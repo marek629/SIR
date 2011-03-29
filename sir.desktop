@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Sir
+GenericName=Simple Image Resizer
+Exec=sir
+Comment=Qt4 Image Resizer
+Icon=/usr/share/pixmaps/sir.png
+Terminal=0
+Type=Application
+Categories=Graphics;

@@ -1,0 +1,14 @@
+Source: sir
+Section: misc
+Priority: optional
+Maintainer: Rafael Sachetto <rsachetto@gmail.com>
+Build-Depends: debhelper (>= 5), libqt4-dev (>=4)
+Standards-Version: 3.7.3
+Homepage: http://sir.projet-libre.org/
+
+Package: sir
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-core, libqt4-gui
+Recommends: dcraw
+Description:  Simple image resizer
+ Simple program to resize and rotate images.

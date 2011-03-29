@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ConvertDialog</class>
+ <widget class="QMainWindow" name="ConvertDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>435</width>
+    <height>531</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SIR - Simple Image Resizer</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../application.qrc">
+    <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout">
+    <property name="margin">
+     <number>9</number>
+    </property>
+    <property name="spacing">
+     <number>6</number>
+    </property>
+    <item row="1" column="0" colspan="4">
+     <layout class="QGridLayout">
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <item row="0" column="2" colspan="2">
+       <widget class="QPushButton" name="RemovepushButton">
+        <property name="text">
+         <string>&amp;Remove File(s)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2" colspan="5">
+       <spacer>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>273</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="1" colspan="3">
+       <widget class="QLineEdit" name="destFileEdit"/>
+      </item>
+      <item row="2" column="6">
+       <widget class="QLineEdit" name="heightLineEdit"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="addDirpushButton">
+        <property name="text">
+         <string>Add &amp;Dir...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="targetFormatLabel">
+        <property name="text">
+         <string>&amp;Target Format:</string>
+        </property>
+        <property name="buddy">
+         <cstring>targetFormatComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3" colspan="2">
+       <widget class="QLineEdit" name="widthLineEdit"/>
+      </item>
+      <item row="0" column="4" colspan="3">
+       <widget class="QPushButton" name="RemoveAllpushButton">
+        <property name="text">
+         <string>Remove Al&amp;l</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="textLabel1">
+        <property name="text">
+         <string>Target Folder:</string>
+        </property>
+        <property name="buddy">
+         <cstring>destFileEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="targetFormatComboBox"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="textLabel1_3">
+        <property name="text">
+         <string>Target Prefix:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLabel" name="textLabel2_2">
+        <property name="text">
+         <string>Height:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4" colspan="3">
+       <widget class="QPushButton" name="browseDestButton">
+        <property name="text">
+         <string>&amp;Browse</string>
+        </property>
+        <property name="shortcut">
+         <string>Alt+B</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="textLabel1_2_2">
+        <property name="text">
+         <string>Width:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="destPrefixEdit"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="addFilepushButton">
+        <property name="text">
+         <string>Add &amp;File...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="4" column="3">
+     <widget class="QPushButton" name="quitButton">
+      <property name="text">
+       <string>&amp;Quit</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="4">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Options</string>
+      </property>
+      <layout class="QGridLayout">
+       <property name="margin">
+        <number>9</number>
+       </property>
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <item row="1" column="0">
+        <layout class="QGridLayout">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="rotateLineEdit">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="rotateCheckBox">
+           <property name="text">
+            <string>Rotation Angle:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>231</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <layout class="QGridLayout">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <item row="0" column="3">
+          <spacer>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>130</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="maintainCheckBox">
+           <property name="text">
+            <string>&amp;Maintain Aspect Ratio</string>
+           </property>
+           <property name="shortcut">
+            <string>Alt+M</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="textLabel1_2">
+           <property name="text">
+            <string>Quality:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QSpinBox" name="qualitySpinBox">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="value">
+            <number>100</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QPushButton" name="convertSelectedButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>&amp;Convert Selected</string>
+      </property>
+      <property name="shortcut">
+       <string>Alt+C</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="4">
+     <widget class="QProgressBar" name="convertProgressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QPushButton" name="convertButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Convert &amp;All</string>
+      </property>
+      <property name="shortcut">
+       <string>Alt+A</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <spacer>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>91</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0" colspan="4">
+     <widget class="myQTreeWidget" name="filesTreeView">
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>435</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <addaction name="actionAdd_File"/>
+    <addaction name="actionAdd_Dir"/>
+    <addaction name="actionRemoveAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout_Sir"/>
+    <addaction name="actionAbout_Qt"/>
+    <addaction name="separator"/>
+    <addaction name="actionSendInstall"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionOptions"/>
+    <addaction name="separator"/>
+    <addaction name="actionCheckforUpdates"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../application.qrc">
+     <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="iconText">
+    <string>Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionOptions">
+   <property name="text">
+    <string>&amp;Options</string>
+   </property>
+  </action>
+  <action name="actionAbout_Sir">
+   <property name="text">
+    <string>About Sir...</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt...</string>
+   </property>
+  </action>
+  <action name="actionAdd_File">
+   <property name="text">
+    <string>Add &amp;File...</string>
+   </property>
+  </action>
+  <action name="actionAdd_Dir">
+   <property name="text">
+    <string>Add &amp;Dir...</string>
+   </property>
+  </action>
+  <action name="actionCheckforUpdates">
+   <property name="text">
+    <string>Check for updates...</string>
+   </property>
+  </action>
+  <action name="actionSendInstall">
+   <property name="text">
+    <string>Let us know that you are using SIR...</string>
+   </property>
+  </action>
+  <action name="actionRemoveAll">
+   <property name="text">
+    <string>Remove Al&amp;l</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove all filles the files list</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myQTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>myqtreewidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>destFileEdit</tabstop>
+  <tabstop>browseDestButton</tabstop>
+  <tabstop>targetFormatComboBox</tabstop>
+  <tabstop>widthLineEdit</tabstop>
+  <tabstop>heightLineEdit</tabstop>
+  <tabstop>destPrefixEdit</tabstop>
+  <tabstop>maintainCheckBox</tabstop>
+  <tabstop>qualitySpinBox</tabstop>
+  <tabstop>rotateCheckBox</tabstop>
+  <tabstop>rotateLineEdit</tabstop>
+  <tabstop>convertButton</tabstop>
+  <tabstop>convertSelectedButton</tabstop>
+  <tabstop>quitButton</tabstop>
+  <tabstop>addFilepushButton</tabstop>
+  <tabstop>addDirpushButton</tabstop>
+  <tabstop>RemovepushButton</tabstop>
+  <tabstop>RemoveAllpushButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../application.qrc"/>
+ </resources>
+ <connections/>
+</ui>
