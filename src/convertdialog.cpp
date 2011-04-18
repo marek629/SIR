@@ -29,13 +29,13 @@
 #include "defines.h"
 #include "rawutils.h"
 #include "networkutils.h"
+#include "messagebox.h"
 #include <QString>
 #include <QDropEvent>
 #include <QMenu>
 #include <QPicture>
 #include <QStringList>
 #include <QDir>
-#include <QMessageBox>
 #include <QFileDialog>
 #include <QImageWriter>
 #include <QTextCharFormat>
@@ -964,19 +964,17 @@ void ConvertDialog::queryOverwrite(const QString& targetFile, int tid) {
     
     if(!ConvertThread::shared->overwriteAll) {
     
-        int result = QMessageBox::question(
+        QMessageBox::StandardButton result = MessageBox::question(
                          this,
                          tr("Overwrite File? -- SIR"),
                          tr("A file called %1 already exists."
-                            "Do you want to overwrite it?").arg( targetFile),
-                         tr("&Yes"), tr("&No"), tr("Yes to &All") , 0, 1 );
+                            "Do you want to overwrite it?").arg( targetFile) );
                          
                          
         ConvertThread::shared->overwriteResult = result;
         
-        if(result == 2) {
+        if (result == QMessageBox::YesToAll)
             ConvertThread::shared->overwriteAll = true;
-        }
         
         ConvertThread::shared->overwriteMutex.unlock();
         convertThreads[tid]->confirmOverwrite(result);

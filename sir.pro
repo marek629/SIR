@@ -21,7 +21,8 @@ SOURCES += src/main.cpp \
     src/languageutils.cpp \
     src/sharedinformation.cpp \
     src/rawutils.cpp \
-    src/networkutils.cpp
+    src/networkutils.cpp \
+    src/messagebox.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
@@ -37,7 +38,8 @@ HEADERS += src/main.h \
     src/languageutils.h \
     src/sharedinformation.h \
     src/rawutils.h \
-    src/networkutils.h
+    src/networkutils.h \
+    src/messagebox.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \
