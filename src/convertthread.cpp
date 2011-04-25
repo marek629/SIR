@@ -26,7 +26,6 @@
 #include "defines.h"
 #include "rawutils.h"
 
-
 SharedInformation* ConvertThread::shared = new SharedInformation();
 
 ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
@@ -120,8 +119,16 @@ void ConvertThread::run() {
     QString destPrefix = m_destPrefix;
     QDir destFolder = m_destFolder;
     bool rawEnabled = RawUtils::isRawEnabled();
+//    shared->abort = false;
+//    shared->overwriteResult = 1;
 
     while(work) {
+        if (shared->abort)
+        {
+            emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+            getNextOrStop();
+            continue;
+        }
 
         emit imageStatus(imageData, tr("Converting"), CONVERTING);
 
@@ -198,36 +205,35 @@ void ConvertThread::run() {
         }
 
         if ( QFile::exists( targetFile ) &&
-             !ConvertThread::shared->overwriteAll) {
-
+             !(ConvertThread::shared->overwriteAll
+               || ConvertThread::shared->abort || ConvertThread::shared->noOverwriteAll)) {
             ConvertThread::shared->overwriteMutex.lock();
             ConvertThread::shared->overwriteResult = 1;
             emit overwriteQuestion(targetFile, tid);
             ConvertThread::shared->overwriteCondition.wait(&(ConvertThread::shared->overwriteMutex));
             ConvertThread::shared->overwriteMutex.unlock();
-
             if(ConvertThread::shared->overwriteResult == 0
                || ConvertThread::shared->overwriteResult == 2) {
 
-                if (destImg.save(targetFile, 0, quality)) {
+                if (destImg.save(targetFile, 0, quality))
                     emit imageStatus(imageData, tr("Converted"), CONVERTED);
-                }
-                else {
-                    emit imageStatus(imageData, tr("Failed to convert"),
-                                     FAILED);
-                }
-            } 
-            else {
+                else
+                    emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+            }
+            else if (ConvertThread::shared->overwriteResult == 4)
+                emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+            else
                 emit imageStatus(imageData, tr("Skipped"), SKIPPED);
-            }
-        } 
-        else {
-            if (destImg.save(targetFile, 0, quality)) {
+        }
+        else if (ConvertThread::shared->noOverwriteAll)
+            emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+        else if (ConvertThread::shared->abort)
+            emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+        else { // when overwriteAll is true
+            if (destImg.save(targetFile, 0, quality))
                 emit imageStatus(imageData, tr("Converted"), CONVERTED);
-            }
-            else {
+            else
                 emit imageStatus(imageData, tr("Failed to convert"), FAILED);
-            }
         }
         delete image;
         getNextOrStop();

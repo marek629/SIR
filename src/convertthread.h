@@ -24,11 +24,7 @@
 
 #include <QThread>
 #include <QImage>
-#include <QQueue>
 #include <QDir>
-#include <QMutex>
-#include <QWaitCondition>
-#include <QStringList>
 #include "sharedinformation.h"
 
 #ifndef CONVERTTHREAD_H

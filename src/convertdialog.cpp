@@ -961,10 +961,14 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
 void ConvertDialog::queryOverwrite(const QString& targetFile, int tid) {
 
     ConvertThread::shared->overwriteMutex.lock();
+
+    if (ConvertThread::shared->noOverwriteAll) {
+        ConvertThread::shared->overwriteMutex.unlock();
+        convertThreads[tid]->confirmOverwrite(3);
+    }
+    else if(!ConvertThread::shared->overwriteAll) {
     
-    if(!ConvertThread::shared->overwriteAll) {
-    
-        QMessageBox::StandardButton result = MessageBox::question(
+        int result = MessageBox::question(
                          this,
                          tr("Overwrite File? -- SIR"),
                          tr("A file called %1 already exists."
@@ -973,8 +977,12 @@ void ConvertDialog::queryOverwrite(const QString& targetFile, int tid) {
                          
         ConvertThread::shared->overwriteResult = result;
         
-        if (result == QMessageBox::YesToAll)
+        if (result == MessageBox::YesToAll)
             ConvertThread::shared->overwriteAll = true;
+        else if (result == MessageBox::NoToAll)
+            ConvertThread::shared->noOverwriteAll = true;
+        else if (result == MessageBox::Cancel)
+            ConvertThread::shared->abort = true;
         
         ConvertThread::shared->overwriteMutex.unlock();
         convertThreads[tid]->confirmOverwrite(result);
@@ -1020,8 +1028,13 @@ void ConvertDialog::retranslateStrings() {
             break;
             case NOTCONVERTED:
             (*it)->setText(3,tr("Not converted yet"));
+            break;
             case CONVERTING:
             (*it)->setText(3,tr("Converting"));
+            break;
+            case CANCELLED:
+            (*it)->setText(3,tr("Cancelled"));
+            break;
         }
         count++;
         ++it;

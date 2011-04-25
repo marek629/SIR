@@ -28,3 +28,4 @@
 #define FAILED 4
 #define REMOVED 5
 #define CONVERTING 6
+#define CANCELLED 7

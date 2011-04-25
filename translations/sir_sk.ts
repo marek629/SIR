@@ -25,7 +25,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Portuguese Translation: Rafael Sachetto  &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Slovak Translation: Jozef Riha&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Spanish Translation: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Russian Translation: Renat Gar and касьянъ&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#00681c;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Russian Translation: Renat Gar, касьянъ and Timur Antipin&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#00681c;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Hungarian Translation: Kopiás Csaba&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Polish Translation: zoteek&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Dutch Translation: Youp&lt;/span&gt;&lt;/p&gt;
@@ -166,14 +166,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/convertdialog.cpp" line="375"/>
         <location filename="../src/convertdialog.cpp" line="610"/>
-        <location filename="../src/convertdialog.cpp" line="972"/>
         <source>&amp;Yes</source>
         <translation>Án&amp;o</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="375"/>
         <location filename="../src/convertdialog.cpp" line="610"/>
-        <location filename="../src/convertdialog.cpp" line="972"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
@@ -190,27 +188,27 @@ p, li { white-space: pre-wrap; }
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="969"/>
+        <location filename="../src/convertdialog.cpp" line="973"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Prepísať súbor -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="970"/>
+        <location filename="../src/convertdialog.cpp" line="974"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Súbor %1 už existuje. Prajete si ho prepísať?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="972"/>
         <source>Yes to &amp;All</source>
-        <translation>Án&amp;o pre všetky</translation>
+        <translation type="obsolete">Án&amp;o pre všetky</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1026"/>
+        <location filename="../src/convertdialog.cpp" line="1033"/>
         <source>Converting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1069"/>
+        <location filename="../src/convertdialog.cpp" line="1036"/>
+        <location filename="../src/convertdialog.cpp" line="1080"/>
         <source>Cancelled</source>
         <translation>Zrušený</translation>
     </message>
@@ -412,7 +410,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="378"/>
         <location filename="../dialogs/convertdialog.ui" line="381"/>
         <location filename="../dialogs/convertdialog.ui" line="384"/>
-        <location filename="../src/convertdialog.cpp" line="1061"/>
+        <location filename="../src/convertdialog.cpp" line="1072"/>
         <source>Quit</source>
         <translation>Ukončiť</translation>
     </message>
@@ -432,8 +430,8 @@ p, li { white-space: pre-wrap; }
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1015"/>
-        <location filename="../src/convertdialog.cpp" line="1071"/>
+        <location filename="../src/convertdialog.cpp" line="1021"/>
+        <location filename="../src/convertdialog.cpp" line="1082"/>
         <source>Converted</source>
         <translation>Skonvertované</translation>
     </message>
@@ -442,7 +440,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete"> Nepodarilo sa skonvertovať</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1018"/>
+        <location filename="../src/convertdialog.cpp" line="1024"/>
         <source>Skipped</source>
         <translation>Preskočené</translation>
     </message>
@@ -451,7 +449,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertdialog.cpp" line="559"/>
         <location filename="../src/convertdialog.cpp" line="746"/>
         <location filename="../src/convertdialog.cpp" line="764"/>
-        <location filename="../src/convertdialog.cpp" line="1024"/>
+        <location filename="../src/convertdialog.cpp" line="1030"/>
         <source>Not converted yet</source>
         <translation>Ešte neskonvertované</translation>
     </message>
@@ -506,27 +504,27 @@ p, li { white-space: pre-wrap; }
         <translation>Vyberte prosím aspoň jeden súbor s obrázkom.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="998"/>
+        <location filename="../src/convertdialog.cpp" line="1004"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="999"/>
+        <location filename="../src/convertdialog.cpp" line="1005"/>
         <source>Ext</source>
         <translation>Príp</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1000"/>
+        <location filename="../src/convertdialog.cpp" line="1006"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1001"/>
+        <location filename="../src/convertdialog.cpp" line="1007"/>
         <source>Status</source>
         <translation>Stav</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1021"/>
+        <location filename="../src/convertdialog.cpp" line="1027"/>
         <source>Failed to convert</source>
         <translation> Nepodarilo sa skonvertovať</translation>
     </message>
@@ -534,24 +532,31 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ConvertThread</name>
     <message>
-        <location filename="../src/convertthread.cpp" line="126"/>
+        <location filename="../src/convertthread.cpp" line="133"/>
         <source>Converting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="161"/>
+        <location filename="../src/convertthread.cpp" line="168"/>
         <source>Failed to open original image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="213"/>
-        <location filename="../src/convertthread.cpp" line="226"/>
+        <location filename="../src/convertthread.cpp" line="219"/>
+        <location filename="../src/convertthread.cpp" line="234"/>
         <source>Converted</source>
         <translation>Skonvertované</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="216"/>
-        <location filename="../src/convertthread.cpp" line="229"/>
+        <location filename="../src/convertthread.cpp" line="224"/>
+        <location filename="../src/convertthread.cpp" line="231"/>
+        <source>Cancelled</source>
+        <translation type="unfinished">Zrušený</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="128"/>
+        <location filename="../src/convertthread.cpp" line="221"/>
+        <location filename="../src/convertthread.cpp" line="236"/>
         <source>Failed to convert</source>
         <translation> Nepodarilo sa skonvertovať</translation>
     </message>
@@ -560,9 +565,38 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete"> Nepodarilo sa skonvertovať</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="221"/>
+        <location filename="../src/convertthread.cpp" line="226"/>
+        <location filename="../src/convertthread.cpp" line="229"/>
         <source>Skipped</source>
         <translation>Preskočené</translation>
+    </message>
+</context>
+<context>
+    <name>MessageBox</name>
+    <message>
+        <location filename="../src/messagebox.cpp" line="14"/>
+        <source>&amp;Yes</source>
+        <translation type="unfinished">Án&amp;o</translation>
+    </message>
+    <message>
+        <location filename="../src/messagebox.cpp" line="15"/>
+        <source>&amp;No</source>
+        <translation type="unfinished">&amp;Nie</translation>
+    </message>
+    <message>
+        <location filename="../src/messagebox.cpp" line="16"/>
+        <source>Yes to &amp;All</source>
+        <translation type="unfinished">Án&amp;o pre všetky</translation>
+    </message>
+    <message>
+        <location filename="../src/messagebox.cpp" line="17"/>
+        <source>N&amp;o to All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/messagebox.cpp" line="18"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

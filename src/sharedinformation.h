@@ -29,6 +29,8 @@
 #include<QStringList>
 #include<QWaitCondition>
 
+class ConvertThread;
+
 class SharedInformation {
 
 public:
@@ -37,18 +39,14 @@ public:
     SharedInformation( const SharedInformation & );
     SharedInformation &operator=( const SharedInformation & );
 
-    ~SharedInformation();
-    void lockOverwriteMutex();
-    void unlockOverwriteMutex();
-
     QMutex mutex;
-    QQueue<QStringList> imageQueue;
     bool overwriteAll;
+    bool noOverwriteAll;
+    bool abort;
 
     QMutex overwriteMutex;
     QWaitCondition overwriteCondition;
     int overwriteResult;
-
 };
 
 #endif // SHAREDINFORMATION_H
