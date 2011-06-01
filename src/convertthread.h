@@ -74,8 +74,9 @@ private:
     QMutex imageMutex;
     QWaitCondition imageCondition;
     int tid;
-    QMutex overwriteMutex;
     bool onlySelected;
+    QMutex overwriteMutex;
+    QWaitCondition overwriteCondition;
 
 };
 

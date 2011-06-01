@@ -25,6 +25,7 @@
 #include "convertthread.h"
 #include "defines.h"
 #include "rawutils.h"
+#include <QDebug>
 
 SharedInformation* ConvertThread::shared = new SharedInformation();
 
@@ -94,9 +95,9 @@ void ConvertThread::convertImage(const QString& name, const QString& extension,
 }
 
 void ConvertThread::confirmOverwrite(int result) {
-    QMutexLocker locker(&(ConvertThread::shared->overwriteMutex));
-    ConvertThread::shared->overwriteResult = result;
-    ConvertThread::shared->overwriteCondition.wakeOne();
+    shared->overwriteResult = result;
+    overwriteMutex.unlock();
+    overwriteCondition.wakeOne();
 }
 
 void ConvertThread::confirmImage() {
@@ -119,13 +120,11 @@ void ConvertThread::run() {
     QString destPrefix = m_destPrefix;
     QDir destFolder = m_destFolder;
     bool rawEnabled = RawUtils::isRawEnabled();
-//    shared->abort = false;
-//    shared->overwriteResult = 1;
 
     while(work) {
         if (shared->abort)
         {
-            emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+            emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
             getNextOrStop();
             continue;
         }
@@ -207,11 +206,14 @@ void ConvertThread::run() {
         if ( QFile::exists( targetFile ) &&
              !(ConvertThread::shared->overwriteAll
                || ConvertThread::shared->abort || ConvertThread::shared->noOverwriteAll)) {
-            ConvertThread::shared->overwriteMutex.lock();
-            ConvertThread::shared->overwriteResult = 1;
-            emit overwriteQuestion(targetFile, tid);
-            ConvertThread::shared->overwriteCondition.wait(&(ConvertThread::shared->overwriteMutex));
-            ConvertThread::shared->overwriteMutex.unlock();
+
+            if (!(ConvertThread::shared->overwriteAll
+               || ConvertThread::shared->abort || ConvertThread::shared->noOverwriteAll)) {
+                overwriteMutex.lock();
+                emit overwriteQuestion(targetFile,tid);
+                overwriteCondition.wait(&overwriteMutex);
+            }
+
             if(ConvertThread::shared->overwriteResult == 0
                || ConvertThread::shared->overwriteResult == 2) {
 

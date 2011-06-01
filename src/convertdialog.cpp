@@ -49,6 +49,7 @@
 #include <QIcon>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QDebug>
 
 ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
     setupUi(this);
@@ -341,6 +342,7 @@ void ConvertDialog::giveNextImage(int threadNum, bool onlySelected) {
 
 void ConvertDialog::convert() {
 
+    resetOverwriteAnswer();
     bool hasWidth = false;
     bool hasHeight = false;
     QMatrix m;
@@ -576,6 +578,7 @@ void ConvertDialog::addFile() {
 
 void ConvertDialog::convertSelected() {
 
+    resetOverwriteAnswer();
     bool hasWidth = false;
     bool hasHeight = false;
     QMatrix m;
@@ -960,38 +963,40 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
 
 void ConvertDialog::queryOverwrite(const QString& targetFile, int tid) {
 
-    ConvertThread::shared->overwriteMutex.lock();
-
-    if (ConvertThread::shared->noOverwriteAll) {
-        ConvertThread::shared->overwriteMutex.unlock();
-        convertThreads[tid]->confirmOverwrite(3);
+    OverwriteData data = {targetFile,tid};
+    overwriteQueue.enqueue(data);
+    if (tid==0)
+    {
+        while (!overwriteQueue.isEmpty())
+            questionOverwrite(overwriteQueue.dequeue());
     }
+}
+
+void ConvertDialog::questionOverwrite(OverwriteData data) {
+
+    if (ConvertThread::shared->noOverwriteAll)
+        convertThreads[data.tid]->confirmOverwrite(3);
+    else if(ConvertThread::shared->abort)
+        convertThreads[data.tid]->confirmOverwrite(4);
     else if(!ConvertThread::shared->overwriteAll) {
-    
+
         int result = MessageBox::question(
                          this,
                          tr("Overwrite File? -- SIR"),
                          tr("A file called %1 already exists."
-                            "Do you want to overwrite it?").arg( targetFile) );
-                         
-                         
-        ConvertThread::shared->overwriteResult = result;
-        
+                            "Do you want to overwrite it?").arg( data.targetFile) );
+
         if (result == MessageBox::YesToAll)
             ConvertThread::shared->overwriteAll = true;
         else if (result == MessageBox::NoToAll)
             ConvertThread::shared->noOverwriteAll = true;
         else if (result == MessageBox::Cancel)
             ConvertThread::shared->abort = true;
-        
-        ConvertThread::shared->overwriteMutex.unlock();
-        convertThreads[tid]->confirmOverwrite(result);
+
+        convertThreads[data.tid]->confirmOverwrite(result);
     }
-    else {
-        ConvertThread::shared->overwriteMutex.unlock();
-        convertThreads[tid]->confirmOverwrite(2);
-    }
-    
+    else
+        convertThreads[data.tid]->confirmOverwrite(2);
 }
 
 void ConvertDialog::retranslateStrings() {

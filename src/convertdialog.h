@@ -23,6 +23,7 @@
 
 #include "ui_convertdialog.h"
 #include "convertthread.h"
+#include <QQueue>
 
 class QString;
 class QDropEvent;
@@ -50,27 +51,35 @@ public:
 
 private:
 
-	void initList();
-	void init();
-	void createConnections();
+    struct OverwriteData {
+        QString targetFile;
+        int tid;
+    };
+    QQueue<OverwriteData> overwriteQueue;
+
+    void initList();
+    void init();
+    void createConnections();
     void createRawFilesList();
-	QList<ConvertThread*> convertThreads;
-	QString args;
-	QStringList argsList;
-	QImage *image;
-	QString targetFile;
-	QString fileFilters;
+    void questionOverwrite(OverwriteData data);
+    inline void resetOverwriteAnswer();
+    QList<ConvertThread*> convertThreads;
+    QString args;
+    QStringList argsList;
+    QImage *image;
+    QString targetFile;
+    QString fileFilters;
     QStringList rawFormats;
-	QString lastDir;
-	PreviewDialog  *previewForm;
-	int numThreads;
-	QStringList *makeList();
-	QTranslator *appTranslator;
-	QMap<QString, int>  *statusList;
-	int convertedImages;
-	int numImages;
-	QList<QTreeWidgetItem *> selectedItems;
-	bool converting;
+    QString lastDir;
+    PreviewDialog  *previewForm;
+    int numThreads;
+    QStringList *makeList();
+    QTranslator *appTranslator;
+    QMap<QString, int>  *statusList;
+    int convertedImages;
+    int numImages;
+    QList<QTreeWidgetItem *> selectedItems;
+    bool converting;
     bool rawEnabled;
     bool alreadSent;
     NetworkUtils *net;
@@ -104,3 +113,10 @@ public slots:
     virtual void sendInstall();
     virtual void showSendInstallResult(QString *result, bool error);
 };
+
+void ConvertDialog::resetOverwriteAnswer() {
+    ConvertThread::shared->overwriteResult = 1;
+    ConvertThread::shared->overwriteAll = false;
+    ConvertThread::shared->noOverwriteAll = false;
+    ConvertThread::shared->abort = false;
+}

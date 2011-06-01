@@ -24,6 +24,11 @@
 #include "sharedinformation.h"
 
 SharedInformation::SharedInformation() {
+
+    overwriteAll=false;
+    noOverwriteAll=false;
+    abort=false;
+    overwriteResult=1;
 }
 
 

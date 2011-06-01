@@ -25,7 +25,6 @@
 #define SHAREDINFORMATION_H
 
 #include<QMutex>
-#include<QQueue>
 #include<QStringList>
 #include<QWaitCondition>
 
@@ -46,7 +45,9 @@ public:
 
     QMutex overwriteMutex;
     QWaitCondition overwriteCondition;
+    QWaitCondition condition;
     int overwriteResult;
+
 };
 
 #endif // SHAREDINFORMATION_H
