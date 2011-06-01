@@ -23,6 +23,7 @@
 */
 
 #include <QThread>
+#include <QWaitCondition>
 #include <QImage>
 #include <QDir>
 #include "sharedinformation.h"

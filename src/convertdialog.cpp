@@ -49,7 +49,6 @@
 #include <QIcon>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QDebug>
 
 ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
     setupUi(this);

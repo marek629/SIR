@@ -21,9 +21,9 @@
 	*
 	*/
 
+#include <QQueue>
 #include "ui_convertdialog.h"
 #include "convertthread.h"
-#include <QQueue>
 
 class QString;
 class QDropEvent;

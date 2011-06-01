@@ -25,7 +25,6 @@
 #include "convertthread.h"
 #include "defines.h"
 #include "rawutils.h"
-#include <QDebug>
 
 SharedInformation* ConvertThread::shared = new SharedInformation();
 

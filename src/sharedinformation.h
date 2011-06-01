@@ -26,7 +26,6 @@
 
 #include<QMutex>
 #include<QStringList>
-#include<QWaitCondition>
 
 class ConvertThread;
 
@@ -42,10 +41,6 @@ public:
     bool overwriteAll;
     bool noOverwriteAll;
     bool abort;
-
-    QMutex overwriteMutex;
-    QWaitCondition overwriteCondition;
-    QWaitCondition condition;
     int overwriteResult;
 
 };
