@@ -22,6 +22,7 @@
 	*/
 
 #include <QQueue>
+#include <QSettings>
 #include "ui_convertdialog.h"
 #include "convertthread.h"
 
@@ -34,13 +35,14 @@ class QMessageBox;
 class QFileDialog;
 class QImageWriter;
 class QMenu;
-class QSettings;
 class QCompleter;
 class myQTreeWidget;
 class PreviewDialog;
 class QTranslator;
 class SharedInformation;
 class NetworkUtils;
+class QPoint;
+class QSize;
 
 class ConvertDialog : public QMainWindow, private Ui::ConvertDialog {
 		Q_OBJECT
@@ -62,6 +64,7 @@ private:
     void createConnections();
     void createRawFilesList();
     void questionOverwrite(OverwriteData data);
+    inline void writeWindowProperties();
     inline void resetOverwriteAnswer();
     QList<ConvertThread*> convertThreads;
     QString args;
@@ -83,6 +86,11 @@ private:
     bool rawEnabled;
     bool alreadSent;
     NetworkUtils *net;
+    QPoint windowPossition;
+    QSize windowSize;
+
+protected:
+    void changeEvent(QEvent *e);
 
 public slots:
 	virtual void browseDestination();
@@ -113,6 +121,22 @@ public slots:
     virtual void sendInstall();
     virtual void showSendInstallResult(QString *result, bool error);
 };
+
+void ConvertDialog::writeWindowProperties() {
+    QSettings settings("SIR");
+    settings.beginGroup("MainWindow");
+    if (this->isMaximized()) {
+        settings.setValue("maximized",true);
+        settings.setValue("possition",windowPossition);
+        settings.setValue("size",windowSize);
+    }
+    else {
+        settings.setValue("maximized",false);
+        settings.setValue("possition",this->pos());
+        settings.setValue("size",this->size());
+    }
+    settings.endGroup();
+}
 
 void ConvertDialog::resetOverwriteAnswer() {
     ConvertThread::shared->overwriteResult = 1;

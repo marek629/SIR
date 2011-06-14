@@ -164,7 +164,7 @@ void OptionsDialog::browseDcraw() {
 void OptionsDialog::writeSettings() {
     QSettings settings("SIR");
 
-    settings.beginGroup("MainWindow");
+    settings.beginGroup("Settings");
     settings.setValue("targetFolder", targetFolderLineEdit->text());
     settings.setValue("targetFormat", targetFormatComboBox->currentIndex());
     settings.setValue("width",widthLineEdit->text());

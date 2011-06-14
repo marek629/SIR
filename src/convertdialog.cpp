@@ -39,7 +39,6 @@
 #include <QFileDialog>
 #include <QImageWriter>
 #include <QTextCharFormat>
-#include <QSettings>
 #include <QCompleter>
 #include <QDirModel>
 #include <QRegExp>
@@ -49,6 +48,7 @@
 #include <QIcon>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QWindowStateChangeEvent>
 
 ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
     setupUi(this);
@@ -63,6 +63,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) 
 }
 
 ConvertDialog::~ConvertDialog() {
+    writeWindowProperties();
     delete statusList;
     delete appTranslator;
     if(net) delete net;
@@ -844,6 +845,27 @@ void ConvertDialog::readSettings() {
     
     QSettings settings("SIR");
     settings.beginGroup("MainWindow");
+    if (settings.value("cores",0).toInt()!=0) {
+        //Old format settings - need migration
+        QFile configFile(settings.fileName());
+        if (configFile.open(QIODevice::ReadWrite)) {
+            QString fileContent = configFile.read(configFile.size());
+            fileContent.replace("[MainWindow]","[Settings]");
+            configFile.resize(fileContent.size());
+            if (configFile.seek(0))
+                configFile.write(fileContent.toAscii());
+            configFile.close();
+        }
+    }
+    else {
+        this->move( settings.value("possition",this->pos()).toPoint() );
+        this->resize( settings.value("size",this->size()).toSize() );
+        if (settings.value("maximized",false).toBool())
+            this->showMaximized();
+    }
+    settings.endGroup();
+    settings.beginGroup("Settings");
+
     destFileEdit->setText(settings.value("targetFolder",
                                          QDir::homePath()).toString());
 
@@ -883,6 +905,18 @@ void ConvertDialog::readSettings() {
 
     retranslateStrings();
     settings.endGroup();
+}
+
+void ConvertDialog::changeEvent(QEvent *e) {
+
+    if (e->type()!=QEvent::WindowStateChange)
+        return;
+
+    QWindowStateChangeEvent *event = (QWindowStateChangeEvent*)(e);
+    if (event->oldState()==Qt::WindowNoState) {
+        windowSize = this->size();
+        windowPossition = this->pos();
+    }
 }
 
 QStringList * ConvertDialog::makeList() {
