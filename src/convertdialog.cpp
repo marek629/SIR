@@ -998,10 +998,16 @@ void ConvertDialog::queryOverwrite(const QString& targetFile, int tid) {
 
     OverwriteData data = {targetFile,tid};
     overwriteQueue.enqueue(data);
-    if (tid==0)
-    {
+    static bool flag = true;
+    static int id = -1;
+    if (id == -1)
+        id = tid;
+    if (tid==id && flag) {
+        flag = false;
         while (!overwriteQueue.isEmpty())
             questionOverwrite(overwriteQueue.dequeue());
+        id = -1;
+        flag = true;
     }
 }
 

@@ -21,10 +21,10 @@
 	*
 	*/
 
-#include <QQueue>
-#include <QSettings>
 #include "ui_convertdialog.h"
 #include "convertthread.h"
+#include <QSettings>
+#include <QQueue>
 
 class QString;
 class QDropEvent;
@@ -52,13 +52,11 @@ public:
 	void retranslateStrings();
 
 private:
-
     struct OverwriteData {
         QString targetFile;
         int tid;
     };
     QQueue<OverwriteData> overwriteQueue;
-
     void initList();
     void init();
     void createConnections();
