@@ -215,7 +215,7 @@ void OptionsDialog::readSettings() {
 
     QString defaultLanguage = languages->getLanguageInfo("sir_"+locale+".qm").niceName;
 
-    settings.beginGroup("MainWindow");
+    settings.beginGroup("Settings");
     targetFolderLineEdit->setText(settings.value("targetFolder",
                                                  QDir::homePath()).toString());
     targetFormatComboBox->setCurrentIndex(settings.value("targetFormat", 0).toInt());

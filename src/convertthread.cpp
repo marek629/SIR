@@ -99,11 +99,16 @@ void ConvertThread::confirmOverwrite(int result) {
     overwriteCondition.wakeOne();
 }
 
+void ConvertThread::confirmEnlarge(int result) {
+    shared->enlargeResult = result;
+    enlargeMutex.unlock();
+    enlargeCondition.wakeOne();
+}
+
 void ConvertThread::confirmImage() {
     QMutexLocker locker(&imageMutex);
     imageCondition.wakeOne();
 }
-
 
 void ConvertThread::run() {
 
@@ -172,6 +177,26 @@ void ConvertThread::run() {
             continue;
         }
 
+        if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
+             (hasHeight && image->height()<height && image->width()<=image->height()) ) {
+
+            if (!(ConvertThread::shared->enlargeAll ||
+                  ConvertThread::shared->noEnlargeAll || ConvertThread::shared->abort)) {
+                enlargeMutex.lock();
+                emit question(imagePath,tid,"enlarge");
+                enlargeCondition.wait(&enlargeMutex);
+            }
+            if (ConvertThread::shared->enlargeResult != 0 &&
+                    ConvertThread::shared->enlargeResult != 2) {
+                if (ConvertThread::shared->enlargeResult == 4)
+                    emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+                else
+                    emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+                getNextOrStop();
+                continue;
+            }
+        }
+
         if (rotate && angle != 0.0) {
                 QMatrix m;
                 m.rotate( angle );
@@ -209,7 +234,7 @@ void ConvertThread::run() {
             if (!(ConvertThread::shared->overwriteAll
                || ConvertThread::shared->abort || ConvertThread::shared->noOverwriteAll)) {
                 overwriteMutex.lock();
-                emit overwriteQuestion(targetFile,tid);
+                emit question(targetFile,tid,"overwrite");
                 overwriteCondition.wait(&overwriteMutex);
             }
 
@@ -230,7 +255,7 @@ void ConvertThread::run() {
             emit imageStatus(imageData, tr("Skipped"), SKIPPED);
         else if (ConvertThread::shared->abort)
             emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
-        else { // when overwriteAll is true
+        else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFile, 0, quality))
                 emit imageStatus(imageData, tr("Converted"), CONVERTED);
             else

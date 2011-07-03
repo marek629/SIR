@@ -52,18 +52,20 @@ public:
 	void retranslateStrings();
 
 private:
-    struct OverwriteData {
-        QString targetFile;
+    struct QueryData {
+        QString filePath;
         int tid;
     };
-    QQueue<OverwriteData> overwriteQueue;
+    QQueue<QueryData> overwriteQueue;
+    QQueue<QueryData> enlargeQueue;
     void initList();
     void init();
     void createConnections();
     void createRawFilesList();
-    void questionOverwrite(OverwriteData data);
+    void questionOverwrite(QueryData data);
+    void questionEnlarge(QueryData data);
     inline void writeWindowProperties();
-    inline void resetOverwriteAnswer();
+    inline void resetAnswers();
     QList<ConvertThread*> convertThreads;
     QString args;
     QStringList argsList;
@@ -107,7 +109,7 @@ public slots:
 	virtual void readSettings();
 	virtual void updateTree();
 	virtual void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
-	virtual void queryOverwrite(const QString& targetFile, int tid);
+    virtual void query(const QString& targetFile, int tid, const QString& whatToDo);
 	virtual void giveNextImage(int tid, bool onlySelected);
 	virtual void setupThreads(int numThreads);
 	virtual void closeOrCancel();
@@ -136,9 +138,12 @@ void ConvertDialog::writeWindowProperties() {
     settings.endGroup();
 }
 
-void ConvertDialog::resetOverwriteAnswer() {
+void ConvertDialog::resetAnswers() {
     ConvertThread::shared->overwriteResult = 1;
     ConvertThread::shared->overwriteAll = false;
     ConvertThread::shared->noOverwriteAll = false;
     ConvertThread::shared->abort = false;
+    ConvertThread::shared->enlargeResult = 1;
+    ConvertThread::shared->enlargeAll = false;
+    ConvertThread::shared->noEnlargeAll = false;
 }

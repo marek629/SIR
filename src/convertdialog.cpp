@@ -49,6 +49,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QWindowStateChangeEvent>
+#include <QDebug>
 
 ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
     setupUi(this);
@@ -232,8 +233,8 @@ void ConvertDialog::setupThreads(int numThreads) {
     
     for (int i = 0; i < numThreads; i++) {
         connect(convertThreads[i],
-                SIGNAL(overwriteQuestion(const QString &, int)),this,
-                SLOT(queryOverwrite(const QString &, int)),
+                SIGNAL(question(const QString &, int, const QString&)),this,
+                SLOT(query(const QString &, int, const QString&)),
                 Qt::QueuedConnection);
 
         connect(convertThreads[i],
@@ -342,7 +343,7 @@ void ConvertDialog::giveNextImage(int threadNum, bool onlySelected) {
 
 void ConvertDialog::convert() {
 
-    resetOverwriteAnswer();
+    resetAnswers();
     bool hasWidth = false;
     bool hasHeight = false;
     QMatrix m;
@@ -578,7 +579,7 @@ void ConvertDialog::addFile() {
 
 void ConvertDialog::convertSelected() {
 
-    resetOverwriteAnswer();
+    resetAnswers();
     bool hasWidth = false;
     bool hasHeight = false;
     QMatrix m;
@@ -994,16 +995,28 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
     }
 }
 
-void ConvertDialog::queryOverwrite(const QString& targetFile, int tid) {
+void ConvertDialog::query(const QString& targetFile, int tid, const QString& whatToDo) {
 
-    OverwriteData data = {targetFile,tid};
-    overwriteQueue.enqueue(data);
+    QueryData data = {targetFile,tid};
+    QString what = whatToDo.toLower();
+    if (what == "overwrite")
+        overwriteQueue.enqueue(data);
+    else if (what == "enlarge")
+        enlargeQueue.enqueue(data);
+    else {
+        qDebug("ConvertDialog::query(): bad \"what\" argument");
+        convertThreads[tid]->confirmEnlarge(1);
+        convertThreads[tid]->confirmOverwrite(1);
+        return;
+    }
     static bool flag = true;
     static int id = -1;
     if (id == -1)
         id = tid;
     if (tid==id && flag) {
         flag = false;
+        while (!enlargeQueue.isEmpty())
+            questionEnlarge(enlargeQueue.dequeue());
         while (!overwriteQueue.isEmpty())
             questionOverwrite(overwriteQueue.dequeue());
         id = -1;
@@ -1011,7 +1024,7 @@ void ConvertDialog::queryOverwrite(const QString& targetFile, int tid) {
     }
 }
 
-void ConvertDialog::questionOverwrite(OverwriteData data) {
+void ConvertDialog::questionOverwrite(QueryData data) {
 
     if (ConvertThread::shared->noOverwriteAll)
         convertThreads[data.tid]->confirmOverwrite(3);
@@ -1023,7 +1036,7 @@ void ConvertDialog::questionOverwrite(OverwriteData data) {
                          this,
                          tr("Overwrite File? -- SIR"),
                          tr("A file called %1 already exists."
-                            "Do you want to overwrite it?").arg( data.targetFile) );
+                            "Do you want to overwrite it?").arg( data.filePath) );
 
         if (result == MessageBox::YesToAll)
             ConvertThread::shared->overwriteAll = true;
@@ -1036,6 +1049,34 @@ void ConvertDialog::questionOverwrite(OverwriteData data) {
     }
     else
         convertThreads[data.tid]->confirmOverwrite(2);
+}
+
+void ConvertDialog::questionEnlarge(QueryData data) {
+
+    if (ConvertThread::shared->noEnlargeAll)
+        convertThreads[data.tid]->confirmEnlarge(3);
+    else if (ConvertThread::shared->abort)
+        convertThreads[data.tid]->confirmEnlarge(4);
+    else if (!ConvertThread::shared->enlargeAll) {
+
+        int result = MessageBox::question(
+                    this,
+                    tr("Enlarge File? - SIR"),
+                    tr("A file called %1 is smaller than the requested size. "
+                       "Enlargement can cause deterioration of picture quality. "
+                       "Do you want enlarge it?").arg(data.filePath));
+
+        if (result == MessageBox::YesToAll)
+            ConvertThread::shared->enlargeAll = true;
+        else if (result == MessageBox::NoToAll)
+            ConvertThread::shared->noEnlargeAll = true;
+        else if (result == MessageBox::Cancel)
+            ConvertThread::shared->abort = true;
+
+        convertThreads[data.tid]->confirmEnlarge(result);
+    }
+    else
+        convertThreads[data.tid]->confirmEnlarge(2);
 }
 
 void ConvertDialog::retranslateStrings() {

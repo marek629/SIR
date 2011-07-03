@@ -43,6 +43,9 @@ public:
     bool abort;
     int overwriteResult;
 
+    bool enlargeAll;
+    bool noEnlargeAll;
+    int enlargeResult;
 };
 
 #endif // SHAREDINFORMATION_H

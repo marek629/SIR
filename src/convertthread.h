@@ -46,6 +46,7 @@ public:
     void setOverwriteAll(bool overwriteAll = false);
     void convertImage(const QString& name, const QString& extension, const QString& path, bool onlySelected = false);
     void confirmOverwrite(int result);
+    void confirmEnlarge(int result);
     void confirmImage();
     void setAcceptWork(bool work);
     void getNextOrStop();
@@ -53,7 +54,7 @@ public:
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
-    void overwriteQuestion(const QString& targetFile, int tid);
+    void question(const QString& targetFile, int tid, const QString& whatToDo);
     void getNextImage(int tid, bool onlySelected);
 
 private:
@@ -78,7 +79,8 @@ private:
     bool onlySelected;
     QMutex overwriteMutex;
     QWaitCondition overwriteCondition;
-
+    QMutex enlargeMutex;
+    QWaitCondition enlargeCondition;
 };
 
 

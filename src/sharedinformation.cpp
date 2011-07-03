@@ -29,6 +29,9 @@ SharedInformation::SharedInformation() {
     noOverwriteAll=false;
     abort=false;
     overwriteResult=1;
+    enlargeAll=false;
+    noEnlargeAll=false;
+    enlargeResult=1;
 }
 
 
