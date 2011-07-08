@@ -38,7 +38,29 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;or do a sudo apt-get install dcraw on Debian based systems.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sir.projet-libre.org/&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;http://sir.projet-libre.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Główny programista: Rafael Sachetto &amp;lt;&lt;/span&gt;&lt;a href=&quot;mailto:rsachetto@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;rsachetto@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Niemieckie tłumaczenie: Michael Kruger&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Portugalskie tłumaczenie: Rafael Sachetto  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Słowackie tłumaczenie: Jozef Riha&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Hiszpańskie tłumaczenie: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Rosyjskie tłumaczenie: Renat Gar, касьянъ i Timur Antipin&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#00681c;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Węgierskie tłumaczenie: Kopiás Csaba&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Polskie tłumaczenie: zoteek&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Duńskie tłumaczenie: Youp&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Rumuńskie tłumaczenie: Ovidiu Pop&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Francuskie tłumaczenie: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:medium; color:#000000;&quot;&gt;Jérôme Launay&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:medium; color:#000000;&quot;&gt;Greckie tłumaczenie: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Steve Jemens&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; color:#000000;&quot;&gt;Czeskie tłumaczenie: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Pavel Fric&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Wkład w kod: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Aby włączyć dcraw odwiedź: &lt;/span&gt;&lt;a href=&quot;http://www.cybercom.net/~dcoffin/dcraw/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cybercom.net/~dcoffin/dcraw/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;lub wykonaj sudo apt-get install dcraw w systemach opartych na Debianie.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sir.projet-libre.org/&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;http://sir.projet-libre.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../dialogs/about.ui" line="128"/>
@@ -79,79 +101,79 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ConvertDialog</name>
     <message>
-        <location filename="../src/convertdialog.cpp" line="122"/>
+        <location filename="../src/convertdialog.cpp" line="123"/>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
         <translation>Już wysłałeś informacje na temat swojej instalacji SIR. Dzięki bardzo!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="130"/>
+        <location filename="../src/convertdialog.cpp" line="131"/>
         <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
         <translation>WAŻNE: nie zostaną wysłane żadne prywatne dane dotyczące Ciebie bądź Twojego komputera! Jedynie zostanie zwiększony licznik unikalnych instalacji SIR.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="171"/>
+        <location filename="../src/convertdialog.cpp" line="172"/>
         <source>Thank you for let us know that you are using SIR! You are the user number %1 of this month!</source>
         <translation>Dzięki, że powiadomiłeś nas o używaniu SIR! Jesteś %1 użytkownikiem w tym miesiącu!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="196"/>
+        <location filename="../src/convertdialog.cpp" line="197"/>
         <source>You have the lastest version of SIR!</source>
         <translation>Masz najnowszą wersję SIR!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="206"/>
+        <location filename="../src/convertdialog.cpp" line="207"/>
         <source>Go to SIR website!</source>
         <translation>Przejdź do strony www SIR!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="306"/>
-        <location filename="../src/convertdialog.cpp" line="459"/>
+        <location filename="../src/convertdialog.cpp" line="309"/>
+        <location filename="../src/convertdialog.cpp" line="462"/>
         <source>Choose a directory</source>
         <translation>Wybierz katalog</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="374"/>
-        <location filename="../src/convertdialog.cpp" line="610"/>
+        <location filename="../src/convertdialog.cpp" line="377"/>
+        <location filename="../src/convertdialog.cpp" line="613"/>
         <source>Create Folder? -- SIR</source>
         <translation>Stworzyć katalog? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="375"/>
-        <location filename="../src/convertdialog.cpp" line="611"/>
+        <location filename="../src/convertdialog.cpp" line="378"/>
+        <location filename="../src/convertdialog.cpp" line="614"/>
         <source>The folder %1 do not exists.Do you want to create it?</source>
         <translation>Katalog %1 nie istnieje. Czy chcesz go utworzyć?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="377"/>
-        <location filename="../src/convertdialog.cpp" line="613"/>
+        <location filename="../src/convertdialog.cpp" line="380"/>
+        <location filename="../src/convertdialog.cpp" line="616"/>
         <source>&amp;Yes</source>
         <translation>&amp;Tak</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="377"/>
-        <location filename="../src/convertdialog.cpp" line="613"/>
+        <location filename="../src/convertdialog.cpp" line="380"/>
+        <location filename="../src/convertdialog.cpp" line="616"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="383"/>
-        <location filename="../src/convertdialog.cpp" line="619"/>
+        <location filename="../src/convertdialog.cpp" line="386"/>
+        <location filename="../src/convertdialog.cpp" line="622"/>
         <source>Unable to create target folder.</source>
         <translation>Nie można stworzyć katalogu docelowego.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="408"/>
-        <location filename="../src/convertdialog.cpp" line="639"/>
+        <location filename="../src/convertdialog.cpp" line="411"/>
+        <location filename="../src/convertdialog.cpp" line="642"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="985"/>
+        <location filename="../src/convertdialog.cpp" line="1052"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Nadpisać plik? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="986"/>
+        <location filename="../src/convertdialog.cpp" line="1053"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Plik %1 już istnieje. Czy chcesz go nadpisać?</translation>
     </message>
@@ -160,13 +182,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Tak na &amp;wszystkie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1038"/>
+        <location filename="../src/convertdialog.cpp" line="1133"/>
         <source>Converting</source>
         <translation>Konwertuję</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1041"/>
-        <location filename="../src/convertdialog.cpp" line="1085"/>
+        <location filename="../src/convertdialog.cpp" line="1136"/>
+        <location filename="../src/convertdialog.cpp" line="1180"/>
         <source>Cancelled</source>
         <translation>Anulowano</translation>
     </message>
@@ -183,37 +205,37 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete"> - übersprungen</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="442"/>
+        <location filename="../src/convertdialog.cpp" line="445"/>
         <source>Please add at least one image file.</source>
         <translation>Proszę dodać co najmniej jeden plik graficzny.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="542"/>
+        <location filename="../src/convertdialog.cpp" line="545"/>
         <source>Images</source>
         <translation>Obrazy</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="546"/>
+        <location filename="../src/convertdialog.cpp" line="549"/>
         <source>Select one or more files to open</source>
         <translation>Zaznacz jeden lub więcej plików do otwarcia</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="805"/>
+        <location filename="../src/convertdialog.cpp" line="808"/>
         <source>Convert Selected</source>
         <translation>Konwertuj zaznaczone</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="806"/>
+        <location filename="../src/convertdialog.cpp" line="809"/>
         <source>Convert the selected images</source>
         <translation>Konwertuj zaznaczone pliki</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="808"/>
+        <location filename="../src/convertdialog.cpp" line="811"/>
         <source>Remove Selected</source>
         <translation>Usuń zaznaczone</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="809"/>
+        <location filename="../src/convertdialog.cpp" line="812"/>
         <source>Remove the selected images</source>
         <translation>Usuń zaznaczone pliki</translation>
     </message>
@@ -368,7 +390,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="378"/>
         <location filename="../dialogs/convertdialog.ui" line="381"/>
         <location filename="../dialogs/convertdialog.ui" line="384"/>
-        <location filename="../src/convertdialog.cpp" line="1077"/>
+        <location filename="../src/convertdialog.cpp" line="1172"/>
         <source>Quit</source>
         <translation>Wyjście</translation>
     </message>
@@ -388,8 +410,8 @@ p, li { white-space: pre-wrap; }
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1026"/>
-        <location filename="../src/convertdialog.cpp" line="1087"/>
+        <location filename="../src/convertdialog.cpp" line="1121"/>
+        <location filename="../src/convertdialog.cpp" line="1182"/>
         <source>Converted</source>
         <translation>Skonwertowany</translation>
     </message>
@@ -398,91 +420,101 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">umwandeln gescheitert</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1029"/>
+        <location filename="../src/convertdialog.cpp" line="1124"/>
         <source>Skipped</source>
         <translation>Pominięty</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="481"/>
-        <location filename="../src/convertdialog.cpp" line="561"/>
-        <location filename="../src/convertdialog.cpp" line="749"/>
-        <location filename="../src/convertdialog.cpp" line="767"/>
-        <location filename="../src/convertdialog.cpp" line="1035"/>
+        <location filename="../src/convertdialog.cpp" line="484"/>
+        <location filename="../src/convertdialog.cpp" line="564"/>
+        <location filename="../src/convertdialog.cpp" line="752"/>
+        <location filename="../src/convertdialog.cpp" line="770"/>
+        <location filename="../src/convertdialog.cpp" line="1130"/>
         <source>Not converted yet</source>
         <translation>Nie skonwertowany</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="121"/>
-        <location filename="../src/convertdialog.cpp" line="129"/>
-        <location filename="../src/convertdialog.cpp" line="162"/>
-        <location filename="../src/convertdialog.cpp" line="170"/>
+        <location filename="../src/convertdialog.cpp" line="122"/>
+        <location filename="../src/convertdialog.cpp" line="130"/>
+        <location filename="../src/convertdialog.cpp" line="163"/>
+        <location filename="../src/convertdialog.cpp" line="171"/>
         <source>Let us know!</source>
         <translation>Daj nam znać!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="136"/>
+        <location filename="../src/convertdialog.cpp" line="137"/>
         <source>Go for it!</source>
         <translation>Zrób to!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="139"/>
+        <location filename="../src/convertdialog.cpp" line="140"/>
         <source>No thanks!</source>
         <translation>Nie, dzięki!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="163"/>
+        <location filename="../src/convertdialog.cpp" line="164"/>
         <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
         <translation>Wystąpił błąd podczas połączenia ze stroną www SIR! Sprawdź połączenie internetowe i spróbuj ponownie!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="187"/>
-        <location filename="../src/convertdialog.cpp" line="195"/>
-        <location filename="../src/convertdialog.cpp" line="201"/>
+        <location filename="../src/convertdialog.cpp" line="188"/>
+        <location filename="../src/convertdialog.cpp" line="196"/>
+        <location filename="../src/convertdialog.cpp" line="202"/>
         <source>SIR Updates</source>
         <translation>Aktualizacje SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="188"/>
+        <location filename="../src/convertdialog.cpp" line="189"/>
         <source>There was an error while trying to connect with SIR update website! Check your internet connection and try again later!</source>
         <translation>Wystąpił błąd podczas połączenia ze stroną www SIR! Sprawdź połączenie internetowe i spróbuj ponownie!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="202"/>
+        <location filename="../src/convertdialog.cpp" line="203"/>
         <source>There is a new version of SIR available for download!</source>
         <translation>Nowa wersja SIR jest dostępna!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="209"/>
+        <location filename="../src/convertdialog.cpp" line="210"/>
         <source>I will check later!</source>
         <translation>Sprawdzę później!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="681"/>
+        <location filename="../src/convertdialog.cpp" line="684"/>
         <source>Please select at least one image file.</source>
         <translation>Proszę wybrać co najmniej jeden plik graficzny.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1009"/>
+        <location filename="../src/convertdialog.cpp" line="1079"/>
+        <source>Enlarge File? - SIR</source>
+        <translation>Powiększyć plik? - SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="1080"/>
+        <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
+        <translation>Plik %1 jest mniejszy od zadanego rozmiaru. Powiększenie może powodować pogorszenie jakości obrazu. Czy chcesz go powiększyć?</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="1104"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1010"/>
+        <location filename="../src/convertdialog.cpp" line="1105"/>
         <source>Ext</source>
         <translation>Rozszerzenie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1011"/>
+        <location filename="../src/convertdialog.cpp" line="1106"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1012"/>
+        <location filename="../src/convertdialog.cpp" line="1107"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1032"/>
+        <location filename="../src/convertdialog.cpp" line="1127"/>
         <source>Failed to convert</source>
         <translation>Nieudana konwersja</translation>
     </message>
@@ -490,31 +522,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ConvertThread</name>
     <message>
-        <location filename="../src/convertthread.cpp" line="132"/>
+        <location filename="../src/convertthread.cpp" line="140"/>
         <source>Converting</source>
         <translation>Konwertuję</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="167"/>
+        <location filename="../src/convertthread.cpp" line="175"/>
         <source>Failed to open original image</source>
         <translation>Błąd otwarcia pliku źródłowego</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="221"/>
-        <location filename="../src/convertthread.cpp" line="236"/>
+        <location filename="../src/convertthread.cpp" line="255"/>
+        <location filename="../src/convertthread.cpp" line="273"/>
         <source>Converted</source>
         <translation>Skonwertowany</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="127"/>
-        <location filename="../src/convertthread.cpp" line="226"/>
-        <location filename="../src/convertthread.cpp" line="233"/>
+        <location filename="../src/convertthread.cpp" line="135"/>
+        <location filename="../src/convertthread.cpp" line="196"/>
+        <location filename="../src/convertthread.cpp" line="261"/>
+        <location filename="../src/convertthread.cpp" line="268"/>
         <source>Cancelled</source>
         <translation>Anulowano</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="223"/>
-        <location filename="../src/convertthread.cpp" line="238"/>
+        <location filename="../src/convertthread.cpp" line="258"/>
+        <location filename="../src/convertthread.cpp" line="276"/>
         <source>Failed to convert</source>
         <translation>Nieudana konwersja</translation>
     </message>
@@ -523,8 +556,9 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Nieudana konwersja</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="228"/>
-        <location filename="../src/convertthread.cpp" line="231"/>
+        <location filename="../src/convertthread.cpp" line="198"/>
+        <location filename="../src/convertthread.cpp" line="263"/>
+        <location filename="../src/convertthread.cpp" line="266"/>
         <source>Skipped</source>
         <translation>Pominięty</translation>
     </message>
@@ -532,27 +566,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../src/messagebox.cpp" line="14"/>
+        <location filename="../src/messagebox.cpp" line="17"/>
         <source>&amp;Yes</source>
         <translation>&amp;Tak</translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="15"/>
+        <location filename="../src/messagebox.cpp" line="18"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="16"/>
+        <location filename="../src/messagebox.cpp" line="19"/>
         <source>Yes to &amp;All</source>
         <translation>Tak na &amp;wszystkie</translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="17"/>
+        <location filename="../src/messagebox.cpp" line="20"/>
         <source>N&amp;o to All</source>
         <translation>Ni&amp;e na wszystkie</translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="18"/>
+        <location filename="../src/messagebox.cpp" line="21"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Anuluj</translation>
     </message>
@@ -565,22 +599,37 @@ p, li { white-space: pre-wrap; }
         <translation>SIR - Konfiguracja</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="23"/>
+        <location filename="../dialogs/optionsdialog.ui" line="60"/>
         <source>SIR - Options</source>
         <translation>SIR - Opcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="257"/>
+        <location filename="../dialogs/optionsdialog.ui" line="314"/>
+        <source>Detect automatically</source>
+        <translation>Wykryj automatycznie</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="341"/>
+        <source>EXIF, IPTC and XMP supported</source>
+        <translation>EXIF, IPTC i XMP są wspierane</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="344"/>
+        <source>Save also metadata</source>
+        <translation>Zapisuj także metadane</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="351"/>
         <source>Enable RAW images support (needs dcraw)</source>
         <translation>Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="309"/>
+        <location filename="../dialogs/optionsdialog.ui" line="44"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="316"/>
+        <location filename="../dialogs/optionsdialog.ui" line="51"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -589,63 +638,68 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">SIR - Opcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="39"/>
+        <location filename="../dialogs/optionsdialog.ui" line="85"/>
         <source>Default Target Folder:</source>
         <translation>Domyślny katalog docelowy:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="46"/>
+        <location filename="../dialogs/optionsdialog.ui" line="92"/>
         <source>Default Target Format:</source>
         <translation>Domyślny format docelowy:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="53"/>
+        <location filename="../dialogs/optionsdialog.ui" line="99"/>
         <source>Default Width:</source>
         <translation>Domyślna szerokość:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="60"/>
+        <location filename="../dialogs/optionsdialog.ui" line="106"/>
         <source>Default Target Prefix:</source>
         <translation>Domyślny prefix:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="67"/>
+        <location filename="../dialogs/optionsdialog.ui" line="113"/>
         <source>Default Quality:</source>
         <translation>Domyślna jakość:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="74"/>
+        <location filename="../dialogs/optionsdialog.ui" line="120"/>
         <source>Default Language:</source>
         <translation>Domyślny język:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="81"/>
+        <location filename="../dialogs/optionsdialog.ui" line="127"/>
         <source>Number of Cores:</source>
         <translation>Ilość rdzeni:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="88"/>
+        <location filename="../dialogs/optionsdialog.ui" line="134"/>
+        <source>Metadata Support:</source>
+        <translation>Wsparcie metadanych:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="144"/>
         <source>RAW Support Options:</source>
         <translation>Wsparcie RAW:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="95"/>
+        <location filename="../dialogs/optionsdialog.ui" line="151"/>
         <source>dcraw Executable Path:</source>
         <translation>dcraw ścieżka:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="102"/>
+        <location filename="../dialogs/optionsdialog.ui" line="158"/>
         <source>dcraw options:</source>
         <translation>dcraw opcje:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="124"/>
-        <location filename="../dialogs/optionsdialog.ui" line="269"/>
+        <location filename="../dialogs/optionsdialog.ui" line="180"/>
+        <location filename="../dialogs/optionsdialog.ui" line="365"/>
         <source>Browse</source>
         <translation>Przeglądaj</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="170"/>
+        <location filename="../dialogs/optionsdialog.ui" line="226"/>
         <source>Default Height:</source>
         <translation>Domyślna wysokość:</translation>
     </message>
@@ -654,27 +708,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Domyślny język</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="95"/>
+        <location filename="../src/optionsdialog.cpp" line="97"/>
         <source>Choose a directory</source>
         <translation>Wybierz katalog</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="113"/>
+        <location filename="../src/optionsdialog.cpp" line="115"/>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
         <translation>Nie odnaleziono pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="128"/>
+        <location filename="../src/optionsdialog.cpp" line="130"/>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
         <translation>Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="139"/>
+        <location filename="../src/optionsdialog.cpp" line="141"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
         <translation>Nie wybrano pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="155"/>
+        <location filename="../src/optionsdialog.cpp" line="157"/>
         <source>Select dcraw executable</source>
         <translation>Wybierz plik wykonywalny dla dcraw</translation>
     </message>
@@ -799,6 +853,14 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/previewdialog.ui" line="463"/>
         <source>TextLabel</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../src/metadata.cpp" line="23"/>
+        <source>This picture was changed with Simple Image Resiser</source>
+        <translation>Ten obraz został zmieniony w Simple Image Resizer</translation>
     </message>
 </context>
 <context>

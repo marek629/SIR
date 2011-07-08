@@ -22,14 +22,15 @@
 * File contributed by: Víctor Fernández <deejayworld@gmail.com>
 */
 
+#ifndef CONVERTTHREAD_H
+#define CONVERTTHREAD_H
+
 #include <QThread>
 #include <QWaitCondition>
 #include <QImage>
 #include <QDir>
 #include "sharedinformation.h"
-
-#ifndef CONVERTTHREAD_H
-#define CONVERTTHREAD_H
+#include "metadatautils.h"
 
 class ConvertThread : public QThread {
 
@@ -51,6 +52,7 @@ public:
     void setAcceptWork(bool work);
     void getNextOrStop();
     static SharedInformation *shared;
+    static void setSaveMetadata(bool value);
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
@@ -81,6 +83,7 @@ private:
     QWaitCondition overwriteCondition;
     QMutex enlargeMutex;
     QWaitCondition enlargeCondition;
+    MetadataUtils metadata;
 };
 
 

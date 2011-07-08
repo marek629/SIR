@@ -8,9 +8,10 @@ MOC_DIR += .moc
 OBJECTS_DIR += .obj
 
 CONFIG += qt \
-    release \
+    release debug \
     warn_on
 INCLUDEPATH += src/
+LIBS += -lexiv2
 SOURCES += src/main.cpp \
     src/convertdialog.cpp \
     src/previewdialog.cpp \
@@ -22,7 +23,8 @@ SOURCES += src/main.cpp \
     src/sharedinformation.cpp \
     src/rawutils.cpp \
     src/networkutils.cpp \
-    src/messagebox.cpp
+    src/messagebox.cpp \
+    src/metadatautils.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
@@ -39,7 +41,8 @@ HEADERS += src/main.h \
     src/sharedinformation.h \
     src/rawutils.h \
     src/networkutils.h \
-    src/messagebox.h
+    src/messagebox.h \
+    src/metadatautils.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \

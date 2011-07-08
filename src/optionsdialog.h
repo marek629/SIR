@@ -47,13 +47,18 @@ public:
     bool checkDcrawPath(QString fileName);
     LanguageUtils * languages;
     QMap<QString, QString> * fileToNiceName;
+    static quint8 detectCoresCount();
+
+private:
+    quint8 coresCount;
     
 private slots:
     virtual void writeSettings();
-	virtual void readSettings();
+    virtual void readSettings();
     virtual void browseDestination();
     virtual void browseDcraw();
     virtual void setRawStatus(int state);
+    virtual void respondCoresSpinBox(bool checked);
 
 signals:
     void ok();

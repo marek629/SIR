@@ -31,6 +31,7 @@
 #include <QIcon>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QThread>
 
 #include "optionsdialog.h"
 #include "languageutils.h"
@@ -80,6 +81,7 @@ void OptionsDialog::createConnections() {
 
     connect(dcrawPushButton, SIGNAL(clicked()), this, SLOT(browseDcraw()));
     connect(rawCheckBox, SIGNAL(stateChanged (int)), SLOT(setRawStatus(int)));
+    connect(coresCheckBox, SIGNAL(toggled(bool)), this, SLOT(respondCoresSpinBox(bool)));
 }
 
 void OptionsDialog::browseDestination() {
@@ -174,7 +176,13 @@ void OptionsDialog::writeSettings() {
     settings.setValue("languageNiceName", languagesComboBox->currentText());
     settings.setValue("languageFileName",
                       fileToNiceName->value(languagesComboBox->currentText()));
-    settings.setValue("cores", coresSpinBox->value());
+
+    if (coresCheckBox->isChecked())
+        settings.setValue("cores", 0);
+    else
+        settings.setValue("cores", coresSpinBox->value());
+
+    settings.setValue("metadata", metadataCheckBox->isChecked());
 
     bool dcrawOk = false;
     bool firstState = rawCheckBox->isChecked();
@@ -228,7 +236,18 @@ void OptionsDialog::readSettings() {
         settings.value("languageNiceName",defaultLanguage).toString(),
         Qt::MatchExactly)
     );
-    coresSpinBox->setValue(settings.value("cores", 1).toInt());
+
+    coresCount = settings.value("cores",0).toInt();
+    if (coresCount == 0) {
+        coresCheckBox->setChecked(true);
+        respondCoresSpinBox(true);
+    }
+    else {
+        coresCheckBox->setChecked(false);
+        respondCoresSpinBox(false);
+    }
+
+    metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
 
     int state = settings.value("raw", false).toBool();
     rawCheckBox->setChecked(state);
@@ -279,4 +298,28 @@ void OptionsDialog::setRawStatus(int state) {
     dcrawLineEdit->setEnabled(state);
     dcrawPushButton->setEnabled(state);
     dcrawOptions->setEnabled(state);
+}
+
+void OptionsDialog::respondCoresSpinBox(bool checked) {
+    if (checked) {
+        coresCount = detectCoresCount();
+        coresSpinBox->setValue(coresCount);
+        coresSpinBox->setReadOnly(true);
+    }
+    else {
+        coresSpinBox->setValue(coresCount);
+        coresSpinBox->setReadOnly(false);
+    }
+}
+
+quint8 OptionsDialog::detectCoresCount() {
+    int cores = QThread::idealThreadCount();
+    if (cores == -1) {
+        qDebug("OptionsDialog: cores count detect failed");
+        return 1;
+    }
+    else if (cores > 50) //coresSpinBox's maximum value
+        return 50;
+    else
+        return (quint8)cores;
 }

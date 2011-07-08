@@ -225,6 +225,8 @@ void ConvertDialog::showUpdateResult(QString *result, bool error) {
 
 void ConvertDialog::setupThreads(int numThreads) {
 
+    ConvertThread::setSaveMetadata(saveMetadata);
+
     convertThreads.clear();
     
     for(int i = 0; i < numThreads; i++) {
@@ -846,7 +848,7 @@ void ConvertDialog::readSettings() {
     
     QSettings settings("SIR");
     settings.beginGroup("MainWindow");
-    if (settings.value("cores",0).toInt()!=0) {
+    if (settings.value("cores",-1).toInt() != -1) {
         //Old format settings - need migration
         QFile configFile(settings.fileName());
         if (configFile.open(QIODevice::ReadWrite)) {
@@ -855,6 +857,8 @@ void ConvertDialog::readSettings() {
             configFile.resize(fileContent.size());
             if (configFile.seek(0))
                 configFile.write(fileContent.toAscii());
+            else
+                qDebug("ConvertDialog: settings migration failed");
             configFile.close();
         }
     }
@@ -877,7 +881,12 @@ void ConvertDialog::readSettings() {
     heightLineEdit->setText(settings.value("height", "600").toString());
     destPrefixEdit->setText(settings.value("targetPrefix", "web").toString());
     qualitySpinBox->setValue(settings.value("quality", 100).toInt());
-    numThreads = settings.value("cores", 1).toInt();
+
+    numThreads = settings.value("cores", 0).toInt();
+    if (numThreads == 0)
+        numThreads = OptionsDialog::detectCoresCount();
+
+    saveMetadata = settings.value("metadata",true).toBool();
     
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
@@ -1004,7 +1013,7 @@ void ConvertDialog::query(const QString& targetFile, int tid, const QString& wha
     else if (what == "enlarge")
         enlargeQueue.enqueue(data);
     else {
-        qDebug("ConvertDialog::query(): bad \"what\" argument");
+        qDebug("ConvertDialog::query(): bad \"whatToDo\" argument");
         convertThreads[tid]->confirmEnlarge(1);
         convertThreads[tid]->confirmOverwrite(1);
         return;

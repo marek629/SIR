@@ -39,7 +39,6 @@ class QCompleter;
 class myQTreeWidget;
 class PreviewDialog;
 class QTranslator;
-class SharedInformation;
 class NetworkUtils;
 class QPoint;
 class QSize;
@@ -49,7 +48,7 @@ class ConvertDialog : public QMainWindow, private Ui::ConvertDialog {
 public:
 	ConvertDialog(QWidget *parent = 0, QString args = 0);
     ~ConvertDialog();
-	void retranslateStrings();
+    void retranslateStrings();
 
 private:
     struct QueryData {
@@ -75,7 +74,7 @@ private:
     QStringList rawFormats;
     QString lastDir;
     PreviewDialog  *previewForm;
-    int numThreads;
+    quint8 numThreads;
     QStringList *makeList();
     QTranslator *appTranslator;
     QMap<QString, int>  *statusList;
@@ -88,6 +87,7 @@ private:
     NetworkUtils *net;
     QPoint windowPossition;
     QSize windowSize;
+    bool saveMetadata;
 
 protected:
     void changeEvent(QEvent *e);

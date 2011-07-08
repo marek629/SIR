@@ -37,10 +37,12 @@ public:
     SharedInformation( const SharedInformation & );
     SharedInformation &operator=( const SharedInformation & );
 
+    bool saveMetadata;
     QMutex mutex;
+    bool abort;
+
     bool overwriteAll;
     bool noOverwriteAll;
-    bool abort;
     int overwriteResult;
 
     bool enlargeAll;

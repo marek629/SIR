@@ -121,7 +121,7 @@ QPixmap *RawUtils::loadRawPixmap(QString imagePath) {
 
 bool RawUtils::isRawEnabled() {
     QSettings settings("SIR");
-    settings.beginGroup("MainWindow");
+    settings.beginGroup("Settings");
     bool rawEnabled = settings.value("raw", false).toBool();
     settings.endGroup();
     return rawEnabled;
@@ -129,7 +129,7 @@ bool RawUtils::isRawEnabled() {
 
 QString RawUtils::readDcrawPath() {
     QSettings settings("SIR");
-    settings.beginGroup("MainWindow");
+    settings.beginGroup("Settings");
     QString dcraw = settings.value("dcrawPath", "").toString();
     settings.endGroup();
     return dcraw;
@@ -137,7 +137,7 @@ QString RawUtils::readDcrawPath() {
 
 QStringList RawUtils::readDcrawOptions() {
     QSettings settings("SIR");
-    settings.beginGroup("MainWindow");
+    settings.beginGroup("Settings");
     QStringList options = settings.value("dcrawOptions", "").toString().split(" ");
     settings.endGroup();
     return options;

@@ -28,6 +28,10 @@
 
 SharedInformation* ConvertThread::shared = new SharedInformation();
 
+void ConvertThread::setSaveMetadata(bool value) {
+    ConvertThread::shared->saveMetadata = value;
+}
+
 ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
 
     this->tid = tid;
@@ -192,6 +196,7 @@ void ConvertThread::run() {
                     emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
                 else
                     emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+                delete image;
                 getNextOrStop();
                 continue;
             }
@@ -202,6 +207,9 @@ void ConvertThread::run() {
                 m.rotate( angle );
                 *image = image->transformed( m,Qt::SmoothTransformation );
         }
+
+        if (ConvertThread::shared->saveMetadata)
+            metadata.read(imagePath);
 
         QImage destImg;
         
@@ -241,8 +249,11 @@ void ConvertThread::run() {
             if(ConvertThread::shared->overwriteResult == 0
                || ConvertThread::shared->overwriteResult == 2) {
 
-                if (destImg.save(targetFile, 0, quality))
+                if (destImg.save(targetFile, 0, quality)) {
+                    if (ConvertThread::shared->saveMetadata)
+                        metadata.write(targetFile);
                     emit imageStatus(imageData, tr("Converted"), CONVERTED);
+                }
                 else
                     emit imageStatus(imageData, tr("Failed to convert"), FAILED);
             }
@@ -256,8 +267,11 @@ void ConvertThread::run() {
         else if (ConvertThread::shared->abort)
             emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
         else { // when overwriteAll is true or file not exists
-            if (destImg.save(targetFile, 0, quality))
+            if (destImg.save(targetFile, 0, quality)) {
+                if (ConvertThread::shared->saveMetadata)
+                    metadata.write(targetFile);
                 emit imageStatus(imageData, tr("Converted"), CONVERTED);
+            }
             else
                 emit imageStatus(imageData, tr("Failed to convert"), FAILED);
         }
