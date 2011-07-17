@@ -32,6 +32,7 @@ class QPixmap;
 class QStringList;
 class QGraphicsPixmapItem;
 class QKeyEvent;
+class MetadataUtils;
 
 class PreviewDialog : public QDialog, public Ui::PreviewDialog {
     Q_OBJECT
@@ -49,8 +50,9 @@ private:
     void loadPixmap();
 
     //Class Variables
-	QGraphicsScene *scene;
-	QString imagePath;
+    QDesktopWidget* desktop;
+    QGraphicsScene *scene;
+    QString imagePath;
     QPixmap *image;
     double zoomFactor;
 	int currentImage;
@@ -60,6 +62,9 @@ private:
 	int imageW;
 	int imageH;
     bool rawEnabled;
+    bool metadataEnabled;
+    bool saveMetadata;
+    MetadataUtils* metadata;
 
 public slots:
 

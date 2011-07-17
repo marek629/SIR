@@ -59,6 +59,7 @@ private slots:
     virtual void browseDcraw();
     virtual void setRawStatus(int state);
     virtual void respondCoresSpinBox(bool checked);
+    virtual void enableMetadata(bool checked);
 
 signals:
     void ok();

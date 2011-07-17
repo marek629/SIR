@@ -232,12 +232,12 @@ p, li { white-space: pre-wrap; }
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1052"/>
+        <location filename="../src/convertdialog.cpp" line="1048"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Přepsat soubor? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1053"/>
+        <location filename="../src/convertdialog.cpp" line="1049"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Soubor s názvem %1 již existuje. Chcete jej přepsat?</translation>
     </message>
@@ -246,13 +246,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&amp;Ano pro vše</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1133"/>
+        <location filename="../src/convertdialog.cpp" line="1129"/>
         <source>Converting</source>
         <translation>Převádí se</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1136"/>
-        <location filename="../src/convertdialog.cpp" line="1180"/>
+        <location filename="../src/convertdialog.cpp" line="1132"/>
+        <location filename="../src/convertdialog.cpp" line="1176"/>
         <source>Cancelled</source>
         <translation>Zrušeno</translation>
     </message>
@@ -454,7 +454,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="378"/>
         <location filename="../dialogs/convertdialog.ui" line="381"/>
         <location filename="../dialogs/convertdialog.ui" line="384"/>
-        <location filename="../src/convertdialog.cpp" line="1172"/>
+        <location filename="../src/convertdialog.cpp" line="1168"/>
         <source>Quit</source>
         <translation>Ukončit</translation>
     </message>
@@ -474,8 +474,8 @@ p, li { white-space: pre-wrap; }
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1121"/>
-        <location filename="../src/convertdialog.cpp" line="1182"/>
+        <location filename="../src/convertdialog.cpp" line="1117"/>
+        <location filename="../src/convertdialog.cpp" line="1178"/>
         <source>Converted</source>
         <translation>Převedeno</translation>
     </message>
@@ -484,7 +484,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete"> Nepodarilo sa skonvertovať</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1124"/>
+        <location filename="../src/convertdialog.cpp" line="1120"/>
         <source>Skipped</source>
         <translation>Přeskočeno</translation>
     </message>
@@ -493,7 +493,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertdialog.cpp" line="564"/>
         <location filename="../src/convertdialog.cpp" line="752"/>
         <location filename="../src/convertdialog.cpp" line="770"/>
-        <location filename="../src/convertdialog.cpp" line="1130"/>
+        <location filename="../src/convertdialog.cpp" line="1126"/>
         <source>Not converted yet</source>
         <translation>Ještě nepřevedeno</translation>
     </message>
@@ -548,37 +548,37 @@ p, li { white-space: pre-wrap; }
         <translation>Vyberte, prosím, alespoň jeden soubor s obrázkem.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1079"/>
+        <location filename="../src/convertdialog.cpp" line="1075"/>
         <source>Enlarge File? - SIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1080"/>
+        <location filename="../src/convertdialog.cpp" line="1076"/>
         <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1104"/>
+        <location filename="../src/convertdialog.cpp" line="1100"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1105"/>
+        <location filename="../src/convertdialog.cpp" line="1101"/>
         <source>Ext</source>
         <translation>Přípona</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1106"/>
+        <location filename="../src/convertdialog.cpp" line="1102"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1107"/>
+        <location filename="../src/convertdialog.cpp" line="1103"/>
         <source>Status</source>
         <translation>Stav</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1127"/>
+        <location filename="../src/convertdialog.cpp" line="1123"/>
         <source>Failed to convert</source>
         <translation>Nepodařilo se převést</translation>
     </message>
@@ -668,22 +668,27 @@ p, li { white-space: pre-wrap; }
         <translation>SIR - Volby</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="314"/>
+        <location filename="../dialogs/optionsdialog.ui" line="298"/>
         <source>Detect automatically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="341"/>
+        <location filename="../dialogs/optionsdialog.ui" line="333"/>
         <source>EXIF, IPTC and XMP supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="344"/>
+        <location filename="../dialogs/optionsdialog.ui" line="336"/>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="343"/>
         <source>Save also metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="351"/>
+        <location filename="../dialogs/optionsdialog.ui" line="352"/>
         <source>Enable RAW images support (needs dcraw)</source>
         <translation>Povolit podporu obrázků RAW (je potřeba dcraw)</translation>
     </message>
@@ -758,7 +763,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="180"/>
-        <location filename="../dialogs/optionsdialog.ui" line="365"/>
+        <location filename="../dialogs/optionsdialog.ui" line="366"/>
         <source>Browse</source>
         <translation>Procházet</translation>
     </message>
@@ -772,22 +777,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Východzí jazyk</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="97"/>
+        <location filename="../src/optionsdialog.cpp" line="98"/>
         <source>Choose a directory</source>
         <translation>Vybrat adresář</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="115"/>
+        <location filename="../src/optionsdialog.cpp" line="116"/>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
         <translation>Spustitelný soubor pro dcraw nebyl nalezen. Podpora pro RAW není umožněna!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="130"/>
+        <location filename="../src/optionsdialog.cpp" line="131"/>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
         <translation>Vybraný soubor není spustitelný. Podpora pro RAW není umožněna!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="141"/>
+        <location filename="../src/optionsdialog.cpp" line="142"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
         <translation>Nebyl vybrán žádný spustitelný soubor pro dcraw. Podpora pro RAW není umožněna!</translation>
     </message>
@@ -810,7 +815,7 @@ RAW support will not be enabled!</source>
 Podpora pro RAW není umožněna!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="157"/>
+        <location filename="../src/optionsdialog.cpp" line="158"/>
         <source>Select dcraw executable</source>
         <translation>Vybrat spustitelný soubor pro dcraw</translation>
     </message>
@@ -827,102 +832,108 @@ Podpora pro RAW není umožněna!</translation>
         <translation>Činnosti</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="107"/>
+        <location filename="../src/previewdialog.cpp" line="117"/>
         <source>Zoom image</source>
         <translation>Přiblížit obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="114"/>
+        <location filename="../src/previewdialog.cpp" line="124"/>
         <source>Back to previous image</source>
         <translation>Zpět na předchozí obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="115"/>
+        <location filename="../src/previewdialog.cpp" line="125"/>
         <source>Go to next image</source>
         <translation>Jít na další obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="122"/>
+        <location filename="../src/previewdialog.cpp" line="132"/>
         <source>Rotate counter clockwise</source>
         <translation>Otočit proti směru hodinových ručiček</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="123"/>
+        <location filename="../src/previewdialog.cpp" line="133"/>
         <source>Rotate clockwise</source>
         <translation>Otočit po směru hodinových ručiček</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="126"/>
+        <location filename="../src/previewdialog.cpp" line="136"/>
         <source>Save image</source>
         <translation>Uložit obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="130"/>
+        <location filename="../src/previewdialog.cpp" line="140"/>
         <source>Save image as...</source>
         <translation>Uložit obrázek jako...</translation>
     </message>
     <message>
-        <location filename="../dialogs/previewdialog.ui" line="437"/>
+        <location filename="../dialogs/previewdialog.ui" line="450"/>
         <source>Quit</source>
         <translation>Ukončit</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="49"/>
+        <location filename="../src/previewdialog.cpp" line="51"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - Náhled obrázků</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="133"/>
+        <location filename="../src/previewdialog.cpp" line="112"/>
+        <location filename="../src/previewdialog.cpp" line="160"/>
+        <source>Fit to window size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/previewdialog.cpp" line="143"/>
         <source>Quit preview</source>
         <translation>Ukončit náhled</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="136"/>
+        <location filename="../src/previewdialog.cpp" line="146"/>
         <source>Fullscreen</source>
         <translation>Celá obrazovka</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="140"/>
+        <location filename="../src/previewdialog.cpp" line="150"/>
         <source>Print current image...</source>
         <translation>Vytisknout současný obrázek...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="161"/>
+        <location filename="../src/previewdialog.cpp" line="172"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Zadajte, prosím, platný násobek zvětšení.</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="303"/>
+        <location filename="../src/previewdialog.cpp" line="282"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Přepsat soubor? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="304"/>
+        <location filename="../src/previewdialog.cpp" line="283"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Soubor s názvem %1 již existuje. Chcete jej přepsat?</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="306"/>
+        <location filename="../src/previewdialog.cpp" line="285"/>
         <source>&amp;Yes</source>
         <translation>An&amp;o</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="306"/>
+        <location filename="../src/previewdialog.cpp" line="285"/>
         <source>&amp;No</source>
         <translation>&amp;Ne</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="334"/>
+        <location filename="../src/previewdialog.cpp" line="313"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="374"/>
+        <location filename="../src/previewdialog.cpp" line="359"/>
         <source>File saved</source>
         <translation>Soubor uložen</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="379"/>
+        <location filename="../src/previewdialog.cpp" line="365"/>
         <source>Failed to save image</source>
         <translation>Obrázek se nepodařilo uložit</translation>
     </message>
@@ -932,7 +943,7 @@ Podpora pro RAW není umožněna!</translation>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location filename="../dialogs/previewdialog.ui" line="463"/>
+        <location filename="../dialogs/previewdialog.ui" line="489"/>
         <source>TextLabel</source>
         <translation>Textový popis</translation>
     </message>
@@ -940,7 +951,7 @@ Podpora pro RAW není umožněna!</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/metadata.cpp" line="23"/>
+        <location filename="../src/metadatautils.cpp" line="26"/>
         <source>This picture was changed with Simple Image Resiser</source>
         <translation type="unfinished"></translation>
     </message>

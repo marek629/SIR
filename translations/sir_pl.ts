@@ -168,12 +168,12 @@ p, li { white-space: pre-wrap; }
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1052"/>
+        <location filename="../src/convertdialog.cpp" line="1048"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Nadpisać plik? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1053"/>
+        <location filename="../src/convertdialog.cpp" line="1049"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Plik %1 już istnieje. Czy chcesz go nadpisać?</translation>
     </message>
@@ -182,13 +182,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Tak na &amp;wszystkie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1133"/>
+        <location filename="../src/convertdialog.cpp" line="1129"/>
         <source>Converting</source>
         <translation>Konwertuję</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1136"/>
-        <location filename="../src/convertdialog.cpp" line="1180"/>
+        <location filename="../src/convertdialog.cpp" line="1132"/>
+        <location filename="../src/convertdialog.cpp" line="1176"/>
         <source>Cancelled</source>
         <translation>Anulowano</translation>
     </message>
@@ -390,7 +390,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="378"/>
         <location filename="../dialogs/convertdialog.ui" line="381"/>
         <location filename="../dialogs/convertdialog.ui" line="384"/>
-        <location filename="../src/convertdialog.cpp" line="1172"/>
+        <location filename="../src/convertdialog.cpp" line="1168"/>
         <source>Quit</source>
         <translation>Wyjście</translation>
     </message>
@@ -410,8 +410,8 @@ p, li { white-space: pre-wrap; }
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1121"/>
-        <location filename="../src/convertdialog.cpp" line="1182"/>
+        <location filename="../src/convertdialog.cpp" line="1117"/>
+        <location filename="../src/convertdialog.cpp" line="1178"/>
         <source>Converted</source>
         <translation>Skonwertowany</translation>
     </message>
@@ -420,7 +420,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">umwandeln gescheitert</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1124"/>
+        <location filename="../src/convertdialog.cpp" line="1120"/>
         <source>Skipped</source>
         <translation>Pominięty</translation>
     </message>
@@ -429,7 +429,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertdialog.cpp" line="564"/>
         <location filename="../src/convertdialog.cpp" line="752"/>
         <location filename="../src/convertdialog.cpp" line="770"/>
-        <location filename="../src/convertdialog.cpp" line="1130"/>
+        <location filename="../src/convertdialog.cpp" line="1126"/>
         <source>Not converted yet</source>
         <translation>Nie skonwertowany</translation>
     </message>
@@ -484,37 +484,37 @@ p, li { white-space: pre-wrap; }
         <translation>Proszę wybrać co najmniej jeden plik graficzny.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1079"/>
+        <location filename="../src/convertdialog.cpp" line="1075"/>
         <source>Enlarge File? - SIR</source>
         <translation>Powiększyć plik? - SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1080"/>
+        <location filename="../src/convertdialog.cpp" line="1076"/>
         <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
         <translation>Plik %1 jest mniejszy od zadanego rozmiaru. Powiększenie może powodować pogorszenie jakości obrazu. Czy chcesz go powiększyć?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1104"/>
+        <location filename="../src/convertdialog.cpp" line="1100"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1105"/>
+        <location filename="../src/convertdialog.cpp" line="1101"/>
         <source>Ext</source>
         <translation>Rozszerzenie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1106"/>
+        <location filename="../src/convertdialog.cpp" line="1102"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1107"/>
+        <location filename="../src/convertdialog.cpp" line="1103"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1127"/>
+        <location filename="../src/convertdialog.cpp" line="1123"/>
         <source>Failed to convert</source>
         <translation>Nieudana konwersja</translation>
     </message>
@@ -604,22 +604,27 @@ p, li { white-space: pre-wrap; }
         <translation>SIR - Opcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="314"/>
+        <location filename="../dialogs/optionsdialog.ui" line="298"/>
         <source>Detect automatically</source>
         <translation>Wykryj automatycznie</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="341"/>
+        <location filename="../dialogs/optionsdialog.ui" line="333"/>
         <source>EXIF, IPTC and XMP supported</source>
         <translation>EXIF, IPTC i XMP są wspierane</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="344"/>
+        <location filename="../dialogs/optionsdialog.ui" line="336"/>
+        <source>Enabled</source>
+        <translation>Włączone</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="343"/>
         <source>Save also metadata</source>
         <translation>Zapisuj także metadane</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="351"/>
+        <location filename="../dialogs/optionsdialog.ui" line="352"/>
         <source>Enable RAW images support (needs dcraw)</source>
         <translation>Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
     </message>
@@ -694,7 +699,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="180"/>
-        <location filename="../dialogs/optionsdialog.ui" line="365"/>
+        <location filename="../dialogs/optionsdialog.ui" line="366"/>
         <source>Browse</source>
         <translation>Przeglądaj</translation>
     </message>
@@ -708,27 +713,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Domyślny język</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="97"/>
+        <location filename="../src/optionsdialog.cpp" line="98"/>
         <source>Choose a directory</source>
         <translation>Wybierz katalog</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="115"/>
+        <location filename="../src/optionsdialog.cpp" line="116"/>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
         <translation>Nie odnaleziono pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="130"/>
+        <location filename="../src/optionsdialog.cpp" line="131"/>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
         <translation>Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="141"/>
+        <location filename="../src/optionsdialog.cpp" line="142"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
         <translation>Nie wybrano pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="157"/>
+        <location filename="../src/optionsdialog.cpp" line="158"/>
         <source>Select dcraw executable</source>
         <translation>Wybierz plik wykonywalny dla dcraw</translation>
     </message>
@@ -745,102 +750,108 @@ p, li { white-space: pre-wrap; }
         <translation>Akcje</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="107"/>
+        <location filename="../src/previewdialog.cpp" line="117"/>
         <source>Zoom image</source>
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="114"/>
+        <location filename="../src/previewdialog.cpp" line="124"/>
         <source>Back to previous image</source>
         <translation>Poprzedni obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="115"/>
+        <location filename="../src/previewdialog.cpp" line="125"/>
         <source>Go to next image</source>
         <translation>Następny obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="122"/>
+        <location filename="../src/previewdialog.cpp" line="132"/>
         <source>Rotate counter clockwise</source>
         <translation>Obróć przeciwnie do kierunku ruchu wskazówek zegara</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="123"/>
+        <location filename="../src/previewdialog.cpp" line="133"/>
         <source>Rotate clockwise</source>
         <translation>Obróć zgodnie z kierunkiem ruchu wskazówek zegara</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="126"/>
+        <location filename="../src/previewdialog.cpp" line="136"/>
         <source>Save image</source>
         <translation>Zapisz obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="130"/>
+        <location filename="../src/previewdialog.cpp" line="140"/>
         <source>Save image as...</source>
         <translation>Zapisz obraz jako...</translation>
     </message>
     <message>
-        <location filename="../dialogs/previewdialog.ui" line="437"/>
+        <location filename="../dialogs/previewdialog.ui" line="450"/>
         <source>Quit</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="49"/>
+        <location filename="../src/previewdialog.cpp" line="51"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - podgląd obrazów</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="133"/>
+        <location filename="../src/previewdialog.cpp" line="112"/>
+        <location filename="../src/previewdialog.cpp" line="160"/>
+        <source>Fit to window size</source>
+        <translation>Dopasuj do rozmiaru okna</translation>
+    </message>
+    <message>
+        <location filename="../src/previewdialog.cpp" line="143"/>
         <source>Quit preview</source>
         <translation>Zakończ podgląd</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="136"/>
+        <location filename="../src/previewdialog.cpp" line="146"/>
         <source>Fullscreen</source>
         <translation>Pełny ekran</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="140"/>
+        <location filename="../src/previewdialog.cpp" line="150"/>
         <source>Print current image...</source>
         <translation>Drukuj obraz...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="161"/>
+        <location filename="../src/previewdialog.cpp" line="172"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Wprowadź prawidłowy współczynnik powiększenia.</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="303"/>
+        <location filename="../src/previewdialog.cpp" line="282"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Nadpisać plik? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="304"/>
+        <location filename="../src/previewdialog.cpp" line="283"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Plik %1 już istnieje. Czy chcesz go nadpisać?</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="306"/>
+        <location filename="../src/previewdialog.cpp" line="285"/>
         <source>&amp;Yes</source>
         <translation>&amp;Tak</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="306"/>
+        <location filename="../src/previewdialog.cpp" line="285"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="334"/>
+        <location filename="../src/previewdialog.cpp" line="313"/>
         <source>Save File</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="374"/>
+        <location filename="../src/previewdialog.cpp" line="359"/>
         <source>File saved</source>
         <translation>Plik zapisany</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="379"/>
+        <location filename="../src/previewdialog.cpp" line="365"/>
         <source>Failed to save image</source>
         <translation>Błąd zapisu pliku</translation>
     </message>
@@ -850,7 +861,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../dialogs/previewdialog.ui" line="463"/>
+        <location filename="../dialogs/previewdialog.ui" line="489"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
@@ -858,7 +869,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/metadata.cpp" line="23"/>
+        <location filename="../src/metadatautils.cpp" line="26"/>
         <source>This picture was changed with Simple Image Resiser</source>
         <translation>Ten obraz został zmieniony w Simple Image Resizer</translation>
     </message>

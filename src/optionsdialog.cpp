@@ -82,6 +82,7 @@ void OptionsDialog::createConnections() {
     connect(dcrawPushButton, SIGNAL(clicked()), this, SLOT(browseDcraw()));
     connect(rawCheckBox, SIGNAL(stateChanged (int)), SLOT(setRawStatus(int)));
     connect(coresCheckBox, SIGNAL(toggled(bool)), this, SLOT(respondCoresSpinBox(bool)));
+    connect(metadataCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableMetadata(bool)));
 }
 
 void OptionsDialog::browseDestination() {
@@ -183,6 +184,7 @@ void OptionsDialog::writeSettings() {
         settings.setValue("cores", coresSpinBox->value());
 
     settings.setValue("metadata", metadataCheckBox->isChecked());
+    settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
 
     bool dcrawOk = false;
     bool firstState = rawCheckBox->isChecked();
@@ -248,6 +250,10 @@ void OptionsDialog::readSettings() {
     }
 
     metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
+    if (!metadataCheckBox->isChecked())
+        saveMetadataCheckBox->setEnabled(false);
+    else
+        saveMetadataCheckBox->setChecked(settings.value("saveMetadata",true).toBool());
 
     int state = settings.value("raw", false).toBool();
     rawCheckBox->setChecked(state);
@@ -309,6 +315,15 @@ void OptionsDialog::respondCoresSpinBox(bool checked) {
     else {
         coresSpinBox->setValue(coresCount);
         coresSpinBox->setReadOnly(false);
+    }
+}
+
+void OptionsDialog::enableMetadata(bool checked) {
+    if (checked)
+        saveMetadataCheckBox->setEnabled(true);
+    else {
+        saveMetadataCheckBox->setChecked(false);
+        saveMetadataCheckBox->setEnabled(false);
     }
 }
 

@@ -37,6 +37,7 @@
 #include <QKeyEvent>
 
 #include "rawutils.h"
+#include "metadatautils.h"
 
 #define H 115
 #define W 50
@@ -55,8 +56,14 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->setModal(true);
 
     rawEnabled = RawUtils::isRawEnabled();
+    metadataEnabled = MetadataUtils::isEnabled();
+    saveMetadata = MetadataUtils::isSave();
     initBar();
     createConnections();
+    rotation = 0;
+
+    if (metadataEnabled)
+        metadata = new MetadataUtils();
 
     loadPixmap();
 
@@ -67,9 +74,9 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
 
     imageW = image->size().width();
     imageH = image->size().height();
-    this->resize(image->size().width()+W, image->size().height()+H);
+
+    this->resize(imageW + W, imageH + H);
     statusBar->setText(imagePath);
-    rotation = 0;
     zoomFactor = 1.0;
     verifyImages();
     view->show();
@@ -77,6 +84,8 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
 
 PreviewDialog::~PreviewDialog() {
     delete scene;
+    if (metadataEnabled)
+        delete metadata;
 }
 
 void PreviewDialog::createConnections() {
@@ -96,10 +105,10 @@ void PreviewDialog::createConnections() {
 }
 
 void PreviewDialog::initBar() {
-
     for(int i = 100; i >= 10; i-=10) {		
         zoomComboBox->addItem(QString::number(i) + "%");
-    }	
+    }
+    zoomComboBox->addItem(tr("Fit to window size"));
 
     comboLabel->setFixedSize(22,22);
     zoomComboBox->setFixedWidth(62);
@@ -145,45 +154,33 @@ void PreviewDialog::initBar() {
 void PreviewDialog::zoom( const QString & text ) {
 
     bool ok;
-    QString aux(text);	
+    QString aux(text);
 
-    if(aux.endsWith("%")) {
+    if (text == tr("Fit to window size")) {
+        view->fitInView(pix,Qt::KeepAspectRatio);
+        return;
+    }
+
+    if (aux.endsWith("%"))
         aux.chop(1);
-        zoomFactor = aux.toDouble(&ok)/100.0;
-    }
-    else {
-        zoomFactor = aux.toDouble(&ok)/100.0;		
-    }
 
-    if(!ok) {
+    double dec = aux.toDouble(&ok)/100.;
+    if (!ok) {
         QMessageBox::warning(
                 this, "SIR",
                 tr("Please enter a valid zoom factor." ));
         return;
     }
+    zoomFactor = dec;
 
-    if((!this->isMaximized()) && (this->windowState() != 4)) {
-        this->resize((int)(imageW*zoomFactor+W), (int)(imageH*zoomFactor+H));
-    }
-
-    view->resetMatrix();
-    view->scale(zoomFactor,zoomFactor);	
+    view->resetTransform();
+    view->scale(zoomFactor,zoomFactor);
+    view->rotate(rotation);
 }
 
 void PreviewDialog::rotatecw( ) {
     rotation += 90;
     view->rotate(90);
-
-    if((!this->isMaximized()) && (this->windowState() != 4)) {
-        if((int)(rotation/90)%2 == 0) {
-            this->resize((int)(imageW*zoomFactor+W),
-                         (int)(imageH*zoomFactor+H));
-        }
-        else {
-            this->resize((int)(imageH*zoomFactor+W),
-                         (int)(imageW*zoomFactor+H));
-        }
-    }
 
     if(rotation == 360) {
         rotation = 0;
@@ -193,17 +190,6 @@ void PreviewDialog::rotatecw( ) {
 void PreviewDialog::rotateccw( ) {
     rotation -= 90;
     view->rotate(-90);
-
-    if((!this->isMaximized()) && (this->windowState() != 4)) {
-        if((int)(rotation/90)%2 == 0) {
-            this->resize((int)(imageW*zoomFactor+W),
-                         (int)(imageH*zoomFactor+H));
-        }
-        else{
-            this->resize((int)(imageH*zoomFactor+W),
-                         (int)(imageW*zoomFactor+H));
-        }			
-    }
 
     if(rotation == -360) {
         rotation = 0;
@@ -224,10 +210,6 @@ void  PreviewDialog::nextImage( ) {
     view->setSceneRect(pix->boundingRect());
     imageW = image->size().width();
     imageH = image->size().height();
-
-    if((!this->isMaximized()) && (this->windowState() != 4)) {
-        this->resize(imageW + W, imageH + H);
-    }
 
     if(zoomFactor != 1.0) {
         zoom(zoomComboBox->currentText());
@@ -252,10 +234,6 @@ void  PreviewDialog::previousImage( ) {
         view->setSceneRect(pix->boundingRect());
         imageW = image->size().width();
         imageH = image->size().height();
-
-        if((!this->isMaximized()) && (this->windowState() != 4)) {
-            this->resize(imageW + W, imageH + H);
-        }	
         
         if(zoomFactor != 1.0) {
             zoom(zoomComboBox->currentText());
@@ -347,22 +325,25 @@ bool PreviewDialog::saveAs() {
 }
 
 bool PreviewDialog::saveFile(const QString &fileName) {
-    int w,h;	
-    
-    if(rotation != 0) {
-        QMatrix m;
-        m.rotate( (double)rotation );
-        *image = image->transformed( m,Qt::SmoothTransformation );
-    }
-    
-    w = (int)(imageW*zoomFactor);
-    h = (int)(imageH*zoomFactor);
+    int w = (int)(imageW*zoomFactor);
+    int h = (int)(imageH*zoomFactor);
 
-    if(rotation%180 != 0) {
+    qint16 orientation = 0;
+    bool changedOrientation = false;
+    if (metadataEnabled && saveMetadata) {
+        orientation = metadata->exifOrientation();
+        changedOrientation = (orientation==6 && rotation!=90)
+                                || (orientation==8 && rotation!=-90);
+        if (changedOrientation) {
+            metadata->setExifOrientation(1);
+            orientation = 1;
+        }
+    }
+    if ( (rotation%180 != 0 || orientation==0) && changedOrientation ) {
         int aux = w;
         w = h;
         h = aux;
-    }	
+    }
 
     imageW = w;
     imageH = h;
@@ -371,13 +352,18 @@ bool PreviewDialog::saveFile(const QString &fileName) {
                                      Qt::SmoothTransformation);
 
     if (destImg.save(fileName, 0 ,100)) {
+        if (saveMetadata) {
+            metadata->write(fileName);
+        }
         statusBar->setText(tr("File saved"));
-        rotation = 0;
+        if (!(orientation == 6 || orientation == 8))
+            rotation = 0;
         return true;
     }
     else {
         statusBar->setText(tr("Failed to save image"));
-        rotation = 0;
+        if (!(orientation == 6 || orientation == 8))
+            rotation = 0;
         return false;
     }
 }
@@ -386,7 +372,8 @@ void PreviewDialog::reloadImage(QString imageName) {
     view->resetMatrix();
     scene->removeItem(pix);	
     delete pix;
-    delete image;	
+    delete image;
+    rotation = 0;
 
     imagePath = imageName;	
 
@@ -397,13 +384,13 @@ void PreviewDialog::reloadImage(QString imageName) {
     imageW = image->size().width();
     imageH = image->size().height();
     
-    if((!this->isMaximized()) && (this->windowState() != 4)) {
-        this->resize(imageW + W, imageH + H);
-    }
-    
     if(zoomFactor != 1.0) {
-        zoom("1.0");
+        zoom("100%");
+        int index = zoomComboBox->findText("100%");
+        zoomComboBox->setCurrentIndex(index);
     }
+    if (metadataEnabled)
+        view->repaint();
 }
 
 void PreviewDialog::loadPixmap() {
@@ -419,6 +406,15 @@ void PreviewDialog::loadPixmap() {
     }
     else {
         image->load(imagePath);
+    }
+
+    if (metadataEnabled) {
+        metadata->read(imagePath);
+        qint16 orientation = metadata->exifOrientation();
+        if (orientation==6)
+            rotatecw();
+        else if (orientation==8)
+            rotateccw();
     }
 }
 

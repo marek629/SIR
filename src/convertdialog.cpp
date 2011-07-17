@@ -886,7 +886,9 @@ void ConvertDialog::readSettings() {
     if (numThreads == 0)
         numThreads = OptionsDialog::detectCoresCount();
 
-    saveMetadata = settings.value("metadata",true).toBool();
+    MetadataUtils::setEnabled(settings.value("metadata",true).toBool());
+    saveMetadata = settings.value("saveMetadata",true).toBool();
+    MetadataUtils::setSave(saveMetadata);
     
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
