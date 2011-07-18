@@ -832,7 +832,7 @@ void ConvertDialog::about() {
 }
 
 void ConvertDialog::setOptions() {
-
+    writeWindowProperties();
     OptionsDialog *options = new OptionsDialog(this);
     connect( options, SIGNAL( ok() ), SLOT( readSettings() ) );
     options->exec();

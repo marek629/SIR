@@ -73,12 +73,14 @@ public slots:
     void rotatecw( );
     void rotateccw( );
     void nextImage();
-	void previousImage();
-	void fullScreen();
-	bool save();
-	bool saveAs();    
-	bool saveFile(const QString &fileName);
-	void print();	
-	
+    void previousImage();
+    void fullScreen();
+    bool save();
+    bool saveAs();
+    bool saveFile(const QString &fileName);
+    void print();
+
+protected:
+    virtual void resizeEvent(QResizeEvent *);
 };
 #endif

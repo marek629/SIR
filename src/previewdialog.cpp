@@ -111,8 +111,7 @@ void PreviewDialog::initBar() {
     zoomComboBox->addItem(tr("Fit to window size"));
 
     comboLabel->setFixedSize(22,22);
-    zoomComboBox->setFixedWidth(62);
-    zoomComboBox->setEditable(true);	
+    zoomComboBox->setEditable(true);
     zoomComboBox->setToolTip(tr("Zoom image"));
 
     previousButton->setDefault(false);
@@ -157,7 +156,26 @@ void PreviewDialog::zoom( const QString & text ) {
     QString aux(text);
 
     if (text == tr("Fit to window size")) {
-        view->fitInView(pix,Qt::KeepAspectRatio);
+        double verticalRatio;
+        double horizontalRatio;
+        if (rotation%180 == 0) {
+            verticalRatio = (double) view->width() / imageW;
+            horizontalRatio = (double) view->height() / imageH;
+        } else {
+            verticalRatio = (double) view->width() / imageH;
+            horizontalRatio = (double) view->height() / imageW;
+        }
+        if (verticalRatio < horizontalRatio) {
+            view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+            view->fitInView(pix,Qt::KeepAspectRatio);
+            zoomFactor = (double) (view->width()-8) / imageW;
+            view->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        } else {
+            view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+            view->fitInView(pix,Qt::KeepAspectRatio);
+            zoomFactor = (double) (view->height()-8) / imageH;
+            view->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        }
         return;
     }
 
@@ -200,9 +218,10 @@ void  PreviewDialog::nextImage( ) {
 
     view->resetMatrix();
     imagePath = images->at(++currentImage);
-    scene->removeItem(pix);	
+    scene->removeItem(pix);
     delete pix;
-    delete image;	
+    delete image;
+    rotation = 0;
 
     loadPixmap();
 
@@ -227,6 +246,7 @@ void  PreviewDialog::previousImage( ) {
         scene->removeItem(pix);
         delete pix;
         delete image;
+        rotation = 0;
 
         loadPixmap();
 
@@ -339,7 +359,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
             orientation = 1;
         }
     }
-    if ( (rotation%180 != 0 || orientation==0) && changedOrientation ) {
+    if ( (rotation%180 != 0 && changedOrientation) || orientation==0 ) {
         int aux = w;
         w = h;
         h = aux;
@@ -428,4 +448,10 @@ void PreviewDialog::print() {
         scene->render(&painter);
     }
 
+}
+
+void PreviewDialog::resizeEvent(QResizeEvent *) {
+    QString currentZoomString = zoomComboBox->currentText();
+    if (currentZoomString == tr("Fit to window size"))
+        zoom(currentZoomString);
 }
