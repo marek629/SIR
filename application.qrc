@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/" >
+    <qresource prefix="/">
         <file>images/exit.png</file>
         <file>images/filesave.png</file>
         <file>images/filesaveas.png</file>
@@ -38,5 +38,10 @@
         <file>images/french.png</file>
         <file>images/greek.png</file>
         <file>images/czech.png</file>
+        <file>images/options_raw.png</file>
+        <file>images/options_general.png</file>
+        <file>images/options_metadata.png</file>
+        <file>images/unfavorite.png</file>
+        <file>images/favorite.png</file>
     </qresource>
 </RCC>

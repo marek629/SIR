@@ -33,5 +33,3 @@ SharedInformation::SharedInformation() {
     noEnlargeAll=false;
     enlargeResult=1;
 }
-
-

@@ -36,6 +36,8 @@
 #include "optionsdialog.h"
 #include "languageutils.h"
 
+quint8 OptionsDialog::maxCoresCount = 50;
+
 OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, f) {
     
     setupUi(this);
@@ -66,23 +68,83 @@ OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, 
     completer2->setCaseSensitivity(Qt::CaseInsensitive);
     targetPrefixLineEdit->setCompleter(completer2);
 
+    coresSpinBox->setMaximum(maxCoresCount);
+
     createLanguageMenu();
     createConnections();
+    setupWindow();
     readSettings();
+
+    delete dir;
+    delete completer;
+    delete completer2;
 }
 
 OptionsDialog::~OptionsDialog() {
     delete languages;
+    delete validator;
+    delete fileToNiceName;
+    delete groupBoxes;
 }
 
 void OptionsDialog::createConnections() {
-    connect(browsePushButton, SIGNAL(clicked()), this,
-            SLOT(browseDestination()));
+
+    connect(listWidget, SIGNAL(currentRowChanged(int)),
+            this, SLOT(categoryChanged(int)));
+
+    connect(browsePushButton, SIGNAL(clicked()),
+            this, SLOT(browseDestination()));
+    connect(coresCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(respondCoresSpinBox(bool)));
+
+
+    connect(metadataCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(enableMetadata(bool)));
+
+    connect(exifArtistCheckBox, SIGNAL(toggled(bool)),
+            exifArtistComboBox, SLOT(setEnabled(bool)));
+
+    connect(exifCopyrightCheckBox, SIGNAL(toggled(bool)),
+            exifCopyrightComboBox, SLOT(setEnabled(bool)));
+
+    connect(exifUserCommentCheckBox, SIGNAL(toggled(bool)),
+            exifUserCommentComboBox, SLOT(setEnabled(bool)));
 
     connect(dcrawPushButton, SIGNAL(clicked()), this, SLOT(browseDcraw()));
     connect(rawCheckBox, SIGNAL(stateChanged (int)), SLOT(setRawStatus(int)));
-    connect(coresCheckBox, SIGNAL(toggled(bool)), this, SLOT(respondCoresSpinBox(bool)));
-    connect(metadataCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableMetadata(bool)));
+}
+
+void OptionsDialog::setupWindow() {
+
+    validator = new QRegExpValidator(QRegExp("^[\\00-\\0177]+"),this);
+
+    exifArtistComboBox->setValidator(validator);
+    exifCopyrightComboBox->setValidator(validator);
+
+    QList <int> sizes;
+    sizes.append(120);
+    sizes.append(500);
+    splitter->setSizes(sizes);
+
+    currentListItem = 0;
+    listWidget->setCurrentRow(currentListItem);
+
+    int categoriesCount = listWidget->count();
+    groupBoxes = new QGroupBox* [categoriesCount];
+    groupBoxes[0] = generalBox;
+    groupBoxes[1] = metadataBox;
+    groupBoxes[2] = rawBox;
+    for (int i=0; i<categoriesCount; i++)
+        groupBoxes[i]->hide();
+    groupBoxes[currentListItem]->show();
+}
+
+void OptionsDialog::categoryChanged(int current) {
+    if (current == currentListItem)
+        return;
+    groupBoxes[currentListItem]->hide();
+    groupBoxes[current]->show();
+    currentListItem = current;
 }
 
 void OptionsDialog::browseDestination() {
@@ -183,6 +245,8 @@ void OptionsDialog::writeSettings() {
     else
         settings.setValue("cores", coresSpinBox->value());
 
+    settings.setValue("maxHistoryCount", historySpinBox->value());
+
     settings.setValue("metadata", metadataCheckBox->isChecked());
     settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
 
@@ -215,6 +279,28 @@ void OptionsDialog::writeSettings() {
         emit ok();
         this->close();
     }
+
+    settings.beginGroup("Exif");
+    QMap<QString,QVariant> exifMap;
+    QList<QVariant> exifList;
+
+    settings.setValue("artistOverwrite", exifArtistCheckBox->isChecked());
+    exifArtistComboBox->exportHistory(&exifMap,&exifList,maxHistoryCount);
+    settings.setValue("artistMap", exifMap);
+    settings.setValue("artistList", exifList);
+
+    settings.setValue("copyrightOverwrite", exifCopyrightCheckBox->isChecked());
+    exifCopyrightComboBox->exportHistory(&exifMap,&exifList,maxHistoryCount);
+    settings.setValue("copyrightMap", exifMap);
+    settings.setValue("copyrightList", exifList);
+
+    settings.setValue("userCommentOverwrite",
+                      exifUserCommentCheckBox->isChecked());
+    exifUserCommentComboBox->exportHistory(&exifMap,&exifList,maxHistoryCount);
+    settings.setValue("userCommentMap", exifMap);
+    settings.setValue("userCommentList", exifList);
+
+    settings.endGroup();
 }
 
 void OptionsDialog::readSettings() {
@@ -249,6 +335,9 @@ void OptionsDialog::readSettings() {
         respondCoresSpinBox(false);
     }
 
+    maxHistoryCount = settings.value("maxHistoryCount",5).toInt();
+    historySpinBox->setValue(maxHistoryCount);
+
     metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
     if (!metadataCheckBox->isChecked())
         saveMetadataCheckBox->setEnabled(false);
@@ -261,6 +350,44 @@ void OptionsDialog::readSettings() {
 
     dcrawLineEdit->setText(settings.value("dcrawPath", "/usr/bin/dcraw").toString());
     dcrawOptions->setText(settings.value("dcrawOptions", "").toString());
+
+    settings.endGroup();
+
+    settings.beginGroup("Exif");
+
+    bool exifOverwrite;
+    QMap<QString,QVariant> exifDefaultMap;
+    QList<QVariant> exifDefaultList;
+
+    exifOverwrite = settings.value("artistOverwrite",false).toBool();
+    exifArtistCheckBox->setChecked(exifOverwrite);
+    exifDefaultMap.insert(tr("Camera owner: ; Photographer: "),false);
+    exifArtistComboBox->
+            loadHistory(settings.value("artistMap", exifDefaultMap).toMap(),
+                        settings.value("artistList", exifDefaultList).toList(),
+                        maxHistoryCount);
+    exifArtistComboBox->setEnabled(exifOverwrite);
+
+    exifOverwrite = settings.value("copyrightOverwrite",false).toBool();
+    exifCopyrightCheckBox->setChecked(exifOverwrite);
+    exifDefaultMap.clear();
+    exifDefaultMap.insert(tr("Copyright owner"),false);
+    exifCopyrightComboBox->
+            loadHistory(settings.value("copyrightMap", exifDefaultMap).toMap(),
+                        settings.value("copyrightList", exifDefaultList).toList(),
+                        maxHistoryCount);
+    exifCopyrightComboBox->setEnabled(exifOverwrite);
+
+    exifOverwrite = settings.value("userCommentOverwrite",false).toBool();
+    exifUserCommentCheckBox->setChecked(exifOverwrite);
+    exifDefaultMap.clear();
+    exifDefaultMap.insert(
+                tr("This picture was edited with Simple Image Resizer"),false);
+    exifUserCommentComboBox->
+            loadHistory(settings.value("userCommentMap",exifDefaultMap).toMap(),
+                        settings.value("userCommentList",exifDefaultList).toList(),
+                        maxHistoryCount);
+    exifUserCommentComboBox->setEnabled(exifOverwrite);
 
     settings.endGroup();
 }
@@ -319,11 +446,21 @@ void OptionsDialog::respondCoresSpinBox(bool checked) {
 }
 
 void OptionsDialog::enableMetadata(bool checked) {
-    if (checked)
+    if (checked) {
         saveMetadataCheckBox->setEnabled(true);
+        exifArtistCheckBox->setEnabled(true);
+        exifCopyrightCheckBox->setEnabled(true);
+        exifUserCommentCheckBox->setEnabled(true);
+    }
     else {
         saveMetadataCheckBox->setChecked(false);
         saveMetadataCheckBox->setEnabled(false);
+        exifArtistCheckBox->setChecked(false);
+        exifArtistCheckBox->setEnabled(false);
+        exifCopyrightCheckBox->setChecked(false);
+        exifCopyrightCheckBox->setEnabled(false);
+        exifUserCommentCheckBox->setChecked(false);
+        exifUserCommentCheckBox->setEnabled(false);
     }
 }
 
@@ -333,8 +470,8 @@ quint8 OptionsDialog::detectCoresCount() {
         qDebug("OptionsDialog: cores count detect failed");
         return 1;
     }
-    else if (cores > 50) //coresSpinBox's maximum value
-        return 50;
+    else if (cores > maxCoresCount)
+        return maxCoresCount;
     else
         return (quint8)cores;
 }

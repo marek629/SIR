@@ -24,7 +24,9 @@ SOURCES += src/main.cpp \
     src/rawutils.cpp \
     src/networkutils.cpp \
     src/messagebox.cpp \
-    src/metadatautils.cpp
+    src/metadatautils.cpp \
+    src/historycombobox.cpp \
+    src/historyitemview.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
@@ -42,7 +44,9 @@ HEADERS += src/main.h \
     src/rawutils.h \
     src/networkutils.h \
     src/messagebox.h \
-    src/metadatautils.h
+    src/metadatautils.h \
+    src/historycombobox.h \
+    src/historyitemview.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \

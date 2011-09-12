@@ -917,6 +917,30 @@ void ConvertDialog::readSettings() {
 
     retranslateStrings();
     settings.endGroup();
+
+
+    settings.beginGroup("Exif");
+    bool exifOverwrite;
+
+    exifOverwrite = settings.value("artistOverwrite",false).toBool();
+    MetadataUtils::setOverwriteExifArtist(exifOverwrite);
+    if (exifOverwrite)
+        MetadataUtils::setStringExifArtist(
+                    settings.value("artistMap").toMap().keys().first() );
+
+    exifOverwrite = settings.value("copyrightOverwrite",false).toBool();
+    MetadataUtils::setOverwriteExifCopyright(exifOverwrite);
+    if (exifOverwrite)
+        MetadataUtils::setStringExifCopyright(
+                    settings.value("copyrightMap").toMap().keys().first() );
+
+    exifOverwrite = settings.value("userCommentOverwrite",false).toBool();
+    MetadataUtils::setOverwriteExifUserComment(exifOverwrite);
+    if (exifOverwrite)
+        MetadataUtils::setStringExifUserComment(
+                    settings.value("userCommentMap").toMap().keys().first() );
+
+    settings.endGroup();
 }
 
 void ConvertDialog::changeEvent(QEvent *e) {
