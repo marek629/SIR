@@ -357,14 +357,13 @@ void OptionsDialog::readSettings() {
 
     bool exifOverwrite;
     QMap<QString,QVariant> exifDefaultMap;
-    QList<QVariant> exifDefaultList;
 
     exifOverwrite = settings.value("artistOverwrite",false).toBool();
     exifArtistCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.insert(tr("Camera owner: ; Photographer: "),false);
     exifArtistComboBox->
-            loadHistory(settings.value("artistMap", exifDefaultMap).toMap(),
-                        settings.value("artistList", exifDefaultList).toList(),
+            loadHistory(settings.value("artistMap",exifDefaultMap).toMap(),
+                        settings.value("artistList").toList(),
                         maxHistoryCount);
     exifArtistComboBox->setEnabled(exifOverwrite);
 
@@ -373,8 +372,8 @@ void OptionsDialog::readSettings() {
     exifDefaultMap.clear();
     exifDefaultMap.insert(tr("Copyright owner"),false);
     exifCopyrightComboBox->
-            loadHistory(settings.value("copyrightMap", exifDefaultMap).toMap(),
-                        settings.value("copyrightList", exifDefaultList).toList(),
+            loadHistory(settings.value("copyrightMap",exifDefaultMap).toMap(),
+                        settings.value("copyrightList").toList(),
                         maxHistoryCount);
     exifCopyrightComboBox->setEnabled(exifOverwrite);
 
@@ -385,7 +384,7 @@ void OptionsDialog::readSettings() {
                 tr("This picture was edited with Simple Image Resizer"),false);
     exifUserCommentComboBox->
             loadHistory(settings.value("userCommentMap",exifDefaultMap).toMap(),
-                        settings.value("userCommentList",exifDefaultList).toList(),
+                        settings.value("userCommentList").toList(),
                         maxHistoryCount);
     exifUserCommentComboBox->setEnabled(exifOverwrite);
 

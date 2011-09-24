@@ -21,7 +21,7 @@
 *
 */
 
-#define VERSION "2.1.1"
+#define VERSION "2.2.0alpha"
 #define NOTCONVERTED 1
 #define CONVERTED 2
 #define SKIPPED 3

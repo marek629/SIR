@@ -56,14 +56,14 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->setModal(true);
 
     rawEnabled = RawUtils::isRawEnabled();
-    metadataEnabled = MetadataUtils::isEnabled();
-    saveMetadata = MetadataUtils::isSave();
+    metadataEnabled = MetadataUtils::Metadata::isEnabled();
+    saveMetadata = MetadataUtils::Metadata::isSave();
     initBar();
     createConnections();
     rotation = 0;
 
     if (metadataEnabled)
-        metadata = new MetadataUtils();
+        metadata = new MetadataUtils::Metadata();
 
     loadPixmap();
 
@@ -84,6 +84,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
 
 PreviewDialog::~PreviewDialog() {
     delete scene;
+    delete images;
     if (metadataEnabled)
         delete metadata;
 }
@@ -351,11 +352,11 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     qint16 orientation = 0;
     bool changedOrientation = false;
     if (metadataEnabled && saveMetadata) {
-        orientation = metadata->exifOrientation();
+        orientation = metadata->ptrExifStruct()->orientation;
         changedOrientation = (orientation==6 && rotation!=90)
                                 || (orientation==8 && rotation!=-90);
         if (changedOrientation) {
-            metadata->setExifOrientation(1);
+            metadata->ptrExifStruct()->orientation = 1;
             orientation = 1;
         }
     }
@@ -373,7 +374,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
 
     if (destImg.save(fileName, 0 ,100)) {
         if (saveMetadata) {
-            metadata->write(fileName);
+            metadata->write(fileName, (const QImage&)destImg);
         }
         statusBar->setText(tr("File saved"));
         if (!(orientation == 6 || orientation == 8))
@@ -430,7 +431,7 @@ void PreviewDialog::loadPixmap() {
 
     if (metadataEnabled) {
         metadata->read(imagePath);
-        qint16 orientation = metadata->exifOrientation();
+        char orientation = metadata->ptrExifStruct()->orientation;
         if (orientation==6)
             rotatecw();
         else if (orientation==8)

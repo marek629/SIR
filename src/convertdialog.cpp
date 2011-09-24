@@ -30,6 +30,7 @@
 #include "rawutils.h"
 #include "networkutils.h"
 #include "messagebox.h"
+#include "metadatadialog.h"
 #include <QString>
 #include <QDropEvent>
 #include <QMenu>
@@ -49,6 +50,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QWindowStateChangeEvent>
+
 #include <QDebug>
 
 ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
@@ -67,7 +69,12 @@ ConvertDialog::~ConvertDialog() {
     writeWindowProperties();
     delete statusList;
     delete appTranslator;
-    if(net) delete net;
+    if(net)
+        delete net;
+    delete convertAction;
+    delete removeAction;
+    delete previewAction;
+    delete metadataAction;
 }
 
 void ConvertDialog::createConnections() {
@@ -107,6 +114,25 @@ void ConvertDialog::createConnections() {
     connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
     connect(actionRemoveAll, SIGNAL(triggered()), SLOT(removeAll()));
     
+}
+
+void ConvertDialog::createActions()
+{
+    removeAction = new QAction(tr("Remove Selected"), this);
+    removeAction->setStatusTip(tr("Remove selected images"));
+    connect(removeAction, SIGNAL(triggered()), this, SLOT(removeSelectedFromList()));
+
+    convertAction = new QAction(tr("Convert Selected"), this);
+    convertAction->setStatusTip(tr("Convert selected images"));
+    connect(convertAction, SIGNAL(triggered()), this, SLOT(convertSelected()));
+
+    previewAction = new QAction(tr("Show Image"), this);
+    previewAction->setStatusTip(tr("Show preview selected image"));
+    connect(previewAction, SIGNAL(triggered()), this, SLOT(previewAct()));
+
+    metadataAction = new QAction(tr("Show Metadata"), this);
+    metadataAction->setStatusTip(tr("Show metadata of selected image"));
+    connect(metadataAction, SIGNAL(triggered()), this, SLOT(showMetadata()));
 }
 
 void ConvertDialog::checkUpdates() {
@@ -291,8 +317,8 @@ void ConvertDialog::init() {
     destPrefixEdit->setCompleter(completer2);
     
     convertProgressBar->setValue(0);
-    filesTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
     createConnections();
+    createActions();
 	
 	converting = false;
 }
@@ -701,26 +727,24 @@ void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
 
     Q_UNUSED(col);
     
-    QString imagePath;
+    QString imagePath = makeImagePath(item);
     int index;
-    QStringList *list;
-    list = makeList();
-    
-    if (!item->text(2).endsWith("/")) {
-        imagePath = item->text(2) + QDir::separator() +item->text(0) + ".";
-        imagePath += item->text(1);
-    }
-    else {
-        imagePath = item->text(2) +item->text(0) + "." +item->text(1);
-    }
-    
-    imagePath = QDir::fromNativeSeparators(imagePath);
+    QStringList *list = makeList();
     
     QRegExp exp(imagePath);
     index = list->indexOf(exp,0);
     previewForm = new PreviewDialog(this, list, index);
     previewForm->show();
-    
+}
+
+void ConvertDialog::showMetadata()
+{
+    QStringList *list = makeList();
+    QRegExp exp( makeImagePath(treeMenuItem) );
+    int index = list->indexOf(exp,0);
+
+    metadataForm = new MetadataDialog(this, list, index);
+    metadataForm->show();
 }
 
 void ConvertDialog::initList() {
@@ -801,24 +825,22 @@ void ConvertDialog::verify(int status) {
 
 void ConvertDialog::showMenu(const QPoint & point) {
 
-    QAction *convert, *remove;
-    QTreeWidgetItem *item = filesTreeView->itemAt(point);
-                            
-    if (item) {
-        convert = new QAction(tr("Convert Selected"), this);
-        convert->setStatusTip(tr("Convert the selected images"));
-        connect(convert, SIGNAL(triggered()), this, SLOT(convertSelected()));
-        remove = new QAction(tr("Remove Selected"), this);
-        remove->setStatusTip(tr("Remove the selected images"));
+    treeMenuItem = filesTreeView->itemAt(point);
 
-        connect(remove, SIGNAL(triggered()), this,
-                SLOT(removeSelectedFromList()));
-
+    if (treeMenuItem) {
         QMenu contextMenu(this);
-        contextMenu.addAction(convert);
-        contextMenu.addAction(remove);
+        contextMenu.addAction(previewAction);
+        contextMenu.addAction(metadataAction);
+        contextMenu.addSeparator();
+        contextMenu.addAction(convertAction);
+        contextMenu.addAction(removeAction);
         contextMenu.exec(QCursor::pos());
     }
+}
+
+void ConvertDialog::previewAct()
+{
+    showPreview(treeMenuItem, 0);
 }
 
 void ConvertDialog::about() {
@@ -886,9 +908,9 @@ void ConvertDialog::readSettings() {
     if (numThreads == 0)
         numThreads = OptionsDialog::detectCoresCount();
 
-    MetadataUtils::setEnabled(settings.value("metadata",true).toBool());
+    MetadataUtils::Metadata::setEnabled(settings.value("metadata",true).toBool());
     saveMetadata = settings.value("saveMetadata",true).toBool();
-    MetadataUtils::setSave(saveMetadata);
+    MetadataUtils::Metadata::setSave(saveMetadata);
     
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
@@ -923,21 +945,21 @@ void ConvertDialog::readSettings() {
     bool exifOverwrite;
 
     exifOverwrite = settings.value("artistOverwrite",false).toBool();
-    MetadataUtils::setOverwriteExifArtist(exifOverwrite);
+    MetadataUtils::Exif::setArtistOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::setStringExifArtist(
+        MetadataUtils::Exif::setArtistString(
                     settings.value("artistMap").toMap().keys().first() );
 
     exifOverwrite = settings.value("copyrightOverwrite",false).toBool();
-    MetadataUtils::setOverwriteExifCopyright(exifOverwrite);
+    MetadataUtils::Exif::setCopyrightOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::setStringExifCopyright(
+        MetadataUtils::Exif::setCopyrightString(
                     settings.value("copyrightMap").toMap().keys().first() );
 
     exifOverwrite = settings.value("userCommentOverwrite",false).toBool();
-    MetadataUtils::setOverwriteExifUserComment(exifOverwrite);
+    MetadataUtils::Exif::setUserCommentOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::setStringExifUserComment(
+        MetadataUtils::Exif::setUserCommentString(
                     settings.value("userCommentMap").toMap().keys().first() );
 
     settings.endGroup();
@@ -985,6 +1007,20 @@ QStringList * ConvertDialog::makeList() {
     }
     
     return list;
+}
+
+QString ConvertDialog::makeImagePath(QTreeWidgetItem *item)
+{
+    QString imagePath;
+    if (!item->text(2).endsWith("/")) {
+        imagePath = item->text(2) + QDir::separator() +item->text(0) + ".";
+        imagePath += item->text(1);
+    }
+    else {
+        imagePath = item->text(2) +item->text(0) + "." +item->text(1);
+    }
+
+    return QDir::fromNativeSeparators(imagePath);
 }
 
 void ConvertDialog::updateTree() {

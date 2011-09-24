@@ -42,6 +42,7 @@ class QTranslator;
 class NetworkUtils;
 class QPoint;
 class QSize;
+class MetadataDialog;
 
 class ConvertDialog : public QMainWindow, private Ui::ConvertDialog {
 		Q_OBJECT
@@ -60,6 +61,7 @@ private:
     void initList();
     void init();
     void createConnections();
+    void createActions();
     void createRawFilesList();
     void questionOverwrite(QueryData data);
     void questionEnlarge(QueryData data);
@@ -74,8 +76,10 @@ private:
     QStringList rawFormats;
     QString lastDir;
     PreviewDialog  *previewForm;
+    MetadataDialog *metadataForm;
     quint8 numThreads;
     QStringList *makeList();
+    QString makeImagePath(QTreeWidgetItem *item);
     QTranslator *appTranslator;
     QMap<QString, int>  *statusList;
     int convertedImages;
@@ -88,9 +92,14 @@ private:
     QPoint windowPossition;
     QSize windowSize;
     bool saveMetadata;
+    QAction *removeAction;
+    QAction *convertAction;
+    QAction *previewAction;
+    QAction *metadataAction;
+    QTreeWidgetItem *treeMenuItem;
 
 protected:
-    void changeEvent(QEvent *e);
+    virtual void changeEvent(QEvent *e);
 
 public slots:
 	virtual void browseDestination();
@@ -102,6 +111,7 @@ public slots:
 	virtual void convertSelected();
 	virtual void verify();
 	virtual void showPreview(QTreeWidgetItem *item, int col);
+    virtual void showMetadata();
 	virtual void showMenu( const QPoint & point);
 	virtual void verify(int status);
 	virtual void about();
@@ -120,6 +130,7 @@ public slots:
     virtual void showUpdateResult(QString *result, bool error);
     virtual void sendInstall();
     virtual void showSendInstallResult(QString *result, bool error);
+    void previewAct();
 };
 
 void ConvertDialog::writeWindowProperties() {

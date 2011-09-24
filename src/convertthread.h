@@ -83,7 +83,7 @@ private:
     QWaitCondition overwriteCondition;
     QMutex enlargeMutex;
     QWaitCondition enlargeCondition;
-    MetadataUtils metadata;
+    MetadataUtils::Metadata metadata;
 };
 
 

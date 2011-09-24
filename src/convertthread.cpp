@@ -251,7 +251,7 @@ void ConvertThread::run() {
 
                 if (destImg.save(targetFile, 0, quality)) {
                     if (ConvertThread::shared->saveMetadata)
-                        metadata.write(targetFile);
+                        metadata.write(targetFile, destImg);
                     emit imageStatus(imageData, tr("Converted"), CONVERTED);
                 }
                 else
@@ -269,7 +269,7 @@ void ConvertThread::run() {
         else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFile, 0, quality)) {
                 if (ConvertThread::shared->saveMetadata)
-                    metadata.write(targetFile);
+                    metadata.write(targetFile, destImg);
                 emit imageStatus(imageData, tr("Converted"), CONVERTED);
             }
             else

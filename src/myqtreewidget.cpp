@@ -29,6 +29,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QImageWriter>
+#include <QMenu>
 
 myQTreeWidget::myQTreeWidget(QWidget *parent):QTreeWidget(parent) {
     QList<QString> itemList;
@@ -45,7 +46,7 @@ myQTreeWidget::myQTreeWidget(QWidget *parent):QTreeWidget(parent) {
     setSortingEnabled(true);
     sortItems(0,Qt::AscendingOrder);
     setAcceptDrops(true);
-
+    setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 void myQTreeWidget::keyPressEvent( QKeyEvent *k ) {
@@ -143,5 +144,3 @@ void myQTreeWidget::dropEvent(QDropEvent *event) {
     }
 		
 }
-
-

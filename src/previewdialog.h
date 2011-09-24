@@ -32,7 +32,10 @@ class QPixmap;
 class QStringList;
 class QGraphicsPixmapItem;
 class QKeyEvent;
-class MetadataUtils;
+namespace MetadataUtils
+{
+    class Metadata;
+}
 
 class PreviewDialog : public QDialog, public Ui::PreviewDialog {
     Q_OBJECT
@@ -64,7 +67,7 @@ private:
     bool rawEnabled;
     bool metadataEnabled;
     bool saveMetadata;
-    MetadataUtils* metadata;
+    MetadataUtils::Metadata* metadata;
 
 public slots:
 

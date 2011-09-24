@@ -2,6 +2,9 @@
 #include <QMessageBox>
 #include <QLineEdit>
 #include <QList>
+#include <QAbstractItemView>
+#include <QAction>
+#include <QMenu>
 
 #include <QDebug>
 
@@ -10,19 +13,42 @@ HistoryComboBox::HistoryComboBox(QWidget *parent) :
 {
     setInsertPolicy(QComboBox::InsertAtTop);
     setEditable(true);
+
     line_edit = lineEdit();
     line_edit->disconnect(this);
     connect(line_edit,SIGNAL(returnPressed()),this,SLOT(prependText()));
+
+    view()->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(view(), SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(showMenu(QPoint)));
     connectPromoteItem();
-    itemView = new HistoryItemView(this);
-    setView((QAbstractItemView*)itemView);
+
     favIcon = QIcon(":/images/favorite.png");
     unfavIcon = QIcon(":/images/unfavorite.png");
+    createActions();
 }
 
 HistoryComboBox::~HistoryComboBox()
 {
-    delete itemView;
+    delete favAction;
+    delete rmAction;
+    delete clearAction;
+    delete surviveAction;
+}
+
+void HistoryComboBox::createActions()
+{
+    favAction = new QAction(this);
+    connect(favAction, SIGNAL(triggered()), this, SLOT(favoriteAct()));
+
+    rmAction = new QAction(tr("Remove item"), this);
+    connect(rmAction, SIGNAL(triggered()), this, SLOT(removeAct()));
+
+    clearAction = new QAction("Clear text history", this);
+    connect(clearAction, SIGNAL(triggered()), this, SLOT(clearAct()));
+
+    surviveAction = new QAction("Survive only favorites", this);
+    connect(surviveAction, SIGNAL(triggered()), this, SLOT(surviveAct()));
 }
 
 void HistoryComboBox::prependText()
@@ -44,7 +70,9 @@ void HistoryComboBox::prependText()
     }
     else
         QMessageBox::information(this, tr("Full text history - SIR"),
-                                 tr("Text history memory is full of favorite items.\nSIR can't automatically remove favorite item. Do it manually.")
+                                 tr("Text history memory is full of favorite items.\n" \
+                                    "SIR can't automatically remove favorite item. " \
+                                    "Do it manually.")
                                  );
 }
 
@@ -61,6 +89,30 @@ bool HistoryComboBox::removeFromEnd()
         i--;
     }
     return false;
+}
+
+void HistoryComboBox::showMenu(const QPoint &point)
+{
+    listViewRow = view()->indexAt(point).row();
+
+    if (itemData(listViewRow).toBool())
+    {
+        favAction->setText(tr("Throw away from favorite"));
+        favAction->setIcon(unfavIcon);
+    }
+    else
+    {
+        favAction->setText(tr("Mark as favorite"));
+        favAction->setIcon(favIcon);
+    }
+
+    QMenu menu(this);
+    menu.addAction(favAction);
+    menu.addAction(rmAction);
+    menu.addAction(surviveAction);
+    menu.addAction(clearAction);
+
+    menu.exec(QCursor::pos());
 }
 
 void HistoryComboBox::promoteItem(int i)
@@ -82,18 +134,17 @@ void HistoryComboBox::promoteItem(int i)
 
 void HistoryComboBox::favoriteAct()
 {
-    int i = itemView->contexIndex();
-    bool b = (! itemData(i).toBool() );
-    setItemData(i,b);
+    bool b = (! itemData(listViewRow).toBool() );
+    setItemData(listViewRow,b);
     if (b)
-        setItemIcon(i,favIcon);
+        setItemIcon(listViewRow,favIcon);
     else
-        setItemIcon(i,unfavIcon);
+        setItemIcon(listViewRow,unfavIcon);
 }
 
 void HistoryComboBox::removeAct()
 {
-    removeItem(itemView->contexIndex());
+    removeItem(listViewRow);
     hidePopup();
     if (count() > 0)
         showPopup();
@@ -139,14 +190,19 @@ void HistoryComboBox::loadHistory(const QMap<QString, QVariant> &currentMap,
             icon = unfavIcon;
         insertItem(i,icon,text,QVariant(value));
     }
-    text = currentMap.keys().first();
-    value = currentMap.value(text,false).toBool();
-    if (value)
-        icon = favIcon;
+    if (!currentMap.isEmpty())
+    {
+        text = currentMap.keys().first();
+        value = currentMap.value(text,false).toBool();
+        if (value)
+            icon = favIcon;
+        else
+            icon = unfavIcon;
+        insertItem(0,icon,text,QVariant(value));
+        setCurrentIndex(0);
+    }
     else
-        icon = unfavIcon;
-    insertItem(0,icon,text,QVariant(value));
-    setCurrentIndex(0);
+        setCurrentIndex(-1);
 
     connectPromoteItem();
 }
@@ -158,7 +214,12 @@ void HistoryComboBox::exportHistory(QMap<QString, QVariant> *currentMap,
     currentMap->clear();
     currentMap->insert( currentText(), itemData(currentIndex()).toBool() );
 
-    int skip = maxCount() - newMaxCount;
+    int skip;
+    if (newMaxCount == -1)
+        skip = 0;
+    else
+        skip = maxCount() - newMaxCount;
+
     for (int i=maxCount()-1; i>=0 && skip>0; i--)
     {
         if (!itemData(i).toBool())

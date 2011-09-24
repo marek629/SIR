@@ -32,18 +32,19 @@ class QDragMoveEvent;
 
 class myQTreeWidget : public QTreeWidget {
 
-    Q_OBJECT
+Q_OBJECT
 	
-    public:
-        myQTreeWidget(QWidget *parent = 0);
-        void keyPressEvent( QKeyEvent *k );
-        void dropEvent(QDropEvent *event);
-        void dragEnterEvent(QDragEnterEvent *event);
-        void dragMoveEvent(QDragMoveEvent *event);
+public:
+    myQTreeWidget(QWidget *parent = 0);
 
-    signals:
-        void changed();
+protected:
+    virtual void keyPressEvent( QKeyEvent *k );
+    virtual void dropEvent(QDropEvent *event);
+    virtual void dragEnterEvent(QDragEnterEvent *event);
+    virtual void dragMoveEvent(QDragMoveEvent *event);
 
+signals:
+    void changed();
 };
 
 #endif

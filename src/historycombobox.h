@@ -2,7 +2,6 @@
 #define HISTORYCOMBOBOX_H
 
 #include <QComboBox>
-#include "historyitemview.h"
 
 template <typename T> class QList;
 
@@ -18,13 +17,18 @@ public:
                      int maxCount);
     void exportHistory(QMap<QString,QVariant> *currentMap,
                        QList<QVariant > *historyList,
-                       int newMaxCount);
+                       int newMaxCount = -1);
 
 private:
+    void createActions();
     QLineEdit *line_edit;
-    HistoryItemView *itemView;
     QIcon favIcon;
     QIcon unfavIcon;
+    int listViewRow;
+    QAction *favAction;
+    QAction *rmAction;
+    QAction *clearAction;
+    QAction *surviveAction;
 
 signals:
 
@@ -35,6 +39,7 @@ public slots:
     void removeAct();
     void clearAct();
     void surviveAct();
+    void showMenu(const QPoint&);
 
 protected:
     inline bool connectPromoteItem();

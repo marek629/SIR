@@ -80,9 +80,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>408</width>
-         <height>700</height>
+         <y>-299</y>
+         <width>407</width>
+         <height>705</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -343,34 +343,49 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="exifArtistCheckBox">
-             <property name="text">
+            <widget class="QGroupBox" name="exifArtistCheckBox">
+             <property name="title">
               <string>Overwrite Exif Artist</string>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="HistoryComboBox" name="exifArtistComboBox"/>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
-            <widget class="HistoryComboBox" name="exifArtistComboBox"/>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="exifCopyrightCheckBox">
-             <property name="text">
+            <widget class="QGroupBox" name="exifCopyrightCheckBox">
+             <property name="title">
               <string>Overwrite Exif Copyright</string>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="HistoryComboBox" name="exifCopyrightComboBox"/>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
-            <widget class="HistoryComboBox" name="exifCopyrightComboBox"/>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="exifUserCommentCheckBox">
-             <property name="text">
+            <widget class="QGroupBox" name="exifUserCommentCheckBox">
+             <property name="title">
               <string>Overwrite Exif User Comment</string>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <widget class="HistoryComboBox" name="exifUserCommentComboBox"/>
+              </item>
+             </layout>
             </widget>
-           </item>
-           <item>
-            <widget class="HistoryComboBox" name="exifUserCommentComboBox"/>
            </item>
           </layout>
          </widget>
