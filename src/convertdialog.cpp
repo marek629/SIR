@@ -824,7 +824,7 @@ void ConvertDialog::showMenu(const QPoint & point) {
 void ConvertDialog::about() {
 
     AboutDialog *about = new AboutDialog();
-    about->setVersion( QString("Version ")+VERSION );
+    about->setVersion( tr("Version ")+VERSION );
     //about->retranslateUi(about);
     about->exec();
     delete about;
