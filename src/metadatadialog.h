@@ -6,6 +6,7 @@
 namespace MetadataUtils
 {
     class Metadata;
+    struct ExifStruct;
 }
 class QStringList;
 class QString;
@@ -22,13 +23,15 @@ public:
 private:
     void setupValues();
     MetadataUtils::Metadata *metadata;
+    MetadataUtils::ExifStruct *exifStruct;
     QStringList *images;
     QString imagePath;
     int currentImage;
 
 signals:
 
-public slots:
+private slots:
+    void saveChanges();
 
 };
 

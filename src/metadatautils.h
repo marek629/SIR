@@ -1,41 +1,50 @@
 #ifndef METADATA_H
 #define METADATA_H
 
-#include <exiv2/exiv2.hpp>
 #include "metadata/exif.h"
+#include "metadata/string.h"
+#include <QObject>
 #include <QImage>
-
-#define EXIF_STD_VERSION "0220"
-
-class QString;
+#include <exiv2/exiv2.hpp>
 
 namespace MetadataUtils
 {
-    class Metadata
+    class Metadata : public QObject
     {
+        Q_OBJECT
     public:
         Metadata();
-        void read(const QString& path);
-        void write(const QString& path, const QImage& image = QImage());
+
+        // Read metadata and (optionaly) setup exif struct.
+        // If you would like use any metadata structs, like exif struct type setupStructs as true.
+        bool read(const String& path, bool setupStructs = false);
+        bool read(const QString& path, bool setupStructs = false);
+
+        bool write(const String& path, const QImage& image = QImage());
+        bool write(const QString& path, const QImage& image = QImage());
+        void setExifData();
         void setExifStruct();
+        void setExifDatum(const std::string &key1, const std::string &key2, int value);
+        void setExifDatum(const std::string &key1, const std::string &key2, Exiv2::Rational value);
+        void setExifDatum(const std::string &key1, const std::string &key2,
+                          const std::string &value);
+        static Exiv2::Rational shortRational(int integer);
         MetadataUtils::ExifStruct *ptrExifStruct() { return &exifStruct; }
+        Exiv2::Error *ptrLastError() const { return lastError; }
         static void setEnabled(bool);
         static bool isEnabled();
         static void setSave(bool);
         static bool isSave();
-        static const QString &noData();
+
 
     private:
-        std::string nativeStdString(const QString& path) const;
-        QString stringFloat2(const Exiv2::Metadatum &datum);
-        void appendString(QString *str, const QString &add = "");
         Exiv2::Image::AutoPtr image;
         Exiv2::ExifData exifData;
         Exiv2::IptcData iptcData;
         Exiv2::XmpData xmpData;
+        Exiv2::Error* lastError;
         static bool enabled;
         static bool save;
-        static QString noData_;
         MetadataUtils::ExifStruct exifStruct;
     };
 }

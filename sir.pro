@@ -27,7 +27,10 @@ SOURCES += src/main.cpp \
     src/metadatautils.cpp \
     src/historycombobox.cpp \
     src/metadata/exif.cpp \
-    src/metadatadialog.cpp
+    src/metadatadialog.cpp \
+    src/timecombobox.cpp \
+    src/metadata/string.cpp \
+    src/application.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
@@ -49,7 +52,10 @@ HEADERS += src/main.h \
     src/metadatautils.h \
     src/historycombobox.h \
     src/metadata/exif.h \
-    src/metadatadialog.h
+    src/metadatadialog.h \
+    src/timecombobox.h \
+    src/metadata/string.h \
+    src/application.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \
@@ -81,6 +87,16 @@ RC_FILE = windows/res.rc
 
 OTHER_FILES += \
     TODO
+
+
+
+
+
+
+
+
+
+
 
 
 

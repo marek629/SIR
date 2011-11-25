@@ -374,7 +374,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
 
     if (destImg.save(fileName, 0 ,100)) {
         if (saveMetadata) {
-            metadata->write(fileName, (const QImage&)destImg);
+            metadata->write(fileName, destImg.toImage());
         }
         statusBar->setText(tr("File saved"));
         if (!(orientation == 6 || orientation == 8))
@@ -416,26 +416,47 @@ void PreviewDialog::reloadImage(QString imageName) {
 
 void PreviewDialog::loadPixmap() {
     image = new QPixmap();
+    bool readSuccess;
 
     if(rawEnabled) {
         if(RawUtils::isRaw(imagePath)) {
             image = RawUtils::loadRawPixmap(imagePath);
+            readSuccess = image;
         }
         else {
-            image->load(imagePath);
+            readSuccess = image->load(imagePath);
         }
     }
     else {
-        image->load(imagePath);
+        readSuccess = image->load(imagePath);
     }
 
+    bool metadataReadError = false;
     if (metadataEnabled) {
-        metadata->read(imagePath);
-        char orientation = metadata->ptrExifStruct()->orientation;
-        if (orientation==6)
-            rotatecw();
-        else if (orientation==8)
-            rotateccw();
+        if (metadata->read(imagePath,true)) {
+            char orientation = metadata->ptrExifStruct()->orientation;
+            if (orientation==6)
+                rotatecw();
+            else if (orientation==8)
+                rotateccw();
+        }
+        else
+            metadataReadError = true;
+    }
+
+    QString errorTitle;
+    QString errorMessage;
+    if (!readSuccess) {
+        errorTitle = tr("Image file error");
+        errorMessage = tr("Load image %1 failed").arg(imagePath);
+        QMessageBox::critical(this, errorTitle, errorMessage);
+    }
+    else if (metadataReadError) {
+        errorTitle = tr("Metadata error");
+        const Exiv2::Error *e = metadata->ptrLastError();
+        errorMessage = QString::fromUtf8(e->what()) +"\n"+
+                    tr("Error code: ")+QString::number(e->code());
+        QMessageBox::critical(this, errorTitle, errorMessage);
     }
 }
 

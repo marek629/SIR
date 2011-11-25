@@ -232,22 +232,22 @@
                  </item>
                  <item>
                   <property name="text">
-                   <string>Counterclockwise rotation, horizontaly mirror</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Counterclockwise rotation</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
                    <string>Clockwise rotation, horizontaly mirror</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
                    <string>Clockwise rotation</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Counterclockwise rotation, horizontaly mirror</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Counterclockwise rotation</string>
                   </property>
                  </item>
                 </widget>
@@ -459,7 +459,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="exifExpTimeComboBox">
+                <widget class="TimeComboBox" name="exifExpTimeComboBox">
                  <item>
                   <property name="text">
                    <string>1/2000 s</string>
@@ -720,18 +720,27 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_12">
-                 <property name="text">
-                  <string>Shutter speed</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QLabel" name="label_4">
                  <property name="text">
                   <string>ISO Speed</string>
                  </property>
                 </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -748,240 +757,6 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="exifShutterSpeedComboBox">
-                 <item>
-                  <property name="text">
-                   <string>1/2000 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/1600 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/1250 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/1000 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/800 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/640 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/500 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/400 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/320 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/250 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/200 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/160 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/125 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/100 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/80 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/60 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/50 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/40 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/30 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/25 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/20 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/15 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/13 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/10 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/8 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/6 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/4 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/2 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>4/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1 1/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1 2/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2 1/2 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>3 1/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>4 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>6 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>8 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>10 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>13 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>15 s</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item>
                 <widget class="QSpinBox" name="exifIsoSpeedSpinBox">
                  <property name="maximum">
                   <number>10000</number>
@@ -990,6 +765,22 @@
                   <number>50</number>
                  </property>
                 </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_7">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -1034,7 +825,7 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>Normal program</string>
+                  <string>Auto</string>
                  </property>
                 </item>
                 <item>
@@ -1354,6 +1145,11 @@
    <class>HistoryComboBox</class>
    <extends>QComboBox</extends>
    <header>historycombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TimeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>timecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

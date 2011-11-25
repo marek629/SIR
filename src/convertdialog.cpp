@@ -737,8 +737,7 @@ void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
     previewForm->show();
 }
 
-void ConvertDialog::showMetadata()
-{
+void ConvertDialog::showMetadata() {
     QStringList *list = makeList();
     QRegExp exp( makeImagePath(treeMenuItem) );
     int index = list->indexOf(exp,0);
@@ -834,6 +833,7 @@ void ConvertDialog::showMenu(const QPoint & point) {
         contextMenu.addSeparator();
         contextMenu.addAction(convertAction);
         contextMenu.addAction(removeAction);
+        contextMenu.setDefaultAction(previewAction);
         contextMenu.exec(QCursor::pos());
     }
 }
@@ -947,20 +947,20 @@ void ConvertDialog::readSettings() {
     exifOverwrite = settings.value("artistOverwrite",false).toBool();
     MetadataUtils::Exif::setArtistOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::Exif::setArtistString(
-                    settings.value("artistMap").toMap().keys().first() );
+        MetadataUtils::Exif::setArtistString( MetadataUtils::String(
+                    settings.value("artistMap").toMap().keys().first() ) );
 
     exifOverwrite = settings.value("copyrightOverwrite",false).toBool();
     MetadataUtils::Exif::setCopyrightOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::Exif::setCopyrightString(
-                    settings.value("copyrightMap").toMap().keys().first() );
+        MetadataUtils::Exif::setCopyrightString( MetadataUtils::String(
+                    settings.value("copyrightMap").toMap().keys().first() ) );
 
     exifOverwrite = settings.value("userCommentOverwrite",false).toBool();
     MetadataUtils::Exif::setUserCommentOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::Exif::setUserCommentString(
-                    settings.value("userCommentMap").toMap().keys().first() );
+        MetadataUtils::Exif::setUserCommentString( MetadataUtils::String(
+                    settings.value("userCommentMap").toMap().keys().first() ) );
 
     settings.endGroup();
 }

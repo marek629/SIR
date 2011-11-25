@@ -1,64 +1,83 @@
 #ifndef EXIF_H
 #define EXIF_H
 
-#include <QString>
+#include "string.h"
 #include <QPixmap>
 
 namespace MetadataUtils
 {
+    class String;
     class Exif
     {
     public:
+        static QString flashString(short);
+        static short flashShort(const QString&);
         static void setVersionKnown(bool);
         static bool isVersionKnown();
         static void setArtistOverwrite(bool);
         static bool isArtistOverwrite();
-        static void setArtistString(const QString&);
-        static QString stringArtist();
+        static void setArtistString(const String&);
+        static String stringArtist();
         static void setCopyrightOverwrite(bool);
         static bool isCopyrightOverwrite();
-        static void setCopyrightString(const QString&);
-        static QString stringCopyright();
+        static void setCopyrightString(const String&);
+        static String stringCopyright();
         static void setUserCommentOverwrite(bool);
         static bool isUserCommentOverwrite();
-        static void setUserCommentString(const QString&);
-        static QString stringUserComment();
+        static void setUserCommentString(const String&);
+        static String stringUserComment();
 
     private:
         static bool versionKnown;
         static bool artistOverwrite;
-        static QString artistString;
+        static String artistString;
         static bool copyrightOverwrite;
-        static QString copyrightString;
+        static String copyrightString;
         static bool userCommentOverwrite;
-        static QString userCommentString;
+        static String userCommentString;
     };
 
     struct ExifStruct
-    {
-        QString version;
-        QString processingSoftware;
-        QString imageWidth;
-        QString imageHeight;
+    {   // Image section
+        String version;
+        String processingSoftware;
+        String imageWidth;
+        String imageHeight;
         char orientation;
-        QString originalDate;
-        QString digitizedDate;
-
+        String originalDate;
+        String digitizedDate;
+        // Thumbnail section
         QPixmap thumbnailPixmap;
-        QString thumbnailWidth;
-        QString thumbnailHeight;
-
+        String thumbnailWidth;
+        String thumbnailHeight;
+        // Photo section
         float focalLength;
         float aperture;
-        QString shutterSpeed;
         int isoSpeed;
         QString expTime;
         float expBias;
         uchar expProgram;
-        uchar meteringMode;
+        short meteringMode;
+        short flashMode;
+        // Camera section
+        String cameraManufacturer;
+        String cameraModel;
+        // Author section
+        String artist;
+        String copyright;
+        String userComment;
+    };
 
-        QString cameraManufacturer;
-        QString cameraModel;
+    struct FlashStruct
+    {
+        static QString noFlashFunction;
+        static QString fired;
+        static QString noFired;
+        static QString compulsoryMode;
+        static QString autoMode;
+        static QString redEyeReduction;
+        static QString strobeReturnDetected;
+        static QString strobeReturnNotDetected;
     };
 }
 

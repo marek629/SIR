@@ -208,8 +208,9 @@ void ConvertThread::run() {
                 *image = image->transformed( m,Qt::SmoothTransformation );
         }
 
+        bool saveMetadata = false;
         if (ConvertThread::shared->saveMetadata)
-            metadata.read(imagePath);
+            saveMetadata = metadata.read(imagePath);
 
         QImage destImg;
         
@@ -250,7 +251,7 @@ void ConvertThread::run() {
                || ConvertThread::shared->overwriteResult == 2) {
 
                 if (destImg.save(targetFile, 0, quality)) {
-                    if (ConvertThread::shared->saveMetadata)
+                    if (saveMetadata)
                         metadata.write(targetFile, destImg);
                     emit imageStatus(imageData, tr("Converted"), CONVERTED);
                 }
@@ -268,7 +269,7 @@ void ConvertThread::run() {
             emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
         else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFile, 0, quality)) {
-                if (ConvertThread::shared->saveMetadata)
+                if (saveMetadata)
                     metadata.write(targetFile, destImg);
                 emit imageStatus(imageData, tr("Converted"), CONVERTED);
             }
