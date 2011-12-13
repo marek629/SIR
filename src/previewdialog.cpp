@@ -35,6 +35,9 @@
 #include <QPrintDialog>
 #include <QImageWriter>
 #include <QKeyEvent>
+#include <QDesktopWidget>
+
+#include <QDebug>
 
 #include "rawutils.h"
 #include "metadatautils.h"
@@ -61,6 +64,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     initBar();
     createConnections();
     rotation = 0;
+    flip = None;
 
     if (metadataEnabled)
         metadata = new MetadataUtils::Metadata();
@@ -75,7 +79,15 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     imageW = image->size().width();
     imageH = image->size().height();
 
-    this->resize(imageW + W, imageH + H);
+    QSize desktopSize = QApplication::desktop()->size();
+    desktopSize -= QSize(8,8);
+    int w = imageW + W;
+    int h = imageH + H;
+    if (desktopSize.width()>=w || desktopSize.height()>=h)
+        this->resize(w,h);
+    else
+        this->showMaximized();
+
     statusBar->setText(imagePath);
     zoomFactor = 1.0;
     verifyImages();
@@ -96,6 +108,8 @@ void PreviewDialog::createConnections() {
             SLOT(zoom(const QString & )));
     connect(rotateCwButton, SIGNAL(clicked ()), SLOT(rotatecw()));
     connect(rotateCcwButton, SIGNAL(clicked ()), SLOT(rotateccw()));
+    connect(flipHButton, SIGNAL(clicked()), SLOT(flipHorizontal()));
+    connect(flipVButton, SIGNAL(clicked()), SLOT(flipVertical()));
     connect(nextButton, SIGNAL(clicked ()), SLOT(nextImage()));
     connect(previousButton, SIGNAL(clicked ()), SLOT(previousImage()));
     connect(fullScreenButton, SIGNAL(clicked ()), SLOT(fullScreen()));
@@ -198,21 +212,81 @@ void PreviewDialog::zoom( const QString & text ) {
 }
 
 void PreviewDialog::rotatecw( ) {
-    rotation += 90;
-    view->rotate(90);
-
-    if(rotation == 360) {
+    if (flip == None || rotation == 180 || rotation == -180) {
+        rotation += 90;
+        view->rotate(90);
+        if(rotation == 270)
+            rotation = -90;
+    }
+    else  if (rotation == 0) {
+        rotation = -90;
+        view->rotate(rotation);
+    }
+    else {
         rotation = 0;
+        view->rotate(-90);
     }
 }
 
 void PreviewDialog::rotateccw( ) {
-    rotation -= 90;
-    view->rotate(-90);
-
-    if(rotation == -360) {
-        rotation = 0;
+    if (flip == None || rotation == 180 || rotation == -180) {
+        rotation -= 90;
+        view->rotate(-90);
+        if(rotation == -270)
+            rotation = 90;
     }
+    else  if (rotation == 0) {
+        rotation = 90;
+        view->rotate(rotation);
+    }
+    else {
+        rotation = 0;
+        view->rotate(90);
+    }
+}
+
+void PreviewDialog::flipHorizontal() {
+    flip ^= Horizontal;
+    if (flip == VerticalAndHorizontal) {
+        flip = None;
+        if (rotation%180 != 0)
+            view->scale(-1.0,1.0);
+        else
+            view->scale(1.0, -1.0);
+        rotation += 180;
+        view->rotate(180);
+        if (rotation == 270)
+            rotation = -90;
+        else if (rotation == 360)
+            rotation = 0;
+        return;
+    }
+    if (rotation%180 != 0)
+        view->scale(1.0,-1.0);
+    else
+        view->scale(-1.0, 1.0);
+}
+
+void PreviewDialog::flipVertical() {
+    flip ^= Vertical;
+    if (flip == VerticalAndHorizontal) {
+        flip = None;
+        if (rotation%180 != 0)
+            view->scale(1.0,-1.0);
+        else
+            view->scale(-1.0, 1.0);
+        rotation += 180;
+        view->rotate(180);
+        if (rotation == 270)
+            rotation = -90;
+        else if (rotation == 360)
+            rotation = 0;
+        return;
+    }
+    if (rotation%180 != 0)
+        view->scale(-1.0,1.0);
+    else
+        view->scale(1.0, -1.0);
 }
 
 void  PreviewDialog::nextImage( ) {
@@ -223,6 +297,7 @@ void  PreviewDialog::nextImage( ) {
     delete pix;
     delete image;
     rotation = 0;
+    flip = None;
 
     loadPixmap();
 
@@ -248,6 +323,7 @@ void  PreviewDialog::previousImage( ) {
         delete pix;
         delete image;
         rotation = 0;
+        flip = None;
 
         loadPixmap();
 
@@ -283,11 +359,14 @@ void  PreviewDialog::verifyImages() {
 }
 
 void PreviewDialog::fullScreen() {
-
+    static bool maximized = false;
     if(this->isFullScreen()) {
         this->showNormal();
+        if (maximized)
+            this->showMaximized();
     }
     else {
+        maximized = this->isMaximized();
         this->showFullScreen();
     }
 
@@ -349,18 +428,66 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     int w = (int)(imageW*zoomFactor);
     int h = (int)(imageH*zoomFactor);
 
-    qint16 orientation = 0;
-    bool changedOrientation = false;
+    if (flip == VerticalAndHorizontal) {
+        flip = None;
+        rotation += 180;
+        if (rotation >= 360)
+            rotation %= 360;
+    }
+
+    if (rotation == -270)
+        rotation = 90;
+    else if (rotation == 270)
+        rotation = -90;
+    else if (rotation == -180)
+        rotation = 180;
+
+    char orientation = 0;
+    short rt = rotation;
+    int fl = flip;
     if (metadataEnabled && saveMetadata) {
         orientation = metadata->ptrExifStruct()->orientation;
-        changedOrientation = (orientation==6 && rotation!=90)
-                                || (orientation==8 && rotation!=-90);
-        if (changedOrientation) {
-            metadata->ptrExifStruct()->orientation = 1;
+        switch (orientation) {
+        case 1:
+            break;
+        case 2:
+            fl ^= Horizontal;
+            break;
+        case 3:
+            rt -= 180;
+            break;
+        case 4:
+            fl ^= Vertical;
+            break;
+        case 5:
+            rt -= 90;
+            fl ^= Horizontal;
+            break;
+        case 6:
+            rt -= 90;
+            break;
+        case 7:
+            rt += 90;
+            fl ^= Horizontal;
+            break;
+        case 8:
+            rt += 90;
+            break;
+        default:
+            qWarning("PreviewDialog::loadPixmap(): Invalid orientation value");
             orientation = 1;
+            break;
         }
+        if (rt!=0  || fl!=None || orientation == 1) {
+            orientation = getOrientation(rotation,flip);
+            if (orientation < 1)
+                orientation = 1;
+            metadata->ptrExifStruct()->orientation = orientation;
+        }
+        else
+            orientation = 0;
     }
-    if ( (rotation%180 != 0 && changedOrientation) || orientation==0 ) {
+    if (orientation < 1 && rt%180 != 0) {
         int aux = w;
         w = h;
         h = aux;
@@ -374,19 +501,57 @@ bool PreviewDialog::saveFile(const QString &fileName) {
 
     if (destImg.save(fileName, 0 ,100)) {
         if (saveMetadata) {
+            metadata->setExifData();
             metadata->write(fileName, destImg.toImage());
         }
         statusBar->setText(tr("File saved"));
-        if (!(orientation == 6 || orientation == 8))
-            rotation = 0;
         return true;
     }
     else {
         statusBar->setText(tr("Failed to save image"));
-        if (!(orientation == 6 || orientation == 8))
+        if (orientation < 1) {
             rotation = 0;
+            flip = None;
+        }
         return false;
     }
+}
+
+char PreviewDialog::getOrientation(short rotation, int flip) {
+    switch (rotation) {
+    case 0:
+        if (flip == None)
+            return 1;
+        else if (flip == Horizontal)
+            return 2;
+        else if (flip == Vertical)
+            return 4;
+        break;
+    case 180:
+        if (flip == None)
+            return 3;
+        break;
+    case 90:
+        if (flip == None)
+            return 6;
+        else if (flip == Horizontal)
+            return 5;
+        else if (flip == Vertical)
+            return 7;
+        break;
+    case -90:
+        if (flip == None)
+            return 8;
+        else if (flip == Horizontal)
+            return 7;
+        else if (flip == Vertical)
+            return 5;
+        break;
+    default:
+        return -1;
+        break;
+    }
+    return -2;
 }
 
 void PreviewDialog::reloadImage(QString imageName) {
@@ -395,6 +560,7 @@ void PreviewDialog::reloadImage(QString imageName) {
     delete pix;
     delete image;
     rotation = 0;
+    flip = None;
 
     imagePath = imageName;	
 
@@ -432,16 +598,51 @@ void PreviewDialog::loadPixmap() {
     }
 
     bool metadataReadError = false;
-    if (metadataEnabled) {
-        if (metadata->read(imagePath,true)) {
+    if (readSuccess && metadataEnabled) {
+        metadataReadError = !metadata->read(imagePath,true);
+        if (!metadataReadError) {
             char orientation = metadata->ptrExifStruct()->orientation;
-            if (orientation==6)
-                rotatecw();
-            else if (orientation==8)
-                rotateccw();
+            flip = None;
+            switch (orientation) {
+            case 1:
+                rotation = 0;
+                break;
+            case 2:
+                rotation = 0;
+                flipHorizontal();
+                break;
+            case 3:
+                rotation = 180;
+                view->rotate(rotation);
+                break;
+            case 4:
+                flipVertical();
+                break;
+            case 5:
+                rotation = 90;
+                view->rotate(rotation);
+                flipHorizontal();
+                break;
+            case 6:
+                rotation = 90;
+                view->rotate(rotation);
+                break;
+            case 7:
+                rotation = -90;
+                view->rotate(rotation);
+                flipHorizontal();
+                break;
+            case 8:
+                rotation = -90;
+                view->rotate(rotation);
+                break;
+            default:
+                qWarning("PreviewDialog::loadPixmap(): Invalid orientation value");
+                orientation = 1;
+                rotation = 0;
+                break;
+            }
         }
-        else
-            metadataReadError = true;
     }
 
     QString errorTitle;

@@ -1,15 +1,14 @@
 *** nearest release ***
-  1 Full support Exif Orientation tag in preview dialog
-    * add mirror buttons
-  2 Fix preview dialog resize bug (bigger than screen)
-  3 Correction convert dialog
+  1 Fix preview dialog resize bug (bigger than screen)
+  2 Correction convert dialog
     * add check box "don't change image size"
     * choice between true rotation and edit exif orientation tag
-  ? Correction preview dialog "toolbar"
+  3 Save loading metadata functions vs empty values
+  ====== Piotrek ======
+  ! add shutter speed in metadata dialog
   ! optimalize MetadataUtils::Exif::flashString(short num)
     * try convert using << or >> operators
-  ! stabilization of saving (and maybe loading) metadata functions
-  ! add shutter speed in metadata dialog
+  ======
 
 *** next release ***
   1 Watermark support

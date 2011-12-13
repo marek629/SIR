@@ -46,24 +46,25 @@ public:
      
 private:
     //Methods
-	void initBar();
+    void initBar();
     void createConnections();
     void verifyImages();
     void reloadImage(QString imagePath);
     void loadPixmap();
+    char getOrientation(short rotation, int flip);
 
     //Class Variables
-    QDesktopWidget* desktop;
     QGraphicsScene *scene;
     QString imagePath;
     QPixmap *image;
     double zoomFactor;
-	int currentImage;
-	int rotation;
-	QStringList *images;
-	QGraphicsPixmapItem *pix;
-	int imageW;
-	int imageH;
+    int currentImage;
+    int rotation;
+    int flip;
+    QStringList *images;
+    QGraphicsPixmapItem *pix;
+    int imageW;
+    int imageH;
     bool rawEnabled;
     bool metadataEnabled;
     bool saveMetadata;
@@ -72,7 +73,7 @@ private:
 public slots:
 
     //Slots
-	void zoom( const QString & text );
+    void zoom( const QString & text );
     void rotatecw( );
     void rotateccw( );
     void nextImage();
@@ -82,8 +83,18 @@ public slots:
     bool saveAs();
     bool saveFile(const QString &fileName);
     void print();
+    void flipVertical();
+    void flipHorizontal();
 
 protected:
     virtual void resizeEvent(QResizeEvent *);
 };
+
+enum Flip {
+    None,
+    Vertical,
+    Horizontal,
+    VerticalAndHorizontal
+};
+
 #endif
