@@ -66,6 +66,9 @@ namespace MetadataUtils
         String artist;
         String copyright;
         String userComment;
+
+        // Methods
+        void reset();
     };
 
     struct FlashStruct

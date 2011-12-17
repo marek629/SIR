@@ -446,7 +446,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     short rt = rotation;
     int fl = flip;
     if (metadataEnabled && saveMetadata) {
-        orientation = metadata->ptrExifStruct()->orientation;
+        orientation = metadata->exifStruct()->orientation;
         switch (orientation) {
         case 1:
             break;
@@ -482,7 +482,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
             orientation = getOrientation(rotation,flip);
             if (orientation < 1)
                 orientation = 1;
-            metadata->ptrExifStruct()->orientation = orientation;
+            metadata->exifStruct()->orientation = orientation;
         }
         else
             orientation = 0;
@@ -601,7 +601,7 @@ void PreviewDialog::loadPixmap() {
     if (readSuccess && metadataEnabled) {
         metadataReadError = !metadata->read(imagePath,true);
         if (!metadataReadError) {
-            char orientation = metadata->ptrExifStruct()->orientation;
+            char orientation = metadata->exifStruct()->orientation;
             flip = None;
             switch (orientation) {
             case 1:
@@ -645,19 +645,17 @@ void PreviewDialog::loadPixmap() {
         }
     }
 
-    QString errorTitle;
-    QString errorMessage;
     if (!readSuccess) {
-        errorTitle = tr("Image file error");
-        errorMessage = tr("Load image %1 failed").arg(imagePath);
+        QString errorTitle = tr("Image file error");
+        QString errorMessage = tr("Load image %1 failed").arg(imagePath);
         QMessageBox::critical(this, errorTitle, errorMessage);
     }
     else if (metadataReadError) {
-        errorTitle = tr("Metadata error");
-        const Exiv2::Error *e = metadata->ptrLastError();
-        errorMessage = QString::fromUtf8(e->what()) +"\n"+
-                    tr("Error code: ")+QString::number(e->code());
-        QMessageBox::critical(this, errorTitle, errorMessage);
+        MetadataUtils::Error *e = metadata->lastError();
+        MetadataUtils::String str(e->message() +
+                                  tr("\nError code: %1\nError message: %2").
+                                     arg(e->code()).arg(e->what()) );
+        qWarning(str.toNativeStdString().c_str());
     }
 }
 

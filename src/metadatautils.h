@@ -3,6 +3,7 @@
 
 #include "metadata/exif.h"
 #include "metadata/string.h"
+#include "metadata/error.h"
 #include <QObject>
 #include <QImage>
 #include <exiv2/exiv2.hpp>
@@ -29,8 +30,8 @@ namespace MetadataUtils
         void setExifDatum(const std::string &key1, const std::string &key2,
                           const std::string &value);
         static Exiv2::Rational shortRational(int integer);
-        MetadataUtils::ExifStruct *ptrExifStruct() { return &exifStruct; }
-        Exiv2::Error *ptrLastError() const { return lastError; }
+        MetadataUtils::ExifStruct *exifStruct() { return &exifStruct_; }
+        Error *lastError() { return &lastError_; }
         static void setEnabled(bool);
         static bool isEnabled();
         static void setSave(bool);
@@ -41,11 +42,13 @@ namespace MetadataUtils
         Exiv2::Image::AutoPtr image;
         Exiv2::ExifData exifData;
         Exiv2::IptcData iptcData;
+#ifdef EXV_HAVE_XMP_TOOLKIT
         Exiv2::XmpData xmpData;
-        Exiv2::Error* lastError;
+#endif // EXV_HAVE_XMP_TOOLKIT
+        Error lastError_;
         static bool enabled;
         static bool save;
-        MetadataUtils::ExifStruct exifStruct;
+        MetadataUtils::ExifStruct exifStruct_;
     };
 }
 

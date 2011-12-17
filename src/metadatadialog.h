@@ -21,6 +21,7 @@ public:
     ~MetadataDialog();
 
 private:
+    void resetStructs();
     void setupValues();
     MetadataUtils::Metadata *metadata;
     MetadataUtils::ExifStruct *exifStruct;

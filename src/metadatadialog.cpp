@@ -16,17 +16,19 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     this->imagePath = this->images->at(this->currentImage);
     metadata = new MetadataUtils::Metadata();
 
-    if (metadata->read(imagePath,true)) {
-        exifStruct = metadata->ptrExifStruct();
-        setupValues();
-    }
-    else {
+    bool readSuccess = metadata->read(imagePath,true);
+    exifStruct = metadata->exifStruct();
+
+    if (!readSuccess) {
         QString errorTitle = tr("Metadata error");
-        Exiv2::Error *e = metadata->ptrLastError();
-        QString errorMessage = QString::fromUtf8(e->what()) +"\n"+
-                    tr("Error code: ")+QString::number(e->code());
+        MetadataUtils::Error *e = metadata->lastError();
+        QString errorMessage = e->message();
+        errorMessage += tr("\nError code: %1\nError message: %2").
+                arg(e->code()).arg(e->what());
         QMessageBox::critical(this, errorTitle, errorMessage);
+        resetStructs();
     }
+    setupValues();
 
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(close()));
     connect(saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
@@ -36,6 +38,10 @@ MetadataDialog::~MetadataDialog()
 {
     delete metadata;
     delete images;
+}
+
+void MetadataDialog::resetStructs() {
+    exifStruct->reset();
 }
 
 void MetadataDialog::setupValues()
@@ -52,9 +58,9 @@ void MetadataDialog::setupValues()
     exifHeightLabel->setText( exifStruct->imageHeight );
     exifOrientationComboBox->setCurrentIndex( exifStruct->orientation - 1 );
     exifOriginalDateComboBox->
-            loadHistory( settings.value("originalDateMap").toMap(),
-                         settings.value("originalDateList").toList(),
-                         maxHistoryCount );
+                loadHistory( settings.value("originalDateMap").toMap(),
+                             settings.value("originalDateList").toList(),
+                             maxHistoryCount );
     exifOriginalDateComboBox->lineEdit()->setText( exifStruct->originalDate );
     exifDigitizedDateComboBox->
             loadHistory( settings.value("digitizedDateMap").toMap(),
