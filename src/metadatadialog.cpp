@@ -12,6 +12,7 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
 {
     setupUi(this);
     this->images = images;
+    qDebug() << this->images->length() << currentImage ;
     this->currentImage = currentImage;
     this->imagePath = this->images->at(this->currentImage);
     metadata = new MetadataUtils::Metadata();

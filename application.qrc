@@ -43,5 +43,7 @@
         <file>images/options_metadata.png</file>
         <file>images/unfavorite.png</file>
         <file>images/favorite.png</file>
+        <file>images/flip_horizontal.png</file>
+        <file>images/flip_vertical.png</file>
     </qresource>
 </RCC>

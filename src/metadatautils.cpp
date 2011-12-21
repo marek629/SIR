@@ -1,6 +1,7 @@
 #include "metadatautils.h"
 #include "defines.h"
 #include <QString>
+#include <cmath>
 
 #include <QDebug>
 
@@ -168,24 +169,22 @@ void MetadataUtils::Metadata::setExifStruct()
     Exiv2::Rational rational = exifData["Exif.Photo.FocalLength"].toRational();
     exifStruct.focalLength = (float)rational.first / rational.second;
     rational = exifData["Exif.Photo.FNumber"].toRational();
-    if ( rational.first == -1 )
+    if ( rational.first == -1 && rational.second == 1 )
         rational = exifData["Exif.Photo.ApertureValue"].toRational();
     exifStruct.aperture = (float)rational.first / rational.second;
-    rational = exifData["Exif.Photo.ExposureTime"].toRational();
-    if ( rational.first == -1 )
-        exifStruct.expTime = MetadataUtils::String::noData();
-    else if ( rational.first < rational.second )
-        exifStruct.expTime = QString::number(rational.first) + "/" +
-                QString::number(rational.second) + " s";
-    else
-    {
-        short integer = rational.first / rational.second;
-        exifStruct.expTime =  QString::number(integer, 'f', 1);
-        int fraction = rational.first - integer*rational.second;
-        if (fraction != 0)
-            exifStruct.expTime += " " + QString::number(fraction) +
-                "/" + QString::number(rational.second);
-        exifStruct.expTime.append(" s");
+    exifStruct.expTime = timeString("Exif.Image.ExposureTime","Exif.Photo.ExposureTime");
+    rational = exifData["Exif.Photo.ShutterSpeedValue"].toRational();
+    bool noEmpty = (rational.first == -1 && rational.second == 1);
+    if (noEmpty) {
+        rational = exifData["Exif.Image.ShutterSpeedValue"].toRational();
+        noEmpty = (rational.first == -1 && rational.second == 1);
+        if (noEmpty)
+            exifStruct.shutterSpeed = MetadataUtils::String::noData();
+    }
+    if (noEmpty) {
+        // tutaj napisz twój kod
+        double part = pow(0.5, (double)rational.first / rational.second);
+
     }
     exifStruct.isoSpeed = exifData["Exif.Photo.ISOSpeedRatings"].toLong();
     if ( exifStruct.isoSpeed == -1 )
@@ -221,6 +220,33 @@ void MetadataUtils::Metadata::setExifStruct()
                 exifData["Exif.Photo.UserComment"].toString() );
     if (exifStruct.userComment.isEmpty())
         exifStruct.userComment = MetadataUtils::String::noData();
+}
+
+QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::string &key2) {
+    QString result;
+    if (key1.empty())
+        return result;
+    Exiv2::Rational rational = exifData[key1].toRational();
+    if ( rational.first == -1  && rational.second == 1 ) {
+        if (!key2.empty())
+            rational = exifData[key2].toRational();
+        else
+            result = MetadataUtils::String::noData();
+    }
+    else if ( rational.first < rational.second )
+        result = QString::number(rational.first) + "/" +
+                QString::number(rational.second) + " s";
+    else
+    {
+        short integer = rational.first / rational.second;
+        result =  QString::number(integer, 'f', 1);
+        int fraction = rational.first - integer*rational.second;
+        if (fraction != 0)
+            result += " " + QString::number(fraction) +
+                "/" + QString::number(rational.second);
+        result.append(" s");
+    }
+    return result;
 }
 
 Exiv2::Rational MetadataUtils::Metadata::shortRational(int integer)
@@ -281,7 +307,7 @@ void MetadataUtils::Metadata::setExifDatum(
 }
 
 void MetadataUtils::Metadata::setExifDatum(
-        const std::string &key1, const std::string &key2, Exiv2::Rational value) {
+        const std::string &key1, const std::string &key2, const Exiv2::Rational &value) {
     if ( key1.empty() || key2.empty() )
         return;
 

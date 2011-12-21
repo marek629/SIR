@@ -34,8 +34,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>544</width>
-            <height>331</height>
+            <width>542</width>
+            <height>340</height>
            </rect>
           </property>
           <attribute name="label">
@@ -295,8 +295,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>544</width>
-            <height>331</height>
+            <width>542</width>
+            <height>340</height>
            </rect>
           </property>
           <attribute name="label">
@@ -408,8 +408,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>544</width>
-            <height>331</height>
+            <width>542</width>
+            <height>340</height>
            </rect>
           </property>
           <attribute name="label">
@@ -720,27 +720,18 @@
                 </widget>
                </item>
                <item>
+                <widget class="QLabel" name="label_12">
+                 <property name="text">
+                  <string>Shutter Speed</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QLabel" name="label_4">
                  <property name="text">
                   <string>ISO Speed</string>
                  </property>
                 </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_6">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </item>
@@ -757,6 +748,9 @@
                 </widget>
                </item>
                <item>
+                <widget class="TimeComboBox" name="exifShutterTimeComboBox"/>
+               </item>
+               <item>
                 <widget class="QSpinBox" name="exifIsoSpeedSpinBox">
                  <property name="maximum">
                   <number>10000</number>
@@ -765,22 +759,6 @@
                   <number>50</number>
                  </property>
                 </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_7">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </item>
@@ -961,8 +939,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>544</width>
-            <height>331</height>
+            <width>542</width>
+            <height>340</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1035,8 +1013,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>544</width>
-            <height>331</height>
+            <width>542</width>
+            <height>340</height>
            </rect>
           </property>
           <attribute name="label">

@@ -1,0 +1,13 @@
+Simple Image Resizer (SIR) was created for parallel resizing images written in C++.
+Project depend on Qt and libexiv2 for metadata support.
+
+Images used in SIR was originated from different souces.
+  1. Own worked:
+     - sir*.{png,ico} by Rafael Sachetto
+     - (un)favorite.png by Marek Jędryka
+  2. Third party
+     - distributed under CreativeCommons Attribution 3.0 United States (CC BY 3.0) licence:
+       * flip_*.png from site http://www.fatcow.com/free-icons
+  3. From icon themes
+     - options_*.png from Tango theme
+     - other icons used in previev dialog window from Oxygen theme

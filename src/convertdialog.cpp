@@ -733,6 +733,7 @@ void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
     
     QRegExp exp(imagePath);
     index = list->indexOf(exp,0);
+    index = 0;
     previewForm = new PreviewDialog(this, list, index);
     previewForm->show();
 }
@@ -741,6 +742,7 @@ void ConvertDialog::showMetadata() {
     QStringList *list = makeList();
     QRegExp exp( makeImagePath(treeMenuItem) );
     int index = list->indexOf(exp,0);
+    index = 0;
 
     metadataForm = new MetadataDialog(this, list, index);
     metadataForm->show();

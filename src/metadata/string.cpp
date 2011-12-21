@@ -63,6 +63,8 @@ Exiv2::Rational MetadataUtils::String::toRational() const
 MetadataUtils::String MetadataUtils::String::fromMetadatum(const Exiv2::Metadatum &datum)
 {
     int size = datum.size();
+    if (size == 0)
+        return "";
     char ch[size];
     for (int i=0; i<size; i++)
         ch[i] = datum.toLong(i);
