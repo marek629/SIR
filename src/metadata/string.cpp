@@ -60,11 +60,12 @@ Exiv2::Rational MetadataUtils::String::toRational() const
     return result;
 }
 
-MetadataUtils::String MetadataUtils::String::fromMetadatum(const Exiv2::Metadatum &datum)
+MetadataUtils::String MetadataUtils::String::exifVersion(const Exiv2::Metadatum &datum)
 {
     int size = datum.size();
-    if (size == 0)
-        return "";
+    if (size < 4)
+        return MetadataUtils::String(noData());
+
     char ch[size];
     for (int i=0; i<size; i++)
         ch[i] = datum.toLong(i);

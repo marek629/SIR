@@ -24,7 +24,7 @@ namespace MetadataUtils
         String & operator =(const char *str);
         String & operator =(const QString &other);
         static const QString &noData();
-        static String fromMetadatum(const Exiv2::Metadatum &datum);
+        static String exifVersion(const Exiv2::Metadatum &datum);
         static String fromStdString(const std::string &s);
 
     private:

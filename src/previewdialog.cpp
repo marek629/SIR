@@ -212,31 +212,81 @@ void PreviewDialog::zoom( const QString & text ) {
 }
 
 void PreviewDialog::rotatecw( ) {
-    rotation += 90;
-    view->rotate(90);
-
-    if(rotation == 360) {
+    if (flip == None || rotation == 180 || rotation == -180) {
+        rotation += 90;
+        view->rotate(90);
+        if(rotation == 270)
+            rotation = -90;
+    }
+    else  if (rotation == 0) {
+        rotation = -90;
+        view->rotate(rotation);
+    }
+    else {
         rotation = 0;
+        view->rotate(-90);
     }
 }
 
 void PreviewDialog::rotateccw( ) {
-    rotation -= 90;
-    view->rotate(-90);
-
-    if(rotation == -360) {
+    if (flip == None || rotation == 180 || rotation == -180) {
+        rotation -= 90;
+        view->rotate(-90);
+        if(rotation == -270)
+            rotation = 90;
+    }
+    else  if (rotation == 0) {
+        rotation = 90;
+        view->rotate(rotation);
+    }
+    else {
         rotation = 0;
+        view->rotate(90);
     }
 }
 
 void PreviewDialog::flipHorizontal() {
     flip ^= Horizontal;
-    view->scale(-1.0, 1.0);
+    if (flip == VerticalAndHorizontal) {
+        flip = None;
+        if (rotation%180 != 0)
+            view->scale(-1.0,1.0);
+        else
+            view->scale(1.0, -1.0);
+        rotation += 180;
+        view->rotate(180);
+        if (rotation == 270)
+            rotation = -90;
+        else if (rotation == 360)
+            rotation = 0;
+        return;
+    }
+    if (rotation%180 != 0)
+        view->scale(1.0,-1.0);
+    else
+        view->scale(-1.0, 1.0);
 }
 
 void PreviewDialog::flipVertical() {
     flip ^= Vertical;
-    view->scale(1.0, -1.0);
+    if (flip == VerticalAndHorizontal) {
+        flip = None;
+        if (rotation%180 != 0)
+            view->scale(1.0,-1.0);
+        else
+            view->scale(-1.0, 1.0);
+        rotation += 180;
+        view->rotate(180);
+        if (rotation == 270)
+            rotation = -90;
+        else if (rotation == 360)
+            rotation = 0;
+        return;
+    }
+    if (rotation%180 != 0)
+        view->scale(-1.0,1.0);
+    else
+        view->scale(1.0, -1.0);
 }
 
 void  PreviewDialog::nextImage( ) {
@@ -381,8 +431,9 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     if (flip == VerticalAndHorizontal) {
         flip = None;
         rotation += 180;
-        if (rotation > 360 || rotation < -360)
-            rotation = rotation%360;
+
+        if (rotation >= 360)
+            rotation %= 360;
     }
 
     if (rotation == -270)
@@ -395,44 +446,29 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     char orientation = 0;
     short rt = rotation;
     int fl = flip;
-//    if (metadataEnabled && saveMetadata) {
-//        orientation = metadata->ptrExifStruct()->orientation;
-//        changedOrientation = (orientation==6 && rotation!=90)
-//                                || (orientation==8 && rotation!=-90);
-//        if (changedOrientation) {
-//            metadata->ptrExifStruct()->orientation = 1;
-//            orientation = 1;
-//        }
-//    }
-//    if ( (rotation%180 != 0 && changedOrientation) || orientation==0 ) {
-//        int aux = w;
-//        w = h;
-//        h = aux;
-//    }
     if (metadataEnabled && saveMetadata) {
-        orientation = metadata->ptrExifStruct()->orientation;
+        orientation = metadata->exifStruct()->orientation;
         switch (orientation) {
         case 1:
             break;
         case 2:
-            fl ^= Vertical;
+            fl ^= Horizontal;
             break;
         case 3:
             rt -= 180;
             break;
         case 4:
-            rt -= 180;
             fl ^= Vertical;
             break;
         case 5:
-            rt += 90;
+            rt -= 90;
             fl ^= Horizontal;
             break;
         case 6:
             rt -= 90;
             break;
         case 7:
-            rt -= 90;
+            rt += 90;
             fl ^= Horizontal;
             break;
         case 8:
@@ -444,10 +480,10 @@ bool PreviewDialog::saveFile(const QString &fileName) {
             break;
         }
         if (rt!=0  || fl!=None || orientation == 1) {
-            orientation = getOrientation(rt,fl);
+            orientation = getOrientation(rotation,flip);
             if (orientation < 1)
                 orientation = 1;
-            metadata->ptrExifStruct()->orientation = orientation;
+            metadata->exifStruct()->orientation = orientation;
         }
         else
             orientation = 0;
@@ -487,25 +523,29 @@ char PreviewDialog::getOrientation(short rotation, int flip) {
     case 0:
         if (flip == None)
             return 1;
-        else if (flip == Vertical)
+        else if (flip == Horizontal)
             return 2;
+        else if (flip == Vertical)
+            return 4;
         break;
     case 180:
         if (flip == None)
             return 3;
-        else if (flip == Vertical)
-            return 4;
         break;
     case 90:
         if (flip == None)
             return 6;
         else if (flip == Horizontal)
+            return 5;
+        else if (flip == Vertical)
             return 7;
         break;
     case -90:
         if (flip == None)
             return 8;
         else if (flip == Horizontal)
+            return 7;
+        else if (flip == Vertical)
             return 5;
         break;
     default:
@@ -562,7 +602,7 @@ void PreviewDialog::loadPixmap() {
     if (readSuccess && metadataEnabled) {
         metadataReadError = !metadata->read(imagePath,true);
         if (!metadataReadError) {
-            char orientation = metadata->ptrExifStruct()->orientation;
+            char orientation = metadata->exifStruct()->orientation;
             flip = None;
             switch (orientation) {
             case 1:
@@ -570,19 +610,17 @@ void PreviewDialog::loadPixmap() {
                 break;
             case 2:
                 rotation = 0;
-                flipVertical();
+                flipHorizontal();
                 break;
             case 3:
                 rotation = 180;
                 view->rotate(rotation);
                 break;
             case 4:
-                rotation = 180;
-                view->rotate(rotation);
                 flipVertical();
                 break;
             case 5:
-                rotation = -90;
+                rotation = 90;
                 view->rotate(rotation);
                 flipHorizontal();
                 break;
@@ -591,7 +629,7 @@ void PreviewDialog::loadPixmap() {
                 view->rotate(rotation);
                 break;
             case 7:
-                rotation = 90;
+                rotation = -90;
                 view->rotate(rotation);
                 flipHorizontal();
                 break;
@@ -608,19 +646,17 @@ void PreviewDialog::loadPixmap() {
         }
     }
 
-    QString errorTitle;
-    QString errorMessage;
     if (!readSuccess) {
-        errorTitle = tr("Image file error");
-        errorMessage = tr("Load image %1 failed").arg(imagePath);
+        QString errorTitle = tr("Image file error");
+        QString errorMessage = tr("Load image %1 failed").arg(imagePath);
         QMessageBox::critical(this, errorTitle, errorMessage);
     }
     else if (metadataReadError) {
-        errorTitle = tr("Metadata error");
-        const Exiv2::Error *e = metadata->ptrLastError();
-        errorMessage = QString::fromUtf8(e->what()) +"\n"+
-                    tr("Error code: ")+QString::number(e->code());
-        QMessageBox::critical(this, errorTitle, errorMessage);
+        MetadataUtils::Error *e = metadata->lastError();
+        MetadataUtils::String str(e->message() +
+                                  tr("\nError code: %1\nError message: %2").
+                                     arg(e->code()).arg(e->what()) );
+        qWarning(str.toNativeStdString().c_str());
     }
 }
 

@@ -42,7 +42,6 @@
 #include <QTextCharFormat>
 #include <QCompleter>
 #include <QDirModel>
-#include <QRegExp>
 #include <QTranslator>
 #include <QLocale>
 #include <QMap>
@@ -284,7 +283,7 @@ void ConvertDialog::init() {
     
     foreach(QByteArray format, imageFormats)
     {
-        list.append(*new QString(format));
+        list.append(QString(format));
     }
     
     targetFormatComboBox->insertItems(0,list);
@@ -728,21 +727,17 @@ void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
     Q_UNUSED(col);
     
     QString imagePath = makeImagePath(item);
-    int index;
     QStringList *list = makeList();
-    
-    QRegExp exp(imagePath);
-    index = list->indexOf(exp,0);
-    index = 0;
+    int index = list->indexOf(imagePath);
+
     previewForm = new PreviewDialog(this, list, index);
     previewForm->show();
 }
 
 void ConvertDialog::showMetadata() {
+    QString imagePath = makeImagePath(treeMenuItem);
     QStringList *list = makeList();
-    QRegExp exp( makeImagePath(treeMenuItem) );
-    int index = list->indexOf(exp,0);
-    index = 0;
+    int index = list->indexOf(imagePath);
 
     metadataForm = new MetadataDialog(this, list, index);
     metadataForm->show();

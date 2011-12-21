@@ -171,3 +171,34 @@ void MetadataUtils::Exif::setUserCommentString(const MetadataUtils::String &v)
 {
     userCommentString = v;
 }
+
+void MetadataUtils::ExifStruct::reset() {
+    // Image section
+    version = MetadataUtils::String::noData();
+    processingSoftware = MetadataUtils::String::noData();
+    imageWidth = MetadataUtils::String::noData();
+    imageHeight = MetadataUtils::String::noData();
+    orientation = 1;
+    originalDate = MetadataUtils::String::noData();
+    digitizedDate = MetadataUtils::String::noData();
+    // Thumbnail section
+    thumbnailPixmap = QPixmap();
+    thumbnailWidth = MetadataUtils::String::noData();
+    thumbnailHeight = MetadataUtils::String::noData();
+    // Photo section
+    focalLength = 0.0;
+    aperture = 0.0;
+    isoSpeed = 0;
+    expTime = MetadataUtils::String::noData();
+    expBias = 0.0;
+    expProgram = 0;
+    meteringMode = 0;
+    flashMode = -1;
+    // Camera section
+    cameraManufacturer = MetadataUtils::String::noData();
+    cameraModel = MetadataUtils::String::noData();
+    // Author section
+    artist = MetadataUtils::String::noData();
+    copyright = MetadataUtils::String::noData();
+    userComment = MetadataUtils::String::noData();
+}

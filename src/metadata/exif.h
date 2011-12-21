@@ -54,6 +54,7 @@ namespace MetadataUtils
         float focalLength;
         float aperture;
         int isoSpeed;
+        QString shutterSpeed;
         QString expTime;
         float expBias;
         uchar expProgram;
@@ -66,6 +67,9 @@ namespace MetadataUtils
         String artist;
         String copyright;
         String userComment;
+
+        // Methods
+        void reset();
     };
 
     struct FlashStruct
