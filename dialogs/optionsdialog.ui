@@ -80,9 +80,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-299</y>
+         <y>-260</y>
          <width>407</width>
-         <height>705</height>
+         <height>772</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -340,6 +340,29 @@
              <property name="text">
               <string>Save also metadata</string>
              </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="rotateGroupBox">
+             <property name="title">
+              <string>When image is rotated</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QRadioButton" name="rotateRadioButton">
+                <property name="text">
+                 <string>rotate seriously</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="exifOrientationRadioButton">
+                <property name="text">
+                 <string>save orientation in Exif</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>

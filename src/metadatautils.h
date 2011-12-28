@@ -25,6 +25,7 @@ namespace MetadataUtils
         bool write(const QString& path, const QImage& image = QImage());
         void setExifData();
         void setExifStruct();
+        void setExifDatum(const std::string &key, int value);
         void setExifDatum(const std::string &key1, const std::string &key2, int value);
         void setExifDatum(const std::string &key1, const std::string &key2, Exiv2::Rational value);
         void setExifDatum(const std::string &key1, const std::string &key2,

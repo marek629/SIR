@@ -91,7 +91,6 @@ private:
     NetworkUtils *net;
     QPoint windowPossition;
     QSize windowSize;
-    bool saveMetadata;
     QAction *removeAction;
     QAction *convertAction;
     QAction *previewAction;

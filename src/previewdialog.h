@@ -25,6 +25,7 @@
  #define PREVIEWDIALOG_H
 
 #include "ui_previewdialog.h"
+#include "metadatautils.h"
 
 class QGraphicsScene;
 class QString;
@@ -32,10 +33,6 @@ class QPixmap;
 class QStringList;
 class QGraphicsPixmapItem;
 class QKeyEvent;
-namespace MetadataUtils
-{
-    class Metadata;
-}
 
 class PreviewDialog : public QDialog, public Ui::PreviewDialog {
     Q_OBJECT
@@ -51,7 +48,6 @@ private:
     void verifyImages();
     void reloadImage(QString imagePath);
     void loadPixmap();
-    char getOrientation(short rotation, int flip);
 
     //Class Variables
     QGraphicsScene *scene;
@@ -88,13 +84,6 @@ public slots:
 
 protected:
     virtual void resizeEvent(QResizeEvent *);
-};
-
-enum Flip {
-    None,
-    Vertical,
-    Horizontal,
-    VerticalAndHorizontal
 };
 
 #endif

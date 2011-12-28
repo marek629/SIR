@@ -267,6 +267,12 @@ void MetadataUtils::Metadata::setSave(bool v) {
     save = v;
 }
 
+void MetadataUtils::Metadata::setExifDatum(const std::string &key, int value) {
+    if (key.empty())
+        return;
+    exifData[key] = value;
+}
+
 void MetadataUtils::Metadata::setExifDatum(
         const std::string &key1, const std::string &key2, int value) {
     if ( key1.empty() || key2.empty() )

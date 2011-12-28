@@ -28,10 +28,6 @@
 
 SharedInformation* ConvertThread::shared = new SharedInformation();
 
-void ConvertThread::setSaveMetadata(bool value) {
-    ConvertThread::shared->saveMetadata = value;
-}
-
 ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
 
     this->tid = tid;
@@ -43,6 +39,14 @@ ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
     m_angle = 0.0;
     m_quality = 100;
     work = true;
+}
+
+void ConvertThread::setSaveMetadata(bool value) {
+    ConvertThread::shared->saveMetadata = value;
+}
+
+void ConvertThread::setRealRotate(bool rotate) {
+    ConvertThread::shared->realRotate = rotate;
 }
 
 void ConvertThread::setAcceptWork(bool work) {
@@ -66,7 +70,8 @@ void ConvertThread::setDesiredFormat(const QString& format) {
 
 void ConvertThread::setDesiredRotation(bool rotate, double angle) {
     m_rotate = rotate;
-    m_angle = angle;
+    int multipler = angle / 360;
+    m_angle = angle - multipler*360;
 }
 
 void ConvertThread::setQuality(int quality) {
@@ -202,15 +207,55 @@ void ConvertThread::run() {
             }
         }
 
-        if (rotate && angle != 0.0) {
-                QMatrix m;
-                m.rotate( angle );
-                *image = image->transformed( m,Qt::SmoothTransformation );
+        bool saveMetadata = false;
+        if (ConvertThread::shared->saveMetadata) {
+            saveMetadata = metadata.read(imagePath,true);
+            if (!saveMetadata) {
+                MetadataUtils::Error *error = metadata.lastError();
+                qWarning() << "tid:" << tid << "/n"
+                           << "    " << error->message() << "/n"
+                           << "    " << "Error code:" << error->code() << "/n"
+                           << "    " << error->what();
+            }
         }
 
-        bool saveMetadata = false;
-        if (ConvertThread::shared->saveMetadata)
-            saveMetadata = metadata.read(imagePath);
+        if (rotate && angle != 0.0) {
+            int alpha = (int)angle;
+            bool saveExifOrientation = !ConvertThread::shared->realRotate;
+            if (saveMetadata && saveExifOrientation && alpha==angle && alpha%90==0) {
+                int flip;
+                alpha += MetadataUtils::Exif::rotationAngle(
+                            metadata.exifStruct()->orientation, &flip );
+                if (alpha == -360) {
+                    alpha = 0;
+                    flip = MetadataUtils::None;
+                }
+
+                // normalization of values alpha and flip
+                if (alpha == -270)
+                    alpha = 90;
+                else if (alpha == 270)
+                    alpha = -90;
+                else if (alpha == -180)
+                    alpha = 180;
+                if (flip != MetadataUtils::None && (int)angle%180 != 0)
+                    flip ^= MetadataUtils::VerticalAndHorizontal;
+
+                char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
+                qDebug("%s orientation %d",imageName.toAscii().constData(),orientation);
+                if (orientation < 1) {
+                    metadata.setExifDatum("Exif.Image.Orientation",1);
+                    saveExifOrientation = false;
+                }
+                else
+                    metadata.setExifDatum("Exif.Image.Orientation",orientation);
+            }
+            if (!saveExifOrientation) {
+                QMatrix m;
+                m.rotate(angle);
+                *image = image->transformed(m, Qt::SmoothTransformation);
+            }
+        }
 
         QImage destImg;
         
@@ -287,4 +332,3 @@ void ConvertThread::getNextOrStop() {
     imageCondition.wait(&imageMutex);
     imageMutex.unlock();
 }
-

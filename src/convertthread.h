@@ -53,6 +53,7 @@ public:
     void getNextOrStop();
     static SharedInformation *shared;
     static void setSaveMetadata(bool value);
+    static void setRealRotate(bool rotate);
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);

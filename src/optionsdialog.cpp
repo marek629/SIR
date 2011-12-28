@@ -88,30 +88,29 @@ OptionsDialog::~OptionsDialog() {
 }
 
 void OptionsDialog::createConnections() {
-
+    // general
     connect(listWidget, SIGNAL(currentRowChanged(int)),
             this, SLOT(categoryChanged(int)));
-
     connect(browsePushButton, SIGNAL(clicked()),
             this, SLOT(browseDestination()));
     connect(coresCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(respondCoresSpinBox(bool)));
 
-
+    // metadata
     connect(metadataCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableMetadata(bool)));
-
+    connect(saveMetadataCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(saveExifOrientation(bool)));
     connect(exifArtistCheckBox, SIGNAL(toggled(bool)),
             exifArtistComboBox, SLOT(setEnabled(bool)));
-
     connect(exifCopyrightCheckBox, SIGNAL(toggled(bool)),
             exifCopyrightComboBox, SLOT(setEnabled(bool)));
-
     connect(exifUserCommentCheckBox, SIGNAL(toggled(bool)),
             exifUserCommentComboBox, SLOT(setEnabled(bool)));
 
+    // raw
     connect(dcrawPushButton, SIGNAL(clicked()), this, SLOT(browseDcraw()));
-    connect(rawCheckBox, SIGNAL(stateChanged (int)), SLOT(setRawStatus(int)));
+    connect(rawCheckBox, SIGNAL(stateChanged(int)), SLOT(setRawStatus(int)));
 }
 
 void OptionsDialog::setupWindow() {
@@ -249,6 +248,7 @@ void OptionsDialog::writeSettings() {
 
     settings.setValue("metadata", metadataCheckBox->isChecked());
     settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
+    settings.setValue("realRotate", rotateRadioButton->isChecked());
 
     bool dcrawOk = false;
     bool firstState = rawCheckBox->isChecked();
@@ -343,6 +343,9 @@ void OptionsDialog::readSettings() {
         saveMetadataCheckBox->setEnabled(false);
     else
         saveMetadataCheckBox->setChecked(settings.value("saveMetadata",true).toBool());
+
+    if (saveMetadataCheckBox->isChecked())
+        rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
 
     int state = settings.value("raw", false).toBool();
     rawCheckBox->setChecked(state);
@@ -461,6 +464,13 @@ void OptionsDialog::enableMetadata(bool checked) {
         exifUserCommentCheckBox->setChecked(false);
         exifUserCommentCheckBox->setEnabled(false);
     }
+}
+
+void OptionsDialog::saveExifOrientation(bool save) {
+    if (save)
+        exifOrientationRadioButton->setChecked(true);
+    else
+        rotateRadioButton->setChecked(true);
 }
 
 quint8 OptionsDialog::detectCoresCount() {

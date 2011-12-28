@@ -6,7 +6,13 @@
 
 namespace MetadataUtils
 {
-    class String;
+    enum Flip {
+        None,
+        Vertical,
+        Horizontal,
+        VerticalAndHorizontal
+    };
+
     class Exif
     {
     public:
@@ -26,6 +32,10 @@ namespace MetadataUtils
         static bool isUserCommentOverwrite();
         static void setUserCommentString(const String&);
         static String stringUserComment();
+        static char getOrientation(short rotation, int flipValue = None);
+        static short rotationAngle(char orientation);
+        static short rotationAngle(char orientation, int *flip);
+        static Flip flipValue(char orientation);
 
     private:
         static bool versionKnown;

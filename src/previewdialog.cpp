@@ -40,7 +40,6 @@
 #include <QDebug>
 
 #include "rawutils.h"
-#include "metadatautils.h"
 
 #define H 115
 #define W 50
@@ -64,7 +63,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     initBar();
     createConnections();
     rotation = 0;
-    flip = None;
+    flip = MetadataUtils::None;
 
     if (metadataEnabled)
         metadata = new MetadataUtils::Metadata();
@@ -212,7 +211,7 @@ void PreviewDialog::zoom( const QString & text ) {
 }
 
 void PreviewDialog::rotatecw( ) {
-    if (flip == None || rotation == 180 || rotation == -180) {
+    if (flip == MetadataUtils::None || rotation == 180 || rotation == -180) {
         rotation += 90;
         view->rotate(90);
         if(rotation == 270)
@@ -229,7 +228,7 @@ void PreviewDialog::rotatecw( ) {
 }
 
 void PreviewDialog::rotateccw( ) {
-    if (flip == None || rotation == 180 || rotation == -180) {
+    if (flip == MetadataUtils::None || rotation == 180 || rotation == -180) {
         rotation -= 90;
         view->rotate(-90);
         if(rotation == -270)
@@ -246,6 +245,7 @@ void PreviewDialog::rotateccw( ) {
 }
 
 void PreviewDialog::flipHorizontal() {
+    using namespace MetadataUtils;
     flip ^= Horizontal;
     if (flip == VerticalAndHorizontal) {
         flip = None;
@@ -268,9 +268,9 @@ void PreviewDialog::flipHorizontal() {
 }
 
 void PreviewDialog::flipVertical() {
-    flip ^= Vertical;
-    if (flip == VerticalAndHorizontal) {
-        flip = None;
+    flip ^= MetadataUtils::Vertical;
+    if (flip == MetadataUtils::VerticalAndHorizontal) {
+        flip = MetadataUtils::None;
         if (rotation%180 != 0)
             view->scale(1.0,-1.0);
         else
@@ -297,7 +297,7 @@ void  PreviewDialog::nextImage( ) {
     delete pix;
     delete image;
     rotation = 0;
-    flip = None;
+    flip = MetadataUtils::None;
 
     loadPixmap();
 
@@ -323,7 +323,7 @@ void  PreviewDialog::previousImage( ) {
         delete pix;
         delete image;
         rotation = 0;
-        flip = None;
+        flip = MetadataUtils::None;
 
         loadPixmap();
 
@@ -428,8 +428,8 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     int w = (int)(imageW*zoomFactor);
     int h = (int)(imageH*zoomFactor);
 
-    if (flip == VerticalAndHorizontal) {
-        flip = None;
+    if (flip == MetadataUtils::VerticalAndHorizontal) {
+        flip = MetadataUtils::None;
         rotation += 180;
         if (rotation >= 360)
             rotation %= 360;
@@ -447,28 +447,29 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     int fl = flip;
     if (metadataEnabled && saveMetadata) {
         orientation = metadata->exifStruct()->orientation;
+        // MetadataUtils::Exif::rotationAngle()
         switch (orientation) {
         case 1:
             break;
         case 2:
-            fl ^= Horizontal;
+            fl ^= MetadataUtils::Horizontal;
             break;
         case 3:
             rt -= 180;
             break;
         case 4:
-            fl ^= Vertical;
+            fl ^= MetadataUtils::Vertical;
             break;
         case 5:
             rt -= 90;
-            fl ^= Horizontal;
+            fl ^= MetadataUtils::Horizontal;
             break;
         case 6:
             rt -= 90;
             break;
         case 7:
             rt += 90;
-            fl ^= Horizontal;
+            fl ^= MetadataUtils::Horizontal;
             break;
         case 8:
             rt += 90;
@@ -478,8 +479,8 @@ bool PreviewDialog::saveFile(const QString &fileName) {
             orientation = 1;
             break;
         }
-        if (rt!=0  || fl!=None || orientation == 1) {
-            orientation = getOrientation(rotation,flip);
+        if (rt!=0  || fl!=MetadataUtils::None || orientation == 1) {
+            orientation = MetadataUtils::Exif::getOrientation(rotation,flip);
             if (orientation < 1)
                 orientation = 1;
             metadata->exifStruct()->orientation = orientation;
@@ -511,47 +512,10 @@ bool PreviewDialog::saveFile(const QString &fileName) {
         statusBar->setText(tr("Failed to save image"));
         if (orientation < 1) {
             rotation = 0;
-            flip = None;
+            flip = MetadataUtils::None;
         }
         return false;
     }
-}
-
-char PreviewDialog::getOrientation(short rotation, int flip) {
-    switch (rotation) {
-    case 0:
-        if (flip == None)
-            return 1;
-        else if (flip == Horizontal)
-            return 2;
-        else if (flip == Vertical)
-            return 4;
-        break;
-    case 180:
-        if (flip == None)
-            return 3;
-        break;
-    case 90:
-        if (flip == None)
-            return 6;
-        else if (flip == Horizontal)
-            return 5;
-        else if (flip == Vertical)
-            return 7;
-        break;
-    case -90:
-        if (flip == None)
-            return 8;
-        else if (flip == Horizontal)
-            return 7;
-        else if (flip == Vertical)
-            return 5;
-        break;
-    default:
-        return -1;
-        break;
-    }
-    return -2;
 }
 
 void PreviewDialog::reloadImage(QString imageName) {
@@ -560,7 +524,7 @@ void PreviewDialog::reloadImage(QString imageName) {
     delete pix;
     delete image;
     rotation = 0;
-    flip = None;
+    flip = MetadataUtils::None;
 
     imagePath = imageName;	
 
@@ -602,7 +566,7 @@ void PreviewDialog::loadPixmap() {
         metadataReadError = !metadata->read(imagePath,true);
         if (!metadataReadError) {
             char orientation = metadata->exifStruct()->orientation;
-            flip = None;
+            flip = MetadataUtils::None;
             switch (orientation) {
             case 1:
                 rotation = 0;

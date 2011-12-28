@@ -74,6 +74,7 @@ ConvertDialog::~ConvertDialog() {
     delete removeAction;
     delete previewAction;
     delete metadataAction;
+    delete ConvertThread::shared;
 }
 
 void ConvertDialog::createConnections() {
@@ -249,9 +250,6 @@ void ConvertDialog::showUpdateResult(QString *result, bool error) {
 }
 
 void ConvertDialog::setupThreads(int numThreads) {
-
-    ConvertThread::setSaveMetadata(saveMetadata);
-
     convertThreads.clear();
     
     for(int i = 0; i < numThreads; i++) {
@@ -273,7 +271,6 @@ void ConvertDialog::setupThreads(int numThreads) {
         connect(convertThreads[i], SIGNAL(getNextImage(int, bool)),this,
                 SLOT(giveNextImage(int, bool)), Qt::QueuedConnection);
     }
-    
 }
 
 void ConvertDialog::init() {
@@ -906,8 +903,13 @@ void ConvertDialog::readSettings() {
         numThreads = OptionsDialog::detectCoresCount();
 
     MetadataUtils::Metadata::setEnabled(settings.value("metadata",true).toBool());
-    saveMetadata = settings.value("saveMetadata",true).toBool();
+    bool saveMetadata = settings.value("saveMetadata",true).toBool();
     MetadataUtils::Metadata::setSave(saveMetadata);
+    ConvertThread::setSaveMetadata(saveMetadata);
+    if (saveMetadata)
+        ConvertThread::setRealRotate(settings.value("realRotate",false).toBool());
+    else
+        ConvertThread::setRealRotate(true);
     
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",

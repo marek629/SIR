@@ -38,6 +38,7 @@ public:
     SharedInformation &operator=( const SharedInformation & );
 
     bool saveMetadata;
+    bool realRotate;
     QMutex mutex;
     bool abort;
 

@@ -172,6 +172,143 @@ void MetadataUtils::Exif::setUserCommentString(const MetadataUtils::String &v)
     userCommentString = v;
 }
 
+char MetadataUtils::Exif::getOrientation(short rotation, int flip) {
+    using namespace MetadataUtils;
+    switch (rotation) {
+    case 0:
+        if (flip == None)
+            return 1;
+        else if (flip == Horizontal)
+            return 2;
+        else if (flip == Vertical)
+            return 4;
+        break;
+    case 180:
+        if (flip == None)
+            return 3;
+        break;
+    case 90:
+        if (flip == None)
+            return 6;
+        else if (flip == Horizontal)
+            return 5;
+        else if (flip == Vertical)
+            return 7;
+        break;
+    case -90:
+        if (flip == None)
+            return 8;
+        else if (flip == Horizontal)
+            return 7;
+        else if (flip == Vertical)
+            return 5;
+        break;
+    default:
+        return -1;
+        break;
+    }
+    return -2;
+}
+
+short MetadataUtils::Exif::rotationAngle(char orientation) {
+    short result = 0;
+    switch (orientation) {
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        result = 180;
+        break;
+    case 4:
+        break;
+    case 5:
+        result = 90;
+        break;
+    case 6:
+        result = 90;
+        break;
+    case 7:
+        result = -90;
+        break;
+    case 8:
+        result = -90;
+        break;
+    default: // invalid orientation value
+        result = -360;
+        break;
+    }
+    return result;
+}
+
+short MetadataUtils::Exif::rotationAngle(char orientation, int *flip) {
+    using namespace MetadataUtils;
+    short result = 0;
+    switch (orientation) {
+    case 1:
+        break;
+    case 2:
+        *flip = Horizontal;
+        break;
+    case 3:
+        result = 180;
+        break;
+    case 4:
+        *flip = Vertical;
+        break;
+    case 5:
+        result = 90;
+        *flip = Horizontal;
+        break;
+    case 6:
+        result = 90;
+        break;
+    case 7:
+        result = -90;
+        *flip = Horizontal;
+        break;
+    case 8:
+        result = -90;
+        break;
+    default: // invalid orientation value
+        result = -360;
+        *flip = VerticalAndHorizontal;
+        break;
+    }
+    return result;
+}
+
+MetadataUtils::Flip MetadataUtils::Exif::flipValue(char orientation) {
+    using namespace MetadataUtils;
+    Flip result = None;
+    switch (orientation) {
+    case 1:
+        break;
+    case 2:
+        result = Horizontal;
+        break;
+    case 3:
+        break;
+    case 4:
+        result = Vertical;
+        break;
+    case 5:
+        result = Horizontal;
+        break;
+    case 6:
+        break;
+    case 7:
+        result = Horizontal;
+        break;
+    case 8:
+        break;
+    default: // invalid orientation value
+        result = VerticalAndHorizontal;
+        break;
+    }
+    return result;
+}
+
 void MetadataUtils::ExifStruct::reset() {
     // Image section
     version = MetadataUtils::String::noData();
