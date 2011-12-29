@@ -243,6 +243,7 @@ short MetadataUtils::Exif::rotationAngle(char orientation) {
 
 short MetadataUtils::Exif::rotationAngle(char orientation, int *flip) {
     using namespace MetadataUtils;
+    *flip = None;
     short result = 0;
     switch (orientation) {
     case 1:

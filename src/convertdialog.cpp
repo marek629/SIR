@@ -370,28 +370,24 @@ void ConvertDialog::convert() {
     resetAnswers();
     bool hasWidth = false;
     bool hasHeight = false;
-    QMatrix m;
-    
+
     int w = 0;
     int h = 0;
-    QString imagePath;
-    
-    QImage destImg;
-    
+
     QDir destFolder(destFileEdit->text());
-    
+
     QString destPrefix = destPrefixEdit->text();
-    
+
     if (!widthLineEdit->text().isEmpty()) {
         w = widthLineEdit->text().toInt();
         hasWidth = true;
     }
-    
+
     if (!heightLineEdit->text().isEmpty()) {
         h = heightLineEdit->text().toInt();
         hasHeight = true;
     }
-    
+
     if (!destFolder.exists()) {
     
         switch ( QMessageBox::question(
@@ -606,28 +602,24 @@ void ConvertDialog::convertSelected() {
     resetAnswers();
     bool hasWidth = false;
     bool hasHeight = false;
-    QMatrix m;
-    
+
     int w = 0;
     int h = 0;
-    QString imagePath;
-    
-    QImage destImg;
-    
+
     QDir destFolder(destFileEdit->text());
-    
+
     QString destPrefix = destPrefixEdit->text();
-    
+
     if (!widthLineEdit->text().isEmpty()) {
         w = widthLineEdit->text().toInt();
         hasWidth = true;
     }
-    
+
     if (!heightLineEdit->text().isEmpty()) {
         h = heightLineEdit->text().toInt();
         hasHeight = true;
     }
-    
+
     if (!destFolder.exists()) {
     
         switch ( QMessageBox::question(

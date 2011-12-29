@@ -6,7 +6,7 @@
     * add check box "don't change image size"
     * add percentage (%) change image size possibility
   3 Add to options dialog - Metadata part:
-    * choice between true rotation and edit exif orientation tag
+    * check box "update thumbnail"
   ====== Piotrek ======
   ! add shutter speed in metadata dialog
   ! optimalize MetadataUtils::Exif::flashString(short num)

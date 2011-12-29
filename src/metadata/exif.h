@@ -7,10 +7,10 @@
 namespace MetadataUtils
 {
     enum Flip {
-        None,
-        Vertical,
-        Horizontal,
-        VerticalAndHorizontal
+        None = 0x0,
+        Vertical = 0x1,
+        Horizontal = 0x2,
+        VerticalAndHorizontal = 0x3
     };
 
     class Exif

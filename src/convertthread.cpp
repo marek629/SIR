@@ -222,7 +222,9 @@ void ConvertThread::run() {
         if (rotate && angle != 0.0) {
             int alpha = (int)angle;
             bool saveExifOrientation = !ConvertThread::shared->realRotate;
-            if (saveMetadata && saveExifOrientation && alpha==angle && alpha%90==0) {
+            if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
+                saveExifOrientation = false;
+            if (saveMetadata && saveExifOrientation) {
                 int flip;
                 alpha += MetadataUtils::Exif::rotationAngle(
                             metadata.exifStruct()->orientation, &flip );
@@ -242,7 +244,6 @@ void ConvertThread::run() {
                     flip ^= MetadataUtils::VerticalAndHorizontal;
 
                 char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
-                qDebug("%s orientation %d",imageName.toAscii().constData(),orientation);
                 if (orientation < 1) {
                     metadata.setExifDatum("Exif.Image.Orientation",1);
                     saveExifOrientation = false;
@@ -251,9 +252,21 @@ void ConvertThread::run() {
                     metadata.setExifDatum("Exif.Image.Orientation",orientation);
             }
             if (!saveExifOrientation) {
-                QMatrix m;
-                m.rotate(angle);
-                *image = image->transformed(m, Qt::SmoothTransformation);
+                QTransform transform;
+                if (saveMetadata) {
+                    metadata.setExifDatum("Exif.Image.Orientation",1);
+                    int flip;
+                    angle += MetadataUtils::Exif::rotationAngle(
+                                metadata.exifStruct()->orientation, &flip );
+                    if (flip == MetadataUtils::Vertical)
+                        transform.scale(1.0,-1.0);
+                    else if (flip == MetadataUtils::Horizontal)
+                        transform.scale(-1.0,1.0);
+                    else if (flip == MetadataUtils::VerticalAndHorizontal)
+                        angle += 360;
+                }
+                transform.rotate(angle);
+                *image = image->transformed(transform, Qt::SmoothTransformation);
             }
         }
 
