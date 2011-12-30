@@ -320,7 +320,7 @@ void MetadataUtils::ExifStruct::reset() {
     originalDate = MetadataUtils::String::noData();
     digitizedDate = MetadataUtils::String::noData();
     // Thumbnail section
-    thumbnailPixmap = QPixmap();
+    thumbnailImage = QImage();
     thumbnailWidth = MetadataUtils::String::noData();
     thumbnailHeight = MetadataUtils::String::noData();
     // Photo section

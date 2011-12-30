@@ -2,7 +2,7 @@
 #define EXIF_H
 
 #include "string.h"
-#include <QPixmap>
+#include <QImage>
 
 namespace MetadataUtils
 {
@@ -57,7 +57,7 @@ namespace MetadataUtils
         String originalDate;
         String digitizedDate;
         // Thumbnail section
-        QPixmap thumbnailPixmap;
+        QImage thumbnailImage;
         String thumbnailWidth;
         String thumbnailHeight;
         // Photo section

@@ -1,6 +1,7 @@
 #include "metadatautils.h"
 #include "defines.h"
 #include <QString>
+#include <QDir>
 
 #include <QDebug>
 
@@ -159,8 +160,9 @@ void MetadataUtils::Metadata::setExifStruct()
     Exiv2::PreviewManager previewMenager(*image);
     Exiv2::PreviewImage thumbnail = previewMenager.getPreviewImage(
                 previewMenager.getPreviewProperties()[0] );
-    exifStruct_.thumbnailPixmap = QPixmap(thumbnail.width(), thumbnail.height());
-    exifStruct_.thumbnailPixmap.loadFromData(thumbnail.pData(), thumbnail.size());
+    exifStruct_.thumbnailImage = QImage(thumbnail.width(), thumbnail.height(),
+                                        QImage::Format_ARGB32);
+    exifStruct_.thumbnailImage.loadFromData(thumbnail.pData(), thumbnail.size());
     exifStruct_.thumbnailWidth = MetadataUtils::String::number( thumbnail.width() );
     exifStruct_.thumbnailWidth.appendUnit(" px");
     exifStruct_.thumbnailHeight = MetadataUtils::String::number( thumbnail.height() );
@@ -315,5 +317,24 @@ void MetadataUtils::Metadata::setExifDatum(
     else {
         exifData[key1] = value;
         exifData[key2] = value;
+    }
+}
+
+void MetadataUtils::Metadata::setExifThumbnail(const std::string &path) {
+    Exiv2::ExifThumb thumb (exifData);
+    thumb.erase();
+    thumb.setJpegThumbnail(path);
+}
+
+bool MetadataUtils::Metadata::setExifThumbnail(QImage *image) {
+    if (image->isNull())
+        return false;
+    QString filePath = QDir::tempPath() + QDir::separator() + "sir_thumb.jpg";
+    try {
+        setExifThumbnail(filePath.toStdString());
+    }
+    catch (Exiv2::Error &e) {
+        lastError_.copy(e);
+        lastError_.setMessage(tr("Save thumnail failed"));
     }
 }

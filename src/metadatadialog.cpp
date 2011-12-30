@@ -69,7 +69,7 @@ void MetadataDialog::setupValues()
     exifDigitizedDateComboBox->lineEdit()->setText( exifStruct->digitizedDate );
 
     // Thumbnail toolbox
-    exifThumbnailLabel->setPixmap( exifStruct->thumbnailPixmap );
+    exifThumbnailLabel->setPixmap(QPixmap::fromImage(exifStruct->thumbnailImage));
     exifThumbnailWidthLabel->setText( exifStruct->thumbnailWidth );
     exifThumbnailHeightLabel->setText( exifStruct->thumbnailHeight );
 

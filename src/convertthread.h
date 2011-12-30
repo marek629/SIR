@@ -54,6 +54,7 @@ public:
     static SharedInformation *shared;
     static void setSaveMetadata(bool value);
     static void setRealRotate(bool rotate);
+    static void setUpdateThumbnail(bool update);
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);

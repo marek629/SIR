@@ -49,6 +49,10 @@ void ConvertThread::setRealRotate(bool rotate) {
     ConvertThread::shared->realRotate = rotate;
 }
 
+void ConvertThread::setUpdateThumbnail(bool update) {
+    ConvertThread::shared->updateThumbnail = update;
+}
+
 void ConvertThread::setAcceptWork(bool work) {
     this->work = work;
 }
@@ -207,6 +211,7 @@ void ConvertThread::run() {
             }
         }
 
+        // read metadata
         bool saveMetadata = false;
         if (ConvertThread::shared->saveMetadata) {
             saveMetadata = metadata.read(imagePath,true);
@@ -219,11 +224,13 @@ void ConvertThread::run() {
             }
         }
 
+        // rotate image
         if (rotate && angle != 0.0) {
             int alpha = (int)angle;
             bool saveExifOrientation = !ConvertThread::shared->realRotate;
             if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
                 saveExifOrientation = false;
+            // don't rotate but save Exif orientation tag
             if (saveMetadata && saveExifOrientation) {
                 int flip;
                 alpha += MetadataUtils::Exif::rotationAngle(
@@ -244,13 +251,14 @@ void ConvertThread::run() {
                     flip ^= MetadataUtils::VerticalAndHorizontal;
 
                 char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
-                if (orientation < 1) {
+                if (orientation < 1) { // realy rotate when getOrientation() failed
                     metadata.setExifDatum("Exif.Image.Orientation",1);
                     saveExifOrientation = false;
                 }
                 else
                     metadata.setExifDatum("Exif.Image.Orientation",orientation);
             }
+            // realy rotate without saving Exif orientation tag
             if (!saveExifOrientation) {
                 QTransform transform;
                 if (saveMetadata) {
@@ -268,6 +276,29 @@ void ConvertThread::run() {
                 transform.rotate(angle);
                 *image = image->transformed(transform, Qt::SmoothTransformation);
             }
+        }
+
+        // update thumbnail
+        if (saveMetadata && ConvertThread::shared->updateThumbnail) {
+            MetadataUtils::ExifStruct *exifStruct = metadata.exifStruct();
+            int w = exifStruct->thumbnailWidth.split(' ').first().toInt();
+            int h = exifStruct->thumbnailHeight.split(' ').first().toInt();
+            qDebug() << w << h;
+            QImage tmpImg = image->scaled(w,h, Qt::KeepAspectRatio,
+                                          Qt::SmoothTransformation);
+            if ( (w > h && tmpImg.width() < tmpImg.height()) ||
+                 (w < h && tmpImg.width() > tmpImg.height()) ) {
+                exifStruct->thumbnailWidth = QString::number(h).append(" px");
+                exifStruct->thumbnailHeight = QString::number(w).append(" px");
+            }
+            QImage *thumbnail = &exifStruct->thumbnailImage;
+            thumbnail->fill(Qt::black);
+            QPoint begin ( (w-tmpImg.width())/2, (h-tmpImg.height())/2 );
+            for (int i=0, y=begin.y(); i<tmpImg.height(); i++, y++) {
+                for (int j=0, x=begin.x(); j<tmpImg.width(); j++, x++)
+                    thumbnail->setPixel(x, y, tmpImg.pixel(j,i));
+            }
+            metadata.setExifThumbnail(thumbnail);
         }
 
         QImage destImg;

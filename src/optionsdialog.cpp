@@ -100,7 +100,7 @@ void OptionsDialog::createConnections() {
     connect(metadataCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableMetadata(bool)));
     connect(saveMetadataCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(saveExifOrientation(bool)));
+            this, SLOT(saveMetadata(bool)));
     connect(exifArtistCheckBox, SIGNAL(toggled(bool)),
             exifArtistComboBox, SLOT(setEnabled(bool)));
     connect(exifCopyrightCheckBox, SIGNAL(toggled(bool)),
@@ -228,6 +228,7 @@ void OptionsDialog::browseDcraw() {
 void OptionsDialog::writeSettings() {
     QSettings settings("SIR");
 
+    // general
     settings.beginGroup("Settings");
     settings.setValue("targetFolder", targetFolderLineEdit->text());
     settings.setValue("targetFormat", targetFormatComboBox->currentIndex());
@@ -246,10 +247,7 @@ void OptionsDialog::writeSettings() {
 
     settings.setValue("maxHistoryCount", historySpinBox->value());
 
-    settings.setValue("metadata", metadataCheckBox->isChecked());
-    settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
-    settings.setValue("realRotate", rotateRadioButton->isChecked());
-
+    // raw
     bool dcrawOk = false;
     bool firstState = rawCheckBox->isChecked();
     //check dcraw executable
@@ -272,14 +270,20 @@ void OptionsDialog::writeSettings() {
         settings.setValue("dcrawPath", dcrawLineEdit->text());
         settings.setValue("dcrawOptions", dcrawOptions->text());
     }
-
-    settings.endGroup();
-
     if(dcrawOk || !firstState) {
         emit ok();
         this->close();
     }
 
+    settings.endGroup();
+
+    // metadata (general part)
+    settings.setValue("metadata", metadataCheckBox->isChecked());
+    settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
+    settings.setValue("realRotate", rotateRadioButton->isChecked());
+    settings.setValue("updateThumbnail", thumbnailCheckBox->isChecked());
+
+    // metadata (Exif part)
     settings.beginGroup("Exif");
     QMap<QString,QVariant> exifMap;
     QList<QVariant> exifList;
@@ -311,6 +315,7 @@ void OptionsDialog::readSettings() {
 
     QString defaultLanguage = languages->getLanguageInfo("sir_"+locale+".qm").niceName;
 
+    // general
     settings.beginGroup("Settings");
     targetFolderLineEdit->setText(settings.value("targetFolder",
                                                  QDir::homePath()).toString());
@@ -338,15 +343,7 @@ void OptionsDialog::readSettings() {
     maxHistoryCount = settings.value("maxHistoryCount",5).toInt();
     historySpinBox->setValue(maxHistoryCount);
 
-    metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
-    if (!metadataCheckBox->isChecked())
-        saveMetadataCheckBox->setEnabled(false);
-    else
-        saveMetadataCheckBox->setChecked(settings.value("saveMetadata",true).toBool());
-
-    if (saveMetadataCheckBox->isChecked())
-        rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
-
+    // raw
     int state = settings.value("raw", false).toBool();
     rawCheckBox->setChecked(state);
     setRawStatus(state);
@@ -354,8 +351,21 @@ void OptionsDialog::readSettings() {
     dcrawLineEdit->setText(settings.value("dcrawPath", "/usr/bin/dcraw").toString());
     dcrawOptions->setText(settings.value("dcrawOptions", "").toString());
 
+    // metadata (general part)
+    metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
+    if (!metadataCheckBox->isChecked())
+        saveMetadataCheckBox->setEnabled(false);
+    else
+        saveMetadataCheckBox->setChecked(settings.value("saveMetadata",true).toBool());
+
+    if (saveMetadataCheckBox->isChecked()) {
+        rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
+        thumbnailCheckBox->setChecked(settings.value("updateThumbnail",true).toBool());
+    }
+
     settings.endGroup();
 
+    // metadata (Exif part)
     settings.beginGroup("Exif");
 
     bool exifOverwrite;
@@ -466,7 +476,8 @@ void OptionsDialog::enableMetadata(bool checked) {
     }
 }
 
-void OptionsDialog::saveExifOrientation(bool save) {
+void OptionsDialog::saveMetadata(bool save) {
+    thumbnailCheckBox->setChecked(save);
     if (save)
         exifOrientationRadioButton->setChecked(true);
     else

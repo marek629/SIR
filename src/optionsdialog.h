@@ -65,7 +65,7 @@ private slots:
     virtual void setRawStatus(int state);
     virtual void respondCoresSpinBox(bool checked);
     virtual void enableMetadata(bool checked);
-    virtual void saveExifOrientation(bool save);
+    virtual void saveMetadata(bool save);
     virtual void categoryChanged(int current);
 
 signals:

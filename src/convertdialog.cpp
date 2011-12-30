@@ -898,8 +898,11 @@ void ConvertDialog::readSettings() {
     bool saveMetadata = settings.value("saveMetadata",true).toBool();
     MetadataUtils::Metadata::setSave(saveMetadata);
     ConvertThread::setSaveMetadata(saveMetadata);
-    if (saveMetadata)
+    if (saveMetadata) {
         ConvertThread::setRealRotate(settings.value("realRotate",false).toBool());
+        ConvertThread::setUpdateThumbnail(
+                    settings.value("updateThumbnail",true).toBool() );
+    }
     else
         ConvertThread::setRealRotate(true);
     

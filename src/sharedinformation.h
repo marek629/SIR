@@ -39,6 +39,7 @@ public:
 
     bool saveMetadata;
     bool realRotate;
+    bool updateThumbnail;
     QMutex mutex;
     bool abort;
 

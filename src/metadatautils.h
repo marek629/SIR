@@ -30,6 +30,8 @@ namespace MetadataUtils
         void setExifDatum(const std::string &key1, const std::string &key2, Exiv2::Rational value);
         void setExifDatum(const std::string &key1, const std::string &key2,
                           const std::string &value);
+        void setExifThumbnail(const std::string &path);
+        bool setExifThumbnail(QImage *image);
         static Exiv2::Rational shortRational(int integer);
         MetadataUtils::ExifStruct *exifStruct() { return &exifStruct_; }
         Error *lastError() { return &lastError_; }
