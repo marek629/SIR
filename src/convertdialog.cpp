@@ -250,7 +250,10 @@ void ConvertDialog::showUpdateResult(QString *result, bool error) {
 }
 
 void ConvertDialog::setupThreads(int numThreads) {
-    convertThreads.clear();
+    while (!convertThreads.isEmpty())
+        delete convertThreads.takeFirst();
+    convertThreads.clear(); // is this dealocating objects?
+    // if that's true while loop is unnecessary
     
     for(int i = 0; i < numThreads; i++) {
         convertThreads.append(new ConvertThread(this, i));
@@ -902,6 +905,8 @@ void ConvertDialog::readSettings() {
         ConvertThread::setRealRotate(settings.value("realRotate",false).toBool());
         ConvertThread::setUpdateThumbnail(
                     settings.value("updateThumbnail",true).toBool() );
+        ConvertThread::setRotateThumbnail(
+                    settings.value("rotateThumbnail",false).toBool() );
     }
     else
         ConvertThread::setRealRotate(true);

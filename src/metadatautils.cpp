@@ -326,15 +326,19 @@ void MetadataUtils::Metadata::setExifThumbnail(const std::string &path) {
     thumb.setJpegThumbnail(path);
 }
 
-bool MetadataUtils::Metadata::setExifThumbnail(QImage *image) {
+bool MetadataUtils::Metadata::setExifThumbnail(QImage *image, int tid) {
     if (image->isNull())
         return false;
-    QString filePath = QDir::tempPath() + QDir::separator() + "sir_thumb.jpg";
+    QString filePath = QDir::tempPath() + QDir::separator() + "sir_thumb";
+    filePath += QString::number(tid) + ".jpg";
+    image->save(filePath);
     try {
         setExifThumbnail(filePath.toStdString());
     }
     catch (Exiv2::Error &e) {
         lastError_.copy(e);
         lastError_.setMessage(tr("Save thumnail failed"));
+        return false;
     }
+    return true;
 }

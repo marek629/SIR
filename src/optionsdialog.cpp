@@ -101,6 +101,8 @@ void OptionsDialog::createConnections() {
             this, SLOT(enableMetadata(bool)));
     connect(saveMetadataCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(saveMetadata(bool)));
+    connect(thumbUpdateCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(updateThumbnail(bool)));
     connect(exifArtistCheckBox, SIGNAL(toggled(bool)),
             exifArtistComboBox, SLOT(setEnabled(bool)));
     connect(exifCopyrightCheckBox, SIGNAL(toggled(bool)),
@@ -114,9 +116,8 @@ void OptionsDialog::createConnections() {
 }
 
 void OptionsDialog::setupWindow() {
-
+    // validate only ASCII characters
     validator = new QRegExpValidator(QRegExp("^[\\00-\\0177]+"),this);
-
     exifArtistComboBox->setValidator(validator);
     exifCopyrightComboBox->setValidator(validator);
 
@@ -275,13 +276,14 @@ void OptionsDialog::writeSettings() {
         this->close();
     }
 
-    settings.endGroup();
-
     // metadata (general part)
     settings.setValue("metadata", metadataCheckBox->isChecked());
     settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
     settings.setValue("realRotate", rotateRadioButton->isChecked());
-    settings.setValue("updateThumbnail", thumbnailCheckBox->isChecked());
+    settings.setValue("updateThumbnail", thumbUpdateCheckBox->isChecked());
+    settings.setValue("rotateThumbnail", thumbRotateCheckBox->isChecked());
+
+    settings.endGroup();
 
     // metadata (Exif part)
     settings.beginGroup("Exif");
@@ -359,8 +361,10 @@ void OptionsDialog::readSettings() {
         saveMetadataCheckBox->setChecked(settings.value("saveMetadata",true).toBool());
 
     if (saveMetadataCheckBox->isChecked()) {
+        thumbUpdateCheckBox->setChecked(settings.value("updateThumbnail",true).toBool());
+        if (thumbUpdateCheckBox->isChecked())
+            thumbRotateCheckBox->setChecked(settings.value("rotateThumbnail",false).toBool());
         rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
-        thumbnailCheckBox->setChecked(settings.value("updateThumbnail",true).toBool());
     }
 
     settings.endGroup();
@@ -477,11 +481,19 @@ void OptionsDialog::enableMetadata(bool checked) {
 }
 
 void OptionsDialog::saveMetadata(bool save) {
-    thumbnailCheckBox->setChecked(save);
+    thumbUpdateCheckBox->setChecked(save);
+    thumbUpdateCheckBox->setEnabled(save);
+    thumbRotateCheckBox->setEnabled(save);
     if (save)
         exifOrientationRadioButton->setChecked(true);
-    else
+    else {
         rotateRadioButton->setChecked(true);
+    }
+}
+
+void OptionsDialog::updateThumbnail(bool update) {
+    if (!update)
+        thumbRotateCheckBox->setChecked(false);
 }
 
 quint8 OptionsDialog::detectCoresCount() {

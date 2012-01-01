@@ -51,10 +51,12 @@ public:
     void confirmImage();
     void setAcceptWork(bool work);
     void getNextOrStop();
+    void printError();
     static SharedInformation *shared;
     static void setSaveMetadata(bool value);
     static void setRealRotate(bool rotate);
     static void setUpdateThumbnail(bool update);
+    static void setRotateThumbnail(bool rotate);
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);

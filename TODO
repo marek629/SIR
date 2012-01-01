@@ -8,8 +8,7 @@
     * add flip radio buttons near rotation line edit
     * add external columns into tree view like size (px,k/MiB)
     * add target size in bytes option
-  3 Add to options dialog - Metadata part:
-    * apply Exif orientation tag into Exif's thumbnail (rotate thumbnail)
+  ! Zbadać dealokację objektów przy czyszczeniu lisy w ConvertDialog::setupThreads()
   ====== Piotrek ======
   ! add shutter speed in metadata dialog
   ! optimalize MetadataUtils::Exif::flashString(short num)

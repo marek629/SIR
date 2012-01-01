@@ -53,6 +53,10 @@ void ConvertThread::setUpdateThumbnail(bool update) {
     ConvertThread::shared->updateThumbnail = update;
 }
 
+void ConvertThread::setRotateThumbnail(bool rotate) {
+    ConvertThread::shared->rotateThumbnail = rotate;
+}
+
 void ConvertThread::setAcceptWork(bool work) {
     this->work = work;
 }
@@ -215,13 +219,8 @@ void ConvertThread::run() {
         bool saveMetadata = false;
         if (ConvertThread::shared->saveMetadata) {
             saveMetadata = metadata.read(imagePath,true);
-            if (!saveMetadata) {
-                MetadataUtils::Error *error = metadata.lastError();
-                qWarning() << "tid:" << tid << "/n"
-                           << "    " << error->message() << "/n"
-                           << "    " << "Error code:" << error->code() << "/n"
-                           << "    " << error->what();
-            }
+            if (!saveMetadata)
+                printError();
         }
 
         // rotate image
@@ -251,14 +250,14 @@ void ConvertThread::run() {
                     flip ^= MetadataUtils::VerticalAndHorizontal;
 
                 char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
-                if (orientation < 1) { // realy rotate when getOrientation() failed
+                if (orientation < 1) { // really rotate when getOrientation() failed
                     metadata.setExifDatum("Exif.Image.Orientation",1);
                     saveExifOrientation = false;
                 }
                 else
                     metadata.setExifDatum("Exif.Image.Orientation",orientation);
             }
-            // realy rotate without saving Exif orientation tag
+            // really rotate without saving Exif orientation tag
             if (!saveExifOrientation) {
                 QTransform transform;
                 if (saveMetadata) {
@@ -283,22 +282,37 @@ void ConvertThread::run() {
             MetadataUtils::ExifStruct *exifStruct = metadata.exifStruct();
             int w = exifStruct->thumbnailWidth.split(' ').first().toInt();
             int h = exifStruct->thumbnailHeight.split(' ').first().toInt();
-            qDebug() << w << h;
             QImage tmpImg = image->scaled(w,h, Qt::KeepAspectRatio,
                                           Qt::SmoothTransformation);
-            if ( (w > h && tmpImg.width() < tmpImg.height()) ||
-                 (w < h && tmpImg.width() > tmpImg.height()) ) {
-                exifStruct->thumbnailWidth = QString::number(h).append(" px");
-                exifStruct->thumbnailHeight = QString::number(w).append(" px");
-            }
+            bool specialRotate = (rotate && (int)angle%90 != 0);
             QImage *thumbnail = &exifStruct->thumbnailImage;
-            thumbnail->fill(Qt::black);
-            QPoint begin ( (w-tmpImg.width())/2, (h-tmpImg.height())/2 );
-            for (int i=0, y=begin.y(); i<tmpImg.height(); i++, y++) {
-                for (int j=0, x=begin.x(); j<tmpImg.width(); j++, x++)
-                    thumbnail->setPixel(x, y, tmpImg.pixel(j,i));
+            if (specialRotate) {
+                w = tmpImg.width();
+                h = tmpImg.height();
+                *thumbnail = tmpImg;
             }
-            metadata.setExifThumbnail(thumbnail);
+            else {
+                thumbnail->fill(Qt::black);
+                QPoint begin ( (w-tmpImg.width())/2, (h-tmpImg.height())/2 );
+                for (int i=0, y=begin.y(); i<tmpImg.height(); i++, y++) {
+                    for (int j=0, x=begin.x(); j<tmpImg.width(); j++, x++)
+                        thumbnail->setPixel(x, y, tmpImg.pixel(j,i));
+                }
+            }
+            // rotate thumbnail
+            if (ConvertThread::shared->rotateThumbnail && !specialRotate) {
+                QTransform transform;
+                int flip;
+                transform.rotate(MetadataUtils::Exif::rotationAngle(
+                                     exifStruct->orientation, &flip));
+                if (flip == MetadataUtils::Vertical)
+                    transform.scale(1.0,-1.0);
+                else if (flip == MetadataUtils::Horizontal)
+                    transform.scale(-1.0,1.0);
+                *thumbnail = thumbnail->transformed(transform);
+            }
+            if (!metadata.setExifThumbnail(thumbnail,tid))
+                printError();
         }
 
         QImage destImg;
@@ -375,4 +389,12 @@ void ConvertThread::getNextOrStop() {
     emit getNextImage(this->tid, onlySelected);
     imageCondition.wait(&imageMutex);
     imageMutex.unlock();
+}
+
+void ConvertThread::printError() {
+    MetadataUtils::Error *error = metadata.lastError();
+    qWarning() << "tid:" << tid << "/n"
+               << "    " << error->message() << "/n"
+               << "    " << tr("Error code:") << error->code() << "/n"
+               << "    " << error->what();
 }

@@ -66,6 +66,7 @@ private slots:
     virtual void respondCoresSpinBox(bool checked);
     virtual void enableMetadata(bool checked);
     virtual void saveMetadata(bool save);
+    virtual void updateThumbnail(bool update);
     virtual void categoryChanged(int current);
 
 signals:

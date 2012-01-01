@@ -80,9 +80,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-290</y>
+         <y>-274</y>
          <width>407</width>
-         <height>774</height>
+         <height>814</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -320,41 +320,50 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="QCheckBox" name="metadataCheckBox">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip">
-                <string>EXIF, IPTC and XMP supported</string>
-               </property>
-               <property name="text">
-                <string>Enable metadata support</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="saveMetadataCheckBox">
-               <property name="text">
-                <string>Save also metadata</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QCheckBox" name="thumbnailCheckBox">
-               <property name="toolTip">
-                <string comment="When image changed SIR'll save current thumbnail in Exif metadata"/>
-               </property>
-               <property name="text">
-                <string>Update thumbnail</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <widget class="QCheckBox" name="metadataCheckBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>EXIF, IPTC and XMP supported</string>
+             </property>
+             <property name="text">
+              <string>Enable metadata support</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="saveMetadataCheckBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Save also metadata</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="thumbUpdateCheckBox">
+             <property name="toolTip">
+              <string comment="When image changed SIR'll save current thumbnail in Exif metadata"/>
+             </property>
+             <property name="text">
+              <string>Update thumbnail</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="thumbRotateCheckBox">
+             <property name="text">
+              <string>Apply Exif Orientation tag to thumbnail</string>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QGroupBox" name="rotateGroupBox">
