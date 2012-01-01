@@ -250,10 +250,9 @@ void ConvertDialog::showUpdateResult(QString *result, bool error) {
 }
 
 void ConvertDialog::setupThreads(int numThreads) {
+    // clearing list of threads
     while (!convertThreads.isEmpty())
         delete convertThreads.takeFirst();
-    convertThreads.clear(); // is this dealocating objects?
-    // if that's true while loop is unnecessary
     
     for(int i = 0; i < numThreads; i++) {
         convertThreads.append(new ConvertThread(this, i));
