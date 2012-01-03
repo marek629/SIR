@@ -44,7 +44,7 @@ class QPoint;
 class QSize;
 class MetadataDialog;
 
-class ConvertDialog : public QMainWindow, private Ui::ConvertDialog {
+class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
 		Q_OBJECT
 public:
 	ConvertDialog(QWidget *parent = 0, QString args = 0);
@@ -61,6 +61,8 @@ private:
     void initList();
     void init();
     void createConnections();
+    inline void connectSizeLinesEdit();
+    inline void disconnectSizeLinesEdit();
     void createActions();
     void createRawFilesList();
     void questionOverwrite(QueryData data);
@@ -96,6 +98,8 @@ private:
     QAction *previewAction;
     QAction *metadataAction;
     QTreeWidgetItem *treeMenuItem;
+    QString sizeWidthString;
+    QString sizeHeightString;
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -130,6 +134,10 @@ public slots:
     virtual void sendInstall();
     virtual void showSendInstallResult(QString *result, bool error);
     void previewAct();
+
+private slots:
+    void setSizeUnit(int index);
+    void sizeChanged(const QString &value);
 };
 
 void ConvertDialog::writeWindowProperties() {
@@ -156,4 +164,16 @@ void ConvertDialog::resetAnswers() {
     ConvertThread::shared->enlargeResult = 1;
     ConvertThread::shared->enlargeAll = false;
     ConvertThread::shared->noEnlargeAll = false;
+}
+
+void ConvertDialog::connectSizeLinesEdit() {
+    connect(widthLineEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(sizeChanged(QString)));
+    connect(heightLineEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(sizeChanged(QString)));
+}
+
+void ConvertDialog::disconnectSizeLinesEdit() {
+    widthLineEdit->disconnect(this,SLOT(sizeChanged(QString)));
+    heightLineEdit->disconnect(this, SLOT(sizeChanged(QString)));
 }

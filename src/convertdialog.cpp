@@ -78,42 +78,45 @@ ConvertDialog::~ConvertDialog() {
 }
 
 void ConvertDialog::createConnections() {
+    // tree view's list menagement buttons & actions
     connect(addFilepushButton, SIGNAL(clicked()), this, SLOT(addFile()));
     connect(addDirpushButton, SIGNAL(clicked()), this, SLOT(addDir()));
-    connect(actionAdd_File, SIGNAL(triggered()), this, SLOT(addFile()));
-    connect(actionAdd_Dir, SIGNAL(triggered()), this, SLOT(addDir()));
-
     connect(RemovepushButton, SIGNAL(clicked()), this,
             SLOT(removeSelectedFromList()));
-
     connect(RemoveAllpushButton, SIGNAL(clicked()), this, SLOT(removeAll()));
 
-    connect(browseDestButton, SIGNAL(clicked()), this,
-            SLOT(browseDestination()));
+    connect(actionAdd_File, SIGNAL(triggered()), this, SLOT(addFile()));
+    connect(actionAdd_Dir, SIGNAL(triggered()), this, SLOT(addDir()));
+    connect(actionRemoveAll, SIGNAL(triggered()), SLOT(removeAll()));
 
-    connect(convertButton, SIGNAL(clicked()), this, SLOT(convert()));
-    connect(convertSelectedButton, SIGNAL(clicked()), this,
-            SLOT(convertSelected()));
-
-    connect(rotateCheckBox,SIGNAL(stateChanged (int)), SLOT(verify(int)));
-    connect(filesTreeView, SIGNAL(customContextMenuRequested (QPoint)),
-            SLOT(showMenu(QPoint)));
-
-    connect(filesTreeView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem *, int)),
-            SLOT(showPreview(QTreeWidgetItem *, int)));
-
-    connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
+    // menu actions
     connect(actionExit, SIGNAL(triggered()), SLOT(close()));
     connect(actionAbout_Qt, SIGNAL(triggered()),qApp, SLOT(aboutQt()));
     connect(actionAbout_Sir, SIGNAL(triggered()), this, SLOT(about()));
     connect(actionOptions, SIGNAL(triggered()), this, SLOT(setOptions()));
-    connect(actionCheckforUpdates, SIGNAL(triggered()), this,
-            SLOT(checkUpdates()));
+    connect(actionCheckforUpdates, SIGNAL(triggered()), SLOT(checkUpdates()));
+    connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
+
+    // tree view events
+    connect(filesTreeView, SIGNAL(customContextMenuRequested (QPoint)),
+            SLOT(showMenu(QPoint)));
+    connect(filesTreeView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem *, int)),
+            SLOT(showPreview(QTreeWidgetItem *, int)));
     connect(filesTreeView, SIGNAL(changed()), SLOT(updateTree()));
 
-    connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
-    connect(actionRemoveAll, SIGNAL(triggered()), SLOT(removeAll()));
-    
+    // browse button
+    connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
+
+    // convert... & stop/exit buttons
+    connect(convertButton, SIGNAL(clicked()), this, SLOT(convert()));
+    connect(convertSelectedButton, SIGNAL(clicked()), SLOT(convertSelected()));
+    connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
+
+    // size tab
+    connect(rotateCheckBox,SIGNAL(stateChanged (int)), SLOT(verify(int)));
+    connect(sizeUnitComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(setSizeUnit(int)));
+    connectSizeLinesEdit();
 }
 
 void ConvertDialog::createActions()
@@ -313,12 +316,12 @@ void ConvertDialog::init() {
     QCompleter *completer2 = new QCompleter(wordList, this);
     completer2->setCaseSensitivity(Qt::CaseInsensitive);
     destPrefixEdit->setCompleter(completer2);
-    
+
     convertProgressBar->setValue(0);
     createConnections();
     createActions();
-	
-	converting = false;
+
+    converting = false;
 }
 
 void ConvertDialog::browseDestination() {
@@ -878,7 +881,7 @@ void ConvertDialog::readSettings() {
         if (settings.value("maximized",false).toBool())
             this->showMaximized();
     }
-    settings.endGroup();
+    settings.endGroup(); // MainWindow
     settings.beginGroup("Settings");
 
     destFileEdit->setText(settings.value("targetFolder",
@@ -887,9 +890,19 @@ void ConvertDialog::readSettings() {
     targetFormatComboBox->setCurrentIndex(settings.value("targetFormat",
                                                          0).toInt());
 
-    widthLineEdit->setText(settings.value("width", "800").toString());
-    heightLineEdit->setText(settings.value("height", "600").toString());
+    sizeWidthString = settings.value("width", "800").toString();
+    widthLineEdit->setText(sizeWidthString);
+    widthLineEdit->setText(settings.value("widthPercent", "100").toString());
+    sizeHeightString = settings.value("height", "600").toString();
+    heightLineEdit->setText(sizeHeightString);
+    heightLineEdit->setText(settings.value("heightPercent", "100").toString());
+    int sizeUnitIndex = settings.value("sizeUnit", 0).toInt();
+    setSizeUnit(sizeUnitIndex);
+    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
+    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
+    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
     destPrefixEdit->setText(settings.value("targetPrefix", "web").toString());
+    destSuffixEdit->setText(settings.value("targetSuffix", "thumb").toString());
     qualitySpinBox->setValue(settings.value("quality", 100).toInt());
 
     numThreads = settings.value("cores", 0).toInt();
@@ -936,8 +949,7 @@ void ConvertDialog::readSettings() {
     }
 
     retranslateStrings();
-    settings.endGroup();
-
+    settings.endGroup(); // Settings
 
     settings.beginGroup("Exif");
     bool exifOverwrite;
@@ -960,7 +972,7 @@ void ConvertDialog::readSettings() {
         MetadataUtils::Exif::setUserCommentString( MetadataUtils::String(
                     settings.value("userCommentMap").toMap().keys().first() ) );
 
-    settings.endGroup();
+    settings.endGroup(); // Exif
 }
 
 void ConvertDialog::changeEvent(QEvent *e) {
@@ -979,16 +991,16 @@ QStringList * ConvertDialog::makeList() {
     int count = filesTreeView->topLevelItemCount();
     QStringList *list = new QStringList();
 
-    
+
     if (count > 0) {
 
         QString imagePath;
         QTreeWidgetItem *item;
 
         for (int i = 0; i < count; i++) {
-        
+
             item = filesTreeView->topLevelItem(i);
-            
+
             if (!item->text(2).endsWith("/")) {
                 imagePath = item->text(2) + QDir::separator() +item->text(0);
                 imagePath += "." + item->text(1);
@@ -996,14 +1008,14 @@ QStringList * ConvertDialog::makeList() {
             else {
                 imagePath = item->text(2) +item->text(0) + "." +item->text(1);
             }
-            
+
             imagePath = QDir::fromNativeSeparators(imagePath);
-            
+
             list->append(imagePath);
         }
 
     }
-    
+
     return list;
 }
 
@@ -1152,8 +1164,12 @@ void ConvertDialog::retranslateStrings() {
 
     QList<QString> itemList;
     QString fileName;
-    
+    int sizeUnitIndex = sizeUnitComboBox->currentIndex();
+    int fileSizeIndex = fileSizeComboBox->currentIndex();
     retranslateUi(this);
+    // restoring nulled indexes
+    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
+    fileSizeComboBox->setCurrentIndex(fileSizeIndex);
     
     itemList.append(tr("Name"));
     itemList.append(tr("Ext"));
@@ -1243,3 +1259,40 @@ void ConvertDialog::setCanceled() {
 		}
 }
 
+void ConvertDialog::setSizeUnit(int index) {
+    if (index < 0)
+        return;
+    static int lastIndex = index + 1;
+    if (index == 2) { // bytes
+        geometryWidget->hide();
+        fileSizeWidget->show();
+    }
+    else { // px or %
+        fileSizeWidget->hide();
+        geometryWidget->show();
+        disconnectSizeLinesEdit();
+        if (lastIndex != index) {
+            QString tmp = sizeWidthString;
+            sizeWidthString = widthLineEdit->text();
+            widthLineEdit->setText(tmp);
+            tmp = sizeHeightString;
+            sizeHeightString = heightLineEdit->text();
+            heightLineEdit->setText(tmp);
+        }
+        if (maintainCheckBox->isChecked() && index == 1) // %
+            heightLineEdit->setText( widthLineEdit->text() );
+        connectSizeLinesEdit();
+        lastIndex = index;
+    }
+}
+
+void ConvertDialog::sizeChanged(const QString &value) {
+    // size unit is % and maintainCheckBox is checked
+    if (sizeUnitComboBox->currentIndex() == 1 && maintainCheckBox->isChecked()) {
+        QString senderName = sender()->objectName();
+        if (senderName == "widthLineEdit")
+            heightLineEdit->setText(value);
+        else if(senderName == "heightLineEdit")
+            widthLineEdit->setText(value);
+    }
+}

@@ -35,6 +35,7 @@
 
 #include "optionsdialog.h"
 #include "languageutils.h"
+#include "convertdialog.h"
 
 quint8 OptionsDialog::maxCoresCount = 50;
 
@@ -54,7 +55,15 @@ OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, 
     fileToNiceName = new QMap<QString, QString>();
 
     targetFormatComboBox->insertItems(0,list);
-    connect(okButton,SIGNAL(clicked()), this, SLOT(writeSettings()));
+
+    // copying items of combo boxes from parent ConvertDialog window
+    ConvertDialog* mainWindow = (ConvertDialog*)parent;
+    int size = mainWindow->sizeUnitComboBox->count();
+    for (int i=0; i<size; i++)
+        sizeUnitComboBox->addItem(mainWindow->sizeUnitComboBox->itemText(i));
+    size = mainWindow->fileSizeComboBox->count();
+    for (int i=0; i<size; i++)
+        fileSizeComboBox->addItem(mainWindow->fileSizeComboBox->itemText(i));
 
     QCompleter *completer = new QCompleter(this);
     QDirModel *dir = new QDirModel(completer);
@@ -113,6 +122,9 @@ void OptionsDialog::createConnections() {
     // raw
     connect(dcrawPushButton, SIGNAL(clicked()), this, SLOT(browseDcraw()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)), SLOT(setRawStatus(int)));
+
+    // ok button
+    connect(okButton,SIGNAL(clicked()), this, SLOT(writeSettings()));
 }
 
 void OptionsDialog::setupWindow() {
@@ -233,9 +245,15 @@ void OptionsDialog::writeSettings() {
     settings.beginGroup("Settings");
     settings.setValue("targetFolder", targetFolderLineEdit->text());
     settings.setValue("targetFormat", targetFormatComboBox->currentIndex());
+    settings.setValue("sizeUnit", sizeUnitComboBox->currentIndex());
     settings.setValue("width",widthLineEdit->text());
+    settings.setValue("widthPercent", widthPercentLineEdit->text());
     settings.setValue("height",heightLineEdit->text());
+    settings.setValue("heightPercent", heightPercentLineEdit->text());
+    settings.setValue("fileSizeValue", fileSizeSpinBox->value());
+    settings.setValue("fileSizeUnit", fileSizeComboBox->currentIndex());
     settings.setValue("targetPrefix",targetPrefixLineEdit->text());
+    settings.setValue("targetSuffix", targetSuffixLineEdit->text());
     settings.setValue("quality", qualitySpinBox->value());
     settings.setValue("languageNiceName", languagesComboBox->currentText());
     settings.setValue("languageFileName",
@@ -283,7 +301,7 @@ void OptionsDialog::writeSettings() {
     settings.setValue("updateThumbnail", thumbUpdateCheckBox->isChecked());
     settings.setValue("rotateThumbnail", thumbRotateCheckBox->isChecked());
 
-    settings.endGroup();
+    settings.endGroup(); // Settings
 
     // metadata (Exif part)
     settings.beginGroup("Exif");
@@ -306,7 +324,7 @@ void OptionsDialog::writeSettings() {
     settings.setValue("userCommentMap", exifMap);
     settings.setValue("userCommentList", exifList);
 
-    settings.endGroup();
+    settings.endGroup(); // Exif
 }
 
 void OptionsDialog::readSettings() {
@@ -322,9 +340,15 @@ void OptionsDialog::readSettings() {
     targetFolderLineEdit->setText(settings.value("targetFolder",
                                                  QDir::homePath()).toString());
     targetFormatComboBox->setCurrentIndex(settings.value("targetFormat", 0).toInt());
+    sizeUnitComboBox->setCurrentIndex(settings.value("sizeUnit", 0).toInt());
     widthLineEdit->setText(settings.value("width", "800").toString());
+    widthPercentLineEdit->setText(settings.value("widthPercent", "100").toString());
     heightLineEdit->setText(settings.value("height", "600").toString());
+    heightPercentLineEdit->setText(settings.value("heightPercent", "100").toString());
+    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
+    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
     targetPrefixLineEdit->setText(settings.value("targetPrefix", "web").toString());
+    targetSuffixLineEdit->setText(settings.value("targetSuffix", "thumb").toString());
     qualitySpinBox->setValue(settings.value("quality", 100).toInt());
 
     languagesComboBox->setCurrentIndex(languagesComboBox->findText(
@@ -367,7 +391,7 @@ void OptionsDialog::readSettings() {
         rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
     }
 
-    settings.endGroup();
+    settings.endGroup(); // Settings
 
     // metadata (Exif part)
     settings.beginGroup("Exif");
@@ -405,7 +429,7 @@ void OptionsDialog::readSettings() {
                         maxHistoryCount);
     exifUserCommentComboBox->setEnabled(exifOverwrite);
 
-    settings.endGroup();
+    settings.endGroup(); // Exif
 }
 
 void OptionsDialog::createLanguageMenu() {
