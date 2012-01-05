@@ -203,7 +203,7 @@ void ConvertDialog::showSendInstallResult(QString *result, bool error) {
                                     "this month!").arg(*result));
 
         QSettings settings("SIR");
-        settings.beginGroup("MainWindow");
+        settings.beginGroup("Settings");
         settings.setValue("alreadSent", true);
         settings.endGroup();
 
@@ -862,7 +862,7 @@ void ConvertDialog::readSettings() {
     QSettings settings("SIR");
     settings.beginGroup("MainWindow");
     if (settings.value("cores",-1).toInt() != -1) {
-        //Old format settings - need migration
+        //Old format settings from SIR 2.1 - need migration to SIR 2.2 format
         QFile configFile(settings.fileName());
         if (configFile.open(QIODevice::ReadWrite)) {
             QString fileContent = configFile.read(configFile.size());
@@ -871,7 +871,7 @@ void ConvertDialog::readSettings() {
             if (configFile.seek(0))
                 configFile.write(fileContent.toAscii());
             else
-                qDebug("ConvertDialog: settings migration failed");
+                qWarning("ConvertDialog: settings migration failed");
             configFile.close();
         }
     }
@@ -881,7 +881,30 @@ void ConvertDialog::readSettings() {
         if (settings.value("maximized",false).toBool())
             this->showMaximized();
     }
+    //Old format settings from SIR 2.2
+    bool oldFormat22 = settings.value("alreadSent",false).toBool();
     settings.endGroup(); // MainWindow
+
+    if (oldFormat22) { // migrate settings from SIR 2.2
+        settings.remove("MainWindow/alreadSent");
+        settings.setValue("Settings/alreadSent",oldFormat22);
+        sizeWidthString = settings.value("Settings/width", "800").toString();
+        settings.remove("Settings/width");
+        settings.setValue("Size/widthPx",sizeWidthString);
+        sizeHeightString = settings.value("Settings/height", "600").toString();
+        settings.remove("Settings/height");
+        settings.setValue("Size/heightPx",sizeHeightString);
+        bool metadata = settings.value("Settings/metadata",true).toBool();
+        settings.remove("Settings/metadata");
+        settings.setValue("Metadata/metadata",metadata);
+        bool saveMetadata = settings.value("Settings/saveMetadata",true).toBool();
+        settings.remove("Settings/saveMetadata");
+        settings.setValue("Metadata/saveMetadata",saveMetadata);
+        rawEnabled = settings.value("Settings/raw", false).toBool();
+        settings.remove("Settings/raw");
+        settings.setValue("Raw/raw",rawEnabled);
+    }
+
     settings.beginGroup("Settings");
 
     destFileEdit->setText(settings.value("targetFolder",
@@ -890,17 +913,6 @@ void ConvertDialog::readSettings() {
     targetFormatComboBox->setCurrentIndex(settings.value("targetFormat",
                                                          0).toInt());
 
-    sizeWidthString = settings.value("width", "800").toString();
-    widthLineEdit->setText(sizeWidthString);
-    widthLineEdit->setText(settings.value("widthPercent", "100").toString());
-    sizeHeightString = settings.value("height", "600").toString();
-    heightLineEdit->setText(sizeHeightString);
-    heightLineEdit->setText(settings.value("heightPercent", "100").toString());
-    int sizeUnitIndex = settings.value("sizeUnit", 0).toInt();
-    setSizeUnit(sizeUnitIndex);
-    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
-    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
-    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
     destPrefixEdit->setText(settings.value("targetPrefix", "web").toString());
     destSuffixEdit->setText(settings.value("targetSuffix", "thumb").toString());
     qualitySpinBox->setValue(settings.value("quality", 100).toInt());
@@ -908,20 +920,6 @@ void ConvertDialog::readSettings() {
     numThreads = settings.value("cores", 0).toInt();
     if (numThreads == 0)
         numThreads = OptionsDialog::detectCoresCount();
-
-    MetadataUtils::Metadata::setEnabled(settings.value("metadata",true).toBool());
-    bool saveMetadata = settings.value("saveMetadata",true).toBool();
-    MetadataUtils::Metadata::setSave(saveMetadata);
-    ConvertThread::setSaveMetadata(saveMetadata);
-    if (saveMetadata) {
-        ConvertThread::setRealRotate(settings.value("realRotate",false).toBool());
-        ConvertThread::setUpdateThumbnail(
-                    settings.value("updateThumbnail",true).toBool() );
-        ConvertThread::setRotateThumbnail(
-                    settings.value("rotateThumbnail",false).toBool() );
-    }
-    else
-        ConvertThread::setRealRotate(true);
     
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
@@ -931,7 +929,28 @@ void ConvertDialog::readSettings() {
     
     alreadSent = settings.value("alreadSent",false).toBool();
 
-    rawEnabled = settings.value("raw", false).toBool();
+    retranslateStrings();
+    settings.endGroup(); // Settings
+
+    settings.beginGroup("Size");
+    if (!oldFormat22) {
+        sizeWidthString = settings.value("widthPx", "800").toString();
+        sizeHeightString = settings.value("heightPx", "600").toString();
+    }
+    widthLineEdit->setText(sizeWidthString);
+    widthLineEdit->setText(settings.value("widthPercent", "100").toString());
+    heightLineEdit->setText(sizeHeightString);
+    heightLineEdit->setText(settings.value("heightPercent", "100").toString());
+    int sizeUnitIndex = settings.value("sizeUnit", 0).toInt();
+    setSizeUnit(sizeUnitIndex);
+    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
+    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
+    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
+    settings.endGroup(); // Size
+
+    settings.beginGroup("Raw");
+    if (!oldFormat22)
+        rawEnabled = settings.value("raw", false).toBool();
 
     if(rawEnabled) {
         foreach(QString ext, rawFormats) {
@@ -947,9 +966,23 @@ void ConvertDialog::readSettings() {
             }
         }
     }
+    settings.endGroup(); // Raw
 
-    retranslateStrings();
-    settings.endGroup(); // Settings
+    settings.beginGroup("Metadata");
+    MetadataUtils::Metadata::setEnabled(settings.value("metadata",true).toBool());
+    bool saveMetadata = settings.value("saveMetadata",true).toBool();
+    MetadataUtils::Metadata::setSave(saveMetadata);
+    ConvertThread::setSaveMetadata(saveMetadata);
+    if (saveMetadata) {
+        ConvertThread::setRealRotate(settings.value("realRotate",false).toBool());
+        ConvertThread::setUpdateThumbnail(
+                    settings.value("updateThumbnail",true).toBool() );
+        ConvertThread::setRotateThumbnail(
+                    settings.value("rotateThumbnail",false).toBool() );
+    }
+    else
+        ConvertThread::setRealRotate(true);
+    settings.endGroup(); // Metadata
 
     settings.beginGroup("Exif");
     bool exifOverwrite;

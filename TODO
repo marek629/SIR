@@ -3,7 +3,6 @@
     image change (next, previous)
     * change flip icons
   2 Correction convert dialog
-    * add check box "don't change image size"
     * add percentage (%) change image size possibility
     * add flip radio buttons near rotation line edit
     * add external columns into tree view like size (px,k/MiB)
@@ -12,6 +11,7 @@
   ! add shutter speed in metadata dialog
   ! optimalize MetadataUtils::Exif::flashString(short num)
     * try convert using << or >> operators
+  ! write slot for 'Delete metadata' button in metadata dialog
   =====================
 
 *** next release ***
