@@ -38,51 +38,45 @@ class ConvertThread : public QThread {
 
 public:
     ConvertThread(QObject *parent, int tid);
-    void setDesiredSize(int width, int height, bool hasWidth = true, bool hasHeight = false, bool maintainAspect = false);
-    void setDesiredFormat(const QString& format);
-    void setDesiredRotation(bool rotate, double angle = 0.0);
-    void setQuality(int quality);
-    void setDestPrefix(const QString& destPrefix);
-    void setDestFolder(const QDir& destFolder);
-    void setOverwriteAll(bool overwriteAll = false);
-    void convertImage(const QString& name, const QString& extension, const QString& path, bool onlySelected = false);
+    static void setDesiredSize(int width, int height, bool percent = false,
+                        bool hasWidth = false, bool hasHeight = false,
+                        bool maintainAspect = true);
+    static void setDesiredSize(int bytes);
+    static void setDesiredFormat(const QString& format);
+    static void setDesiredRotation(bool rotate, double angle = 0.0);
+    static void setQuality(int quality);
+    static void setDestPrefix(const QString& destPrefix);
+    static void setDestSuffix(const QString& destSuffix);
+    static void setDestFolder(const QDir& destFolder);
+    static void setOverwriteAll(bool overwriteAll = false);
+    void convertImage(const QString& name, const QString& extension,
+                      const QString& path);
     void confirmOverwrite(int result);
     void confirmEnlarge(int result);
     void confirmImage();
     void setAcceptWork(bool work);
     void getNextOrStop();
     void printError();
-    static SharedInformation *shared;
     static void setSaveMetadata(bool value);
     static void setRealRotate(bool rotate);
     static void setUpdateThumbnail(bool update);
     static void setRotateThumbnail(bool rotate);
 
+    static SharedInformation *shared;
+
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
     void question(const QString& targetFile, int tid, const QString& whatToDo);
-    void getNextImage(int tid, bool onlySelected);
+    void getNextImage(int tid);
 
 private:
     void run();
 
-    int m_width;
-    int m_height;
-    bool m_hasWidth;
-    bool m_hasHeight;
-    bool m_maintainAspect;
     bool work;
     QStringList imageData;
-    QString m_format;
-    bool m_rotate;
-    double m_angle;
-    int m_quality;
-    QString m_destPrefix;
-    QDir m_destFolder;
     QMutex imageMutex;
     QWaitCondition imageCondition;
     int tid;
-    bool onlySelected;
     QMutex overwriteMutex;
     QWaitCondition overwriteCondition;
     QMutex enlargeMutex;

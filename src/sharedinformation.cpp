@@ -25,11 +25,27 @@
 
 SharedInformation::SharedInformation() {
 
-    overwriteAll=false;
-    noOverwriteAll=false;
-    abort=false;
-    overwriteResult=1;
-    enlargeAll=false;
-    noEnlargeAll=false;
-    enlargeResult=1;
+    overwriteAll = false;
+    noOverwriteAll = false;
+    overwriteResult = 1;
+    abort = false;
+    enlargeAll = false;
+    noEnlargeAll = false;
+    enlargeResult = 1;
+
+    width = 0;
+    height = 0;
+    hasWidth = false;
+    hasHeight = false;
+    maintainAspect = true;
+    sizeBytes = 0;
+    sizeUnit = 0;
+    quality = 100;
+    rotate = false;
+    angle = 0.;
+
+    saveMetadata = true;
+    realRotate = false;
+    updateThumbnail = true;
+    rotateThumbnail = false;
 }

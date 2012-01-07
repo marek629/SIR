@@ -245,28 +245,32 @@ void OptionsDialog::writeSettings() {
     settings.beginGroup("Settings");
     settings.setValue("targetFolder", targetFolderLineEdit->text());
     settings.setValue("targetFormat", targetFormatComboBox->currentIndex());
-    settings.setValue("sizeUnit", sizeUnitComboBox->currentIndex());
-    settings.setValue("width",widthLineEdit->text());
-    settings.setValue("widthPercent", widthPercentLineEdit->text());
-    settings.setValue("height",heightLineEdit->text());
-    settings.setValue("heightPercent", heightPercentLineEdit->text());
-    settings.setValue("fileSizeValue", fileSizeSpinBox->value());
-    settings.setValue("fileSizeUnit", fileSizeComboBox->currentIndex());
     settings.setValue("targetPrefix",targetPrefixLineEdit->text());
     settings.setValue("targetSuffix", targetSuffixLineEdit->text());
     settings.setValue("quality", qualitySpinBox->value());
     settings.setValue("languageNiceName", languagesComboBox->currentText());
     settings.setValue("languageFileName",
                       fileToNiceName->value(languagesComboBox->currentText()));
-
     if (coresCheckBox->isChecked())
         settings.setValue("cores", 0);
     else
         settings.setValue("cores", coresSpinBox->value());
-
     settings.setValue("maxHistoryCount", historySpinBox->value());
+    settings.endGroup(); // Settings
+
+    // size
+    settings.beginGroup("Size");
+    settings.setValue("sizeUnit", sizeUnitComboBox->currentIndex());
+    settings.setValue("widthPx",widthLineEdit->text());
+    settings.setValue("widthPercent", widthPercentLineEdit->text());
+    settings.setValue("heightPx",heightLineEdit->text());
+    settings.setValue("heightPercent", heightPercentLineEdit->text());
+    settings.setValue("fileSizeValue", fileSizeSpinBox->value());
+    settings.setValue("fileSizeUnit", fileSizeComboBox->currentIndex());
+    settings.endGroup(); // Size
 
     // raw
+    settings.beginGroup("Raw");
     bool dcrawOk = false;
     bool firstState = rawCheckBox->isChecked();
     //check dcraw executable
@@ -293,15 +297,16 @@ void OptionsDialog::writeSettings() {
         emit ok();
         this->close();
     }
+    settings.endGroup(); // Raw
 
     // metadata (general part)
+    settings.beginGroup("Metadata");
     settings.setValue("metadata", metadataCheckBox->isChecked());
     settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
     settings.setValue("realRotate", rotateRadioButton->isChecked());
     settings.setValue("updateThumbnail", thumbUpdateCheckBox->isChecked());
     settings.setValue("rotateThumbnail", thumbRotateCheckBox->isChecked());
-
-    settings.endGroup(); // Settings
+    settings.endGroup(); // Metadata
 
     // metadata (Exif part)
     settings.beginGroup("Exif");
@@ -340,22 +345,13 @@ void OptionsDialog::readSettings() {
     targetFolderLineEdit->setText(settings.value("targetFolder",
                                                  QDir::homePath()).toString());
     targetFormatComboBox->setCurrentIndex(settings.value("targetFormat", 0).toInt());
-    sizeUnitComboBox->setCurrentIndex(settings.value("sizeUnit", 0).toInt());
-    widthLineEdit->setText(settings.value("width", "800").toString());
-    widthPercentLineEdit->setText(settings.value("widthPercent", "100").toString());
-    heightLineEdit->setText(settings.value("height", "600").toString());
-    heightPercentLineEdit->setText(settings.value("heightPercent", "100").toString());
-    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
-    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
     targetPrefixLineEdit->setText(settings.value("targetPrefix", "web").toString());
     targetSuffixLineEdit->setText(settings.value("targetSuffix", "thumb").toString());
     qualitySpinBox->setValue(settings.value("quality", 100).toInt());
-
     languagesComboBox->setCurrentIndex(languagesComboBox->findText(
         settings.value("languageNiceName",defaultLanguage).toString(),
         Qt::MatchExactly)
     );
-
     coresCount = settings.value("cores",0).toInt();
     if (coresCount == 0) {
         coresCheckBox->setChecked(true);
@@ -365,19 +361,32 @@ void OptionsDialog::readSettings() {
         coresCheckBox->setChecked(false);
         respondCoresSpinBox(false);
     }
-
     maxHistoryCount = settings.value("maxHistoryCount",5).toInt();
     historySpinBox->setValue(maxHistoryCount);
+    settings.endGroup(); // Settings
+
+    // size
+    settings.beginGroup("Size");
+    sizeUnitComboBox->setCurrentIndex(settings.value("sizeUnit", 0).toInt());
+    widthLineEdit->setText(settings.value("widthPx", "800").toString());
+    widthPercentLineEdit->setText(settings.value("widthPercent", "100").toString());
+    heightLineEdit->setText(settings.value("heightPx", "600").toString());
+    heightPercentLineEdit->setText(settings.value("heightPercent", "100").toString());
+    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
+    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
+    settings.endGroup(); // Size
 
     // raw
+    settings.beginGroup("Raw");
     int state = settings.value("raw", false).toBool();
     rawCheckBox->setChecked(state);
     setRawStatus(state);
-
     dcrawLineEdit->setText(settings.value("dcrawPath", "/usr/bin/dcraw").toString());
     dcrawOptions->setText(settings.value("dcrawOptions", "").toString());
+    settings.endGroup(); // Raw
 
     // metadata (general part)
+    settings.beginGroup("Metadata");
     metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
     if (!metadataCheckBox->isChecked())
         saveMetadataCheckBox->setEnabled(false);
@@ -390,12 +399,10 @@ void OptionsDialog::readSettings() {
             thumbRotateCheckBox->setChecked(settings.value("rotateThumbnail",false).toBool());
         rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
     }
-
-    settings.endGroup(); // Settings
+    settings.endGroup(); // Metadata
 
     // metadata (Exif part)
     settings.beginGroup("Exif");
-
     bool exifOverwrite;
     QMap<QString,QVariant> exifDefaultMap;
 

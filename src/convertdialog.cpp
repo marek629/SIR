@@ -108,7 +108,7 @@ void ConvertDialog::createConnections() {
     connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
 
     // convert... & stop/exit buttons
-    connect(convertButton, SIGNAL(clicked()), this, SLOT(convert()));
+    connect(convertButton, SIGNAL(clicked()), this, SLOT(convertAll()));
     connect(convertSelectedButton, SIGNAL(clicked()), SLOT(convertSelected()));
     connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
 
@@ -256,11 +256,11 @@ void ConvertDialog::setupThreads(int numThreads) {
     // clearing list of threads
     while (!convertThreads.isEmpty())
         delete convertThreads.takeFirst();
-    
+
     for(int i = 0; i < numThreads; i++) {
         convertThreads.append(new ConvertThread(this, i));
     }
-    
+
     for (int i = 0; i < numThreads; i++) {
         connect(convertThreads[i],
                 SIGNAL(question(const QString &, int, const QString&)),this,
@@ -282,12 +282,12 @@ void ConvertDialog::init() {
 
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
     QStringList list;
-    
+
     foreach(QByteArray format, imageFormats)
     {
         list.append(QString(format));
     }
-    
+
     targetFormatComboBox->insertItems(0,list);
     fileFilters = "*.";
     fileFilters.append(list.join(" *.").toLower());
@@ -304,13 +304,13 @@ void ConvertDialog::init() {
         argsList = args.split("**");
         initList();
     }
-    
+
     QCompleter *completer = new QCompleter(this);
     QDirModel *dir = new QDirModel(completer);
     dir->setFilter(QDir::AllDirs);
     completer->setModel(dir);
     destFileEdit->setCompleter(completer);
-    
+
     QStringList wordList;
     wordList << "web" << "thumb" << "thumbnail" << "resized" << "new";
     QCompleter *completer2 = new QCompleter(wordList, this);
@@ -327,148 +327,37 @@ void ConvertDialog::init() {
 void ConvertDialog::browseDestination() {
 
     QString initialName = destFileEdit->text();
-    
+
     if (initialName.isEmpty())
         initialName = QDir::homePath();
-        
+
     QString fileName = QFileDialog::getExistingDirectory(
                            this,
                            tr("Choose a directory"),
                            initialName,
                            QFileDialog::ShowDirsOnly );
-                           
+
     fileName = QDir::convertSeparators(fileName);
-    
+
     if (!fileName.isEmpty()) {
         destFileEdit->setText(fileName);
     }
 }
 
-void ConvertDialog::giveNextImage(int threadNum, bool onlySelected) {
+void ConvertDialog::giveNextImage(int threadNum) {
 
     QTreeWidgetItem *item = NULL;
-    
+
     if(convertedImages < numImages) {
-
-        if(onlySelected) {
-            item = selectedItems[convertedImages];
-        }
-        else {
-            item = filesTreeView->topLevelItem(convertedImages);
-        }
-
+        item = itemsToConvert[convertedImages];
         convertThreads[threadNum]->convertImage(item->text(0), item->text(1),
                                                 item->text(2));
-
         convertThreads[threadNum]->confirmImage();
         convertedImages++;
-        
     }
     else {
         convertThreads[threadNum]->setAcceptWork(false);
-        convertThreads[threadNum]->confirmImage();        
-    }    
-}
-
-void ConvertDialog::convert() {
-
-    resetAnswers();
-    bool hasWidth = false;
-    bool hasHeight = false;
-
-    int w = 0;
-    int h = 0;
-
-    QDir destFolder(destFileEdit->text());
-
-    QString destPrefix = destPrefixEdit->text();
-
-    if (!widthLineEdit->text().isEmpty()) {
-        w = widthLineEdit->text().toInt();
-        hasWidth = true;
-    }
-
-    if (!heightLineEdit->text().isEmpty()) {
-        h = heightLineEdit->text().toInt();
-        hasHeight = true;
-    }
-
-    if (!destFolder.exists()) {
-    
-        switch ( QMessageBox::question(
-                 this,
-                 tr("Create Folder? -- SIR"),
-                 tr("The folder %1 do not exists."
-                    "Do you want to create it?").arg(destFolder.absolutePath()),
-                    tr("&Yes"), tr("&No") , 0, 1 ) ) {
-        
-            case 0:
-            if (!destFolder.mkdir(destFolder.absolutePath())) {
-                QMessageBox::warning(
-                        this, "SIR",
-                        tr("Unable to create target folder.")
-                        );
-                return;
-            }
-            break;
-            
-            case 1:
-            return;
-        }        
-    }
-    
-    QTreeWidgetItem *item;
-    
-    convertProgressBar->setRange(0,filesTreeView->topLevelItemCount());
-    convertProgressBar->setValue(0);
-    numImages = filesTreeView->topLevelItemCount();
-    convertedImages = 0;
-    int nt = numThreads;
-    
-    if (numImages > 0) {
-    
-        if(numImages < nt) {
-            nt = numImages;
-        }
-     
-		quitButton->setText(tr("Cancel"));
-		converting = true;
-		this->setCursor(Qt::WaitCursor);    
-		convertButton->setEnabled(false);
-	 
-        //Start the worker threads
-        setupThreads(nt);
-        
-        //Gives a image to each thread convert
-        for(int i = 0; i < nt; i++) {
-            convertThreads[i]->setDesiredSize( w, h, hasWidth, hasHeight,
-                                               maintainCheckBox->isChecked() );
-            QString desiredFormat = targetFormatComboBox->currentText().toLower();
-            convertThreads[i]->setDesiredFormat( desiredFormat );
-
-            convertThreads[i]->setDesiredRotation(rotateCheckBox->isChecked(),
-                                                  rotateLineEdit->text().toDouble());
-
-            convertThreads[i]->setQuality( qualitySpinBox->value() );
-            convertThreads[i]->setDestPrefix( destPrefix );
-            convertThreads[i]->setDestFolder( destFolder );
-            convertThreads[i]->setOverwriteAll( false );
-            convertThreads[i]->setAcceptWork( true );
-            item = filesTreeView->topLevelItem(convertedImages);
-            convertThreads[i]->convertImage(item->text(0), item->text(1),
-                                            item->text(2));
-            convertedImages++;
-        }
-        
-    }
-    else {
-    
-        QMessageBox::warning(
-            this, "SIR",
-            tr("Please add at least one image file." ));
-            
-        convertButton->setEnabled(TRUE);
-        
+        convertThreads[threadNum]->confirmImage();
     }
 }
 
@@ -477,27 +366,27 @@ void ConvertDialog::addDir() {
     if(lastDir == "") {
         lastDir = QDir::homePath();
     }
-        
+
     QTreeWidgetItem *item;
-    
+
     QString fileName = QFileDialog::getExistingDirectory(
                        this,
                        tr("Choose a directory"),
                        lastDir,
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-                           
+
     fileName = QDir::convertSeparators(fileName);
-    
+
     lastDir = fileName;
-    
+
     if (!fileName.isEmpty()) {
         QDir sourceFolder(fileName,fileFilters);
         sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-        
+
         QList<QFileInfo> list = sourceFolder.entryInfoList();
         QListIterator<QFileInfo> it(list);
         QFileInfo fi;
-        
+
         while ( it.hasNext() ) {
             fi = it.next();
             QList<QString> itemList;
@@ -509,11 +398,11 @@ void ConvertDialog::addDir() {
             filesTreeView->addTopLevelItem(item);
             statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
         }
-        
+
         convertButton->setEnabled(TRUE);
         convertSelectedButton->setEnabled(TRUE);
     }
-    
+
     filesTreeView->resizeColumnToContents (0);
     filesTreeView->resizeColumnToContents (1);
     filesTreeView->resizeColumnToContents (2);
@@ -530,17 +419,17 @@ void ConvertDialog::removeAll() {
     convertSelectedButton->setEnabled(FALSE);
     convertProgressBar->reset();
     statusList->clear();
-    
+
 }
 
 void ConvertDialog::removeSelectedFromList() {
 
     QTreeWidgetItem *item;
     QString fileName;
-    
+
     for (int i = 0; i < filesTreeView->topLevelItemCount(); i++)
     {
-    
+
         if ((filesTreeView->topLevelItem(i))->isSelected()) {
             item = filesTreeView->takeTopLevelItem(i);
 
@@ -549,9 +438,9 @@ void ConvertDialog::removeSelectedFromList() {
 
             statusList->remove(fileName);
         }
-        
+
     }
-    
+
     if (filesTreeView->topLevelItemCount() == 0) {
         convertButton->setEnabled(FALSE);
         convertSelectedButton->setEnabled(FALSE);
@@ -563,21 +452,21 @@ void ConvertDialog::addFile() {
     if(lastDir == "") {
         lastDir = QDir::homePath();
     }
-    
+
     QString fileName;
     QString aux = tr("Images") + "(" + fileFilters + ")";
-    
+
     QStringList files = QFileDialog::getOpenFileNames(
                             this,
                             tr("Select one or more files to open"),
                             lastDir,
                             aux
                         );
-                        
-                        
+
+
     QStringList::Iterator it = files.begin();
     QTreeWidgetItem *item;
-    
+
     while ( it != files.end() ) {
         QList<QString> itemList;
         fileName = QDir::convertSeparators(*it);
@@ -587,13 +476,13 @@ void ConvertDialog::addFile() {
         itemList.append(tr("Not converted yet"));
         statusList->insert(QFileInfo(fileName).absoluteFilePath(),
                            NOTCONVERTED);
-        
+
         item = new QTreeWidgetItem(itemList);
         filesTreeView->addTopLevelItem(item);
         ++it;
         lastDir = QFileInfo(fileName).path();
     }
-    
+
     convertButton->setEnabled(TRUE);
     convertSelectedButton->setEnabled(TRUE);
     filesTreeView->resizeColumnToContents (0);
@@ -602,8 +491,29 @@ void ConvertDialog::addFile() {
     filesTreeView->resizeColumnToContents (3);
 }
 
-void ConvertDialog::convertSelected() {
+void ConvertDialog::convertAll() {
+    itemsToConvert.clear();
+    for (int i=0; i<filesTreeView->topLevelItemCount(); i++)
+        itemsToConvert.append( filesTreeView->topLevelItem(i) );
+    if (itemsToConvert.isEmpty()) {
+        QMessageBox::warning(this, "SIR",
+                             tr("Please add at least one image file." ));
+        return;
+    }
+    convert();
+}
 
+void ConvertDialog::convertSelected() {
+    itemsToConvert = filesTreeView->selectedItems();
+    if (itemsToConvert.isEmpty()) {
+        QMessageBox::warning( this, "SIR",
+                              tr("Please select at least one image file." ));
+        return;
+    }
+    convert();
+}
+
+void ConvertDialog::convert() {
     resetAnswers();
     bool hasWidth = false;
     bool hasHeight = false;
@@ -612,97 +522,77 @@ void ConvertDialog::convertSelected() {
     int h = 0;
 
     QDir destFolder(destFileEdit->text());
-
     QString destPrefix = destPrefixEdit->text();
 
     if (!widthLineEdit->text().isEmpty()) {
         w = widthLineEdit->text().toInt();
         hasWidth = true;
     }
-
     if (!heightLineEdit->text().isEmpty()) {
         h = heightLineEdit->text().toInt();
         hasHeight = true;
     }
 
     if (!destFolder.exists()) {
-    
-        switch ( QMessageBox::question(
-                     this,
-                     tr("Create Folder? -- SIR"),
-                     tr("The folder %1 do not exists."
-                     "Do you want to create it?").arg(destFolder.absolutePath()),
-                     tr("&Yes"), tr("&No") , 0, 1 ) ) {
-        
+        switch ( QMessageBox::question(this, tr("Create Folder? -- SIR"),
+                                       tr("The folder %1 do not exists."
+                                          "Do you want to create it?").arg(
+                                           destFolder.absolutePath() ),
+                                       tr("&Yes"), tr("&No") , 0, 1 ) ) {
+
             case 0:
-            if (!destFolder.mkdir(destFolder.absolutePath())) {
-                QMessageBox::warning(
-                    this, "SIR",
-                    tr("Unable to create target folder.") );
-                return;
-            }
+                if (!destFolder.mkdir(destFolder.absolutePath())) {
+                    QMessageBox::warning(this, "SIR",
+                                         tr("Unable to create target folder.") );
+                    return;
+                }
             break;
             case 1:
             return;
         }
-        
     }
-    
-	QTreeWidgetItem * item;
-    
-    selectedItems = filesTreeView->selectedItems();
-    
-    numImages = selectedItems.count();
+
+    QTreeWidgetItem * item;
+
+    numImages = itemsToConvert.count();
     convertedImages = 0;
     int nt = numThreads;
-    
-    if (!selectedItems.isEmpty()) {
-	
-		quitButton->setText(tr("Cancel"));
-		converting = true;
-		this->setCursor(Qt::WaitCursor);
-    
-        if(numImages < nt) {
-            nt = numImages;
-        }
-        
-        //Start the worker threads
-        setupThreads(nt);
-        
-        convertProgressBar->setRange(0,selectedItems.count());
-        convertProgressBar->setValue(0);
-        
-        convertSelectedButton->setEnabled(false);
-        convertButton->setEnabled(false);
-        
-        
-        //Gives a image to each thread convert
-        for(int i = 0; i < nt; i++) {
-            convertThreads[i]->setDesiredSize( w, h, hasWidth, hasHeight,
-                                               maintainCheckBox->isChecked() );
-            QString desiredFormat = targetFormatComboBox->currentText().toLower();
-            convertThreads[i]->setDesiredFormat( desiredFormat );
-            convertThreads[i]->setDesiredRotation( rotateCheckBox->isChecked(),
-                                                   rotateLineEdit->text().toDouble() );
-            convertThreads[i]->setQuality( qualitySpinBox->value() );
-            convertThreads[i]->setDestPrefix( destPrefix );
-            convertThreads[i]->setDestFolder( destFolder );
-            convertThreads[i]->setOverwriteAll( false );
-            convertThreads[i]->setAcceptWork( true );
-            item = selectedItems[convertedImages];
-            convertThreads[i]->convertImage(item->text(0), item->text(1),
-                                            item->text(2),  true);
-            convertedImages++;
-        }
-        
+
+    quitButton->setText(tr("Cancel"));
+    converting = true;
+    this->setCursor(Qt::WaitCursor);
+
+    if(numImages < nt) {
+        nt = numImages;
     }
-    else {
-    
-        QMessageBox::warning(
-            this, "SIR",
-            tr("Please select at least one image file." ));
-            
-        convertButton->setEnabled(TRUE);
+
+    //Start the worker threads
+    setupThreads(nt);
+
+    convertProgressBar->setRange(0,itemsToConvert.count());
+    convertProgressBar->setValue(0);
+
+    convertSelectedButton->setEnabled(false);
+    convertButton->setEnabled(false);
+
+    ConvertThread::setDesiredSize( w, h, hasWidth, hasHeight,
+                                       maintainCheckBox->isChecked() );
+    QString desiredFormat = targetFormatComboBox->currentText().toLower();
+    ConvertThread::setDesiredFormat( desiredFormat );
+    ConvertThread::setDesiredRotation( rotateCheckBox->isChecked(),
+                                           rotateLineEdit->text().toDouble() );
+    ConvertThread::setQuality( qualitySpinBox->value() );
+    ConvertThread::setDestPrefix( destPrefix );
+    ConvertThread::setDestFolder( destFolder );
+    ConvertThread::setOverwriteAll( false );
+
+    //Gives a image to each thread convert
+    for(int i = 0; i < nt; i++) {
+        convertThreads[i]->setAcceptWork( true );
+        item = itemsToConvert[convertedImages];
+        convertThreads[i]->convertImage(item->text(0), item->text(1),
+                                        item->text(2));
+        convertedImages++;
     }
 }
 
@@ -719,7 +609,7 @@ void ConvertDialog::verify() {
 void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
 
     Q_UNUSED(col);
-    
+
     QString imagePath = makeImagePath(item);
     QStringList *list = makeList();
     int index = list->indexOf(imagePath);
@@ -742,21 +632,21 @@ void ConvertDialog::initList() {
     QStringList::Iterator it2 = argsList.begin();
     QString fileName;
     QTreeWidgetItem *item;
-    
+
     for ( ; it2 != argsList.end(); ++it2 ) {
         fileName = *it2;
         fileName = QDir::convertSeparators(fileName);
-        
+
         if (!fileName.isEmpty() && QFileInfo(fileName).exists()) {
             //Directory
             if (QFileInfo(fileName).isDir()) {
                 QDir sourceFolder(fileName,fileFilters);
                 sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-                
+
                 QList<QFileInfo> list = sourceFolder.entryInfoList();
                 QListIterator<QFileInfo> it(list);
                 QFileInfo fi;
-                
+
                 while ( it.hasNext() ) {
                     fi = it.next();
                     QList<QString> itemList;
@@ -773,7 +663,7 @@ void ConvertDialog::initList() {
             else {
 
                 int comp = QString::compare("",QFileInfo(fileName).suffix());
-                
+
                 if((fileFilters.contains(QFileInfo(fileName).suffix()))
                     && (comp !=0)) {
 
@@ -790,12 +680,12 @@ void ConvertDialog::initList() {
             }
         }
     }
-    
+
     if (filesTreeView->topLevelItemCount() > 0) {
         convertButton->setEnabled(TRUE);
         convertSelectedButton->setEnabled(TRUE);
     }
-    
+
     filesTreeView->resizeColumnToContents (0);
     filesTreeView->resizeColumnToContents (1);
     filesTreeView->resizeColumnToContents (2);
@@ -841,7 +731,7 @@ void ConvertDialog::about() {
     //about->retranslateUi(about);
     about->exec();
     delete about;
-    
+
 }
 
 void ConvertDialog::setOptions() {
@@ -850,15 +740,15 @@ void ConvertDialog::setOptions() {
     connect( options, SIGNAL( ok() ), SLOT( readSettings() ) );
     options->exec();
     delete options;
-    
+
 }
 
 void ConvertDialog::readSettings() {
 
     QString locale = QLocale::system().name();
-    
+
     QString defaultLanguage = "sir_"+locale+".qm";
-    
+
     QSettings settings("SIR");
     settings.beginGroup("MainWindow");
     if (settings.value("cores",-1).toInt() != -1) {
@@ -881,13 +771,15 @@ void ConvertDialog::readSettings() {
         if (settings.value("maximized",false).toBool())
             this->showMaximized();
     }
-    //Old format settings from SIR 2.2
-    bool oldFormat22 = settings.value("alreadSent",false).toBool();
     settings.endGroup(); // MainWindow
 
-    if (oldFormat22) { // migrate settings from SIR 2.2
+    //Old format settings from SIR 2.2
+    QString testStr = "Errare humanum est.";
+    if (settings.value("Settings/width", testStr).toString() != testStr) {
+        // migrate settings from SIR 2.2
+        bool sent = settings.value("MainWindow/alreadSent",false).toBool();
         settings.remove("MainWindow/alreadSent");
-        settings.setValue("Settings/alreadSent",oldFormat22);
+        settings.setValue("Settings/alreadSent",sent);
         sizeWidthString = settings.value("Settings/width", "800").toString();
         settings.remove("Settings/width");
         settings.setValue("Size/widthPx",sizeWidthString);
@@ -920,27 +812,35 @@ void ConvertDialog::readSettings() {
     numThreads = settings.value("cores", 0).toInt();
     if (numThreads == 0)
         numThreads = OptionsDialog::detectCoresCount();
-    
+
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
                                               defaultLanguage).toString();
 
     appTranslator->load(selectedTranslationFile);
-    
+
     alreadSent = settings.value("alreadSent",false).toBool();
 
     retranslateStrings();
     settings.endGroup(); // Settings
 
     settings.beginGroup("Size");
-    if (!oldFormat22) {
+    if (sizeUnitComboBox->currentIndex() == 1) {
         sizeWidthString = settings.value("widthPx", "800").toString();
         sizeHeightString = settings.value("heightPx", "600").toString();
+        widthLineEdit->setText(sizeWidthString);
+        widthLineEdit->setText(settings.value("widthPercent", "100").toString());
+        heightLineEdit->setText(sizeHeightString);
+        heightLineEdit->setText(settings.value("heightPercent", "100").toString());
     }
-    widthLineEdit->setText(sizeWidthString);
-    widthLineEdit->setText(settings.value("widthPercent", "100").toString());
-    heightLineEdit->setText(sizeHeightString);
-    heightLineEdit->setText(settings.value("heightPercent", "100").toString());
+    else if (sizeUnitComboBox->currentIndex() == 0) {
+        sizeWidthString = settings.value("widthPercent", "100").toString();
+        sizeHeightString = settings.value("heightPercent", "100").toString();
+        widthLineEdit->setText(sizeWidthString);
+        widthLineEdit->setText(settings.value("widthPx", "800").toString());
+        heightLineEdit->setText(sizeHeightString);
+        heightLineEdit->setText(settings.value("heightPx", "600").toString());
+    }
     int sizeUnitIndex = settings.value("sizeUnit", 0).toInt();
     setSizeUnit(sizeUnitIndex);
     sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
@@ -949,9 +849,7 @@ void ConvertDialog::readSettings() {
     settings.endGroup(); // Size
 
     settings.beginGroup("Raw");
-    if (!oldFormat22)
-        rawEnabled = settings.value("raw", false).toBool();
-
+    rawEnabled = settings.value("raw", false).toBool();
     if(rawEnabled) {
         foreach(QString ext, rawFormats) {
             if(!fileFilters.contains(ext)) {
@@ -1072,7 +970,7 @@ void ConvertDialog::updateTree() {
         convertButton->setEnabled(TRUE);
         convertSelectedButton->setEnabled(TRUE);
     }
-    
+
     filesTreeView->resizeColumnToContents (0);
     filesTreeView->resizeColumnToContents (1);
     filesTreeView->resizeColumnToContents (2);
@@ -1090,7 +988,7 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
     }
     int count = filesTreeView->topLevelItemCount();
     QString fileName;
-    
+
     for (int i = 0; i < count; i++)
     {
         QTreeWidgetItem *item = filesTreeView->topLevelItem(i);
@@ -1103,7 +1001,7 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
             break;
         }
     }
-    
+
     if(convertProgressBar->value() == convertProgressBar->maximum()) {
         updateInterface();
     }
@@ -1203,17 +1101,17 @@ void ConvertDialog::retranslateStrings() {
     // restoring nulled indexes
     sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
     fileSizeComboBox->setCurrentIndex(fileSizeIndex);
-    
+
     itemList.append(tr("Name"));
     itemList.append(tr("Ext"));
     itemList.append(tr("Path"));
     itemList.append(tr("Status"));
     filesTreeView->setHeaderLabels(itemList);
-    
+
     QTreeWidgetItemIterator it(filesTreeView);
     int count;
     count = 0;
-    
+
     while (*it)
     {
         fileName = (*it)->text(2) + QDir::separator() +(*it)->text(0) + ".";
@@ -1258,21 +1156,21 @@ void ConvertDialog::closeOrCancel() {
 }
 
 void ConvertDialog::stopConvertThreads() {
-	for (int i = 0; i < numThreads; i++) {
-		convertThreads[i]->terminate();
-	}
+        for (int i = 0; i < numThreads; i++) {
+                convertThreads[i]->terminate();
+        }
 }
 
 void ConvertDialog::updateInterface() {
-	converting = false;
-	convertSelectedButton->setEnabled(true);
+        converting = false;
+        convertSelectedButton->setEnabled(true);
     convertButton->setEnabled(true);
     filesTreeView->resizeColumnToContents (0);
     filesTreeView->resizeColumnToContents (1);
     filesTreeView->resizeColumnToContents (2);
     filesTreeView->resizeColumnToContents (3);
-	setCursor(Qt::ArrowCursor);
-	quitButton->setText(tr("Quit"));
+        setCursor(Qt::ArrowCursor);
+        quitButton->setText(tr("Quit"));
 }
 
 void ConvertDialog::setCanceled() {
@@ -1288,14 +1186,14 @@ void ConvertDialog::setCanceled() {
             item = filesTreeView->topLevelItem(i);
             if(item->text(3) != converted){
                 item->setText(3, status);
-			}
-		}
+                        }
+                }
 }
 
 void ConvertDialog::setSizeUnit(int index) {
     if (index < 0)
         return;
-    static int lastIndex = index + 1;
+    static int lastIndex = index;
     if (index == 2) { // bytes
         geometryWidget->hide();
         fileSizeWidget->show();

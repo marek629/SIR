@@ -69,6 +69,10 @@ private:
     void questionEnlarge(QueryData data);
     inline void writeWindowProperties();
     inline void resetAnswers();
+    QStringList *makeList();
+    QString makeImagePath(QTreeWidgetItem *item);
+    void convert();
+
     QList<ConvertThread*> convertThreads;
     QString args;
     QStringList argsList;
@@ -80,13 +84,11 @@ private:
     PreviewDialog  *previewForm;
     MetadataDialog *metadataForm;
     quint8 numThreads;
-    QStringList *makeList();
-    QString makeImagePath(QTreeWidgetItem *item);
     QTranslator *appTranslator;
     QMap<QString, int>  *statusList;
     int convertedImages;
     int numImages;
-    QList<QTreeWidgetItem *> selectedItems;
+    QList<QTreeWidgetItem *> itemsToConvert;
     bool converting;
     bool rawEnabled;
     bool alreadSent;
@@ -106,7 +108,7 @@ protected:
 
 public slots:
 	virtual void browseDestination();
-	virtual void convert();
+        virtual void convertAll();
 	virtual void addDir();
 	virtual void removeAll();
 	virtual void removeSelectedFromList();
@@ -123,7 +125,7 @@ public slots:
 	virtual void updateTree();
 	virtual void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
     virtual void query(const QString& targetFile, int tid, const QString& whatToDo);
-	virtual void giveNextImage(int tid, bool onlySelected);
+        virtual void giveNextImage(int tid);
 	virtual void setupThreads(int numThreads);
 	virtual void closeOrCancel();
 	virtual void updateInterface();

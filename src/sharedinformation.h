@@ -24,8 +24,9 @@
 #ifndef SHAREDINFORMATION_H
 #define SHAREDINFORMATION_H
 
-#include<QMutex>
-#include<QStringList>
+#include <QMutex>
+#include <QString>
+#include <QDir>
 
 class ConvertThread;
 
@@ -37,10 +38,28 @@ public:
     SharedInformation( const SharedInformation & );
     SharedInformation &operator=( const SharedInformation & );
 
+    quint32 width;
+    quint32 height;
+    bool hasWidth;
+    bool hasHeight;
+    bool maintainAspect;
+    quint32 sizeBytes;
+    char sizeUnit;
+
+    QDir destFolder;
+    QString prefix;
+    QString suffix;
+    QString format;
+    int quality;
+
+    bool rotate;
+    double angle;
+
     bool saveMetadata;
     bool realRotate;
     bool updateThumbnail;
     bool rotateThumbnail;
+
     QMutex mutex;
     bool abort;
 

@@ -31,13 +31,6 @@ SharedInformation* ConvertThread::shared = new SharedInformation();
 ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
 
     this->tid = tid;
-    m_width = 0;
-    m_height = 0;
-    m_hasWidth = false;
-    m_hasHeight = false;
-    m_rotate = false;
-    m_angle = 0.0;
-    m_quality = 100;
     work = true;
 }
 
@@ -61,37 +54,50 @@ void ConvertThread::setAcceptWork(bool work) {
     this->work = work;
 }
 
-void ConvertThread::setDesiredSize(int width, int height, bool hasWidth,
-                                   bool hasHeight, bool maintainAspect) {
+void ConvertThread::setDesiredSize(int width, int height, bool percent,
+                                   bool hasWidth, bool hasHeight,
+                                   bool maintainAspect) {
 
-    m_width = width;
-    m_height = height;
-    m_hasWidth = hasWidth;
-    m_hasHeight = hasHeight;
-    m_maintainAspect = maintainAspect;
+    shared->width = width;
+    shared->height = height;
+    shared->hasWidth = hasWidth;
+    shared->hasHeight = hasHeight;
+    shared->maintainAspect = maintainAspect;
+    if (percent)
+        shared->sizeUnit = 1;
+    else
+        shared->sizeUnit = 0;
 }
 
+void ConvertThread::setDesiredSize(int bytes) {
+    shared->sizeBytes = bytes;
+    shared->sizeUnit = 2;
+}
 
 void ConvertThread::setDesiredFormat(const QString& format) {
-    m_format = format;
+    shared->format = format;
 }
 
 void ConvertThread::setDesiredRotation(bool rotate, double angle) {
-    m_rotate = rotate;
+    shared->rotate = rotate;
     int multipler = angle / 360;
-    m_angle = angle - multipler*360;
+    shared->angle = angle - multipler*360;
 }
 
 void ConvertThread::setQuality(int quality) {
-    m_quality = quality;
+    shared->quality = quality;
 }
 
 void ConvertThread::setDestPrefix(const QString& destPrefix) {
-    m_destPrefix = destPrefix;
+    shared->prefix = destPrefix;
+}
+
+void ConvertThread::setDestSuffix(const QString &destSuffix) {
+    shared->suffix = destSuffix;
 }
 
 void ConvertThread::setDestFolder(const QDir& destFolder) {
-    m_destFolder = destFolder;
+    shared->destFolder = destFolder;
 }
 
 void ConvertThread::setOverwriteAll(bool overwriteAll) {
@@ -100,9 +106,7 @@ void ConvertThread::setOverwriteAll(bool overwriteAll) {
 }
 
 void ConvertThread::convertImage(const QString& name, const QString& extension,
-                                 const QString& path, bool onlySelected) {
-
-    this->onlySelected = onlySelected;
+                                 const QString& path) {
     imageData.clear();
     imageData << name << extension << path;
     if(!isRunning()) {
@@ -129,17 +133,17 @@ void ConvertThread::confirmImage() {
 
 void ConvertThread::run() {
 
-    int width = m_width;
-    int height = m_height;
-    bool hasWidth = m_hasWidth;
-    bool hasHeight = m_hasHeight;
-    bool maintainAspect = m_maintainAspect;
-    QString format = m_format;
-    bool rotate = m_rotate;
-    double angle = m_angle;
-    int quality = m_quality;	
-    QString destPrefix = m_destPrefix;
-    QDir destFolder = m_destFolder;
+    int width = shared->width;
+    int height = shared->height;
+    bool hasWidth = shared->hasWidth;
+    bool hasHeight = shared->hasHeight;
+    bool maintainAspect = shared->maintainAspect;
+    QString format = shared->format;
+    bool rotate = shared->rotate;
+    double angle = shared->angle;
+    int quality = shared->quality;
+    QString destPrefix = shared->prefix;
+    QDir destFolder = shared->destFolder;
     bool rawEnabled = RawUtils::isRawEnabled();
 
     while(work) {
@@ -386,7 +390,7 @@ void ConvertThread::run() {
 
 void ConvertThread::getNextOrStop() {
     imageMutex.lock();
-    emit getNextImage(this->tid, onlySelected);
+    emit getNextImage(this->tid);
     imageCondition.wait(&imageMutex);
     imageMutex.unlock();
 }
