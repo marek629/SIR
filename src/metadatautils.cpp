@@ -7,6 +7,8 @@
 
 bool MetadataUtils::Metadata::enabled = false;
 bool MetadataUtils::Metadata::save = false;
+QStringList MetadataUtils::Metadata::saveMetadataFormats =
+        QStringList() << "jpeg" << "jpg" << "png" << "tif" << "tiff";
 
 MetadataUtils::Metadata::Metadata()
 {
@@ -267,6 +269,10 @@ bool MetadataUtils::Metadata::isSave() {
 
 void MetadataUtils::Metadata::setSave(bool v) {
     save = v;
+}
+
+bool MetadataUtils::Metadata::isWriteSupportedFormat(const QString &format) {
+    return saveMetadataFormats.contains(format);
 }
 
 void MetadataUtils::Metadata::setExifDatum(const std::string &key, int value) {

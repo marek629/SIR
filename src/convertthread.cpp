@@ -76,6 +76,14 @@ void ConvertThread::setDesiredSize(int bytes) {
 
 void ConvertThread::setDesiredFormat(const QString& format) {
     shared->format = format;
+    if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
+        shared->saveMetadata = false;
+        qWarning("Format \"%s\" haven't write metadata support",
+                 format.toAscii().constData());
+    }
+    else
+        shared->saveMetadata = QSettings("SIR").value("Metadata/saveMetadata",
+                                                      true).toBool();
 }
 
 void ConvertThread::setDesiredRotation(bool rotate, double angle) {

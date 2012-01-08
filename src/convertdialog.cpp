@@ -316,6 +316,7 @@ void ConvertDialog::init() {
     QCompleter *completer2 = new QCompleter(wordList, this);
     completer2->setCaseSensitivity(Qt::CaseInsensitive);
     destPrefixEdit->setCompleter(completer2);
+    destSuffixEdit->setCompleter(completer2);
 
     convertProgressBar->setValue(0);
     createConnections();

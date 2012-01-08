@@ -39,6 +39,7 @@ namespace MetadataUtils
         static bool isEnabled();
         static void setSave(bool);
         static bool isSave();
+        static bool isWriteSupportedFormat(const QString &format);
 
 
     private:
@@ -51,6 +52,7 @@ namespace MetadataUtils
         Error lastError_;
         static bool enabled;
         static bool save;
+        static QStringList saveMetadataFormats;
         MetadataUtils::ExifStruct exifStruct_;
     };
 }
