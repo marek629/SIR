@@ -33,11 +33,13 @@ class ConvertThread;
 class SharedInformation {
 
 public:
-    
+    // methods
     SharedInformation();
     SharedInformation( const SharedInformation & );
     SharedInformation &operator=( const SharedInformation & );
 
+    // image data
+    // destinated size
     quint32 width;
     quint32 height;
     bool hasWidth;
@@ -45,28 +47,29 @@ public:
     bool maintainAspect;
     quint32 sizeBytes;
     char sizeUnit;
-
+    // destinated image file parameters
     QDir destFolder;
     QString prefix;
     QString suffix;
     QString format;
     int quality;
-
+    // destinated rotate angle
     bool rotate;
     double angle;
-
+    // metadata settings
     bool saveMetadata;
     bool realRotate;
     bool updateThumbnail;
     bool rotateThumbnail;
 
+    // thread synchronization data
     QMutex mutex;
     bool abort;
-
+    // overwrite
     bool overwriteAll;
     bool noOverwriteAll;
     int overwriteResult;
-
+    // enlarge
     bool enlargeAll;
     bool noEnlargeAll;
     int enlargeResult;

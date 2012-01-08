@@ -273,8 +273,8 @@ void ConvertDialog::setupThreads(int numThreads) {
                 SLOT(setImageStatus(const QStringList &, const QString &, int)),
                 Qt::QueuedConnection);
 
-        connect(convertThreads[i], SIGNAL(getNextImage(int, bool)),this,
-                SLOT(giveNextImage(int, bool)), Qt::QueuedConnection);
+        connect(convertThreads[i], SIGNAL(getNextImage(int)),this,
+                SLOT(giveNextImage(int)), Qt::QueuedConnection);
     }
 }
 
@@ -522,7 +522,6 @@ void ConvertDialog::convert() {
     int h = 0;
 
     QDir destFolder(destFileEdit->text());
-    QString destPrefix = destPrefixEdit->text();
 
     if (!widthLineEdit->text().isEmpty()) {
         w = widthLineEdit->text().toInt();
@@ -575,16 +574,25 @@ void ConvertDialog::convert() {
     convertSelectedButton->setEnabled(false);
     convertButton->setEnabled(false);
 
-    ConvertThread::setDesiredSize( w, h, hasWidth, hasHeight,
+    if (sizeUnitComboBox->currentIndex() == 2) {
+        int multiplier = 1024;
+        if (fileSizeComboBox->currentIndex() == 1)
+            multiplier *= 1024;
+        ConvertThread::setDesiredSize( fileSizeSpinBox->value() * multiplier );
+    }
+    else
+        ConvertThread::setDesiredSize( w, h, (sizeUnitComboBox->currentIndex() == 1),
+                                       hasWidth, hasHeight,
                                        maintainCheckBox->isChecked() );
     QString desiredFormat = targetFormatComboBox->currentText().toLower();
     ConvertThread::setDesiredFormat( desiredFormat );
     ConvertThread::setDesiredRotation( rotateCheckBox->isChecked(),
                                            rotateLineEdit->text().toDouble() );
-    ConvertThread::setQuality( qualitySpinBox->value() );
-    ConvertThread::setDestPrefix( destPrefix );
-    ConvertThread::setDestFolder( destFolder );
-    ConvertThread::setOverwriteAll( false );
+    ConvertThread::setQuality(qualitySpinBox->value());
+    ConvertThread::setDestPrefix(destPrefixEdit->text());
+    ConvertThread::setDestSuffix(destSuffixEdit->text());
+    ConvertThread::setDestFolder(destFolder);
+    ConvertThread::setOverwriteAll(false);
 
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
@@ -825,6 +833,11 @@ void ConvertDialog::readSettings() {
     settings.endGroup(); // Settings
 
     settings.beginGroup("Size");
+    int sizeUnitIndex = settings.value("sizeUnit", 0).toInt();
+    setSizeUnit(sizeUnitIndex);
+    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
+    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
+    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
     if (sizeUnitComboBox->currentIndex() == 1) {
         sizeWidthString = settings.value("widthPx", "800").toString();
         sizeHeightString = settings.value("heightPx", "600").toString();
@@ -841,11 +854,6 @@ void ConvertDialog::readSettings() {
         heightLineEdit->setText(sizeHeightString);
         heightLineEdit->setText(settings.value("heightPx", "600").toString());
     }
-    int sizeUnitIndex = settings.value("sizeUnit", 0).toInt();
-    setSizeUnit(sizeUnitIndex);
-    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
-    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
-    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
     settings.endGroup(); // Size
 
     settings.beginGroup("Raw");

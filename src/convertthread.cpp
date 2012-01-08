@@ -133,20 +133,18 @@ void ConvertThread::confirmImage() {
 
 void ConvertThread::run() {
 
-    int width = shared->width;
-    int height = shared->height;
-    bool hasWidth = shared->hasWidth;
-    bool hasHeight = shared->hasHeight;
-    bool maintainAspect = shared->maintainAspect;
-    QString format = shared->format;
-    bool rotate = shared->rotate;
-    double angle = shared->angle;
     int quality = shared->quality;
-    QString destPrefix = shared->prefix;
-    QDir destFolder = shared->destFolder;
     bool rawEnabled = RawUtils::isRawEnabled();
 
     while(work) {
+        int width = shared->width;
+        int height = shared->height;
+        bool hasWidth = shared->hasWidth;
+        bool hasHeight = shared->hasHeight;
+        bool maintainAspect = shared->maintainAspect;
+        bool rotate = shared->rotate;
+        double angle = shared->angle;
+
         if (shared->abort)
         {
             emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
@@ -159,15 +157,13 @@ void ConvertThread::run() {
         QString imageName = imageData.at(0);
         QString originalFormat = imageData.at(1);
 
-        QString targetFile;
-        if (destPrefix.isEmpty()) {
-                targetFile = destFolder.absolutePath() + QDir::separator()
-                             + imageName + "." + format;
-        }
-        else {
-            targetFile = destFolder.absolutePath() + QDir::separator() +
-                         destPrefix + "_" + imageName + "." + format;
-        }
+        QString targetFile = shared->destFolder.absolutePath() + QDir::separator();
+        if (!shared->prefix.isEmpty())
+            targetFile += shared->prefix + "_";
+        targetFile += imageName;
+        if (!shared->suffix.isEmpty())
+            targetFile += "_" + shared->suffix;
+        targetFile += "." + shared->format;
 
         QString imagePath = imageData.at(2) + QDir::separator() +
                             imageData.at(0) + "." + originalFormat;
@@ -198,6 +194,15 @@ void ConvertThread::run() {
             continue;
         }
 
+        // compute size when it wasn't typed in pixels
+        if (shared->sizeUnit == 1) { // %
+            width *= image->width() / 100.;
+            height *= image->height() / 100.;
+        }
+        else if (shared->sizeUnit == 2) { // bytes
+            // what about bytes?
+        }
+
         if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
              (hasHeight && image->height()<height && image->width()<=image->height()) ) {
 
@@ -225,6 +230,19 @@ void ConvertThread::run() {
             saveMetadata = metadata.read(imagePath,true);
             if (!saveMetadata)
                 printError();
+            // flip width-height (px only)
+            else if (angle == 0 && shared->sizeUnit == 0) {
+                int beta = MetadataUtils::Exif::rotationAngle(
+                            metadata.exifStruct()->orientation);
+                if (beta%90 == 0 && beta%180 != 0) {
+                    int temp = width;
+                    width = height;
+                    height = temp;
+                    bool tmp = hasWidth;
+                    hasWidth = hasHeight;
+                    hasHeight = tmp;
+                }
+            }
         }
 
         // rotate image
@@ -320,7 +338,7 @@ void ConvertThread::run() {
         }
 
         QImage destImg;
-        
+
         if (hasWidth && hasHeight && !maintainAspect) {
             destImg = image->scaled(width, height, Qt::IgnoreAspectRatio,
                                     Qt::SmoothTransformation);
