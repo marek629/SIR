@@ -211,6 +211,9 @@ void ConvertThread::run() {
             // what about bytes?
         }
 
+        if (shared->format == "tif" || shared->format == "tiff")
+            image = image->mirrored();
+
         if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
              (hasHeight && image->height()<height && image->width()<=image->height()) ) {
 
