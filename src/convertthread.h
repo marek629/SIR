@@ -57,6 +57,7 @@ public:
     void setAcceptWork(bool work);
     void getNextOrStop();
     void printError();
+    static void setMetadataEnabled(bool value);
     static void setSaveMetadata(bool value);
     static void setRealRotate(bool rotate);
     static void setUpdateThumbnail(bool update);

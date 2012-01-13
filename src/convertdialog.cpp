@@ -868,7 +868,7 @@ void ConvertDialog::readSettings() {
     }
     else {
         foreach(QString ext, rawFormats) {
-            if(fileFilters.contains(ext)) {
+            if(fileFilters.contains(ext) && ext != " *.tif") {
                 fileFilters.remove(ext);
             }
         }
@@ -876,7 +876,9 @@ void ConvertDialog::readSettings() {
     settings.endGroup(); // Raw
 
     settings.beginGroup("Metadata");
-    MetadataUtils::Metadata::setEnabled(settings.value("metadata",true).toBool());
+    bool metadataEnabled = settings.value("metadata",true).toBool();
+    MetadataUtils::Metadata::setEnabled(metadataEnabled);
+    ConvertThread::setMetadataEnabled(metadataEnabled);
     bool saveMetadata = settings.value("saveMetadata",true).toBool();
     MetadataUtils::Metadata::setSave(saveMetadata);
     ConvertThread::setSaveMetadata(saveMetadata);
@@ -1025,7 +1027,7 @@ void ConvertDialog::query(const QString& targetFile, int tid, const QString& wha
     else if (what == "enlarge")
         enlargeQueue.enqueue(data);
     else {
-        qDebug("ConvertDialog::query(): bad \"whatToDo\" argument");
+        qWarning("ConvertDialog::query(): bad \"whatToDo\" argument");
         convertThreads[tid]->confirmEnlarge(1);
         convertThreads[tid]->confirmOverwrite(1);
         return;

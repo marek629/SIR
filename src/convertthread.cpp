@@ -34,6 +34,10 @@ ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
     work = true;
 }
 
+void ConvertThread::setMetadataEnabled(bool value) {
+    shared->metadataEnabled = value;
+}
+
 void ConvertThread::setSaveMetadata(bool value) {
     ConvertThread::shared->saveMetadata = value;
 }
@@ -78,6 +82,7 @@ void ConvertThread::setDesiredFormat(const QString& format) {
     shared->format = format;
     if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
         shared->saveMetadata = false;
+        shared->realRotate = true;
         qWarning("Format \"%s\" haven't write metadata support",
                  format.toAscii().constData());
     }
@@ -211,9 +216,6 @@ void ConvertThread::run() {
             // what about bytes?
         }
 
-        if (shared->format == "tif" || shared->format == "tiff")
-            image = image->mirrored();
-
         if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
              (hasHeight && image->height()<height && image->width()<=image->height()) ) {
 
@@ -237,14 +239,14 @@ void ConvertThread::run() {
 
         // read metadata
         bool saveMetadata = false;
-        if (ConvertThread::shared->saveMetadata) {
+        if (shared->metadataEnabled) {
             saveMetadata = metadata.read(imagePath,true);
+            int beta = MetadataUtils::Exif::rotationAngle(
+                        metadata.exifStruct()->orientation);
             if (!saveMetadata)
                 printError();
-            // flip width-height (px only)
+            // flip-flap width-height (px only)
             else if (angle == 0 && shared->sizeUnit == 0) {
-                int beta = MetadataUtils::Exif::rotationAngle(
-                            metadata.exifStruct()->orientation);
                 if (beta%90 == 0 && beta%180 != 0) {
                     int temp = width;
                     width = height;
@@ -256,10 +258,10 @@ void ConvertThread::run() {
             }
         }
 
+        bool saveExifOrientation = !ConvertThread::shared->realRotate;
         // rotate image
         if (rotate && angle != 0.0) {
             int alpha = (int)angle;
-            bool saveExifOrientation = !ConvertThread::shared->realRotate;
             if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
                 saveExifOrientation = false;
             // don't rotate but save Exif orientation tag
@@ -290,24 +292,24 @@ void ConvertThread::run() {
                 else
                     metadata.setExifDatum("Exif.Image.Orientation",orientation);
             }
-            // really rotate without saving Exif orientation tag
-            if (!saveExifOrientation) {
-                QTransform transform;
-                if (saveMetadata) {
-                    metadata.setExifDatum("Exif.Image.Orientation",1);
-                    int flip;
-                    angle += MetadataUtils::Exif::rotationAngle(
-                                metadata.exifStruct()->orientation, &flip );
-                    if (flip == MetadataUtils::Vertical)
-                        transform.scale(1.0,-1.0);
-                    else if (flip == MetadataUtils::Horizontal)
-                        transform.scale(-1.0,1.0);
-                    else if (flip == MetadataUtils::VerticalAndHorizontal)
-                        angle += 360;
-                }
-                transform.rotate(angle);
-                *image = image->transformed(transform, Qt::SmoothTransformation);
+        }
+        // really rotate without saving Exif orientation tag
+        if (!saveExifOrientation || shared->realRotate) {
+            QTransform transform;
+            if (saveMetadata) {
+                metadata.setExifDatum("Exif.Image.Orientation",1);
+                int flip;
+                angle += MetadataUtils::Exif::rotationAngle(
+                            metadata.exifStruct()->orientation, &flip );
+                if (flip == MetadataUtils::Vertical)
+                    transform.scale(1.0,-1.0);
+                else if (flip == MetadataUtils::Horizontal)
+                    transform.scale(-1.0,1.0);
+                else if (flip == MetadataUtils::VerticalAndHorizontal)
+                    angle += 360;
             }
+            transform.rotate(angle);
+            *image = image->transformed(transform, Qt::SmoothTransformation);
         }
 
         // update thumbnail

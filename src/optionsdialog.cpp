@@ -40,7 +40,7 @@
 quint8 OptionsDialog::maxCoresCount = 50;
 
 OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, f) {
-    
+
     setupUi(this);
 
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
@@ -269,36 +269,6 @@ void OptionsDialog::writeSettings() {
     settings.setValue("fileSizeUnit", fileSizeComboBox->currentIndex());
     settings.endGroup(); // Size
 
-    // raw
-    settings.beginGroup("Raw");
-    bool dcrawOk = false;
-    bool firstState = rawCheckBox->isChecked();
-    //check dcraw executable
-    if(rawCheckBox->isChecked()) {
-        if((dcrawOk = checkDcrawPath(dcrawLineEdit->text()))) {
-            settings.setValue("raw", true);
-            settings.setValue("dcrawPath", dcrawLineEdit->text());
-            settings.setValue("dcrawOptions", dcrawOptions->text());
-        }
-        else {
-            settings.setValue("raw", false);
-            rawCheckBox->setChecked(false);
-            settings.setValue("dcrawPath", dcrawLineEdit->text());
-            settings.setValue("dcrawOptions", dcrawOptions->text());
-            setRawStatus(false);
-        }
-    }
-    else {
-        settings.setValue("raw", false);
-        settings.setValue("dcrawPath", dcrawLineEdit->text());
-        settings.setValue("dcrawOptions", dcrawOptions->text());
-    }
-    if(dcrawOk || !firstState) {
-        emit ok();
-        this->close();
-    }
-    settings.endGroup(); // Raw
-
     // metadata (general part)
     settings.beginGroup("Metadata");
     settings.setValue("metadata", metadataCheckBox->isChecked());
@@ -330,6 +300,36 @@ void OptionsDialog::writeSettings() {
     settings.setValue("userCommentList", exifList);
 
     settings.endGroup(); // Exif
+
+    // raw
+    settings.beginGroup("Raw");
+    bool dcrawOk = false;
+    bool firstState = rawCheckBox->isChecked();
+    //check dcraw executable
+    if(rawCheckBox->isChecked()) {
+        if((dcrawOk = checkDcrawPath(dcrawLineEdit->text()))) {
+            settings.setValue("raw", true);
+            settings.setValue("dcrawPath", dcrawLineEdit->text());
+            settings.setValue("dcrawOptions", dcrawOptions->text());
+        }
+        else {
+            settings.setValue("raw", false);
+            rawCheckBox->setChecked(false);
+            settings.setValue("dcrawPath", dcrawLineEdit->text());
+            settings.setValue("dcrawOptions", dcrawOptions->text());
+            setRawStatus(false);
+        }
+    }
+    else {
+        settings.setValue("raw", false);
+        settings.setValue("dcrawPath", dcrawLineEdit->text());
+        settings.setValue("dcrawOptions", dcrawOptions->text());
+    }
+    if(dcrawOk || !firstState) {
+        emit ok();
+        this->close();
+    }
+    settings.endGroup(); // Raw
 }
 
 void OptionsDialog::readSettings() {
@@ -376,20 +376,14 @@ void OptionsDialog::readSettings() {
     fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
     settings.endGroup(); // Size
 
-    // raw
-    settings.beginGroup("Raw");
-    int state = settings.value("raw", false).toBool();
-    rawCheckBox->setChecked(state);
-    setRawStatus(state);
-    dcrawLineEdit->setText(settings.value("dcrawPath", "/usr/bin/dcraw").toString());
-    dcrawOptions->setText(settings.value("dcrawOptions", "").toString());
-    settings.endGroup(); // Raw
-
     // metadata (general part)
     settings.beginGroup("Metadata");
     metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
-    if (!metadataCheckBox->isChecked())
+    if (!metadataCheckBox->isChecked()) {
         saveMetadataCheckBox->setEnabled(false);
+        thumbUpdateCheckBox->setEnabled(false);
+        thumbRotateCheckBox->setEnabled(false);
+    }
     else
         saveMetadataCheckBox->setChecked(settings.value("saveMetadata",true).toBool());
 
@@ -398,6 +392,11 @@ void OptionsDialog::readSettings() {
         if (thumbUpdateCheckBox->isChecked())
             thumbRotateCheckBox->setChecked(settings.value("rotateThumbnail",false).toBool());
         rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
+    }
+    else {
+        thumbUpdateCheckBox->setEnabled(false);
+        thumbRotateCheckBox->setEnabled(false);
+        rotateRadioButton->setChecked(true);
     }
     settings.endGroup(); // Metadata
 
@@ -437,10 +436,19 @@ void OptionsDialog::readSettings() {
     exifUserCommentComboBox->setEnabled(exifOverwrite);
 
     settings.endGroup(); // Exif
+
+    // raw
+    settings.beginGroup("Raw");
+    int state = settings.value("raw", false).toBool();
+    rawCheckBox->setChecked(state);
+    setRawStatus(state);
+    dcrawLineEdit->setText(settings.value("dcrawPath", "/usr/bin/dcraw").toString());
+    dcrawOptions->setText(settings.value("dcrawOptions", "").toString());
+    settings.endGroup(); // Raw
 }
 
 void OptionsDialog::createLanguageMenu() {
-    
+
     QDir dir(":translations/");
     QStringList filter;
     filter << "sir_*.qm";
@@ -530,7 +538,7 @@ void OptionsDialog::updateThumbnail(bool update) {
 quint8 OptionsDialog::detectCoresCount() {
     int cores = QThread::idealThreadCount();
     if (cores == -1) {
-        qDebug("OptionsDialog: cores count detect failed");
+        qWarning("OptionsDialog: cores count detect failed");
         return 1;
     }
     else if (cores > maxCoresCount)

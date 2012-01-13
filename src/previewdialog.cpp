@@ -23,7 +23,6 @@
 
 #include "previewdialog.h"
 #include <QGraphicsScene>
-#include <QString>
 #include <QPixmap>
 #include <QResizeEvent>
 #include <QWheelEvent>
@@ -50,7 +49,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
 
     setupUi(this);
     this->setWindowTitle(tr("SIR - Preview Images"));
-    this->currentImage = currentImage;	
+    this->currentImage = currentImage;
     this->images = images;
     this->imagePath = images->at(currentImage);
     this->setFocusPolicy(Qt::StrongFocus);
@@ -58,15 +57,12 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->setModal(true);
 
     rawEnabled = RawUtils::isRawEnabled();
-    metadataEnabled = MetadataUtils::Metadata::isEnabled();
+    metadataEnabled = isntTiffImage();
     saveMetadata = MetadataUtils::Metadata::isSave();
     initBar();
     createConnections();
     rotation = 0;
     flip = MetadataUtils::None;
-
-    if (metadataEnabled)
-        metadata = new MetadataUtils::Metadata();
 
     loadPixmap();
 
@@ -119,7 +115,7 @@ void PreviewDialog::createConnections() {
 }
 
 void PreviewDialog::initBar() {
-    for(int i = 100; i >= 10; i-=10) {		
+    for(int i = 100; i >= 10; i-=10) {
         zoomComboBox->addItem(QString::number(i) + "%");
     }
     zoomComboBox->addItem(tr("Fit to window size"));
@@ -131,7 +127,7 @@ void PreviewDialog::initBar() {
     previousButton->setDefault(false);
 
     previousButton->setFixedSize(22,22);
-    nextButton->setFixedSize(22,22);	
+    nextButton->setFixedSize(22,22);
 
     previousButton->setToolTip(tr("Back to previous image"));
     nextButton->setToolTip(tr("Go to next image"));
@@ -158,7 +154,7 @@ void PreviewDialog::initBar() {
     fullScreenButton->setToolTip(tr("Fullscreen"));
     fullScreenButton->setShortcut(Qt::Key_F11);
 
-    printButton->setFixedSize(22,22);	
+    printButton->setFixedSize(22,22);
     printButton->setToolTip(tr("Print current image..."));
     printButton->setShortcut(Qt::CTRL + Qt::Key_P);
 
@@ -298,6 +294,7 @@ void  PreviewDialog::nextImage( ) {
     delete image;
     rotation = 0;
     flip = MetadataUtils::None;
+    metadataEnabled = isntTiffImage();
 
     loadPixmap();
 
@@ -309,14 +306,14 @@ void  PreviewDialog::nextImage( ) {
     if(zoomFactor != 1.0) {
         zoom(zoomComboBox->currentText());
     }
-    
+
     statusBar->setText(imagePath);
-    verifyImages();	
+    verifyImages();
 }
 
 void  PreviewDialog::previousImage( ) {
 
-    if(previousButton->hasFocus()) {	
+    if(previousButton->hasFocus()) {
         view->resetMatrix();
         imagePath = images->at(--currentImage);
         scene->removeItem(pix);
@@ -324,6 +321,7 @@ void  PreviewDialog::previousImage( ) {
         delete image;
         rotation = 0;
         flip = MetadataUtils::None;
+        metadataEnabled = isntTiffImage();
 
         loadPixmap();
 
@@ -331,18 +329,18 @@ void  PreviewDialog::previousImage( ) {
         view->setSceneRect(pix->boundingRect());
         imageW = image->size().width();
         imageH = image->size().height();
-        
+
         if(zoomFactor != 1.0) {
             zoom(zoomComboBox->currentText());
         }
         statusBar->setText(imagePath);;
-        verifyImages();	
+        verifyImages();
     }
 }
 
 void  PreviewDialog::verifyImages() {
 
-    if(currentImage+2 > images->size()) { 
+    if(currentImage+2 > images->size()) {
         nextButton->setEnabled(false);
     }
     else{
@@ -353,7 +351,7 @@ void  PreviewDialog::verifyImages() {
         previousButton->setEnabled(false);
     }
     else {
-        previousButton->setEnabled(true);	
+        previousButton->setEnabled(true);
     }
 
 }
@@ -411,13 +409,13 @@ bool PreviewDialog::saveAs() {
 
     QString fileName = QFileDialog::getSaveFileName(this,tr("Save File"),
                                                     imagePath,fileFilters);
-    
+
     if (fileName.isEmpty()) {
         return false;
     }
 
     bool ret = saveFile(fileName);
-    
+
     if(ret) {
         reloadImage(fileName);
     }
@@ -496,7 +494,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
 
     imageW = w;
     imageH = h;
-    
+
     QPixmap destImg =  image->scaled(w, h,Qt::IgnoreAspectRatio,
                                      Qt::SmoothTransformation);
 
@@ -520,13 +518,13 @@ bool PreviewDialog::saveFile(const QString &fileName) {
 
 void PreviewDialog::reloadImage(QString imageName) {
     view->resetMatrix();
-    scene->removeItem(pix);	
+    scene->removeItem(pix);
     delete pix;
     delete image;
     rotation = 0;
     flip = MetadataUtils::None;
-
-    imagePath = imageName;	
+    imagePath = imageName;
+    metadataEnabled = isntTiffImage();
 
     loadPixmap();
 
@@ -534,7 +532,7 @@ void PreviewDialog::reloadImage(QString imageName) {
     view->setSceneRect(pix->boundingRect());
     imageW = image->size().width();
     imageH = image->size().height();
-    
+
     if(zoomFactor != 1.0) {
         zoom("100%");
         int index = zoomComboBox->findText("100%");

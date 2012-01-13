@@ -26,9 +26,9 @@
 
 #include "ui_previewdialog.h"
 #include "metadatautils.h"
+#include <QString>
 
 class QGraphicsScene;
-class QString;
 class QPixmap;
 class QStringList;
 class QGraphicsPixmapItem;
@@ -40,7 +40,7 @@ public:
     PreviewDialog(QWidget *parent = 0, QStringList *images = 0,
                   int currentImage = 0);
     ~PreviewDialog();
-     
+
 private:
     //Methods
     void initBar();
@@ -48,6 +48,7 @@ private:
     void verifyImages();
     void reloadImage(QString imagePath);
     void loadPixmap();
+    inline bool isntTiffImage();
 
     //Class Variables
     QGraphicsScene *scene;
@@ -85,5 +86,15 @@ public slots:
 protected:
     virtual void resizeEvent(QResizeEvent *);
 };
+
+bool PreviewDialog::isntTiffImage() {
+    QString ext = imagePath.split('.').last().toLower();
+    bool tiffMetadataDisabled = !(ext == "tif" || ext == "tiff");
+    if (MetadataUtils::Metadata::isEnabled() && tiffMetadataDisabled) {
+        metadata = new MetadataUtils::Metadata();
+        return true;
+    }
+    return false;
+}
 
 #endif

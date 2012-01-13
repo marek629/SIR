@@ -57,6 +57,7 @@ public:
     bool rotate;
     double angle;
     // metadata settings
+    bool metadataEnabled;
     bool saveMetadata;
     bool realRotate;
     bool updateThumbnail;
