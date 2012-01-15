@@ -22,6 +22,7 @@
 */
 
 #include <QtGui>
+#include <cmath>
 #include "convertthread.h"
 #include "defines.h"
 #include "rawutils.h"
@@ -73,7 +74,7 @@ void ConvertThread::setDesiredSize(int width, int height, bool percent,
         shared->sizeUnit = 0;
 }
 
-void ConvertThread::setDesiredSize(int bytes) {
+void ConvertThread::setDesiredSize(quint32 bytes) {
     shared->sizeBytes = bytes;
     shared->sizeUnit = 2;
 }
@@ -213,7 +214,91 @@ void ConvertThread::run() {
             height *= image->height() / 100.;
         }
         else if (shared->sizeUnit == 2) { // bytes
-            // what about bytes?
+            width = image->width();
+            height = image->height();
+            hasWidth = true;
+            hasHeight = true;
+            double destSize = shared->sizeBytes;
+            bool linearSize = false;
+            if (shared->format == "bmp") {
+                destSize -= 54;
+                destSize /= 3;
+                linearSize = true;
+            }
+            else if (shared->format == "ppm") {
+                destSize -= 17;
+                destSize /= 3;
+                linearSize = true;
+            }
+            else if (shared->format == "ico") {
+                destSize -= 1422;
+                destSize /= 4;
+                linearSize = true;
+            }
+            else if (shared->format == "tif" || shared->format == "tiff") {
+                destSize -= 14308;
+                destSize /= 4;
+                linearSize = true;
+            }
+            else if (shared->format == "xbm") {
+                destSize -= 60;
+                destSize /= 0.65;
+                linearSize = true;
+            }
+            if (linearSize) {
+                double sourceSizeSqrt = sqrt(width * height);
+                double sourceWidthRatio = width / sourceSizeSqrt;
+                double sourceHeightRatio = height / sourceSizeSqrt;
+                destSize = sqrt(destSize);
+                width = sourceWidthRatio * destSize;
+                height = sourceHeightRatio * destSize;
+                qDebug() << width << height;
+            }
+            else { // non-linear size relationship
+                qDebug() << "jpeg, png, xpm";
+                QString tempImagePath = QDir::tempPath() + QDir::separator() +
+                        "sir_temp" + QString::number(tid) + "." + shared->format;
+                QByteArray destFormat = shared->format.toAscii().toUpper();
+                QImage tempImage(*image);
+                quint32 fileSize = QFile(imagePath).size();
+                QSize size = image->size();
+                qDebug() << fileSize << shared->sizeBytes << shared->quality;
+                double fileSizeRatio = (double) fileSize / shared->sizeBytes;
+                fileSizeRatio = sqrt(fileSizeRatio);
+                qDebug() << fileSizeRatio;
+                bool tempSaveError = false;
+                while (fileSizeRatio < 0.97 || fileSizeRatio > 1.) {
+                    QByteArray ba;
+                    QBuffer buffer(&ba);
+                    buffer.open(QIODevice::WriteOnly);
+                    buffer.seek(0);
+                    width = size.width() / fileSizeRatio;
+                    height = size.height() / fileSizeRatio;
+                    qDebug() << width << height;
+                    tempImage = tempImage.scaled(width, height, Qt::KeepAspectRatio,
+                                                 Qt::SmoothTransformation);
+//                    if (!tempImage.save(tempImagePath, 0, shared->quality)) {
+                    if (!tempImage.save(&buffer, destFormat.constData(), shared->quality)) {
+                        qWarning("tid %d: Save temporary image file %s failed",
+                                 tid, tempImagePath.toUtf8().constData());
+                        emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+                        tempSaveError = true;
+                        break;
+                    }
+                    fileSize = buffer.size();
+                    size = tempImage.size();
+                    qDebug() << size << fileSize;
+                    fileSizeRatio = (double) fileSize / shared->sizeBytes;
+                    fileSizeRatio = sqrt(fileSizeRatio);
+                    qDebug() << fileSizeRatio;
+                    buffer.close();
+                }
+                if (tempSaveError) {
+                    delete image;
+                    getNextOrStop();
+                    continue;
+                }
+            }
         }
 
         if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
@@ -246,16 +331,15 @@ void ConvertThread::run() {
             if (!saveMetadata)
                 printError();
             // flip-flap width-height (px only)
-            else if (angle == 0 && shared->sizeUnit == 0) {
-                if (beta%90 == 0 && beta%180 != 0) {
-                    int temp = width;
-                    width = height;
-                    height = temp;
-                    bool tmp = hasWidth;
-                    hasWidth = hasHeight;
-                    hasHeight = tmp;
-                }
+            else if (angle == 0 && shared->sizeUnit != 1 && beta%90 == 0 && beta%180 != 0) {
+                int temp = width;
+                width = height;
+                height = temp;
+                bool tmp = hasWidth;
+                hasWidth = hasHeight;
+                hasHeight = tmp;
             }
+            saveMetadata = shared->saveMetadata;
         }
 
         bool saveExifOrientation = !ConvertThread::shared->realRotate;
@@ -407,6 +491,7 @@ void ConvertThread::run() {
             emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
         else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFile, 0, quality)) {
+                qDebug() << "saved" << destImg.width() << destImg.height();
                 if (saveMetadata)
                     metadata.write(targetFile, destImg);
                 emit imageStatus(imageData, tr("Converted"), CONVERTED);

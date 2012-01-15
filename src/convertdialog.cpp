@@ -1205,9 +1205,13 @@ void ConvertDialog::setSizeUnit(int index) {
     if (index < 0)
         return;
     static int lastIndex = index;
+    static bool maintainRatioAspect = maintainCheckBox->isChecked();
     if (index == 2) { // bytes
         geometryWidget->hide();
         fileSizeWidget->show();
+        maintainRatioAspect = maintainCheckBox->isCheckable();
+        maintainCheckBox->setChecked(true);
+        maintainCheckBox->setEnabled(false);
     }
     else { // px or %
         fileSizeWidget->hide();
@@ -1220,6 +1224,10 @@ void ConvertDialog::setSizeUnit(int index) {
             tmp = sizeHeightString;
             sizeHeightString = heightLineEdit->text();
             heightLineEdit->setText(tmp);
+        }
+        if (lastIndex == 2) {
+            maintainCheckBox->setEnabled(true);
+            maintainCheckBox->setChecked(maintainRatioAspect);
         }
         if (maintainCheckBox->isChecked() && index == 1) // %
             heightLineEdit->setText( widthLineEdit->text() );

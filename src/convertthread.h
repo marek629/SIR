@@ -41,7 +41,7 @@ public:
     static void setDesiredSize(int width, int height, bool percent = false,
                         bool hasWidth = false, bool hasHeight = false,
                         bool maintainAspect = true);
-    static void setDesiredSize(int bytes);
+    static void setDesiredSize(quint32 bytes);
     static void setDesiredFormat(const QString& format); // use after setSaveMetadata(bool)
     static void setDesiredRotation(bool rotate, double angle = 0.0);
     static void setQuality(int quality);
