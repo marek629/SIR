@@ -43,6 +43,8 @@ namespace MetadataUtils
 
 
     private:
+        void setData(const QImage& qImage = QImage());
+
         Exiv2::Image::AutoPtr image;
         Exiv2::ExifData exifData;
         Exiv2::IptcData iptcData;

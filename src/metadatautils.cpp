@@ -48,41 +48,8 @@ bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QIm
     try {
         std::string filePath = path.toNativeStdString();
         image = Exiv2::ImageFactory::open(filePath);
-
-        if (MetadataUtils::Exif::isArtistOverwrite())
-            exifData["Exif.Image.Artist"] =
-                    MetadataUtils::Exif::stringArtist().toStdString();
-        if (MetadataUtils::Exif::isCopyrightOverwrite())
-            exifData["Exif.Image.Copyright"] =
-                    MetadataUtils::Exif::stringCopyright().toStdString();
-        if (MetadataUtils::Exif::isUserCommentOverwrite())
-            exifData["Exif.Photo.UserComment"] =
-                    MetadataUtils::Exif::stringUserComment().toNativeStdString();
-
-        if (!exifData.empty())
-        {
-            if (!MetadataUtils::Exif::isVersionKnown() )
-            {
-                Exiv2::byte version[4] = { 48, 50, 50, 48 };
-                Exiv2::DataValue value(version,4);
-                exifData["Exif.Photo.ExifVersion"] = value;
-            }
-            exifData["Exif.Image.ProcessingSoftware"] = "Simple Image Resizer "
-                    VERSION;
-            if (!qImage.isNull())
-            {
-                exifData["Exif.Image.ImageWidth"] = qImage.width();
-                exifData["Exif.Image.ImageLength"] = qImage.height();
-            }
-        }
-
-        image->setExifData(exifData);
-        image->setIptcData(iptcData);
-#ifdef EXV_HAVE_XMP_TOOLKIT
-        image->setXmpData(xmpData);
-#endif // EXV_HAVE_XMP_TOOLKIT
+        setData(qImage);
         image->writeMetadata();
-
         image.reset();
         return true;
     }
@@ -95,6 +62,40 @@ bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QIm
 
 bool MetadataUtils::Metadata::write(const QString &path, const QImage &image) {
     return write((const MetadataUtils::String&)path, image);
+}
+
+void MetadataUtils::Metadata::setData(const QImage& qImage) {
+    if (MetadataUtils::Exif::isArtistOverwrite())
+        exifData["Exif.Image.Artist"] =
+                MetadataUtils::Exif::stringArtist().toStdString();
+    if (MetadataUtils::Exif::isCopyrightOverwrite())
+        exifData["Exif.Image.Copyright"] =
+                MetadataUtils::Exif::stringCopyright().toStdString();
+    if (MetadataUtils::Exif::isUserCommentOverwrite())
+        exifData["Exif.Photo.UserComment"] =
+                MetadataUtils::Exif::stringUserComment().toNativeStdString();
+
+    if (!exifData.empty())
+    {
+        if (!MetadataUtils::Exif::isVersionKnown() )
+        {
+            Exiv2::byte version[4] = { 48, 50, 50, 48 };
+            Exiv2::DataValue value(version,4);
+            exifData["Exif.Photo.ExifVersion"] = value;
+        }
+        exifData["Exif.Image.ProcessingSoftware"] = "Simple Image Resizer "
+                VERSION;
+        if (!qImage.isNull())
+        {
+            exifData["Exif.Image.ImageWidth"] = qImage.width();
+            exifData["Exif.Image.ImageLength"] = qImage.height();
+        }
+    }
+    image->setExifData(exifData);
+    image->setIptcData(iptcData);
+#ifdef EXV_HAVE_XMP_TOOLKIT
+    image->setXmpData(xmpData);
+#endif // EXV_HAVE_XMP_TOOLKIT
 }
 
 void MetadataUtils::Metadata::setExifData()

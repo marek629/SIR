@@ -67,22 +67,33 @@ public:
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
-    void question(const QString& targetFile, int tid, const QString& whatToDo);
+    void question(const QString& targetFilePath, int tid, const QString& whatToDo);
     void getNextImage(int tid);
 
 private:
     void run();
+    void rotateImage(QImage *image);
+    void updateThumbnail(const QImage *image);
+    bool computeSize(const QImage *image, const QString &imagePath);
 
     bool work;
     QStringList imageData;
     QMutex imageMutex;
     QWaitCondition imageCondition;
     int tid;
+    bool hasWidth;
+    bool hasHeight;
+    int width;
+    int height;
+    bool saveMetadata;
+    bool rotate;
+    double angle;
     QMutex overwriteMutex;
     QWaitCondition overwriteCondition;
     QMutex enlargeMutex;
     QWaitCondition enlargeCondition;
     MetadataUtils::Metadata metadata;
+    QString targetFilePath;
 };
 
 
