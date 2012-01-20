@@ -32,23 +32,21 @@
 #include "sharedinformation.h"
 #include "metadatautils.h"
 
+//! Image convertion thread class.
+/** Threads converting images work in main loop implemented in run method.
+  * \sa run
+  */
 class ConvertThread : public QThread {
 
     Q_OBJECT
 
 public:
+    //! Default constructor.
+    /** \param parent parent object
+      * \param tid thread ID
+      */
     ConvertThread(QObject *parent, int tid);
-    static void setDesiredSize(int width, int height, bool percent = false,
-                        bool hasWidth = false, bool hasHeight = false,
-                        bool maintainAspect = true);
-    static void setDesiredSize(quint32 bytes);
-    static void setDesiredFormat(const QString& format); // use after setSaveMetadata(bool)
-    static void setDesiredRotation(bool rotate, double angle = 0.0);
-    static void setQuality(int quality);
-    static void setDestPrefix(const QString& destPrefix);
-    static void setDestSuffix(const QString& destSuffix);
-    static void setDestFolder(const QDir& destFolder);
-    static void setOverwriteAll(bool overwriteAll = false);
+
     void convertImage(const QString& name, const QString& extension,
                       const QString& path);
     void confirmOverwrite(int result);
@@ -57,7 +55,64 @@ public:
     void setAcceptWork(bool work);
     void getNextOrStop();
     void printError();
+
+    //! Set desired size.
+    /** Set desired size in pixels or percent, depend on \a percent value.
+      * \param width Width of desired image.
+      * \param height Height of desired image.
+      * \param percent Sets desired width and height in pixels if false, otherwise
+      *     sets size as percent of original image size.
+      * \param hasWidth Sets desired width to \a width if true.
+      * \param hasHeight Sets desired height to \a height if true.
+      * \param maintainAspect If true image will be scaled with keeping apsect ratio.
+      */
+    static void setDesiredSize(int width, int height, bool percent = false,
+                        bool hasWidth = false, bool hasHeight = false,
+                        bool maintainAspect = true);
+    //! Set desired size.
+    /** \par
+      * This is overloaded function.
+      *
+      * \par
+      * Sets disired size in bytes. Result file size can be lower
+      * but never grower than \a bytes.
+      */
+    static void setDesiredSize(quint32 bytes);
+
+    //! Set desired format string without point prefix.
+    /** \note Call this function after calling #setSaveMetadata.
+      */
+    static void setDesiredFormat(const QString& format);
+
+    //! Allow rotate and set desired rotation angle.
+    /** \param rotate Allows rotate.
+      * \param angle Clockwise rotation angle.
+      */
+    static void setDesiredRotation(bool rotate, double angle = 0.0);
+
+    //! Set desired image quality.
+    /** \param quality Integer factor in range 0 to 100.
+      */
+    static void setQuality(int quality);
+
+    //! Set destination file name prefix.
+    static void setDestPrefix(const QString& destPrefix);
+    //! Set destination file name suffix.
+    static void setDestSuffix(const QString& destSuffix);
+    //! Set destination directory path.
+    static void setDestFolder(const QDir& destFolder);
+    //! Allow overwrite all files.
+    static void setOverwriteAll(bool overwriteAll = false);
+
+    //! Enable metadata support.
+    /** Enable metadata support if true, otherwise disables metadata support.
+      */
     static void setMetadataEnabled(bool value);
+
+    //! Enable save metadata option.
+    /** Enable save metadata option if true, otherwise disables saving metadata.
+      * \note Call this function before calling #setDesiredFormat.
+      */
     static void setSaveMetadata(bool value);
     static void setRealRotate(bool rotate);
     static void setUpdateThumbnail(bool update);
