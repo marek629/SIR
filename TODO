@@ -5,7 +5,6 @@
   2 Correction convert dialog
     * add flip radio buttons near rotation line edit
     * add external columns into tree view like size (px,k/MiB)
-    * add target size in bytes option
   ====== Piotrek ======
   ! add shutter speed in metadata dialog
   ! optimalize MetadataUtils::Exif::flashString(short num)

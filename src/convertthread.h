@@ -129,7 +129,7 @@ private:
     void run();
     void rotateImage(QImage *image);
     void updateThumbnail(const QImage *image);
-    bool computeSize(const QImage *image, const QString &imagePath);
+    char computeSize(const QImage *image, const QString &imagePath);
 
     bool work;
     QStringList imageData;

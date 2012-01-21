@@ -269,7 +269,6 @@ void ConvertDialog::setupThreads(int numThreads) {
 
         connect(convertThreads[i],
                 SIGNAL(imageStatus(const QStringList &, const QString &, int)),
-                this,
                 SLOT(setImageStatus(const QStringList &, const QString &, int)),
                 Qt::QueuedConnection);
 

@@ -224,7 +224,7 @@ void ConvertThread::run() {
         }
 
         // compute dest size in px
-        if (!computeSize(image,imagePath)) {
+        if (computeSize(image,imagePath) == 1) { // image saved
             delete image;
             getNextOrStop();
             continue;
@@ -423,7 +423,7 @@ void ConvertThread::updateThumbnail(const QImage *image) {
     }
 }
 
-bool ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
+char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     if (shared->sizeUnit == 0) ; // px
     // compute size when it wasn't typed in pixels
     else if (shared->sizeUnit == 1) { // %
@@ -473,17 +473,17 @@ bool ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
         else { // non-linear size relationship
             QString tempFilePath = QDir::tempPath() + QDir::separator() +
                     "sir_temp" + QString::number(tid) + "." + shared->format;
-            QImage tempImage(*image);
+            QImage tempImage;
             quint32 fileSize = QFile(imagePath).size();
             QSize size = image->size();
             double fileSizeRatio = (double) fileSize / shared->sizeBytes;
             fileSizeRatio = sqrt(fileSizeRatio);
             QFile tempFile(tempFilePath);
             tempFile.open(QIODevice::WriteOnly);
-            while (fileSizeRatio < 0.97 || fileSizeRatio > 1.) {
+            for (uchar i=0; (fileSizeRatio<0.99 || fileSizeRatio>1.) && i<20; i++) {
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
-                tempImage = tempImage.scaled(width, height, Qt::KeepAspectRatio,
+                tempImage = image->scaled(width, height, Qt::KeepAspectRatio,
                                              Qt::SmoothTransformation);
                 rotateImage(&tempImage);
                 updateThumbnail(&tempImage);
@@ -493,7 +493,8 @@ bool ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 }
                 else {
                     qWarning("tid %d: Save temporary image file "
-                             "into memory buffer failed",  tid);
+                             "into %s failed", tid,
+                             MetadataUtils::String(targetFilePath).toNativeStdString().data());
                     emit imageStatus(imageData, tr("Failed to compute image size"),
                                      FAILED);
                     return false;
@@ -530,10 +531,13 @@ bool ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                     overwriteCondition.wait(&overwriteMutex);
                 }
                 if(shared->overwriteResult == 0 || shared->overwriteResult == 2) {
+                    QFile::remove(targetFilePath);
                     if (tempFile.copy(targetFilePath))
                         emit imageStatus(imageData, tr("Converted"), CONVERTED);
-                    else
-                        emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+                    else {
+                        emit imageStatus(imageData, tr("Failed to save"), FAILED);
+                        return -1;
+                    }
                 }
                 else if (shared->overwriteResult == 4)
                     emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
@@ -545,12 +549,16 @@ bool ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             else if (shared->abort)
                 emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
             else { // when overwriteAll is true or file not exists
+                QFile::remove(targetFilePath);
                 if (tempFile.copy(targetFilePath))
                     emit imageStatus(imageData, tr("Converted"), CONVERTED);
-                else
-                    emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+                else {
+                    emit imageStatus(imageData, tr("Failed to save"), FAILED);
+                    return -2;
+                }
             }
         }
+        return 1;
     }
-    return true;
+    return 0;
 }
