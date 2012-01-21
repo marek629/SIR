@@ -113,7 +113,7 @@ void ConvertDialog::createConnections() {
     connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
 
     // size tab
-    connect(rotateCheckBox,SIGNAL(stateChanged (int)), SLOT(verify(int)));
+    connect(rotateCheckBox,SIGNAL(stateChanged (int)), SLOT(verifyRotate(int)));
     connect(sizeUnitComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(setSizeUnit(int)));
     connectSizeLinesEdit();
@@ -604,16 +604,6 @@ void ConvertDialog::convert() {
     }
 }
 
-void ConvertDialog::verify() {
-
-    if (rotateCheckBox->isChecked()) {
-        rotateLineEdit->setEnabled(TRUE);
-    }
-    else {
-        rotateLineEdit->setEnabled(FALSE);
-    }
-}
-
 void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
 
     Q_UNUSED(col);
@@ -700,7 +690,7 @@ void ConvertDialog::initList() {
     filesTreeView->resizeColumnToContents (3);
 }
 
-void ConvertDialog::verify(int status) {
+void ConvertDialog::verifyRotate(int status) {
 
     if (status == Qt::Checked ) {
         rotateLineEdit->setEnabled(TRUE);
@@ -733,13 +723,10 @@ void ConvertDialog::previewAct()
 }
 
 void ConvertDialog::about() {
-
     AboutDialog *about = new AboutDialog();
     about->setVersion( QString("Version ")+VERSION );
-    //about->retranslateUi(about);
     about->exec();
     delete about;
-
 }
 
 void ConvertDialog::setOptions() {
@@ -748,7 +735,6 @@ void ConvertDialog::setOptions() {
     connect( options, SIGNAL( ok() ), SLOT( readSettings() ) );
     options->exec();
     delete options;
-
 }
 
 void ConvertDialog::readSettings() {
@@ -975,12 +961,10 @@ QString ConvertDialog::makeImagePath(QTreeWidgetItem *item)
 }
 
 void ConvertDialog::updateTree() {
-
     if (filesTreeView->topLevelItemCount() > 0) {
         convertButton->setEnabled(TRUE);
         convertSelectedButton->setEnabled(TRUE);
     }
-
     filesTreeView->resizeColumnToContents (0);
     filesTreeView->resizeColumnToContents (1);
     filesTreeView->resizeColumnToContents (2);

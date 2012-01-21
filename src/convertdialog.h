@@ -1,25 +1,27 @@
 /*
-    * This file is part of SIR, an open-source cross-platform Image tool
-        * 2007  Rafael Sachetto
-        *
-        * This program is free software; you can redistribute it and/or modify
-        * it under the terms of the GNU General Public License as published by
-        * the Free Software Foundation; either version 2 of the License, or
-        * (at your option) any later version.
-        *
-        * This program is distributed in the hope that it will be useful,
-        * but WITHOUT ANY WARRANTY; without even the implied warranty of
-        * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        * GNU General Public License for more details.
-        *
-        * You should have received a copy of the GNU General Public License
-        * along with this program; if not, write to the Free Software
-        * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-        *
-        * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
-    * Program URL: http://sir.projet-libre.org/
-        *
-        */
+ * This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
+ * Program URL: http://sir.projet-libre.org/
+ *
+ */
 
 #include "ui_convertdialog.h"
 #include "convertthread.h"
@@ -44,11 +46,28 @@ class QPoint;
 class QSize;
 class MetadataDialog;
 
+//! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
-                Q_OBJECT
+
+    Q_OBJECT
+
 public:
-        ConvertDialog(QWidget *parent = 0, QString args = 0);
+    //! Default constuctor.
+    /** Sets up window with saved settings like window state, position
+      * and convertion preferences.
+      * \param parent Pointer to parent object.
+      * \param args String containing aplication argv tables records
+      *     separated by ** (double star-sign).
+      * \sa readSettings
+      */
+    ConvertDialog(QWidget *parent = 0, QString args = 0);
+
+    //! Destructor.
+    /** Writes window state and position and dealocates dynamic allocated memory.
+      */
     ~ConvertDialog();
+
+    //! Retranslates GUI.
     void retranslateStrings();
 
 private:
@@ -107,35 +126,113 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 public slots:
-        virtual void browseDestination();
-        virtual void convertAll();
-        virtual void addDir();
-        virtual void removeAll();
-        virtual void removeSelectedFromList();
-        virtual void addFile();
-        virtual void convertSelected();
-        virtual void verify();
-        virtual void showPreview(QTreeWidgetItem *item, int col);
-    virtual void showMetadata();
-        virtual void showMenu( const QPoint & point);
-        virtual void verify(int status);
-        virtual void about();
-        virtual void setOptions();
-        virtual void readSettings();
-        virtual void updateTree();
-        virtual void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
-    virtual void query(const QString& targetFile, int tid, const QString& whatToDo);
-        virtual void giveNextImage(int tid);
-        virtual void setupThreads(int numThreads);
-        virtual void closeOrCancel();
-        virtual void updateInterface();
-        virtual void setCanceled();
-        virtual void stopConvertThreads();
-    virtual void checkUpdates();
-    virtual void showUpdateResult(QString *result, bool error);
-    virtual void sendInstall();
-    virtual void showSendInstallResult(QString *result, bool error);
+    //! Browse destination directory button slot.
+    /** Choose destination directory in QFileDialog.
+      * \par
+      * Path from neighboring line edit is setting as origin directory in QFileDialog.
+      * If the path is empty origin directory will be set to home path.
+      */
+    void browseDestination();
+
+    //! Convert all button slot.
+    /** Load all items from tree widget into list of images to convert and
+      * call #convert() function.
+      * \sa convertSelected
+      */
+    void convertAll();
+
+    //! Convert selected button slot.
+    /** Load selected items from tree widget into list of images to convert and
+      * call #convert() function.
+      * \sa convertAll
+      */
+    void convertSelected();
+
+    //! Add directory button and action slot.
+    /** Load all supported image files from choosed directory (non-recursive)
+      * into tree widget and set state to \em "Not converted yet".\n
+      * This function remember last opened directory in the same session.
+      * Default directory is home directory.
+      * \sa addFile
+      */
+    void addDir();
+
+    //! Add file button and action slot.
+    /** Load selected image files into tree widget and set state to
+      * \em "Not \em converted \em yet".\n
+      * This function remember last opened directory in the same session.
+      * Default directory is home directory.
+      * \sa addDir
+      */
+    void addFile();
+
+    //! Remove all button and action slot.
+    /** Remove all items of tree widget.
+      * \sa removeSelectedFromList
+      */
+    void removeAll();
+
+    //! Remove selected button and action slot.
+    /** Remove selected items of tree widget.
+      * \sa removeAll
+      */
+    void removeSelectedFromList();
+
+    //! Shows context menu.
+    /** Shows context menu for selected tree widgets item.
+      * \param point Global position of context menu.
+      * \sa showPreview showMetadata convertSelected removeSelectedFromList
+      */
+    void showMenu( const QPoint & point);
+
+    //! Preview action slot.
+    /** Show preview action from context menu slot providing usefull interface
+      * for #showPreview slot.
+      * \sa showMenu
+      */
     void previewAct();
+
+    //! Show preview dialog.
+    /** Show preview dialog containig selected \a item image.\n
+      * This slot is called when tree widgets \a item was double clicked.
+      * \param item Pointer to selected tree widgets item.
+      * \param col Is ignored, exists for signal-slot compatibility only.
+      * \sa showMenu previewAct
+      */
+    void showPreview(QTreeWidgetItem *item, int col);
+
+    //! Metadata action slot.
+    /** Shows metadata dialog containg selected tree widgets item image metadata.
+      * \sa showMenu showPreview
+      */
+    void showMetadata();
+
+    //! Rotate checkbox slot.
+    /** Disables/enables rotation angle line edit.
+      * \param status Status of the checkbox.
+      */
+    void verifyRotate(int status);
+
+    //! Shows window containing information about SIR.
+    void about();
+    //! Writes window state and position and show options dialog.
+    void setOptions();
+    //! Reads settings and sets up window state, position and convertion preferences.
+    void readSettings();
+    //! Updates tree widget when it will change.
+    void updateTree();
+    void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
+    void query(const QString& targetFile, int tid, const QString& whatToDo);
+    void giveNextImage(int tid);
+    void setupThreads(int numThreads);
+    void closeOrCancel();
+    void updateInterface();
+    void setCanceled();
+    void stopConvertThreads();
+    void checkUpdates();
+    void showUpdateResult(QString *result, bool error);
+    void sendInstall();
+    void showSendInstallResult(QString *result, bool error);
 
 private slots:
     void setSizeUnit(int index);
