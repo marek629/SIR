@@ -1188,6 +1188,7 @@ void ConvertDialog::setSizeUnit(int index) {
     if (index < 0)
         return;
     static int lastIndex = index;
+    static int lastIndexPxPercent = index+1;
     static bool maintainRatioAspect = maintainCheckBox->isChecked();
     if (index == 2) { // bytes
         geometryWidget->hide();
@@ -1200,13 +1201,14 @@ void ConvertDialog::setSizeUnit(int index) {
         fileSizeWidget->hide();
         geometryWidget->show();
         disconnectSizeLinesEdit();
-        if (lastIndex != index) {
+        if (lastIndexPxPercent != index) {
             QString tmp = sizeWidthString;
             sizeWidthString = widthLineEdit->text();
             widthLineEdit->setText(tmp);
             tmp = sizeHeightString;
             sizeHeightString = heightLineEdit->text();
             heightLineEdit->setText(tmp);
+            lastIndexPxPercent = index;
         }
         if (lastIndex == 2) {
             maintainCheckBox->setEnabled(true);
@@ -1215,8 +1217,8 @@ void ConvertDialog::setSizeUnit(int index) {
         if (maintainCheckBox->isChecked() && index == 1) // %
             heightLineEdit->setText( widthLineEdit->text() );
         connectSizeLinesEdit();
-        lastIndex = index;
     }
+    lastIndex = index;
 }
 
 void ConvertDialog::sizeChanged(const QString &value) {
