@@ -117,6 +117,10 @@ void ConvertDialog::createConnections() {
     connect(sizeUnitComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(setSizeUnit(int)));
     connectSizeLinesEdit();
+
+    // quality spin box & slider
+    connect(qualitySpinBox, SIGNAL(valueChanged(int)), qualitySlider, SLOT(setValue(int)));
+    connect(qualitySlider, SIGNAL(valueChanged(int)), qualitySpinBox, SLOT(setValue(int)));
 }
 
 void ConvertDialog::createActions()
