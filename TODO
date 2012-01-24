@@ -3,7 +3,6 @@
     image change (next, previous)
     * change flip icons
   2 Correction convert dialog
-    * add flip radio buttons near rotation line edit
     * add external columns into tree view like size (px,k/MiB)
   ====== Piotrek ======
   ! add shutter speed in metadata dialog

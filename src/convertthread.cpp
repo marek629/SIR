@@ -97,6 +97,10 @@ void ConvertThread::setDesiredRotation(bool rotate, double angle) {
     shared->angle = angle - multipler*360;
 }
 
+void ConvertThread::setDesiredFlip(int flip) {
+    shared->flip = flip;
+}
+
 void ConvertThread::setQuality(int quality) {
     shared->quality = quality;
 }
@@ -342,6 +346,8 @@ void ConvertThread::rotateImage(QImage *image) {
                 alpha = 0;
                 flip = MetadataUtils::None;
             }
+
+            flip ^= shared->flip;
 
             // normalization of values alpha and flip
             if (alpha == -270)

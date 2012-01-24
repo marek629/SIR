@@ -53,9 +53,10 @@ public:
     QString suffix;
     QString format;
     int quality;
-    // destinated rotate angle
+    // destinated orientation
     bool rotate;
     double angle;
+    int flip;
     // metadata settings
     bool metadataEnabled;
     bool saveMetadata;

@@ -586,6 +586,7 @@ void ConvertDialog::convert() {
                                        maintainCheckBox->isChecked() );
     QString desiredFormat = targetFormatComboBox->currentText().toLower();
     ConvertThread::setDesiredFormat( desiredFormat );
+    ConvertThread::setDesiredFlip(flipComboBox->currentIndex());
     ConvertThread::setDesiredRotation( rotateCheckBox->isChecked(),
                                            rotateLineEdit->text().toDouble() );
     ConvertThread::setQuality(qualitySpinBox->value());

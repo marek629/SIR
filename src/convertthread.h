@@ -90,6 +90,15 @@ public:
       */
     static void setDesiredRotation(bool rotate, double angle = 0.0);
 
+    //! Set desired flip mode.
+    /** \param flip Index of flip combo box. Supported values:
+      * \li 0 <c>None flip</c>
+      * \li 1 <c>Flip verticaly</c>
+      * \li 2 <c>Flip horizontaly</c>
+      * \li 3 <c>Flip verticaly and horizontaly</c>
+      */
+    static void setDesiredFlip(int flip);
+
     //! Set desired image quality.
     /** \param quality Integer factor in range 0 to 100.
       */
@@ -150,6 +159,5 @@ private:
     MetadataUtils::Metadata metadata;
     QString targetFilePath;
 };
-
 
 #endif
