@@ -1,14 +1,17 @@
 *** nearest release ***
-  1 Fix preview dialog resize bug (bigger than screen)
+  1 If zoom mode in preview dialog is "Fit to window size" resize window after
+    image change (next, previous)
+    * change flip icons
   2 Correction convert dialog
-    * add check box "don't change image size"
-    * choice between true rotation and edit exif orientation tag
-  3 Save loading metadata functions vs empty values
+    * add flip radio buttons near rotation line edit
+    * add external columns into tree view like size (px,k/MiB)
   ====== Piotrek ======
   ! add shutter speed in metadata dialog
   ! optimalize MetadataUtils::Exif::flashString(short num)
     * try convert using << or >> operators
-  ======
+  ! write slot for 'Delete metadata' button in metadata dialog
+  ! seg. fault fix MetadataUtils::Metadata::setExifData() when Exif.Image.ImageWidth is empty
+  =====================
 
 *** next release ***
   1 Watermark support

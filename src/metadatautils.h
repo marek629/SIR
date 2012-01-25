@@ -23,6 +23,7 @@ namespace MetadataUtils
 
         bool write(const String& path, const QImage& image = QImage());
         bool write(const QString& path, const QImage& image = QImage());
+        void clearMetadata();
         void setExifData();
         void setExifStruct();
         void setExifDatum(const std::string &key1, const std::string &key2, int value);

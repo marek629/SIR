@@ -3,7 +3,7 @@
 #include <QLineEdit>
 #include <QSettings>
 #include <QMessageBox>
-
+#include <exiv2/exif.hpp>
 #include <QDebug>
 
 MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
@@ -12,7 +12,6 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
 {
     setupUi(this);
     this->images = images;
-    qDebug() << this->images->length() << currentImage ;
     this->currentImage = currentImage;
     this->imagePath = this->images->at(this->currentImage);
     metadata = new MetadataUtils::Metadata();
@@ -33,6 +32,7 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
 
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(close()));
     connect(saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
+    connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteMetadata()));
 }
 
 MetadataDialog::~MetadataDialog()
@@ -160,4 +160,20 @@ void MetadataDialog::saveChanges()
     // saving
     metadata->setExifData();
     metadata->write(imagePath);
+}
+
+void MetadataDialog::deleteMetadata()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("Delete metadata"));
+    msgBox.setText(tr("Do you really want to delete metadata from this image?"));
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    if(msgBox.exec() == QMessageBox::Yes)
+    {
+        metadata->clearMetadata();
+        metadata->write(imagePath);
+        resetStructs();
+        setupValues();
+    }
 }

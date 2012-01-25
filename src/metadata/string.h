@@ -21,6 +21,7 @@ namespace MetadataUtils
         std::string toNativeStdString() const;
         QString toQString() const { return *this; }
         Exiv2::Rational toRational() const;
+        Exiv2::Rational toRationalPower() const;
         String & operator =(const char *str);
         String & operator =(const QString &other);
         static const QString &noData();

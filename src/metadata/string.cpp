@@ -2,6 +2,7 @@
 #include <exiv2/metadatum.hpp>
 #include <QObject>
 #include <QStringList>
+#include <cmath>
 
 QString MetadataUtils::String::noData_ = QObject::tr("no data");
 
@@ -58,6 +59,13 @@ Exiv2::Rational MetadataUtils::String::toRational() const
         result.first += list.first().toInt() * result.second;
 
     return result;
+}
+
+Exiv2::Rational MetadataUtils::String::toRationalPower() {
+    Exiv2::Rational rational = toRational();
+    Exiv2::Rational result;
+    result.first = log(rational.first / rational.second);
+    result.second = log(0.5);
 }
 
 MetadataUtils::String MetadataUtils::String::exifVersion(const Exiv2::Metadatum &datum)
