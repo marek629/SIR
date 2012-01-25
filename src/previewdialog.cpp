@@ -1,27 +1,30 @@
 /*
-* This file is part of Sir, an open-source cross-platform Image tool
-* 2007  Rafael Sachetto
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
-* Program URL: http://sir.projet-libre.org/
-*
-*/
+ * This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
+ * Program URL: http://sir.projet-libre.org/
+ *
+ */
 
 #include "previewdialog.h"
+#include "rawutils.h"
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QResizeEvent>
@@ -38,12 +41,14 @@
 
 #include <QDebug>
 
-#include "rawutils.h"
-
 #define H 115
 #define W 50
 
-
+/*! Default constructor.
+ * \param parent Parent widget.
+ * \param images List of image files path.
+ * \param currentImage Index of current image on \a images list.
+ */
 PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
                              int currentImage):QDialog(parent) {
 
@@ -89,6 +94,10 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     view->show();
 }
 
+/*! Destructor.
+ * \par
+ * Dealocates dynamic allocated memory.
+ */
 PreviewDialog::~PreviewDialog() {
     delete scene;
     delete images;
@@ -99,8 +108,7 @@ PreviewDialog::~PreviewDialog() {
 void PreviewDialog::createConnections() {
 
     connect(quitButton, SIGNAL(clicked()), SLOT(close()));
-    connect(zoomComboBox, SIGNAL(activated ( const QString &  )),
-            SLOT(zoom(const QString & )));
+    connect(zoomComboBox, SIGNAL(activated(QString)), SLOT(zoom(QString)));
     connect(rotateCwButton, SIGNAL(clicked ()), SLOT(rotatecw()));
     connect(rotateCcwButton, SIGNAL(clicked ()), SLOT(rotateccw()));
     connect(flipHButton, SIGNAL(clicked()), SLOT(flipHorizontal()));
@@ -160,7 +168,13 @@ void PreviewDialog::initBar() {
 
 }
 
-void PreviewDialog::zoom( const QString & text ) {
+/*! Zoom combo box slot.
+ * \par
+ * Zoom previewed image to typed perventage value as \a text. A valid value
+ * should be decimal value and percent-sign without space, for example \em 100%.\n
+ * A special value \em "Fit to window size" (translatable) is supported.
+ */
+void PreviewDialog::zoom(const QString &text) {
 
     bool ok;
     QString aux(text);
@@ -206,6 +220,8 @@ void PreviewDialog::zoom( const QString & text ) {
     view->rotate(rotation);
 }
 
+/*! Rotate clockwise button slot. Rotates clockwise viewing image.
+ */
 void PreviewDialog::rotatecw( ) {
     if (flip == MetadataUtils::None || rotation == 180 || rotation == -180) {
         rotation += 90;
@@ -223,6 +239,8 @@ void PreviewDialog::rotatecw( ) {
     }
 }
 
+/*! Rotate counterclockwise button slot. Rotates counterclockwise viewing image.
+ */
 void PreviewDialog::rotateccw( ) {
     if (flip == MetadataUtils::None || rotation == 180 || rotation == -180) {
         rotation -= 90;
@@ -240,6 +258,32 @@ void PreviewDialog::rotateccw( ) {
     }
 }
 
+/*! Flip vertical button slot. Flips verticaly current image.
+ */
+void PreviewDialog::flipVertical() {
+    flip ^= MetadataUtils::Vertical;
+    if (flip == MetadataUtils::VerticalAndHorizontal) {
+        flip = MetadataUtils::None;
+        if (rotation%180 != 0)
+            view->scale(1.0,-1.0);
+        else
+            view->scale(-1.0, 1.0);
+        rotation += 180;
+        view->rotate(180);
+        if (rotation == 270)
+            rotation = -90;
+        else if (rotation == 360)
+            rotation = 0;
+        return;
+    }
+    if (rotation%180 != 0)
+        view->scale(-1.0,1.0);
+    else
+        view->scale(1.0, -1.0);
+}
+
+/*! Flip horizontal button slot. Flips horizontaly current image.
+ */
 void PreviewDialog::flipHorizontal() {
     using namespace MetadataUtils;
     flip ^= Horizontal;
@@ -263,28 +307,8 @@ void PreviewDialog::flipHorizontal() {
         view->scale(-1.0, 1.0);
 }
 
-void PreviewDialog::flipVertical() {
-    flip ^= MetadataUtils::Vertical;
-    if (flip == MetadataUtils::VerticalAndHorizontal) {
-        flip = MetadataUtils::None;
-        if (rotation%180 != 0)
-            view->scale(1.0,-1.0);
-        else
-            view->scale(-1.0, 1.0);
-        rotation += 180;
-        view->rotate(180);
-        if (rotation == 270)
-            rotation = -90;
-        else if (rotation == 360)
-            rotation = 0;
-        return;
-    }
-    if (rotation%180 != 0)
-        view->scale(-1.0,1.0);
-    else
-        view->scale(1.0, -1.0);
-}
-
+/*! Next image button slot. Shows next image.
+ */
 void  PreviewDialog::nextImage( ) {
 
     view->resetMatrix();
@@ -311,6 +335,8 @@ void  PreviewDialog::nextImage( ) {
     verifyImages();
 }
 
+/*! Previous image button slot. Shows previous image.
+ */
 void  PreviewDialog::previousImage( ) {
 
     if(previousButton->hasFocus()) {
@@ -356,6 +382,9 @@ void  PreviewDialog::verifyImages() {
 
 }
 
+/*! Full screen button slot. Shows this window in full screen or normal mode
+ * depending on current window state.
+ */
 void PreviewDialog::fullScreen() {
     static bool maximized = false;
     if(this->isFullScreen()) {
@@ -367,9 +396,10 @@ void PreviewDialog::fullScreen() {
         maximized = this->isMaximized();
         this->showFullScreen();
     }
-
 }
 
+/*! Save button slot. Ask and overwrite if accepted current file.
+ */
 bool PreviewDialog::save() {
 
     bool ret;
@@ -394,6 +424,8 @@ bool PreviewDialog::save() {
     return false;
 }
 
+/*! Save as button slot. Ask and overwrite if accepted current file.
+ */
 bool PreviewDialog::saveAs() {
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
     QStringList list;
@@ -422,6 +454,8 @@ bool PreviewDialog::saveAs() {
     return ret;
 }
 
+/*! Save image file into typed \a fileName path.
+ */
 bool PreviewDialog::saveFile(const QString &fileName) {
     int w = (int)(imageW*zoomFactor);
     int h = (int)(imageH*zoomFactor);
@@ -445,7 +479,6 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     int fl = flip;
     if (metadataEnabled && saveMetadata) {
         orientation = metadata->exifStruct()->orientation;
-        // MetadataUtils::Exif::rotationAngle()
         switch (orientation) {
         case 1:
             break;
@@ -621,18 +654,22 @@ void PreviewDialog::loadPixmap() {
     }
 }
 
+/*! Print button slot. Prints current image.
+ */
 void PreviewDialog::print() {
-
     QPrinter printer;
-
     if (QPrintDialog(&printer).exec() == QDialog::Accepted) {
         QPainter painter(&printer);
         painter.setRenderHint(QPainter::Antialiasing);
         scene->render(&painter);
     }
-
 }
 
+/*! When window resized fits image to window size if special value \em "Fit to window size"
+ * of zoom combo box is activated.
+ * \par
+ * This is overloaded QDialogs's method.
+ */
 void PreviewDialog::resizeEvent(QResizeEvent *) {
     QString currentZoomString = zoomComboBox->currentText();
     if (currentZoomString == tr("Fit to window size"))

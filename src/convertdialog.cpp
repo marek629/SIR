@@ -1,6 +1,7 @@
 /*
  * This file is part of SIR, an open-source cross-platform Image tool
- * 2007  Rafael Sachetto
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
  *
  */
@@ -52,6 +54,14 @@
 
 #include <QDebug>
 
+/*! Default constuctor.\n
+ * Sets up window with saved settings like window state, position
+ * and convertion preferences.
+ * \param parent Pointer to parent object.
+ * \param args String containing aplication argv tables records
+ *     separated by ** (double star-sign).
+ * \sa readSettings
+ */
 ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
     setupUi(this);
     numThreads = 1;
@@ -64,6 +74,9 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) 
     init();
 }
 
+/*! Destructor.\n
+ * Writes window state and position and dealocates dynamic allocated memory.
+ */
 ConvertDialog::~ConvertDialog() {
     writeWindowProperties();
     delete statusList;
@@ -142,6 +155,9 @@ void ConvertDialog::createActions()
     connect(metadataAction, SIGNAL(triggered()), this, SLOT(showMetadata()));
 }
 
+/*! Check updates on SIR website.
+ * \sa showUpdateResult
+ */
 void ConvertDialog::checkUpdates() {
     net = new NetworkUtils();
     connect(net, SIGNAL(checkDone(QString*, bool)),
@@ -149,6 +165,10 @@ void ConvertDialog::checkUpdates() {
     net->checkUpdates();
 }
 
+/*! Notify SIR installation on project website if alread didn't notified;
+ * otherwise show message box about alread sended.
+ * \sa showSendInstallResult
+ */
 void ConvertDialog::sendInstall() {
 
     if(alreadSent) {
@@ -190,6 +210,9 @@ void ConvertDialog::sendInstall() {
 
 }
 
+/*! Show message box about notified installation.
+ * \sa sendInstall
+ */
 void ConvertDialog::showSendInstallResult(QString *result, bool error) {
 
     if(error) {
@@ -215,6 +238,9 @@ void ConvertDialog::showSendInstallResult(QString *result, bool error) {
 
 }
 
+/*! Show result of checkUpdates() in message box.
+ * \sa checkUpdates
+ */
 void ConvertDialog::showUpdateResult(QString *result, bool error) {
 
     if(error) {
@@ -256,6 +282,8 @@ void ConvertDialog::showUpdateResult(QString *result, bool error) {
     }
 }
 
+/*! Setup \a numThreads worker threads.
+ */
 void ConvertDialog::setupThreads(int numThreads) {
     // clearing list of threads
     while (!convertThreads.isEmpty())
@@ -328,6 +356,12 @@ void ConvertDialog::init() {
     converting = false;
 }
 
+/*! Browse destination directory button slot.
+ * Choose destination directory in QFileDialog.
+ * \par
+ * Path from neighboring line edit is setting as origin directory in QFileDialog.
+ * If the path is empty origin directory will be set to home path.
+ */
 void ConvertDialog::browseDestination() {
 
     QString initialName = destFileEdit->text();
@@ -348,6 +382,8 @@ void ConvertDialog::browseDestination() {
     }
 }
 
+/*! Gives next image for worker thread legitimazed \a tid thread ID.
+ */
 void ConvertDialog::giveNextImage(int threadNum) {
 
     QTreeWidgetItem *item = NULL;
@@ -365,6 +401,13 @@ void ConvertDialog::giveNextImage(int threadNum) {
     }
 }
 
+/*! Add directory button and action slot.
+ * Load all supported image files from choosed directory (non-recursive)
+ * into tree widget and set state to \em "Not converted yet".\n
+ * This function remember last opened directory in the same session.
+ * Default directory is home directory.
+ * \sa addFile
+ */
 void ConvertDialog::addDir() {
 
     if(lastDir == "") {
@@ -413,6 +456,10 @@ void ConvertDialog::addDir() {
     filesTreeView->resizeColumnToContents (3);
 }
 
+/*! Remove all button and action slot.
+ * Remove all items of tree widget.
+ * \sa removeSelectedFromList
+ */
 void ConvertDialog::removeAll() {
 
     if (filesTreeView->topLevelItemCount() > 0) {
@@ -426,6 +473,10 @@ void ConvertDialog::removeAll() {
 
 }
 
+/*! Remove selected button and action slot.
+ * Remove selected items of tree widget.
+ * \sa removeAll
+ */
 void ConvertDialog::removeSelectedFromList() {
 
     QTreeWidgetItem *item;
@@ -451,6 +502,13 @@ void ConvertDialog::removeSelectedFromList() {
     }
 }
 
+/*! Add file button and action slot.
+ * Load selected image files into tree widget and set state to
+ * \em "Not \em converted \em yet".\n
+ * This function remember last opened directory in the same session.
+ * Default directory is home directory.
+ * \sa addDir
+ */
 void ConvertDialog::addFile() {
 
     if(lastDir == "") {
@@ -495,6 +553,11 @@ void ConvertDialog::addFile() {
     filesTreeView->resizeColumnToContents (3);
 }
 
+/*! Convert all button slot.
+ * Load all items from tree widget into list of images to convert and
+ * call #convert() function.
+ * \sa convertSelected
+ */
 void ConvertDialog::convertAll() {
     itemsToConvert.clear();
     for (int i=0; i<filesTreeView->topLevelItemCount(); i++)
@@ -507,6 +570,11 @@ void ConvertDialog::convertAll() {
     convert();
 }
 
+/*! Convert selected button slot.
+ * Load selected items from tree widget into list of images to convert and
+ * call #convert() function.
+ * \sa convertAll
+ */
 void ConvertDialog::convertSelected() {
     itemsToConvert = filesTreeView->selectedItems();
     if (itemsToConvert.isEmpty()) {
@@ -609,6 +677,13 @@ void ConvertDialog::convert() {
     }
 }
 
+/*! Show preview dialog.
+ * Show preview dialog containig selected \a item image.\n
+ * This slot is called when tree widgets \a item was double clicked.
+ * \param item Pointer to selected tree widgets item.
+ * \param col Is ignored, exists for signal-slot compatibility only.
+ * \sa showMenu previewAct
+ */
 void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
 
     Q_UNUSED(col);
@@ -621,6 +696,10 @@ void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
     previewForm->show();
 }
 
+/*! Metadata action slot.
+ * Shows metadata dialog containg selected tree widgets item image metadata.
+ * \sa showMenu showPreview
+ */
 void ConvertDialog::showMetadata() {
     QString imagePath = makeImagePath(treeMenuItem);
     QStringList *list = makeList();
@@ -695,6 +774,10 @@ void ConvertDialog::initList() {
     filesTreeView->resizeColumnToContents (3);
 }
 
+/*! Rotate checkbox slot.
+ * Disables/enables rotation angle line edit.
+ * \param status Status of the checkbox.
+ */
 void ConvertDialog::verifyRotate(int status) {
 
     if (status == Qt::Checked ) {
@@ -706,6 +789,11 @@ void ConvertDialog::verifyRotate(int status) {
 
 }
 
+/*! Shows context menu.
+ * Shows context menu for selected tree widgets item.
+ * \param point Global position of context menu.
+ * \sa showPreview showMetadata convertSelected removeSelectedFromList
+ */
 void ConvertDialog::showMenu(const QPoint & point) {
 
     treeMenuItem = filesTreeView->itemAt(point);
@@ -727,6 +815,8 @@ void ConvertDialog::previewAct()
     showPreview(treeMenuItem, 0);
 }
 
+/*! Shows window containing information about SIR.
+ */
 void ConvertDialog::about() {
     AboutDialog *about = new AboutDialog();
     about->setVersion( QString("Version ")+VERSION );
@@ -734,6 +824,8 @@ void ConvertDialog::about() {
     delete about;
 }
 
+/*! Writes window state and position and show options dialog.
+ */
 void ConvertDialog::setOptions() {
     writeWindowProperties();
     OptionsDialog *options = new OptionsDialog(this);
@@ -742,6 +834,8 @@ void ConvertDialog::setOptions() {
     delete options;
 }
 
+/*! Reads settings and sets up window state, position and convertion preferences.
+ */
 void ConvertDialog::readSettings() {
 
     QString locale = QLocale::system().name();
@@ -907,6 +1001,10 @@ void ConvertDialog::readSettings() {
     settings.endGroup(); // Exif
 }
 
+/*! Save new window state and size in private fields.
+ * \par
+ * This is overloaded QWidget's method.
+ */
 void ConvertDialog::changeEvent(QEvent *e) {
 
     if (e->type()!=QEvent::WindowStateChange)
@@ -965,6 +1063,8 @@ QString ConvertDialog::makeImagePath(QTreeWidgetItem *item)
     return QDir::fromNativeSeparators(imagePath);
 }
 
+/*! Updates tree widget when it will change.
+ */
 void ConvertDialog::updateTree() {
     if (filesTreeView->topLevelItemCount() > 0) {
         convertButton->setEnabled(TRUE);
@@ -976,9 +1076,13 @@ void ConvertDialog::updateTree() {
     filesTreeView->resizeColumnToContents (3);
 }
 
+/*! Set converting status of image.
+ * \param imageData List of strings containing path, image name and file extension.
+ * \param status Status message.
+ * \param statusNum Status code defined in src/defines.h.
+ */
 void ConvertDialog::setImageStatus(const QStringList& imageData,
                                    const QString& status, int statusNum) {
-
 
     if(statusNum != CONVERTING) {
         //We don't want to update the status bar if the statusValue is
@@ -1006,6 +1110,11 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
     }
 }
 
+/*! Ask for users agreement of typed action on file.
+ * \param targetFile Asking file path.
+ * \param tid Worker thread ID.
+ * \param whatToDo Action on target file. Support for \em overwrite and \em enlarge only.
+ */
 void ConvertDialog::query(const QString& targetFile, int tid, const QString& whatToDo) {
 
     QueryData data = {targetFile,tid};
@@ -1090,6 +1199,8 @@ void ConvertDialog::questionEnlarge(QueryData data) {
         convertThreads[data.tid]->confirmEnlarge(2);
 }
 
+/*! Retranslates GUI.
+ */
 void ConvertDialog::retranslateStrings() {
 
     QList<QString> itemList;
@@ -1141,6 +1252,8 @@ void ConvertDialog::retranslateStrings() {
     }
 }
 
+/*! Cancel converting if converting runs; otherwise close window.
+ */
 void ConvertDialog::closeOrCancel() {
 
     if (converting) {
@@ -1154,24 +1267,29 @@ void ConvertDialog::closeOrCancel() {
 
 }
 
+/*! Terminate all worker threads.
+ */
 void ConvertDialog::stopConvertThreads() {
-        for (int i = 0; i < numThreads; i++) {
-                convertThreads[i]->terminate();
-        }
+    for (int i = 0; i < numThreads; i++)
+        convertThreads[i]->terminate();
 }
 
+/*! Update user interface after convering.
+ */
 void ConvertDialog::updateInterface() {
-        converting = false;
-        convertSelectedButton->setEnabled(true);
+    converting = false;
+    convertSelectedButton->setEnabled(true);
     convertButton->setEnabled(true);
     filesTreeView->resizeColumnToContents (0);
     filesTreeView->resizeColumnToContents (1);
     filesTreeView->resizeColumnToContents (2);
     filesTreeView->resizeColumnToContents (3);
-        setCursor(Qt::ArrowCursor);
-        quitButton->setText(tr("Quit"));
+    setCursor(Qt::ArrowCursor);
+    quitButton->setText(tr("Quit"));
 }
 
+/*! Set image status to \em Cancelled if the image isn't converted yet.
+ */
 void ConvertDialog::setCanceled() {
 
         int count = filesTreeView->topLevelItemCount();
