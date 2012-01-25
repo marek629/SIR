@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>657</width>
+    <width>660</width>
     <height>531</height>
    </rect>
   </property>
@@ -338,7 +338,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="sizeTab">
        <attribute name="title">
@@ -563,17 +563,17 @@
           </item>
           <item>
            <property name="text">
-            <string>Flip verticaly</string>
+            <string>Flip vertically</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Flip horizontaly</string>
+            <string>Flip horizontally</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Flip verticaly and horizontaly</string>
+            <string>Flip vertically and horizontally</string>
            </property>
           </item>
          </widget>
@@ -641,8 +641,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>657</width>
-     <height>24</height>
+     <width>660</width>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

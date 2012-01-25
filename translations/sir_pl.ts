@@ -99,81 +99,88 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <location filename="../src/application.cpp" line="17"/>
+        <source>Error code: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="18"/>
+        <source>Metadata error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConvertDialog</name>
     <message>
-        <location filename="../src/convertdialog.cpp" line="123"/>
+        <location filename="../src/convertdialog.cpp" line="176"/>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
         <translation>Już wysłałeś informacje na temat swojej instalacji SIR. Dzięki bardzo!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="131"/>
+        <location filename="../src/convertdialog.cpp" line="184"/>
         <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
         <translation>WAŻNE: nie zostaną wysłane żadne prywatne dane dotyczące Ciebie bądź Twojego komputera! Jedynie zostanie zwiększony licznik unikalnych instalacji SIR.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="172"/>
+        <location filename="../src/convertdialog.cpp" line="228"/>
         <source>Thank you for let us know that you are using SIR! You are the user number %1 of this month!</source>
         <translation>Dzięki, że powiadomiłeś nas o używaniu SIR! Jesteś %1 użytkownikiem w tym miesiącu!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="197"/>
+        <location filename="../src/convertdialog.cpp" line="256"/>
         <source>You have the lastest version of SIR!</source>
         <translation>Masz najnowszą wersję SIR!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="207"/>
+        <location filename="../src/convertdialog.cpp" line="266"/>
         <source>Go to SIR website!</source>
         <translation>Przejdź do strony www SIR!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="309"/>
-        <location filename="../src/convertdialog.cpp" line="462"/>
+        <location filename="../src/convertdialog.cpp" line="374"/>
+        <location filename="../src/convertdialog.cpp" line="421"/>
         <source>Choose a directory</source>
         <translation>Wybierz katalog</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="377"/>
-        <location filename="../src/convertdialog.cpp" line="613"/>
+        <location filename="../src/convertdialog.cpp" line="608"/>
         <source>Create Folder? -- SIR</source>
         <translation>Stworzyć katalog? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="378"/>
-        <location filename="../src/convertdialog.cpp" line="614"/>
+        <location filename="../src/convertdialog.cpp" line="609"/>
         <source>The folder %1 do not exists.Do you want to create it?</source>
         <translation>Katalog %1 nie istnieje. Czy chcesz go utworzyć?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="380"/>
-        <location filename="../src/convertdialog.cpp" line="616"/>
+        <location filename="../src/convertdialog.cpp" line="612"/>
         <source>&amp;Yes</source>
         <translation>&amp;Tak</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="380"/>
-        <location filename="../src/convertdialog.cpp" line="616"/>
+        <location filename="../src/convertdialog.cpp" line="612"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="386"/>
-        <location filename="../src/convertdialog.cpp" line="622"/>
+        <location filename="../src/convertdialog.cpp" line="617"/>
         <source>Unable to create target folder.</source>
         <translation>Nie można stworzyć katalogu docelowego.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="411"/>
-        <location filename="../src/convertdialog.cpp" line="642"/>
+        <location filename="../src/convertdialog.cpp" line="632"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1048"/>
+        <location filename="../src/convertdialog.cpp" line="1157"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Nadpisać plik? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1049"/>
+        <location filename="../src/convertdialog.cpp" line="1158"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Plik %1 już istnieje. Czy chcesz go nadpisać?</translation>
     </message>
@@ -182,13 +189,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Tak na &amp;wszystkie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1129"/>
+        <location filename="../src/convertdialog.cpp" line="1244"/>
         <source>Converting</source>
         <translation>Konwertuję</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1132"/>
-        <location filename="../src/convertdialog.cpp" line="1176"/>
+        <location filename="../src/convertdialog.cpp" line="1247"/>
+        <location filename="../src/convertdialog.cpp" line="1298"/>
         <source>Cancelled</source>
         <translation>Anulowano</translation>
     </message>
@@ -205,39 +212,37 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete"> - übersprungen</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="445"/>
+        <location filename="../src/convertdialog.cpp" line="567"/>
         <source>Please add at least one image file.</source>
         <translation>Proszę dodać co najmniej jeden plik graficzny.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="545"/>
+        <location filename="../src/convertdialog.cpp" line="519"/>
         <source>Images</source>
         <translation>Obrazy</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="549"/>
+        <location filename="../src/convertdialog.cpp" line="523"/>
         <source>Select one or more files to open</source>
         <translation>Zaznacz jeden lub więcej plików do otwarcia</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="808"/>
+        <location filename="../src/convertdialog.cpp" line="145"/>
         <source>Convert Selected</source>
         <translation>Konwertuj zaznaczone</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="809"/>
         <source>Convert the selected images</source>
-        <translation>Konwertuj zaznaczone pliki</translation>
+        <translation type="obsolete">Konwertuj zaznaczone pliki</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="811"/>
+        <location filename="../src/convertdialog.cpp" line="141"/>
         <source>Remove Selected</source>
         <translation>Usuń zaznaczone</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="812"/>
         <source>Remove the selected images</source>
-        <translation>Usuń zaznaczone pliki</translation>
+        <translation type="obsolete">Usuń zaznaczone pliki</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="14"/>
@@ -245,173 +250,238 @@ p, li { white-space: pre-wrap; }
         <translation>SIR - Simple Image Resizer</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="151"/>
+        <location filename="../dialogs/convertdialog.ui" line="82"/>
         <source>&amp;Quit</source>
         <translation>&amp;Wyjście</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="275"/>
+        <location filename="../dialogs/convertdialog.ui" line="72"/>
         <source>&amp;Convert Selected</source>
         <translation>Konwertuj &amp;zaznaczone</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="278"/>
+        <location filename="../dialogs/convertdialog.ui" line="75"/>
         <source>Alt+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="298"/>
+        <location filename="../dialogs/convertdialog.ui" line="59"/>
         <source>Convert &amp;All</source>
         <translation>Ko&amp;nwertuj wszystkie</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="301"/>
+        <location filename="../dialogs/convertdialog.ui" line="62"/>
         <source>Alt+A</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="39"/>
+        <location filename="../dialogs/convertdialog.ui" line="175"/>
         <source>&amp;Remove File(s)</source>
         <translation>&amp;Usuń plik(i)</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="68"/>
-        <location filename="../dialogs/convertdialog.ui" line="409"/>
+        <location filename="../dialogs/convertdialog.ui" line="140"/>
+        <location filename="../dialogs/convertdialog.ui" line="716"/>
         <source>Add &amp;Dir...</source>
         <translation>Dodaj &amp;katalog...</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="75"/>
+        <location filename="../dialogs/convertdialog.ui" line="298"/>
         <source>&amp;Target Format:</source>
         <translation>&amp;Format docelowy:</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="88"/>
-        <location filename="../dialogs/convertdialog.ui" line="424"/>
+        <location filename="../dialogs/convertdialog.ui" line="194"/>
+        <location filename="../dialogs/convertdialog.ui" line="731"/>
         <source>Remove Al&amp;l</source>
         <translation>Usuń w&amp;szystkie</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="95"/>
+        <location filename="../dialogs/convertdialog.ui" line="278"/>
         <source>Target Folder:</source>
         <translation>Katalog docelowy:</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="108"/>
+        <location filename="../dialogs/convertdialog.ui" line="249"/>
         <source>Target Prefix:</source>
-        <translation>Dodaj prefix:</translation>
+        <translation>Dodaj prefiks:</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="115"/>
+        <location filename="../dialogs/convertdialog.ui" line="419"/>
         <source>Height:</source>
         <translation>Wysokość:</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="122"/>
+        <location filename="../dialogs/convertdialog.ui" line="262"/>
         <source>&amp;Browse</source>
         <translation>&amp;Przeglądaj</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="125"/>
+        <location filename="../dialogs/convertdialog.ui" line="265"/>
         <source>Alt+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="132"/>
+        <location filename="../dialogs/convertdialog.ui" line="386"/>
         <source>Width:</source>
         <translation>Szerokość:</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="142"/>
-        <location filename="../dialogs/convertdialog.ui" line="404"/>
+        <location filename="../dialogs/convertdialog.ui" line="121"/>
+        <location filename="../dialogs/convertdialog.ui" line="711"/>
         <source>Add &amp;File...</source>
         <translation>&amp;Dodaj plik...</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="158"/>
+        <location filename="../dialogs/convertdialog.ui" line="540"/>
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="185"/>
+        <location filename="../dialogs/convertdialog.ui" line="546"/>
         <source>Rotation Angle:</source>
         <translation>Obróć o kąt:</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="234"/>
+        <location filename="../dialogs/convertdialog.ui" line="362"/>
         <source>&amp;Maintain Aspect Ratio</source>
         <translation>Zachowaj p&amp;roporcje obrazu</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="237"/>
+        <location filename="../dialogs/convertdialog.ui" line="288"/>
+        <source>Target Suffix:</source>
+        <translation>Dodaj sufix:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="345"/>
+        <source>Size</source>
+        <translation>Rozmiar</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="365"/>
         <source>Alt+M</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="247"/>
+        <location filename="../dialogs/convertdialog.ui" line="448"/>
+        <source>Target File Size:</source>
+        <translation>Rozmiar docelowy:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="472"/>
+        <source>KiB</source>
+        <translation>KiB</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="477"/>
+        <source>MiB</source>
+        <translation>MiB</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="511"/>
+        <source>Choose unit</source>
+        <translation>Wybierz jednostkę</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="518"/>
+        <source>Pixels (px)</source>
+        <translation>Pixele (px)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="523"/>
+        <source>Percent (%)</source>
+        <translation>Procenty (%)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="528"/>
+        <source>Bytes (B)</source>
+        <translation>Bajty (B)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="553"/>
         <source>Quality:</source>
         <translation>Jakość:</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="414"/>
+        <location filename="../dialogs/convertdialog.ui" line="561"/>
+        <source>No flip</source>
+        <translation>Brak odbicia</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="566"/>
+        <source>Flip verticaly</source>
+        <translation>Odbij pionowo</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="571"/>
+        <source>Flip horizontaly</source>
+        <translation>Odbij poziomo</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="576"/>
+        <source>Flip verticaly and horizontaly</source>
+        <translation>Odbij pionowo i poziomo</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="721"/>
         <source>Check for updates...</source>
         <translation>Sprawdź aktualizacje...</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="419"/>
+        <location filename="../dialogs/convertdialog.ui" line="726"/>
         <source>Let us know that you are using SIR...</source>
         <translation>Daj znać, że używasz SIR...</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="427"/>
+        <location filename="../dialogs/convertdialog.ui" line="734"/>
         <source>Remove all filles the files list</source>
-        <translation></translation>
+        <translation>Usuń wszystkie pliki z listy plików</translation>
     </message>
     <message>
         <source>File</source>
         <translation type="obsolete">Plik</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="362"/>
+        <location filename="../dialogs/convertdialog.ui" line="669"/>
         <source>Edit</source>
         <translation>Edytuj</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="353"/>
+        <location filename="../dialogs/convertdialog.ui" line="660"/>
         <source>About</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="343"/>
+        <location filename="../dialogs/convertdialog.ui" line="650"/>
         <source>Actions</source>
         <translation>Akcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="378"/>
-        <location filename="../dialogs/convertdialog.ui" line="381"/>
-        <location filename="../dialogs/convertdialog.ui" line="384"/>
-        <location filename="../src/convertdialog.cpp" line="1168"/>
+        <location filename="../dialogs/convertdialog.ui" line="685"/>
+        <location filename="../dialogs/convertdialog.ui" line="688"/>
+        <location filename="../dialogs/convertdialog.ui" line="691"/>
+        <location filename="../src/convertdialog.cpp" line="1288"/>
         <source>Quit</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="389"/>
+        <location filename="../dialogs/convertdialog.ui" line="696"/>
         <source>&amp;Options</source>
         <translation>&amp;Opcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="394"/>
+        <location filename="../dialogs/convertdialog.ui" line="701"/>
         <source>About Sir...</source>
         <translation>O SIR...</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="399"/>
+        <location filename="../dialogs/convertdialog.ui" line="706"/>
         <source>About Qt...</source>
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1117"/>
-        <location filename="../src/convertdialog.cpp" line="1178"/>
+        <location filename="../src/convertdialog.cpp" line="1232"/>
+        <location filename="../src/convertdialog.cpp" line="1300"/>
         <source>Converted</source>
         <translation>Skonwertowany</translation>
     </message>
@@ -420,101 +490,131 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">umwandeln gescheitert</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1120"/>
+        <location filename="../src/convertdialog.cpp" line="1235"/>
         <source>Skipped</source>
         <translation>Pominięty</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="484"/>
-        <location filename="../src/convertdialog.cpp" line="564"/>
-        <location filename="../src/convertdialog.cpp" line="752"/>
-        <location filename="../src/convertdialog.cpp" line="770"/>
-        <location filename="../src/convertdialog.cpp" line="1126"/>
+        <location filename="../src/convertdialog.cpp" line="443"/>
+        <location filename="../src/convertdialog.cpp" line="538"/>
+        <location filename="../src/convertdialog.cpp" line="738"/>
+        <location filename="../src/convertdialog.cpp" line="756"/>
+        <location filename="../src/convertdialog.cpp" line="1241"/>
         <source>Not converted yet</source>
         <translation>Nie skonwertowany</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="122"/>
-        <location filename="../src/convertdialog.cpp" line="130"/>
-        <location filename="../src/convertdialog.cpp" line="163"/>
-        <location filename="../src/convertdialog.cpp" line="171"/>
+        <location filename="../src/convertdialog.cpp" line="142"/>
+        <source>Remove selected images</source>
+        <translation>Usuń zaznaczone obrazki</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="146"/>
+        <source>Convert selected images</source>
+        <translation>Konwertuj zaznaczone obrazki</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="149"/>
+        <source>Show Image</source>
+        <translation>Pokaz obrazek</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="150"/>
+        <source>Show preview selected image</source>
+        <translation>Pokaż podgląd zaznaczonego obrazka</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="153"/>
+        <source>Show Metadata</source>
+        <translation>Pokaż metadane</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="154"/>
+        <source>Show metadata of selected image</source>
+        <translation>Pokaż metadane zaznaczonego obrazka</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="175"/>
+        <location filename="../src/convertdialog.cpp" line="183"/>
+        <location filename="../src/convertdialog.cpp" line="219"/>
+        <location filename="../src/convertdialog.cpp" line="227"/>
         <source>Let us know!</source>
         <translation>Daj nam znać!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="137"/>
+        <location filename="../src/convertdialog.cpp" line="190"/>
         <source>Go for it!</source>
         <translation>Zrób to!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="140"/>
+        <location filename="../src/convertdialog.cpp" line="193"/>
         <source>No thanks!</source>
         <translation>Nie, dzięki!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="164"/>
+        <location filename="../src/convertdialog.cpp" line="220"/>
         <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
         <translation>Wystąpił błąd podczas połączenia ze stroną www SIR! Sprawdź połączenie internetowe i spróbuj ponownie!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="188"/>
-        <location filename="../src/convertdialog.cpp" line="196"/>
-        <location filename="../src/convertdialog.cpp" line="202"/>
+        <location filename="../src/convertdialog.cpp" line="247"/>
+        <location filename="../src/convertdialog.cpp" line="255"/>
+        <location filename="../src/convertdialog.cpp" line="261"/>
         <source>SIR Updates</source>
         <translation>Aktualizacje SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="189"/>
+        <location filename="../src/convertdialog.cpp" line="248"/>
         <source>There was an error while trying to connect with SIR update website! Check your internet connection and try again later!</source>
         <translation>Wystąpił błąd podczas połączenia ze stroną www SIR! Sprawdź połączenie internetowe i spróbuj ponownie!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="203"/>
+        <location filename="../src/convertdialog.cpp" line="262"/>
         <source>There is a new version of SIR available for download!</source>
         <translation>Nowa wersja SIR jest dostępna!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="210"/>
+        <location filename="../src/convertdialog.cpp" line="269"/>
         <source>I will check later!</source>
         <translation>Sprawdzę później!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="684"/>
+        <location filename="../src/convertdialog.cpp" line="582"/>
         <source>Please select at least one image file.</source>
         <translation>Proszę wybrać co najmniej jeden plik graficzny.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1075"/>
+        <location filename="../src/convertdialog.cpp" line="1184"/>
         <source>Enlarge File? - SIR</source>
         <translation>Powiększyć plik? - SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1076"/>
+        <location filename="../src/convertdialog.cpp" line="1185"/>
         <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
         <translation>Plik %1 jest mniejszy od zadanego rozmiaru. Powiększenie może powodować pogorszenie jakości obrazu. Czy chcesz go powiększyć?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1100"/>
+        <location filename="../src/convertdialog.cpp" line="1215"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1101"/>
+        <location filename="../src/convertdialog.cpp" line="1216"/>
         <source>Ext</source>
         <translation>Rozszerzenie</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1102"/>
+        <location filename="../src/convertdialog.cpp" line="1217"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1103"/>
+        <location filename="../src/convertdialog.cpp" line="1218"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1123"/>
+        <location filename="../src/convertdialog.cpp" line="1238"/>
         <source>Failed to convert</source>
         <translation>Nieudana konwersja</translation>
     </message>
@@ -522,32 +622,53 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ConvertThread</name>
     <message>
-        <location filename="../src/convertthread.cpp" line="140"/>
+        <location filename="../src/convertthread.cpp" line="217"/>
         <source>Converting</source>
         <translation>Konwertuję</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="175"/>
+        <location filename="../src/convertthread.cpp" line="247"/>
         <source>Failed to open original image</source>
         <translation>Błąd otwarcia pliku źródłowego</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="255"/>
-        <location filename="../src/convertthread.cpp" line="273"/>
+        <location filename="../src/convertthread.cpp" line="336"/>
+        <location filename="../src/convertthread.cpp" line="354"/>
+        <location filename="../src/convertthread.cpp" line="589"/>
+        <location filename="../src/convertthread.cpp" line="607"/>
         <source>Converted</source>
         <translation>Skonwertowany</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="135"/>
-        <location filename="../src/convertthread.cpp" line="196"/>
-        <location filename="../src/convertthread.cpp" line="261"/>
-        <location filename="../src/convertthread.cpp" line="268"/>
+        <location filename="../src/convertthread.cpp" line="375"/>
+        <source>Error code:</source>
+        <translation>Kod błędu:</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="551"/>
+        <source>Failed to compute image size</source>
+        <translation>Nieudane obliczenie rozmiaru obrazka</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="591"/>
+        <location filename="../src/convertthread.cpp" line="609"/>
+        <source>Failed to save</source>
+        <translation>Nieudany zapis</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="212"/>
+        <location filename="../src/convertthread.cpp" line="295"/>
+        <location filename="../src/convertthread.cpp" line="342"/>
+        <location filename="../src/convertthread.cpp" line="349"/>
+        <location filename="../src/convertthread.cpp" line="571"/>
+        <location filename="../src/convertthread.cpp" line="596"/>
+        <location filename="../src/convertthread.cpp" line="603"/>
         <source>Cancelled</source>
         <translation>Anulowano</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="258"/>
-        <location filename="../src/convertthread.cpp" line="276"/>
+        <location filename="../src/convertthread.cpp" line="339"/>
+        <location filename="../src/convertthread.cpp" line="357"/>
         <source>Failed to convert</source>
         <translation>Nieudana konwersja</translation>
     </message>
@@ -556,11 +677,44 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Nieudana konwersja</translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="198"/>
-        <location filename="../src/convertthread.cpp" line="263"/>
-        <location filename="../src/convertthread.cpp" line="266"/>
+        <location filename="../src/convertthread.cpp" line="297"/>
+        <location filename="../src/convertthread.cpp" line="344"/>
+        <location filename="../src/convertthread.cpp" line="347"/>
+        <location filename="../src/convertthread.cpp" line="573"/>
+        <location filename="../src/convertthread.cpp" line="598"/>
+        <location filename="../src/convertthread.cpp" line="601"/>
         <source>Skipped</source>
         <translation>Pominięty</translation>
+    </message>
+</context>
+<context>
+    <name>HistoryComboBox</name>
+    <message>
+        <location filename="../src/historycombobox.cpp" line="44"/>
+        <source>Remove item</source>
+        <translation>Usuń element</translation>
+    </message>
+    <message>
+        <location filename="../src/historycombobox.cpp" line="72"/>
+        <source>Full text history - SIR</source>
+        <translation>Pełna historia edycji- SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/historycombobox.cpp" line="73"/>
+        <source>Text history memory is full of favorite items.
+SIR can&apos;t automatically remove favorite item. Do it manually.</source>
+        <translation>Pamięc edycji zapełniona.
+ SIR nie może automatycznie usunąć ulubionych elementów. Zrób to ręcznie.</translation>
+    </message>
+    <message>
+        <location filename="../src/historycombobox.cpp" line="100"/>
+        <source>Throw away from favorite</source>
+        <translation>Usuń z ulubionych</translation>
+    </message>
+    <message>
+        <location filename="../src/historycombobox.cpp" line="105"/>
+        <source>Mark as favorite</source>
+        <translation>Oznacz jako ulubiony</translation>
     </message>
 </context>
 <context>
@@ -592,6 +746,583 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="14"/>
+        <source>Metadata - SIR</source>
+        <translation>Metadane - SIR</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="24"/>
+        <source>Exif</source>
+        <translation>Exif</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="42"/>
+        <source>Image</source>
+        <translation>Obrazek</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="52"/>
+        <source>Exif Version</source>
+        <translation>Wersja Exiv</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="59"/>
+        <source>Processing Software</source>
+        <translation>Obróbka programem</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="73"/>
+        <location filename="../dialogs/metadatadialog.ui" line="83"/>
+        <location filename="../dialogs/metadatadialog.ui" line="123"/>
+        <location filename="../dialogs/metadatadialog.ui" line="156"/>
+        <location filename="../dialogs/metadatadialog.ui" line="338"/>
+        <location filename="../dialogs/metadatadialog.ui" line="371"/>
+        <source>TextLabel</source>
+        <translation>Tekst etykiety</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="107"/>
+        <location filename="../dialogs/metadatadialog.ui" line="322"/>
+        <source>Size</source>
+        <translation>Rozmiar</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="113"/>
+        <location filename="../dialogs/metadatadialog.ui" line="328"/>
+        <source>Width</source>
+        <translation>Szerokość</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="146"/>
+        <location filename="../dialogs/metadatadialog.ui" line="361"/>
+        <source>Height</source>
+        <translation>Wysokość</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="183"/>
+        <source>Orientation</source>
+        <translation>Obrót</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="190"/>
+        <source>Generated Date and Time</source>
+        <translation>Data i godzina utworzenia</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="197"/>
+        <source>Digitized Date and Time</source>
+        <translation>Data i godzina cyfryzacji</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="215"/>
+        <source>No rotation</source>
+        <translation>Brak obrotu</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="220"/>
+        <source>No rotation, verticaly mirror</source>
+        <translation>Brak obrotu, pionowe odbicie</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../dialogs/metadatadialog.ui" line="225"/>
+        <source>Rotation 180°</source>
+        <translation>Obrót 180°</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../dialogs/metadatadialog.ui" line="230"/>
+        <source>Rotation 180°, verticaly mirror</source>
+        <translation>Obrót 180°, pionowe odbicie</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="235"/>
+        <source>Clockwise rotation, horizontaly mirror</source>
+        <translation>Obrót zgodnie z ruchem wskazówek zegara, pionowe odbicie</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="240"/>
+        <source>Clockwise rotation</source>
+        <translation>Obrót zgodnie z ruchem wskazówek zegara</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="245"/>
+        <source>Counterclockwise rotation, horizontaly mirror</source>
+        <translation>Obrót zgodnie z ruchem wskazówek zegara, poziome odbicie</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="250"/>
+        <source>Counterclockwise rotation</source>
+        <translation>Obrót przeciwny do ruchu wskazówek zegara</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="303"/>
+        <source>Thumbnail</source>
+        <translation>Miniatura</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="309"/>
+        <source>Thumbnail Label</source>
+        <translation>Etykieta miniaturki</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="416"/>
+        <source>Photo</source>
+        <translation>Zdjęcie</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="426"/>
+        <source>Focal length</source>
+        <translation>Ogniskowa</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="433"/>
+        <source>Exposure time</source>
+        <translation>Czas naświetlania</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="440"/>
+        <source>Exposure bias</source>
+        <translation>Ekspozycja</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="451"/>
+        <source> mm</source>
+        <translation> mm</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="468"/>
+        <source>1/2000 s</source>
+        <translation>1/2000 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="473"/>
+        <source>1/1600 s</source>
+        <translation>1/1600 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="478"/>
+        <source>1/1250 s</source>
+        <translation>1/1250 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="483"/>
+        <source>1/1000 s</source>
+        <translation>1/1000 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="488"/>
+        <source>1/800 s</source>
+        <translation>1/800 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="493"/>
+        <source>1/640 s</source>
+        <translation>1/640 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="498"/>
+        <source>1/500 s</source>
+        <translation>1/500 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="503"/>
+        <source>1/400 s</source>
+        <translation>1/400 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="508"/>
+        <source>1/320 s</source>
+        <translation>1/320 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="513"/>
+        <source>1/250 s</source>
+        <translation>1/250 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="518"/>
+        <source>1/200 s</source>
+        <translation>1/200 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="523"/>
+        <source>1/160 s</source>
+        <translation>1/160 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="528"/>
+        <source>1/125 s</source>
+        <translation>1/125 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="533"/>
+        <source>1/100 s</source>
+        <translation>1/100 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="538"/>
+        <source>1/80 s</source>
+        <translation>1/80 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="543"/>
+        <source>1/60 s</source>
+        <translation>1/60 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="548"/>
+        <source>1/50 s</source>
+        <translation>1/50 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="553"/>
+        <source>1/40 s</source>
+        <translation>1/40 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="558"/>
+        <source>1/30 s</source>
+        <translation>1/30 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="563"/>
+        <source>1/25 s</source>
+        <translation>1/25 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="568"/>
+        <source>1/20 s</source>
+        <translation>1/20 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="573"/>
+        <source>1/15 s</source>
+        <translation>1/15 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="578"/>
+        <source>1/13 s</source>
+        <translation>1/13 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="583"/>
+        <source>1/10 s</source>
+        <translation>1/10 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="588"/>
+        <source>1/8 s</source>
+        <translation>1/8 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="593"/>
+        <source>1/6 s</source>
+        <translation>1/6 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="598"/>
+        <source>1/5 s</source>
+        <translation>1/5 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="603"/>
+        <source>1/4 s</source>
+        <translation>1/4 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="608"/>
+        <source>1/3 s</source>
+        <translation>1/3 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="613"/>
+        <source>2/5 s</source>
+        <translation>2/5 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="618"/>
+        <source>1/2 s</source>
+        <translation>1/2 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="623"/>
+        <source>2/3 s</source>
+        <translation>2/3 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="628"/>
+        <source>4/5 s</source>
+        <translation>4/5 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="633"/>
+        <source>1 s</source>
+        <translation>1 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="638"/>
+        <source>1 1/3 s</source>
+        <translation>1 1/3 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="643"/>
+        <source>1 2/3 s</source>
+        <translation>1 2/3 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="648"/>
+        <source>2 s</source>
+        <translation>2 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="653"/>
+        <source>2 1/2 s</source>
+        <translation>2 1/2 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="658"/>
+        <source>3 1/5 s</source>
+        <translation>3 1/5 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="663"/>
+        <source>4 s</source>
+        <translation>4 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="668"/>
+        <source>5 s</source>
+        <translation>5 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="673"/>
+        <source>6 s</source>
+        <translation>6 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="678"/>
+        <source>8 s</source>
+        <translation>8 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="683"/>
+        <source>10 s</source>
+        <translation>10 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="688"/>
+        <source>13 s</source>
+        <translation>13 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="693"/>
+        <source>15 s</source>
+        <translation>15 s</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="701"/>
+        <source>EV</source>
+        <translation>EV</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="721"/>
+        <source>Aperture</source>
+        <translation>Szczelina</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="728"/>
+        <source>ISO Speed</source>
+        <translation>Szybkość ISO</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="755"/>
+        <source>F</source>
+        <translation>F</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="808"/>
+        <source>Exposure program</source>
+        <translation>Ekspozycja</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="821"/>
+        <source>Not defined</source>
+        <translation>Niezdefiniowany</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="826"/>
+        <source>Manual</source>
+        <translation>Ręczny</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="831"/>
+        <source>Auto</source>
+        <translation>Automatyczny</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="836"/>
+        <source>Aperture priority</source>
+        <translation type="unfinished">Priorytet szczeliny</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="841"/>
+        <source>Shutter priority</source>
+        <translation>Priorytet migawki</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="846"/>
+        <source>Creative program (biased toward depth of field)</source>
+        <translation type="unfinished">Kreatywny (duża głębia ostrości)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="851"/>
+        <source>Action program (biased toward fast shutter speed)</source>
+        <translation>Akcja (duża szybkość migawki)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="856"/>
+        <source>Portrait mode (for closeup photos with the background out of focus)</source>
+        <translation>Tryb portretowy (dla zdjęć z bliska, z nieostrym tłem)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="861"/>
+        <source>Landscape mode (for landscape photos with the background in focus)</source>
+        <translation>Tryb krajobrazowy (dla dalekich zdjęć z tłem)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="872"/>
+        <source>Light metering mode</source>
+        <translation>Tryb pomiaru światła</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="885"/>
+        <source>Unknown</source>
+        <translation>Nieznany</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="890"/>
+        <source>Average</source>
+        <translation>Średnia</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="895"/>
+        <source>Center weighted average</source>
+        <translation>Srednia ważona</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="900"/>
+        <source>Spot</source>
+        <translation type="unfinished">Punkt</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="905"/>
+        <source>Multi spot</source>
+        <translation type="unfinished">Multipunkty</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="910"/>
+        <source>Pattern</source>
+        <translation type="unfinished">Wzorzec</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="915"/>
+        <source>Partial</source>
+        <translation>Częściowy</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="920"/>
+        <source>Other</source>
+        <translation>Inne</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="931"/>
+        <source>Flash mode</source>
+        <translation>Tryb lampy błyskowej</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="972"/>
+        <source>Camera</source>
+        <translation>Aparat</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="982"/>
+        <source>Manufacturer</source>
+        <translation>Producent</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="989"/>
+        <source>Model</source>
+        <translation>Model</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="1046"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="1052"/>
+        <source>Artist</source>
+        <translation>Artysta</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="1064"/>
+        <source>Copyright</source>
+        <translation>Prawa autorskie</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="1076"/>
+        <source>User Comment</source>
+        <translation>Komentarz użytkownika</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="1111"/>
+        <source>Delete metadata</source>
+        <translation>Usuń metadane</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="1131"/>
+        <source>Save changes</source>
+        <translation>Zapisz zmiany</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="1138"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <location filename="../src/metadatadialog.cpp" line="23"/>
+        <source>Metadata error</source>
+        <translation>Błąd metadanych</translation>
+    </message>
+    <message>
+        <location filename="../src/metadatadialog.cpp" line="26"/>
+        <source>
+Error code: %1
+Error message: %2</source>
+        <translation>Kod błędu %1
+Informacja: %2</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataUtils::Metadata</name>
+    <message>
+        <location filename="../src/metadatautils.cpp" line="37"/>
+        <source>Error open file %1</source>
+        <translation>Błąd otwarcia pliku %1</translation>
+    </message>
+    <message>
+        <location filename="../src/metadatautils.cpp" line="57"/>
+        <source>Error write file %1</source>
+        <translation>Błąd zapisu pliku %1</translation>
+    </message>
+    <message>
+        <location filename="../src/metadatautils.cpp" line="347"/>
+        <source>Save thumnail failed</source>
+        <translation>Błąd zapisu miniatury</translation>
+    </message>
+</context>
+<context>
     <name>OptionsDialog</name>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="17"/>
@@ -599,42 +1330,96 @@ p, li { white-space: pre-wrap; }
         <translation>SIR - Konfiguracja</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="60"/>
         <source>SIR - Options</source>
-        <translation>SIR - Opcje</translation>
+        <translation type="obsolete">SIR - Opcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="298"/>
+        <location filename="../dialogs/optionsdialog.ui" line="177"/>
         <source>Detect automatically</source>
         <translation>Wykryj automatycznie</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="333"/>
+        <location filename="../dialogs/optionsdialog.ui" line="266"/>
+        <location filename="../dialogs/optionsdialog.ui" line="273"/>
+        <source>px</source>
+        <translation>px</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="405"/>
+        <source>Metadata Options</source>
+        <translation>Opcje metadanych</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="417"/>
         <source>EXIF, IPTC and XMP supported</source>
         <translation>EXIF, IPTC i XMP są wspierane</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="336"/>
         <source>Enabled</source>
-        <translation>Włączone</translation>
+        <translation type="obsolete">Włączone</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="343"/>
+        <location filename="../dialogs/optionsdialog.ui" line="433"/>
         <source>Save also metadata</source>
         <translation>Zapisuj także metadane</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="352"/>
+        <location filename="../dialogs/optionsdialog.ui" line="443"/>
+        <source>Update thumbnail</source>
+        <translation>Aktualizuj miniaturę</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="450"/>
+        <source>Apply Exif Orientation tag to thumbnail</source>
+        <translation>Zastosuj tag obrotu w miniaturce</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="457"/>
+        <source>When image is rotated</source>
+        <translation>Kiedy obraz jest odwrócony</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="463"/>
+        <source>rotate seriously</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="470"/>
+        <source>save orientation in Exif</source>
+        <translation type="unfinished">zapisz obrót</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="480"/>
+        <source>Overwrite Exif Artist</source>
+        <translation>Nadpisz artystę</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="495"/>
+        <source>Overwrite Exif Copyright</source>
+        <translation>Nadpisz prawa autorskie</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="510"/>
+        <source>Overwrite Exif User Comment</source>
+        <translation>Nadpisz komentarz użytkownika</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="528"/>
+        <source>Raw Options</source>
+        <translation>Opcje RAW</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="534"/>
         <source>Enable RAW images support (needs dcraw)</source>
         <translation>Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="44"/>
+        <location filename="../dialogs/optionsdialog.ui" line="626"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="51"/>
+        <location filename="../dialogs/optionsdialog.ui" line="633"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -643,68 +1428,117 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">SIR - Opcje</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="85"/>
+        <location filename="../dialogs/optionsdialog.ui" line="210"/>
         <source>Default Target Folder:</source>
         <translation>Domyślny katalog docelowy:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="92"/>
+        <location filename="../dialogs/optionsdialog.ui" line="129"/>
         <source>Default Target Format:</source>
         <translation>Domyślny format docelowy:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="99"/>
+        <location filename="../dialogs/optionsdialog.ui" line="49"/>
+        <source>General</source>
+        <translation>Ogólne</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="58"/>
+        <source>Metadata</source>
+        <translation>Metadane</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="67"/>
+        <source>Raw</source>
+        <translation>Raw</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="92"/>
+        <source>General Settings</source>
+        <translation>Ogólne ustawienia</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="196"/>
+        <location filename="../dialogs/optionsdialog.ui" line="313"/>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="203"/>
+        <source>Default Size Unit:</source>
+        <translation>Domyślna jednostka rozmiaru:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="224"/>
+        <source>Default File Size:</source>
+        <translation>Domyślny rozmiar pliku:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="231"/>
+        <source>Default Target Suffix:</source>
+        <translation>Domyślny sufix:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="238"/>
         <source>Default Width:</source>
         <translation>Domyślna szerokość:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="106"/>
+        <location filename="../dialogs/optionsdialog.ui" line="245"/>
         <source>Default Target Prefix:</source>
         <translation>Domyślny prefix:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="113"/>
+        <location filename="../dialogs/optionsdialog.ui" line="420"/>
+        <source>Enable metadata support</source>
+        <translation>Włącz wsparcie dla metadanych</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="217"/>
         <source>Default Quality:</source>
         <translation>Domyślna jakość:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="120"/>
+        <location filename="../dialogs/optionsdialog.ui" line="122"/>
         <source>Default Language:</source>
         <translation>Domyślny język:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="127"/>
+        <location filename="../dialogs/optionsdialog.ui" line="136"/>
         <source>Number of Cores:</source>
         <translation>Ilość rdzeni:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="134"/>
         <source>Metadata Support:</source>
-        <translation>Wsparcie metadanych:</translation>
+        <translation type="obsolete">Wsparcie metadanych:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="144"/>
         <source>RAW Support Options:</source>
-        <translation>Wsparcie RAW:</translation>
+        <translation type="obsolete">Wsparcie RAW:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="151"/>
+        <location filename="../dialogs/optionsdialog.ui" line="552"/>
         <source>dcraw Executable Path:</source>
         <translation>dcraw ścieżka:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="158"/>
+        <location filename="../dialogs/optionsdialog.ui" line="545"/>
         <source>dcraw options:</source>
         <translation>dcraw opcje:</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="180"/>
-        <location filename="../dialogs/optionsdialog.ui" line="366"/>
+        <location filename="../dialogs/optionsdialog.ui" line="113"/>
+        <location filename="../dialogs/optionsdialog.ui" line="568"/>
         <source>Browse</source>
         <translation>Przeglądaj</translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="226"/>
+        <location filename="../dialogs/optionsdialog.ui" line="252"/>
+        <source>Text history count:</source>
+        <translation>Licznik edycji:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="259"/>
         <source>Default Height:</source>
         <translation>Domyślna wysokość:</translation>
     </message>
@@ -713,29 +1547,44 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Domyślny język</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="98"/>
+        <location filename="../src/optionsdialog.cpp" line="172"/>
         <source>Choose a directory</source>
         <translation>Wybierz katalog</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="116"/>
+        <location filename="../src/optionsdialog.cpp" line="190"/>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
         <translation>Nie odnaleziono pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="131"/>
+        <location filename="../src/optionsdialog.cpp" line="205"/>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
         <translation>Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="142"/>
+        <location filename="../src/optionsdialog.cpp" line="216"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
         <translation>Nie wybrano pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="158"/>
+        <location filename="../src/optionsdialog.cpp" line="232"/>
         <source>Select dcraw executable</source>
         <translation>Wybierz plik wykonywalny dla dcraw</translation>
+    </message>
+    <message>
+        <location filename="../src/optionsdialog.cpp" line="410"/>
+        <source>Camera owner: ; Photographer: </source>
+        <translation>Właściciel aparatu: ; Fotograf: </translation>
+    </message>
+    <message>
+        <location filename="../src/optionsdialog.cpp" line="420"/>
+        <source>Copyright owner</source>
+        <translation>Właściciel praw autorskich</translation>
+    </message>
+    <message>
+        <location filename="../src/optionsdialog.cpp" line="431"/>
+        <source>This picture was edited with Simple Image Resizer</source>
+        <translation>Ten program był edytowany przy pomocy Simple Image Resizer</translation>
     </message>
 </context>
 <context>
@@ -750,110 +1599,130 @@ p, li { white-space: pre-wrap; }
         <translation>Akcje</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="117"/>
+        <location filename="../src/previewdialog.cpp" line="133"/>
         <source>Zoom image</source>
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="124"/>
+        <location filename="../src/previewdialog.cpp" line="140"/>
         <source>Back to previous image</source>
         <translation>Poprzedni obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="125"/>
+        <location filename="../src/previewdialog.cpp" line="141"/>
         <source>Go to next image</source>
         <translation>Następny obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="132"/>
+        <location filename="../src/previewdialog.cpp" line="148"/>
         <source>Rotate counter clockwise</source>
         <translation>Obróć przeciwnie do kierunku ruchu wskazówek zegara</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="133"/>
+        <location filename="../src/previewdialog.cpp" line="149"/>
         <source>Rotate clockwise</source>
         <translation>Obróć zgodnie z kierunkiem ruchu wskazówek zegara</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="136"/>
+        <location filename="../src/previewdialog.cpp" line="152"/>
         <source>Save image</source>
         <translation>Zapisz obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="140"/>
+        <location filename="../src/previewdialog.cpp" line="156"/>
         <source>Save image as...</source>
         <translation>Zapisz obraz jako...</translation>
     </message>
     <message>
-        <location filename="../dialogs/previewdialog.ui" line="450"/>
+        <location filename="../dialogs/previewdialog.ui" line="504"/>
         <source>Quit</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="51"/>
+        <location filename="../src/previewdialog.cpp" line="56"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - podgląd obrazów</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="112"/>
-        <location filename="../src/previewdialog.cpp" line="160"/>
+        <location filename="../src/previewdialog.cpp" line="129"/>
+        <location filename="../src/previewdialog.cpp" line="182"/>
+        <location filename="../src/previewdialog.cpp" line="675"/>
         <source>Fit to window size</source>
         <translation>Dopasuj do rozmiaru okna</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="143"/>
+        <location filename="../src/previewdialog.cpp" line="159"/>
         <source>Quit preview</source>
         <translation>Zakończ podgląd</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="146"/>
+        <location filename="../src/previewdialog.cpp" line="162"/>
         <source>Fullscreen</source>
         <translation>Pełny ekran</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="150"/>
+        <location filename="../src/previewdialog.cpp" line="166"/>
         <source>Print current image...</source>
         <translation>Drukuj obraz...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="172"/>
+        <location filename="../src/previewdialog.cpp" line="213"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Wprowadź prawidłowy współczynnik powiększenia.</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="282"/>
+        <location filename="../src/previewdialog.cpp" line="409"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Nadpisać plik? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="283"/>
+        <location filename="../src/previewdialog.cpp" line="410"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Plik %1 już istnieje. Czy chcesz go nadpisać?</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="285"/>
+        <location filename="../src/previewdialog.cpp" line="412"/>
         <source>&amp;Yes</source>
         <translation>&amp;Tak</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="285"/>
+        <location filename="../src/previewdialog.cpp" line="412"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="313"/>
+        <location filename="../src/previewdialog.cpp" line="442"/>
         <source>Save File</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="359"/>
+        <location filename="../src/previewdialog.cpp" line="539"/>
         <source>File saved</source>
         <translation>Plik zapisany</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="365"/>
+        <location filename="../src/previewdialog.cpp" line="543"/>
         <source>Failed to save image</source>
         <translation>Błąd zapisu pliku</translation>
+    </message>
+    <message>
+        <location filename="../src/previewdialog.cpp" line="644"/>
+        <source>Image file error</source>
+        <translation>Błąd pliku obrazu</translation>
+    </message>
+    <message>
+        <location filename="../src/previewdialog.cpp" line="645"/>
+        <source>Load image %1 failed</source>
+        <translation>Nieudane wczytanie obrazka %1</translation>
+    </message>
+    <message>
+        <location filename="../src/previewdialog.cpp" line="651"/>
+        <source>
+Error code: %1
+Error message: %2</source>
+        <translation>
+Kod błędu: %1
+Informacja: %2</translation>
     </message>
     <message>
         <location filename="../dialogs/previewdialog.ui" line="17"/>
@@ -861,7 +1730,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../dialogs/previewdialog.ui" line="489"/>
+        <location filename="../dialogs/previewdialog.ui" line="536"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
@@ -869,36 +1738,85 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/metadatautils.cpp" line="26"/>
         <source>This picture was changed with Simple Image Resiser</source>
-        <translation>Ten obraz został zmieniony w Simple Image Resizer</translation>
+        <translation type="obsolete">Ten obraz został zmieniony w Simple Image Resizer</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="12"/>
+        <source>No flash function.</source>
+        <translation>Brak funkcji flesza.</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="13"/>
+        <source>Flash fired</source>
+        <translation>Lampa błyskowa</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="14"/>
+        <source>Flash didn&apos;t fire</source>
+        <translation type="unfinished">Bez lampy błyskowej</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="16"/>
+        <source>, strobe return light detected</source>
+        <translation type="unfinished">; wykryto światło stroboskopowe</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="18"/>
+        <source>, strobe return light not detected</source>
+        <translation type="unfinished">nie wykryto światła stroboskopowego</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="19"/>
+        <source>, auto mode</source>
+        <translation>; tryb automatyczny</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="20"/>
+        <source>, compulsory flash mode</source>
+        <translation type="unfinished">; obowiązkowy tryb lampy błyskowej</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="21"/>
+        <source>, red-eye reduction</source>
+        <translation>; redukcja efektu czerwonych oczu</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="27"/>
+        <source>Unknown</source>
+        <translation>Nieznany</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/string.cpp" line="6"/>
+        <source>no data</source>
+        <translation>brak danych</translation>
     </message>
 </context>
 <context>
     <name>myQTreeWidget</name>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="38"/>
+        <location filename="../src/myqtreewidget.cpp" line="39"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="39"/>
+        <location filename="../src/myqtreewidget.cpp" line="40"/>
         <source>Ext</source>
         <translation>Rozszerzenie</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="40"/>
+        <location filename="../src/myqtreewidget.cpp" line="41"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="41"/>
+        <location filename="../src/myqtreewidget.cpp" line="42"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="113"/>
-        <location filename="../src/myqtreewidget.cpp" line="130"/>
+        <location filename="../src/myqtreewidget.cpp" line="114"/>
+        <location filename="../src/myqtreewidget.cpp" line="131"/>
         <source>Not converted yet</source>
         <translation>Nie skonwertowany</translation>
     </message>
