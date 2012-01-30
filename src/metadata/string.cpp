@@ -61,11 +61,13 @@ Exiv2::Rational MetadataUtils::String::toRational() const
     return result;
 }
 
-Exiv2::Rational MetadataUtils::String::toRationalPower() {
+Exiv2::Rational MetadataUtils::String::toRationalPower() const {
     Exiv2::Rational rational = toRational();
     Exiv2::Rational result;
-    result.first = log(rational.first / rational.second);
-    result.second = log(0.5);
+    const quint16 multiplier = 0xffff;
+    result.first = multiplier * log((double)rational.first / rational.second);
+    result.second = multiplier * log(0.5);
+    return result;
 }
 
 MetadataUtils::String MetadataUtils::String::exifVersion(const Exiv2::Metadatum &datum)

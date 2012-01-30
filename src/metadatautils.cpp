@@ -174,23 +174,25 @@ void MetadataUtils::Metadata::setExifStruct()
     // Photo section
     Exiv2::Rational rational = exifData["Exif.Photo.FocalLength"].toRational();
     exifStruct_.focalLength = (float)rational.first / rational.second;
+
     rational = exifData["Exif.Photo.FNumber"].toRational();
-    if ( rational.first == -1 && rational.second == 1 )
+    if (rational.first == -1 && rational.second == 1)
         rational = exifData["Exif.Photo.ApertureValue"].toRational();
     exifStruct_.aperture = (float)rational.first / rational.second;
     exifStruct_.expTime = timeString("Exif.Image.ExposureTime","Exif.Photo.ExposureTime");
+
     rational = exifData["Exif.Photo.ShutterSpeedValue"].toRational();
-    bool noEmpty = (rational.first == -1 && rational.second == 1);
-    if (noEmpty) {
+    bool isEmpty (rational.first == -1 && rational.second == 1);
+    if (isEmpty) {
         rational = exifData["Exif.Image.ShutterSpeedValue"].toRational();
-        noEmpty = (rational.first == -1 && rational.second == 1);
-        if (noEmpty)
+        isEmpty = (rational.first == -1 && rational.second == 1);
+        if (isEmpty)
             exifStruct_.shutterSpeed = MetadataUtils::String::noData();
     }
-    if (noEmpty) {
+    if (!isEmpty) {
         // tutaj napisz twój kod
-        double part = pow(0.5, (double)rational.first / rational.second);
-
+        exifStruct_.shutterSpeed = timeString(rational);
+        qDebug() << exifStruct_.shutterSpeed << exifStruct_.expTime;
     }
     exifStruct_.isoSpeed = exifData["Exif.Photo.ISOSpeedRatings"].toLong();
     if ( exifStruct_.isoSpeed == -1 )
@@ -233,24 +235,59 @@ QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::
     if (key1.empty())
         return result;
     Exiv2::Rational rational = exifData[key1].toRational();
-    if ( rational.first == -1  && rational.second == 1 ) {
-        if (!key2.empty())
-            rational = exifData[key2].toRational();
+    result = timeString(&rational,key2);
+    return result;
+}
+
+QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rational) {
+    QString result;
+    if (rational.first > 0) {
+        result = "1/";
+        result += QString::number((int)pow(2,(double)rational.first / rational.second));
+        result.append(" s");
+    }
+    else if (rational.first == 0) {
+        result = "1";
+        result.append(" s");
+    }
+    else {
+        Exiv2::Rational tmpRational = rational;
+        const quint16 multiplier = 0xFFFF;
+        if (rational.first != -1 && rational.second != 1) {
+            tmpRational.first = multiplier * pow(0.5, (double)rational.first / rational.second);
+            tmpRational.second = multiplier;
+        }
+        result = timeString(&tmpRational,"");
+    }
+    return result;
+}
+
+QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
+                                            const std::string &key2) {
+    QString result;
+    bool isEmpty(rational->first == -1  && rational->second == 1);
+    if (isEmpty) {
+        if (!key2.empty()) {
+            *rational = exifData[key2].toRational();
+            isEmpty = false;
+        }
         else
             result = MetadataUtils::String::noData();
     }
-    else if ( rational.first < rational.second )
-        result = QString::number(rational.first) + "/" +
-                QString::number(rational.second) + " s";
-    else
-    {
-        short integer = rational.first / rational.second;
-        result =  QString::number(integer, 'f', 1);
-        int fraction = rational.first - integer*rational.second;
-        if (fraction != 0)
-            result += " " + QString::number(fraction) +
-                "/" + QString::number(rational.second);
-        result.append(" s");
+    if (!isEmpty) {
+        if ( rational->first < rational->second )
+            result = QString::number(rational->first) + "/" +
+                    QString::number(rational->second) + " s";
+        else
+        {
+            short integer = rational->first / rational->second;
+            result =  QString::number(integer, 'f', 1);
+            int fraction = rational->first - integer*rational->second;
+            if (fraction != 0)
+                result += " " + QString::number(fraction) +
+                    "/" + QString::number(rational->second);
+            result.append(" s");
+        }
     }
     return result;
 }
