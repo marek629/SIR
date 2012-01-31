@@ -460,17 +460,17 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="566"/>
-        <source>Flip verticaly</source>
+        <source>Flip vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="571"/>
-        <source>Flip horizontaly</source>
+        <source>Flip horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="576"/>
-        <source>Flip verticaly and horizontaly</source>
+        <source>Flip vertically and horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

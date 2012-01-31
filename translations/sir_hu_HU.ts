@@ -435,21 +435,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="566"/>
-        <source>Flip verticaly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="571"/>
-        <source>Flip horizontaly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="576"/>
-        <source>Flip verticaly and horizontaly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../dialogs/convertdialog.ui" line="721"/>
         <source>Check for updates...</source>
         <translation type="unfinished"></translation>
@@ -477,6 +462,21 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="660"/>
         <source>About</source>
         <translation>Súgó</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="566"/>
+        <source>Flip vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="571"/>
+        <source>Flip horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="576"/>
+        <source>Flip vertically and horizontally</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="650"/>

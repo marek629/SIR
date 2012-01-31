@@ -108,7 +108,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/application.cpp" line="18"/>
         <source>Metadata error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Błąd metadanych</translation>
     </message>
 </context>
 <context>
@@ -408,19 +408,16 @@ p, li { white-space: pre-wrap; }
         <translation>Brak odbicia</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="566"/>
         <source>Flip verticaly</source>
-        <translation>Odbij pionowo</translation>
+        <translation type="obsolete">Odbij pionowo</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="571"/>
         <source>Flip horizontaly</source>
-        <translation>Odbij poziomo</translation>
+        <translation type="obsolete">Odbij poziomo</translation>
     </message>
     <message>
-        <location filename="../dialogs/convertdialog.ui" line="576"/>
         <source>Flip verticaly and horizontaly</source>
-        <translation>Odbij pionowo i poziomo</translation>
+        <translation type="obsolete">Odbij pionowo i poziomo</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="721"/>
@@ -450,6 +447,21 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="660"/>
         <source>About</source>
         <translation>Pomoc</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="566"/>
+        <source>Flip vertically</source>
+        <translation>Odbij pionowo</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="571"/>
+        <source>Flip horizontally</source>
+        <translation>Odbij pionowo</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="576"/>
+        <source>Flip vertically and horizontally</source>
+        <translation>Odbij pionowo i poziomo</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="650"/>
@@ -803,7 +815,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="183"/>
         <source>Orientation</source>
-        <translation>Obrót</translation>
+        <translation>Orientacja</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="190"/>
@@ -848,7 +860,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="245"/>
         <source>Counterclockwise rotation, horizontaly mirror</source>
-        <translation>Obrót zgodnie z ruchem wskazówek zegara, poziome odbicie</translation>
+        <translation>Obrót przeciwny do ruchu wskazówek zegara, poziome odbicie</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="250"/>
@@ -1128,12 +1140,12 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="721"/>
         <source>Aperture</source>
-        <translation>Szczelina</translation>
+        <translation>Przesłona</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="728"/>
         <source>ISO Speed</source>
-        <translation>Szybkość ISO</translation>
+        <translation>Czułość ISO</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="755"/>
@@ -1143,7 +1155,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="808"/>
         <source>Exposure program</source>
-        <translation>Ekspozycja</translation>
+        <translation>Program ekspozycji</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="821"/>
@@ -1163,7 +1175,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="836"/>
         <source>Aperture priority</source>
-        <translation type="unfinished">Priorytet szczeliny</translation>
+        <translation>Priorytet przesłony</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="841"/>
@@ -1173,7 +1185,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="846"/>
         <source>Creative program (biased toward depth of field)</source>
-        <translation type="unfinished">Kreatywny (duża głębia ostrości)</translation>
+        <translation>Kreatywny (duża głębia ostrości)</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="851"/>
@@ -1188,7 +1200,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="861"/>
         <source>Landscape mode (for landscape photos with the background in focus)</source>
-        <translation>Tryb krajobrazowy (dla dalekich zdjęć z tłem)</translation>
+        <translation>Tryb krajobrazowy (dla dalekich zdjęć z ostrym tłem)</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="872"/>
@@ -1208,22 +1220,22 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="895"/>
         <source>Center weighted average</source>
-        <translation>Srednia ważona</translation>
+        <translation>Centralnie ważony uśredniony</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="900"/>
         <source>Spot</source>
-        <translation type="unfinished">Punkt</translation>
+        <translation>Punktowy</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="905"/>
         <source>Multi spot</source>
-        <translation type="unfinished">Multipunkty</translation>
+        <translation>Wielopunktowy</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="910"/>
         <source>Pattern</source>
-        <translation type="unfinished">Wzorzec</translation>
+        <translation>Wzorcowy</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="915"/>
@@ -1233,7 +1245,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="920"/>
         <source>Other</source>
-        <translation>Inne</translation>
+        <translation>Inny</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="931"/>
@@ -1371,37 +1383,37 @@ Informacja: %2</translation>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="450"/>
         <source>Apply Exif Orientation tag to thumbnail</source>
-        <translation>Zastosuj tag obrotu w miniaturce</translation>
+        <translation>Zastosuj orientację Exif w miniaturce</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="457"/>
         <source>When image is rotated</source>
-        <translation>Kiedy obraz jest odwrócony</translation>
+        <translation>Kiedy obraz jest obracany</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="463"/>
         <source>rotate seriously</source>
-        <translation type="unfinished"></translation>
+        <translation>rzeczywiście obróć</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="470"/>
         <source>save orientation in Exif</source>
-        <translation type="unfinished">zapisz obrót</translation>
+        <translation>zapisz orientację w Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="480"/>
         <source>Overwrite Exif Artist</source>
-        <translation>Nadpisz artystę</translation>
+        <translation>Nadpisz artystę Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="495"/>
         <source>Overwrite Exif Copyright</source>
-        <translation>Nadpisz prawa autorskie</translation>
+        <translation>Nadpisz prawa autorskie Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="510"/>
         <source>Overwrite Exif User Comment</source>
-        <translation>Nadpisz komentarz użytkownika</translation>
+        <translation>Nadpisz komentarz użytkownika Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="528"/>
@@ -1754,17 +1766,17 @@ Informacja: %2</translation>
     <message>
         <location filename="../src/metadata/exif.cpp" line="14"/>
         <source>Flash didn&apos;t fire</source>
-        <translation type="unfinished">Bez lampy błyskowej</translation>
+        <translation>Bez lampy błyskowej</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.cpp" line="16"/>
         <source>, strobe return light detected</source>
-        <translation type="unfinished">; wykryto światło stroboskopowe</translation>
+        <translation>; wykryto światło stroboskopowe</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.cpp" line="18"/>
         <source>, strobe return light not detected</source>
-        <translation type="unfinished">nie wykryto światła stroboskopowego</translation>
+        <translation>nie wykryto światła stroboskopowego</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.cpp" line="19"/>
@@ -1774,7 +1786,7 @@ Informacja: %2</translation>
     <message>
         <location filename="../src/metadata/exif.cpp" line="20"/>
         <source>, compulsory flash mode</source>
-        <translation type="unfinished">; obowiązkowy tryb lampy błyskowej</translation>
+        <translation>, błysk wymuszony</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.cpp" line="21"/>
