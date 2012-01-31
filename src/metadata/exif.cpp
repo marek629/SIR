@@ -190,6 +190,7 @@ void MetadataUtils::ExifStruct::reset() {
     aperture = 0.0;
     isoSpeed = 0;
     expTime = MetadataUtils::String::noData();
+    shutterSpeed= MetadataUtils::String::noData();
     expBias = 0.0;
     expProgram = 0;
     meteringMode = 0;
