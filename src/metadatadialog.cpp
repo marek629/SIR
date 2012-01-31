@@ -3,7 +3,7 @@
 #include <QLineEdit>
 #include <QSettings>
 #include <QMessageBox>
-
+#include <exiv2/exif.hpp>
 #include <QDebug>
 
 MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
@@ -32,6 +32,7 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
 
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(close()));
     connect(saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
+    connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteMetadata()));
 }
 
 MetadataDialog::~MetadataDialog()
@@ -81,6 +82,11 @@ void MetadataDialog::setupValues()
         exifExpTimeComboBox->setCurrentIndex(0);
     else
         exifExpTimeComboBox->addItem( exifStruct->expTime );
+    exifShutterTimeComboBox->insertItem(0,MetadataUtils::String::noData());
+    if(exifStruct->shutterSpeed.isEmpty())
+        exifShutterTimeComboBox->setCurrentIndex(0);
+    else
+        exifShutterTimeComboBox->addItem(exifStruct->shutterSpeed);
     exifExpBiasSpinBox->setSpecialValueText(MetadataUtils::String::noData());
     exifExpBiasSpinBox->setValue( exifStruct->expBias );
     exifApertureSpinBox->setSpecialValueText(MetadataUtils::String::noData());
@@ -141,6 +147,7 @@ void MetadataDialog::saveChanges()
     // Photo toolbox
     exifStruct->focalLength = exifFocalLengthSpinBox->value();
     exifStruct->expTime = exifExpTimeComboBox->currentText();
+
     exifStruct->expBias = exifExpBiasSpinBox->value();
     exifStruct->aperture = exifApertureSpinBox->value();
     exifStruct->isoSpeed = exifIsoSpeedSpinBox->value();
@@ -159,4 +166,20 @@ void MetadataDialog::saveChanges()
     // saving
     metadata->setExifData();
     metadata->write(imagePath);
+}
+
+void MetadataDialog::deleteMetadata()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("Delete metadata"));
+    msgBox.setText(tr("Do you really want to delete metadata from this image?"));
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    if(msgBox.exec() == QMessageBox::Yes)
+    {
+        metadata->clearMetadata();
+        metadata->write(imagePath);
+        resetStructs();
+        setupValues();
+    }
 }

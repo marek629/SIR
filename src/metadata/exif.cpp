@@ -279,37 +279,6 @@ short MetadataUtils::Exif::rotationAngle(char orientation, int *flip) {
     return result;
 }
 
-MetadataUtils::Flip MetadataUtils::Exif::flipValue(char orientation) {
-    using namespace MetadataUtils;
-    Flip result = None;
-    switch (orientation) {
-    case 1:
-        break;
-    case 2:
-        result = Horizontal;
-        break;
-    case 3:
-        break;
-    case 4:
-        result = Vertical;
-        break;
-    case 5:
-        result = Horizontal;
-        break;
-    case 6:
-        break;
-    case 7:
-        result = Horizontal;
-        break;
-    case 8:
-        break;
-    default: // invalid orientation value
-        result = VerticalAndHorizontal;
-        break;
-    }
-    return result;
-}
-
 void MetadataUtils::ExifStruct::reset() {
     // Image section
     version = MetadataUtils::String::noData();
@@ -328,6 +297,7 @@ void MetadataUtils::ExifStruct::reset() {
     aperture = 0.0;
     isoSpeed = 0;
     expTime = MetadataUtils::String::noData();
+    shutterSpeed= MetadataUtils::String::noData();
     expBias = 0.0;
     expProgram = 0;
     meteringMode = 0;

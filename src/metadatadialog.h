@@ -33,7 +33,7 @@ signals:
 
 private slots:
     void saveChanges();
-
+    void deleteMetadata();
 };
 
 #endif // METADATADIALOG_H
