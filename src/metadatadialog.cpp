@@ -82,6 +82,11 @@ void MetadataDialog::setupValues()
         exifExpTimeComboBox->setCurrentIndex(0);
     else
         exifExpTimeComboBox->addItem( exifStruct->expTime );
+    exifShutterTimeComboBox->insertItem(0,MetadataUtils::String::noData());
+    if(exifStruct->shutterSpeed.isEmpty())
+        exifShutterTimeComboBox->setCurrentIndex(0);
+    else
+        exifShutterTimeComboBox->addItem(exifStruct->shutterSpeed);
     exifExpBiasSpinBox->setSpecialValueText(MetadataUtils::String::noData());
     exifExpBiasSpinBox->setValue( exifStruct->expBias );
     exifApertureSpinBox->setSpecialValueText(MetadataUtils::String::noData());
@@ -142,6 +147,7 @@ void MetadataDialog::saveChanges()
     // Photo toolbox
     exifStruct->focalLength = exifFocalLengthSpinBox->value();
     exifStruct->expTime = exifExpTimeComboBox->currentText();
+
     exifStruct->expBias = exifExpBiasSpinBox->value();
     exifStruct->aperture = exifApertureSpinBox->value();
     exifStruct->isoSpeed = exifIsoSpeedSpinBox->value();
@@ -168,7 +174,7 @@ void MetadataDialog::deleteMetadata()
     msgBox.setWindowTitle(tr("Delete metadata"));
     msgBox.setText(tr("Do you really want to delete metadata from this image?"));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::Yes);
+    msgBox.setDefaultButton(QMessageBox::No);
     if(msgBox.exec() == QMessageBox::Yes)
     {
         metadata->clearMetadata();

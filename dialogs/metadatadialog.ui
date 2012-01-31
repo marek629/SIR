@@ -887,7 +887,83 @@
             </widget>
            </item>
            <item row="3" column="4">
-            <widget class="TimeComboBox" name="exifShutterTimeComboBox"/>
+            <widget class="TimeComboBox" name="exifShutterTimeComboBox">
+             <item>
+              <property name="text">
+               <string>1/2048 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/1024 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/512 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/256 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/128 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/64 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/32 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/16 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/8 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/4 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/2 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>4 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>8 s</string>
+              </property>
+             </item>
+            </widget>
            </item>
            <item row="4" column="4">
             <widget class="QSpinBox" name="exifIsoSpeedSpinBox">
