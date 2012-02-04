@@ -31,6 +31,7 @@
 #include <QString>
 
 class QGraphicsScene;
+class QString;
 class QPixmap;
 class QStringList;
 class QGraphicsPixmapItem;

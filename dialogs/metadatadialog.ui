@@ -415,394 +415,8 @@
           <attribute name="label">
            <string>Photo</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_13">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_8">
-               <item>
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>Focal length</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>Exposure time</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_13">
-                 <property name="text">
-                  <string>Exposure bias</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_12">
-               <item>
-                <widget class="QDoubleSpinBox" name="exifFocalLengthSpinBox">
-                 <property name="suffix">
-                  <string> mm</string>
-                 </property>
-                 <property name="decimals">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <double>10000.000000000000000</double>
-                 </property>
-                 <property name="singleStep">
-                  <double>0.100000000000000</double>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="TimeComboBox" name="exifExpTimeComboBox">
-                 <item>
-                  <property name="text">
-                   <string>1/2000 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/1600 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/1250 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/1000 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/800 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/640 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/500 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/400 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/320 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/250 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/200 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/160 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/125 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/100 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/80 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/60 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/50 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/40 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/30 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/25 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/20 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/15 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/13 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/10 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/8 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/6 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/4 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1/2 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>4/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1 1/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1 2/3 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2 1/2 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>3 1/5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>4 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>5 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>6 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>8 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>10 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>13 s</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>15 s</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDoubleSpinBox" name="exifExpBiasSpinBox">
-                 <property name="suffix">
-                  <string>EV</string>
-                 </property>
-                 <property name="decimals">
-                  <number>1</number>
-                 </property>
-                 <property name="minimum">
-                  <double>-100.000000000000000</double>
-                 </property>
-                 <property name="singleStep">
-                  <double>0.500000000000000</double>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_14">
-               <item>
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>Aperture</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>ISO Speed</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_6">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_15">
-               <item>
-                <widget class="QDoubleSpinBox" name="exifApertureSpinBox">
-                 <property name="prefix">
-                  <string>F</string>
-                 </property>
-                 <property name="decimals">
-                  <number>1</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="exifIsoSpeedSpinBox">
-                 <property name="maximum">
-                  <number>10000</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>50</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_7">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-           <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="5" column="0" colspan="5">
             <widget class="QGroupBox" name="groupBox_6">
              <property name="title">
               <string>Exposure program</string>
@@ -866,7 +480,7 @@
              </layout>
             </widget>
            </item>
-           <item>
+           <item row="6" column="0" colspan="5">
             <widget class="QGroupBox" name="groupBox_7">
              <property name="title">
               <string>Light metering mode</string>
@@ -925,7 +539,7 @@
              </layout>
             </widget>
            </item>
-           <item>
+           <item row="7" column="0" colspan="5">
             <widget class="QGroupBox" name="groupBox_8">
              <property name="title">
               <string>Flash mode</string>
@@ -944,7 +558,7 @@
              </layout>
             </widget>
            </item>
-           <item>
+           <item row="8" column="0">
             <spacer name="verticalSpacer_3">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -953,6 +567,426 @@
               <size>
                <width>20</width>
                <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Focal length</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Exposure time</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_13">
+             <property name="text">
+              <string>Exposure bias</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QDoubleSpinBox" name="exifFocalLengthSpinBox">
+             <property name="suffix">
+              <string> mm</string>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="TimeComboBox" name="exifExpTimeComboBox">
+             <item>
+              <property name="text">
+               <string>1/2000 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/1600 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/1250 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/1000 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/800 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/640 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/500 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/400 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/320 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/250 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/200 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/160 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/125 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/100 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/80 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/60 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/50 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/40 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/30 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/25 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/20 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/15 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/13 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/10 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/8 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/6 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/5 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/4 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/3 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2/5 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/2 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2/3 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>4/5 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1 1/3 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1 2/3 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2 1/2 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>3 1/5 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>4 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>5 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>6 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>8 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>10 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>13 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>15 s</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QDoubleSpinBox" name="exifExpBiasSpinBox">
+             <property name="suffix">
+              <string>EV</string>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="minimum">
+              <double>-100.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.500000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Aperture</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Shutter Speed</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>ISO Speed</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QDoubleSpinBox" name="exifApertureSpinBox">
+             <property name="prefix">
+              <string>F</string>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <widget class="TimeComboBox" name="exifShutterTimeComboBox">
+             <item>
+              <property name="text">
+               <string>1/2048 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/1024 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/512 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/256 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/128 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/64 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/32 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/16 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/8 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/4 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1/2 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>4 s</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>8 s</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="4">
+            <widget class="QSpinBox" name="exifIsoSpeedSpinBox">
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="singleStep">
+              <number>50</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Preferred</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
               </size>
              </property>
             </spacer>

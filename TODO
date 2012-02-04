@@ -2,13 +2,15 @@
   1 If zoom mode in preview dialog is "Fit to window size" resize window after
     image change (next, previous)
     * change flip icons
-  2 Correction convert dialog
+  2 Fix preview dialog resize bug (bigger than screen)
+  3 Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
   ====== Piotrek ======
-  ! add shutter speed in metadata dialog
   ! optimalize MetadataUtils::Exif::flashString(short num)
     * try convert using << or >> operators
-  ! write slot for 'Delete metadata' button in metadata dialog
+  ! stabilization of saving (and maybe loading) metadata functions
+  ! add shutter speed in metadata dialog
+  ! seg. fault fix MetadataUtils::Metadata::setExifData() when Exif.Image.ImageWidth is empty
   =====================
 
 *** next release ***

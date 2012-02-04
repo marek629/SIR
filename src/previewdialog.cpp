@@ -24,8 +24,8 @@
  */
 
 #include "previewdialog.h"
-#include "rawutils.h"
 #include <QGraphicsScene>
+#include <QString>
 #include <QPixmap>
 #include <QResizeEvent>
 #include <QWheelEvent>
@@ -40,6 +40,9 @@
 #include <QDesktopWidget>
 
 #include <QDebug>
+
+#include "rawutils.h"
+#include "metadatautils.h"
 
 #define H 115
 #define W 50
@@ -68,6 +71,9 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     createConnections();
     rotation = 0;
     flip = MetadataUtils::None;
+
+    if (metadataEnabled)
+        metadata = new MetadataUtils::Metadata();
 
     loadPixmap();
 

@@ -23,15 +23,20 @@ namespace MetadataUtils
 
         bool write(const String& path, const QImage& image = QImage());
         bool write(const QString& path, const QImage& image = QImage());
+        void clearMetadata();
         void setExifData();
         void setExifStruct();
         void setExifDatum(const std::string &key, int value);
         void setExifDatum(const std::string &key1, const std::string &key2, int value);
-        void setExifDatum(const std::string &key1, const std::string &key2, Exiv2::Rational value);
+        void setExifDatum(const std::string &key1, const std::string &key2,
+                          const Exiv2::Rational &value);
         void setExifDatum(const std::string &key1, const std::string &key2,
                           const std::string &value);
         void setExifThumbnail(const std::string &path);
         bool setExifThumbnail(QImage *image, int tid = 0);
+        QString timeString(const std::string &key1, const std::string &key2 = "");
+        QString timeString(const Exiv2::Rational &rational);
+        QString timeString(Exiv2::Rational *rational, const std::string &key2);
         static Exiv2::Rational shortRational(int integer);
         MetadataUtils::ExifStruct *exifStruct() { return &exifStruct_; }
         Error *lastError() { return &lastError_; }
