@@ -67,6 +67,7 @@ bool MetadataUtils::Metadata::write(const QString &path, const QImage &image) {
 
 void MetadataUtils::Metadata::clearMetadata() {
     exifData.clear();
+}
 
 void MetadataUtils::Metadata::setData(const QImage& qImage) {
     if (MetadataUtils::Exif::isArtistOverwrite())
