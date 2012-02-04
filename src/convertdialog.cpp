@@ -900,7 +900,9 @@ void ConvertDialog::readSettings() {
 
     destPrefixEdit->setText(settings.value("targetPrefix", "web").toString());
     destSuffixEdit->setText(settings.value("targetSuffix", "thumb").toString());
-    qualitySpinBox->setValue(settings.value("quality", 100).toInt());
+    int quality = settings.value("quality", 100).toInt();
+    qualitySpinBox->setValue(quality);
+    qualitySlider->setValue(quality);
 
     numThreads = settings.value("cores", 0).toInt();
     if (numThreads == 0)

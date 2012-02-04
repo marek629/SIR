@@ -8,8 +8,6 @@
   ====== Piotrek ======
   ! optimalize MetadataUtils::Exif::flashString(short num)
     * try convert using << or >> operators
-  ! stabilization of saving (and maybe loading) metadata functions
-  ! add shutter speed in metadata dialog
   ! seg. fault fix MetadataUtils::Metadata::setExifData() when Exif.Image.ImageWidth is empty
   =====================
 

@@ -49,37 +49,37 @@ namespace MetadataUtils
 
     struct ExifStruct
     {   // Image section
-        String version; /**< Contains information about version of Exiv library */
-        String processingSoftware;  /**< Contains information about processing software */
-        String imageWidth; /**< Contains image width with " px" suffix */
-        String imageHeight;  /**< Contains image height with " px" suffix */
-        char orientation; /**< Information about orientation of image*/
-        String originalDate; /**< Creation date and time */
-        String digitizedDate; /**< Digitalization date and time */
+        String version; /**< Contains information about version of Exiv library. */
+        String processingSoftware;  /**< Contains information about processing software. */
+        String imageWidth; /**< Contains image width with " px" suffix. */
+        String imageHeight;  /**< Contains image height with " px" suffix. */
+        char orientation; /**< Information about orientation of image. */
+        String originalDate; /**< Creation date and time. */
+        String digitizedDate; /**< Digitalization date and time. */
         // Thumbnail section
-        QImage thumbnailImage; /**< Contains photo thumbnail */
-        String thumbnailWidth; /**< Contains thumbnail width with " px" suffix */
-        String thumbnailHeight;  /**< Contains thumbnail height with " px" suffix */
+        QImage thumbnailImage; /**< Contains photo thumbnail. */
+        String thumbnailWidth; /**< Contains thumbnail width with " px" suffix. */
+        String thumbnailHeight;  /**< Contains thumbnail height with " px" suffix. */
         // Photo section
-        float focalLength; /**< Contains Focal Length */
-        float aperture; /**< Contains Aperture */
-        int isoSpeed; /**< Contains ISO Speed */
-        QString shutterSpeed; /**< Contains Shutter Speed */
-        QString expTime;  /**< Contains Exposure time*/
-        float expBias;  /**< Contains Exposure bias */
-        uchar expProgram; /**< Contains information about Exposure program */
-        short meteringMode; /**< Contains information about Light metering mode */
-        short flashMode; /**< Contains information about flash mode */
+        float focalLength; /**< Contains Focal Length value in milimeters. */
+        float aperture; /**< Contains Aperture value. */
+        int isoSpeed; /**< Contains ISO Speed value. */
+        QString shutterSpeed; /**< Contains Shutter Speed. */
+        QString expTime;  /**< Contains Exposure time. */
+        float expBias;  /**< Contains Exposure bias value in EV. */
+        uchar expProgram; /**< Contains information about Exposure program. */
+        short meteringMode; /**< Contains information about Light metering mode. */
+        short flashMode; /**< Contains information about flash mode. */
         // Camera section
-        String cameraManufacturer;  /**< Contains information about Light metering mode */
-        String cameraModel; /**< Contains information about Camera's model */
+        String cameraManufacturer;  /**< Contains information about Light metering mode. */
+        String cameraModel; /**< Contains information about Camera's model. */
         // Author section
-        String artist; /**< Contains information about autor */
-        String copyright; /**< Contains copyright information */
-        String userComment; /**< Contains user comment */
+        String artist; /**< Contains information about autor. */
+        String copyright; /**< Contains copyright information. */
+        String userComment; /**< Contains user comment. */
 
         // Methods
-        void reset(); /**< Sets default values */
+        void reset(); /**< Sets default values. */
     };
 
     struct FlashStruct

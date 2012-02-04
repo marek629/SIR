@@ -1,6 +1,6 @@
 #include "metadatautils.h"
 #include "defines.h"
-#include <QString>
+#include <QStringList>
 #include <QDir>
 #include <cmath>
 
@@ -179,6 +179,7 @@ void MetadataUtils::Metadata::setExifStruct()
     // Photo section
     Exiv2::Rational rational = exifData["Exif.Photo.FocalLength"].toRational();
     exifStruct_.focalLength = (float)rational.first / rational.second;
+
     rational = exifData["Exif.Photo.FNumber"].toRational();
     if (rational.first == -1 && rational.second == 1)
         rational = exifData["Exif.Photo.ApertureValue"].toRational();

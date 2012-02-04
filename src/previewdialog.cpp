@@ -24,6 +24,7 @@
  */
 
 #include "previewdialog.h"
+#include "rawutils.h"
 #include <QGraphicsScene>
 #include <QString>
 #include <QPixmap>
