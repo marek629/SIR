@@ -58,6 +58,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
 
     setupUi(this);
     this->setWindowTitle(tr("SIR - Preview Images"));
+    this->setWindowFlags(Qt::Window);
     this->currentImage = currentImage;
     this->images = images;
     this->imagePath = images->at(currentImage);

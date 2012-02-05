@@ -1,9 +1,6 @@
 *** nearest release ***
-  1 If zoom mode in preview dialog is "Fit to window size" resize window after
-    image change (next, previous)
-    * change flip icons
-  2 Fix preview dialog resize bug (bigger than screen)
-  3 Correction convert dialog
+  1 Translateble strings in MetadataUtils namespace
+  2 Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
   ====== Piotrek ======
   ! optimalize MetadataUtils::Exif::flashString(short num)
