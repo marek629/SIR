@@ -101,14 +101,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Application</name>
     <message>
-        <location filename="../src/application.cpp" line="17"/>
-        <source>Error code: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/application.cpp" line="18"/>
         <source>Metadata error</source>
-        <translation type="unfinished">Błąd metadanych</translation>
+        <translation type="obsolete">Błąd metadanych</translation>
     </message>
 </context>
 <context>

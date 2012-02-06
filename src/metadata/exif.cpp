@@ -15,8 +15,7 @@ QString MetadataUtils::Exif::flashString(short num)
     QString result;
     QString bin = QString::number(num,2);
     // invert bin
-    for (short i=0, j=bin.length()-1; i<bin.length(); i++, j--)
-    {
+    for (short i=0, j=bin.length()-1; i<bin.length(); i++, j--) {
         QChar temp = bin[j];
         bin[j] = bin[i];
         bin[i] = temp;
@@ -35,20 +34,19 @@ QString MetadataUtils::Exif::flashString(short num)
     else
         result.append(MetadataUtils::Flash::noFired());
 
-    // bits 1 and 2 indicating the status of returned light
-    if ( bin[1] == '1' )
-    {
-        if ( bin[2] == '1' )
-            result.append(MetadataUtils::Flash::strobeReturnDetected());
-        else
-            result.append(MetadataUtils::Flash::strobeReturnNotDetected());
-    }
-
     // bits 3 and 4 indicating the camera's flash mode
     if ( bin[3]=='1' && bin[4]=='1' )
         result.append(MetadataUtils::Flash::autoMode());
     else if ( (bin[3]=='0' && bin[4]=='1') || (bin[3]=='1' && bin[4]=='0') )
         result.append(MetadataUtils::Flash::compulsoryMode());
+
+    // bits 1 and 2 indicating the status of returned light
+    if ( bin[1] == '1' ) {
+        if ( bin[2] == '1' )
+            result.append(MetadataUtils::Flash::strobeReturnDetected());
+        else
+            result.append(MetadataUtils::Flash::strobeReturnNotDetected());
+    }
 
     // bit 6 indicating the camera's red-eye mode
     if ( bin[6] == '1' )

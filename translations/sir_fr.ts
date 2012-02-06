@@ -63,19 +63,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Application</name>
-    <message>
-        <location filename="../src/application.cpp" line="17"/>
-        <source>Error code: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/application.cpp" line="18"/>
-        <source>Metadata error</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ConvertDialog</name>
     <message>
         <location filename="../src/convertdialog.cpp" line="175"/>

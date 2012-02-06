@@ -1,14 +1,12 @@
 *** nearest release ***
-  1 Change order in flash mode combobox:
-    * [fired], [mode], [external mode] (red-eye red. etc.)
-  2 Correction convert dialog
-    * add external columns into tree view like size (px,k/MiB)
-  ====== Piotrek ======
   ! optimalize MetadataUtils::Exif::flashString(short num)
     * try convert using << or >> operators
   ! seg. fault fix MetadataUtils::Metadata::setExifData() when Exif.Image.ImageWidth is empty
-  =====================
+  ! expand shutter speeds default values list
 
 *** next release ***
   1 Watermark support
   2 Correction convert dialog
+    * add external columns into tree view like size (px,k/MiB)
+  3 Correction metadata dialog
+    * add next/preview buttons and file name label
