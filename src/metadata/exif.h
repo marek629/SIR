@@ -82,16 +82,18 @@ namespace MetadataUtils
         void reset(); /**< Sets default values. */
     };
 
-    struct FlashStruct
-    {
-        static QString noFlashFunction;
-        static QString fired;
-        static QString noFired;
-        static QString compulsoryMode;
-        static QString autoMode;
-        static QString redEyeReduction;
-        static QString strobeReturnDetected;
-        static QString strobeReturnNotDetected;
+    class Flash {
+    public:
+        static QString noFlashFunction() { return QObject::tr("No flash function."); }
+        static QString fired() { return QObject::tr("Flash fired"); }
+        static QString noFired() { return QObject::tr("Flash didn't fire"); }
+        static QString compulsoryMode() { return QObject::tr(", compulsory flash mode"); }
+        static QString autoMode() { return QObject::tr(", auto mode"); }
+        static QString redEyeReduction() { return QObject::tr(", red-eye reduction"); }
+        static QString strobeReturnDetected() {
+            return QObject::tr(", strobe return light detected"); }
+        static QString strobeReturnNotDetected() {
+            return QObject::tr(", strobe return light not detected"); }
     };
 }
 

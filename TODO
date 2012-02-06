@@ -1,5 +1,6 @@
 *** nearest release ***
-  1 Translateble strings in MetadataUtils namespace
+  1 Change order in flash mode combobox:
+    * [fired], [mode], [external mode] (red-eye red. etc.)
   2 Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
   ====== Piotrek ======

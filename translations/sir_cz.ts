@@ -1432,12 +1432,12 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="90"/>
+        <location filename="../src/metadatautils.cpp" line="58"/>
         <source>Error write file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="412"/>
+        <location filename="../src/metadatautils.cpp" line="413"/>
         <source>Save thumnail failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1729,37 +1729,37 @@ Podpora pro RAW není umožněna!</translation>
         <translation>Činnosti</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="133"/>
+        <location filename="../src/previewdialog.cpp" line="141"/>
         <source>Zoom image</source>
         <translation>Přiblížit obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="140"/>
+        <location filename="../src/previewdialog.cpp" line="148"/>
         <source>Back to previous image</source>
         <translation>Zpět na předchozí obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="141"/>
+        <location filename="../src/previewdialog.cpp" line="149"/>
         <source>Go to next image</source>
         <translation>Jít na další obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="148"/>
+        <location filename="../src/previewdialog.cpp" line="156"/>
         <source>Rotate counter clockwise</source>
         <translation>Otočit proti směru hodinových ručiček</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="149"/>
+        <location filename="../src/previewdialog.cpp" line="157"/>
         <source>Rotate clockwise</source>
         <translation>Otočit po směru hodinových ručiček</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="152"/>
+        <location filename="../src/previewdialog.cpp" line="160"/>
         <source>Save image</source>
         <translation>Uložit obrázek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="156"/>
+        <location filename="../src/previewdialog.cpp" line="164"/>
         <source>Save image as...</source>
         <translation>Uložit obrázek jako...</translation>
     </message>
@@ -1769,84 +1769,84 @@ Podpora pro RAW není umožněna!</translation>
         <translation>Ukončit</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="56"/>
+        <location filename="../src/previewdialog.cpp" line="60"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - Náhled obrázků</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="129"/>
-        <location filename="../src/previewdialog.cpp" line="182"/>
-        <location filename="../src/previewdialog.cpp" line="675"/>
+        <location filename="../src/previewdialog.cpp" line="137"/>
+        <location filename="../src/previewdialog.cpp" line="190"/>
+        <location filename="../src/previewdialog.cpp" line="683"/>
         <source>Fit to window size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="159"/>
+        <location filename="../src/previewdialog.cpp" line="167"/>
         <source>Quit preview</source>
         <translation>Ukončit náhled</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="162"/>
+        <location filename="../src/previewdialog.cpp" line="170"/>
         <source>Fullscreen</source>
         <translation>Celá obrazovka</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="166"/>
+        <location filename="../src/previewdialog.cpp" line="174"/>
         <source>Print current image...</source>
         <translation>Vytisknout současný obrázek...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="213"/>
+        <location filename="../src/previewdialog.cpp" line="221"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Zadajte, prosím, platný násobek zvětšení.</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="409"/>
+        <location filename="../src/previewdialog.cpp" line="417"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Přepsat soubor? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="410"/>
+        <location filename="../src/previewdialog.cpp" line="418"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Soubor s názvem %1 již existuje. Chcete jej přepsat?</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="412"/>
+        <location filename="../src/previewdialog.cpp" line="420"/>
         <source>&amp;Yes</source>
         <translation>An&amp;o</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="412"/>
+        <location filename="../src/previewdialog.cpp" line="420"/>
         <source>&amp;No</source>
         <translation>&amp;Ne</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="442"/>
+        <location filename="../src/previewdialog.cpp" line="450"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="539"/>
+        <location filename="../src/previewdialog.cpp" line="547"/>
         <source>File saved</source>
         <translation>Soubor uložen</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="543"/>
+        <location filename="../src/previewdialog.cpp" line="551"/>
         <source>Failed to save image</source>
         <translation>Obrázek se nepodařilo uložit</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="644"/>
+        <location filename="../src/previewdialog.cpp" line="652"/>
         <source>Image file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="645"/>
+        <location filename="../src/previewdialog.cpp" line="653"/>
         <source>Load image %1 failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="651"/>
+        <location filename="../src/previewdialog.cpp" line="659"/>
         <source>
 Error code: %1
 Error message: %2</source>
@@ -1866,47 +1866,47 @@ Error message: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="12"/>
+        <location filename="../src/metadata/exif.h" line="87"/>
         <source>No flash function.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="13"/>
+        <location filename="../src/metadata/exif.h" line="88"/>
         <source>Flash fired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="14"/>
+        <location filename="../src/metadata/exif.h" line="89"/>
         <source>Flash didn&apos;t fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="16"/>
+        <location filename="../src/metadata/exif.h" line="94"/>
         <source>, strobe return light detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="18"/>
+        <location filename="../src/metadata/exif.h" line="96"/>
         <source>, strobe return light not detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="19"/>
+        <location filename="../src/metadata/exif.h" line="91"/>
         <source>, auto mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="20"/>
+        <location filename="../src/metadata/exif.h" line="90"/>
         <source>, compulsory flash mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="21"/>
+        <location filename="../src/metadata/exif.h" line="92"/>
         <source>, red-eye reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="27"/>
+        <location filename="../src/metadata/exif.cpp" line="14"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>

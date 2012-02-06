@@ -1316,12 +1316,12 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="90"/>
+        <location filename="../src/metadatautils.cpp" line="58"/>
         <source>Error write file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="412"/>
+        <location filename="../src/metadatautils.cpp" line="413"/>
         <source>Save thumnail failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1582,119 +1582,119 @@ Error message: %2</source>
         <translation type="obsolete">Sir - Previsualizar imágenes</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="56"/>
+        <location filename="../src/previewdialog.cpp" line="60"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - Previsualizar imágenes</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="129"/>
-        <location filename="../src/previewdialog.cpp" line="182"/>
-        <location filename="../src/previewdialog.cpp" line="675"/>
+        <location filename="../src/previewdialog.cpp" line="137"/>
+        <location filename="../src/previewdialog.cpp" line="190"/>
+        <location filename="../src/previewdialog.cpp" line="683"/>
         <source>Fit to window size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="133"/>
+        <location filename="../src/previewdialog.cpp" line="141"/>
         <source>Zoom image</source>
         <translation>Acercar imagen</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="140"/>
+        <location filename="../src/previewdialog.cpp" line="148"/>
         <source>Back to previous image</source>
         <translation>Volver a la imagen anterior</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="141"/>
+        <location filename="../src/previewdialog.cpp" line="149"/>
         <source>Go to next image</source>
         <translation>Ir a la imagen siguiente</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="148"/>
+        <location filename="../src/previewdialog.cpp" line="156"/>
         <source>Rotate counter clockwise</source>
         <translation>Girar en sentido contrario a las agujas del reloj</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="149"/>
+        <location filename="../src/previewdialog.cpp" line="157"/>
         <source>Rotate clockwise</source>
         <translation>Girar en el sentido de las agujas del reloj</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="152"/>
+        <location filename="../src/previewdialog.cpp" line="160"/>
         <source>Save image</source>
         <translation>Guardar imagen</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="156"/>
+        <location filename="../src/previewdialog.cpp" line="164"/>
         <source>Save image as...</source>
         <translation>Guardar imagen como...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="159"/>
+        <location filename="../src/previewdialog.cpp" line="167"/>
         <source>Quit preview</source>
         <translation>Cerrar previsualización</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="162"/>
+        <location filename="../src/previewdialog.cpp" line="170"/>
         <source>Fullscreen</source>
         <translation>Pantalla completa</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="166"/>
+        <location filename="../src/previewdialog.cpp" line="174"/>
         <source>Print current image...</source>
         <translation>Imprimir imagen actual...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="213"/>
+        <location filename="../src/previewdialog.cpp" line="221"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Por favor, introduzca un factor de zoom válido.</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="409"/>
+        <location filename="../src/previewdialog.cpp" line="417"/>
         <source>Overwrite File? -- SIR</source>
         <translation>¿Sobreescribir archivo? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="410"/>
+        <location filename="../src/previewdialog.cpp" line="418"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Ya existe un archivo llamado %1. ¿Desea sobreescribirlo?</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="412"/>
+        <location filename="../src/previewdialog.cpp" line="420"/>
         <source>&amp;Yes</source>
         <translation>&amp;Sí</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="412"/>
+        <location filename="../src/previewdialog.cpp" line="420"/>
         <source>&amp;No</source>
         <translation>&amp;No</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="442"/>
+        <location filename="../src/previewdialog.cpp" line="450"/>
         <source>Save File</source>
         <translation>Guardar archivo</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="539"/>
+        <location filename="../src/previewdialog.cpp" line="547"/>
         <source>File saved</source>
         <translation>Archivo guardado</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="543"/>
+        <location filename="../src/previewdialog.cpp" line="551"/>
         <source>Failed to save image</source>
         <translation>Fallo al guardar el archivo de imagen</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="644"/>
+        <location filename="../src/previewdialog.cpp" line="652"/>
         <source>Image file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="645"/>
+        <location filename="../src/previewdialog.cpp" line="653"/>
         <source>Load image %1 failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="651"/>
+        <location filename="../src/previewdialog.cpp" line="659"/>
         <source>
 Error code: %1
 Error message: %2</source>
@@ -1724,47 +1724,47 @@ Error message: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="12"/>
+        <location filename="../src/metadata/exif.h" line="87"/>
         <source>No flash function.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="13"/>
+        <location filename="../src/metadata/exif.h" line="88"/>
         <source>Flash fired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="14"/>
+        <location filename="../src/metadata/exif.h" line="89"/>
         <source>Flash didn&apos;t fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="16"/>
+        <location filename="../src/metadata/exif.h" line="94"/>
         <source>, strobe return light detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="18"/>
+        <location filename="../src/metadata/exif.h" line="96"/>
         <source>, strobe return light not detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="19"/>
+        <location filename="../src/metadata/exif.h" line="91"/>
         <source>, auto mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="20"/>
+        <location filename="../src/metadata/exif.h" line="90"/>
         <source>, compulsory flash mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="21"/>
+        <location filename="../src/metadata/exif.h" line="92"/>
         <source>, red-eye reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="27"/>
+        <location filename="../src/metadata/exif.cpp" line="14"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>

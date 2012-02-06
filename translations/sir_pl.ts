@@ -1382,12 +1382,12 @@ Informacja: %2</translation>
         <translation>Błąd otwarcia pliku %1</translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="90"/>
+        <location filename="../src/metadatautils.cpp" line="58"/>
         <source>Error write file %1</source>
         <translation>Błąd zapisu pliku %1</translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="412"/>
+        <location filename="../src/metadatautils.cpp" line="413"/>
         <source>Save thumnail failed</source>
         <translation>Błąd zapisu miniatury</translation>
     </message>
@@ -1669,37 +1669,37 @@ Informacja: %2</translation>
         <translation>Akcje</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="133"/>
+        <location filename="../src/previewdialog.cpp" line="141"/>
         <source>Zoom image</source>
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="140"/>
+        <location filename="../src/previewdialog.cpp" line="148"/>
         <source>Back to previous image</source>
         <translation>Poprzedni obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="141"/>
+        <location filename="../src/previewdialog.cpp" line="149"/>
         <source>Go to next image</source>
         <translation>Następny obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="148"/>
+        <location filename="../src/previewdialog.cpp" line="156"/>
         <source>Rotate counter clockwise</source>
         <translation>Obróć przeciwnie do kierunku ruchu wskazówek zegara</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="149"/>
+        <location filename="../src/previewdialog.cpp" line="157"/>
         <source>Rotate clockwise</source>
         <translation>Obróć zgodnie z kierunkiem ruchu wskazówek zegara</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="152"/>
+        <location filename="../src/previewdialog.cpp" line="160"/>
         <source>Save image</source>
         <translation>Zapisz obraz</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="156"/>
+        <location filename="../src/previewdialog.cpp" line="164"/>
         <source>Save image as...</source>
         <translation>Zapisz obraz jako...</translation>
     </message>
@@ -1709,84 +1709,84 @@ Informacja: %2</translation>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="56"/>
+        <location filename="../src/previewdialog.cpp" line="60"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - podgląd obrazów</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="129"/>
-        <location filename="../src/previewdialog.cpp" line="182"/>
-        <location filename="../src/previewdialog.cpp" line="675"/>
+        <location filename="../src/previewdialog.cpp" line="137"/>
+        <location filename="../src/previewdialog.cpp" line="190"/>
+        <location filename="../src/previewdialog.cpp" line="683"/>
         <source>Fit to window size</source>
         <translation>Dopasuj do rozmiaru okna</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="159"/>
+        <location filename="../src/previewdialog.cpp" line="167"/>
         <source>Quit preview</source>
         <translation>Zakończ podgląd</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="162"/>
+        <location filename="../src/previewdialog.cpp" line="170"/>
         <source>Fullscreen</source>
         <translation>Pełny ekran</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="166"/>
+        <location filename="../src/previewdialog.cpp" line="174"/>
         <source>Print current image...</source>
         <translation>Drukuj obraz...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="213"/>
+        <location filename="../src/previewdialog.cpp" line="221"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Wprowadź prawidłowy współczynnik powiększenia.</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="409"/>
+        <location filename="../src/previewdialog.cpp" line="417"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Nadpisać plik? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="410"/>
+        <location filename="../src/previewdialog.cpp" line="418"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Plik %1 już istnieje. Czy chcesz go nadpisać?</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="412"/>
+        <location filename="../src/previewdialog.cpp" line="420"/>
         <source>&amp;Yes</source>
         <translation>&amp;Tak</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="412"/>
+        <location filename="../src/previewdialog.cpp" line="420"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="442"/>
+        <location filename="../src/previewdialog.cpp" line="450"/>
         <source>Save File</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="539"/>
+        <location filename="../src/previewdialog.cpp" line="547"/>
         <source>File saved</source>
         <translation>Plik zapisany</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="543"/>
+        <location filename="../src/previewdialog.cpp" line="551"/>
         <source>Failed to save image</source>
         <translation>Błąd zapisu pliku</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="644"/>
+        <location filename="../src/previewdialog.cpp" line="652"/>
         <source>Image file error</source>
         <translation>Błąd pliku obrazu</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="645"/>
+        <location filename="../src/previewdialog.cpp" line="653"/>
         <source>Load image %1 failed</source>
         <translation>Nieudane wczytanie obrazka %1</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="651"/>
+        <location filename="../src/previewdialog.cpp" line="659"/>
         <source>
 Error code: %1
 Error message: %2</source>
@@ -1812,47 +1812,47 @@ Informacja: %2</translation>
         <translation type="obsolete">Ten obraz został zmieniony w Simple Image Resizer</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="12"/>
+        <location filename="../src/metadata/exif.h" line="87"/>
         <source>No flash function.</source>
         <translation>Brak funkcji flesza.</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="13"/>
+        <location filename="../src/metadata/exif.h" line="88"/>
         <source>Flash fired</source>
         <translation>Lampa błyskowa</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="14"/>
+        <location filename="../src/metadata/exif.h" line="89"/>
         <source>Flash didn&apos;t fire</source>
         <translation>Bez lampy błyskowej</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="16"/>
+        <location filename="../src/metadata/exif.h" line="94"/>
         <source>, strobe return light detected</source>
-        <translation>; wykryto światło stroboskopowe</translation>
+        <translation>, wykryto światło stroboskopowe</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="18"/>
+        <location filename="../src/metadata/exif.h" line="96"/>
         <source>, strobe return light not detected</source>
-        <translation>nie wykryto światła stroboskopowego</translation>
+        <translation>, nie wykryto światła stroboskopowego</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="19"/>
+        <location filename="../src/metadata/exif.h" line="91"/>
         <source>, auto mode</source>
-        <translation>; tryb automatyczny</translation>
+        <translation>, tryb automatyczny</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="20"/>
+        <location filename="../src/metadata/exif.h" line="90"/>
         <source>, compulsory flash mode</source>
         <translation>, błysk wymuszony</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="21"/>
+        <location filename="../src/metadata/exif.h" line="92"/>
         <source>, red-eye reduction</source>
-        <translation>; redukcja efektu czerwonych oczu</translation>
+        <translation>, redukcja efektu czerwonych oczu</translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="27"/>
+        <location filename="../src/metadata/exif.cpp" line="14"/>
         <source>Unknown</source>
         <translation>Nieznany</translation>
     </message>
