@@ -47,6 +47,7 @@ namespace MetadataUtils
         static String userCommentString;
     };
 
+    //! Stores \a Exif metadata user readable.
     struct ExifStruct
     {   // Image section
         String version; /**< Contains information about version of Exiv library. */

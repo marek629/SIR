@@ -36,8 +36,9 @@ namespace MetadataUtils
         bool setExifThumbnail(QImage *image, int tid = 0);
         QString timeString(const std::string &key1, const std::string &key2 = "");
         QString timeString(const Exiv2::Rational &rational);
-        QString timeString(Exiv2::Rational *rational, const std::string &key2);
+        QString timeString(Exiv2::Rational *rational, const std::string &key);
         static Exiv2::Rational shortRational(int integer);
+        static Exiv2::Rational shortRational(const Exiv2::Rational &rational);
         MetadataUtils::ExifStruct *exifStruct() { return &exifStruct_; }
         Error *lastError() { return &lastError_; }
         static void setEnabled(bool);

@@ -165,73 +165,73 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ConvertDialog</name>
     <message>
-        <location filename="../src/convertdialog.cpp" line="176"/>
+        <location filename="../src/convertdialog.cpp" line="177"/>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
         <translation>Již jste poslal informace o své instalaci SIR. Děkujeme vám velmi moc!</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="184"/>
+        <location filename="../src/convertdialog.cpp" line="185"/>
         <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
         <translation>DŮLEŽITÉ: tento krok nebude posílat jakákoli osobní data o vás nebo o vašem počítači vývojářům programu SIR. Dojde pouze k obnově počítadla jedinečných instalací programu SIR.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="228"/>
+        <location filename="../src/convertdialog.cpp" line="229"/>
         <source>Thank you for let us know that you are using SIR! You are the user number %1 of this month!</source>
         <translation>Děkujeme vám za zprávu o tom, že používáte SIR. Jste uživatelem tohoto měsíce číslo %1.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="256"/>
+        <location filename="../src/convertdialog.cpp" line="257"/>
         <source>You have the lastest version of SIR!</source>
         <translation>Máte poslední verzi programu SIR.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="266"/>
+        <location filename="../src/convertdialog.cpp" line="267"/>
         <source>Go to SIR website!</source>
         <translation>Jít na stránky SIR.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="374"/>
-        <location filename="../src/convertdialog.cpp" line="421"/>
+        <location filename="../src/convertdialog.cpp" line="375"/>
+        <location filename="../src/convertdialog.cpp" line="422"/>
         <source>Choose a directory</source>
         <translation>Vybrat adresář</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="608"/>
+        <location filename="../src/convertdialog.cpp" line="615"/>
         <source>Create Folder? -- SIR</source>
         <translation>Vytvořit složku? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="609"/>
+        <location filename="../src/convertdialog.cpp" line="616"/>
         <source>The folder %1 do not exists.Do you want to create it?</source>
         <translation>Složka %1 neexistuje. Chcete ji vytvořit?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="612"/>
+        <location filename="../src/convertdialog.cpp" line="619"/>
         <source>&amp;Yes</source>
         <translation>An&amp;o</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="612"/>
+        <location filename="../src/convertdialog.cpp" line="619"/>
         <source>&amp;No</source>
         <translation>&amp;Ne</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="617"/>
+        <location filename="../src/convertdialog.cpp" line="624"/>
         <source>Unable to create target folder.</source>
         <translation>Nelze vytvořit cílovou složku.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="632"/>
+        <location filename="../src/convertdialog.cpp" line="639"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1159"/>
+        <location filename="../src/convertdialog.cpp" line="1166"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Přepsat soubor? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1160"/>
+        <location filename="../src/convertdialog.cpp" line="1167"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Soubor s názvem %1 již existuje. Chcete jej přepsat?</translation>
     </message>
@@ -240,13 +240,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&amp;Ano pro vše</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1246"/>
+        <location filename="../src/convertdialog.cpp" line="1253"/>
         <source>Converting</source>
         <translation>Převádí se</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1249"/>
-        <location filename="../src/convertdialog.cpp" line="1300"/>
+        <location filename="../src/convertdialog.cpp" line="1256"/>
+        <location filename="../src/convertdialog.cpp" line="1307"/>
         <source>Cancelled</source>
         <translation>Zrušeno</translation>
     </message>
@@ -263,22 +263,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete"> - Preskočené</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="567"/>
+        <location filename="../src/convertdialog.cpp" line="574"/>
         <source>Please add at least one image file.</source>
         <translation>Přidejte, prosím, alespoň jeden soubor s obrázkem.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="519"/>
+        <location filename="../src/convertdialog.cpp" line="526"/>
         <source>Images</source>
         <translation>Obrázky</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="523"/>
+        <location filename="../src/convertdialog.cpp" line="530"/>
         <source>Select one or more files to open</source>
         <translation>Vyberte jeden nebo více souborů, které chcete otevřít</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="145"/>
+        <location filename="../src/convertdialog.cpp" line="146"/>
         <source>Convert Selected</source>
         <translation>Převést vybrané</translation>
     </message>
@@ -287,7 +287,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Převést vybrané obrázky</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="141"/>
+        <location filename="../src/convertdialog.cpp" line="142"/>
         <source>Remove Selected</source>
         <translation>Odstranit vybrané</translation>
     </message>
@@ -511,7 +511,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="685"/>
         <location filename="../dialogs/convertdialog.ui" line="688"/>
         <location filename="../dialogs/convertdialog.ui" line="691"/>
-        <location filename="../src/convertdialog.cpp" line="1290"/>
+        <location filename="../src/convertdialog.cpp" line="1297"/>
         <source>Quit</source>
         <translation>Ukončit</translation>
     </message>
@@ -531,8 +531,8 @@ p, li { white-space: pre-wrap; }
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1234"/>
-        <location filename="../src/convertdialog.cpp" line="1302"/>
+        <location filename="../src/convertdialog.cpp" line="1241"/>
+        <location filename="../src/convertdialog.cpp" line="1309"/>
         <source>Converted</source>
         <translation>Převedeno</translation>
     </message>
@@ -541,131 +541,131 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete"> Nepodarilo sa skonvertovať</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1237"/>
+        <location filename="../src/convertdialog.cpp" line="1244"/>
         <source>Skipped</source>
         <translation>Přeskočeno</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="443"/>
-        <location filename="../src/convertdialog.cpp" line="538"/>
-        <location filename="../src/convertdialog.cpp" line="738"/>
-        <location filename="../src/convertdialog.cpp" line="756"/>
-        <location filename="../src/convertdialog.cpp" line="1243"/>
+        <location filename="../src/convertdialog.cpp" line="450"/>
+        <location filename="../src/convertdialog.cpp" line="545"/>
+        <location filename="../src/convertdialog.cpp" line="745"/>
+        <location filename="../src/convertdialog.cpp" line="763"/>
+        <location filename="../src/convertdialog.cpp" line="1250"/>
         <source>Not converted yet</source>
         <translation>Ještě nepřevedeno</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="142"/>
+        <location filename="../src/convertdialog.cpp" line="143"/>
         <source>Remove selected images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="146"/>
+        <location filename="../src/convertdialog.cpp" line="147"/>
         <source>Convert selected images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="149"/>
+        <location filename="../src/convertdialog.cpp" line="150"/>
         <source>Show Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="150"/>
+        <location filename="../src/convertdialog.cpp" line="151"/>
         <source>Show preview selected image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="153"/>
+        <location filename="../src/convertdialog.cpp" line="154"/>
         <source>Show Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="154"/>
+        <location filename="../src/convertdialog.cpp" line="155"/>
         <source>Show metadata of selected image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="175"/>
-        <location filename="../src/convertdialog.cpp" line="183"/>
-        <location filename="../src/convertdialog.cpp" line="219"/>
-        <location filename="../src/convertdialog.cpp" line="227"/>
+        <location filename="../src/convertdialog.cpp" line="176"/>
+        <location filename="../src/convertdialog.cpp" line="184"/>
+        <location filename="../src/convertdialog.cpp" line="220"/>
+        <location filename="../src/convertdialog.cpp" line="228"/>
         <source>Let us know!</source>
         <translation>Dejte nám vědět.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="190"/>
+        <location filename="../src/convertdialog.cpp" line="191"/>
         <source>Go for it!</source>
         <translation>Jít pro to.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="193"/>
+        <location filename="../src/convertdialog.cpp" line="194"/>
         <source>No thanks!</source>
         <translation>Ne díky.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="220"/>
+        <location filename="../src/convertdialog.cpp" line="221"/>
         <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
         <translation>Při pokusu o spojení se se stránkami SIR se vyskytla chyba. Zkontrolujte své internetové spojení a zkuste to později znovu.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="247"/>
-        <location filename="../src/convertdialog.cpp" line="255"/>
-        <location filename="../src/convertdialog.cpp" line="261"/>
+        <location filename="../src/convertdialog.cpp" line="248"/>
+        <location filename="../src/convertdialog.cpp" line="256"/>
+        <location filename="../src/convertdialog.cpp" line="262"/>
         <source>SIR Updates</source>
         <translation>Aktualizace programu SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="248"/>
+        <location filename="../src/convertdialog.cpp" line="249"/>
         <source>There was an error while trying to connect with SIR update website! Check your internet connection and try again later!</source>
         <translation>Při pokusu o spojení se s aktualizačními stránkami SIR se vyskytla chyba. Zkontrolujte své internetové spojení a zkuste to později znovu.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="262"/>
+        <location filename="../src/convertdialog.cpp" line="263"/>
         <source>There is a new version of SIR available for download!</source>
         <translation>Ke stažení je nová verze programu SIR.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="269"/>
+        <location filename="../src/convertdialog.cpp" line="270"/>
         <source>I will check later!</source>
         <translation>Zkontroluji později.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="582"/>
+        <location filename="../src/convertdialog.cpp" line="589"/>
         <source>Please select at least one image file.</source>
         <translation>Vyberte, prosím, alespoň jeden soubor s obrázkem.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1186"/>
+        <location filename="../src/convertdialog.cpp" line="1193"/>
         <source>Enlarge File? - SIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1187"/>
+        <location filename="../src/convertdialog.cpp" line="1194"/>
         <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1217"/>
+        <location filename="../src/convertdialog.cpp" line="1224"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1218"/>
+        <location filename="../src/convertdialog.cpp" line="1225"/>
         <source>Ext</source>
         <translation>Přípona</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1219"/>
+        <location filename="../src/convertdialog.cpp" line="1226"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1220"/>
+        <location filename="../src/convertdialog.cpp" line="1227"/>
         <source>Status</source>
         <translation>Stav</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1240"/>
+        <location filename="../src/convertdialog.cpp" line="1247"/>
         <source>Failed to convert</source>
         <translation>Nepodařilo se převést</translation>
     </message>
@@ -1424,7 +1424,7 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="413"/>
+        <location filename="../src/metadatautils.cpp" line="458"/>
         <source>Save thumnail failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1853,42 +1853,42 @@ Error message: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/metadata/exif.h" line="87"/>
+        <location filename="../src/metadata/exif.h" line="88"/>
         <source>No flash function.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="88"/>
+        <location filename="../src/metadata/exif.h" line="89"/>
         <source>Flash fired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="89"/>
+        <location filename="../src/metadata/exif.h" line="90"/>
         <source>Flash didn&apos;t fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="94"/>
+        <location filename="../src/metadata/exif.h" line="95"/>
         <source>, strobe return light detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="96"/>
+        <location filename="../src/metadata/exif.h" line="97"/>
         <source>, strobe return light not detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="91"/>
+        <location filename="../src/metadata/exif.h" line="92"/>
         <source>, auto mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="90"/>
+        <location filename="../src/metadata/exif.h" line="91"/>
         <source>, compulsory flash mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="92"/>
+        <location filename="../src/metadata/exif.h" line="93"/>
         <source>, red-eye reduction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1898,7 +1898,7 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/string.cpp" line="7"/>
+        <location filename="../src/metadata/string.cpp" line="96"/>
         <source>no data</source>
         <translation type="unfinished"></translation>
     </message>

@@ -24,12 +24,9 @@ namespace MetadataUtils
         Exiv2::Rational toRationalPower() const;
         String & operator =(const char *str);
         String & operator =(const QString &other);
-        static const QString &noData();
+        static QString noData();
         static String exifVersion(const Exiv2::Metadatum &datum);
         static String fromStdString(const std::string &s);
-
-    private:
-        static QString noData_;
     };
 }
 

@@ -4,8 +4,6 @@
 #include <QStringList>
 #include <cmath>
 
-QString MetadataUtils::String::noData_ = QObject::tr("no data");
-
 MetadataUtils::String & MetadataUtils::String::operator =(const char *str)
 {
     QString::operator =(str);
@@ -21,7 +19,7 @@ MetadataUtils::String & MetadataUtils::String::operator =(const QString& other)
 void MetadataUtils::String::appendUnit(const char *unit)
 {
     if ( (this->toDouble() == -1.) || this->isEmpty() )
-        *this = noData_;
+        *this = noData();
     else
         this->append(unit);
 }
@@ -38,7 +36,7 @@ std::string MetadataUtils::String::toNativeStdString() const
 Exiv2::Rational MetadataUtils::String::toRational() const
 {
     Exiv2::Rational result;
-    if (this == noData_) {
+    if (this == noData()) {
         result.first = -1;
         result.second = 1;
         return result;
@@ -93,7 +91,7 @@ MetadataUtils::String MetadataUtils::String::fromStdString(const std::string &s)
     return MetadataUtils::String( QString::fromStdString(s) );
 }
 
-const QString &MetadataUtils::String::noData()
+QString MetadataUtils::String::noData()
 {
-    return noData_;
+    return QObject::tr("no data");
 }

@@ -196,6 +196,9 @@ void MetadataUtils::Metadata::setExifStruct()
     }
     if (!isEmpty)
         exifStruct_.shutterSpeed = timeString(rational);
+
+    qDebug() << exifStruct_.expTime << exifStruct_.shutterSpeed << rational.first << rational.second;
+
     exifStruct_.isoSpeed = exifData["Exif.Photo.ISOSpeedRatings"].toLong();
     if ( exifStruct_.isoSpeed == -1 )
         exifStruct_.isoSpeed = exifData["Exif.Image.ISOSpeedRatings"].toLong();
@@ -243,79 +246,123 @@ QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::
 
 QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rational) {
     QString result;
-    if (rational.first > 0) {
-        result = "1/";
-        result += QString::number((int)pow(2,(double)rational.first / rational.second));
-        result.append(" s");
-    }
-    else if (rational.first == 0) {
-        result = "1";
-        result.append(" s");
+    Exiv2::Rational tmpRational = rational;
+    if (rational.first == 0)
+        result = "1 s";
+    else if (rational.first < 2*rational.second) {
+        // decimal stores point moved 3 digits to right and rounded to nearest integer
+        int decimal = pow(0.5,(double)rational.first/rational.second) * 1000 + 0.5;
+        if (decimal > 1000) {
+            double d = decimal * 0.001;
+            int i = d;
+            result = QString::number(i + (int)(d-i+0.05));
+        }
+        tmpRational.first = decimal % 1000;
+        tmpRational.second = 1000;
+        if (tmpRational.first >= 250 && tmpRational.first < 350) { // test 1/3 s
+            if (result.length() > 0 && result.right(1) != " ")
+                result.append(" ");
+            int diff = tmpRational.first - 333;
+            diff *= diff;
+            if (diff > 272) // half of diffrend between 300 and 333 is 16.5; 16.5^2 = 272.25
+                result += "3/10 s";
+            else
+                result += "1/3 s";
+        }
+        else if (tmpRational.first >= 950) {
+            if (result.length() > 0 && result.right(1) != " ")
+                result.append(" ");
+            result.append("s");
+        }
+        else {
+            tmpRational.first = tmpRational.first * 0.01 + 0.5;
+            tmpRational.second = 10;
+            if (result.length() > 0 && result.right(1) != " ")
+                result.append(" ");
+            result += timeString(&tmpRational,"");
+        }
     }
     else {
-        Exiv2::Rational tmpRational = rational;
-        const quint16 multiplier = 0xFFFF;
-        if (rational.first != -1 && rational.second != 1) {
-            tmpRational.first = multiplier * pow(0.5, (double)rational.first / rational.second);
-            tmpRational.second = multiplier;
-        }
-        result = timeString(&tmpRational,"");
+        tmpRational.first = 1;
+        tmpRational.second = pow(2, (double)rational.first / rational.second) + 0.5;
+        if (result.length() > 0 && result.right(1) != " ")
+            result.append(" ");
+        result += timeString(&tmpRational,"");
     }
     return result;
 }
 
 QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
-                                            const std::string &key2) {
+                                            const std::string &key) {
     QString result;
     bool isEmpty(rational->first == -1  && rational->second == 1);
     if (isEmpty) {
-        if (!key2.empty()) {
-            *rational = exifData[key2].toRational();
+        if (!key.empty()) {
+            *rational = exifData[key].toRational();
             isEmpty = false;
         }
         else
             result = MetadataUtils::String::noData();
     }
     if (!isEmpty) {
-        if ( rational->first < rational->second )
+        if (rational->first == 0)
+            result.clear();
+        else if (rational->first < rational->second) {
+            *rational = shortRational(*rational);
             result = QString::number(rational->first) + "/" +
-                    QString::number(rational->second) + " s";
+                    QString::number(rational->second);
+        }
         else
         {
             short integer = rational->first / rational->second;
-            result =  QString::number(integer, 'f', 1);
+            result = QString::number(integer);
             int fraction = rational->first - integer*rational->second;
-            if (fraction != 0)
-                result += " " + QString::number(fraction) +
+            if (fraction != 0) {
+                rational->first = fraction;
+                *rational = shortRational(*rational);
+                result += " " + QString::number(rational->first) +
                     "/" + QString::number(rational->second);
-            result.append(" s");
+            }
         }
+        if (result.length() > 0 && result.right(1) != " ")
+            result.append(" ");
+        result.append("s");
     }
     return result;
 }
 
-Exiv2::Rational MetadataUtils::Metadata::shortRational(int integer)
-{
+Exiv2::Rational MetadataUtils::Metadata::shortRational(int integer) {
     Exiv2::Rational result;
-    if ( integer % 10 == 0 )
-    {
+    if (integer % 10 == 0) {
         result.first = integer / 10;
         result.second = 1;
     }
-    else if ( integer % 5 == 0 )
-    {
+    else if (integer % 5 == 0) {
         result.first = integer / 5;
         result.second = 2;
     }
-    else if ( integer % 2 == 0 )
-    {
+    else if (integer % 2 == 0) {
         result.first = integer / 2;
         result.second = 5;
     }
-    else
-    {
+    else {
         result.first = integer;
         result.second = 10;
+    }
+    return result;
+}
+
+Exiv2::Rational MetadataUtils::Metadata::shortRational(const Exiv2::Rational &rational) {
+    Exiv2::Rational result = rational;
+    if (rational.first == 0)
+        result.second = 1;
+    else if (rational.second % rational.first == 0) {
+        result.first = 1;
+        result.second = rational.second / rational.first;
+    }
+    else if (rational.second % 2 == 0 && rational.first % 2 == 0) {
+        result.first = rational.first / 2;
+        result.second = rational.second / 2;
     }
     return result;
 }
