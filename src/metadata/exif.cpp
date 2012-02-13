@@ -49,11 +49,13 @@ QString MetadataUtils::Exif::flashString(short num) {
     QString result;
     QString bin = QString::number(num,2);
     // invert bin
-    for (short i=0, j=bin.length()-1; i<bin.length(); i++, j--) {
+    short binHalfLength = bin.length() / 2;
+    for (short i=0, j=bin.length()-1; i<binHalfLength; i++, j--) {
         QChar temp = bin[j];
         bin[j] = bin[i];
         bin[i] = temp;
     }
+    // copmlete with 0 up to target bin string length
     short toAppend = 7 - bin.length();
     for (short i=0; i<toAppend; i++)
         bin.append('0');
@@ -64,9 +66,9 @@ QString MetadataUtils::Exif::flashString(short num) {
 
     // bit 0 indicating whether the flash fired
     if ( bin[0] == '1' )
-        result.append(MetadataUtils::Flash::fired());
+        result = MetadataUtils::Flash::fired();
     else
-        result.append(MetadataUtils::Flash::noFired());
+        result = MetadataUtils::Flash::noFired();
 
     // bits 3 and 4 indicating the camera's flash mode
     if ( bin[3]=='1' && bin[4]=='1' )

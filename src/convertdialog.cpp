@@ -441,12 +441,6 @@ void ConvertDialog::addDir() {
             itemList.append(fi.completeBaseName());
             itemList.append(fi.suffix());
             itemList.append(fi.path());
-
-
-            MetadataUtils::Metadata met;
-            qDebug() << fi.completeBaseName() << sizeof(MetadataUtils::Exif);
-            met.read(fi.absoluteFilePath(), true);
-
             itemList.append(tr("Not converted yet"));
             item = new QTreeWidgetItem(itemList);
             filesTreeView->addTopLevelItem(item);

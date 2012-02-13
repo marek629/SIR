@@ -213,9 +213,6 @@ void MetadataUtils::Metadata::setExifStruct() {
     }
     if (!isEmpty)
         exifStruct_.shutterSpeed = timeString(rational);
-
-    qDebug() << exifStruct_.expTime << exifStruct_.shutterSpeed << rational.first << rational.second;
-
     exifStruct_.isoSpeed = exifData["Exif.Photo.ISOSpeedRatings"].toLong();
     if ( exifStruct_.isoSpeed == -1 )
         exifStruct_.isoSpeed = exifData["Exif.Image.ISOSpeedRatings"].toLong();
