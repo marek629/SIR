@@ -23,8 +23,8 @@
  *
  */
 
- #ifndef PREVIEWDIALOG_H
- #define PREVIEWDIALOG_H
+#ifndef PREVIEWDIALOG_H
+#define PREVIEWDIALOG_H
 
 #include "ui_previewdialog.h"
 #include "metadatautils.h"

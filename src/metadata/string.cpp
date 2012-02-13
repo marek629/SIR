@@ -1,5 +1,4 @@
 #include "string.h"
-#include <exiv2/metadatum.hpp>
 #include <QObject>
 #include <QStringList>
 #include <cmath>
@@ -66,24 +65,6 @@ Exiv2::Rational MetadataUtils::String::toRationalPower() const {
     result.first = multiplier * log((double)rational.first / rational.second);
     result.second = multiplier * log(0.5);
     return result;
-}
-
-MetadataUtils::String MetadataUtils::String::exifVersion(const Exiv2::Metadatum &datum)
-{
-    int size = datum.size();
-    if (size < 4)
-        return MetadataUtils::String(noData());
-
-    char ch[size];
-    for (int i=0; i<size; i++)
-        ch[i] = datum.toLong(i);
-    QString str = QString(QByteArray(ch,size));
-    str.insert(size-2,'.');
-    if (str[size-1] == '0')
-        str.remove(size-1,1);
-    if (str[0] == '0')
-        str.remove(0,1);
-    return MetadataUtils::String(str);
 }
 
 MetadataUtils::String MetadataUtils::String::fromStdString(const std::string &s)

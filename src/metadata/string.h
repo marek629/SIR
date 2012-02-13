@@ -4,11 +4,6 @@
 #include <QString>
 #include <exiv2/types.hpp>
 
-namespace Exiv2
-{
-    class Metadatum;
-}
-
 namespace MetadataUtils
 {
     class String : public QString
@@ -25,7 +20,6 @@ namespace MetadataUtils
         String & operator =(const char *str);
         String & operator =(const QString &other);
         static QString noData();
-        static String exifVersion(const Exiv2::Metadatum &datum);
         static String fromStdString(const std::string &s);
     };
 }

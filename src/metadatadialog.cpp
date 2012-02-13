@@ -7,9 +7,7 @@
 #include <QDebug>
 
 MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
-                               int currentImage) :
-    QDialog(parent)
-{
+                               int currentImage) : QDialog(parent) {
     setupUi(this);
     this->images = images;
     this->currentImage = currentImage;
@@ -35,8 +33,7 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteMetadata()));
 }
 
-MetadataDialog::~MetadataDialog()
-{
+MetadataDialog::~MetadataDialog() {
     delete metadata;
     delete images;
 }
@@ -45,8 +42,7 @@ void MetadataDialog::resetStructs() {
     exifStruct->reset();
 }
 
-void MetadataDialog::setupValues()
-{
+void MetadataDialog::setupValues() {
     QSettings settings("SIR");
     settings.beginGroup("Exif");
     int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
@@ -137,8 +133,7 @@ void MetadataDialog::setupValues()
     settings.endGroup();
 }
 
-void MetadataDialog::saveChanges()
-{
+void MetadataDialog::saveChanges() {
     // Exif tab
     // Image toolbox
     exifStruct->orientation = exifOrientationComboBox->currentIndex();
@@ -147,7 +142,6 @@ void MetadataDialog::saveChanges()
     // Photo toolbox
     exifStruct->focalLength = exifFocalLengthSpinBox->value();
     exifStruct->expTime = exifExpTimeComboBox->currentText();
-
     exifStruct->expBias = exifExpBiasSpinBox->value();
     exifStruct->aperture = exifApertureSpinBox->value();
     exifStruct->isoSpeed = exifIsoSpeedSpinBox->value();
@@ -166,10 +160,10 @@ void MetadataDialog::saveChanges()
     // saving
     metadata->setExifData();
     metadata->write(imagePath);
+    this->close();
 }
 
-void MetadataDialog::deleteMetadata()
-{
+void MetadataDialog::deleteMetadata() {
     QMessageBox msgBox;
     msgBox.setWindowTitle(tr("Delete metadata"));
     msgBox.setText(tr("Do you really want to delete metadata from this image?"));
@@ -182,4 +176,5 @@ void MetadataDialog::deleteMetadata()
         resetStructs();
         setupValues();
     }
+    this->close();
 }

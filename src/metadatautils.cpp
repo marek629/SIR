@@ -1,3 +1,28 @@
+/*
+ * This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
+ * Program URL: http://sir.projet-libre.org/
+ *
+ */
+
 #include "metadatautils.h"
 #include "defines.h"
 #include <QStringList>
@@ -22,8 +47,7 @@ bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setup
         image->readMetadata();
 
         exifData = image->exifData();
-        MetadataUtils::Exif::setVersionKnown(
-                    exifData["Exif.Photo.ExifVersion"].toString().empty() );
+        exif.setVersion(exifData["Exif.Photo.ExifVersion"]);
         if (setupStructs)
             setExifStruct();
 
@@ -35,7 +59,7 @@ bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setup
         return true;
     }
     catch (Exiv2::Error &e) {
-        lastError_.setMessage(tr("Error open file %1").arg( path.toQString() ) );
+        lastError_.setMessage(tr("Error open file %1").arg(path.toQString()));
         lastError_.copy(e);
         return false;
     }
@@ -80,18 +104,14 @@ void MetadataUtils::Metadata::setData(const QImage& qImage) {
         exifData["Exif.Photo.UserComment"] =
                 MetadataUtils::Exif::stringUserComment().toNativeStdString();
 
-    if (!exifData.empty())
-    {
-        if (!MetadataUtils::Exif::isVersionKnown() )
-        {
+    if (!exifData.empty()) {
+        if (!exif.isVersionKnown()) {
             Exiv2::byte version[4] = { 48, 50, 50, 48 };
             Exiv2::DataValue value(version,4);
             exifData["Exif.Photo.ExifVersion"] = value;
         }
-        exifData["Exif.Image.ProcessingSoftware"] = "Simple Image Resizer "
-                VERSION;
-        if (!qImage.isNull())
-        {
+        exifData["Exif.Image.ProcessingSoftware"] = "Simple Image Resizer " VERSION;
+        if (!qImage.isNull()) {
             exifData["Exif.Image.ImageWidth"] = qImage.width();
             exifData["Exif.Image.ImageLength"] = qImage.height();
         }
@@ -103,8 +123,7 @@ void MetadataUtils::Metadata::setData(const QImage& qImage) {
 #endif // EXV_HAVE_XMP_TOOLKIT
 }
 
-void MetadataUtils::Metadata::setExifData()
-{
+void MetadataUtils::Metadata::setExifData() {
     // Image section
     exifData["Exif.Image.Orientation"] = exifStruct_.orientation;
     setExifDatum("Exif.Photo.DateTimeOriginal","Exif.Image.DateTimeOriginal",
@@ -137,11 +156,9 @@ void MetadataUtils::Metadata::setExifData()
     exifData["Exif.Photo.UserComment"] = exifStruct_.userComment.toNativeStdString();
 }
 
-void MetadataUtils::Metadata::setExifStruct()
-{
+void MetadataUtils::Metadata::setExifStruct() {
     // Image section
-    exifStruct_.version = MetadataUtils::String::exifVersion(
-                exifData["Exif.Photo.ExifVersion"] );
+    exifStruct_.version = exif.getVersion();
     exifStruct_.processingSoftware = MetadataUtils::String::fromStdString(
                 exifData["Exif.Image.ProcessingSoftware"].toString() );
     if (exifStruct_.processingSoftware.isEmpty())

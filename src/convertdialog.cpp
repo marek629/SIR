@@ -444,7 +444,7 @@ void ConvertDialog::addDir() {
 
 
             MetadataUtils::Metadata met;
-            qDebug() << fi.completeBaseName();
+            qDebug() << fi.completeBaseName() << sizeof(MetadataUtils::Exif);
             met.read(fi.absoluteFilePath(), true);
 
             itemList.append(tr("Not converted yet"));
