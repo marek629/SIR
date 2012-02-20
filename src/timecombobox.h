@@ -9,14 +9,13 @@ class TimeComboBox : public QComboBox
 public:
     explicit TimeComboBox(QWidget *parent = 0);
     void addItem(const QString &text, const QVariant &userData = QVariant());
+    void setEditable(bool editable);
 
 private:
-    int rigthIndex(const QString &text);
+    int validIndex(const QString &text);
 
-signals:
-
-public slots:
-
+private slots:
+    void addEditedText();
 };
 
 #endif // TIMECOMBOBOX_H

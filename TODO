@@ -1,10 +1,12 @@
 *** nearest release ***
-  ! editable time combo boxes in MetadataDialog's Photo section
+  ! make better TimeComboBox::validIndex() if time > 1 s
   ! restore cursor position in size lines edit after change
 
 *** next release ***
-  1 Watermark support
-  2 Correction convert dialog
+  ! Watermark support
+  ! Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
-  3 Correction metadata dialog
+  ! Correction metadata dialog
     * add next/preview buttons and file name label
+  ! Conditional converting (ie. convert if image width > 1000 px)
+    * create wizard window

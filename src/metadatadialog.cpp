@@ -12,7 +12,7 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     this->images = images;
     this->currentImage = currentImage;
     this->imagePath = this->images->at(this->currentImage);
-    metadata = new MetadataUtils::Metadata();
+    metadata = new MetadataUtils::Metadata;
 
     bool readSuccess = metadata->read(imagePath,true);
     exifStruct = metadata->exifStruct();
@@ -144,6 +144,7 @@ void MetadataDialog::saveChanges() {
     exifStruct->expTime = exifExpTimeComboBox->currentText();
     exifStruct->expBias = exifExpBiasSpinBox->value();
     exifStruct->aperture = exifApertureSpinBox->value();
+    exifStruct->shutterSpeed = exifShutterTimeComboBox->currentText();
     exifStruct->isoSpeed = exifIsoSpeedSpinBox->value();
     exifStruct->expProgram = exifExpProgramComboBox->currentIndex();
     exifStruct->meteringMode = exifLightMeteringModeComboBox->currentIndex();
@@ -169,12 +170,11 @@ void MetadataDialog::deleteMetadata() {
     msgBox.setText(tr("Do you really want to delete metadata from this image?"));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::No);
-    if(msgBox.exec() == QMessageBox::Yes)
-    {
+    if(msgBox.exec() == QMessageBox::Yes) {
         metadata->clearMetadata();
         metadata->write(imagePath);
         resetStructs();
         setupValues();
+        this->close();
     }
-    this->close();
 }

@@ -91,19 +91,13 @@ bool MetadataUtils::Metadata::write(const QString &path, const QImage &image) {
 
 void MetadataUtils::Metadata::clearMetadata() {
     exifData.clear();
+    iptcData.clear();
+#ifdef EXV_HAVE_XMP_TOOLKIT
+    xmpData.clear();
+#endif // EXV_HAVE_XMP_TOOLKIT
 }
 
 void MetadataUtils::Metadata::setData(const QImage& qImage) {
-    if (MetadataUtils::Exif::isArtistOverwrite())
-        exifData["Exif.Image.Artist"] =
-                MetadataUtils::Exif::stringArtist().toStdString();
-    if (MetadataUtils::Exif::isCopyrightOverwrite())
-        exifData["Exif.Image.Copyright"] =
-                MetadataUtils::Exif::stringCopyright().toStdString();
-    if (MetadataUtils::Exif::isUserCommentOverwrite())
-        exifData["Exif.Photo.UserComment"] =
-                MetadataUtils::Exif::stringUserComment().toNativeStdString();
-
     if (!exifData.empty()) {
         if (!exif.isVersionKnown()) {
             Exiv2::byte version[4] = { 48, 50, 50, 48 };
@@ -115,6 +109,15 @@ void MetadataUtils::Metadata::setData(const QImage& qImage) {
             exifData["Exif.Image.ImageWidth"] = qImage.width();
             exifData["Exif.Image.ImageLength"] = qImage.height();
         }
+        if (MetadataUtils::Exif::isArtistOverwrite())
+            exifData["Exif.Image.Artist"] =
+                    MetadataUtils::Exif::stringArtist().toStdString();
+        if (MetadataUtils::Exif::isCopyrightOverwrite())
+            exifData["Exif.Image.Copyright"] =
+                    MetadataUtils::Exif::stringCopyright().toStdString();
+        if (MetadataUtils::Exif::isUserCommentOverwrite())
+            exifData["Exif.Photo.UserComment"] =
+                    MetadataUtils::Exif::stringUserComment().toNativeStdString();
     }
     image->setExifData(exifData);
     image->setIptcData(iptcData);
@@ -140,11 +143,17 @@ void MetadataUtils::Metadata::setExifData() {
     rational = mString.toRational();
     setExifDatum("Exif.Image.ExposureTime","Exif.Photo.ExposureTime",rational);
     rational = shortRational( exifStruct_.expBias * 10 );
-    setExifDatum("Exif.Image.ExposureBiasValue","Exif.Photo.ExposureBiasValue",rational);
-    setExifDatum("Exif.Image.ISOSpeedRatings","Exif.Photo.ISOSpeedRatings",exifStruct_.isoSpeed);
+    setExifDatum("Exif.Image.ExposureBiasValue","Exif.Photo.ExposureBiasValue",
+                 rational);
+    setExifDatum("Exif.Image.ShutterSpeedValue","Exif.Photo.ShutterSpeedValue",
+                 exifStruct_.shutterSpeed.toRationalPower());
+    setExifDatum("Exif.Image.ISOSpeedRatings","Exif.Photo.ISOSpeedRatings",
+                 exifStruct_.isoSpeed);
     setExifDatum("Exif.Image.Flash","Exif.Photo.Flash",exifStruct_.flashMode);
-    setExifDatum("Exif.Image.ExposureProgram","Exif.Photo.ExposureProgram",exifStruct_.expProgram);
-    setExifDatum("Exif.Image.MeteringMode","Exif.Photo.MeteringMode",exifStruct_.meteringMode);
+    setExifDatum("Exif.Image.ExposureProgram","Exif.Photo.ExposureProgram",
+                 exifStruct_.expProgram);
+    setExifDatum("Exif.Image.MeteringMode","Exif.Photo.MeteringMode",
+                 exifStruct_.meteringMode);
 
     // Camera section
     exifData["Exif.Image.Make"] = exifStruct_.cameraManufacturer.toStdString();
@@ -258,50 +267,50 @@ QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::
     return result;
 }
 
-QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rational) {
+QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rationalPower) {
     QString result;
-    Exiv2::Rational tmpRational = rational;
-    if (rational.first == 0)
+    Exiv2::Rational rational = rationalPower;
+    if (rationalPower.first == 0)
         result = "1 s";
-    else if (rational.first < 2*rational.second) {
+    else if (abs(rationalPower.first) < abs(2*rationalPower.second)) {
         // decimal stores point moved 3 digits to right and rounded to nearest integer
-        int decimal = pow(0.5,(double)rational.first/rational.second) * 1000 + 0.5;
+        int decimal = pow(0.5,(double)rationalPower.first/rationalPower.second) * 1000 + 0.5;
         if (decimal > 1000) {
             double d = decimal * 0.001;
             int i = d;
             result = QString::number(i + (int)(d-i+0.05));
         }
-        tmpRational.first = decimal % 1000;
-        tmpRational.second = 1000;
-        if (tmpRational.first >= 250 && tmpRational.first < 350) { // test 1/3 s
+        rational.first = decimal % 1000;
+        rational.second = 1000;
+        if (rational.first >= 290 && rational.first < 340) { // test 1/3 s
             if (result.length() > 0 && result.right(1) != " ")
                 result.append(" ");
-            int diff = tmpRational.first - 333;
+            int diff = rational.first - 333;
             diff *= diff;
             if (diff > 272) // half of diffrend between 300 and 333 is 16.5; 16.5^2 = 272.25
                 result += "3/10 s";
             else
                 result += "1/3 s";
         }
-        else if (tmpRational.first >= 950) {
+        else if (rational.first >= 950) {
             if (result.length() > 0 && result.right(1) != " ")
                 result.append(" ");
             result.append("s");
         }
         else {
-            tmpRational.first = tmpRational.first * 0.01 + 0.5;
-            tmpRational.second = 10;
+            rational.first = rational.first * 0.1 + 0.5;
+            rational.second = 100;
             if (result.length() > 0 && result.right(1) != " ")
                 result.append(" ");
-            result += timeString(&tmpRational,"");
+            result += timeString(&rational,"");
         }
     }
-    else {
-        tmpRational.first = 1;
-        tmpRational.second = pow(2, (double)rational.first / rational.second) + 0.5;
+    else { // rational <= 1/4 s
+        rational.first = 1;
+        rational.second = pow(2, fabs(rationalPower.first) / abs(rationalPower.second)) + 0.5;
         if (result.length() > 0 && result.right(1) != " ")
             result.append(" ");
-        result += timeString(&tmpRational,"");
+        result += timeString(&rational,"");
     }
     return result;
 }
@@ -326,8 +335,7 @@ QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
             result = QString::number(rational->first) + "/" +
                     QString::number(rational->second);
         }
-        else
-        {
+        else {
             short integer = rational->first / rational->second;
             result = QString::number(integer);
             int fraction = rational->first - integer*rational->second;
@@ -366,6 +374,7 @@ Exiv2::Rational MetadataUtils::Metadata::shortRational(int integer) {
     return result;
 }
 
+// excepted paramether value is i.e. 1/100
 Exiv2::Rational MetadataUtils::Metadata::shortRational(const Exiv2::Rational &rational) {
     Exiv2::Rational result = rational;
     if (rational.first == 0)
@@ -374,9 +383,29 @@ Exiv2::Rational MetadataUtils::Metadata::shortRational(const Exiv2::Rational &ra
         result.first = 1;
         result.second = rational.second / rational.first;
     }
+    else if (rational.second % 25 == 0 && rational.first % 25 == 0) {
+        result.first = rational.first / 25;
+        result.second = rational.second / 25;
+    }
+    else if (rational.second % 20 == 0 && rational.first % 20 == 0) {
+        result.first = rational.first / 20;
+        result.second = rational.second / 20;
+    }
+    else if (rational.second % 10 == 0 && rational.first % 10 == 0) {
+        result.first = rational.first / 10;
+        result.second = rational.second / 10;
+    }
+    else if (rational.second % 5 == 0 && rational.first % 5 == 0) {
+        result.first = rational.first / 5;
+        result.second = rational.second / 5;
+    }
     else if (rational.second % 2 == 0 && rational.first % 2 == 0) {
         result.first = rational.first / 2;
         result.second = rational.second / 2;
+    }
+    else {
+        result.first = rational.first * 0.1 + 0.5;
+        result.second = rational.second * 0.1 + 0.5;
     }
     return result;
 }

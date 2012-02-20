@@ -106,8 +106,8 @@ namespace MetadataUtils
         float focalLength; /**< Contains Focal Length value in milimeters. */
         float aperture; /**< Contains Aperture value. */
         int isoSpeed; /**< Contains ISO Speed value. */
-        QString shutterSpeed; /**< Contains Shutter Speed. */
-        QString expTime;  /**< Contains Exposure time. */
+        String shutterSpeed; /**< Contains Shutter Speed. */
+        String expTime;  /**< Contains Exposure time. */
         float expBias;  /**< Contains Exposure bias value in EV. */
         uchar expProgram; /**< Contains information about Exposure program. */
         short meteringMode; /**< Contains information about Light metering mode. */
