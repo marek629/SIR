@@ -18,30 +18,31 @@
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Main Developper: Rafael Sachetto &amp;lt;&lt;/span&gt;&lt;a href=&quot;mailto:rsachetto@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;rsachetto@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;German Translation: Michael Kruger&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Portuguese Translation: Rafael Sachetto  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Slovak Translation: Jozef Riha&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Spanish Translation: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Russian Translation: Renat Gar, касьянъ and Timur Antipin&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#00681c;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Hungarian Translation: Kopiás Csaba&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Polish Translation: zoteek&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Dutch Translation: Youp&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Romanian Translation: Ovidiu Pop&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;French Translation: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:medium; color:#000000;&quot;&gt;Jérôme Launay&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:medium; color:#000000;&quot;&gt;Greek Translation: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Steve Jemens&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; color:#000000;&quot;&gt;Czech Translation: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Pavel Fric&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Code Contribuition: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;To enable dcraw visit: &lt;/span&gt;&lt;a href=&quot;http://www.cybercom.net/~dcoffin/dcraw/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cybercom.net/~dcoffin/dcraw/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;or do a sudo apt-get install dcraw on Debian based systems.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sir.projet-libre.org/&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;http://sir.projet-libre.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Main Developper: Rafael Sachetto &amp;lt;&lt;/span&gt;&lt;a href=&quot;mailto:rsachetto@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;rsachetto@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Developer: Marek Jędryka &amp;lt;&lt;/span&gt;&lt;a href=&quot;mailto:jedryka89@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;jedryka89@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;German Translation: Michael Kruger&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Portuguese Translation: Rafael Sachetto  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Slovak Translation: Jozef Riha&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Spanish Translation: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Russian Translation: Renat Gar, касьянъ and Timur Antipin&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#00681c;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Hungarian Translation: Kopiás Csaba&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Polish Translation: zoteek, Marek Jędryka&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Dutch Translation: Youp&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Romanian Translation: Ovidiu Pop&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;French Translation: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Jérôme Launay&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Greek Translation: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Steve Jemens&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Czech Translation: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Pavel Fric&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;Code Contribuition: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;To enable dcraw visit: &lt;/span&gt;&lt;a href=&quot;http://www.cybercom.net/~dcoffin/dcraw/&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cybercom.net/~dcoffin/dcraw/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;or do a sudo apt-get install dcraw on Debian based systems.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sir.projet-libre.org/&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://sir.projet-libre.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/about.ui" line="128"/>
+        <location filename="../dialogs/about.ui" line="129"/>
         <source>OK</source>
         <translation>Accepter</translation>
     </message>
@@ -65,172 +66,177 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ConvertDialog</name>
     <message>
-        <location filename="../src/convertdialog.cpp" line="176"/>
-        <location filename="../src/convertdialog.cpp" line="184"/>
-        <location filename="../src/convertdialog.cpp" line="220"/>
-        <location filename="../src/convertdialog.cpp" line="228"/>
+        <location filename="../src/convertdialog.cpp" line="174"/>
+        <location filename="../src/convertdialog.cpp" line="182"/>
+        <location filename="../src/convertdialog.cpp" line="218"/>
+        <location filename="../src/convertdialog.cpp" line="226"/>
         <source>Let us know!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="191"/>
+        <location filename="../src/convertdialog.cpp" line="189"/>
         <source>Go for it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="194"/>
+        <location filename="../src/convertdialog.cpp" line="192"/>
         <source>No thanks!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="221"/>
+        <location filename="../src/convertdialog.cpp" line="219"/>
         <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="248"/>
-        <location filename="../src/convertdialog.cpp" line="256"/>
-        <location filename="../src/convertdialog.cpp" line="262"/>
+        <location filename="../src/convertdialog.cpp" line="246"/>
+        <location filename="../src/convertdialog.cpp" line="254"/>
+        <location filename="../src/convertdialog.cpp" line="260"/>
         <source>SIR Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="249"/>
+        <location filename="../src/convertdialog.cpp" line="247"/>
         <source>There was an error while trying to connect with SIR update website! Check your internet connection and try again later!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="263"/>
+        <location filename="../src/convertdialog.cpp" line="261"/>
         <source>There is a new version of SIR available for download!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="177"/>
+        <location filename="../src/convertdialog.cpp" line="175"/>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="143"/>
+        <location filename="../src/convertdialog.cpp" line="141"/>
         <source>Remove selected images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="147"/>
+        <location filename="../src/convertdialog.cpp" line="145"/>
         <source>Convert selected images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="150"/>
+        <location filename="../src/convertdialog.cpp" line="148"/>
         <source>Show Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="151"/>
+        <location filename="../src/convertdialog.cpp" line="149"/>
         <source>Show preview selected image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="154"/>
+        <location filename="../src/convertdialog.cpp" line="152"/>
         <source>Show Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="155"/>
+        <location filename="../src/convertdialog.cpp" line="153"/>
         <source>Show metadata of selected image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="185"/>
+        <location filename="../src/convertdialog.cpp" line="183"/>
         <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="229"/>
+        <location filename="../src/convertdialog.cpp" line="227"/>
         <source>Thank you for let us know that you are using SIR! You are the user number %1 of this month!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="257"/>
+        <location filename="../src/convertdialog.cpp" line="255"/>
         <source>You have the lastest version of SIR!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="267"/>
+        <location filename="../src/convertdialog.cpp" line="265"/>
         <source>Go to SIR website!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="270"/>
+        <location filename="../src/convertdialog.cpp" line="268"/>
         <source>I will check later!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="375"/>
-        <location filename="../src/convertdialog.cpp" line="422"/>
+        <location filename="../src/convertdialog.cpp" line="373"/>
+        <location filename="../src/convertdialog.cpp" line="420"/>
         <source>Choose a directory</source>
         <translation>Choisir un répertoire</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="615"/>
+        <location filename="../src/convertdialog.cpp" line="607"/>
         <source>Create Folder? -- SIR</source>
         <translation>Créer répertoire? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="616"/>
+        <location filename="../src/convertdialog.cpp" line="608"/>
         <source>The folder %1 do not exists.Do you want to create it?</source>
         <translation>le répertoire %1 n&apos;existe pas. Voulez vous le créer?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="619"/>
+        <location filename="../src/convertdialog.cpp" line="611"/>
         <source>&amp;Yes</source>
         <translation>&amp;Oui</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="619"/>
+        <location filename="../src/convertdialog.cpp" line="611"/>
         <source>&amp;No</source>
         <translation>&amp;Non</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="624"/>
+        <location filename="../src/convertdialog.cpp" line="616"/>
         <source>Unable to create target folder.</source>
         <translation>Impossible de créer le répertoire de destination.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="639"/>
+        <location filename="../src/convertdialog.cpp" line="631"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="574"/>
+        <location filename="../src/convertdialog.cpp" line="821"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="566"/>
         <source>Please add at least one image file.</source>
         <translation>Ajoutez au moins un fichier image s&apos;il vous plait.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="450"/>
-        <location filename="../src/convertdialog.cpp" line="545"/>
-        <location filename="../src/convertdialog.cpp" line="745"/>
-        <location filename="../src/convertdialog.cpp" line="763"/>
-        <location filename="../src/convertdialog.cpp" line="1250"/>
+        <location filename="../src/convertdialog.cpp" line="442"/>
+        <location filename="../src/convertdialog.cpp" line="537"/>
+        <location filename="../src/convertdialog.cpp" line="737"/>
+        <location filename="../src/convertdialog.cpp" line="755"/>
+        <location filename="../src/convertdialog.cpp" line="1242"/>
         <source>Not converted yet</source>
         <translation>Pas encore converti</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="526"/>
+        <location filename="../src/convertdialog.cpp" line="518"/>
         <source>Images</source>
         <translation>Images</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="530"/>
+        <location filename="../src/convertdialog.cpp" line="522"/>
         <source>Select one or more files to open</source>
         <translation>Sélectionnez un ou plusieurs fichiers à ouvrir</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="589"/>
+        <location filename="../src/convertdialog.cpp" line="581"/>
         <source>Please select at least one image file.</source>
         <translation>Ajoutez au moins un fichier image s&apos;il vous plait.</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="146"/>
+        <location filename="../src/convertdialog.cpp" line="144"/>
         <source>Convert Selected</source>
         <translation>Convertir la séléction</translation>
     </message>
@@ -239,7 +245,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Convertir les images sélectionnées</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="142"/>
+        <location filename="../src/convertdialog.cpp" line="140"/>
         <source>Remove Selected</source>
         <translation>Effacer la sélection</translation>
     </message>
@@ -248,22 +254,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Effacer les images sélectionnées</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1166"/>
+        <location filename="../src/convertdialog.cpp" line="1158"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Ecraser le fichier ? -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1167"/>
+        <location filename="../src/convertdialog.cpp" line="1159"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Un fichier nommé %1 existe déja, voulez-vous l&apos;écraser?</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1193"/>
+        <location filename="../src/convertdialog.cpp" line="1185"/>
         <source>Enlarge File? - SIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1194"/>
+        <location filename="../src/convertdialog.cpp" line="1186"/>
         <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -272,13 +278,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Oui pour &amp;Tous</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1253"/>
+        <location filename="../src/convertdialog.cpp" line="1245"/>
         <source>Converting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1256"/>
-        <location filename="../src/convertdialog.cpp" line="1307"/>
+        <location filename="../src/convertdialog.cpp" line="1248"/>
+        <location filename="../src/convertdialog.cpp" line="1299"/>
         <source>Cancelled</source>
         <translation>Annulé</translation>
     </message>
@@ -498,7 +504,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="685"/>
         <location filename="../dialogs/convertdialog.ui" line="688"/>
         <location filename="../dialogs/convertdialog.ui" line="691"/>
-        <location filename="../src/convertdialog.cpp" line="1297"/>
+        <location filename="../src/convertdialog.cpp" line="1289"/>
         <source>Quit</source>
         <translation>Quitter</translation>
     </message>
@@ -518,38 +524,38 @@ p, li { white-space: pre-wrap; }
         <translation>A propos de Qt...</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1224"/>
+        <location filename="../src/convertdialog.cpp" line="1216"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1225"/>
+        <location filename="../src/convertdialog.cpp" line="1217"/>
         <source>Ext</source>
         <translation>Extension</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1226"/>
+        <location filename="../src/convertdialog.cpp" line="1218"/>
         <source>Path</source>
         <translation>chemin</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1227"/>
+        <location filename="../src/convertdialog.cpp" line="1219"/>
         <source>Status</source>
         <translation>Statut</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1241"/>
-        <location filename="../src/convertdialog.cpp" line="1309"/>
+        <location filename="../src/convertdialog.cpp" line="1233"/>
+        <location filename="../src/convertdialog.cpp" line="1301"/>
         <source>Converted</source>
         <translation>Convertis</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1244"/>
+        <location filename="../src/convertdialog.cpp" line="1236"/>
         <source>Skipped</source>
         <translation>Ignorés</translation>
     </message>
     <message>
-        <location filename="../src/convertdialog.cpp" line="1247"/>
+        <location filename="../src/convertdialog.cpp" line="1239"/>
         <source>Failed to convert</source>
         <translation>Echec de conversion</translation>
     </message>
@@ -805,284 +811,284 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="577"/>
+        <location filename="../dialogs/metadatadialog.ui" line="564"/>
         <source>Focal length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="584"/>
+        <location filename="../dialogs/metadatadialog.ui" line="571"/>
         <source>Exposure time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="591"/>
+        <location filename="../dialogs/metadatadialog.ui" line="578"/>
         <source>Exposure bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="598"/>
+        <location filename="../dialogs/metadatadialog.ui" line="585"/>
         <source> mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="612"/>
+        <location filename="../dialogs/metadatadialog.ui" line="602"/>
         <source>1/2000 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="617"/>
+        <location filename="../dialogs/metadatadialog.ui" line="607"/>
         <source>1/1600 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="622"/>
+        <location filename="../dialogs/metadatadialog.ui" line="612"/>
         <source>1/1250 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="627"/>
+        <location filename="../dialogs/metadatadialog.ui" line="617"/>
         <source>1/1000 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="632"/>
+        <location filename="../dialogs/metadatadialog.ui" line="622"/>
         <source>1/800 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="637"/>
+        <location filename="../dialogs/metadatadialog.ui" line="627"/>
         <source>1/640 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="642"/>
+        <location filename="../dialogs/metadatadialog.ui" line="632"/>
         <source>1/500 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="647"/>
+        <location filename="../dialogs/metadatadialog.ui" line="637"/>
         <source>1/400 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="652"/>
+        <location filename="../dialogs/metadatadialog.ui" line="642"/>
         <source>1/320 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="657"/>
+        <location filename="../dialogs/metadatadialog.ui" line="647"/>
         <source>1/250 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="662"/>
+        <location filename="../dialogs/metadatadialog.ui" line="652"/>
         <source>1/200 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="667"/>
+        <location filename="../dialogs/metadatadialog.ui" line="657"/>
         <source>1/160 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="672"/>
+        <location filename="../dialogs/metadatadialog.ui" line="662"/>
         <source>1/125 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="677"/>
+        <location filename="../dialogs/metadatadialog.ui" line="667"/>
         <source>1/100 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="682"/>
+        <location filename="../dialogs/metadatadialog.ui" line="672"/>
         <source>1/80 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="687"/>
+        <location filename="../dialogs/metadatadialog.ui" line="677"/>
         <source>1/60 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="692"/>
+        <location filename="../dialogs/metadatadialog.ui" line="682"/>
         <source>1/50 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="697"/>
+        <location filename="../dialogs/metadatadialog.ui" line="687"/>
         <source>1/40 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="702"/>
+        <location filename="../dialogs/metadatadialog.ui" line="692"/>
         <source>1/30 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="707"/>
+        <location filename="../dialogs/metadatadialog.ui" line="697"/>
         <source>1/25 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="712"/>
+        <location filename="../dialogs/metadatadialog.ui" line="702"/>
         <source>1/20 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="717"/>
+        <location filename="../dialogs/metadatadialog.ui" line="707"/>
         <source>1/15 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="722"/>
+        <location filename="../dialogs/metadatadialog.ui" line="712"/>
         <source>1/13 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="727"/>
+        <location filename="../dialogs/metadatadialog.ui" line="717"/>
         <source>1/10 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="732"/>
-        <location filename="../dialogs/metadatadialog.ui" line="933"/>
+        <location filename="../dialogs/metadatadialog.ui" line="722"/>
+        <location filename="../dialogs/metadatadialog.ui" line="926"/>
         <source>1/8 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="737"/>
+        <location filename="../dialogs/metadatadialog.ui" line="727"/>
         <source>1/6 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="742"/>
+        <location filename="../dialogs/metadatadialog.ui" line="732"/>
         <source>1/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="747"/>
-        <location filename="../dialogs/metadatadialog.ui" line="938"/>
+        <location filename="../dialogs/metadatadialog.ui" line="737"/>
+        <location filename="../dialogs/metadatadialog.ui" line="931"/>
         <source>1/4 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="752"/>
+        <location filename="../dialogs/metadatadialog.ui" line="742"/>
         <source>1/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="757"/>
+        <location filename="../dialogs/metadatadialog.ui" line="747"/>
         <source>2/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="762"/>
-        <location filename="../dialogs/metadatadialog.ui" line="943"/>
+        <location filename="../dialogs/metadatadialog.ui" line="752"/>
+        <location filename="../dialogs/metadatadialog.ui" line="936"/>
         <source>1/2 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="767"/>
+        <location filename="../dialogs/metadatadialog.ui" line="757"/>
         <source>2/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="772"/>
+        <location filename="../dialogs/metadatadialog.ui" line="762"/>
         <source>4/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="777"/>
-        <location filename="../dialogs/metadatadialog.ui" line="948"/>
+        <location filename="../dialogs/metadatadialog.ui" line="767"/>
+        <location filename="../dialogs/metadatadialog.ui" line="941"/>
         <source>1 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="782"/>
+        <location filename="../dialogs/metadatadialog.ui" line="772"/>
         <source>1 1/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="787"/>
+        <location filename="../dialogs/metadatadialog.ui" line="777"/>
         <source>1 2/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="792"/>
-        <location filename="../dialogs/metadatadialog.ui" line="953"/>
+        <location filename="../dialogs/metadatadialog.ui" line="782"/>
+        <location filename="../dialogs/metadatadialog.ui" line="946"/>
         <source>2 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="797"/>
+        <location filename="../dialogs/metadatadialog.ui" line="787"/>
         <source>2 1/2 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="802"/>
+        <location filename="../dialogs/metadatadialog.ui" line="792"/>
         <source>3 1/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="807"/>
-        <location filename="../dialogs/metadatadialog.ui" line="958"/>
+        <location filename="../dialogs/metadatadialog.ui" line="797"/>
+        <location filename="../dialogs/metadatadialog.ui" line="951"/>
         <source>4 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="812"/>
+        <location filename="../dialogs/metadatadialog.ui" line="802"/>
         <source>5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="817"/>
+        <location filename="../dialogs/metadatadialog.ui" line="807"/>
         <source>6 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="822"/>
-        <location filename="../dialogs/metadatadialog.ui" line="963"/>
+        <location filename="../dialogs/metadatadialog.ui" line="812"/>
+        <location filename="../dialogs/metadatadialog.ui" line="956"/>
         <source>8 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="827"/>
+        <location filename="../dialogs/metadatadialog.ui" line="817"/>
         <source>10 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="832"/>
+        <location filename="../dialogs/metadatadialog.ui" line="822"/>
         <source>13 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="837"/>
+        <location filename="../dialogs/metadatadialog.ui" line="827"/>
         <source>15 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="845"/>
+        <location filename="../dialogs/metadatadialog.ui" line="835"/>
         <source>EV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="861"/>
+        <location filename="../dialogs/metadatadialog.ui" line="851"/>
         <source>Aperture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="868"/>
+        <location filename="../dialogs/metadatadialog.ui" line="858"/>
         <source>Shutter Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="875"/>
+        <location filename="../dialogs/metadatadialog.ui" line="865"/>
         <source>ISO Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="882"/>
+        <location filename="../dialogs/metadatadialog.ui" line="872"/>
         <source>F</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1187,110 +1193,110 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="893"/>
+        <location filename="../dialogs/metadatadialog.ui" line="886"/>
         <source>1/2048 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="898"/>
+        <location filename="../dialogs/metadatadialog.ui" line="891"/>
         <source>1/1024 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="903"/>
+        <location filename="../dialogs/metadatadialog.ui" line="896"/>
         <source>1/512 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="908"/>
+        <location filename="../dialogs/metadatadialog.ui" line="901"/>
         <source>1/256 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="913"/>
+        <location filename="../dialogs/metadatadialog.ui" line="906"/>
         <source>1/128 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="918"/>
+        <location filename="../dialogs/metadatadialog.ui" line="911"/>
         <source>1/64 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="923"/>
+        <location filename="../dialogs/metadatadialog.ui" line="916"/>
         <source>1/32 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="928"/>
+        <location filename="../dialogs/metadatadialog.ui" line="921"/>
         <source>1/16 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1006"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1012"/>
         <source>Camera</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1016"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1022"/>
         <source>Manufacturer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1023"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1029"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1080"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1086"/>
         <source>Author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1086"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1092"/>
         <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1098"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1104"/>
         <source>Copyright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1110"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1116"/>
         <source>User Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1145"/>
-        <location filename="../src/metadatadialog.cpp" line="174"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1151"/>
+        <location filename="../src/metadatadialog.cpp" line="170"/>
         <source>Delete metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1165"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1171"/>
         <source>Save changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1172"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1178"/>
         <source>Cancel</source>
         <translation type="unfinished">Annuler</translation>
     </message>
     <message>
-        <location filename="../src/metadatadialog.cpp" line="23"/>
+        <location filename="../src/metadatadialog.cpp" line="22"/>
         <source>Metadata error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatadialog.cpp" line="26"/>
+        <location filename="../src/metadatadialog.cpp" line="25"/>
         <source>
 Error code: %1
 Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatadialog.cpp" line="175"/>
+        <location filename="../src/metadatadialog.cpp" line="171"/>
         <source>Do you really want to delete metadata from this image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1298,17 +1304,17 @@ Error message: %2</source>
 <context>
     <name>MetadataUtils::Metadata</name>
     <message>
-        <location filename="../src/metadatautils.cpp" line="38"/>
+        <location filename="../src/metadatautils.cpp" line="62"/>
         <source>Error open file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="58"/>
+        <location filename="../src/metadatautils.cpp" line="82"/>
         <source>Error write file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="458"/>
+        <location filename="../src/metadatautils.cpp" line="501"/>
         <source>Save thumnail failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1715,52 +1721,52 @@ Error message: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/metadata/exif.h" line="88"/>
+        <location filename="../src/metadata/exif.h" line="133"/>
         <source>No flash function.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="89"/>
+        <location filename="../src/metadata/exif.h" line="136"/>
         <source>Flash fired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="90"/>
+        <location filename="../src/metadata/exif.h" line="139"/>
         <source>Flash didn&apos;t fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="95"/>
+        <location filename="../src/metadata/exif.h" line="152"/>
         <source>, strobe return light detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="97"/>
+        <location filename="../src/metadata/exif.h" line="156"/>
         <source>, strobe return light not detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="92"/>
+        <location filename="../src/metadata/exif.h" line="145"/>
         <source>, auto mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="91"/>
+        <location filename="../src/metadata/exif.h" line="142"/>
         <source>, compulsory flash mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="93"/>
+        <location filename="../src/metadata/exif.h" line="148"/>
         <source>, red-eye reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="14"/>
+        <location filename="../src/metadata/exif.cpp" line="48"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/string.cpp" line="96"/>
+        <location filename="../src/metadata/string.cpp" line="73"/>
         <source>no data</source>
         <translation type="unfinished"></translation>
     </message>

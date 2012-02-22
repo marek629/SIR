@@ -818,7 +818,7 @@ void ConvertDialog::previewAct()
  */
 void ConvertDialog::about() {
     AboutDialog *about = new AboutDialog();
-    about->setVersion( QString("Version ")+VERSION );
+    about->setVersion(tr("Version") + " " + VERSION);
     about->exec();
     delete about;
 }
