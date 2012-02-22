@@ -32,6 +32,7 @@
 #include "rawutils.h"
 #include "networkutils.h"
 #include "messagebox.h"
+#include "metadatautils.h"
 #include "metadatadialog.h"
 #include <QString>
 #include <QDropEvent>
@@ -51,9 +52,6 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QWindowStateChangeEvent>
-
-#include <QDebug>
-#include "metadatautils.h"
 
 /*! Default constuctor.\n
  * Sets up window with saved settings like window state, position

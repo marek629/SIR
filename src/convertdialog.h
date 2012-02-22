@@ -23,6 +23,9 @@
  *
  */
 
+#ifndef CONVERTDIALOG_H
+#define CONVERTDIALOG_H
+
 #include "ui_convertdialog.h"
 #include "convertthread.h"
 #include <QSettings>
@@ -183,3 +186,5 @@ void ConvertDialog::disconnectSizeLinesEdit() {
     widthLineEdit->disconnect(this,SLOT(sizeChanged(QString)));
     heightLineEdit->disconnect(this, SLOT(sizeChanged(QString)));
 }
+
+#endif // CONVERTDIALOG_H

@@ -1,5 +1,4 @@
 *** nearest release ***
-  ! make better TimeComboBox::validIndex() if time > 1 s
   ! restore cursor position in size lines edit after change
 
 *** next release ***
@@ -10,3 +9,4 @@
     * add next/preview buttons and file name label
   ! Conditional converting (ie. convert if image width > 1000 px)
     * create wizard window
+    * scripts with exiv2 support
