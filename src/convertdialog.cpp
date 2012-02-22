@@ -1348,10 +1348,13 @@ void ConvertDialog::setSizeUnit(int index) {
 void ConvertDialog::sizeChanged(const QString &value) {
     // size unit is % and maintainCheckBox is checked
     if (sizeUnitComboBox->currentIndex() == 1 && maintainCheckBox->isChecked()) {
+        QLineEdit *line = static_cast<QLineEdit*>(sender());
+        int pos = line->cursorPosition();
         QString senderName = sender()->objectName();
         if (senderName == "widthLineEdit")
             heightLineEdit->setText(value);
         else if(senderName == "heightLineEdit")
             widthLineEdit->setText(value);
+        line->setCursorPosition(pos);
     }
 }

@@ -9,6 +9,7 @@
 MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
                                int currentImage) : QDialog(parent) {
     setupUi(this);
+    cancelButton->setDefault(true);
     this->images = images;
     this->currentImage = currentImage;
     this->imagePath = this->images->at(this->currentImage);
