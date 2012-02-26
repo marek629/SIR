@@ -35,23 +35,30 @@ class LanguageUtils;
 
 using namespace std;
 
+//! Settings wizard window.
 class OptionsDialog : public QDialog, public Ui::OptionsDialog {
     Q_OBJECT
 
 public:
     OptionsDialog( QWidget * parent = 0, Qt::WFlags f = 0);
     ~OptionsDialog();
-	int getOption();	
-    void createLanguageMenu();
-    void createConnections();
-    bool checkDcrawPath(QString fileName);
-    LanguageUtils * languages;
-    QMap<QString, QString> * fileToNiceName;
     static quint8 detectCoresCount();
 
 private:
+    void createLanguageMenu();
+    void createConnections();
+    bool checkDcrawPath(QString fileName);
+    void setupWindow();
+
+    LanguageUtils * languages;
+    QMap<QString, QString> * fileToNiceName;
+    QRegExpValidator* validator;
+    QGroupBox** groupBoxes;
+    quint8 currentListItem;
     quint8 coresCount;
-    
+    static quint8 maxCoresCount;
+    quint8 maxHistoryCount;
+
 private slots:
     virtual void writeSettings();
     virtual void readSettings();
@@ -60,9 +67,11 @@ private slots:
     virtual void setRawStatus(int state);
     virtual void respondCoresSpinBox(bool checked);
     virtual void enableMetadata(bool checked);
+    virtual void saveMetadata(bool save);
+    virtual void updateThumbnail(bool update);
+    virtual void categoryChanged(int current);
 
 signals:
-    void ok();
-
+    void ok(); /**< Indicates write settings success. */
 };
 #endif

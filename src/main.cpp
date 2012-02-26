@@ -24,17 +24,17 @@
 #include "main.h"
 
 int main(int argc, char *argv[]) {
-	Q_INIT_RESOURCE(application);
-	QApplication app(argc, argv);
+    Q_INIT_RESOURCE(application);
+    QApplication app(argc, argv);
 
-	QString args = "";
+    QString args = "";
 
-	/*Parse the arguments from the command line*/
-	for(int i = 1; i < argc; i++)
-		args = args + (QString)argv[i] + "**" ;
+    /*Parse the arguments from the command line*/
+    for(int i = 1; i < argc; i++)
+        args = args + (QString)argv[i] + "**" ;
 
-	ConvertDialog w(0,args);
-	w.show();
-	app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
-	return app.exec();
+    ConvertDialog w(0,args);
+    w.show();
+    app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
+    return app.exec();
 }

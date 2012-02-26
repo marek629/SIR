@@ -8,7 +8,7 @@ MOC_DIR += .moc
 OBJECTS_DIR += .obj
 
 CONFIG += qt \
-    release debug \
+    release_and_debug \
     warn_on
 INCLUDEPATH += src/
 LIBS += -lexiv2
@@ -24,11 +24,18 @@ SOURCES += src/main.cpp \
     src/rawutils.cpp \
     src/networkutils.cpp \
     src/messagebox.cpp \
-    src/metadatautils.cpp
+    src/metadatautils.cpp \
+    src/historycombobox.cpp \
+    src/metadata/exif.cpp \
+    src/metadatadialog.cpp \
+    src/timecombobox.cpp \
+    src/metadata/string.cpp \
+    src/metadata/error.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
-    dialogs/previewdialog.ui
+    dialogs/previewdialog.ui \
+    dialogs/metadatadialog.ui
 HEADERS += src/main.h \
     src/convertdialog.h \
     src/previewdialog.h \
@@ -42,7 +49,13 @@ HEADERS += src/main.h \
     src/rawutils.h \
     src/networkutils.h \
     src/messagebox.h \
-    src/metadatautils.h
+    src/metadatautils.h \
+    src/historycombobox.h \
+    src/metadata/exif.h \
+    src/metadatadialog.h \
+    src/timecombobox.h \
+    src/metadata/string.h \
+    src/metadata/error.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \
@@ -71,3 +84,24 @@ unix {
 win32 { 
 RC_FILE = windows/res.rc
 }
+
+OTHER_FILES += \
+    TODO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

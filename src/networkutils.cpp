@@ -1,6 +1,7 @@
 /*
  * This file is part of SIR, an open-source cross-platform Image tool
- * 2007  Rafael Sachetto
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
  *
  */
@@ -28,16 +30,17 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-#include <QDebug>
+/** Default constructor. */
+NetworkUtils::NetworkUtils() : QObject() {}
 
-NetworkUtils::NetworkUtils():QObject() {
-
-}
-
+/** Destructor. */
 NetworkUtils::~NetworkUtils() {
     delete reply;
 }
 
+/** Checks if update is avalaible on SIR website server.
+  * \sa showResults
+  */
 void NetworkUtils::checkUpdates() {
 
     QNetworkAccessManager* nam;
@@ -51,6 +54,9 @@ void NetworkUtils::checkUpdates() {
 
 }
 
+/** Sends anonymous information about SIR instalation to SIR website server.
+  * \sa showResults
+  */
 void NetworkUtils::sendInstalltoSite() {
 
     QNetworkAccessManager* nam;
@@ -67,6 +73,9 @@ void NetworkUtils::sendInstalltoSite() {
 
 }
 
+/** Emits checkDone signal.
+  * \note In fact, result information could be shown in checkDone slot.
+  */
 void NetworkUtils::showResults(QNetworkReply* reply) {
 
     QString *response = new QString("");
