@@ -1,12 +1,17 @@
 *** nearest release ***
+  ! Correction metadata dialog
+    * add next/preview buttons and file name label
 
 
 *** next release ***
-  ! Watermark support
   ! Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
-  ! Correction metadata dialog
-    * add next/preview buttons and file name label
+    * improve drag-drop events (myQTreeWidget)
   ! Conditional converting (ie. convert if image width > 1000 px)
     * create wizard window
     * scripts with exiv2 support
+  ! Make recursive screen images with (auto detect of sceeen frame) feature
+  ! Make simple effects
+    * color (sepia, b&w, etc.) and gradient filtres
+    * watermark
+    * add frame

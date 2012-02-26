@@ -1,6 +1,7 @@
 /*
  * This file is part of SIR, an open-source cross-platform Image tool
- * 2007  Rafael Sachetto
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
  *
  */
@@ -26,9 +28,11 @@
 
 #include <QObject>
 
-
 class QNetworkReply;
 
+/** \brief Network tools useful for updates checking and sending anonymous
+  * information about SIR instalation.
+  */
 class NetworkUtils : public QObject {
 Q_OBJECT
 public:
@@ -36,7 +40,7 @@ public:
     ~NetworkUtils();
     void checkUpdates();
     void sendInstalltoSite();
-    QNetworkReply* reply;
+    QNetworkReply* reply; /**< Stores information returning from SIR website server. */
 signals:
     void checkDone(QString *msg, bool error);
 

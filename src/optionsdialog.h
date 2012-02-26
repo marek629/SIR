@@ -35,19 +35,21 @@ class LanguageUtils;
 
 using namespace std;
 
+//! Settings wizard window.
 class OptionsDialog : public QDialog, public Ui::OptionsDialog {
     Q_OBJECT
 
 public:
     OptionsDialog( QWidget * parent = 0, Qt::WFlags f = 0);
     ~OptionsDialog();
+    static quint8 detectCoresCount();
+
+private:
     void createLanguageMenu();
     void createConnections();
     bool checkDcrawPath(QString fileName);
-    static quint8 detectCoresCount();
     void setupWindow();
 
-private:
     LanguageUtils * languages;
     QMap<QString, QString> * fileToNiceName;
     QRegExpValidator* validator;
@@ -56,7 +58,7 @@ private:
     quint8 coresCount;
     static quint8 maxCoresCount;
     quint8 maxHistoryCount;
-    
+
 private slots:
     virtual void writeSettings();
     virtual void readSettings();
@@ -70,7 +72,6 @@ private slots:
     virtual void categoryChanged(int current);
 
 signals:
-    void ok();
-
+    void ok(); /**< Indicates write settings success. */
 };
 #endif

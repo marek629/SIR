@@ -1,25 +1,27 @@
 /*
-* This file is part of Sir, an open-source cross-platform Image tool
-* 2007  Rafael Sachetto
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
-* Program URL: http://sir.projet-libre.org/
-*
-*/
+ * This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
+ * Program URL: http://sir.projet-libre.org/
+ *
+ */
 
 #include "rawutils.h"
 #include <QImage>
@@ -28,9 +30,9 @@
 #include <QProcess>
 #include <QImageWriter>
 #include <QSettings>
-
 #include <QPixmap>
 
+/** Returns true if \b imagePath is path to raw image, otherwise returns false. */
 bool RawUtils::isRaw(QString imagePath) {
 
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
@@ -70,6 +72,10 @@ bool RawUtils::isRaw(QString imagePath) {
 
 }
 
+/** Loads raw image from file in \b imagePath path and returns pointer to this image.
+  * \note If loading image failed this function will return null pointer.
+  * \sa loadRawPixmap
+  */
 QImage *RawUtils::loadRawImage(QString imagePath) {
 
     //The error handling is up to the caller
@@ -95,6 +101,10 @@ QImage *RawUtils::loadRawImage(QString imagePath) {
     return image;
 }
 
+/** Loads raw image from file in \b imagePath path and returns pointer to this pixmap.
+  * \note If loading image failed this function will return null pointer.
+  * \sa loadRawImage
+  */
 QPixmap *RawUtils::loadRawPixmap(QString imagePath) {
 
     //The error handling is up to the caller
@@ -119,6 +129,7 @@ QPixmap *RawUtils::loadRawPixmap(QString imagePath) {
     return image;
 }
 
+/** Returns true if raw support is enabled, otherwise returns false. */
 bool RawUtils::isRawEnabled() {
     QSettings settings("SIR");
     settings.beginGroup("Raw");
@@ -143,8 +154,9 @@ QStringList RawUtils::readDcrawOptions() {
     return options;
 }
 
+/** Creates list of supported image file extensions into \b rawFormats. */
 void RawUtils::createRawFilesList(QStringList &rawFormats) {
-
+    rawFormats.clear();
     rawFormats.append(" *.3fr");
     rawFormats.append(" *.arw");
     rawFormats.append(" *.arw");
@@ -215,5 +227,4 @@ void RawUtils::createRawFilesList(QStringList &rawFormats) {
     rawFormats.append(" *.SRF");
     rawFormats.append(" *.TIF");
     rawFormats.append(" *.X3F");
-
 }

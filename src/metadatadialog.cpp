@@ -1,11 +1,39 @@
+/*
+ * This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
+ * Program URL: http://sir.projet-libre.org/
+ *
+ */
+
 #include "metadatadialog.h"
 #include "metadatautils.h"
 #include <QLineEdit>
 #include <QSettings>
 #include <QMessageBox>
 #include <exiv2/exif.hpp>
-#include <QDebug>
 
+ /** Default constructor.\n
+   * Sets up window and reads metadata from file within \b currentImage index
+   * into \b images list.
+   */
 MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
                                int currentImage) : QDialog(parent) {
     setupUi(this);
@@ -34,6 +62,9 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteMetadata()));
 }
 
+/** Destructor.
+  * \note Deallocates \b images list typed in \ref MetadataDialog() "constructor".
+  */
 MetadataDialog::~MetadataDialog() {
     delete metadata;
     delete images;
@@ -56,12 +87,12 @@ void MetadataDialog::setupValues() {
     exifHeightLabel->setText( exifStruct->imageHeight );
     exifOrientationComboBox->setCurrentIndex( exifStruct->orientation - 1 );
     exifOriginalDateComboBox->
-                loadHistory( settings.value("originalDateMap").toMap(),
+                importHistory( settings.value("originalDateMap").toMap(),
                              settings.value("originalDateList").toList(),
                              maxHistoryCount );
     exifOriginalDateComboBox->lineEdit()->setText( exifStruct->originalDate );
     exifDigitizedDateComboBox->
-            loadHistory( settings.value("digitizedDateMap").toMap(),
+            importHistory( settings.value("digitizedDateMap").toMap(),
                          settings.value("digitizedDateList").toList(),
                          maxHistoryCount );
     exifDigitizedDateComboBox->lineEdit()->setText( exifStruct->digitizedDate );
@@ -115,17 +146,17 @@ void MetadataDialog::setupValues() {
     exifModelComboBox->lineEdit()->setText( exifStruct->cameraModel );
 
     // Author toolbox
-    exifArtistComboBox->loadHistory( settings.value("artistMap").toMap(),
+    exifArtistComboBox->importHistory( settings.value("artistMap").toMap(),
                                      settings.value("artistList").toList(),
                                      maxHistoryCount );
     exifArtistComboBox->setCurrentIndex(-1);
     exifArtistComboBox->lineEdit()->setText( exifStruct->artist );
-    exifCopyrightComboBox->loadHistory( settings.value("copyrightMap").toMap(),
+    exifCopyrightComboBox->importHistory( settings.value("copyrightMap").toMap(),
                                         settings.value("copyrightList").toList(),
                                         maxHistoryCount );
     exifCopyrightComboBox->setCurrentIndex(-1);
     exifCopyrightComboBox->lineEdit()->setText( exifStruct->copyright );
-    exifUserCommentComboBox->loadHistory( settings.value("userCommentMap").toMap(),
+    exifUserCommentComboBox->importHistory( settings.value("userCommentMap").toMap(),
                                           settings.value("userCommentList").toList(),
                                           maxHistoryCount );
     exifUserCommentComboBox->setCurrentIndex(-1);

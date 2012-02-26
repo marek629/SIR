@@ -39,6 +39,9 @@
 
 quint8 OptionsDialog::maxCoresCount = 50;
 
+/** Default constructor.\n
+  * Sets up window and read settings.
+  */
 OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, f) {
 
     setupUi(this);
@@ -89,6 +92,7 @@ OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, 
     delete completer2;
 }
 
+/** Destructor. */
 OptionsDialog::~OptionsDialog() {
     delete languages;
     delete validator;
@@ -96,6 +100,7 @@ OptionsDialog::~OptionsDialog() {
     delete groupBoxes;
 }
 
+/** Connects signals to slots. */
 void OptionsDialog::createConnections() {
     // general
     connect(listWidget, SIGNAL(currentRowChanged(int)),
@@ -325,11 +330,11 @@ void OptionsDialog::writeSettings() {
         settings.setValue("dcrawPath", dcrawLineEdit->text());
         settings.setValue("dcrawOptions", dcrawOptions->text());
     }
+    settings.endGroup(); // Raw
     if(dcrawOk || !firstState) {
         emit ok();
         this->close();
     }
-    settings.endGroup(); // Raw
 }
 
 void OptionsDialog::readSettings() {
@@ -409,7 +414,7 @@ void OptionsDialog::readSettings() {
     exifArtistCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.insert(tr("Camera owner: ; Photographer: "),false);
     exifArtistComboBox->
-            loadHistory(settings.value("artistMap",exifDefaultMap).toMap(),
+            importHistory(settings.value("artistMap",exifDefaultMap).toMap(),
                         settings.value("artistList").toList(),
                         maxHistoryCount);
     exifArtistComboBox->setEnabled(exifOverwrite);
@@ -419,7 +424,7 @@ void OptionsDialog::readSettings() {
     exifDefaultMap.clear();
     exifDefaultMap.insert(tr("Copyright owner"),false);
     exifCopyrightComboBox->
-            loadHistory(settings.value("copyrightMap",exifDefaultMap).toMap(),
+            importHistory(settings.value("copyrightMap",exifDefaultMap).toMap(),
                         settings.value("copyrightList").toList(),
                         maxHistoryCount);
     exifCopyrightComboBox->setEnabled(exifOverwrite);
@@ -430,7 +435,7 @@ void OptionsDialog::readSettings() {
     exifDefaultMap.insert(
                 tr("This picture was edited with Simple Image Resizer"),false);
     exifUserCommentComboBox->
-            loadHistory(settings.value("userCommentMap",exifDefaultMap).toMap(),
+            importHistory(settings.value("userCommentMap",exifDefaultMap).toMap(),
                         settings.value("userCommentList").toList(),
                         maxHistoryCount);
     exifUserCommentComboBox->setEnabled(exifOverwrite);
@@ -535,6 +540,7 @@ void OptionsDialog::updateThumbnail(bool update) {
         thumbRotateCheckBox->setChecked(false);
 }
 
+/** Returns CPU cores count. */
 quint8 OptionsDialog::detectCoresCount() {
     int cores = QThread::idealThreadCount();
     if (cores == -1) {

@@ -33,8 +33,7 @@ MetadataUtils::String MetadataUtils::Exif::copyrightString = "";
 bool MetadataUtils::Exif::userCommentOverwrite = false;
 MetadataUtils::String MetadataUtils::Exif::userCommentString = "";
 
-/** Default constructor.
-  */
+/** Default constructor. */
 MetadataUtils::Exif::Exif() {
     versionKnown = false;
 }

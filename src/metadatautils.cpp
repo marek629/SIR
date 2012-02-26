@@ -29,17 +29,19 @@
 #include <QDir>
 #include <cmath>
 
-#include <QDebug>
-
 bool MetadataUtils::Metadata::enabled = false;
 bool MetadataUtils::Metadata::save = false;
 QStringList MetadataUtils::Metadata::saveMetadataFormats =
         QStringList() << "jpeg" << "jpg" << "png" << "tif" << "tiff";
 
-MetadataUtils::Metadata::Metadata()
-{
-}
+/** Default constructor. */
+MetadataUtils::Metadata::Metadata() {}
 
+/** Reads metadata from \b path file path and optionaly setup ExifStruct if
+  * \b setupStructs is true, and returns read success value.\n
+  * If exception catched this error data will be saved into lastError_ field.
+  * \sa lastError
+  */
 bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setupStructs) {
     try {
         std::string filePath = path.toNativeStdString();
@@ -65,10 +67,16 @@ bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setup
     }
 }
 
+/** This is overloaded function. */
 bool MetadataUtils::Metadata::read(const QString &path, bool setupStructs) {
     return read((const MetadataUtils::String&)path,setupStructs);
 }
 
+/** Writes metadata about file corresponding with \b path file path and
+  * \b qImage image, and returns read success value.\n
+  * If exception catched this error data will be saved into lastError_ field.
+  * \sa lastError
+  */
 bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QImage& qImage) {
     try {
         std::string filePath = path.toNativeStdString();
@@ -85,10 +93,12 @@ bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QIm
     }
 }
 
+/** This is overloaded function. */
 bool MetadataUtils::Metadata::write(const QString &path, const QImage &image) {
     return write((const MetadataUtils::String&)path, image);
 }
 
+/** Clears metadata. */
 void MetadataUtils::Metadata::clearMetadata() {
     exifData.clear();
     iptcData.clear();
@@ -126,6 +136,9 @@ void MetadataUtils::Metadata::setData(const QImage& qImage) {
 #endif // EXV_HAVE_XMP_TOOLKIT
 }
 
+/** Sets \a Exif metadata based on exifStruct_ data.
+  * \sa ExifStruct setExifStruct
+  */
 void MetadataUtils::Metadata::setExifData() {
     // Image section
     exifData["Exif.Image.Orientation"] = exifStruct_.orientation;
@@ -135,14 +148,14 @@ void MetadataUtils::Metadata::setExifData() {
 
     // Photo section
     Exiv2::Rational rational;
-    rational = shortRational( exifStruct_.focalLength * 10 );
+    rational = simpleRational( exifStruct_.focalLength * 10 );
     exifData["Exif.Photo.FocalLength"] = rational;
-    rational = shortRational( exifStruct_.aperture * 10 );
+    rational = simpleRational( exifStruct_.aperture * 10 );
     setExifDatum("Exif.Photo.ApertureValue","Exif.Photo.FNumber",rational);
     MetadataUtils::String mString (exifStruct_.expTime);
     rational = mString.toRational();
     setExifDatum("Exif.Image.ExposureTime","Exif.Photo.ExposureTime",rational);
-    rational = shortRational( exifStruct_.expBias * 10 );
+    rational = simpleRational( exifStruct_.expBias * 10 );
     setExifDatum("Exif.Image.ExposureBiasValue","Exif.Photo.ExposureBiasValue",
                  rational);
     setExifDatum("Exif.Image.ShutterSpeedValue","Exif.Photo.ShutterSpeedValue",
@@ -165,6 +178,9 @@ void MetadataUtils::Metadata::setExifData() {
     exifData["Exif.Photo.UserComment"] = exifStruct_.userComment.toNativeStdString();
 }
 
+/** Loads \a exifStruct_ data from \a Exif metadata.
+  * \sa ExifStruct setExifData
+  */
 void MetadataUtils::Metadata::setExifStruct() {
     // Image section
     exifStruct_.version = exif.getVersion();
@@ -258,6 +274,13 @@ void MetadataUtils::Metadata::setExifStruct() {
         exifStruct_.userComment = MetadataUtils::String::noData();
 }
 
+/** This is overloaded function useful for getting exposure time.\n
+  * Returns valid fractional time string suffixed by /em " s" based on metadata
+  * corresponding with \b key1 and \b key2 keys. If \b key1 is empty this function
+  * returns empty string.\n
+  * If \b key1 value isn't defined will be read \b key2 value. Otherwise will be
+  * returned string based on \b key1.
+  */
 QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::string &key2) {
     QString result;
     if (key1.empty())
@@ -267,6 +290,9 @@ QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::
     return result;
 }
 
+/** This is overloaded function useful for getting shutter speed.\n
+  * Returns valid fractional time string based on \b rationalPower power of 0.5.
+  */
 QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rationalPower) {
     QString result;
     Exiv2::Rational rational = rationalPower;
@@ -315,6 +341,11 @@ QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rationalPower
     return result;
 }
 
+/** This is overloaded function, provides tools useful for both another
+  * overloaded functions.\n
+  * Returns valid fractional time string based on \b rational value and if it's
+  * not defined (-1/1) on \b key value.
+  */
 QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
                                             const std::string &key) {
     QString result;
@@ -331,7 +362,7 @@ QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
         if (rational->first == 0)
             result.clear();
         else if (rational->first < rational->second) {
-            *rational = shortRational(*rational);
+            *rational = simpleRational(*rational);
             result = QString::number(rational->first) + "/" +
                     QString::number(rational->second);
         }
@@ -341,7 +372,7 @@ QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
             int fraction = rational->first - integer*rational->second;
             if (fraction != 0) {
                 rational->first = fraction;
-                *rational = shortRational(*rational);
+                *rational = simpleRational(*rational);
                 result += " " + QString::number(rational->first) +
                     "/" + QString::number(rational->second);
             }
@@ -353,7 +384,8 @@ QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
     return result;
 }
 
-Exiv2::Rational MetadataUtils::Metadata::shortRational(int integer) {
+/** Returns simplest fraction which equal \b integer divided by 10. */
+Exiv2::Rational MetadataUtils::Metadata::simpleRational(int integer) {
     Exiv2::Rational result;
     if (integer % 10 == 0) {
         result.first = integer / 10;
@@ -374,8 +406,11 @@ Exiv2::Rational MetadataUtils::Metadata::shortRational(int integer) {
     return result;
 }
 
-// excepted paramether value is i.e. 1/100
-Exiv2::Rational MetadataUtils::Metadata::shortRational(const Exiv2::Rational &rational) {
+/** This is overloaded function.\n
+  * Returns simplest fraction whitch equal \b rational value.
+  * Maximum denominator expected is 100 (i.e. 25/100).
+  */
+Exiv2::Rational MetadataUtils::Metadata::simpleRational(const Exiv2::Rational &rational) {
     Exiv2::Rational result = rational;
     if (rational.first == 0)
         result.second = 1;
@@ -410,40 +445,54 @@ Exiv2::Rational MetadataUtils::Metadata::shortRational(const Exiv2::Rational &ra
     return result;
 }
 
+/** Returns true if metadata support is enabled, otherwise false. */
 bool MetadataUtils::Metadata::isEnabled() {
     return enabled;
 }
 
+/** Enables metadata support if \v is true, otherwise disables this. */
 void MetadataUtils::Metadata::setEnabled(bool v) {
     enabled = v;
 }
 
+/** Returns true if metadata saving support is enabled, otherwise false. */
 bool MetadataUtils::Metadata::isSave() {
     return save;
 }
 
+/** Enables metadata saving support if \v is true, otherwise disables this. */
 void MetadataUtils::Metadata::setSave(bool v) {
     save = v;
 }
 
+/** Returns true if typed \b format format file is write supported, otherwise false. */
 bool MetadataUtils::Metadata::isWriteSupportedFormat(const QString &format) {
     return saveMetadataFormats.contains(format);
 }
 
+/** This is overloaded function.\n
+  * Sets \a Exif metadatum corresponding to \b key key to typed \b value.
+  */
 void MetadataUtils::Metadata::setExifDatum(const std::string &key, int value) {
     if (key.empty())
         return;
     exifData[key] = value;
 }
 
+/** This is overloaded function.\n
+  * Sets \a Exif metadatum corresponding to \b key1 and \b key2 to typed \b value.
+  * \note If value following key1 or key2 isn't set, it will be set just known
+  * value. If both keys values are unknown, this function will do nothing and
+  * just return.
+  */
 void MetadataUtils::Metadata::setExifDatum(
         const std::string &key1, const std::string &key2, int value) {
-    if ( key1.empty() || key2.empty() )
+    if (key1.empty() && key2.empty())
         return;
 
-    if ( exifData[key1].toLong() == 0 )
+    if (exifData[key1].toLong() == 0)
         exifData[key2] = value;
-    else if ( exifData[key2].toLong() == 0 )
+    else if (exifData[key2].toLong() == 0)
         exifData[key1] = value;
     else {
         exifData[key1] = value;
@@ -451,14 +500,20 @@ void MetadataUtils::Metadata::setExifDatum(
     }
 }
 
+/** This is overloaded function.\n
+  * Sets \a Exif metadatum corresponding to \b key1 and \b key2 to typed \b value.
+  * \note If value following key1 or key2 isn't set, it will be set just known
+  * value. If both keys values are unknown, this function will do nothing and
+  * just return.
+  */
 void MetadataUtils::Metadata::setExifDatum(
         const std::string &key1, const std::string &key2, const Exiv2::Rational &value) {
-    if ( key1.empty() || key2.empty() )
+    if (key1.empty() && key2.empty())
         return;
 
-    if ( exifData[key1].toLong(0) == -1 && exifData[key1].toLong(1) == 1 )
+    if (exifData[key1].toLong(0) == -1 && exifData[key1].toLong(1) == 1)
         exifData[key2] = value;
-    else if ( exifData[key2].toLong(0) == -1 && exifData[key2].toLong(1) == 1 )
+    else if (exifData[key2].toLong(0) == -1 && exifData[key2].toLong(1) == 1)
         exifData[key1] = value;
     else {
         exifData[key1] = value;
@@ -466,14 +521,20 @@ void MetadataUtils::Metadata::setExifDatum(
     }
 }
 
+/** This is overloaded function.\n
+  * Sets \a Exif metadatum corresponding to \b key1 and \b key2 to typed \b value.
+  * \note If value following key1 or key2 isn't set, it will be set just known
+  * value. If both keys values are unknown, this function will do nothing and
+  * just return.
+  */
 void MetadataUtils::Metadata::setExifDatum(
         const std::string &key1, const std::string &key2, const std::string &value) {
-    if ( key1.empty() || key2.empty() )
+    if (key1.empty() && key2.empty())
         return;
 
-    if ( exifData[key1].toString().empty() )
+    if (exifData[key1].toString().empty())
         exifData[key2] = value;
-    else if ( exifData[key2].toString().empty() )
+    else if (exifData[key2].toString().empty())
         exifData[key1] = value;
     else {
         exifData[key1] = value;
@@ -481,12 +542,21 @@ void MetadataUtils::Metadata::setExifDatum(
     }
 }
 
+/** This is overloaded function.\n
+  * Sets \a Exif thumbnail based on image loaded from \b path file path.
+  */
 void MetadataUtils::Metadata::setExifThumbnail(const std::string &path) {
     Exiv2::ExifThumb thumb (exifData);
     thumb.erase();
     thumb.setJpegThumbnail(path);
 }
 
+/** This is overloaded function.\n
+  * Sets \a Exif thumbnail based on \b image data saved as temporary file with
+  * \b tid ID.\n
+  * If exception catched this error data will be saved into lastError_ field.
+  * \sa lastError
+  */
 bool MetadataUtils::Metadata::setExifThumbnail(QImage *image, int tid) {
     if (image->isNull())
         return false;

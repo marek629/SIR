@@ -1,25 +1,27 @@
 /*
-* This file is part of SIR, an open-source cross-platform Image tool
-* 2007  Rafael Sachetto
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
-* Program URL: http://sir.projet-libre.org/
-*
-*/
+ * This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto
+ * 2011-2012  Marek Jędryka
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
+ *                 Marek Jędryka   <jedryka89@gmail.com>
+ * Program URL: http://sir.projet-libre.org/
+ *
+ */
 
 #include <myqtreewidget.h>
 #include <QKeyEvent>
@@ -31,7 +33,8 @@
 #include <QImageWriter>
 #include <QMenu>
 
-myQTreeWidget::myQTreeWidget(QWidget *parent):QTreeWidget(parent) {
+/** Default constructor. */
+myQTreeWidget::myQTreeWidget(QWidget *parent) : QTreeWidget(parent) {
     QList<QString> itemList;
     setRootIsDecorated(false);
     setAlternatingRowColors(true);
@@ -41,7 +44,7 @@ myQTreeWidget::myQTreeWidget(QWidget *parent):QTreeWidget(parent) {
     itemList.append(tr("Path"));
     itemList.append(tr("Status"));
     setSelectionMode(QAbstractItemView::ExtendedSelection);
-    setHeaderLabels(itemList);   
+    setHeaderLabels(itemList);
     setUniformRowHeights(true);
     setSortingEnabled(true);
     sortItems(0,Qt::AscendingOrder);
@@ -49,62 +52,67 @@ myQTreeWidget::myQTreeWidget(QWidget *parent):QTreeWidget(parent) {
     setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
+/** Removes selected items when \a Delete key pressed by user. */
 void myQTreeWidget::keyPressEvent( QKeyEvent *k ) {
-	
     if(k->key() == Qt::Key_Delete) {
         for (int i = 0; i < this->topLevelItemCount(); i++) {
             if ((this->topLevelItem(i))->isSelected()) {
                 this->takeTopLevelItem(i);
-            }	
+            }
         }
     }
 }
 
+/** Accepts proposed action. \sa dragMoveEvent */
 void myQTreeWidget::dragEnterEvent(QDragEnterEvent *event) {
      event->acceptProposedAction();
 }
 
+/** Accepts proposed action. \sa dragEnterEvent */
 void myQTreeWidget::dragMoveEvent(QDragMoveEvent *event) {
      event->acceptProposedAction();
 }
 
+/** Appends droped files or directories into this tree widget.\n
+  * Emits changed() signal if any file added.
+  */
 void myQTreeWidget::dropEvent(QDropEvent *event) {
 
     const QMimeData *mimeData = event->mimeData();
     QString fileName = mimeData->text();
     QTreeWidgetItem *item;
     QStringList argsList;
-    bool change = false;	
+    bool change = false;
     argsList = fileName.split("\n");
-	
+
     QStringList::Iterator it2 = argsList.begin();
-	
+
     for ( ; it2 != argsList.end(); ++it2 ) {
-        fileName = *it2;		
-        fileName = fileName.section("/",2);		
-	
+        fileName = *it2;
+        fileName = fileName.section("/",2);
+
         QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
         QStringList list;
-	
+
         foreach(QByteArray format, imageFormats) {
             list.append(*new QString(format));
         }
-	
+
         QString fileFilters = "*.";
         fileFilters += list.join(" *.").toLower() + " *.jpg"+ " *.JPG";
         fileFilters += " *.JPEG *.Jpg *.Jpeg";
-			
-	
+
+
         if (!fileName.isEmpty() && QFileInfo(fileName).exists()) {
             //Directory
             if (QFileInfo(fileName).isDir()) {
                 QDir sourceFolder(fileName,fileFilters);
                 sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-	
+
                 QList<QFileInfo> list = sourceFolder.entryInfoList();
                 QListIterator<QFileInfo> it(list);
                 QFileInfo fi;
-	
+
                 while ( it.hasNext() ) {
                     fi = it.next();
                     QList<QString> itemList;
@@ -118,8 +126,8 @@ void myQTreeWidget::dropEvent(QDropEvent *event) {
                 }
             }
             //File
-            else {  
-                int comp = QString::compare("",QFileInfo(fileName).suffix());         	 
+            else {
+                int comp = QString::compare("",QFileInfo(fileName).suffix());
 
                 if((fileFilters.contains(QFileInfo(fileName).suffix()))
                     && (comp !=0)) {
@@ -138,9 +146,8 @@ void myQTreeWidget::dropEvent(QDropEvent *event) {
     }
 
     event->acceptProposedAction();
-	
+
     if(change) {
         emit changed();
     }
-		
 }
