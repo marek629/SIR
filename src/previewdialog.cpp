@@ -25,6 +25,7 @@
 
 #include "previewdialog.h"
 #include "rawutils.h"
+#include "metadatautils.h"
 #include <QGraphicsScene>
 #include <QString>
 #include <QPixmap>
@@ -39,11 +40,6 @@
 #include <QImageWriter>
 #include <QKeyEvent>
 #include <QDesktopWidget>
-
-#include <QDebug>
-
-#include "rawutils.h"
-#include "metadatautils.h"
 
 #define H 115
 #define W 50

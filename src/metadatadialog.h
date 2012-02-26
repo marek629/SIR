@@ -46,6 +46,7 @@ public:
 private:
     void resetStructs();
     void setupValues();
+    void readFile();
     MetadataUtils::Metadata *metadata;
     MetadataUtils::ExifStruct *exifStruct;
     QStringList *images;
@@ -55,6 +56,8 @@ private:
 private slots:
     void saveChanges();
     void deleteMetadata();
+    void previousImage();
+    void nextImage();
 };
 
 #endif // METADATADIALOG_H

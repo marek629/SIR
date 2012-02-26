@@ -37,26 +37,22 @@
 MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
                                int currentImage) : QDialog(parent) {
     setupUi(this);
-    cancelButton->setDefault(true);
     this->images = images;
     this->currentImage = currentImage;
     this->imagePath = this->images->at(this->currentImage);
     metadata = new MetadataUtils::Metadata;
 
-    bool readSuccess = metadata->read(imagePath,true);
-    exifStruct = metadata->exifStruct();
+    if (currentImage == 0)
+        previousButton->setEnabled(false);
+    if (currentImage == images->length()-1)
+        nextButton->setEnabled(false);
+    filePathLabel->setText(imagePath);
 
-    if (!readSuccess) {
-        QString errorTitle = tr("Metadata error");
-        MetadataUtils::Error *e = metadata->lastError();
-        QString errorMessage = e->message();
-        errorMessage += tr("\nError code: %1\nError message: %2").
-                arg(e->code()).arg(e->what());
-        QMessageBox::critical(this, errorTitle, errorMessage);
-        resetStructs();
-    }
+    readFile();
     setupValues();
 
+    connect(previousButton, SIGNAL(clicked()), this, SLOT(previousImage()));
+    connect(nextButton, SIGNAL(clicked()), this, SLOT(nextImage()));
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(close()));
     connect(saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteMetadata()));
@@ -72,6 +68,20 @@ MetadataDialog::~MetadataDialog() {
 
 void MetadataDialog::resetStructs() {
     exifStruct->reset();
+}
+
+void MetadataDialog::readFile() {
+    bool readSuccess = metadata->read(imagePath,true);
+    exifStruct = metadata->exifStruct();
+    if (!readSuccess) {
+        QString errorTitle = tr("Metadata error");
+        MetadataUtils::Error *e = metadata->lastError();
+        QString errorMessage = e->message();
+        errorMessage += tr("\nError code: %1\nError message: %2").
+                arg(e->code()).arg(e->what());
+        QMessageBox::critical(this, errorTitle, errorMessage);
+        resetStructs();
+    }
 }
 
 void MetadataDialog::setupValues() {
@@ -106,7 +116,7 @@ void MetadataDialog::setupValues() {
     exifFocalLengthSpinBox->setSpecialValueText(MetadataUtils::String::noData());
     exifFocalLengthSpinBox->setValue( exifStruct->focalLength );
     exifExpTimeComboBox->insertItem(0,MetadataUtils::String::noData());
-    if (exifStruct->expTime.isEmpty())
+    if (exifStruct->expTime.isEmpty() || exifStruct->expTime == "0/0 s")
         exifExpTimeComboBox->setCurrentIndex(0);
     else
         exifExpTimeComboBox->addItem( exifStruct->expTime );
@@ -163,6 +173,30 @@ void MetadataDialog::setupValues() {
     exifUserCommentComboBox->lineEdit()->setText( exifStruct->userComment );
 
     settings.endGroup();
+}
+
+void MetadataDialog::previousImage() {
+    currentImage--;
+    if (currentImage == 0)
+        previousButton->setEnabled(false);
+    if (!nextButton->isEnabled() && currentImage < images->length()-1)
+        nextButton->setEnabled(true);
+    imagePath = images->at(currentImage);
+    readFile();
+    setupValues();
+    filePathLabel->setText(imagePath);
+}
+
+void MetadataDialog::nextImage() {
+    currentImage++;
+    if (currentImage == images->length()-1)
+        nextButton->setEnabled(false);
+    if (!previousButton->isEnabled())
+        previousButton->setEnabled(true);
+    imagePath = images->at(currentImage);
+    readFile();
+    setupValues();
+    filePathLabel->setText(imagePath);
 }
 
 void MetadataDialog::saveChanges() {
