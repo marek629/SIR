@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{A3BCDC21-EE6A-4DDF-8A08-E5B692C5B5F1}
 AppName=Sir
-AppVerName=Sir 2.1
+AppVerName=Sir 2.3
 AppPublisher=Sir Software
 AppPublisherURL=http://sir.projet-libre.org/
 AppSupportURL=http://sir.projet-libre.org/
@@ -15,10 +15,10 @@ AppUpdatesURL=http://sir.projet-libre.org/
 DefaultDirName={pf}\Sir
 DefaultGroupName=Sir
 AllowNoIcons=yes
-LicenseFile=E:\sir\LICENSE
-OutputDir=E:\sir\installer
+LicenseFile=I:\sir\LICENSE
+OutputDir=I:\sir\installer
 OutputBaseFilename=setup
-SetupIconFile=E:\sir\images\sir.ico
+SetupIconFile=I:\sir\images\sir.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -50,19 +50,23 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "E:\sir\release\sir.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\MinGW\bin\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\bin\mingwm10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\bin\QtCore4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\bin\QtGui4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\bin\QtNetwork4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\plugins\imageformats\qgif4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\plugins\imageformats\qico4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\plugins\imageformats\qjpeg4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\plugins\imageformats\qmng4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\plugins\imageformats\qsvg4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "E:\Qt\4.6.2\plugins\imageformats\qtiff4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "E:\sir\windows\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir-build-desktop\release\sir.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\QtSDK\mingw\bin\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\QtSDK\mingw\bin\mingwm10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir\windows\include\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir\windows\include\libgcc_s_sjlj-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir\windows\include\libexiv2-10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir\windows\include\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir\windows\include\QtCore4.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir\windows\include\QtGui4.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "I:\sir\windows\include\QtNetwork4.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qgif4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
+Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qico4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
+Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qjpeg4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
+Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qmng4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
+Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qsvg4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
+Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qtiff4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
+Source: "I:\sir\windows\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

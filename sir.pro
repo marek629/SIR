@@ -82,26 +82,11 @@ unix {
     INSTALLS += service
 }
 win32 { 
-RC_FILE = windows/res.rc
+    RC_FILE = windows/res.rc
+    INCLUDEPATH += windows/include
+    LIBS += -L"i:\sir\windows\include"
 }
 
 OTHER_FILES += \
     TODO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
