@@ -61,12 +61,14 @@
  *     separated by ** (double star-sign).
  * \sa readSettings
  */
-ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
+ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent) {
     setupUi(this);
     numThreads = 1;
     this->args = args;
     lastDir = "";
+    qtTranslator = new QTranslator(this);
     appTranslator = new QTranslator(this);
+    qApp->installTranslator(qtTranslator);
     qApp->installTranslator(appTranslator);
     statusList = new QMap<QString,int>();
     net = NULL;
@@ -79,6 +81,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) 
 ConvertDialog::~ConvertDialog() {
     writeWindowProperties();
     delete statusList;
+    delete qtTranslator;
     delete appTranslator;
     if(net)
         delete net;
@@ -910,7 +913,10 @@ void ConvertDialog::readSettings() {
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
                                               defaultLanguage).toString();
+    QString qtTranslationFile = "qt_" +
+            selectedTranslationFile.split('_').at(1).split('.').first();
 
+    qtTranslator->load(qtTranslationFile, QT_TRANSLATIONS_DIR);
     appTranslator->load(selectedTranslationFile);
 
     alreadSent = settings.value("alreadSent",false).toBool();

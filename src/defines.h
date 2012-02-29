@@ -31,3 +31,7 @@
 #define REMOVED 5
 #define CONVERTING 6
 #define CANCELLED 7
+
+#ifndef QT_TRANSLATIONS_DIR
+#define QT_TRANSLATIONS_DIR "/usr/share/qt/translations/"
+#endif // QT_TRANSLATIONS_DIR

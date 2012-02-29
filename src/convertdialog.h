@@ -92,6 +92,7 @@ private:
     PreviewDialog  *previewForm;
     MetadataDialog *metadataForm;
     quint8 numThreads;
+    QTranslator *qtTranslator;
     QTranslator *appTranslator;
     QMap<QString, int>  *statusList;
     int convertedImages;
