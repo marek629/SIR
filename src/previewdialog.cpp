@@ -1,11 +1,10 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -17,17 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
-#include "previewdialog.h"
-#include "rawutils.h"
-#include "metadatautils.h"
 #include <QGraphicsScene>
-#include <QString>
 #include <QPixmap>
 #include <QResizeEvent>
 #include <QWheelEvent>
@@ -40,6 +32,11 @@
 #include <QImageWriter>
 #include <QKeyEvent>
 #include <QDesktopWidget>
+#include <QDebug>
+
+#include "previewdialog.h"
+#include "rawutils.h"
+#include "metadatautils.h"
 
 #define H 115
 #define W 50
@@ -76,12 +73,12 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     loadPixmap();
 
     scene = new QGraphicsScene();
-    pix = scene->addPixmap(*image);
+    imageItem = addImageIntoScene();
     view->setScene(scene);
     view->setCacheMode(QGraphicsView::CacheBackground);
 
-    imageW = image->size().width();
-    imageH = image->size().height();
+    imageW = imageItem->boundingRect().width();
+    imageH = imageItem->boundingRect().height();
 
     QSize desktopSize = QApplication::desktop()->size();
     desktopSize -= QSize(8,8);
@@ -195,12 +192,12 @@ void PreviewDialog::zoom(const QString &text) {
         }
         if (verticalRatio < horizontalRatio) {
             view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-            view->fitInView(pix,Qt::KeepAspectRatio);
+            view->fitInView(imageItem,Qt::KeepAspectRatio);
             zoomFactor = (double) (view->width()-8) / imageW;
             view->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         } else {
             view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-            view->fitInView(pix,Qt::KeepAspectRatio);
+            view->fitInView(imageItem,Qt::KeepAspectRatio);
             zoomFactor = (double) (view->height()-8) / imageH;
             view->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         }
@@ -317,8 +314,8 @@ void  PreviewDialog::nextImage( ) {
 
     view->resetMatrix();
     imagePath = images->at(++currentImage);
-    scene->removeItem(pix);
-    delete pix;
+    scene->removeItem(imageItem);
+    delete imageItem;
     delete image;
     rotation = 0;
     flip = MetadataUtils::None;
@@ -326,10 +323,10 @@ void  PreviewDialog::nextImage( ) {
 
     loadPixmap();
 
-    pix = scene->addPixmap(*image);
-    view->setSceneRect(pix->boundingRect());
-    imageW = image->size().width();
-    imageH = image->size().height();
+    imageItem = addImageIntoScene();
+    view->setSceneRect(imageItem->boundingRect());
+    imageW = imageItem->boundingRect().width();
+    imageH = imageItem->boundingRect().height();
 
     if(zoomFactor != 1.0) {
         zoom(zoomComboBox->currentText());
@@ -346,8 +343,8 @@ void  PreviewDialog::previousImage( ) {
     if(previousButton->hasFocus()) {
         view->resetMatrix();
         imagePath = images->at(--currentImage);
-        scene->removeItem(pix);
-        delete pix;
+        scene->removeItem(imageItem);
+        delete imageItem;
         delete image;
         rotation = 0;
         flip = MetadataUtils::None;
@@ -355,10 +352,10 @@ void  PreviewDialog::previousImage( ) {
 
         loadPixmap();
 
-        pix = scene->addPixmap(*image);
-        view->setSceneRect(pix->boundingRect());
-        imageW = image->size().width();
-        imageH = image->size().height();
+        imageItem = addImageIntoScene();
+        view->setSceneRect(imageItem->boundingRect());
+        imageW = imageItem->boundingRect().width();
+        imageH = imageItem->boundingRect().height();
 
         if(zoomFactor != 1.0) {
             zoom(zoomComboBox->currentText());
@@ -532,7 +529,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     imageW = w;
     imageH = h;
 
-    QPixmap destImg =  image->scaled(w, h,Qt::IgnoreAspectRatio,
+    QPixmap destImg = image->scaled(w, h,Qt::IgnoreAspectRatio,
                                      Qt::SmoothTransformation);
 
     if (destImg.save(fileName, 0 ,100)) {
@@ -555,8 +552,8 @@ bool PreviewDialog::saveFile(const QString &fileName) {
 
 void PreviewDialog::reloadImage(QString imageName) {
     view->resetMatrix();
-    scene->removeItem(pix);
-    delete pix;
+    scene->removeItem(imageItem);
+    delete imageItem;
     delete image;
     rotation = 0;
     flip = MetadataUtils::None;
@@ -565,10 +562,10 @@ void PreviewDialog::reloadImage(QString imageName) {
 
     loadPixmap();
 
-    pix = scene->addPixmap(*image);
-    view->setSceneRect(pix->boundingRect());
-    imageW = image->size().width();
-    imageH = image->size().height();
+    imageItem = addImageIntoScene();
+    view->setSceneRect(imageItem->boundingRect());
+    imageW = imageItem->boundingRect().width();
+    imageH = imageItem->boundingRect().height();
 
     if(zoomFactor != 1.0) {
         zoom("100%");
@@ -582,22 +579,29 @@ void PreviewDialog::reloadImage(QString imageName) {
 void PreviewDialog::loadPixmap() {
     image = new QPixmap();
     bool readSuccess;
+    svgLoaded = false;
+    QString fileExt = imagePath.split('.').last().toLower();
 
-    if(rawEnabled) {
+    // reading...
+    if (rawEnabled) { // raw image
         if(RawUtils::isRaw(imagePath)) {
             image = RawUtils::loadRawPixmap(imagePath);
             readSuccess = image;
         }
-        else {
+        else
             readSuccess = image->load(imagePath);
-        }
     }
-    else {
+    else if (fileExt == "svg" || fileExt == "svgz") { // SVG file
+        svgImage = new QGraphicsSvgItem(imagePath);
+        svgLoaded = true;
+        readSuccess = (svgImage != 0);
+    }
+    else // other image formats
         readSuccess = image->load(imagePath);
-    }
 
     bool metadataReadError = false;
     if (readSuccess && metadataEnabled) {
+        // reading metadata
         metadataReadError = !metadata->read(imagePath,true);
         if (!metadataReadError) {
             char orientation = metadata->exifStruct()->orientation;
@@ -654,7 +658,8 @@ void PreviewDialog::loadPixmap() {
         MetadataUtils::String str(e->message() +
                                   tr("\nError code: %1\nError message: %2").
                                      arg(e->code()).arg(e->what()) );
-        qWarning(str.toNativeStdString().c_str());
+        qWarning() << tr("Metadata error!");
+        qWarning() << str;
     }
 }
 

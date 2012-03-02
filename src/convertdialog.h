@@ -26,10 +26,11 @@
 #ifndef CONVERTDIALOG_H
 #define CONVERTDIALOG_H
 
-#include "ui_convertdialog.h"
-#include "convertthread.h"
 #include <QSettings>
 #include <QQueue>
+
+#include "ui_convertdialog.h"
+#include "convertthread.h"
 
 class QString;
 class QDropEvent;
@@ -64,8 +65,6 @@ private:
         QString filePath;
         int tid;
     };
-    QQueue<QueryData> overwriteQueue;
-    QQueue<QueryData> enlargeQueue;
     void initList();
     void init();
     void createConnections();
@@ -81,6 +80,8 @@ private:
     QString makeImagePath(QTreeWidgetItem *item);
     void convert();
 
+    QQueue<QueryData> overwriteQueue;
+    QQueue<QueryData> enlargeQueue;
     QList<ConvertThread*> convertThreads;
     QString args;
     QStringList argsList;

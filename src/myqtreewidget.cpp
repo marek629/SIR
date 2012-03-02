@@ -30,7 +30,7 @@
 #include <QDragMoveEvent>
 #include <QDir>
 #include <QFileInfo>
-#include <QImageWriter>
+#include <QImageReader>
 #include <QMenu>
 
 /** Default constructor. */
@@ -91,7 +91,7 @@ void myQTreeWidget::dropEvent(QDropEvent *event) {
         fileName = *it2;
         fileName = fileName.section("/",2);
 
-        QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
+        QList<QByteArray> imageFormats = QImageReader::supportedImageFormats();
         QStringList list;
 
         foreach(QByteArray format, imageFormats) {

@@ -1,11 +1,10 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -17,24 +16,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
 #ifndef PREVIEWDIALOG_H
 #define PREVIEWDIALOG_H
 
+#include <QString>
+#include <QGraphicsSvgItem>
+
 #include "ui_previewdialog.h"
 #include "metadatautils.h"
-#include <QString>
 
-class QGraphicsScene;
-class QString;
-class QPixmap;
 class QStringList;
-class QGraphicsPixmapItem;
 class QKeyEvent;
 
 //! Preview image window.
@@ -53,20 +47,23 @@ private:
     void reloadImage(QString imagePath);
     void loadPixmap();
     inline bool isntTiffImage();
+    inline QGraphicsItem *addImageIntoScene();
 
     //Class Variables
     QGraphicsScene *scene;
     QString imagePath;
     QPixmap *image;
+    QGraphicsSvgItem *svgImage;
     double zoomFactor;
     int currentImage;
     int rotation;
     int flip;
     QStringList *images;
-    QGraphicsPixmapItem *pix;
+    QGraphicsItem *imageItem;
     int imageW;
     int imageH;
     bool rawEnabled;
+    bool svgLoaded;
     bool metadataEnabled;
     bool saveMetadata;
     MetadataUtils::Metadata* metadata;
@@ -99,6 +96,14 @@ bool PreviewDialog::isntTiffImage() {
         return true;
     }
     return false;
+}
+
+QGraphicsItem * PreviewDialog::addImageIntoScene() {
+    if (svgLoaded) {
+        scene->addItem(svgImage);
+        return svgImage;
+    }
+    return scene->addPixmap(*image);
 }
 
 #endif

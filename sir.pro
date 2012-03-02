@@ -1,7 +1,7 @@
 TEMPLATE = app
 LANGUAGE = C++
 RESOURCES += application.qrc
-QT += network
+QT += network svg
 
 UI_DIR += .ui
 MOC_DIR += .moc
@@ -68,7 +68,7 @@ TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_fr.ts \
     translations/sir_gr.ts \
     translations/sir_cz.ts
-unix { 
+unix {
     target.path += /usr/bin
     images.path = /usr/share/pixmaps
     images.files = images/sir*
@@ -81,12 +81,14 @@ unix {
     INSTALLS += desktop
     INSTALLS += service
 }
-win32 { 
+win32 {
     RC_FILE = windows/res.rc
     INCLUDEPATH += windows/include
     LIBS += -L"i:\sir\windows\include"
 }
 
 OTHER_FILES += \
-    TODO
-
+    TODO \
+    LICENSE \
+    INSTALL \
+    README.txt

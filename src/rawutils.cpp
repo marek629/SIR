@@ -28,14 +28,14 @@
 #include <QString>
 #include <QStringList>
 #include <QProcess>
-#include <QImageWriter>
+#include <QImageReader>
 #include <QSettings>
 #include <QPixmap>
 
 /** Returns true if \b imagePath is path to raw image, otherwise returns false. */
 bool RawUtils::isRaw(QString imagePath) {
 
-    QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
+    QList<QByteArray> imageFormats = QImageReader::supportedImageFormats();
     QStringList list;
     QString dcrawPath = readDcrawPath();
 

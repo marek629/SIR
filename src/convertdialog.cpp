@@ -23,17 +23,6 @@
  *
  */
 
-#include "convertdialog.h"
-#include "previewdialog.h"
-#include "myqtreewidget.h"
-#include "aboutdialog.h"
-#include "optionsdialog.h"
-#include "defines.h"
-#include "rawutils.h"
-#include "networkutils.h"
-#include "messagebox.h"
-#include "metadatautils.h"
-#include "metadatadialog.h"
 #include <QString>
 #include <QDropEvent>
 #include <QMenu>
@@ -41,6 +30,7 @@
 #include <QStringList>
 #include <QDir>
 #include <QFileDialog>
+#include <QImageReader>
 #include <QImageWriter>
 #include <QTextCharFormat>
 #include <QCompleter>
@@ -52,6 +42,18 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QWindowStateChangeEvent>
+
+#include "convertdialog.h"
+#include "previewdialog.h"
+#include "myqtreewidget.h"
+#include "aboutdialog.h"
+#include "optionsdialog.h"
+#include "defines.h"
+#include "rawutils.h"
+#include "networkutils.h"
+#include "messagebox.h"
+#include "metadatautils.h"
+#include "metadatadialog.h"
 
 /*! Default constuctor.\n
  * Sets up window with saved settings like window state, position
@@ -235,7 +237,7 @@ void ConvertDialog::showSendInstallResult(QString *result, bool error) {
         settings.beginGroup("Settings");
         settings.setValue("alreadSent", true);
         settings.endGroup();
-
+        alreadSent = true;
     }
 
 }
@@ -312,19 +314,21 @@ void ConvertDialog::setupThreads(int numThreads) {
 }
 
 void ConvertDialog::init() {
-
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
     QStringList list;
-
-    foreach(QByteArray format, imageFormats)
-    {
+    // target format combo box setup
+    foreach (QByteArray format, imageFormats)
         list.append(QString(format));
-    }
-
     targetFormatComboBox->insertItems(0,list);
+    // read file filters setup
+    imageFormats = QImageReader::supportedImageFormats();
+    foreach (QByteArray format, imageFormats) {
+        QString str(format);
+        if (!list.contains(str))
+            list.append(str);
+    }
     fileFilters = "*.";
     fileFilters.append(list.join(" *.").toLower());
-    fileFilters.append(" *.jpg");
     fileFilters.append(" *.JPG");
     fileFilters.append(" *.JPEG");
     fileFilters.append(" *.Jpg");
