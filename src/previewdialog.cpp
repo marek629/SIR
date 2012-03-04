@@ -33,6 +33,7 @@
 #include <QKeyEvent>
 #include <QDesktopWidget>
 #include <QDebug>
+#include <QtSvg/QSvgRenderer>
 
 #include "previewdialog.h"
 #include "rawutils.h"
@@ -41,11 +42,11 @@
 #define H 115
 #define W 50
 
-/*! Default constructor.
- * \param parent Parent widget.
- * \param images List of image files path.
- * \param currentImage Index of current image on \a images list.
- */
+/** Default constructor.
+  * \param parent Parent widget.
+  * \param images List of image files path.
+  * \param currentImage Index of current image on \a images list.
+  */
 PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
                              int currentImage):QDialog(parent) {
 
@@ -95,10 +96,9 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     view->show();
 }
 
-/*! Destructor.
- * \par
- * Dealocates dynamic allocated memory.
- */
+/** Destructor.\n
+  * Dealocates dynamic allocated memory.
+  */
 PreviewDialog::~PreviewDialog() {
     delete scene;
     delete images;
@@ -106,8 +106,8 @@ PreviewDialog::~PreviewDialog() {
         delete metadata;
 }
 
+/** Connects signals emited by \em Actions toolbar for corresponding slots. */
 void PreviewDialog::createConnections() {
-
     connect(quitButton, SIGNAL(clicked()), SLOT(close()));
     connect(zoomComboBox, SIGNAL(activated(QString)), SLOT(zoom(QString)));
     connect(rotateCwButton, SIGNAL(clicked ()), SLOT(rotatecw()));
@@ -120,9 +120,9 @@ void PreviewDialog::createConnections() {
     connect(saveImageButton, SIGNAL(clicked ()), SLOT(save()));
     connect(saveAsButton, SIGNAL(clicked ()), SLOT(saveAs()));
     connect(printButton, SIGNAL(clicked ()), SLOT(print()));
-
 }
 
+/** Sets up \em Actions toolbar. */
 void PreviewDialog::initBar() {
     for(int i = 100; i >= 10; i-=10) {
         zoomComboBox->addItem(QString::number(i) + "%");
@@ -169,12 +169,12 @@ void PreviewDialog::initBar() {
 
 }
 
-/*! Zoom combo box slot.
- * \par
- * Zoom previewed image to typed perventage value as \a text. A valid value
- * should be decimal value and percent-sign without space, for example \em 100%.\n
- * A special value \em "Fit to window size" (translatable) is supported.
- */
+/** Zoom combo box slot.
+  * \par
+  * Zooms previewed image to typed perventage value as \a text. A valid value
+  * should be decimal value and percent-sign without space, for example \em 100%.\n
+  * A special value \em "Fit to window size" (translatable) is supported.
+  */
 void PreviewDialog::zoom(const QString &text) {
 
     bool ok;
@@ -221,8 +221,7 @@ void PreviewDialog::zoom(const QString &text) {
     view->rotate(rotation);
 }
 
-/*! Rotate clockwise button slot. Rotates clockwise viewing image.
- */
+/** Rotate clockwise button slot. Rotates clockwise viewing image. */
 void PreviewDialog::rotatecw( ) {
     if (flip == MetadataUtils::None || rotation == 180 || rotation == -180) {
         rotation += 90;
@@ -240,8 +239,7 @@ void PreviewDialog::rotatecw( ) {
     }
 }
 
-/*! Rotate counterclockwise button slot. Rotates counterclockwise viewing image.
- */
+/** Rotate counterclockwise button slot. Rotates counterclockwise viewing image. */
 void PreviewDialog::rotateccw( ) {
     if (flip == MetadataUtils::None || rotation == 180 || rotation == -180) {
         rotation -= 90;
@@ -259,8 +257,7 @@ void PreviewDialog::rotateccw( ) {
     }
 }
 
-/*! Flip vertical button slot. Flips verticaly current image.
- */
+/** Flip vertical button slot. Flips verticaly current image. */
 void PreviewDialog::flipVertical() {
     flip ^= MetadataUtils::Vertical;
     if (flip == MetadataUtils::VerticalAndHorizontal) {
@@ -283,8 +280,7 @@ void PreviewDialog::flipVertical() {
         view->scale(1.0, -1.0);
 }
 
-/*! Flip horizontal button slot. Flips horizontaly current image.
- */
+/** Flip horizontal button slot. Flips horizontaly current image. */
 void PreviewDialog::flipHorizontal() {
     using namespace MetadataUtils;
     flip ^= Horizontal;
@@ -308,8 +304,7 @@ void PreviewDialog::flipHorizontal() {
         view->scale(-1.0, 1.0);
 }
 
-/*! Next image button slot. Shows next image.
- */
+/** Next image button slot. Shows next image. */
 void  PreviewDialog::nextImage( ) {
 
     view->resetMatrix();
@@ -336,8 +331,7 @@ void  PreviewDialog::nextImage( ) {
     verifyImages();
 }
 
-/*! Previous image button slot. Shows previous image.
- */
+/** Previous image button slot. Shows previous image. */
 void  PreviewDialog::previousImage( ) {
 
     if(previousButton->hasFocus()) {
@@ -365,27 +359,26 @@ void  PreviewDialog::previousImage( ) {
     }
 }
 
+/** Menages enabled state of next and previous image buttons.\n
+  * Disables next image button if current image is last of images list,
+  * otherwise enables this button.\n
+  * Disables previous image button if current image is first of images list,
+  * otherwise enables this button.\n
+  */
 void  PreviewDialog::verifyImages() {
-
-    if(currentImage+2 > images->size()) {
+    if(currentImage+2 > images->size())
         nextButton->setEnabled(false);
-    }
-    else{
+    else
         nextButton->setEnabled(true);
-    }
-
-    if(currentImage == 0) {
+    if(currentImage == 0)
         previousButton->setEnabled(false);
-    }
-    else {
+    else
         previousButton->setEnabled(true);
-    }
-
 }
 
-/*! Full screen button slot. Shows this window in full screen or normal mode
- * depending on current window state.
- */
+/** Full screen button slot. Shows this window in full screen or normal mode
+  * depending on current window state.
+  */
 void PreviewDialog::fullScreen() {
     static bool maximized = false;
     if(this->isFullScreen()) {
@@ -399,8 +392,7 @@ void PreviewDialog::fullScreen() {
     }
 }
 
-/*! Save button slot. Ask and overwrite if accepted current file.
- */
+/** Save button slot. Ask and overwrite if accepted current file. */
 bool PreviewDialog::save() {
 
     bool ret;
@@ -425,8 +417,7 @@ bool PreviewDialog::save() {
     return false;
 }
 
-/*! Save as button slot. Ask and overwrite if accepted current file.
- */
+/** Save as button slot. Ask and overwrite if accepted current file. */
 bool PreviewDialog::saveAs() {
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
     QStringList list;
@@ -455,8 +446,7 @@ bool PreviewDialog::saveAs() {
     return ret;
 }
 
-/*! Save image file into typed \a fileName path.
- */
+/** Save image file into typed \a fileName path. */
 bool PreviewDialog::saveFile(const QString &fileName) {
     int w = (int)(imageW*zoomFactor);
     int h = (int)(imageH*zoomFactor);
@@ -529,8 +519,19 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     imageW = w;
     imageH = h;
 
-    QPixmap destImg = image->scaled(w, h,Qt::IgnoreAspectRatio,
-                                     Qt::SmoothTransformation);
+    QPixmap destImg(1,1);
+    QString ext = fileName.split('.').last().toLower();
+    if (ext == "png" || ext == "gif")
+        destImg.fill(Qt::transparent);
+    else
+        destImg.fill(Qt::white);
+    destImg = destImg.scaled(w,h);
+    QPainter painter(&destImg);
+    if (svgLoaded)
+        svgImage->renderer()->render(&painter);
+    else
+        painter.drawPixmap(0,0, image->scaled(w,h,Qt::IgnoreAspectRatio,
+                                              Qt::SmoothTransformation) );
 
     if (destImg.save(fileName, 0 ,100)) {
         if (saveMetadata) {
@@ -550,6 +551,9 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     }
 }
 
+/** Reloads current image after save.
+  * \sa save saveAs
+  */
 void PreviewDialog::reloadImage(QString imageName) {
     view->resetMatrix();
     scene->removeItem(imageItem);
@@ -576,6 +580,11 @@ void PreviewDialog::reloadImage(QString imageName) {
         view->repaint();
 }
 
+/** Loads image's pixmap from imagePath file path into corresponding graphics
+  * item object - QGraphicsPixmapItem* image or QGraphicsSvgItem* svgImage.\n
+  * Its set svgLoaded variable to \a true if SVG image was loaded, otherwise
+  * set false.
+  */
 void PreviewDialog::loadPixmap() {
     image = new QPixmap();
     bool readSuccess;
@@ -663,8 +672,7 @@ void PreviewDialog::loadPixmap() {
     }
 }
 
-/*! Print button slot. Prints current image.
- */
+/** Print button slot. Prints current image. */
 void PreviewDialog::print() {
     QPrinter printer;
     if (QPrintDialog(&printer).exec() == QDialog::Accepted) {
@@ -674,11 +682,10 @@ void PreviewDialog::print() {
     }
 }
 
-/*! When window resized fits image to window size if special value \em "Fit to window size"
- * of zoom combo box is activated.
- * \par
- * This is overloaded QDialogs's method.
- */
+/** When window resized fits image to window size if special value
+  * \em "Fit to window size" of zoom combo box is activated.\n
+  * This is overloaded QDialogs's method.
+  */
 void PreviewDialog::resizeEvent(QResizeEvent *) {
     QString currentZoomString = zoomComboBox->currentText();
     if (currentZoomString == tr("Fit to window size"))
