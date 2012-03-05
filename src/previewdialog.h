@@ -52,6 +52,7 @@ private:
     //Class Variables
     QGraphicsScene *scene;
     QString imagePath;
+    QByteArray fileExt;
     QPixmap *image;
     QGraphicsSvgItem *svgImage;
     double zoomFactor;
@@ -67,9 +68,9 @@ private:
     bool metadataEnabled;
     bool saveMetadata;
     MetadataUtils::Metadata* metadata;
+    QString destFileExtension;
 
 public slots:
-
     //Slots
     void zoom(const QString &text);
     void rotatecw( );
@@ -83,6 +84,7 @@ public slots:
     bool saveAs();
     bool saveFile(const QString &fileName);
     void print();
+    void setDestFileExt(const QString &ext);
 
 protected:
     virtual void resizeEvent(QResizeEvent *);

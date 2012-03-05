@@ -34,6 +34,8 @@
 #include <QDesktopWidget>
 #include <QDebug>
 #include <QtSvg/QSvgRenderer>
+#include <QDialogButtonBox>
+#include <QSettings>
 
 #include "previewdialog.h"
 #include "rawutils.h"
@@ -56,6 +58,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->currentImage = currentImage;
     this->images = images;
     this->imagePath = images->at(currentImage);
+    this->fileExt = imagePath.split('.').last().toLower().toAscii();
     this->setFocusPolicy(Qt::StrongFocus);
     this->setFocus();
     this->setModal(true);
@@ -65,6 +68,8 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     saveMetadata = MetadataUtils::Metadata::isSave();
     initBar();
     createConnections();
+    saveImageButton->setEnabled(
+                    QImageWriter::supportedImageFormats().contains(fileExt) );
     rotation = 0;
     flip = MetadataUtils::None;
 
@@ -309,12 +314,15 @@ void  PreviewDialog::nextImage( ) {
 
     view->resetMatrix();
     imagePath = images->at(++currentImage);
+    fileExt = imagePath.split('.').last().toLower().toAscii();
     scene->removeItem(imageItem);
     delete imageItem;
     delete image;
     rotation = 0;
     flip = MetadataUtils::None;
     metadataEnabled = isntTiffImage();
+    saveImageButton->setEnabled(
+                    QImageWriter::supportedImageFormats().contains(fileExt) );
 
     loadPixmap();
 
@@ -337,12 +345,15 @@ void  PreviewDialog::previousImage( ) {
     if(previousButton->hasFocus()) {
         view->resetMatrix();
         imagePath = images->at(--currentImage);
+        fileExt = imagePath.split('.').last().toLower().toAscii();
         scene->removeItem(imageItem);
         delete imageItem;
         delete image;
         rotation = 0;
         flip = MetadataUtils::None;
         metadataEnabled = isntTiffImage();
+        saveImageButton->setEnabled(
+                        QImageWriter::supportedImageFormats().contains(fileExt) );
 
         loadPixmap();
 
@@ -427,23 +438,53 @@ bool PreviewDialog::saveAs() {
         list.append(*new QString(format));
     }
 
-    fileFilters = "*.";
-    fileFilters += list.join(" *.").toLower() + " *.jpg"+ " *.JPG"+ " *.JPEG"
+    fileFilters = list.join(" *.").toLower() + " *.jpg"+ " *.JPG"+ " *.JPEG"
                    + " *.Jpg"+ " *.Jpeg"+ " *.PNG"+ " *.Png";
 
     QString fileName = QFileDialog::getSaveFileName(this,tr("Save File"),
-                                                    imagePath,fileFilters);
-
-    if (fileName.isEmpty()) {
+                                                   imagePath,fileFilters);
+    if (fileName.isEmpty()) // when QFileDialog::getSaveFileName cancelled
         return false;
+    if ( !QImageWriter::supportedImageFormats().contains(
+                    fileName.split('.').last().toLower().toAscii() ) ) {
+        QDialog *dialog = new QDialog(this, Qt::Dialog);
+        dialog->setWindowTitle(tr("Unsupported file format"));
+        QVBoxLayout *layout = new QVBoxLayout(dialog);
+        QLabel *label = new QLabel(tr("Write into %1 file is unsupported.\n"
+                                      "Choose supported file extension:").
+                                        arg(fileName), dialog);
+        layout->addWidget(label);
+        QComboBox *comboBox = new QComboBox(dialog);
+        foreach (QByteArray format, imageFormats)
+            comboBox->addItem(format.toLower());
+        comboBox->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+        connect(comboBox, SIGNAL(currentIndexChanged(QString)),
+                this, SLOT(setDestFileExt(QString)) );
+        comboBox->setCurrentIndex(
+                    QSettings("SIR").value("Settings/targetFormat",0).toInt() );
+        layout->addWidget(comboBox);
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
+                                                           QDialogButtonBox::Cancel,
+                                                           Qt::Horizontal, dialog);
+        buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
+        connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+        connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+        layout->addWidget(buttonBox);
+        dialog->setLayout(layout);
+        if (dialog->exec() == QDialog::Rejected)
+            return false;
+        fileName = fileName.left(fileName.lastIndexOf('.')+1);
+        fileName += destFileExtension;
     }
-
     bool ret = saveFile(fileName);
-
-    if(ret) {
+    if (ret)
         reloadImage(fileName);
-    }
     return ret;
+}
+
+/** Sets destFileExtension value to \b ext. */
+void PreviewDialog::setDestFileExt(const QString &ext) {
+    destFileExtension = ext;
 }
 
 /** Save image file into typed \a fileName path. */
@@ -520,7 +561,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     imageH = h;
 
     QPixmap destImg(1,1);
-    QString ext = fileName.split('.').last().toLower();
+    QString ext = fileName.split('.').last().toLower().toAscii();
     if (ext == "png" || ext == "gif")
         destImg.fill(Qt::transparent);
     else
@@ -562,7 +603,10 @@ void PreviewDialog::reloadImage(QString imageName) {
     rotation = 0;
     flip = MetadataUtils::None;
     imagePath = imageName;
+    fileExt = imagePath.split('.').last().toLower().toAscii();
     metadataEnabled = isntTiffImage();
+    saveImageButton->setEnabled(
+                    QImageWriter::supportedImageFormats().contains(fileExt) );
 
     loadPixmap();
 
@@ -589,7 +633,6 @@ void PreviewDialog::loadPixmap() {
     image = new QPixmap();
     bool readSuccess;
     svgLoaded = false;
-    QString fileExt = imagePath.split('.').last().toLower();
 
     // reading...
     if (rawEnabled) { // raw image
