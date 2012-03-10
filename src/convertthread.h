@@ -84,6 +84,7 @@ private:
     char computeSize(const QImage *image, const QString &imagePath);
     char computeSize(const QGraphicsSvgItem *image, const QString &imagePath);
     bool isLinearFileSizeFormat(double *destSize);
+    char askEnlarge(const QImage &image, const QString &imagePath);
 
     bool work;
     QStringList imageData;

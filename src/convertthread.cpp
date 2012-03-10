@@ -332,23 +332,10 @@ void ConvertThread::run() {
         }
 
         // ask enlarge
-        if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
-             (hasHeight && image->height()<height && image->width()<=image->height()) ) {
-            if (!(shared->enlargeAll ||
-                  shared->noEnlargeAll || shared->abort)) {
-                enlargeMutex.lock();
-                emit question(imagePath,tid,"enlarge");
-                enlargeCondition.wait(&enlargeMutex);
-            }
-            if (shared->enlargeResult != 0 && shared->enlargeResult != 2) {
-                if (shared->enlargeResult == 4)
-                    emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
-                else
-                    emit imageStatus(imageData, tr("Skipped"), SKIPPED);
-                delete image;
-                getNextOrStop();
-                continue;
-            }
+        if (askEnlarge(*image,imagePath) != 0) {
+            delete image;
+            getNextOrStop();
+            continue;
         }
 
         // rotate image and update thumbnail
@@ -548,23 +535,6 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             height = sourceHeightRatio * destSize;
         }
         else { // non-linear size relationship
-//            if (shared->format == "jpg" || shared->format == "jpeg") {
-//                int area = width * height;
-//                double estimatedSizeRatio = area * 0.1 / destSize;
-//                int i=0;
-//                while (estimatedSizeRatio >= 0.9 || estimatedSizeRatio <= 1.1) {
-//                    double ln = log(estimatedSizeRatio);
-//                    width += ln * width;
-//                    height += ln * height;
-//                    area = width * height;
-//                    estimatedSizeRatio = area * 0.1 / destSize;
-//                    qDebug() << width << height << ln << area << estimatedSizeRatio;
-//                    i++;
-//                    if (i > 8)
-//                        break;
-//                }
-//            }
-            //-------------------
             QString tempFilePath = QDir::tempPath() + QDir::separator() +
                     "sir_temp" + QString::number(tid) + "." + shared->format;
             QImage tempImage;
@@ -592,7 +562,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                                 toNativeStdString().data());
                     emit imageStatus(imageData, tr("Failed to compute image size"),
                                      FAILED);
-                    return -1;
+                    return -4;
                 }
                 tempFile.close();
                 fileSize = tempFile.size();
@@ -601,20 +571,8 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 fileSizeRatio = sqrt(fileSizeRatio);
             }
             // ask enlarge
-            if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
-                 (hasHeight && image->height()<height && image->width()<=image->height()) ) {
-                if (!(shared->enlargeAll || shared->noEnlargeAll || shared->abort)) {
-                    enlargeMutex.lock();
-                    emit question(imagePath,tid,"enlarge");
-                    enlargeCondition.wait(&enlargeMutex);
-                }
-                if (shared->enlargeResult != 0 && shared->enlargeResult != 2) {
-                    if (shared->enlargeResult == 4)
-                        emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
-                    else
-                        emit imageStatus(imageData, tr("Skipped"), SKIPPED);
-                }
-            }
+            if (askEnlarge(*image,imagePath) != 0)
+                return -3;
             // ask overwrite
             if ( QFile::exists( targetFilePath ) &&
                  !(shared->overwriteAll || shared->abort
@@ -686,4 +644,24 @@ bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
         linearSize = true;
     }
     return linearSize;
+}
+
+char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
+    if ( (image.width()<width && image.width()>=image.height()) ||
+         (image.height()<height && image.width()<=image.height()) ) {
+        if (!(shared->enlargeAll || shared->noEnlargeAll || shared->abort)) {
+            enlargeMutex.lock();
+            emit question(imagePath,tid,"enlarge");
+            enlargeCondition.wait(&enlargeMutex);
+        }
+        if (shared->enlargeResult != 0 && shared->enlargeResult != 2) {
+            if (shared->enlargeResult == 4)
+                emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+            else
+                emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+            return -1;
+        }
+        return 0;
+    }
+    return 1;
 }
