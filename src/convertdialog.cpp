@@ -1,11 +1,10 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -17,10 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
 #include <QString>
@@ -1263,30 +1259,24 @@ void ConvertDialog::retranslateStrings() {
     }
 }
 
-/*! Cancel converting if converting runs; otherwise close window.
- */
+/** Cancels converting if converting runs; otherwise close window. */
 void ConvertDialog::closeOrCancel() {
-
     if (converting) {
         stopConvertThreads();
         updateInterface();
         setCanceled();
     }
-    else{
+    else
         close();
-    }
-
 }
 
-/*! Terminate all worker threads.
- */
+/** Terminates all worker threads. */
 void ConvertDialog::stopConvertThreads() {
-    for (int i = 0; i < numThreads; i++)
+    for (int i=0; i<convertThreads.length(); i++)
         convertThreads[i]->terminate();
 }
 
-/*! Update user interface after convering.
- */
+/** Updates user interface after convering. */
 void ConvertDialog::updateInterface() {
     converting = false;
     convertSelectedButton->setEnabled(true);
@@ -1299,23 +1289,17 @@ void ConvertDialog::updateInterface() {
     quitButton->setText(tr("Quit"));
 }
 
-/*! Set image status to \em Cancelled if the image isn't converted yet.
- */
+/** Sets image status to \em Cancelled if the image isn't converted yet. */
 void ConvertDialog::setCanceled() {
-
-        int count = filesTreeView->topLevelItemCount();
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-
-        QString status = tr("Cancelled");
-
-        QString converted = tr("Converted");
-
-        for(int i = 0; i < count; i++) {
-            item = filesTreeView->topLevelItem(i);
-            if(item->text(3) != converted){
-                item->setText(3, status);
-                        }
-                }
+    int count = filesTreeView->topLevelItemCount();
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    QString status = tr("Cancelled");
+    QString converted = tr("Converted");
+    for(int i = 0; i < count; i++) {
+        item = filesTreeView->topLevelItem(i);
+        if (item->text(3) != converted)
+            item->setText(3, status);
+    }
 }
 
 void ConvertDialog::setSizeUnit(int index) {

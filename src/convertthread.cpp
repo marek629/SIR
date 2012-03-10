@@ -1,25 +1,23 @@
-/*
-* This file is part of SIR, an open-source cross-platform Image tool
-* 2007  Rafael Sachetto
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
-* Program URL: http://sir.projet-libre.org/
-*
-*/
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Program URL: http://sir.projet-libre.org/
+ */
 
 #include <QImage>
 #include <QDir>
@@ -36,24 +34,23 @@
 
 SharedInformation* ConvertThread::shared = new SharedInformation();
 
-/*! Default constructor.
- * \param parent parent object
- * \param tid thread ID
- */
+/** Default constructor.
+  * \param parent parent object
+  * \param tid thread ID
+  */
 ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
     this->tid = tid;
     work = true;
 }
 
-/*! Enable metadata support if true, otherwise disables metadata support.
- */
+/** Enable metadata support if true, otherwise disables metadata support. */
 void ConvertThread::setMetadataEnabled(bool value) {
     shared->metadataEnabled = value;
 }
 
-/*! Enable save metadata option if true, otherwise disables saving metadata.
- * \note Call this function before calling #setDesiredFormat.
- */
+/** Enable save metadata option if true, otherwise disables saving metadata.
+  * \note Call this function before calling #setDesiredFormat.
+  */
 void ConvertThread::setSaveMetadata(bool value) {
     shared->saveMetadata = value;
 }
@@ -74,15 +71,15 @@ void ConvertThread::setAcceptWork(bool work) {
     this->work = work;
 }
 
-/*! Set desired size in pixels or percent, depend on \a percent value.
- * \param width Width of desired image.
- * \param height Height of desired image.
- * \param percent Sets desired width and height in pixels if false, otherwise
- *     sets size as percent of original image size.
- * \param hasWidth Sets desired width to \a width if true.
- * \param hasHeight Sets desired height to \a height if true.
- * \param maintainAspect If true image will be scaled with keeping apsect ratio.
- */
+/** Set desired size in pixels or percent, depend on \a percent value.
+  * \param width Width of desired image.
+  * \param height Height of desired image.
+  * \param percent Sets desired width and height in pixels if false, otherwise
+  *     sets size as percent of original image size.
+  * \param hasWidth Sets desired width to \a width if true.
+  * \param hasHeight Sets desired height to \a height if true.
+  * \param maintainAspect If true image will be scaled with keeping apsect ratio.
+  */
 void ConvertThread::setDesiredSize(int width, int height, bool percent,
                                    bool hasWidth, bool hasHeight,
                                    bool maintainAspect) {
@@ -98,19 +95,19 @@ void ConvertThread::setDesiredSize(int width, int height, bool percent,
         shared->sizeUnit = 0;
 }
 
-/*! Sets disired size in bytes. Result file size can be lower
- * but never grower than \a bytes.
- * \par
- * This is overloaded function.
- */
+/** Sets disired size in bytes. Result file size can be lower
+  * but never grower than \a bytes.
+  * \par
+  * This is overloaded function.
+  */
 void ConvertThread::setDesiredSize(quint32 bytes) {
     shared->sizeBytes = bytes;
     shared->sizeUnit = 2;
 }
 
-/*! Set desired format string without point prefix.
- * \note Call this function after calling #setSaveMetadata.
- */
+/** Set desired format string without point prefix.
+  * \note Call this function after calling #setSaveMetadata.
+  */
 void ConvertThread::setDesiredFormat(const QString& format) {
     shared->format = format;
     if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
@@ -124,54 +121,50 @@ void ConvertThread::setDesiredFormat(const QString& format) {
                                                       true).toBool();
 }
 
-/*! Allow rotate and set desired rotation angle.
- * \param rotate Allows rotate.
- * \param angle Clockwise rotation angle.
- */
+/** Allow rotate and set desired rotation angle.
+  * \param rotate Allows rotate.
+  * \param angle Clockwise rotation angle.
+  */
 void ConvertThread::setDesiredRotation(bool rotate, double angle) {
     shared->rotate = rotate;
     int multipler = angle / 360;
     shared->angle = angle - multipler*360;
 }
 
-/*! Set desired flip mode.
- * \param flip Index of flip combo box. Supported values:
- * \li 0 <c>None flip</c>
- * \li 1 <c>Flip verticaly</c>
- * \li 2 <c>Flip horizontaly</c>
- * \li 3 <c>Flip verticaly and horizontaly</c>
- */
+/** Set desired flip mode.
+  * \param flip Index of flip combo box. Supported values:
+  * \li 0 <c>None flip</c>
+  * \li 1 <c>Flip verticaly</c>
+  * \li 2 <c>Flip horizontaly</c>
+  * \li 3 <c>Flip verticaly and horizontaly</c>
+  */
 void ConvertThread::setDesiredFlip(int flip) {
     shared->flip = flip;
 }
 
-/*! Set desired image quality.
- * \param quality Integer factor in range 0 to 100.
- */
+/** Set desired image quality.
+  * \param quality Integer factor in range 0 to 100.
+  */
 void ConvertThread::setQuality(int quality) {
     shared->quality = quality;
 }
 
-/*! Set destination file name prefix.
- */
+/** Set destination file name prefix. */
 void ConvertThread::setDestPrefix(const QString& destPrefix) {
     shared->prefix = destPrefix;
 }
 
-/*! Set destination file name suffix.
- */
+/** Set destination file name suffix. */
 void ConvertThread::setDestSuffix(const QString &destSuffix) {
     shared->suffix = destSuffix;
 }
 
-/*! Set destination directory path.
- */
+/** Set destination directory path. */
 void ConvertThread::setDestFolder(const QDir& destFolder) {
     shared->destFolder = destFolder;
 }
 
-/*! Allow overwrite all files.
- */
+/** Allow overwrite all files. */
 void ConvertThread::setOverwriteAll(bool overwriteAll) {
     QMutexLocker locker(&(shared->mutex));
     shared->overwriteAll = overwriteAll;
@@ -203,6 +196,9 @@ void ConvertThread::confirmImage() {
     imageCondition.wakeOne();
 }
 
+/** This is main function of thread.\n
+  * Converts selected images to desired size, format and quality.
+  */
 void ConvertThread::run() {
 
     bool rawEnabled = RawUtils::isRawEnabled();
@@ -398,6 +394,7 @@ void ConvertThread::run() {
     }
 }
 
+/** Gets next image for converting or stops this thread. */
 void ConvertThread::getNextOrStop() {
     imageMutex.lock();
     emit getNextImage(this->tid);
@@ -405,6 +402,7 @@ void ConvertThread::getNextOrStop() {
     imageMutex.unlock();
 }
 
+/** Prints metadata error message on standard error output. */
 void ConvertThread::printError() {
     MetadataUtils::Error *error = metadata.lastError();
     qWarning() << "tid:" << tid << "/n"
@@ -413,6 +411,7 @@ void ConvertThread::printError() {
                << "    " << error->what();
 }
 
+/** Rotates \b image */
 void ConvertThread::rotateImage(QImage *image) {
 
     bool saveExifOrientation = !shared->realRotate;
@@ -472,8 +471,12 @@ void ConvertThread::rotateImage(QImage *image) {
     }
 }
 
+/** Updates Exif thumnail after conversion and (if required) rotates this thumbnail.
+  * New thumbnail will set as \a exifThumbnail in metadata object.\n
+  * If setting thumbnail fails, this function will print error using printError()
+  * function.
+  */
 void ConvertThread::updateThumbnail(const QImage *image) {
-
     // update thumbnail
     if (saveMetadata && shared->updateThumbnail) {
         MetadataUtils::ExifStruct *exifStruct = metadata.exifStruct();
@@ -616,6 +619,10 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     return 0;
 }
 
+/** Returns true if desired file format is corresponding file size to image size
+  * as linear function, otherwise returns false.\n
+  * Following file formats are linear size: BMP, PPM, ICO, TIFF and XBM.
+  */
 bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
     bool linearSize = false;
     if (shared->format == "bmp") {
