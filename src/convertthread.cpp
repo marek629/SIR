@@ -21,7 +21,15 @@
 *
 */
 
-#include <QtGui>
+#include <QImage>
+#include <QDir>
+#include <QSettings>
+#include <QtSvg/QGraphicsSvgItem>
+#include <QtSvg/QSvgRenderer>
+#include <QDebug>
+#include <cmath>
+#include <QPainter>
+
 #include "convertthread.h"
 #include "defines.h"
 #include "rawutils.h"
@@ -229,18 +237,60 @@ void ConvertThread::run() {
 
         QString imagePath = imageData.at(2) + QDir::separator() +
                             imageData.at(0) + "." + originalFormat;
+        originalFormat = originalFormat.toLower();
 
-
-        QImage *image = new QImage();
+        QImage *image = 0;
 
         if(rawEnabled) {
+            image = new QImage();
             if(RawUtils::isRaw(imagePath))
                 image = RawUtils::loadRawImage(imagePath);
             else
                 image->load(imagePath);
         }
-        else
+        else if (originalFormat == "svg" || originalFormat == "svgz") {
+            QGraphicsSvgItem svgImage(imagePath);
+            QSize svgSize = svgImage.renderer()->defaultSize();
+            QPainter *svgPainter = new QPainter;
+            if (shared->sizeUnit == 0) {
+                width = svgSize.width();
+                height = svgSize.height();
+            }
+            else if (shared->sizeUnit == 1) {
+                width *= svgSize.width() / 100.;
+                height *= svgSize.height() / 100.;
+            }
+            else if (shared->sizeUnit == 2) {
+                QString tempFilePath = QDir::tempPath() + QDir::separator() +
+                        "sir_temp" + QString::number(tid) + "." + shared->format;
+                QImage tempImage(svgSize, QImage::Format_ARGB32);
+                if (shared->format == "gif" || shared->format == "png")
+                    tempImage.fill(Qt::transparent);
+                else
+                    tempImage.fill(Qt::white);
+                svgPainter->begin(&tempImage);
+                svgImage.renderer()->render(svgPainter);
+                svgPainter->end();
+                tempImage.save(tempFilePath);
+                qint64 tempFileSize = QFile(tempFilePath).size();
+                double sizeFraction = (double) tempFileSize / shared->sizeBytes;
+                sizeFraction *= 1.5;
+                width = svgSize.width() * sizeFraction;
+                height = svgSize.height() * sizeFraction;
+            }
+            image = new QImage(width, height, QImage::Format_ARGB32);
+            if (shared->format == "gif" || shared->format == "png")
+                image->fill(Qt::transparent);
+            else
+                image->fill(Qt::white);
+            svgPainter->begin(image);
+            svgImage.renderer()->render(svgPainter);
+            svgPainter->end();
+        }
+        else {
+            image = new QImage();
             image->load(imagePath);
+        }
 
         if(image->isNull()) {
             //For some reason we where not able to open the image file
@@ -489,33 +539,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
         hasWidth = true;
         hasHeight = true;
         double destSize = shared->sizeBytes;
-        bool linearSize = false;
-        if (shared->format == "bmp") {
-            destSize -= 54;
-            destSize /= 3;
-            linearSize = true;
-        }
-        else if (shared->format == "ppm") {
-            destSize -= 17;
-            destSize /= 3;
-            linearSize = true;
-        }
-        else if (shared->format == "ico") {
-            destSize -= 1422;
-            destSize /= 4;
-            linearSize = true;
-        }
-        else if (shared->format == "tif" || shared->format == "tiff") {
-            destSize -= 14308;
-            destSize /= 4;
-            linearSize = true;
-        }
-        else if (shared->format == "xbm") {
-            destSize -= 60;
-            destSize /= 0.65;
-            linearSize = true;
-        }
-        if (linearSize) {
+        if (isLinearFileSizeFormat(&destSize)) {
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
             double sourceHeightRatio = height / sourceSizeSqrt;
@@ -524,19 +548,36 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             height = sourceHeightRatio * destSize;
         }
         else { // non-linear size relationship
+//            if (shared->format == "jpg" || shared->format == "jpeg") {
+//                int area = width * height;
+//                double estimatedSizeRatio = area * 0.1 / destSize;
+//                int i=0;
+//                while (estimatedSizeRatio >= 0.9 || estimatedSizeRatio <= 1.1) {
+//                    double ln = log(estimatedSizeRatio);
+//                    width += ln * width;
+//                    height += ln * height;
+//                    area = width * height;
+//                    estimatedSizeRatio = area * 0.1 / destSize;
+//                    qDebug() << width << height << ln << area << estimatedSizeRatio;
+//                    i++;
+//                    if (i > 8)
+//                        break;
+//                }
+//            }
+            //-------------------
             QString tempFilePath = QDir::tempPath() + QDir::separator() +
                     "sir_temp" + QString::number(tid) + "." + shared->format;
             QImage tempImage;
-            quint32 fileSize = QFile(imagePath).size();
+            qint64 fileSize = QFile(imagePath).size();
             QSize size = image->size();
             double fileSizeRatio = (double) fileSize / shared->sizeBytes;
             fileSizeRatio = sqrt(fileSizeRatio);
             QFile tempFile(tempFilePath);
-            tempFile.open(QIODevice::WriteOnly);
-            for (uchar i=0; (fileSizeRatio<0.99 || fileSizeRatio>1.) && i<20; i++) {
+            for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
+                tempFile.open(QIODevice::ReadWrite);
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
-                tempImage = image->scaled(width, height, Qt::KeepAspectRatio,
+                tempImage = image->scaled(width, height, Qt::IgnoreAspectRatio,
                                              Qt::SmoothTransformation);
                 rotateImage(&tempImage);
                 updateThumbnail(&tempImage);
@@ -547,16 +588,17 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 else {
                     qWarning("tid %d: Save temporary image file "
                              "into %s failed", tid,
-                             MetadataUtils::String(targetFilePath).toNativeStdString().data());
+                             MetadataUtils::String(targetFilePath).
+                                toNativeStdString().data());
                     emit imageStatus(imageData, tr("Failed to compute image size"),
                                      FAILED);
-                    return false;
+                    return -1;
                 }
+                tempFile.close();
                 fileSize = tempFile.size();
                 size = tempImage.size();
                 fileSizeRatio = (double) fileSize / shared->sizeBytes;
                 fileSizeRatio = sqrt(fileSizeRatio);
-                tempFile.close();
             }
             // ask enlarge
             if ( (hasWidth && image->width()<width && image->width()>=image->height()) ||
@@ -614,4 +656,34 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
         return 1;
     }
     return 0;
+}
+
+bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
+    bool linearSize = false;
+    if (shared->format == "bmp") {
+        *destSize -= 54;
+        *destSize /= 3;
+        linearSize = true;
+    }
+    else if (shared->format == "ppm") {
+        *destSize -= 17;
+        *destSize /= 3;
+        linearSize = true;
+    }
+    else if (shared->format == "ico") {
+        *destSize -= 1422;
+        *destSize /= 4;
+        linearSize = true;
+    }
+    else if (shared->format == "tif" || shared->format == "tiff") {
+        *destSize -= 14308;
+        *destSize /= 4;
+        linearSize = true;
+    }
+    else if (shared->format == "xbm") {
+        *destSize -= 60;
+        *destSize /= 0.65;
+        linearSize = true;
+    }
+    return linearSize;
 }

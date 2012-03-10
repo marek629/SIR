@@ -27,10 +27,12 @@
 
 #include <QThread>
 #include <QWaitCondition>
-#include <QImage>
-#include <QDir>
-#include "sharedinformation.h"
+#include <QMutex>
+
 #include "metadatautils.h"
+#include "sharedinformation.h"
+
+class QGraphicsSvgItem;
 
 //! Image convertion thread class.
 /** Threads converting images work in main loop implemented in run method.
@@ -80,6 +82,8 @@ private:
     void rotateImage(QImage *image);
     void updateThumbnail(const QImage *image);
     char computeSize(const QImage *image, const QString &imagePath);
+    char computeSize(const QGraphicsSvgItem *image, const QString &imagePath);
+    bool isLinearFileSizeFormat(double *destSize);
 
     bool work;
     QStringList imageData;
