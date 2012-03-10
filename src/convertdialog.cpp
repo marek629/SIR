@@ -938,7 +938,7 @@ void ConvertDialog::readSettings() {
         heightLineEdit->setText(sizeHeightString);
         heightLineEdit->setText(settings.value("heightPercent", "100").toString());
     }
-    else if (sizeUnitComboBox->currentIndex() == 0) {
+    else {
         sizeWidthString = settings.value("widthPercent", "100").toString();
         sizeHeightString = settings.value("heightPercent", "100").toString();
         widthLineEdit->setText(sizeWidthString);
@@ -1151,6 +1151,7 @@ void ConvertDialog::query(const QString& targetFile, int tid, const QString& wha
     }
 }
 
+/** Asks the user for agree to overwrite image corresponding to \b data. */
 void ConvertDialog::questionOverwrite(QueryData data) {
 
     if (ConvertThread::shared->noOverwriteAll)
@@ -1178,6 +1179,7 @@ void ConvertDialog::questionOverwrite(QueryData data) {
         convertThreads[data.tid]->confirmOverwrite(2);
 }
 
+/** Asks the user for agree to enlarge image corresponding to \b data. */
 void ConvertDialog::questionEnlarge(QueryData data) {
 
     if (ConvertThread::shared->noEnlargeAll)
@@ -1206,8 +1208,7 @@ void ConvertDialog::questionEnlarge(QueryData data) {
         convertThreads[data.tid]->confirmEnlarge(2);
 }
 
-/*! Retranslates GUI.
- */
+/** Retranslates GUI. */
 void ConvertDialog::retranslateStrings() {
 
     QList<QString> itemList;

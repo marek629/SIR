@@ -18,6 +18,7 @@
  *
  * Program URL: http://sir.projet-libre.org/
  */
+
 #ifndef CONVERTDIALOG_H
 #define CONVERTDIALOG_H
 
@@ -146,6 +147,9 @@ private slots:
     void sizeChanged(const QString &value);
 };
 
+/** Writes window properties like size, position and maximize state for restore
+  * in next session.
+  */
 void ConvertDialog::writeWindowProperties() {
     QSettings settings("SIR");
     settings.beginGroup("MainWindow");
@@ -162,6 +166,7 @@ void ConvertDialog::writeWindowProperties() {
     settings.endGroup();
 }
 
+/** Resets enlarge and overwrite agree answers. */
 void ConvertDialog::resetAnswers() {
     ConvertThread::shared->overwriteResult = 1;
     ConvertThread::shared->overwriteAll = false;
@@ -172,6 +177,10 @@ void ConvertDialog::resetAnswers() {
     ConvertThread::shared->noEnlargeAll = false;
 }
 
+/** Connects width and height lines edit's textChanged() signal to sizeChanged()
+  * slot.
+  * \sa disconnectSizeLinesEdit
+  */
 void ConvertDialog::connectSizeLinesEdit() {
     connect(widthLineEdit, SIGNAL(textChanged(QString)),
             this, SLOT(sizeChanged(QString)));
@@ -179,6 +188,9 @@ void ConvertDialog::connectSizeLinesEdit() {
             this, SLOT(sizeChanged(QString)));
 }
 
+/** Disconnects sizeChanged() slot.
+  * \sa connectSizeLinesEdit
+  */
 void ConvertDialog::disconnectSizeLinesEdit() {
     widthLineEdit->disconnect(this,SLOT(sizeChanged(QString)));
     heightLineEdit->disconnect(this, SLOT(sizeChanged(QString)));
