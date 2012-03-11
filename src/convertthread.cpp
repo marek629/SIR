@@ -321,14 +321,15 @@ void ConvertThread::run() {
         }
 
         // compute dest size in px
-        if (computeSize(image,imagePath) == 1) { // image saved
+        char sizeComputed = computeSize(image,imagePath);
+        if (sizeComputed == 1) { // image saved
             delete image;
             getNextOrStop();
             continue;
         }
 
         // ask enlarge
-        if (askEnlarge(*image,imagePath) != 0) {
+        if (sizeComputed == -3 || askEnlarge(*image,imagePath) < 0) {
             delete image;
             getNextOrStop();
             continue;
@@ -547,7 +548,8 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             fileSizeRatio = sqrt(fileSizeRatio);
             QFile tempFile(tempFilePath);
             for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
-                tempFile.open(QIODevice::ReadWrite);
+                tempFile.open(QIODevice::WriteOnly);
+                tempFile.seek(0);
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
                 tempImage = image->scaled(width, height, Qt::IgnoreAspectRatio,
@@ -574,7 +576,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 fileSizeRatio = sqrt(fileSizeRatio);
             }
             // ask enlarge
-            if (askEnlarge(*image,imagePath) != 0)
+            if (askEnlarge(*image,imagePath) < 0)
                 return -3;
             // ask overwrite
             if ( QFile::exists( targetFilePath ) &&
