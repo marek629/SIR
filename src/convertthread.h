@@ -29,7 +29,7 @@
 #include "metadatautils.h"
 #include "sharedinformation.h"
 
-class QGraphicsSvgItem;
+class QSvgRenderer;
 
 //! Image convertion thread class.
 /** Threads converting images work in main loop implemented in run method.
@@ -79,7 +79,7 @@ private:
     void rotateImage(QImage *image);
     void updateThumbnail(const QImage *image);
     char computeSize(const QImage *image, const QString &imagePath);
-    char computeSize(const QGraphicsSvgItem *image, const QString &imagePath);
+    char computeSize(QSvgRenderer *renderer, const QString &imagePath);
     bool isLinearFileSizeFormat(double *destSize);
     char askEnlarge(const QImage &image, const QString &imagePath);
 
@@ -92,6 +92,7 @@ private:
     bool hasHeight;
     int width;
     int height;
+    char sizeComputed;
     bool saveMetadata;
     bool rotate;
     double angle;

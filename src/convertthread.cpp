@@ -204,6 +204,7 @@ void ConvertThread::run() {
     bool rawEnabled = RawUtils::isRawEnabled();
 
     while(work) {
+        sizeComputed = 0;
         width = shared->width;
         height = shared->height;
         hasWidth = shared->hasWidth;
@@ -246,42 +247,13 @@ void ConvertThread::run() {
         }
         else if (originalFormat == "svg" || originalFormat == "svgz") {
             QGraphicsSvgItem svgImage(imagePath);
-            QSize svgSize = svgImage.renderer()->defaultSize();
-            QPainter *svgPainter = new QPainter;
-            if (shared->sizeUnit == 0) {
-                width = svgSize.width();
-                height = svgSize.height();
+            sizeComputed = computeSize(svgImage.renderer(), imagePath);
+            if (sizeComputed == 1) {
+                getNextOrStop();
+                continue;
             }
-            else if (shared->sizeUnit == 1) {
-                width *= svgSize.width() / 100.;
-                height *= svgSize.height() / 100.;
-            }
-            else if (shared->sizeUnit == 2) {
-                QString tempFilePath = QDir::tempPath() + QDir::separator() +
-                        "sir_temp" + QString::number(tid) + "." + shared->format;
-                QImage tempImage(svgSize, QImage::Format_ARGB32);
-                if (shared->format == "gif" || shared->format == "png")
-                    tempImage.fill(Qt::transparent);
-                else
-                    tempImage.fill(Qt::white);
-                svgPainter->begin(&tempImage);
-                svgImage.renderer()->render(svgPainter);
-                svgPainter->end();
-                tempImage.save(tempFilePath);
-                qint64 tempFileSize = QFile(tempFilePath).size();
-                double sizeFraction = (double) tempFileSize / shared->sizeBytes;
-                sizeFraction *= 1.5;
-                width = svgSize.width() * sizeFraction;
-                height = svgSize.height() * sizeFraction;
-            }
-            image = new QImage(width, height, QImage::Format_ARGB32);
-            if (shared->format == "gif" || shared->format == "png")
-                image->fill(Qt::transparent);
-            else
-                image->fill(Qt::white);
-            svgPainter->begin(image);
-            svgImage.renderer()->render(svgPainter);
-            svgPainter->end();
+            image = new QImage();
+            image->load(imagePath);
         }
         else {
             image = new QImage();
@@ -321,11 +293,13 @@ void ConvertThread::run() {
         }
 
         // compute dest size in px
-        char sizeComputed = computeSize(image,imagePath);
-        if (sizeComputed == 1) { // image saved
-            delete image;
-            getNextOrStop();
-            continue;
+        if (sizeComputed == 0) { // false if converting from SVG file
+                sizeComputed = computeSize(image,imagePath);
+            if (sizeComputed == 1) { // image saved
+                delete image;
+                getNextOrStop();
+                continue;
+            }
         }
 
         // ask enlarge
@@ -578,6 +552,117 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             // ask enlarge
             if (askEnlarge(*image,imagePath) < 0)
                 return -3;
+            // ask overwrite
+            if ( QFile::exists( targetFilePath ) &&
+                 !(shared->overwriteAll || shared->abort
+                   || shared->noOverwriteAll)) {
+                if (!(shared->overwriteAll || shared->abort
+                      || shared->noOverwriteAll)) {
+                    overwriteMutex.lock();
+                    emit question(targetFilePath,tid,"overwrite");
+                    overwriteCondition.wait(&overwriteMutex);
+                }
+                if(shared->overwriteResult == 0 || shared->overwriteResult == 2) {
+                    QFile::remove(targetFilePath);
+                    if (tempFile.copy(targetFilePath))
+                        emit imageStatus(imageData, tr("Converted"), CONVERTED);
+                    else {
+                        emit imageStatus(imageData, tr("Failed to save"), FAILED);
+                        return -1;
+                    }
+                }
+                else if (shared->overwriteResult == 4)
+                    emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+                else
+                    emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+            }
+            else if (shared->noOverwriteAll)
+                emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+            else if (shared->abort)
+                emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+            else { // when overwriteAll is true or file not exists
+                QFile::remove(targetFilePath);
+                if (tempFile.copy(targetFilePath))
+                    emit imageStatus(imageData, tr("Converted"), CONVERTED);
+                else {
+                    emit imageStatus(imageData, tr("Failed to save"), FAILED);
+                    return -2;
+                }
+            }
+        }
+        return 1;
+    }
+    return 0;
+}
+
+char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath) {
+    QSize defaultSize = renderer->defaultSize();
+    if (shared->sizeUnit == 0) ; // px
+    // compute size when it wasn't typed in pixels
+    else if (shared->sizeUnit == 1) { // %
+        width *= defaultSize.width() / 100.;
+        height *= defaultSize.height() / 100.;
+    }
+    else if (shared->sizeUnit == 2) { // bytes
+        width = defaultSize.width();
+        height = defaultSize.height();
+        hasWidth = true;
+        hasHeight = true;
+        double destSize = shared->sizeBytes;
+        if (isLinearFileSizeFormat(&destSize)) {
+            double sourceSizeSqrt = sqrt(width * height);
+            double sourceWidthRatio = width / sourceSizeSqrt;
+            double sourceHeightRatio = height / sourceSizeSqrt;
+            destSize = sqrt(destSize);
+            width = sourceWidthRatio * destSize;
+            height = sourceHeightRatio * destSize;
+        }
+        else { // non-linear size relationship
+            QString tempFilePath = QDir::tempPath() + QDir::separator() +
+                    "sir_temp" + QString::number(tid) + "." + shared->format;
+            qint64 fileSize = QFile(imagePath).size();
+            QSize size = defaultSize;
+            double fileSizeRatio = (double) fileSize / shared->sizeBytes;
+            fileSizeRatio = sqrt(fileSizeRatio);
+            QFile tempFile(tempFilePath);
+            QPainter painter;
+            for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
+                tempFile.open(QIODevice::WriteOnly);
+                tempFile.seek(0);
+                width = size.width() / fileSizeRatio;
+                height = size.height() / fileSizeRatio;
+                QImage tempImage(width, height, QImage::Format_ARGB32);
+                if (shared->format == "gif" || shared->format == "png")
+                    tempImage.fill(Qt::transparent);
+                else // in other formats tranparency isn't supported
+                    tempImage.fill(Qt::white);
+                painter.begin(&tempImage);
+                renderer->render(&painter);
+                painter.end();
+                rotateImage(&tempImage);
+                updateThumbnail(&tempImage);
+                if (tempImage.save(&tempFile, 0, shared->quality)) {
+                    if (saveMetadata)
+                        metadata.write(tempFilePath, tempImage);
+                }
+                else {
+                    qWarning("tid %d: Save temporary image file "
+                             "into %s failed", tid,
+                             MetadataUtils::String(targetFilePath).
+                                toNativeStdString().data());
+                    emit imageStatus(imageData, tr("Failed to compute image size"),
+                                     FAILED);
+                    return -4;
+                }
+                tempFile.close();
+                fileSize = tempFile.size();
+                size = tempImage.size();
+                fileSizeRatio = (double) fileSize / shared->sizeBytes;
+                fileSizeRatio = sqrt(fileSizeRatio);
+            }
+
+            // TODO: finish this function
+
             // ask overwrite
             if ( QFile::exists( targetFilePath ) &&
                  !(shared->overwriteAll || shared->abort
