@@ -1286,6 +1286,7 @@ void ConvertDialog::setCanceled() {
     }
 }
 
+/** Shows size values corresponding index of size unit combo box. */
 void ConvertDialog::setSizeUnit(int index) {
     if (index < 0)
         return;
@@ -1323,6 +1324,9 @@ void ConvertDialog::setSizeUnit(int index) {
     lastIndex = index;
 }
 
+/** If desired size unit is percent and it keeps aspect ratio it will be change
+  * width or heigth percent value following the user change in adjacent line edit.
+  */
 void ConvertDialog::sizeChanged(const QString &value) {
     // size unit is % and maintainCheckBox is checked
     if (sizeUnitComboBox->currentIndex() == 1 && maintainCheckBox->isChecked()) {
