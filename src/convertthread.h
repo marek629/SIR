@@ -82,6 +82,7 @@ private:
     char computeSize(QSvgRenderer *renderer, const QString &imagePath);
     bool isLinearFileSizeFormat(double *destSize);
     char askEnlarge(const QImage &image, const QString &imagePath);
+    char askOverwrite(QFile *tempFile);
 
     bool work;
     QStringList imageData;

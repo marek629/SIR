@@ -553,42 +553,9 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             if (askEnlarge(*image,imagePath) < 0)
                 return -3;
             // ask overwrite
-            if ( QFile::exists( targetFilePath ) &&
-                 !(shared->overwriteAll || shared->abort
-                   || shared->noOverwriteAll)) {
-                if (!(shared->overwriteAll || shared->abort
-                      || shared->noOverwriteAll)) {
-                    overwriteMutex.lock();
-                    emit question(targetFilePath,tid,"overwrite");
-                    overwriteCondition.wait(&overwriteMutex);
-                }
-                if(shared->overwriteResult == 0 || shared->overwriteResult == 2) {
-                    QFile::remove(targetFilePath);
-                    if (tempFile.copy(targetFilePath))
-                        emit imageStatus(imageData, tr("Converted"), CONVERTED);
-                    else {
-                        emit imageStatus(imageData, tr("Failed to save"), FAILED);
-                        return -1;
-                    }
-                }
-                else if (shared->overwriteResult == 4)
-                    emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
-                else
-                    emit imageStatus(imageData, tr("Skipped"), SKIPPED);
-            }
-            else if (shared->noOverwriteAll)
-                emit imageStatus(imageData, tr("Skipped"), SKIPPED);
-            else if (shared->abort)
-                emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
-            else { // when overwriteAll is true or file not exists
-                QFile::remove(targetFilePath);
-                if (tempFile.copy(targetFilePath))
-                    emit imageStatus(imageData, tr("Converted"), CONVERTED);
-                else {
-                    emit imageStatus(imageData, tr("Failed to save"), FAILED);
-                    return -2;
-                }
-            }
+            char answer = askOverwrite(&tempFile);
+            if (answer < 0)
+                return answer;
         }
         return 1;
     }
@@ -660,46 +627,10 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                 fileSizeRatio = (double) fileSize / shared->sizeBytes;
                 fileSizeRatio = sqrt(fileSizeRatio);
             }
-
-            // TODO: finish this function
-
             // ask overwrite
-            if ( QFile::exists( targetFilePath ) &&
-                 !(shared->overwriteAll || shared->abort
-                   || shared->noOverwriteAll)) {
-                if (!(shared->overwriteAll || shared->abort
-                      || shared->noOverwriteAll)) {
-                    overwriteMutex.lock();
-                    emit question(targetFilePath,tid,"overwrite");
-                    overwriteCondition.wait(&overwriteMutex);
-                }
-                if(shared->overwriteResult == 0 || shared->overwriteResult == 2) {
-                    QFile::remove(targetFilePath);
-                    if (tempFile.copy(targetFilePath))
-                        emit imageStatus(imageData, tr("Converted"), CONVERTED);
-                    else {
-                        emit imageStatus(imageData, tr("Failed to save"), FAILED);
-                        return -1;
-                    }
-                }
-                else if (shared->overwriteResult == 4)
-                    emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
-                else
-                    emit imageStatus(imageData, tr("Skipped"), SKIPPED);
-            }
-            else if (shared->noOverwriteAll)
-                emit imageStatus(imageData, tr("Skipped"), SKIPPED);
-            else if (shared->abort)
-                emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
-            else { // when overwriteAll is true or file not exists
-                QFile::remove(targetFilePath);
-                if (tempFile.copy(targetFilePath))
-                    emit imageStatus(imageData, tr("Converted"), CONVERTED);
-                else {
-                    emit imageStatus(imageData, tr("Failed to save"), FAILED);
-                    return -2;
-                }
-            }
+            char answer = askOverwrite(&tempFile);
+            if (answer < 0)
+                return answer;
         }
         return 1;
     }
@@ -758,4 +689,48 @@ char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
         return 0;
     }
     return 1;
+}
+
+/** Asks the user in message box if overwrite file.\n
+  * Returns negative value if overwriting failed, otherwise returns 0.
+  * \note This function was created for SVG images.
+  */
+char ConvertThread::askOverwrite(QFile *tempFile) {
+    if ( QFile::exists( targetFilePath ) &&
+         !(shared->overwriteAll || shared->abort
+           || shared->noOverwriteAll)) {
+        if (!(shared->overwriteAll || shared->abort
+              || shared->noOverwriteAll)) {
+            overwriteMutex.lock();
+            emit question(targetFilePath,tid,"overwrite");
+            overwriteCondition.wait(&overwriteMutex);
+        }
+        if(shared->overwriteResult == 0 || shared->overwriteResult == 2) {
+            QFile::remove(targetFilePath);
+            if (tempFile->copy(targetFilePath))
+                emit imageStatus(imageData, tr("Converted"), CONVERTED);
+            else {
+                emit imageStatus(imageData, tr("Failed to save"), FAILED);
+                return -1;
+            }
+        }
+        else if (shared->overwriteResult == 4)
+            emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+        else
+            emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+    }
+    else if (shared->noOverwriteAll)
+        emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+    else if (shared->abort)
+        emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+    else { // when overwriteAll is true or file not exists
+        QFile::remove(targetFilePath);
+        if (tempFile->copy(targetFilePath))
+            emit imageStatus(imageData, tr("Converted"), CONVERTED);
+        else {
+            emit imageStatus(imageData, tr("Failed to save"), FAILED);
+            return -2;
+        }
+    }
+    return 0;
 }
