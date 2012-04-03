@@ -163,6 +163,8 @@ void ConvertDialog::writeWindowProperties() {
         settings.setValue("possition",this->pos());
         settings.setValue("size",this->size());
     }
+    settings.setValue("horizontalSplitter", horizontalSplitter->saveState());
+    settings.setValue("verticalSplitter", verticalSplitter->saveState());
     settings.endGroup();
 }
 

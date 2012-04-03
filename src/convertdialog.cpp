@@ -357,6 +357,9 @@ void ConvertDialog::init() {
     destPrefixEdit->setCompleter(completer2);
     destSuffixEdit->setCompleter(completer2);
 
+    verticalSplitter->setStretchFactor(0,1000);
+    horizontalSplitter->setStretchFactor(0,1000);
+
     convertProgressBar->setValue(0);
     createConnections();
     createActions();
@@ -872,6 +875,8 @@ void ConvertDialog::readSettings() {
         this->resize( settings.value("size",this->size()).toSize() );
         if (settings.value("maximized",false).toBool())
             this->showMaximized();
+        horizontalSplitter->restoreState(settings.value("horizontalSplitter").toByteArray());
+        verticalSplitter->restoreState(settings.value("verticalSplitter").toByteArray());
     }
     settings.endGroup(); // MainWindow
 
