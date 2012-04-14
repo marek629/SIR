@@ -141,6 +141,7 @@ public slots:
     void showUpdateResult(QString *result, bool error);
     void sendInstall();
     void showSendInstallResult(QString *result, bool error);
+    void showDetails();
 
 private slots:
     void setSizeUnit(int index);

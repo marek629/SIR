@@ -38,6 +38,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QWindowStateChangeEvent>
+#include <QDebug>
 
 #include "convertdialog.h"
 #include "previewdialog.h"
@@ -118,6 +119,7 @@ void ConvertDialog::createConnections() {
     connect(filesTreeView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem *, int)),
             SLOT(showPreview(QTreeWidgetItem *, int)));
     connect(filesTreeView, SIGNAL(changed()), SLOT(updateTree()));
+    connect(filesTreeView, SIGNAL(itemSelectionChanged()), SLOT(showDetails()));
 
     // browse button
     connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
@@ -720,6 +722,44 @@ void ConvertDialog::showMetadata() {
 
     metadataForm = new MetadataDialog(this, list, index);
     metadataForm->show();
+}
+
+void ConvertDialog::showDetails() {
+    if (horizontalSplitter->widget(1)->width() == 0)
+        return;
+    QList<QTreeWidgetItem*> selectedFiles = filesTreeView->selectedItems();
+    QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+            "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+            "<html><head><meta name=\"qrichtext\" content=\"1\" />"
+            "<style type=\"text/css\">p, li { white-space: pre-wrap; }</style>"
+            "</head><body style=\" font-family:'Sans Serif';"
+            "font-size:9pt; font-weight:400; font-style:normal;\">";
+    QString htmlContent;
+    QString htmlEnd = "</body></html>";
+    const QString breakLine = "<br />";
+    if (selectedFiles.length() == 1) {
+        QTreeWidgetItem *item = selectedFiles.first();
+        MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
+                item->text(0) + '.' + item->text(1);
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(imagePath.toNativeStdString());
+        image->readMetadata();
+        Exiv2::PreviewManager previewManager (*image);
+        Exiv2::PreviewPropertiesList previewList = previewManager.getPreviewProperties();
+        if (!previewList.empty()) {
+            Exiv2::PreviewImage preview = previewManager.getPreviewImage(previewList[0]);
+            QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb" +
+                    preview.extension().c_str();
+            preview.writeFile(thumbPath.toStdString());
+            htmlContent = "<center><img src=\"" + thumbPath + "\" /></center>" + breakLine;
+        }
+        htmlContent += imagePath + "<hr />";
+        detailsBrowser->setHtml(htmlOrigin + htmlContent + htmlEnd);
+    }
+    else if (selectedFiles.length() <= 0)
+        detailsBrowser->setText(tr("Select image to show this one details."));
+    else { // many files summary
+
+    }
 }
 
 /** Loads files into tree view from main() functions \a argv argument list. */

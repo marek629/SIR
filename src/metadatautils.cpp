@@ -207,9 +207,9 @@ void MetadataUtils::Metadata::setExifStruct() {
                     exifData["Exif.Image.DateTimeDigitized"].toString() );
 
     // Thumbnail section
-    Exiv2::PreviewManager previewMenager(*image);
-    Exiv2::PreviewImage thumbnail = previewMenager.getPreviewImage(
-                previewMenager.getPreviewProperties()[0] );
+    Exiv2::PreviewManager previewManager(*image);
+    Exiv2::PreviewImage thumbnail = previewManager.getPreviewImage(
+                previewManager.getPreviewProperties()[0] );
     exifStruct_.thumbnailImage = QImage(thumbnail.width(), thumbnail.height(),
                                         QImage::Format_ARGB32);
     exifStruct_.thumbnailImage.loadFromData(thumbnail.pData(), thumbnail.size());
