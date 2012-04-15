@@ -1,0 +1,50 @@
+Index: sir/sir.desktop
+===================================================================
+--- sir.orig/sir.desktop	2010-12-15 22:28:28.000000000 +0000
++++ sir/sir.desktop	2010-12-15 22:29:31.000000000 +0000
+@@ -1,9 +1,9 @@
+ [Desktop Entry]
+ Name=Sir
+ GenericName=Simple Image Resizer
+-Exec=sir
++Exec=/opt/extras.ubuntu.com/sir/bin/sir
+ Comment=Qt4 Image Resizer
+-Icon=/usr/share/pixmaps/sir.png
++Icon=/opt/extras.ubuntu.com/sir/share/pixmaps/sir.png
+ Terminal=0
+ Type=Application
+ Categories=Graphics;
+Index: sir/sir.pro
+===================================================================
+--- sir.orig/sir.pro	2010-12-15 22:25:40.000000000 +0000
++++ sir/sir.pro	2010-12-15 22:27:41.000000000 +0000
+@@ -51,8 +51,8 @@
+     translations/sir_gr.ts \
+     translations/sir_cz.ts
+ unix { 
+-    target.path += /usr/bin
+-    images.path = /usr/share/pixmaps
++    target.path += /opt/extras.ubuntu.com/sir/bin
++    images.path = /opt/extras.ubuntu.com/sir/share/pixmaps
+     images.files = images/sir*
+     service.path = /usr/share/kde4/services/ServiceMenus
+     service.files = sir_service.desktop
+Index: sir/sir_service.desktop
+===================================================================
+--- sir.orig/sir_service.desktop	2010-12-15 22:29:49.000000000 +0000
++++ sir/sir_service.desktop	2010-12-15 22:31:08.000000000 +0000
+@@ -5,7 +5,7 @@
+ ServiceTypes=KonqPopupMenu/Plugin,image/*
+ Actions=openWithSir
+ Name=openWithSir
+-Icon=/usr/share/pixmaps/sir.png
++Icon=/opt/extras.ubuntu.com/sir/share/pixmaps/sir.png
+ X-KDE-Priority=TopLevel
+ 
+ [Desktop Action openWithSir]
+@@ -13,4 +13,4 @@
+ Name[pl]=ZmieĹ„ rozmiar obrazka z SIR
+ Name[pt_BR]=Abrir com SIR
+ Exec=sir %U
+-Icon=/usr/share/pixmaps/sir.png
++Icon=/opt/extras.ubuntu.com/sir/share/pixmaps/sir.png

@@ -39,7 +39,29 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;or do a sudo apt-get install dcraw on Debian based systems.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sir.projet-libre.org/&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://sir.projet-libre.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Hlavní vývojář: Rafael Sachetto &amp;lt;&lt;/span&gt;&lt;a href=&quot;mailto:rsachetto@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;rsachetto@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Český překlad: Pavel Fric&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Německý překlad: Michael Kruger&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Portugalský překlad: Rafael Sachetto  &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Slovenský překlad: Jozef Riha&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Španělský překlad: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Ruský překlad: Renat Gar and касьянъ&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#00681c;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Maďarský překlad: Kopiás Csaba&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Polský překlad: zoteek&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Holandský překlad: Youp&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Rumunský překlad: Ovidiu Pop&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Francouzský překlad: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Verdana ,Bitstream Vera Sans ,Arial ,Helvetica ,Sans ,Bitstream Vera Serif&apos;; font-size:medium; color:#000000;&quot;&gt;Jérôme Launay&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Řecký překlad: Steve Jemens&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Přispění kódem: Víctor Fernández Martínez&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;Pro umožnění návštěvy dcraw: &lt;/span&gt;&lt;a href=&quot;http://www.cybercom.net/~dcoffin/dcraw/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cybercom.net/~dcoffin/dcraw/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;nebo provést sudo apt-get install dcraw na systémech založených na distribuci Debian.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; color:#000000;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://rsachetto.googlepages.com&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;http://sir.projet-libre.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -229,7 +251,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/convertdialog.cpp" line="821"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Verze</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1158"/>
@@ -407,12 +429,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../dialogs/convertdialog.ui" line="288"/>
         <source>Target Suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Cílová přípona:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="345"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="365"/>
@@ -422,37 +444,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../dialogs/convertdialog.ui" line="448"/>
         <source>Target File Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost cílového souboru:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="472"/>
         <source>KiB</source>
-        <translation type="unfinished"></translation>
+        <translation>KiB</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="477"/>
         <source>MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>MiB</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="511"/>
         <source>Choose unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat jednotku</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="518"/>
         <source>Pixels (px)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pixely (px)</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="523"/>
         <source>Percent (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Procento (%)</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="528"/>
         <source>Bytes (B)</source>
-        <translation type="unfinished"></translation>
+        <translation>Byty (B)</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="553"/>
@@ -462,7 +484,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../dialogs/convertdialog.ui" line="561"/>
         <source>No flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné obrácení</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="721"/>
@@ -496,17 +518,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../dialogs/convertdialog.ui" line="566"/>
         <source>Flip vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrátit svisle</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="571"/>
         <source>Flip horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrátit vodorovně</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="576"/>
         <source>Flip vertically and horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrátit svisle a vodorovně</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="650"/>
@@ -563,32 +585,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/convertdialog.cpp" line="141"/>
         <source>Remove selected images</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit vybrané obrázky</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="145"/>
         <source>Convert selected images</source>
-        <translation type="unfinished"></translation>
+        <translation>Převést vybrané obrázky</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="148"/>
         <source>Show Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat obrázek</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="149"/>
         <source>Show preview selected image</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat náhled na vybraný obrázek</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="152"/>
         <source>Show Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat popisné údaje</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="153"/>
         <source>Show metadata of selected image</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat popisné údaje k vybranému obrázku</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="174"/>
@@ -596,22 +618,22 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertdialog.cpp" line="218"/>
         <location filename="../src/convertdialog.cpp" line="226"/>
         <source>Let us know!</source>
-        <translation>Dejte nám vědět.</translation>
+        <translation>Dejte nám vědět!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="189"/>
         <source>Go for it!</source>
-        <translation>Jít pro to.</translation>
+        <translation>Jdi pro to!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="192"/>
         <source>No thanks!</source>
-        <translation>Ne díky.</translation>
+        <translation>Ne díky!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="219"/>
         <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
-        <translation>Při pokusu o spojení se se stránkami SIR se vyskytla chyba. Zkontrolujte své internetové spojení a zkuste to později znovu.</translation>
+        <translation>Při pokusu o spojení se se stránkami SIR se vyskytla chyba. Zkontrolujte své internetové spojení a zkuste to později znovu!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="246"/>
@@ -643,12 +665,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/convertdialog.cpp" line="1185"/>
         <source>Enlarge File? - SIR</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvětšit soubor? - SIR</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1186"/>
         <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor nazvaný %1 je menší než požadovaná velikost. Zvětšení může způsobit zhoršení kvality obrázku. Chcete jej zvětšit?</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1216"/>
@@ -699,18 +721,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/convertthread.cpp" line="375"/>
         <source>Error code:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kód chyby:</translation>
     </message>
     <message>
         <location filename="../src/convertthread.cpp" line="551"/>
         <source>Failed to compute image size</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se spočítat velikostí obrázku</translation>
     </message>
     <message>
         <location filename="../src/convertthread.cpp" line="591"/>
         <location filename="../src/convertthread.cpp" line="609"/>
         <source>Failed to save</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se uložit</translation>
     </message>
     <message>
         <location filename="../src/convertthread.cpp" line="212"/>
@@ -721,7 +743,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertthread.cpp" line="596"/>
         <location filename="../src/convertthread.cpp" line="603"/>
         <source>Cancelled</source>
-        <translation type="unfinished">Zrušeno</translation>
+        <translation>Zrušeno</translation>
     </message>
     <message>
         <location filename="../src/convertthread.cpp" line="339"/>
@@ -749,28 +771,29 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/historycombobox.cpp" line="44"/>
         <source>Remove item</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit položku</translation>
     </message>
     <message>
         <location filename="../src/historycombobox.cpp" line="72"/>
         <source>Full text history - SIR</source>
-        <translation type="unfinished"></translation>
+        <translation>Celá historie textu - SIR</translation>
     </message>
     <message>
         <location filename="../src/historycombobox.cpp" line="73"/>
         <source>Text history memory is full of favorite items.
 SIR can&apos;t automatically remove favorite item. Do it manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>Paměť s historií textu je plná oblíbených položek.
+SIR nedokáže oblíbené položky odstranit automaticky. Udělejte to ručně.</translation>
     </message>
     <message>
         <location filename="../src/historycombobox.cpp" line="100"/>
         <source>Throw away from favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyhodit z oblíbených</translation>
     </message>
     <message>
         <location filename="../src/historycombobox.cpp" line="105"/>
         <source>Mark as favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Označit jako oblíbené</translation>
     </message>
 </context>
 <context>
@@ -778,27 +801,27 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../src/messagebox.cpp" line="17"/>
         <source>&amp;Yes</source>
-        <translation type="unfinished">An&amp;o</translation>
+        <translation>An&amp;o</translation>
     </message>
     <message>
         <location filename="../src/messagebox.cpp" line="18"/>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Ne</translation>
+        <translation>&amp;Ne</translation>
     </message>
     <message>
         <location filename="../src/messagebox.cpp" line="19"/>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished">&amp;Ano pro vše</translation>
+        <translation>&amp;Ano pro vše</translation>
     </message>
     <message>
         <location filename="../src/messagebox.cpp" line="20"/>
         <source>N&amp;o to All</source>
-        <translation type="unfinished"></translation>
+        <translation>N&amp;e pro vše</translation>
     </message>
     <message>
         <location filename="../src/messagebox.cpp" line="21"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Z&amp;rušit</translation>
     </message>
 </context>
 <context>
@@ -806,27 +829,27 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="14"/>
         <source>Metadata - SIR</source>
-        <translation type="unfinished"></translation>
+        <translation>Popisné údaje - SIR</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="24"/>
         <source>Exif</source>
-        <translation type="unfinished"></translation>
+        <translation>Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="42"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrázek</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="52"/>
         <source>Exif Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Verze Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="59"/>
         <source>Processing Software</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpracovávající program</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="73"/>
@@ -836,585 +859,587 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <location filename="../dialogs/metadatadialog.ui" line="338"/>
         <location filename="../dialogs/metadatadialog.ui" line="371"/>
         <source>TextLabel</source>
-        <translation type="unfinished">Textový popis</translation>
+        <translation>Textový štítek</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="107"/>
         <location filename="../dialogs/metadatadialog.ui" line="322"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="113"/>
         <location filename="../dialogs/metadatadialog.ui" line="328"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="146"/>
         <location filename="../dialogs/metadatadialog.ui" line="361"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="183"/>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Natočení</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="190"/>
         <source>Generated Date and Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořené datum a čas</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="197"/>
         <source>Digitized Date and Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdigitalizované datum a čas</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="215"/>
         <source>No rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné otočení</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="220"/>
         <source>No rotation, verticaly mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné otočení, zrcadlit svisle</translation>
     </message>
     <message utf8="true">
         <location filename="../dialogs/metadatadialog.ui" line="225"/>
         <source>Rotation 180°</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočení 180°</translation>
     </message>
     <message utf8="true">
         <location filename="../dialogs/metadatadialog.ui" line="230"/>
         <source>Rotation 180°, verticaly mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočení 180°, zrcadlit svisle</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="235"/>
         <source>Clockwise rotation, horizontaly mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočení po směru hodinových ručiček, zrcadlit vodorovně</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="240"/>
         <source>Clockwise rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočení po směru hodinových ručiček</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="245"/>
         <source>Counterclockwise rotation, horizontaly mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočení proti směru hodinových ručiček, zrcadlit vodorovně</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="250"/>
         <source>Counterclockwise rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočení proti směru hodinových ručiček</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="303"/>
         <source>Thumbnail</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhled</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="309"/>
         <source>Thumbnail Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Štítek náhledu</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="416"/>
         <source>Photo</source>
-        <translation type="unfinished"></translation>
+        <translation>Fotografie</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="564"/>
         <source>Focal length</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohnisková vzdálenost</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="571"/>
         <source>Exposure time</source>
-        <translation type="unfinished"></translation>
+        <translation>Doba osvětlení</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="578"/>
         <source>Exposure bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Zkreslení osvětlení</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="585"/>
         <source> mm</source>
-        <translation type="unfinished"></translation>
+        <translation> mm</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="602"/>
         <source>1/2000 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/2000 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="607"/>
         <source>1/1600 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/1600 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="612"/>
         <source>1/1250 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/1250 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="617"/>
         <source>1/1000 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/1000 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="622"/>
         <source>1/800 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/800 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="627"/>
         <source>1/640 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/640 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="632"/>
         <source>1/500 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/500 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="637"/>
         <source>1/400 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/400 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="642"/>
         <source>1/320 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/320 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="647"/>
         <source>1/250 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/250 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="652"/>
         <source>1/200 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/200 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="657"/>
         <source>1/160 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/160 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="662"/>
         <source>1/125 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/125 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="667"/>
         <source>1/100 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/100 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="672"/>
         <source>1/80 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/80 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="677"/>
         <source>1/60 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/60 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="682"/>
         <source>1/50 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/50 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="687"/>
         <source>1/40 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/40 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="692"/>
         <source>1/30 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/30 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="697"/>
         <source>1/25 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/25 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="702"/>
         <source>1/20 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/20 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="707"/>
         <source>1/15 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/15 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="712"/>
         <source>1/13 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/13 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="717"/>
         <source>1/10 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/10 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="722"/>
         <location filename="../dialogs/metadatadialog.ui" line="926"/>
         <source>1/8 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/8 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="727"/>
         <source>1/6 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/6 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="732"/>
         <source>1/5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/5 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="737"/>
         <location filename="../dialogs/metadatadialog.ui" line="931"/>
         <source>1/4 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/4 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="742"/>
         <source>1/3 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/3 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="747"/>
         <source>2/5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>2/5 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="752"/>
         <location filename="../dialogs/metadatadialog.ui" line="936"/>
         <source>1/2 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/2 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="757"/>
         <source>2/3 s</source>
-        <translation type="unfinished"></translation>
+        <translation>2/3 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="762"/>
         <source>4/5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>4/5 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="767"/>
         <location filename="../dialogs/metadatadialog.ui" line="941"/>
         <source>1 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="772"/>
         <source>1 1/3 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1 1/3 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="777"/>
         <source>1 2/3 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1 2/3 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="782"/>
         <location filename="../dialogs/metadatadialog.ui" line="946"/>
         <source>2 s</source>
-        <translation type="unfinished"></translation>
+        <translation>2 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="787"/>
         <source>2 1/2 s</source>
-        <translation type="unfinished"></translation>
+        <translation>2 1/2 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="792"/>
         <source>3 1/5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>3 1/5 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="797"/>
         <location filename="../dialogs/metadatadialog.ui" line="951"/>
         <source>4 s</source>
-        <translation type="unfinished"></translation>
+        <translation>4 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="802"/>
         <source>5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>5 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="807"/>
         <source>6 s</source>
-        <translation type="unfinished"></translation>
+        <translation>6 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="812"/>
         <location filename="../dialogs/metadatadialog.ui" line="956"/>
         <source>8 s</source>
-        <translation type="unfinished"></translation>
+        <translation>8 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="817"/>
         <source>10 s</source>
-        <translation type="unfinished"></translation>
+        <translation>10 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="822"/>
         <source>13 s</source>
-        <translation type="unfinished"></translation>
+        <translation>13 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="827"/>
         <source>15 s</source>
-        <translation type="unfinished"></translation>
+        <translation>15 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="835"/>
         <source>EV</source>
-        <translation type="unfinished"></translation>
+        <translation>EV</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="851"/>
         <source>Aperture</source>
-        <translation type="unfinished"></translation>
+        <translation>Clona</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="858"/>
         <source>Shutter Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychlost závěrky</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="865"/>
         <source>ISO Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychlost ISO</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="872"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="422"/>
         <source>Exposure program</source>
-        <translation type="unfinished"></translation>
+        <translation>Osvětlovací program</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="435"/>
         <source>Not defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Nestanoveno</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="440"/>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruční</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="445"/>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="450"/>
         <source>Aperture priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Přednost clony</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="455"/>
         <source>Shutter priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Přednost závěrky</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="460"/>
         <source>Creative program (biased toward depth of field)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvůrčí program (zkresleno směrem k hloubce pole)</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="465"/>
         <source>Action program (biased toward fast shutter speed)</source>
-        <translation type="unfinished"></translation>
+        <translation>Akční program (zkresleno směrem k rychlosti závěrky)</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="470"/>
         <source>Portrait mode (for closeup photos with the background out of focus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim portrétu (formát na výšku; pro uzavřené fotografie s pozadím mimo ohnisko)</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="475"/>
         <source>Landscape mode (for landscape photos with the background in focus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim krajiny (formát na šířku; pro krajinné fotografie s pozadím v ohnisku)</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="486"/>
         <source>Light metering mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim měření osvětlení</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="499"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="504"/>
         <source>Average</source>
-        <translation type="unfinished"></translation>
+        <translation>Průměr</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="509"/>
         <source>Center weighted average</source>
-        <translation type="unfinished"></translation>
+        <translation>Středově zdůrazněný průměr</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="514"/>
         <source>Spot</source>
-        <translation type="unfinished"></translation>
+        <translation>Tečka</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="519"/>
         <source>Multi spot</source>
-        <translation type="unfinished"></translation>
+        <translation>Více teček</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="524"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzor</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="529"/>
         <source>Partial</source>
-        <translation type="unfinished"></translation>
+        <translation>Částečný</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="534"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Jiné</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="545"/>
         <source>Flash mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim blesku</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="886"/>
         <source>1/2048 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/2048 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="891"/>
         <source>1/1024 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/1024 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="896"/>
         <source>1/512 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/512 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="901"/>
         <source>1/256 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/256 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="906"/>
         <source>1/128 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/128 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="911"/>
         <source>1/64 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/64 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="916"/>
         <source>1/32 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/32 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="921"/>
         <source>1/16 s</source>
-        <translation type="unfinished"></translation>
+        <translation>1/16 s</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1012"/>
         <source>Camera</source>
-        <translation type="unfinished"></translation>
+        <translation>Fotoaparát</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1022"/>
         <source>Manufacturer</source>
-        <translation type="unfinished"></translation>
+        <translation>Výrobce</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1029"/>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Model</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1086"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1092"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Umělec</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1104"/>
         <source>Copyright</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorské právo</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1116"/>
         <source>User Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Uživatelská poznámka</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1151"/>
         <location filename="../src/metadatadialog.cpp" line="170"/>
         <source>Delete metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat popisné údaje</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1171"/>
         <source>Save changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit změny</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1178"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../src/metadatadialog.cpp" line="22"/>
         <source>Metadata error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba v popisných údajích</translation>
     </message>
     <message>
         <location filename="../src/metadatadialog.cpp" line="25"/>
         <source>
 Error code: %1
 Error message: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Kód chyby: %1
+Hlášení o chybě: %2</translation>
     </message>
     <message>
         <location filename="../src/metadatadialog.cpp" line="171"/>
         <source>Do you really want to delete metadata from this image?</source>
-        <translation type="unfinished"></translation>
+        <translation>Opravdu chcete smazat popisné údaje k tomuto obrázku?</translation>
     </message>
 </context>
 <context>
@@ -1422,17 +1447,17 @@ Error message: %2</source>
     <message>
         <location filename="../src/metadatautils.cpp" line="62"/>
         <source>Error open file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při otevírání souboru %1</translation>
     </message>
     <message>
         <location filename="../src/metadatautils.cpp" line="82"/>
         <source>Error write file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při zápisu souboru %1</translation>
     </message>
     <message>
         <location filename="../src/metadatautils.cpp" line="501"/>
         <source>Save thumnail failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhled se nepodařilo uložit</translation>
     </message>
 </context>
 <context>
@@ -1449,73 +1474,73 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="177"/>
         <source>Detect automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Určit automaticky</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="266"/>
         <location filename="../dialogs/optionsdialog.ui" line="273"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="405"/>
         <source>Metadata Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Volby pro popisné údaje</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="417"/>
         <source>EXIF, IPTC and XMP supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Podporovány EXIF, IPTC a XMP</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="433"/>
         <source>Save also metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit i popisné údaje</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="443"/>
         <source>Update thumbnail</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnovit náhled</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="450"/>
         <source>Apply Exif Orientation tag to thumbnail</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít značku natočení Exif na náhled</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="457"/>
         <source>When image is rotated</source>
-        <translation type="unfinished"></translation>
+        <translation>Když je obrázek otáčen</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="463"/>
         <source>rotate seriously</source>
-        <translation type="unfinished"></translation>
+        <translation>otáčet vážně</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="470"/>
         <source>save orientation in Exif</source>
-        <translation type="unfinished"></translation>
+        <translation>uložit natočení v Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="480"/>
         <source>Overwrite Exif Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat umělce v Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="495"/>
         <source>Overwrite Exif Copyright</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat autorské právo v Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="510"/>
         <source>Overwrite Exif User Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat uživatelskou poznámku v Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="528"/>
         <source>Raw Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Volby pro surové obrázky</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="534"/>
@@ -1549,43 +1574,43 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="49"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Obecné</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="58"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Popisné údaje</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="67"/>
         <source>Raw</source>
-        <translation type="unfinished"></translation>
+        <translation>Surový</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="92"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Obecná nastavení</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="196"/>
         <location filename="../dialogs/optionsdialog.ui" line="313"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="203"/>
         <source>Default Size Unit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jednotka pro výchozí velikost:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="224"/>
         <source>Default File Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost výchozího souboru:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="231"/>
         <source>Default Target Suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí cílová přípona:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="238"/>
@@ -1600,7 +1625,7 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="420"/>
         <source>Enable metadata support</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolit podporu pro popisné údaje</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="217"/>
@@ -1640,7 +1665,7 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="252"/>
         <source>Text history count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet historie textu:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="259"/>
@@ -1674,17 +1699,17 @@ Error message: %2</source>
     <message>
         <location filename="../src/optionsdialog.cpp" line="410"/>
         <source>Camera owner: ; Photographer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastník fotoaparátu: ; Fotograf: </translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="420"/>
         <source>Copyright owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastník autorského práva</translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="431"/>
         <source>This picture was edited with Simple Image Resizer</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento obrázek byl upraven v programu Simple Image Resizer</translation>
     </message>
     <message>
         <source>dcraw executable not found.
@@ -1771,7 +1796,7 @@ Podpora pro RAW není umožněna!</translation>
         <location filename="../src/previewdialog.cpp" line="190"/>
         <location filename="../src/previewdialog.cpp" line="683"/>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístit do velikosti okna</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="167"/>
@@ -1831,19 +1856,21 @@ Podpora pro RAW není umožněna!</translation>
     <message>
         <location filename="../src/previewdialog.cpp" line="652"/>
         <source>Image file error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba souboru s obrázkem</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="653"/>
         <source>Load image %1 failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrázek %1 se nepodařilo nahrát</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="659"/>
         <source>
 Error code: %1
 Error message: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Kód chyby: %1
+Hlášení o chybě: %2</translation>
     </message>
     <message>
         <location filename="../dialogs/previewdialog.ui" line="17"/>
@@ -1861,52 +1888,52 @@ Error message: %2</source>
     <message>
         <location filename="../src/metadata/exif.h" line="133"/>
         <source>No flash function.</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádná funkce blesku.</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.h" line="136"/>
         <source>Flash fired</source>
-        <translation type="unfinished"></translation>
+        <translation>Použit blesk</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.h" line="139"/>
         <source>Flash didn&apos;t fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Blesk nevyletěl</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.h" line="152"/>
         <source>, strobe return light detected</source>
-        <translation type="unfinished"></translation>
+        <translation>, rozpoznán odraz světla elektrického blesku</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.h" line="156"/>
         <source>, strobe return light not detected</source>
-        <translation type="unfinished"></translation>
+        <translation>, nerozpoznán odraz světla elektrického blesku</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.h" line="145"/>
         <source>, auto mode</source>
-        <translation type="unfinished"></translation>
+        <translation>, automatický režim</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.h" line="142"/>
         <source>, compulsory flash mode</source>
-        <translation type="unfinished"></translation>
+        <translation>, nucený režim blesku</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.h" line="148"/>
         <source>, red-eye reduction</source>
-        <translation type="unfinished"></translation>
+        <translation>, omezení červených očí</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.cpp" line="48"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../src/metadata/string.cpp" line="73"/>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádná data</translation>
     </message>
 </context>
 <context>

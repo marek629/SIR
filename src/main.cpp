@@ -21,17 +21,21 @@
  *
  */
 
+
+#include <QtCore/QLocale>
+#include <QtCore/QTextCodec>
 #include "main.h"
 
 int main(int argc, char *argv[]) {
     Q_INIT_RESOURCE(application);
     QApplication app(argc, argv);
 
+    QTextCodec* codec = QTextCodec::codecForLocale ();
     QString args = "";
 
     /*Parse the arguments from the command line*/
     for(int i = 1; i < argc; i++)
-        args = args + (QString)argv[i] + "**" ;
+        args = args + codec->toUnicode(argv[i]) + "**" ;
 
     ConvertDialog w(0,args);
     w.show();
