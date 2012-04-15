@@ -39,6 +39,7 @@
 #include <QUrl>
 #include <QWindowStateChangeEvent>
 #include <QDebug>
+#include <cmath>
 
 #include "convertdialog.h"
 #include "previewdialog.h"
@@ -737,6 +738,7 @@ void ConvertDialog::showDetails() {
     QString htmlContent;
     QString htmlEnd = "</body></html>";
     const QString breakLine = "<br />";
+    detailsBrowser->clear();
     if (selectedFiles.length() == 1) {
         QTreeWidgetItem *item = selectedFiles.first();
         MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
@@ -753,7 +755,14 @@ void ConvertDialog::showDetails() {
             htmlContent = "<center><img src=\"" + thumbPath + "\" /></center>" + breakLine;
         }
         htmlContent += imagePath + "<hr />";
+        htmlContent += tr("Image size: ") + QString::number(image->pixelWidth())
+                + "x" + QString::number(image->pixelHeight()) + " px" + breakLine;
+        QFileInfo info(imagePath);
+        htmlContent += tr("File size: ") + QString::number(
+                    info.size() / pow(1024.,fileSizeComboBox->currentIndex()+1.), 'f', 2)
+                + " " + fileSizeComboBox->currentText() + breakLine;
         detailsBrowser->setHtml(htmlOrigin + htmlContent + htmlEnd);
+        detailsBrowser->reload();
     }
     else if (selectedFiles.length() <= 0)
         detailsBrowser->setText(tr("Select image to show this one details."));
