@@ -40,6 +40,7 @@
 #include <QWindowStateChangeEvent>
 #include <QDebug>
 #include <cmath>
+#include <QSvgRenderer>
 
 #include "convertdialog.h"
 #include "previewdialog.h"
@@ -729,34 +730,66 @@ void ConvertDialog::showDetails() {
     if (horizontalSplitter->widget(1)->width() == 0)
         return;
     QList<QTreeWidgetItem*> selectedFiles = filesTreeView->selectedItems();
-    QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+    const QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
             "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
             "<html><head><meta name=\"qrichtext\" content=\"1\" />"
             "<style type=\"text/css\">p, li { white-space: pre-wrap; }</style>"
             "</head><body style=\" font-family:'Sans Serif';"
             "font-size:9pt; font-weight:400; font-style:normal;\">";
     QString htmlContent;
-    QString htmlEnd = "</body></html>";
+    const QString htmlEnd = "</body></html>";
     const QString breakLine = "<br />";
     detailsBrowser->clear();
+    QSize imageSize;
+    bool isSvg = false;
     if (selectedFiles.length() == 1) {
         QTreeWidgetItem *item = selectedFiles.first();
+        QString ext = item->text(1);
         MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
                 item->text(0) + '.' + item->text(1);
-        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(imagePath.toNativeStdString());
-        image->readMetadata();
-        Exiv2::PreviewManager previewManager (*image);
-        Exiv2::PreviewPropertiesList previewList = previewManager.getPreviewProperties();
-        if (!previewList.empty()) {
-            Exiv2::PreviewImage preview = previewManager.getPreviewImage(previewList[0]);
-            QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb" +
-                    preview.extension().c_str();
-            preview.writeFile(thumbPath.toStdString());
-            htmlContent = "<center><img src=\"" + thumbPath + "\" /></center>" + breakLine;
+        int usableWidth = detailsBrowser->width() - 12;
+        QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb";
+        ext = ext.toUpper();
+        // thumbnail generation
+        if (ext != "SVG" && ext != "SVGZ") {
+            Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(imagePath.toNativeStdString());
+            image->readMetadata();
+            imageSize = QSize(image->pixelWidth(), image->pixelHeight());
+            Exiv2::PreviewManager previewManager (*image);
+            Exiv2::PreviewPropertiesList previewList = previewManager.getPreviewProperties();
+            if (!previewList.empty()) { // read from metadata thumnail
+                Exiv2::PreviewImage preview = previewManager.getPreviewImage(previewList[0]);
+                thumbPath += preview.extension().c_str();
+                preview.writeFile(thumbPath.toStdString());
+            }
+            else { // generate from image data
+                QImage img(imagePath);
+                QImage thumbnail = img.scaledToWidth(usableWidth, Qt::SmoothTransformation);
+                thumbnail.save(thumbPath, "TIFF");
+            }
         }
+        else { // render from SVG file
+            isSvg = true;
+            QGraphicsSvgItem svg(imagePath);
+            QSvgRenderer *renderer = svg.renderer();
+            QSize size = renderer->defaultSize();
+            imageSize = size;
+            double sizeRatio = (double) usableWidth / size.width();
+            size *= sizeRatio;
+            QImage thumbnail (size, QImage::Format_ARGB32);
+            thumbnail.fill(Qt::transparent);
+            QPainter painter (&thumbnail);
+            renderer->render(&painter);
+            thumbnail.save(thumbPath, "TIFF");
+        }
+        htmlContent = "<center><img src=\"" + thumbPath + "\" /></center>" + breakLine;
         htmlContent += imagePath + "<hr />";
-        htmlContent += tr("Image size: ") + QString::number(image->pixelWidth())
-                + "x" + QString::number(image->pixelHeight()) + " px" + breakLine;
+        if (isSvg)
+            htmlContent += tr("Default image size: ");
+        else
+            htmlContent += tr("Image size: ");
+        htmlContent += QString::number(imageSize.width()) + "x"
+                + QString::number(imageSize.height()) + " px" + breakLine;
         QFileInfo info(imagePath);
         htmlContent += tr("File size: ") + QString::number(
                     info.size() / pow(1024.,fileSizeComboBox->currentIndex()+1.), 'f', 2)
