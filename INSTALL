@@ -1,0 +1,9 @@
+==================
+
+-If you want to get up and running quickly and easily-
+
+sir/> ./qmake sir.pro
+sir/> make
+sir/> make install (as root)
+
+==================

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin,image/*
+Actions=openWithSir
+Name=openWithSir
+Icon=/usr/share/pixmaps/sir.png
+X-KDE-Priority=TopLevel
+
+[Desktop Action openWithSir]
+Name=Open with SIR
+Name[pl]=ZmieĹ„ rozmiar obrazka z SIR
+Name[pt_BR]=Abrir com SIR
+Exec=sir %U
+Icon=/usr/share/pixmaps/sir.png

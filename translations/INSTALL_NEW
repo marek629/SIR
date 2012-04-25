@@ -1,0 +1,6 @@
+To install a new language:
+
+- Add the line in the translation_info.txt file: qm_file,Language_Name,flag_image
+- Add the files in application.qrc (Both language (qm) and flag)
+- Add the ts file in sir.pro
+- Run lrelase sir.pro
