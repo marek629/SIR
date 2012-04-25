@@ -26,8 +26,9 @@
 #ifndef EXIF_H
 #define EXIF_H
 
-#include "string.h"
 #include <QImage>
+#include <QObject>
+#include "string.h"
 
 namespace Exiv2
 {
@@ -51,7 +52,7 @@ namespace MetadataUtils
       * \a vide See also.
       * \sa ExifStruct Flash Flip String
       */
-    class Exif {
+    class Exif : public QObject {
     public:
         Exif();
         bool isVersionKnown();
@@ -76,6 +77,9 @@ namespace MetadataUtils
         static short rotationAngle(char orientation);
         static short rotationAngle(char orientation, int *flip);
         static Flip flipValue(char orientation);
+        static String orientationString(char orientation);
+        static String expProgramString(uchar programId);
+        static String meteringModeString(short modeId);
 
     private:
         bool versionKnown;

@@ -108,6 +108,10 @@ private:
     QTreeWidgetItem *treeMenuItem;
     QString sizeWidthString;
     QString sizeHeightString;
+    int exifAuthor;
+    int exifCamera;
+    int exifPhoto;
+    int exifImage;
 
 protected:
     virtual void changeEvent(QEvent *e);

@@ -37,12 +37,17 @@ QStringList MetadataUtils::Metadata::saveMetadataFormats =
 /** Default constructor. */
 MetadataUtils::Metadata::Metadata() {}
 
+MetadataUtils::Metadata::~Metadata() {
+    close();
+}
+
 /** Reads metadata from \b path file path and optionaly setup ExifStruct if
   * \b setupStructs is true, and returns read success value.\n
   * If exception catched this error data will be saved into lastError_ field.
   * \sa lastError
   */
 bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setupStructs) {
+    close();
     try {
         std::string filePath = path.toNativeStdString();
         image = Exiv2::ImageFactory::open(filePath);
@@ -57,7 +62,6 @@ bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setup
 #ifdef EXV_HAVE_XMP_TOOLKIT
         xmpData = image->xmpData();
 #endif // EXV_HAVE_XMP_TOOLKIT
-        image.reset();
         return true;
     }
     catch (Exiv2::Error &e) {
@@ -78,12 +82,12 @@ bool MetadataUtils::Metadata::read(const QString &path, bool setupStructs) {
   * \sa lastError
   */
 bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QImage& qImage) {
+    close();
     try {
         std::string filePath = path.toNativeStdString();
         image = Exiv2::ImageFactory::open(filePath);
         setData(qImage);
         image->writeMetadata();
-        image.reset();
         return true;
     }
     catch (Exiv2::Error &e) {
@@ -96,6 +100,13 @@ bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QIm
 /** This is overloaded function. */
 bool MetadataUtils::Metadata::write(const QString &path, const QImage &image) {
     return write((const MetadataUtils::String&)path, image);
+}
+
+/** Closes last file opened to read or write.
+  * \sa open write
+  */
+void MetadataUtils::Metadata::close() {
+    image.reset();
 }
 
 /** Clears metadata. */
@@ -285,7 +296,14 @@ QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::
     QString result;
     if (key1.empty())
         return result;
-    Exiv2::Rational rational = exifData[key1].toRational();
+    Exiv2::Exifdatum& tag = exifData[key1];
+    Exiv2::Rational rational;
+    if (tag.size() > 0)
+        rational = tag.toRational();
+    else {
+        rational.first = -1;
+        rational.second = 1;
+    }
     result = timeString(&rational,key2);
     return result;
 }

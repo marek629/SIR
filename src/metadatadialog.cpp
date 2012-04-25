@@ -42,6 +42,17 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     this->imagePath = this->images->at(this->currentImage);
     metadata = new MetadataUtils::Metadata;
 
+    // setup Exif orientation combo box
+    for (char i=1; i<=8; i++)
+        exifOrientationComboBox->addItem(MetadataUtils::Exif::orientationString(i));
+    // setup Exif exposure program combo box
+    for (uchar i=0; i<=8; i++)
+        exifExpProgramComboBox->addItem(MetadataUtils::Exif::expProgramString(i));
+    // setup Exif light metering mode combo box
+    for (short i=0; i<8; i++)
+        exifLightMeteringModeComboBox->addItem(
+                    MetadataUtils::Exif::meteringModeString(i));
+
     if (currentImage == 0)
         previousButton->setEnabled(false);
     if (currentImage == images->length()-1)

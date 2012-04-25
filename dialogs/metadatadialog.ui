@@ -267,46 +267,6 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <item>
-                  <property name="text">
-                   <string>No rotation</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>No rotation, verticaly mirror</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Rotation 180°</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Rotation 180°, verticaly mirror</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Clockwise rotation, horizontaly mirror</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Clockwise rotation</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Counterclockwise rotation, horizontaly mirror</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Counterclockwise rotation</string>
-                  </property>
-                 </item>
                 </widget>
                </item>
                <item>
@@ -487,51 +447,6 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>Not defined</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Manual</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Auto</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Aperture priority</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Shutter priority</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Creative program (biased toward depth of field)</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Action program (biased toward fast shutter speed)</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Portrait mode (for closeup photos with the background out of focus)</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Landscape mode (for landscape photos with the background in focus)</string>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>
@@ -551,46 +466,6 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>Unknown</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Average</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Center weighted average</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Spot</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Multi spot</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Pattern</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Partial</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Other</string>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>

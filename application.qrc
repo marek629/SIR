@@ -45,5 +45,6 @@
         <file>images/favorite.png</file>
         <file>images/flip_horizontal.png</file>
         <file>images/flip_vertical.png</file>
+        <file>images/options_details.png</file>
     </qresource>
 </RCC>

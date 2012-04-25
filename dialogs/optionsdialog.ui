@@ -64,6 +64,15 @@
       </item>
       <item>
        <property name="text">
+        <string>File details</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../application.qrc">
+         <normaloff>:/images/options_details.png</normaloff>:/images/options_details.png</iconset>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>Raw</string>
        </property>
        <property name="icon">
@@ -80,9 +89,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>403</width>
-         <height>910</height>
+         <y>-824</y>
+         <width>409</width>
+         <height>1237</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -523,60 +532,212 @@
          </widget>
         </item>
         <item>
+         <widget class="QGroupBox" name="detailsBox">
+          <property name="title">
+           <string>File details options</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="1" column="0">
+            <widget class="QTabWidget" name="tabWidget">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="exifTab">
+              <attribute name="title">
+               <string>Exif</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="4" column="0">
+                <widget class="QCheckBox" name="exifGeneratedTimeCheckBox">
+                 <property name="text">
+                  <string>Generated Date and Time</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="exifSoftCheckBox">
+                 <property name="text">
+                  <string>Processing Software</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="exifFocalLengthCheckBox">
+                 <property name="text">
+                  <string>Focal length</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="exifVersionCheckBox">
+                 <property name="text">
+                  <string>Exif Version</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QCheckBox" name="exifOrientationCheckBox">
+                 <property name="text">
+                  <string>Orientation</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QCheckBox" name="exifManufacturerCheckBox">
+                 <property name="text">
+                  <string>Camera Manufacturer</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QCheckBox" name="exifDigitizedTimeCheckBox">
+                 <property name="text">
+                  <string>Digitized Date and Time</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="exifApertureCheckBox">
+                 <property name="text">
+                  <string>Aperture</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QCheckBox" name="exifExpTimeCheckBox">
+                 <property name="text">
+                  <string>Exposure time</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0">
+                <widget class="QCheckBox" name="exifModelCheckBox">
+                 <property name="text">
+                  <string>Camera Model</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="1">
+                <widget class="QCheckBox" name="exifIsoCheckBox">
+                 <property name="text">
+                  <string>ISO Speed</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="1">
+                <widget class="QCheckBox" name="exifMeteringCheckBox">
+                 <property name="text">
+                  <string>Light metering mode</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1">
+                <widget class="QCheckBox" name="exifExpProgramCheckBox">
+                 <property name="text">
+                  <string>Exposure program</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="0">
+                <widget class="QCheckBox" name="exifArtistCheckBox_D">
+                 <property name="text">
+                  <string>Artist</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="0">
+                <widget class="QCheckBox" name="exifCopyrightCheckBox_D">
+                 <property name="text">
+                  <string>Copyright</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="11" column="0">
+                <widget class="QCheckBox" name="exifUserCommentCheckBox_D">
+                 <property name="text">
+                  <string>User Comment</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="1">
+                <widget class="QCheckBox" name="exifFlashCheckBox">
+                 <property name="text">
+                  <string>Flash mode</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QCheckBox" name="exifShutterSpeedCheckBox">
+                 <property name="text">
+                  <string>Shutter Speed</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QCheckBox" name="exifExpBiasCheckBox">
+                 <property name="text">
+                  <string>Exposure bias</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="iptcTab">
+              <attribute name="title">
+               <string>IPTC</string>
+              </attribute>
+             </widget>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>Print metadata fields:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
          <widget class="QGroupBox" name="rawBox">
           <property name="title">
            <string>Raw Options</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="2" column="1" colspan="2">
+            <widget class="QLineEdit" name="dcrawLineEdit"/>
+           </item>
+           <item row="0" column="0" colspan="3">
             <widget class="QCheckBox" name="rawCheckBox">
              <property name="text">
               <string>Enable RAW images support (needs dcraw)</string>
              </property>
             </widget>
            </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_5">
-               <item>
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>dcraw options:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_9">
-                 <property name="text">
-                  <string>dcraw Executable Path:</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <layout class="QHBoxLayout" name="targetFolderLayout_2">
-                 <item>
-                  <widget class="QLineEdit" name="dcrawOptions"/>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="dcrawPushButton">
-                   <property name="text">
-                    <string>Browse</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="dcrawLineEdit"/>
-               </item>
-              </layout>
-             </item>
-            </layout>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="dcrawOptions"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>dcraw options:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>dcraw Executable Path:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="dcrawPushButton">
+             <property name="text">
+              <string>Browse</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

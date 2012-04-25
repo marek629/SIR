@@ -26,7 +26,6 @@
 
 #include "ui_optionsdialog.h"
 
-
 class QSettings;
 class QDir;
 class QImageWriter;
@@ -34,6 +33,36 @@ class ConvertDialog;
 class LanguageUtils;
 
 using namespace std;
+
+namespace DetailsOptions {
+enum ExifPicture {
+    ExifVersion = 0x1,
+    ProcessingSoftware = 0x2,
+    GeneratedTime = 0x4,
+    DigitizedTime = 0x8,
+    Orientation = 0x10
+};
+enum ExifPhoto {
+    FocalLenght = 0x1,
+    Aperture = 0x2,
+    ShutterSpeed = 0x4,
+    IsoSpeed = 0x8,
+    ExposureTime = 0x10,
+    ExposureBias = 0x20,
+    ExposureProgram = 0x40,
+    LightMeteringMode = 0x80,
+    FlashMode = 0x100
+};
+enum ExifCamera {
+    Manufacturer = 0x1,
+    Model = 0x2
+};
+enum ExifAuthor {
+    Artist = 0x1,
+    Copyright = 0x2,
+    UserComment = 0x4
+};
+}
 
 //! Settings wizard window.
 class OptionsDialog : public QDialog, public Ui::OptionsDialog {

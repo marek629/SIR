@@ -263,7 +263,7 @@ void MetadataUtils::Exif::setUserCommentString(const MetadataUtils::String &v) {
   * \return -1 if \b rotation value is unexpected\n
   *         -2 if \b flip value is unexpected\n
   *         otherwise returing value is in range 1 to 8
-  * \sa rotationAngle flipValue Flip
+  * \sa orientationString rotationAngle flipValue Flip
   */
 char MetadataUtils::Exif::getOrientation(short rotation, int flip) {
     using namespace MetadataUtils;
@@ -302,6 +302,63 @@ char MetadataUtils::Exif::getOrientation(short rotation, int flip) {
         break;
     }
     return -2;
+}
+
+/** Returs translated string coresponding \b orientation code.
+  * \param orientation Orientation code in range 1 to 8. If it isn't in range
+  *        this function will return \em "No rotation" text.
+  * \sa getOrientation expProgramString meteringModeString
+  */
+MetadataUtils::String MetadataUtils::Exif::orientationString(char orientation) {
+    switch (orientation) {
+    case 1: return tr("No rotation");
+    case 2: return tr("No rotation, flip verticaly");
+    case 3: return tr("Rotation 180°");
+    case 4: return tr("Rotation 180°, flip verticaly");
+    case 5: return tr("Clockwise rotation, flip horizontaly");
+    case 6: return tr("Clockwise rotation");
+    case 7: return tr("Counterclockwise rotation, flip horizontaly");
+    case 8: return tr("Counterclockwise rotation");
+    default: return tr("No rotation");
+    }
+}
+
+/** Returs translated string coresponding \b programId code.
+  * \param orientation Orientation code in range 0 to 8. If it isn't in range
+  *        this function will return \em "Not defined" text.
+  * \sa orientationString meteringModeString
+  */
+MetadataUtils::String MetadataUtils::Exif::expProgramString(uchar programId) {
+    switch (programId) {
+    case 0: return tr("Not defined");
+    case 1: return tr("Manual");
+    case 2: return tr("Auto");
+    case 3: return tr("Aperture priority");
+    case 4: return tr("Shutter priority");
+    case 5: return tr("Creative program (biased toward depth of field)");
+    case 6: return tr("Action program (biased toward fast shutter speed)");
+    case 7: return tr("Portrait mode (for closeup photos with the background out of focus)");
+    case 8: return tr("Landscape mode (for landscape photos with the background in focus)");
+    default: return tr("Not defined");
+    }
+}
+
+/** Returs translated string coresponding \b modeId code.
+  * \param orientation Orientation code in range 0 to 6. If it isn't in range
+  *        this function will return \em "Other" text.
+  * \sa orientationString expProgramString
+  */
+MetadataUtils::String MetadataUtils::Exif::meteringModeString(short modeId) {
+    switch (modeId) {
+    case 0: return tr("Unknown");
+    case 1: return tr("Average");
+    case 2: return tr("Center weighted average");
+    case 3: return tr("Spot");
+    case 4: return tr("Multi spot");
+    case 5: return tr("Pattern");
+    case 6: return tr("Partial");
+    default: return tr("Other");
+    }
 }
 
 /** Returns rotation angle in degrees basing on orientation code.

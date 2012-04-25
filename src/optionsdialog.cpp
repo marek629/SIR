@@ -150,7 +150,8 @@ void OptionsDialog::setupWindow() {
     groupBoxes = new QGroupBox* [categoriesCount];
     groupBoxes[0] = generalBox;
     groupBoxes[1] = metadataBox;
-    groupBoxes[2] = rawBox;
+    groupBoxes[2] = detailsBox;
+    groupBoxes[3] = rawBox;
     for (int i=0; i<categoriesCount; i++)
         groupBoxes[i]->hide();
     groupBoxes[currentListItem]->show();
@@ -306,6 +307,56 @@ void OptionsDialog::writeSettings() {
 
     settings.endGroup(); // Exif
 
+    // details
+    settings.beginGroup("Details");
+    int hex = 0;
+    if (exifVersionCheckBox->isChecked())
+        hex |= DetailsOptions::ExifVersion;
+    if (exifSoftCheckBox->isChecked())
+        hex |= DetailsOptions::ProcessingSoftware;
+    if (exifOrientationCheckBox->isChecked())
+        hex |= DetailsOptions::Orientation;
+    if (exifGeneratedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::GeneratedTime;
+    if (exifDigitizedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::DigitizedTime;
+    settings.setValue("exifImage",hex);
+    hex = 0;
+    if (exifFocalLengthCheckBox->isChecked())
+        hex |= DetailsOptions::FocalLenght;
+    if (exifApertureCheckBox->isChecked())
+        hex |= DetailsOptions::Aperture;
+    if (exifExpTimeCheckBox->isChecked())
+        hex |= DetailsOptions::ExposureTime;
+    if (exifShutterSpeedCheckBox->isChecked())
+        hex |= DetailsOptions::ShutterSpeed;
+    if (exifExpBiasCheckBox->isChecked())
+        hex |= DetailsOptions::ExposureBias;
+    if (exifIsoCheckBox->isChecked())
+        hex |= DetailsOptions::IsoSpeed;
+    if (exifExpProgramCheckBox->isChecked())
+        hex |= DetailsOptions::ExposureProgram;
+    if (exifMeteringCheckBox->isChecked())
+        hex |= DetailsOptions::LightMeteringMode;
+    if (exifFlashCheckBox->isChecked())
+        hex |= DetailsOptions::FlashMode;
+    settings.setValue("exifPhoto",hex);
+    hex = 0;
+    if (exifManufacturerCheckBox->isChecked())
+        hex |= DetailsOptions::Manufacturer;
+    if (exifModelCheckBox->isChecked())
+        hex |= DetailsOptions::Model;
+    settings.setValue("exifCamera",hex);
+    hex = 0;
+    if (exifArtistCheckBox->isChecked())
+        hex |= DetailsOptions::Artist;
+    if (exifCopyrightCheckBox_D->isChecked())
+        hex |= DetailsOptions::Copyright;
+    if (exifUserCommentCheckBox_D->isChecked())
+        hex |= DetailsOptions::UserComment;
+    settings.setValue("exifAuthor",hex);
+    settings.endGroup(); // Details
+
     // raw
     settings.beginGroup("Raw");
     bool dcrawOk = false;
@@ -441,6 +492,33 @@ void OptionsDialog::readSettings() {
     exifUserCommentComboBox->setEnabled(exifOverwrite);
 
     settings.endGroup(); // Exif
+
+    // details
+    settings.beginGroup("Details");
+    int hex = settings.value("exifImage",0x14).toInt();
+    exifVersionCheckBox->setChecked(hex & DetailsOptions::ExifVersion);
+    exifSoftCheckBox->setChecked(hex & DetailsOptions::ProcessingSoftware);
+    exifOrientationCheckBox->setChecked(hex & DetailsOptions::Orientation);
+    exifGeneratedTimeCheckBox->setChecked(hex & DetailsOptions::GeneratedTime);
+    exifDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
+    hex = settings.value("exifPhoto",0x1f).toInt();
+    exifFocalLengthCheckBox->setChecked(hex & DetailsOptions::FocalLenght);
+    exifApertureCheckBox->setChecked(hex & DetailsOptions::Aperture);
+    exifIsoCheckBox->setChecked(hex & DetailsOptions::IsoSpeed);
+    exifShutterSpeedCheckBox->setChecked(hex & DetailsOptions::ShutterSpeed);
+    exifExpTimeCheckBox->setChecked(hex & DetailsOptions::ExposureTime);
+    exifExpBiasCheckBox->setChecked(hex & DetailsOptions::ExposureBias);
+    exifExpProgramCheckBox->setChecked(hex & DetailsOptions::ExposureProgram);
+    exifMeteringCheckBox->setChecked(hex & DetailsOptions::LightMeteringMode);
+    exifFlashCheckBox->setChecked(hex & DetailsOptions::FlashMode);
+    hex = settings.value("exifCamera",0x2).toInt();
+    exifManufacturerCheckBox->setChecked(hex & DetailsOptions::Manufacturer);
+    exifModelCheckBox->setChecked(hex & DetailsOptions::Model);
+    hex = settings.value("exifAuthor",0x1).toInt();
+    exifArtistCheckBox_D->setChecked(hex & DetailsOptions::Artist);
+    exifCopyrightCheckBox_D->setChecked(hex & DetailsOptions::Copyright);
+    exifUserCommentCheckBox_D->setChecked(hex & DetailsOptions::UserComment);
+    settings.endGroup(); // Details
 
     // raw
     settings.beginGroup("Raw");

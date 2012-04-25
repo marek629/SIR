@@ -40,10 +40,12 @@ namespace MetadataUtils {
         Q_OBJECT
     public:
         Metadata();
+        ~Metadata();
         bool read(const String& path, bool setupStructs = false);
         bool read(const QString& path, bool setupStructs = false);
         bool write(const String& path, const QImage& image = QImage());
         bool write(const QString& path, const QImage& image = QImage());
+        void close();
         void clearMetadata();
         void setExifData();
         void setExifStruct();
@@ -60,6 +62,7 @@ namespace MetadataUtils {
         QString timeString(Exiv2::Rational *rational, const std::string &key);
         static Exiv2::Rational simpleRational(int integer);
         static Exiv2::Rational simpleRational(const Exiv2::Rational &rationalPower);
+        Exiv2::Image::AutoPtr imageAutoPtr() { return image; }
         MetadataUtils::ExifStruct *exifStruct() { return &exifStruct_; } /**< Returns pointer
             to \a Exif struct. */
         Error *lastError() { return &lastError_; } /**< Returns pointer to last error object. */
