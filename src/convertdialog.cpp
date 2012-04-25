@@ -4,7 +4,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -743,18 +743,19 @@ void ConvertDialog::showDetails() {
     QString htmlContent;
     const QString htmlEnd = "</body></html>";
     const QString htmlBr = "<br />";
+    const QString htmlHr = "<hr />";
     detailsBrowser->clear();
     QSize imageSize;
     bool isSvg = false;
-    bool metadataEnabled(MetadataUtils::Metadata::isEnabled());
+    bool metadataEnabled = MetadataUtils::Metadata::isEnabled();
     MetadataUtils::Metadata metadata;
     MetadataUtils::ExifStruct *exifStruct = 0;
+    int usableWidth = detailsBrowser->width() - 12;
     if (selectedFiles.length() == 1) {
         QTreeWidgetItem *item = selectedFiles.first();
         QString ext = item->text(1);
         MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
-                item->text(0) + '.' + item->text(1);
-        int usableWidth = detailsBrowser->width() - 12;
+                item->text(0) + '.' + ext;
         QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb";
         ext = ext.toUpper();
         // thumbnail generation
@@ -782,8 +783,12 @@ void ConvertDialog::showDetails() {
                 if (!imageSize.isValid())
                     imageSize = img.size();
                 thumbPath += ".tif";
-                QImage thumbnail = img.scaledToWidth(usableWidth,
-                                                     Qt::SmoothTransformation);
+                QImage thumbnail;
+                if (img.width() > usableWidth)
+                    thumbnail = img.scaledToWidth(usableWidth,
+                                                  Qt::SmoothTransformation);
+                else
+                    thumbnail = img;
                 thumbnail.save(thumbPath, "TIFF");
             }
         }
@@ -878,13 +883,94 @@ void ConvertDialog::showDetails() {
                 htmlContent += tr("User Comment") + ": " + exifStruct->userComment
                          + htmlBr;
         }
-        detailsBrowser->setHtml(htmlOrigin + htmlContent + htmlEnd);
     }
-    else if (selectedFiles.length() <= 0)
+    else if (selectedFiles.length() <= 0) {
         detailsBrowser->setText(tr("Select image to show this one details."));
-    else { // many files summary
-
+        return;
     }
+    else { // many files summary
+        QTreeWidgetItem *lastItem = selectedFiles.last();
+        QString lastItemPath = lastItem->text(2) + QDir::separator() +
+                lastItem->text(0) + '.' + lastItem->text(1);
+        if (usableWidth > 180)
+            usableWidth = 180;
+        int i = 0;
+        foreach (QTreeWidgetItem *item, selectedFiles) {
+            QString ext = item->text(1);
+            MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
+                    item->text(0) + '.' + ext;
+            QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
+                    + QString::number(i);
+            ext = ext.toUpper();
+            // thumbnail generation
+            if (ext != "SVG" && ext != "SVGZ") {
+                bool fromData(!MetadataUtils::Metadata::isEnabled());
+                isSvg = false;
+                if (!fromData) {
+                    metadata.read(imagePath, true);
+                    exifStruct = metadata.exifStruct();
+                    Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
+                    imageSize = QSize(image->pixelWidth(), image->pixelHeight());
+                    Exiv2::PreviewManager previewManager (*image);
+                    Exiv2::PreviewPropertiesList previewList = previewManager.
+                            getPreviewProperties();
+                    if (!previewList.empty()) { // read from metadata thumnail
+                        Exiv2::PreviewImage preview = previewManager.getPreviewImage(
+                                    previewList[0]);
+                        preview.writeFile(thumbPath.toStdString());
+                        thumbPath += preview.extension().c_str();
+                    }
+                    else
+                        fromData = true;
+                }
+                if (fromData) { // generate from image data
+                    QImage img(imagePath);
+                    if (!imageSize.isValid())
+                        imageSize = img.size();
+                    thumbPath += ".tif";
+                    QImage thumbnail;
+                    if (img.width() > usableWidth)
+                        thumbnail = img.scaledToWidth(usableWidth,
+                                                      Qt::SmoothTransformation);
+                    else
+                        thumbnail = img;
+                    thumbnail.save(thumbPath, "TIFF");
+                }
+            }
+            else { // render from SVG file
+                isSvg = true;
+                metadataEnabled = false;
+                QGraphicsSvgItem svg(imagePath);
+                QSvgRenderer *renderer = svg.renderer();
+                QSize size = renderer->defaultSize();
+                imageSize = size;
+                double sizeRatio = (double) usableWidth / size.width();
+                size *= sizeRatio;
+                QImage thumbnail (size, QImage::Format_ARGB32);
+                thumbnail.fill(Qt::transparent);
+                QPainter painter (&thumbnail);
+                renderer->render(&painter);
+                thumbPath += ".tif";
+                thumbnail.save(thumbPath, "TIFF");
+            }
+            htmlContent += "<center><img src=\"" + thumbPath + "\" /></center>" + htmlBr;
+            htmlContent += imagePath + htmlBr;
+            if (isSvg)
+                htmlContent += tr("Default image size: ");
+            else
+                htmlContent += tr("Image size: ");
+            htmlContent += QString::number(imageSize.width()) + "x"
+                    + QString::number(imageSize.height()) + " px" + htmlBr;
+            QFileInfo info(imagePath);
+            htmlContent += tr("File size: ") + QString::number(
+                        info.size() / pow(1024.,fileSizeComboBox->currentIndex()+1.), 'f', 2)
+                    + " " + fileSizeComboBox->currentText();
+            if (imagePath != lastItemPath)
+                htmlContent += htmlHr;
+            i++;
+        }
+    }
+    detailsBrowser->setHtml(htmlOrigin + htmlContent + htmlEnd);
 }
 
 /** Loads files into tree view from main() functions \a argv argument list. */

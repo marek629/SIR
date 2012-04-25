@@ -1,5 +1,4 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
+/* This file is part of SIR, an open-source cross-platform Image tool
  * 2007-2010  Rafael Sachetto
  * 2011-2012  Marek Jędryka
  *
@@ -20,7 +19,6 @@
  * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
  *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
 #include "rawutils.h"
