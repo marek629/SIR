@@ -35,6 +35,9 @@ QStringList Metadata::saveMetadataFormats =
 /** Default constructor. */
 Metadata::Metadata() {}
 
+/** Destructor.\n
+  * Closes current image file.
+  */
 Metadata::~Metadata() {
     close();
 }
@@ -120,6 +123,11 @@ void Metadata::clearMetadata() {
 #endif // EXV_HAVE_XMP_TOOLKIT
 }
 
+/** Sets metadata of all supported standards.\n
+  * If \a Exif metadata isn't empty and \a qImage isn't null save image size
+  * in \em Exif.Image.ImageWidth and \em Exif.Image.ImageLength; otherwise this
+  * metadata fields will filled from current Exiv2::Image \a image file.
+  */
 void Metadata::setData(const QImage& qImage) {
     if (!exifData.empty()) {
         if (!exif.isVersionKnown()) {
@@ -154,7 +162,7 @@ void Metadata::setData(const QImage& qImage) {
 }
 
 /** Sets \a Exif metadata based on exifStruct_ data.
-  * \sa ExifStruct setExifStruct
+  * \sa ExifStruct setExifStruct setIptcStruct
   */
 void Metadata::setExifData() {
     // Image section
@@ -196,7 +204,7 @@ void Metadata::setExifData() {
 }
 
 /** Loads \a exifStruct_ data from \a Exif metadata.
-  * \sa ExifStruct setExifData
+  * \sa ExifStruct setExifData setIptcData
   */
 void Metadata::setExifStruct() {
     // Image section
@@ -291,6 +299,9 @@ void Metadata::setExifStruct() {
         exifStruct_.userComment = String::noData();
 }
 
+/** Loads \a iptcStruct_ data from \a IPTC metadata.
+  * \sa IptcStruct setIptcData setExifData
+  */
 void Metadata::setIptcData() {
     if (!Iptc::isVersionKnown() || Iptc::version() < 2)
         iptcData["Iptc.Envelope.ModelVersion"] = 2;
@@ -336,6 +347,9 @@ void Metadata::setIptcData() {
     iptcData["Iptc.Application2.EditStatus"] = iptcStruct_.editStatus.toStdString();
 }
 
+/** Sets \a IPTC metadata based on iptcStruct_ data.
+  * \sa IptcStruct setIptcStruct setExifStruct
+  */
 void Metadata::setIptcStruct() {
     if (Iptc::isVersionKnown())
         iptcStruct_.modelVersion = String::number(Iptc::version());
@@ -560,6 +574,10 @@ Exiv2::Rational Metadata::simpleRational(const Exiv2::Rational &rational) {
     return result;
 }
 
+/** Returns metadata value corresponding \b key string. Exif and IPTC metadata
+  * are supported.\n
+  * When this function fault returns negative value (-2 or -3).
+  */
 long Metadata::getLong(const QString &key) {
     QString standard = key.split('.').first();
     std::string str = key.toStdString();

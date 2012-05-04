@@ -475,8 +475,7 @@ Flip Exif::flipValue(char orientation) {
     return result;
 }
 
-/** Sets default value of ExifStruct fields, mainly 0 and \em no \em data strings.
-  */
+/** Sets default value of ExifStruct fields, mainly 0 and \em "no data" strings. */
 void ExifStruct::reset() {
     // Image section
     version = String::noData();

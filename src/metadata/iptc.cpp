@@ -25,26 +25,41 @@ using namespace MetadataUtils;
 
 short Iptc::modelVersion = -1;
 
+/** Returns date object based on \a str ISO 8601 string.
+  * \sa time
+  */
 QDate Iptc::date(const std::string &str) {
     if (str.length() != 10)
         return QDate(1,1,1);
     return QDate::fromString(QString::fromStdString(str), Qt::ISODate);
 }
 
+/** Returns time object based on \a str ISO 8601 string.
+  * \sa date
+  */
 QTime Iptc::time(const std::string &str) {
     if (str.length() != 14)
         return QTime();
     return QTime::fromString(QString::fromStdString(str), Qt::ISODate);
 }
 
+/** Returns  ISO 8601 string based on \a date object.
+  * \sa timeString
+  */
 std::string Iptc::dateString(const QDate &date) {
     return date.toString(Qt::ISODate).toStdString();
 }
 
+/** Returns  ISO 8601 string based on \a time object.
+  * \sa dateString
+  */
 std::string Iptc::timeString(const QTime &time) {
     return time.toString(Qt::ISODate).toStdString();
 }
 
+/** Sets default value of IptcStruct fields - \em "no data" strings and null
+  * date and time objects.
+  */
 void IptcStruct::reset() {
     modelVersion = String::noData();
     dateCreated = QDate();

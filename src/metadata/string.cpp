@@ -55,6 +55,7 @@ String & String::operator =(const std::string &str) {
     return *this;
 }
 
+/** Adds \b str to this string and returns a reference to this string. */
 String & String::operator +=(const std::string &str) {
     this->append(QString::fromStdString(str));
     return *this;

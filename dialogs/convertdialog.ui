@@ -764,6 +764,7 @@
     </property>
     <addaction name="actionAdd_File"/>
     <addaction name="actionAdd_Dir"/>
+    <addaction name="actionSelect"/>
     <addaction name="actionRemoveAll"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -845,6 +846,14 @@
    </property>
    <property name="toolTip">
     <string>Remove all filles the files list</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="text">
+    <string>Select...</string>
+   </property>
+   <property name="toolTip">
+    <string>Do advanced selection of images on list</string>
    </property>
   </action>
  </widget>

@@ -44,7 +44,7 @@ namespace MetadataUtils {
       * getting information about user comments, orientation and flash.
       * This class are comlemented by another classes from MetadataUtils namespace,
       * \a vide See also.
-      * \sa ExifStruct Flash Flip String
+      * \sa ExifStruct Iptc Flash Flip String
       */
     class Exif : public QObject {
     public:

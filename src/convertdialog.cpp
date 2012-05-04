@@ -96,15 +96,16 @@ ConvertDialog::~ConvertDialog() {
 
 /** Connects UI signals to corresponding slots. */
 void ConvertDialog::createConnections() {
-    // tree view's list menagement buttons & actions
+    // tree view's list menagement buttons
     connect(addFilepushButton, SIGNAL(clicked()), this, SLOT(addFile()));
     connect(addDirpushButton, SIGNAL(clicked()), this, SLOT(addDir()));
     connect(RemovepushButton, SIGNAL(clicked()), this,
             SLOT(removeSelectedFromList()));
     connect(RemoveAllpushButton, SIGNAL(clicked()), this, SLOT(removeAll()));
-
+    // & actions
     connect(actionAdd_File, SIGNAL(triggered()), this, SLOT(addFile()));
     connect(actionAdd_Dir, SIGNAL(triggered()), this, SLOT(addDir()));
+    connect(actionSelect, SIGNAL(triggered()), SLOT(showSelectionDialog()));
     connect(actionRemoveAll, SIGNAL(triggered()), SLOT(removeAll()));
 
     // menu actions
@@ -724,6 +725,10 @@ void ConvertDialog::showMetadata() {
 
     metadataForm = new MetadataDialog(this, list, index);
     metadataForm->show();
+}
+
+void ConvertDialog::showSelectionDialog() {
+
 }
 
 /** Shows file details or few files summary.\n

@@ -27,13 +27,25 @@
 #include "string.h"
 
 namespace MetadataUtils {
+
+    /** \brief IPTC metadata storage and manipulation class.
+      *
+      * IPTC class provide general manipulation IPTC metadata methods like
+      * getting information about model version.
+      * This class are comlemented by another classes from MetadataUtils namespace,
+      * \a vide See also.
+      * \sa IptcStruct Exif Flash Flip String
+      */
     class Iptc {
         static short modelVersion;
     public:
         Iptc();
-        static void setVersion(short v) { modelVersion = v; }
-        static short version() { return modelVersion; }
-        static bool isVersionKnown() { return (modelVersion > 0); }
+        static void setVersion(short v) { modelVersion = v; } /**< Sets new model
+            version value. */
+        static short version() { return modelVersion; } /**< Returns model version.
+            If version isn't set or known it will returns -1. */
+        static bool isVersionKnown() { return (modelVersion > 0); } /**< Returns
+            true if model version is known (isn't negative), otherwise false. */
         static QDate date(const std::string &str);
         static QTime time(const std::string &str);
         static std::string dateString(const QDate &date);

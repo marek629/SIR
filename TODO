@@ -1,14 +1,14 @@
 *** nearest release ***
-
+  ! Conditional converting (ie. convert if image width > 1000 px)
+    * create wizard window
 
 *** next release ***
   ! Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
     * improve drag-drop events (myQTreeWidget)
   ! Conditional converting (ie. convert if image width > 1000 px)
-    * create wizard window
     * scripts with exiv2 support
-  ! Make recursive screen images with (auto detect of sceeen frame) feature
+  ! Make recursive screen images with (auto detect of sceeen frame) feature - joke :)
   ! Make simple effects
     * color (sepia, b&w, etc.) and gradient filtres
     * watermark

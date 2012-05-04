@@ -146,6 +146,7 @@ public slots:
     void sendInstall();
     void showSendInstallResult(QString *result, bool error);
     void showDetails();
+    void showSelectionDialog();
 
 private slots:
     void setSizeUnit(int index);
