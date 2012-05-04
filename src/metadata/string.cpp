@@ -24,26 +24,39 @@
 #include <QStringList>
 #include <cmath>
 
+using namespace MetadataUtils;
+
 /** Default constructor.\n
   * Constructs empty string.
   */
-MetadataUtils::String::String() : QString() {}
+String::String() : QString() {}
 
 /** Constructs string from \b str. */
-MetadataUtils::String::String(const char *str) : QString(str) {}
+String::String(const char *str) : QString(str) {}
 
 /** Constructs string from \b other. */
-MetadataUtils::String::String(const QString &other) : QString(other) {}
+String::String(const QString &other) : QString(other) {}
 
 /** Assigns \b str to this string and returns a reference to this string. */
-MetadataUtils::String & MetadataUtils::String::operator =(const char *str) {
+String & String::operator =(const char *str) {
     QString::operator =(str);
     return *this;
 }
 
 /** Assigns \b other to this string and returns a reference to this string. */
-MetadataUtils::String & MetadataUtils::String::operator =(const QString& other) {
+String & String::operator =(const QString& other) {
     QString::operator =(other);
+    return *this;
+}
+
+/** Assigns \b str to this string and returns a reference to this string. */
+String & String::operator =(const std::string &str) {
+    String::operator =(QString::fromStdString(str));
+    return *this;
+}
+
+String & String::operator +=(const std::string &str) {
+    this->append(QString::fromStdString(str));
     return *this;
 }
 
@@ -51,7 +64,7 @@ MetadataUtils::String & MetadataUtils::String::operator =(const QString& other) 
   * otherwise the string will be assigns noData() string.
   * \sa noData
   */
-void MetadataUtils::String::appendUnit(const char *unit) {
+void String::appendUnit(const char *unit) {
     if ( (this->toDouble() == -1.) || this->isEmpty() )
         *this = noData();
     else
@@ -61,7 +74,7 @@ void MetadataUtils::String::appendUnit(const char *unit) {
 /** Returns copy of this string converted to local 8 bit code on Windows,
   * otherwise to will be converted to UTF-8.
   */
-std::string MetadataUtils::String::toNativeStdString() const {
+std::string String::toNativeStdString() const {
 #ifdef Q_OS_WIN32
     return toLocal8Bit().constData();
 #else
@@ -70,7 +83,7 @@ std::string MetadataUtils::String::toNativeStdString() const {
 }
 
 /** Converts this string to improper fraction and returns this fraction. */
-Exiv2::Rational MetadataUtils::String::toRational() const {
+Exiv2::Rational String::toRational() const {
     Exiv2::Rational result;
     if (this == noData()) {
         result.first = -1;
@@ -99,7 +112,7 @@ Exiv2::Rational MetadataUtils::String::toRational() const {
 }
 
 /** Converts this string to improper fraction of exponent and returns this fraction. */
-Exiv2::Rational MetadataUtils::String::toRationalPower() const {
+Exiv2::Rational String::toRationalPower() const {
     Exiv2::Rational rational = toRational();
     Exiv2::Rational result;
     const quint16 multiplier = 10000;
@@ -109,11 +122,11 @@ Exiv2::Rational MetadataUtils::String::toRationalPower() const {
 }
 
 /** Returns string converted from \b s. */
-MetadataUtils::String MetadataUtils::String::fromStdString(const std::string &s) {
-    return MetadataUtils::String( QString::fromStdString(s) );
+String String::fromStdString(const std::string &s) {
+    return String( QString::fromStdString(s) );
 }
 
 /** Returns translated \em no \em data string. */
-QString MetadataUtils::String::noData() {
+QString String::noData() {
     return QObject::tr("no data");
 }

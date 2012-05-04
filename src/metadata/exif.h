@@ -26,13 +26,11 @@
 #include <QObject>
 #include "string.h"
 
-namespace Exiv2
-{
+namespace Exiv2 {
     class Metadatum;
 }
 
-namespace MetadataUtils
-{
+namespace MetadataUtils {
     enum Flip {
         None = 0x0,
         Vertical = 0x1,

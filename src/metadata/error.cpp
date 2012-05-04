@@ -25,22 +25,24 @@
 
 #include "error.h"
 
+using namespace MetadataUtils;
+
 /** Default constructor.\n
   * Constructs error object with empty strings and random error code.
   */
-MetadataUtils::Error::Error() {}
+Error::Error() {}
 
 /** Constructs error object based on \b e with empty message string.
   * \sa copy
   */
-MetadataUtils::Error::Error(Exiv2::Error &e) {
+Error::Error(Exiv2::Error &e) {
     copy(e);
 }
 
 /** Constructs error object based on \b e and \b message.
   * \sa setMessage copy
   */
-MetadataUtils::Error::Error(const QString &message, Exiv2::Error &e) {
+Error::Error(const QString &message, Exiv2::Error &e) {
     setMessage(message);
     copy(e);
 }
@@ -48,12 +50,12 @@ MetadataUtils::Error::Error(const QString &message, Exiv2::Error &e) {
 /** Sets user readable error message to \b str.
   * \sa copy
   */
-void MetadataUtils::Error::setMessage(const QString &str) {
+void Error::setMessage(const QString &str) {
     message_ = str;
 }
 
 
-void MetadataUtils::Error::copy(Exiv2::Error &e) {
+void Error::copy(Exiv2::Error &e) {
     code_ = e.code();
     string = QString::fromUtf8(e.what());
 }

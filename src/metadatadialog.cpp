@@ -49,6 +49,11 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
         exifLightMeteringModeComboBox->addItem(
                     MetadataUtils::Exif::meteringModeString(i));
 
+    iptcCreatedDateEdit->setSpecialValueText(MetadataUtils::String::noData());
+    iptcCreatedTimeEdit->setSpecialValueText(MetadataUtils::String::noData());
+    iptcDigitizedDateEdit->setSpecialValueText(MetadataUtils::String::noData());
+    iptcDigitizedTimeEdit->setSpecialValueText(MetadataUtils::String::noData());
+
     if (currentImage == 0)
         previousButton->setEnabled(false);
     if (currentImage == images->length()-1)
@@ -73,13 +78,18 @@ MetadataDialog::~MetadataDialog() {
     delete images;
 }
 
+/** Resets metadata structs to default values. */
 void MetadataDialog::resetStructs() {
     exifStruct->reset();
 }
 
+/** Read current image file and shows information about issues if exist.\n
+  * This function will call resetStructs() function if error cought.
+  */
 void MetadataDialog::readFile() {
     bool readSuccess = metadata->read(imagePath,true);
     exifStruct = metadata->exifStruct();
+    iptcStruct = metadata->iptcStruct();
     if (!readSuccess) {
         QString errorTitle = tr("Metadata error");
         MetadataUtils::Error *e = metadata->lastError();
@@ -88,15 +98,30 @@ void MetadataDialog::readFile() {
                 arg(e->code()).arg(e->what());
         QMessageBox::critical(this, errorTitle, errorMessage);
         resetStructs();
+        tabWidget->setCurrentWidget(iptcTab);
     }
+    Exiv2::Image::AutoPtr image = metadata->imageAutoPtr();
+    QString message;
+    if (image->exifData().empty()) {
+        tabWidget->setCurrentWidget(iptcTab);
+        message = tr("No Exif metadata.");
+    }
+    else if (image->iptcData().empty()) {
+        tabWidget->setCurrentWidget(exifTab);
+        message = tr("No IPTC metadata.");
+    }
+    if (!message.isNull())
+        QMessageBox::warning(this, tr("Metadata warning"), message);
 }
 
 void MetadataDialog::setupValues() {
     QSettings settings("SIR");
-    settings.beginGroup("Exif");
+    settings.beginGroup("Settings");
     int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
+    settings.endGroup();
 
     // Exif tab
+    settings.beginGroup("Exif");
     // Image toolbox
     exifVersionLabel->setText( exifStruct->version );
     exifProcessingSoftLabel->setText( exifStruct->processingSoftware );
@@ -180,6 +205,27 @@ void MetadataDialog::setupValues() {
     exifUserCommentComboBox->lineEdit()->setText( exifStruct->userComment );
 
     settings.endGroup();
+
+    // IPTC tab
+    settings.beginGroup("IPTC");
+    iptcVersionLabel->setText(iptcStruct->modelVersion);
+    iptcCreatedDateEdit->setDate(iptcStruct->dateCreated);
+    iptcCreatedTimeEdit->setTime(iptcStruct->timeCreated);
+    iptcDigitizedDateEdit->setDate(iptcStruct->digitizationDate);
+    iptcDigitizedTimeEdit->setTime(iptcStruct->digitizationTime);
+    iptcByLineEdit->setText(iptcStruct->byline);
+    iptcCopyrightLineEdit->setText(iptcStruct->copyright);
+    iptcObjectNameLineEdit->setText(iptcStruct->objectName);
+    iptcKeywordsLineEdit->setText(iptcStruct->keywords);
+    iptcDescriptionTextEdit->setPlainText(iptcStruct->caption);
+    iptcCountryLineEdit->setText(iptcStruct->countryName);
+    iptcCityLineEdit->setText(iptcStruct->city);
+    iptcEditStatusComboBox->importHistory(settings.value("editStatusMap").toMap(),
+                                          settings.value("editStatusList").toList(),
+                                          maxHistoryCount);
+    iptcEditStatusComboBox->setCurrentIndex(-1);
+    iptcEditStatusComboBox->lineEdit()->setText(iptcStruct->editStatus);
+    settings.endGroup();
 }
 
 void MetadataDialog::previousImage() {
@@ -231,8 +277,35 @@ void MetadataDialog::saveChanges() {
     exifStruct->copyright = exifCopyrightComboBox->lineEdit()->text();
     exifStruct->userComment = exifUserCommentComboBox->lineEdit()->text();
 
+    // IPTC tab
+    if (iptcCreatedDateEdit->date() == iptcCreatedDateEdit->minimumDate())
+        iptcStruct->dateCreated = QDate();
+    else
+        iptcStruct->dateCreated = iptcCreatedDateEdit->date();
+    if (iptcCreatedTimeEdit->time() == iptcCreatedTimeEdit->minimumTime())
+        iptcStruct->timeCreated = QTime();
+    else
+        iptcStruct->timeCreated = iptcCreatedTimeEdit->time();
+    if (iptcDigitizedDateEdit->date() == iptcDigitizedDateEdit->minimumDate())
+        iptcStruct->digitizationDate = QDate();
+    else
+        iptcStruct->digitizationDate = iptcDigitizedDateEdit->date();
+    if (iptcDigitizedTimeEdit->time() == iptcDigitizedTimeEdit->minimumTime())
+        iptcStruct->digitizationTime = QTime();
+    else
+        iptcStruct->digitizationTime = iptcDigitizedTimeEdit->time();
+    iptcStruct->byline = iptcByLineEdit->text();
+    iptcStruct->copyright = iptcCopyrightLineEdit->text();
+    iptcStruct->objectName = iptcObjectNameLineEdit->text();
+    iptcStruct->keywords = iptcKeywordsLineEdit->text();
+    iptcStruct->caption = iptcDescriptionTextEdit->toPlainText();
+    iptcStruct->countryName = iptcCountryLineEdit->text();
+    iptcStruct->city = iptcCityLineEdit->text();
+    iptcStruct->editStatus = iptcEditStatusComboBox->lineEdit()->text();
+
     // saving
     metadata->setExifData();
+    metadata->setIptcData();
     metadata->write(imagePath);
     this->close();
 }

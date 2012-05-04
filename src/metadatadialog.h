@@ -31,6 +31,7 @@
 namespace MetadataUtils {
     class Metadata;
     struct ExifStruct;
+    struct IptcStruct;
 }
 class QStringList;
 class QString;
@@ -49,6 +50,7 @@ private:
     void readFile();
     MetadataUtils::Metadata *metadata;
     MetadataUtils::ExifStruct *exifStruct;
+    MetadataUtils::IptcStruct *iptcStruct;
     QStringList *images;
     QString imagePath;
     int currentImage;
