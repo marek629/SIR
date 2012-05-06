@@ -119,6 +119,10 @@ void MetadataUtils::Metadata::setData(const QImage& qImage) {
             exifData["Exif.Image.ImageWidth"] = qImage.width();
             exifData["Exif.Image.ImageLength"] = qImage.height();
         }
+        else {
+            exifData["Exif.Image.ImageWidth"] = image->pixelWidth();
+            exifData["Exif.Image.ImageLength"] = image->pixelHeight();
+        }
         if (MetadataUtils::Exif::isArtistOverwrite())
             exifData["Exif.Image.Artist"] =
                     MetadataUtils::Exif::stringArtist().toStdString();

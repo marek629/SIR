@@ -703,28 +703,28 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HistoryComboBox</name>
     <message>
-        <location filename="../src/historycombobox.cpp" line="44"/>
+        <location filename="../src/historycombobox.cpp" line="66"/>
         <source>Remove item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/historycombobox.cpp" line="72"/>
+        <location filename="../src/historycombobox.cpp" line="98"/>
         <source>Full text history - SIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/historycombobox.cpp" line="73"/>
+        <location filename="../src/historycombobox.cpp" line="99"/>
         <source>Text history memory is full of favorite items.
 SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/historycombobox.cpp" line="100"/>
+        <location filename="../src/historycombobox.cpp" line="127"/>
         <source>Throw away from favorite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/historycombobox.cpp" line="105"/>
+        <location filename="../src/historycombobox.cpp" line="131"/>
         <source>Mark as favorite</source>
         <translation type="unfinished"></translation>
     </message>
@@ -732,27 +732,27 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../src/messagebox.cpp" line="17"/>
+        <location filename="../src/messagebox.cpp" line="37"/>
         <source>&amp;Yes</source>
         <translation type="unfinished">Án&amp;o</translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="18"/>
+        <location filename="../src/messagebox.cpp" line="38"/>
         <source>&amp;No</source>
         <translation type="unfinished">&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="19"/>
+        <location filename="../src/messagebox.cpp" line="39"/>
         <source>Yes to &amp;All</source>
         <translation type="unfinished">Án&amp;o pre všetky</translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="20"/>
+        <location filename="../src/messagebox.cpp" line="40"/>
         <source>N&amp;o to All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/messagebox.cpp" line="21"/>
+        <location filename="../src/messagebox.cpp" line="41"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -765,610 +765,611 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="24"/>
+        <location filename="../dialogs/metadatadialog.ui" line="81"/>
         <source>Exif</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="42"/>
+        <location filename="../dialogs/metadatadialog.ui" line="99"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="52"/>
+        <location filename="../dialogs/metadatadialog.ui" line="109"/>
         <source>Exif Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="59"/>
+        <location filename="../dialogs/metadatadialog.ui" line="116"/>
         <source>Processing Software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="73"/>
-        <location filename="../dialogs/metadatadialog.ui" line="83"/>
-        <location filename="../dialogs/metadatadialog.ui" line="123"/>
-        <location filename="../dialogs/metadatadialog.ui" line="156"/>
-        <location filename="../dialogs/metadatadialog.ui" line="338"/>
-        <location filename="../dialogs/metadatadialog.ui" line="371"/>
+        <location filename="../dialogs/metadatadialog.ui" line="65"/>
+        <location filename="../dialogs/metadatadialog.ui" line="130"/>
+        <location filename="../dialogs/metadatadialog.ui" line="140"/>
+        <location filename="../dialogs/metadatadialog.ui" line="180"/>
+        <location filename="../dialogs/metadatadialog.ui" line="213"/>
+        <location filename="../dialogs/metadatadialog.ui" line="395"/>
+        <location filename="../dialogs/metadatadialog.ui" line="428"/>
         <source>TextLabel</source>
         <translation type="unfinished">Textový popis</translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="107"/>
-        <location filename="../dialogs/metadatadialog.ui" line="322"/>
+        <location filename="../dialogs/metadatadialog.ui" line="164"/>
+        <location filename="../dialogs/metadatadialog.ui" line="379"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="113"/>
-        <location filename="../dialogs/metadatadialog.ui" line="328"/>
+        <location filename="../dialogs/metadatadialog.ui" line="170"/>
+        <location filename="../dialogs/metadatadialog.ui" line="385"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="146"/>
-        <location filename="../dialogs/metadatadialog.ui" line="361"/>
+        <location filename="../dialogs/metadatadialog.ui" line="203"/>
+        <location filename="../dialogs/metadatadialog.ui" line="418"/>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="183"/>
+        <location filename="../dialogs/metadatadialog.ui" line="240"/>
         <source>Orientation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="190"/>
+        <location filename="../dialogs/metadatadialog.ui" line="247"/>
         <source>Generated Date and Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="197"/>
+        <location filename="../dialogs/metadatadialog.ui" line="254"/>
         <source>Digitized Date and Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="215"/>
+        <location filename="../dialogs/metadatadialog.ui" line="272"/>
         <source>No rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="220"/>
+        <location filename="../dialogs/metadatadialog.ui" line="277"/>
         <source>No rotation, verticaly mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="../dialogs/metadatadialog.ui" line="225"/>
+        <location filename="../dialogs/metadatadialog.ui" line="282"/>
         <source>Rotation 180°</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="../dialogs/metadatadialog.ui" line="230"/>
+        <location filename="../dialogs/metadatadialog.ui" line="287"/>
         <source>Rotation 180°, verticaly mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="235"/>
+        <location filename="../dialogs/metadatadialog.ui" line="292"/>
         <source>Clockwise rotation, horizontaly mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="240"/>
+        <location filename="../dialogs/metadatadialog.ui" line="297"/>
         <source>Clockwise rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="245"/>
+        <location filename="../dialogs/metadatadialog.ui" line="302"/>
         <source>Counterclockwise rotation, horizontaly mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="250"/>
+        <location filename="../dialogs/metadatadialog.ui" line="307"/>
         <source>Counterclockwise rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="303"/>
+        <location filename="../dialogs/metadatadialog.ui" line="360"/>
         <source>Thumbnail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="309"/>
+        <location filename="../dialogs/metadatadialog.ui" line="366"/>
         <source>Thumbnail Label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="416"/>
+        <location filename="../dialogs/metadatadialog.ui" line="473"/>
         <source>Photo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="564"/>
+        <location filename="../dialogs/metadatadialog.ui" line="621"/>
         <source>Focal length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="571"/>
+        <location filename="../dialogs/metadatadialog.ui" line="628"/>
         <source>Exposure time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="578"/>
+        <location filename="../dialogs/metadatadialog.ui" line="635"/>
         <source>Exposure bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="585"/>
+        <location filename="../dialogs/metadatadialog.ui" line="642"/>
         <source> mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="602"/>
+        <location filename="../dialogs/metadatadialog.ui" line="659"/>
         <source>1/2000 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="607"/>
+        <location filename="../dialogs/metadatadialog.ui" line="664"/>
         <source>1/1600 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="612"/>
+        <location filename="../dialogs/metadatadialog.ui" line="669"/>
         <source>1/1250 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="617"/>
+        <location filename="../dialogs/metadatadialog.ui" line="674"/>
         <source>1/1000 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="622"/>
+        <location filename="../dialogs/metadatadialog.ui" line="679"/>
         <source>1/800 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="627"/>
+        <location filename="../dialogs/metadatadialog.ui" line="684"/>
         <source>1/640 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="632"/>
+        <location filename="../dialogs/metadatadialog.ui" line="689"/>
         <source>1/500 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="637"/>
+        <location filename="../dialogs/metadatadialog.ui" line="694"/>
         <source>1/400 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="642"/>
+        <location filename="../dialogs/metadatadialog.ui" line="699"/>
         <source>1/320 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="647"/>
+        <location filename="../dialogs/metadatadialog.ui" line="704"/>
         <source>1/250 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="652"/>
+        <location filename="../dialogs/metadatadialog.ui" line="709"/>
         <source>1/200 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="657"/>
+        <location filename="../dialogs/metadatadialog.ui" line="714"/>
         <source>1/160 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="662"/>
+        <location filename="../dialogs/metadatadialog.ui" line="719"/>
         <source>1/125 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="667"/>
+        <location filename="../dialogs/metadatadialog.ui" line="724"/>
         <source>1/100 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="672"/>
+        <location filename="../dialogs/metadatadialog.ui" line="729"/>
         <source>1/80 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="677"/>
+        <location filename="../dialogs/metadatadialog.ui" line="734"/>
         <source>1/60 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="682"/>
+        <location filename="../dialogs/metadatadialog.ui" line="739"/>
         <source>1/50 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="687"/>
+        <location filename="../dialogs/metadatadialog.ui" line="744"/>
         <source>1/40 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="692"/>
+        <location filename="../dialogs/metadatadialog.ui" line="749"/>
         <source>1/30 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="697"/>
+        <location filename="../dialogs/metadatadialog.ui" line="754"/>
         <source>1/25 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="702"/>
+        <location filename="../dialogs/metadatadialog.ui" line="759"/>
         <source>1/20 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="707"/>
+        <location filename="../dialogs/metadatadialog.ui" line="764"/>
         <source>1/15 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="712"/>
+        <location filename="../dialogs/metadatadialog.ui" line="769"/>
         <source>1/13 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="717"/>
+        <location filename="../dialogs/metadatadialog.ui" line="774"/>
         <source>1/10 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="722"/>
-        <location filename="../dialogs/metadatadialog.ui" line="926"/>
+        <location filename="../dialogs/metadatadialog.ui" line="779"/>
+        <location filename="../dialogs/metadatadialog.ui" line="983"/>
         <source>1/8 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="727"/>
+        <location filename="../dialogs/metadatadialog.ui" line="784"/>
         <source>1/6 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="732"/>
+        <location filename="../dialogs/metadatadialog.ui" line="789"/>
         <source>1/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="737"/>
-        <location filename="../dialogs/metadatadialog.ui" line="931"/>
+        <location filename="../dialogs/metadatadialog.ui" line="794"/>
+        <location filename="../dialogs/metadatadialog.ui" line="988"/>
         <source>1/4 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="742"/>
+        <location filename="../dialogs/metadatadialog.ui" line="799"/>
         <source>1/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="747"/>
+        <location filename="../dialogs/metadatadialog.ui" line="804"/>
         <source>2/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="752"/>
-        <location filename="../dialogs/metadatadialog.ui" line="936"/>
+        <location filename="../dialogs/metadatadialog.ui" line="809"/>
+        <location filename="../dialogs/metadatadialog.ui" line="993"/>
         <source>1/2 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="757"/>
+        <location filename="../dialogs/metadatadialog.ui" line="814"/>
         <source>2/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="762"/>
+        <location filename="../dialogs/metadatadialog.ui" line="819"/>
         <source>4/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="767"/>
-        <location filename="../dialogs/metadatadialog.ui" line="941"/>
+        <location filename="../dialogs/metadatadialog.ui" line="824"/>
+        <location filename="../dialogs/metadatadialog.ui" line="998"/>
         <source>1 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="772"/>
+        <location filename="../dialogs/metadatadialog.ui" line="829"/>
         <source>1 1/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="777"/>
+        <location filename="../dialogs/metadatadialog.ui" line="834"/>
         <source>1 2/3 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="782"/>
-        <location filename="../dialogs/metadatadialog.ui" line="946"/>
+        <location filename="../dialogs/metadatadialog.ui" line="839"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1003"/>
         <source>2 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="787"/>
+        <location filename="../dialogs/metadatadialog.ui" line="844"/>
         <source>2 1/2 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="792"/>
+        <location filename="../dialogs/metadatadialog.ui" line="849"/>
         <source>3 1/5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="797"/>
-        <location filename="../dialogs/metadatadialog.ui" line="951"/>
+        <location filename="../dialogs/metadatadialog.ui" line="854"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1008"/>
         <source>4 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="802"/>
+        <location filename="../dialogs/metadatadialog.ui" line="859"/>
         <source>5 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="807"/>
+        <location filename="../dialogs/metadatadialog.ui" line="864"/>
         <source>6 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="812"/>
-        <location filename="../dialogs/metadatadialog.ui" line="956"/>
+        <location filename="../dialogs/metadatadialog.ui" line="869"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1013"/>
         <source>8 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="817"/>
+        <location filename="../dialogs/metadatadialog.ui" line="874"/>
         <source>10 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="822"/>
+        <location filename="../dialogs/metadatadialog.ui" line="879"/>
         <source>13 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="827"/>
+        <location filename="../dialogs/metadatadialog.ui" line="884"/>
         <source>15 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="835"/>
+        <location filename="../dialogs/metadatadialog.ui" line="892"/>
         <source>EV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="851"/>
+        <location filename="../dialogs/metadatadialog.ui" line="908"/>
         <source>Aperture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="858"/>
+        <location filename="../dialogs/metadatadialog.ui" line="915"/>
         <source>Shutter Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="865"/>
+        <location filename="../dialogs/metadatadialog.ui" line="922"/>
         <source>ISO Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="872"/>
+        <location filename="../dialogs/metadatadialog.ui" line="929"/>
         <source>F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="422"/>
+        <location filename="../dialogs/metadatadialog.ui" line="479"/>
         <source>Exposure program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="435"/>
+        <location filename="../dialogs/metadatadialog.ui" line="492"/>
         <source>Not defined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="440"/>
+        <location filename="../dialogs/metadatadialog.ui" line="497"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="445"/>
+        <location filename="../dialogs/metadatadialog.ui" line="502"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="450"/>
+        <location filename="../dialogs/metadatadialog.ui" line="507"/>
         <source>Aperture priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="455"/>
+        <location filename="../dialogs/metadatadialog.ui" line="512"/>
         <source>Shutter priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="460"/>
+        <location filename="../dialogs/metadatadialog.ui" line="517"/>
         <source>Creative program (biased toward depth of field)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="465"/>
+        <location filename="../dialogs/metadatadialog.ui" line="522"/>
         <source>Action program (biased toward fast shutter speed)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="470"/>
+        <location filename="../dialogs/metadatadialog.ui" line="527"/>
         <source>Portrait mode (for closeup photos with the background out of focus)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="475"/>
+        <location filename="../dialogs/metadatadialog.ui" line="532"/>
         <source>Landscape mode (for landscape photos with the background in focus)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="486"/>
+        <location filename="../dialogs/metadatadialog.ui" line="543"/>
         <source>Light metering mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="499"/>
+        <location filename="../dialogs/metadatadialog.ui" line="556"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="504"/>
+        <location filename="../dialogs/metadatadialog.ui" line="561"/>
         <source>Average</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="509"/>
+        <location filename="../dialogs/metadatadialog.ui" line="566"/>
         <source>Center weighted average</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="514"/>
+        <location filename="../dialogs/metadatadialog.ui" line="571"/>
         <source>Spot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="519"/>
+        <location filename="../dialogs/metadatadialog.ui" line="576"/>
         <source>Multi spot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="524"/>
+        <location filename="../dialogs/metadatadialog.ui" line="581"/>
         <source>Pattern</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="529"/>
+        <location filename="../dialogs/metadatadialog.ui" line="586"/>
         <source>Partial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="534"/>
+        <location filename="../dialogs/metadatadialog.ui" line="591"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="545"/>
+        <location filename="../dialogs/metadatadialog.ui" line="602"/>
         <source>Flash mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="886"/>
+        <location filename="../dialogs/metadatadialog.ui" line="943"/>
         <source>1/2048 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="891"/>
+        <location filename="../dialogs/metadatadialog.ui" line="948"/>
         <source>1/1024 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="896"/>
+        <location filename="../dialogs/metadatadialog.ui" line="953"/>
         <source>1/512 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="901"/>
+        <location filename="../dialogs/metadatadialog.ui" line="958"/>
         <source>1/256 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="906"/>
+        <location filename="../dialogs/metadatadialog.ui" line="963"/>
         <source>1/128 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="911"/>
+        <location filename="../dialogs/metadatadialog.ui" line="968"/>
         <source>1/64 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="916"/>
+        <location filename="../dialogs/metadatadialog.ui" line="973"/>
         <source>1/32 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="921"/>
+        <location filename="../dialogs/metadatadialog.ui" line="978"/>
         <source>1/16 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1012"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1069"/>
         <source>Camera</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1022"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1079"/>
         <source>Manufacturer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1029"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1086"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1086"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1143"/>
         <source>Author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1092"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1149"/>
         <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1104"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1161"/>
         <source>Copyright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1116"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1173"/>
         <source>User Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1151"/>
-        <location filename="../src/metadatadialog.cpp" line="170"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1211"/>
+        <location filename="../src/metadatadialog.cpp" line="235"/>
         <source>Delete metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1171"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1234"/>
         <source>Save changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="1178"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1244"/>
         <source>Cancel</source>
         <translation type="unfinished">Zrušiť</translation>
     </message>
     <message>
-        <location filename="../src/metadatadialog.cpp" line="22"/>
+        <location filename="../src/metadatadialog.cpp" line="77"/>
         <source>Metadata error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatadialog.cpp" line="25"/>
+        <location filename="../src/metadatadialog.cpp" line="80"/>
         <source>
 Error code: %1
 Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatadialog.cpp" line="171"/>
+        <location filename="../src/metadatadialog.cpp" line="236"/>
         <source>Do you really want to delete metadata from this image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1376,17 +1377,17 @@ Error message: %2</source>
 <context>
     <name>MetadataUtils::Metadata</name>
     <message>
-        <location filename="../src/metadatautils.cpp" line="62"/>
+        <location filename="../src/metadatautils.cpp" line="64"/>
         <source>Error open file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="82"/>
+        <location filename="../src/metadatautils.cpp" line="90"/>
         <source>Error write file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadatautils.cpp" line="501"/>
+        <location filename="../src/metadatautils.cpp" line="575"/>
         <source>Save thumnail failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1604,42 +1605,42 @@ Error message: %2</source>
         <translation type="obsolete">Východzí jazyk</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="172"/>
+        <location filename="../src/optionsdialog.cpp" line="177"/>
         <source>Choose a directory</source>
         <translation>Vyberte adresár</translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="190"/>
+        <location filename="../src/optionsdialog.cpp" line="195"/>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="205"/>
+        <location filename="../src/optionsdialog.cpp" line="210"/>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="216"/>
+        <location filename="../src/optionsdialog.cpp" line="221"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="232"/>
+        <location filename="../src/optionsdialog.cpp" line="237"/>
         <source>Select dcraw executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="410"/>
+        <location filename="../src/optionsdialog.cpp" line="415"/>
         <source>Camera owner: ; Photographer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="420"/>
+        <location filename="../src/optionsdialog.cpp" line="425"/>
         <source>Copyright owner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/optionsdialog.cpp" line="431"/>
+        <location filename="../src/optionsdialog.cpp" line="436"/>
         <source>This picture was edited with Simple Image Resizer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1656,37 +1657,37 @@ Error message: %2</source>
         <translation>Akcie</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="141"/>
+        <location filename="../src/previewdialog.cpp" line="137"/>
         <source>Zoom image</source>
         <translation>Priblížiť obrázok</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="148"/>
+        <location filename="../src/previewdialog.cpp" line="144"/>
         <source>Back to previous image</source>
         <translation>Späť na predchádzajúci obrázok</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="149"/>
+        <location filename="../src/previewdialog.cpp" line="145"/>
         <source>Go to next image</source>
         <translation>Prejsť na ďalší obrázok</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="156"/>
+        <location filename="../src/previewdialog.cpp" line="152"/>
         <source>Rotate counter clockwise</source>
         <translation>Otočiť proti smeru hodinových ručičiek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="157"/>
+        <location filename="../src/previewdialog.cpp" line="153"/>
         <source>Rotate clockwise</source>
         <translation>Otočiť v smere hodinových ručičiek</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="160"/>
+        <location filename="../src/previewdialog.cpp" line="156"/>
         <source>Save image</source>
         <translation>Uložiť obrázok</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="164"/>
+        <location filename="../src/previewdialog.cpp" line="160"/>
         <source>Save image as...</source>
         <translation>Uložiť obrázok ako...</translation>
     </message>
@@ -1696,84 +1697,84 @@ Error message: %2</source>
         <translation>Ukončiť</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="60"/>
+        <location filename="../src/previewdialog.cpp" line="56"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - Prehliadanie obrázkov</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="137"/>
-        <location filename="../src/previewdialog.cpp" line="190"/>
-        <location filename="../src/previewdialog.cpp" line="683"/>
+        <location filename="../src/previewdialog.cpp" line="133"/>
+        <location filename="../src/previewdialog.cpp" line="186"/>
+        <location filename="../src/previewdialog.cpp" line="679"/>
         <source>Fit to window size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="167"/>
+        <location filename="../src/previewdialog.cpp" line="163"/>
         <source>Quit preview</source>
         <translation>Ukončiť prehliadanie</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="170"/>
+        <location filename="../src/previewdialog.cpp" line="166"/>
         <source>Fullscreen</source>
         <translation>Celá obrazovka</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="174"/>
+        <location filename="../src/previewdialog.cpp" line="170"/>
         <source>Print current image...</source>
         <translation>Vytlačiť aktuálny obrázok...</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="221"/>
+        <location filename="../src/previewdialog.cpp" line="217"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Zadajte prosím platný faktor priblíženia.</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="417"/>
+        <location filename="../src/previewdialog.cpp" line="413"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Prepísať súbor -- SIR</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="418"/>
+        <location filename="../src/previewdialog.cpp" line="414"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Súbor %1 už existuje. Prajete si ho prepísať?</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="420"/>
+        <location filename="../src/previewdialog.cpp" line="416"/>
         <source>&amp;Yes</source>
         <translation>Án&amp;o</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="420"/>
+        <location filename="../src/previewdialog.cpp" line="416"/>
         <source>&amp;No</source>
         <translation>&amp;Nie</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="450"/>
+        <location filename="../src/previewdialog.cpp" line="446"/>
         <source>Save File</source>
         <translation>Uložiť súbor</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="547"/>
+        <location filename="../src/previewdialog.cpp" line="543"/>
         <source>File saved</source>
         <translation>Súbor uložený</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="551"/>
+        <location filename="../src/previewdialog.cpp" line="547"/>
         <source>Failed to save image</source>
         <translation>Zlyhalo ukladanie obrázku</translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="652"/>
+        <location filename="../src/previewdialog.cpp" line="648"/>
         <source>Image file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="653"/>
+        <location filename="../src/previewdialog.cpp" line="649"/>
         <source>Load image %1 failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/previewdialog.cpp" line="659"/>
+        <location filename="../src/previewdialog.cpp" line="655"/>
         <source>
 Error code: %1
 Error message: %2</source>
@@ -1833,12 +1834,12 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="48"/>
+        <location filename="../src/metadata/exif.cpp" line="47"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/string.cpp" line="73"/>
+        <location filename="../src/metadata/string.cpp" line="122"/>
         <source>no data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1846,28 +1847,28 @@ Error message: %2</source>
 <context>
     <name>myQTreeWidget</name>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="39"/>
+        <location filename="../src/myqtreewidget.cpp" line="42"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="40"/>
+        <location filename="../src/myqtreewidget.cpp" line="43"/>
         <source>Ext</source>
         <translation>Príp</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="41"/>
+        <location filename="../src/myqtreewidget.cpp" line="44"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="42"/>
+        <location filename="../src/myqtreewidget.cpp" line="45"/>
         <source>Status</source>
         <translation>Stav</translation>
     </message>
     <message>
-        <location filename="../src/myqtreewidget.cpp" line="114"/>
-        <location filename="../src/myqtreewidget.cpp" line="131"/>
+        <location filename="../src/myqtreewidget.cpp" line="122"/>
+        <location filename="../src/myqtreewidget.cpp" line="139"/>
         <source>Not converted yet</source>
         <translation>Ešte neskonvertovaný</translation>
     </message>

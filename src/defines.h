@@ -23,7 +23,7 @@
  *
  */
 
-#define VERSION "2.3"
+#define VERSION "2.3.1"
 #define NOTCONVERTED 1
 #define CONVERTED 2
 #define SKIPPED 3

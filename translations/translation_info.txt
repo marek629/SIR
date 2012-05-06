@@ -10,3 +10,4 @@ sir_sk.qm,Slovak,slovak.png
 sir_fr.qm,French,french.png
 sir_gr.qm,Greek,greek.png
 sir_cz.qm,Czech,czech.png
+sir_sr.qm,Serbian,serbian.png
