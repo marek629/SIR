@@ -89,7 +89,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-824</y>
+         <y>-774</y>
          <width>409</width>
          <height>1237</height>
         </rect>
@@ -686,6 +686,99 @@
               <attribute name="title">
                <string>IPTC</string>
               </attribute>
+              <layout class="QGridLayout" name="gridLayout_5">
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="iptcBylineCheckBox">
+                 <property name="text">
+                  <string>Author</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="iptcVersionCheckBox">
+                 <property name="text">
+                  <string>Model version</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="iptcCopyrightCheckBox">
+                 <property name="text">
+                  <string>Copyright</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QCheckBox" name="iptcObjectNameCheckBox">
+                 <property name="text">
+                  <string>Object name</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QCheckBox" name="iptcCreatedDateCheckBox">
+                 <property name="text">
+                  <string>Created date</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QCheckBox" name="iptcKeywordsCheckBox">
+                 <property name="text">
+                  <string>Keywords</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="iptcDigitizedDateCheckBox">
+                 <property name="text">
+                  <string>Digitized date</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QCheckBox" name="iptcCaptionCheckBox">
+                 <property name="text">
+                  <string>Description</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QCheckBox" name="iptcCountryNameCheckBox">
+                 <property name="text">
+                  <string>Country</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QCheckBox" name="iptcCityCheckBox">
+                 <property name="text">
+                  <string>City</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="iptcCreatedTimeCheckBox">
+                 <property name="text">
+                  <string>Created time</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QCheckBox" name="iptcDigitizedTimeCheckBox">
+                 <property name="text">
+                  <string>Digitized time</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0">
+                <widget class="QCheckBox" name="iptcEditStatusCheckBox">
+                 <property name="text">
+                  <string>Edit status</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </widget>
            </item>

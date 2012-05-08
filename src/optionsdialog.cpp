@@ -315,9 +315,9 @@ void OptionsDialog::writeSettings() {
     if (exifOrientationCheckBox->isChecked())
         hex |= DetailsOptions::Orientation;
     if (exifGeneratedTimeCheckBox->isChecked())
-        hex |= DetailsOptions::GeneratedTime;
+        hex |= DetailsOptions::GeneratedDateAndTime;
     if (exifDigitizedTimeCheckBox->isChecked())
-        hex |= DetailsOptions::DigitizedTime;
+        hex |= DetailsOptions::DigitizedDateAndTime;
     settings.setValue("exifImage",hex);
     hex = 0;
     if (exifFocalLengthCheckBox->isChecked())
@@ -353,6 +353,35 @@ void OptionsDialog::writeSettings() {
     if (exifUserCommentCheckBox_D->isChecked())
         hex |= DetailsOptions::UserComment;
     settings.setValue("exifAuthor",hex);
+
+    hex = 0;
+    if (iptcVersionCheckBox->isChecked())
+        hex |= DetailsOptions::ModelVersion;
+    if (iptcBylineCheckBox->isChecked())
+        hex |= DetailsOptions::Byline;
+    if (iptcCopyrightCheckBox->isChecked())
+        hex |= DetailsOptions::CopyrightIptc;
+    if (iptcObjectNameCheckBox->isChecked())
+        hex |= DetailsOptions::ObjectName;
+    if (iptcKeywordsCheckBox->isChecked())
+        hex |= DetailsOptions::Keywords;
+    if (iptcCaptionCheckBox->isChecked())
+        hex |= DetailsOptions::Caption;
+    if (iptcCountryNameCheckBox->isChecked())
+        hex |= DetailsOptions::CountryName;
+    if (iptcCityCheckBox->isChecked())
+        hex |= DetailsOptions::City;
+    if (iptcEditStatusCheckBox->isChecked())
+        hex |= DetailsOptions::EditStatus;
+    if (iptcCreatedDateCheckBox->isChecked())
+        hex |= DetailsOptions::DateCreated;
+    if (iptcCreatedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::TimeCreated;
+    if (iptcDigitizedDateCheckBox->isChecked())
+        hex |= DetailsOptions::DigitizedDate;
+    if (iptcDigitizedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::DigitizedTime;
+    settings.setValue("iptc",hex);
     settings.endGroup(); // Details
 
     // raw
@@ -493,12 +522,13 @@ void OptionsDialog::readSettings() {
 
     // details
     settings.beginGroup("Details");
+
     int hex = settings.value("exifImage",0x14).toInt();
     exifVersionCheckBox->setChecked(hex & DetailsOptions::ExifVersion);
     exifSoftCheckBox->setChecked(hex & DetailsOptions::ProcessingSoftware);
     exifOrientationCheckBox->setChecked(hex & DetailsOptions::Orientation);
-    exifGeneratedTimeCheckBox->setChecked(hex & DetailsOptions::GeneratedTime);
-    exifDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
+    exifGeneratedTimeCheckBox->setChecked(hex & DetailsOptions::GeneratedDateAndTime);
+    exifDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedDateAndTime);
     hex = settings.value("exifPhoto",0x1f).toInt();
     exifFocalLengthCheckBox->setChecked(hex & DetailsOptions::FocalLenght);
     exifApertureCheckBox->setChecked(hex & DetailsOptions::Aperture);
@@ -516,6 +546,22 @@ void OptionsDialog::readSettings() {
     exifArtistCheckBox_D->setChecked(hex & DetailsOptions::Artist);
     exifCopyrightCheckBox_D->setChecked(hex & DetailsOptions::Copyright);
     exifUserCommentCheckBox_D->setChecked(hex & DetailsOptions::UserComment);
+
+    hex = settings.value("iptc",0xd00).toInt();
+    iptcVersionCheckBox->setChecked(hex & DetailsOptions::ModelVersion);
+    iptcBylineCheckBox->setChecked(hex & DetailsOptions::Byline);
+    iptcCopyrightCheckBox->setChecked(hex & DetailsOptions::CopyrightIptc);
+    iptcObjectNameCheckBox->setChecked(hex & DetailsOptions::ObjectName);
+    iptcKeywordsCheckBox->setChecked(hex & DetailsOptions::Keywords);
+    iptcCaptionCheckBox->setChecked(hex & DetailsOptions::Caption);
+    iptcCountryNameCheckBox->setChecked(hex & DetailsOptions::CountryName);
+    iptcCityCheckBox->setChecked(hex & DetailsOptions::City);
+    iptcEditStatusCheckBox->setChecked(hex & DetailsOptions::EditStatus);
+    iptcCreatedDateCheckBox->setChecked(hex & DetailsOptions::DateCreated);
+    iptcCreatedTimeCheckBox->setChecked(hex & DetailsOptions::TimeCreated);
+    iptcDigitizedDateCheckBox->setChecked(hex & DetailsOptions::DigitizedDate);
+    iptcDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
+
     settings.endGroup(); // Details
 
     // raw

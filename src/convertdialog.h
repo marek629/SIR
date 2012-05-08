@@ -112,6 +112,7 @@ private:
     int exifCamera;
     int exifPhoto;
     int exifImage;
+    int iptcPrint;
 
 protected:
     virtual void changeEvent(QEvent *e);

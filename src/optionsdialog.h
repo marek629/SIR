@@ -36,8 +36,8 @@ namespace DetailsOptions {
 enum ExifPicture {
     ExifVersion = 0x1,
     ProcessingSoftware = 0x2,
-    GeneratedTime = 0x4,
-    DigitizedTime = 0x8,
+    GeneratedDateAndTime = 0x4,
+    DigitizedDateAndTime = 0x8,
     Orientation = 0x10
 };
 enum ExifPhoto {
@@ -59,6 +59,21 @@ enum ExifAuthor {
     Artist = 0x1,
     Copyright = 0x2,
     UserComment = 0x4
+};
+enum Iptc {
+    ModelVersion = 0x1,
+    DateCreated = 0x2,
+    TimeCreated = 0x4,
+    DigitizedDate = 0x8,
+    DigitizedTime = 0x10,
+    Byline = 0x20,
+    CopyrightIptc = 0x40,
+    ObjectName = 0x80,
+    Keywords = 0x100,
+    Caption = 0x200,
+    CountryName = 0x400,
+    City = 0x800,
+    EditStatus = 0x1000
 };
 }
 
