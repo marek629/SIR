@@ -1,7 +1,6 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +16,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
 #include <exiv2/metadatum.hpp>
 #include "exif.h"
 
-bool MetadataUtils::Exif::artistOverwrite = false;
-MetadataUtils::String MetadataUtils::Exif::artistString = "";
-bool MetadataUtils::Exif::copyrightOverwrite = false;
-MetadataUtils::String MetadataUtils::Exif::copyrightString = "";
-bool MetadataUtils::Exif::userCommentOverwrite = false;
-MetadataUtils::String MetadataUtils::Exif::userCommentString = "";
+using namespace MetadataUtils;
+
+bool Exif::artistOverwrite = false;
+String Exif::artistString = "";
+bool Exif::copyrightOverwrite = false;
+String Exif::copyrightString = "";
+bool Exif::userCommentOverwrite = false;
+String Exif::userCommentString = "";
 
 /** Default constructor. */
-MetadataUtils::Exif::Exif() {
+Exif::Exif() {
     versionKnown = false;
 }
 
@@ -42,7 +40,7 @@ MetadataUtils::Exif::Exif() {
   * \param num Encoded value of \a Exif.Photo.Flash.
   * \sa Flash flashShort
   */
-QString MetadataUtils::Exif::flashString(short num) {
+QString Exif::flashString(short num) {
     if (num == -1)
         return QObject::tr("Unknown");
     QString result;
@@ -61,31 +59,31 @@ QString MetadataUtils::Exif::flashString(short num) {
 
     // bit 5 indicating the presence of a flash function
     if ( bin[5] == '1' )
-        return MetadataUtils::Flash::noFlashFunction();
+        return Flash::noFlashFunction();
 
     // bit 0 indicating whether the flash fired
     if ( bin[0] == '1' )
-        result = MetadataUtils::Flash::fired();
+        result = Flash::fired();
     else
-        result = MetadataUtils::Flash::noFired();
+        result = Flash::noFired();
 
     // bits 3 and 4 indicating the camera's flash mode
     if ( bin[3]=='1' && bin[4]=='1' )
-        result.append(MetadataUtils::Flash::autoMode());
+        result.append(Flash::autoMode());
     else if ( (bin[3]=='0' && bin[4]=='1') || (bin[3]=='1' && bin[4]=='0') )
-        result.append(MetadataUtils::Flash::compulsoryMode());
+        result.append(Flash::compulsoryMode());
 
     // bits 1 and 2 indicating the status of returned light
     if ( bin[1] == '1' ) {
         if ( bin[2] == '1' )
-            result.append(MetadataUtils::Flash::strobeReturnDetected());
+            result.append(Flash::strobeReturnDetected());
         else
-            result.append(MetadataUtils::Flash::strobeReturnNotDetected());
+            result.append(Flash::strobeReturnNotDetected());
     }
 
     // bit 6 indicating the camera's red-eye mode
     if ( bin[6] == '1' )
-        result.append(MetadataUtils::Flash::redEyeReduction());
+        result.append(Flash::redEyeReduction());
 
     result.append('.');
     return result;
@@ -94,31 +92,31 @@ QString MetadataUtils::Exif::flashString(short num) {
 /** Returns flash mode \b str string converted to encoded \a Exif.Photo.Flash value.
   \sa Flash flashString
   */
-short MetadataUtils::Exif::flashShort(const QString &str) {
+short Exif::flashShort(const QString &str) {
     // bit 5 indicating the presence of a flash function
-    if ( str == MetadataUtils::Flash::noFlashFunction() )
+    if ( str == Flash::noFlashFunction() )
         return 32; // 2^5
 
     short result = 0;
 
     // bit 0 indicating whether the flash fired
-    if (str.contains(MetadataUtils::Flash::fired()))
+    if (str.contains(Flash::fired()))
         result += 1; // 2^0
 
     // bits 1 and 2 indicating the status of returned light
-    if (str.contains(MetadataUtils::Flash::strobeReturnDetected()))
+    if (str.contains(Flash::strobeReturnDetected()))
         result += 6; // 2^1 + 2^2
-    else if (str.contains(MetadataUtils::Flash::strobeReturnNotDetected()))
+    else if (str.contains(Flash::strobeReturnNotDetected()))
         result += 2; // 2^1
 
     // bits 3 and 4 indicating the camera's flash mode
-    if (str.contains(MetadataUtils::Flash::autoMode()))
+    if (str.contains(Flash::autoMode()))
         result += 24; // 2^3 + 2^4
-    else if (str.contains(MetadataUtils::Flash::compulsoryMode()))
+    else if (str.contains(Flash::compulsoryMode()))
         result += 16; // 2^4
 
     // bit 6 indicating the camera's red-eye mode
-    if (str.contains(MetadataUtils::Flash::redEyeReduction()))
+    if (str.contains(Flash::redEyeReduction()))
         result += 64; // 2^6
 
     return result;
@@ -127,17 +125,17 @@ short MetadataUtils::Exif::flashShort(const QString &str) {
 /** Returns true if Exif version is known; otherwise returns false.
   * \sa setVersion getVersion
   */
-bool MetadataUtils::Exif::isVersionKnown() {
+bool Exif::isVersionKnown() {
     return versionKnown;
 }
 
 /** Sets version string and version knowlege status basing on datum.
   * \sa getVersion isVersionKnown
   */
-void MetadataUtils::Exif::setVersion(const Exiv2::Metadatum &datum) {
+void Exif::setVersion(const Exiv2::Metadatum &datum) {
     int size = datum.size();
     if (size < 4) {
-        version = MetadataUtils::String::noData();
+        version = String::noData();
         versionKnown = false;
         return;
     }
@@ -156,7 +154,7 @@ void MetadataUtils::Exif::setVersion(const Exiv2::Metadatum &datum) {
 /** Returns version string.
   * \sa setVersion isVersionKnown
   */
-const MetadataUtils::String & MetadataUtils::Exif::getVersion() {
+const String & Exif::getVersion() {
     return version;
 }
 
@@ -164,7 +162,7 @@ const MetadataUtils::String & MetadataUtils::Exif::getVersion() {
   * returns version string.
   * \sa setVersion isVersionKnown
   */
-const MetadataUtils::String & MetadataUtils::Exif::getVersion(
+const String & Exif::getVersion(
         const Exiv2::Metadatum &datum) {
     setVersion(datum);
     return version;
@@ -174,28 +172,28 @@ const MetadataUtils::String & MetadataUtils::Exif::getVersion(
   * otherwise returns false.
   * \sa setArtistOverwrite stringArtist setArtistString
   */
-bool MetadataUtils::Exif::isArtistOverwrite() {
+bool Exif::isArtistOverwrite() {
     return artistOverwrite;
 }
 
 /** Sets value of \a Exif.Image.Artist overwrite status.
   * \sa isArtistOverwrite stringArtist setArtistString
   */
-void MetadataUtils::Exif::setArtistOverwrite(bool v) {
+void Exif::setArtistOverwrite(bool v) {
     artistOverwrite = v;
 }
 
 /** Returns string with \a Exif.Image.Artist field should be saved.
   * \sa setArtistString isArtistOverwrite setArtistOverwrite
   */
-MetadataUtils::String MetadataUtils::Exif::stringArtist() {
+String Exif::stringArtist() {
     return artistString;
 }
 
 /** Sets string with \a Exif.Image.Artist field should be saved.
   * \sa stringArtist isArtistOverwrite setArtistOverwrite
   */
-void MetadataUtils::Exif::setArtistString(const MetadataUtils::String &v) {
+void Exif::setArtistString(const String &v) {
     artistString = v;
 }
 
@@ -203,28 +201,28 @@ void MetadataUtils::Exif::setArtistString(const MetadataUtils::String &v) {
   * otherwise returns false.
   * \sa setCopyrightOverwrite stringCopyright setCopyrightString
   */
-bool MetadataUtils::Exif::isCopyrightOverwrite() {
+bool Exif::isCopyrightOverwrite() {
     return copyrightOverwrite;
 }
 
 /** Sets value of \a Exif.Image.Copyright overwrite status.
   * \sa isCopyrightOverwrite stringCopyright setCopyrightString
   */
-void MetadataUtils::Exif::setCopyrightOverwrite(bool v) {
+void Exif::setCopyrightOverwrite(bool v) {
     copyrightOverwrite = v;
 }
 
 /** Returns string with \a Exif.Image.Copyright field should be saved.
   * \sa setCopyrightString isCopyrightOverwrite setCopyrightOverwrite
   */
-MetadataUtils::String MetadataUtils::Exif::stringCopyright() {
+String Exif::stringCopyright() {
     return copyrightString;
 }
 
 /** Sets string with \a Exif.Image.Copyright field should be saved.
   * \sa stringCopyright isCopyrightOverwrite setCopyrightOverwrite
   */
-void MetadataUtils::Exif::setCopyrightString(const MetadataUtils::String &v) {
+void Exif::setCopyrightString(const String &v) {
     copyrightString = v;
 }
 
@@ -232,28 +230,28 @@ void MetadataUtils::Exif::setCopyrightString(const MetadataUtils::String &v) {
   * otherwise returns false.
   * \sa setUserCommentOverwrite stringUserComment setUserCommentString
   */
-bool MetadataUtils::Exif::isUserCommentOverwrite() {
+bool Exif::isUserCommentOverwrite() {
     return userCommentOverwrite;
 }
 
 /** Sets value of \a Exif.Photo.UserComment overwrite status.
   * \sa isUserCommentOverwrite stringUserComment setUserCommentString
   */
-void MetadataUtils::Exif::setUserCommentOverwrite(bool v) {
+void Exif::setUserCommentOverwrite(bool v) {
     userCommentOverwrite = v;
 }
 
 /** Returns string with \a Exif.Photo.UserComment field should be saved.
   * \sa setUserCommentString isUserCommentOverwrite setUserCommentOverwrite
   */
-MetadataUtils::String MetadataUtils::Exif::stringUserComment() {
+String Exif::stringUserComment() {
     return userCommentString;
 }
 
 /** Sets string with \a Exif.Photo.UserComment field should be saved.
   * \sa stringUserComment isUserCommentOverwrite setUserCommentOverwrite
   */
-void MetadataUtils::Exif::setUserCommentString(const MetadataUtils::String &v) {
+void Exif::setUserCommentString(const String &v) {
     userCommentString = v;
 }
 
@@ -263,10 +261,9 @@ void MetadataUtils::Exif::setUserCommentString(const MetadataUtils::String &v) {
   * \return -1 if \b rotation value is unexpected\n
   *         -2 if \b flip value is unexpected\n
   *         otherwise returing value is in range 1 to 8
-  * \sa rotationAngle flipValue Flip
+  * \sa orientationString rotationAngle flipValue Flip
   */
-char MetadataUtils::Exif::getOrientation(short rotation, int flip) {
-    using namespace MetadataUtils;
+char Exif::getOrientation(short rotation, int flip) {
     switch (rotation) {
     case 0:
         if (flip == None)
@@ -304,13 +301,70 @@ char MetadataUtils::Exif::getOrientation(short rotation, int flip) {
     return -2;
 }
 
+/** Returs translated string coresponding \b orientation code.
+  * \param orientation Orientation code in range 1 to 8. If it isn't in range
+  *        this function will return \em "No rotation" text.
+  * \sa getOrientation expProgramString meteringModeString
+  */
+String Exif::orientationString(char orientation) {
+    switch (orientation) {
+    case 1: return tr("No rotation");
+    case 2: return tr("No rotation, flip verticaly");
+    case 3: return tr("Rotation 180°");
+    case 4: return tr("Rotation 180°, flip verticaly");
+    case 5: return tr("Clockwise rotation, flip horizontaly");
+    case 6: return tr("Clockwise rotation");
+    case 7: return tr("Counterclockwise rotation, flip horizontaly");
+    case 8: return tr("Counterclockwise rotation");
+    default: return tr("No rotation");
+    }
+}
+
+/** Returs translated string coresponding \b programId code.
+  * \param orientation Orientation code in range 0 to 8. If it isn't in range
+  *        this function will return \em "Not defined" text.
+  * \sa orientationString meteringModeString
+  */
+String Exif::expProgramString(uchar programId) {
+    switch (programId) {
+    case 0: return tr("Not defined");
+    case 1: return tr("Manual");
+    case 2: return tr("Auto");
+    case 3: return tr("Aperture priority");
+    case 4: return tr("Shutter priority");
+    case 5: return tr("Creative program (biased toward depth of field)");
+    case 6: return tr("Action program (biased toward fast shutter speed)");
+    case 7: return tr("Portrait mode (for closeup photos with the background out of focus)");
+    case 8: return tr("Landscape mode (for landscape photos with the background in focus)");
+    default: return tr("Not defined");
+    }
+}
+
+/** Returs translated string coresponding \b modeId code.
+  * \param orientation Orientation code in range 0 to 6. If it isn't in range
+  *        this function will return \em "Other" text.
+  * \sa orientationString expProgramString
+  */
+String Exif::meteringModeString(short modeId) {
+    switch (modeId) {
+    case 0: return tr("Unknown");
+    case 1: return tr("Average");
+    case 2: return tr("Center weighted average");
+    case 3: return tr("Spot");
+    case 4: return tr("Multi spot");
+    case 5: return tr("Pattern");
+    case 6: return tr("Partial");
+    default: return tr("Other");
+    }
+}
+
 /** Returns rotation angle in degrees basing on orientation code.
   * \param orientation Orientation code in range 1 to 8.
   * \return -360 if \b orientation value is unexpected\n
   *         otherwise returing value is -90, 0, 90 or 180
   * \sa flipValue getOrientation
   */
-short MetadataUtils::Exif::rotationAngle(char orientation) {
+short Exif::rotationAngle(char orientation) {
     short result = 0;
     switch (orientation) {
     case 1:
@@ -348,8 +402,7 @@ short MetadataUtils::Exif::rotationAngle(char orientation) {
   *         otherwise returing value is -90, 0, 90 or 180
   * \sa rotationAngle getOrientation Flip
   */
-short MetadataUtils::Exif::rotationAngle(char orientation, int *flip) {
-    using namespace MetadataUtils;
+short Exif::rotationAngle(char orientation, int *flip) {
     *flip = None;
     short result = 0;
     switch (orientation) {
@@ -392,8 +445,7 @@ short MetadataUtils::Exif::rotationAngle(char orientation, int *flip) {
   *         otherwise returing value is \a None, \a Vertical or \a Horizontal
   * \sa rotationAngle getOrientation
   */
-MetadataUtils::Flip MetadataUtils::Exif::flipValue(char orientation) {
-    using namespace MetadataUtils;
+Flip Exif::flipValue(char orientation) {
     Flip result = None;
     switch (orientation) {
     case 1:
@@ -423,36 +475,35 @@ MetadataUtils::Flip MetadataUtils::Exif::flipValue(char orientation) {
     return result;
 }
 
-/** Sets default value of ExifStruct fields, mainly 0 and \em no \em data strings.
-  */
-void MetadataUtils::ExifStruct::reset() {
+/** Sets default value of ExifStruct fields, mainly 0 and \em "no data" strings. */
+void ExifStruct::reset() {
     // Image section
-    version = MetadataUtils::String::noData();
-    processingSoftware = MetadataUtils::String::noData();
-    imageWidth = MetadataUtils::String::noData();
-    imageHeight = MetadataUtils::String::noData();
+    version = String::noData();
+    processingSoftware = String::noData();
+    imageWidth = String::noData();
+    imageHeight = String::noData();
     orientation = 1;
-    originalDate = MetadataUtils::String::noData();
-    digitizedDate = MetadataUtils::String::noData();
+    originalDate = String::noData();
+    digitizedDate = String::noData();
     // Thumbnail section
     thumbnailImage = QImage();
-    thumbnailWidth = MetadataUtils::String::noData();
-    thumbnailHeight = MetadataUtils::String::noData();
+    thumbnailWidth = String::noData();
+    thumbnailHeight = String::noData();
     // Photo section
     focalLength = 0.0;
     aperture = 0.0;
     isoSpeed = 0;
-    expTime = MetadataUtils::String::noData();
-    shutterSpeed = MetadataUtils::String::noData();
+    expTime = String::noData();
+    shutterSpeed = String::noData();
     expBias = 0.0;
     expProgram = 0;
     meteringMode = 0;
     flashMode = -1;
     // Camera section
-    cameraManufacturer = MetadataUtils::String::noData();
-    cameraModel = MetadataUtils::String::noData();
+    cameraManufacturer = String::noData();
+    cameraModel = String::noData();
     // Author section
-    artist = MetadataUtils::String::noData();
-    copyright = MetadataUtils::String::noData();
-    userComment = MetadataUtils::String::noData();
+    artist = String::noData();
+    copyright = String::noData();
+    userComment = String::noData();
 }

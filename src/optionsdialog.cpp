@@ -1,25 +1,23 @@
-/*
-* This file is part of SIR, an open-source cross-platform Image tool
-* 2007  Rafael Sachetto
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
-* Program URL: http://sir.projet-libre.org/
-*
-*/
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Program URL: http://sir.projet-libre.org/
+ */
 
 #include <QSettings>
 #include <QDir>
@@ -150,7 +148,8 @@ void OptionsDialog::setupWindow() {
     groupBoxes = new QGroupBox* [categoriesCount];
     groupBoxes[0] = generalBox;
     groupBoxes[1] = metadataBox;
-    groupBoxes[2] = rawBox;
+    groupBoxes[2] = detailsBox;
+    groupBoxes[3] = rawBox;
     for (int i=0; i<categoriesCount; i++)
         groupBoxes[i]->hide();
     groupBoxes[currentListItem]->show();
@@ -306,6 +305,85 @@ void OptionsDialog::writeSettings() {
 
     settings.endGroup(); // Exif
 
+    // details
+    settings.beginGroup("Details");
+    int hex = 0;
+    if (exifVersionCheckBox->isChecked())
+        hex |= DetailsOptions::ExifVersion;
+    if (exifSoftCheckBox->isChecked())
+        hex |= DetailsOptions::ProcessingSoftware;
+    if (exifOrientationCheckBox->isChecked())
+        hex |= DetailsOptions::Orientation;
+    if (exifGeneratedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::GeneratedDateAndTime;
+    if (exifDigitizedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::DigitizedDateAndTime;
+    settings.setValue("exifImage",hex);
+    hex = 0;
+    if (exifFocalLengthCheckBox->isChecked())
+        hex |= DetailsOptions::FocalLenght;
+    if (exifApertureCheckBox->isChecked())
+        hex |= DetailsOptions::Aperture;
+    if (exifExpTimeCheckBox->isChecked())
+        hex |= DetailsOptions::ExposureTime;
+    if (exifShutterSpeedCheckBox->isChecked())
+        hex |= DetailsOptions::ShutterSpeed;
+    if (exifExpBiasCheckBox->isChecked())
+        hex |= DetailsOptions::ExposureBias;
+    if (exifIsoCheckBox->isChecked())
+        hex |= DetailsOptions::IsoSpeed;
+    if (exifExpProgramCheckBox->isChecked())
+        hex |= DetailsOptions::ExposureProgram;
+    if (exifMeteringCheckBox->isChecked())
+        hex |= DetailsOptions::LightMeteringMode;
+    if (exifFlashCheckBox->isChecked())
+        hex |= DetailsOptions::FlashMode;
+    settings.setValue("exifPhoto",hex);
+    hex = 0;
+    if (exifManufacturerCheckBox->isChecked())
+        hex |= DetailsOptions::Manufacturer;
+    if (exifModelCheckBox->isChecked())
+        hex |= DetailsOptions::Model;
+    settings.setValue("exifCamera",hex);
+    hex = 0;
+    if (exifArtistCheckBox->isChecked())
+        hex |= DetailsOptions::Artist;
+    if (exifCopyrightCheckBox_D->isChecked())
+        hex |= DetailsOptions::Copyright;
+    if (exifUserCommentCheckBox_D->isChecked())
+        hex |= DetailsOptions::UserComment;
+    settings.setValue("exifAuthor",hex);
+
+    hex = 0;
+    if (iptcVersionCheckBox->isChecked())
+        hex |= DetailsOptions::ModelVersion;
+    if (iptcBylineCheckBox->isChecked())
+        hex |= DetailsOptions::Byline;
+    if (iptcCopyrightCheckBox->isChecked())
+        hex |= DetailsOptions::CopyrightIptc;
+    if (iptcObjectNameCheckBox->isChecked())
+        hex |= DetailsOptions::ObjectName;
+    if (iptcKeywordsCheckBox->isChecked())
+        hex |= DetailsOptions::Keywords;
+    if (iptcCaptionCheckBox->isChecked())
+        hex |= DetailsOptions::Caption;
+    if (iptcCountryNameCheckBox->isChecked())
+        hex |= DetailsOptions::CountryName;
+    if (iptcCityCheckBox->isChecked())
+        hex |= DetailsOptions::City;
+    if (iptcEditStatusCheckBox->isChecked())
+        hex |= DetailsOptions::EditStatus;
+    if (iptcCreatedDateCheckBox->isChecked())
+        hex |= DetailsOptions::DateCreated;
+    if (iptcCreatedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::TimeCreated;
+    if (iptcDigitizedDateCheckBox->isChecked())
+        hex |= DetailsOptions::DigitizedDate;
+    if (iptcDigitizedTimeCheckBox->isChecked())
+        hex |= DetailsOptions::DigitizedTime;
+    settings.setValue("iptc",hex);
+    settings.endGroup(); // Details
+
     // raw
     settings.beginGroup("Raw");
     bool dcrawOk = false;
@@ -441,6 +519,50 @@ void OptionsDialog::readSettings() {
     exifUserCommentComboBox->setEnabled(exifOverwrite);
 
     settings.endGroup(); // Exif
+
+    // details
+    settings.beginGroup("Details");
+
+    int hex = settings.value("exifImage",0x14).toInt();
+    exifVersionCheckBox->setChecked(hex & DetailsOptions::ExifVersion);
+    exifSoftCheckBox->setChecked(hex & DetailsOptions::ProcessingSoftware);
+    exifOrientationCheckBox->setChecked(hex & DetailsOptions::Orientation);
+    exifGeneratedTimeCheckBox->setChecked(hex & DetailsOptions::GeneratedDateAndTime);
+    exifDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedDateAndTime);
+    hex = settings.value("exifPhoto",0x1f).toInt();
+    exifFocalLengthCheckBox->setChecked(hex & DetailsOptions::FocalLenght);
+    exifApertureCheckBox->setChecked(hex & DetailsOptions::Aperture);
+    exifIsoCheckBox->setChecked(hex & DetailsOptions::IsoSpeed);
+    exifShutterSpeedCheckBox->setChecked(hex & DetailsOptions::ShutterSpeed);
+    exifExpTimeCheckBox->setChecked(hex & DetailsOptions::ExposureTime);
+    exifExpBiasCheckBox->setChecked(hex & DetailsOptions::ExposureBias);
+    exifExpProgramCheckBox->setChecked(hex & DetailsOptions::ExposureProgram);
+    exifMeteringCheckBox->setChecked(hex & DetailsOptions::LightMeteringMode);
+    exifFlashCheckBox->setChecked(hex & DetailsOptions::FlashMode);
+    hex = settings.value("exifCamera",0x2).toInt();
+    exifManufacturerCheckBox->setChecked(hex & DetailsOptions::Manufacturer);
+    exifModelCheckBox->setChecked(hex & DetailsOptions::Model);
+    hex = settings.value("exifAuthor",0x1).toInt();
+    exifArtistCheckBox_D->setChecked(hex & DetailsOptions::Artist);
+    exifCopyrightCheckBox_D->setChecked(hex & DetailsOptions::Copyright);
+    exifUserCommentCheckBox_D->setChecked(hex & DetailsOptions::UserComment);
+
+    hex = settings.value("iptc",0xd00).toInt();
+    iptcVersionCheckBox->setChecked(hex & DetailsOptions::ModelVersion);
+    iptcBylineCheckBox->setChecked(hex & DetailsOptions::Byline);
+    iptcCopyrightCheckBox->setChecked(hex & DetailsOptions::CopyrightIptc);
+    iptcObjectNameCheckBox->setChecked(hex & DetailsOptions::ObjectName);
+    iptcKeywordsCheckBox->setChecked(hex & DetailsOptions::Keywords);
+    iptcCaptionCheckBox->setChecked(hex & DetailsOptions::Caption);
+    iptcCountryNameCheckBox->setChecked(hex & DetailsOptions::CountryName);
+    iptcCityCheckBox->setChecked(hex & DetailsOptions::City);
+    iptcEditStatusCheckBox->setChecked(hex & DetailsOptions::EditStatus);
+    iptcCreatedDateCheckBox->setChecked(hex & DetailsOptions::DateCreated);
+    iptcCreatedTimeCheckBox->setChecked(hex & DetailsOptions::TimeCreated);
+    iptcDigitizedDateCheckBox->setChecked(hex & DetailsOptions::DigitizedDate);
+    iptcDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
+
+    settings.endGroup(); // Details
 
     // raw
     settings.beginGroup("Raw");

@@ -44,6 +44,8 @@ namespace MetadataUtils
         Exiv2::Rational toRationalPower() const;
         String & operator =(const char *str);
         String & operator =(const QString &other);
+        String & operator =(const std::string &str);
+        String & operator +=(const std::string &str);
         static QString noData();
         static String fromStdString(const std::string &s);
     };

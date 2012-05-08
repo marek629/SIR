@@ -30,7 +30,8 @@ SOURCES += src/main.cpp \
     src/metadatadialog.cpp \
     src/timecombobox.cpp \
     src/metadata/string.cpp \
-    src/metadata/error.cpp
+    src/metadata/error.cpp \
+    src/metadata/iptc.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
@@ -55,7 +56,8 @@ HEADERS += src/main.h \
     src/metadatadialog.h \
     src/timecombobox.h \
     src/metadata/string.h \
-    src/metadata/error.h
+    src/metadata/error.h \
+    src/metadata/iptc.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \

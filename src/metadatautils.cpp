@@ -1,7 +1,6 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,32 +16,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
-#include "metadatautils.h"
-#include "defines.h"
 #include <QStringList>
 #include <QDir>
 #include <cmath>
+#include "metadatautils.h"
+#include "defines.h"
 
-bool MetadataUtils::Metadata::enabled = false;
-bool MetadataUtils::Metadata::save = false;
-QStringList MetadataUtils::Metadata::saveMetadataFormats =
+using namespace MetadataUtils;
+
+bool Metadata::enabled = false;
+bool Metadata::save = false;
+QStringList Metadata::saveMetadataFormats =
         QStringList() << "jpeg" << "jpg" << "png" << "tif" << "tiff";
 
 /** Default constructor. */
-MetadataUtils::Metadata::Metadata() {}
+Metadata::Metadata() {}
+
+/** Destructor.\n
+  * Closes current image file.
+  */
+Metadata::~Metadata() {
+    close();
+}
 
 /** Reads metadata from \b path file path and optionaly setup ExifStruct if
   * \b setupStructs is true, and returns read success value.\n
   * If exception catched this error data will be saved into lastError_ field.
   * \sa lastError
   */
-bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setupStructs) {
+bool Metadata::read(const String& path, bool setupStructs) {
+    close();
     try {
         std::string filePath = path.toNativeStdString();
         image = Exiv2::ImageFactory::open(filePath);
@@ -50,14 +56,17 @@ bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setup
 
         exifData = image->exifData();
         exif.setVersion(exifData["Exif.Photo.ExifVersion"]);
-        if (setupStructs)
-            setExifStruct();
 
         iptcData = image->iptcData();
+        Iptc::setVersion(iptcData["Iptc.Envelope.ModelVersion"].toLong());
+
 #ifdef EXV_HAVE_XMP_TOOLKIT
         xmpData = image->xmpData();
 #endif // EXV_HAVE_XMP_TOOLKIT
-        image.reset();
+        if (setupStructs) {
+            setExifStruct();
+            setIptcStruct();
+        }
         return true;
     }
     catch (Exiv2::Error &e) {
@@ -68,8 +77,8 @@ bool MetadataUtils::Metadata::read(const MetadataUtils::String& path, bool setup
 }
 
 /** This is overloaded function. */
-bool MetadataUtils::Metadata::read(const QString &path, bool setupStructs) {
-    return read((const MetadataUtils::String&)path,setupStructs);
+bool Metadata::read(const QString &path, bool setupStructs) {
+    return read((const String&)path,setupStructs);
 }
 
 /** Writes metadata about file corresponding with \b path file path and
@@ -77,13 +86,13 @@ bool MetadataUtils::Metadata::read(const QString &path, bool setupStructs) {
   * If exception catched this error data will be saved into lastError_ field.
   * \sa lastError
   */
-bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QImage& qImage) {
+bool Metadata::write(const String& path, const QImage& qImage) {
+    close();
     try {
         std::string filePath = path.toNativeStdString();
         image = Exiv2::ImageFactory::open(filePath);
         setData(qImage);
         image->writeMetadata();
-        image.reset();
         return true;
     }
     catch (Exiv2::Error &e) {
@@ -94,12 +103,19 @@ bool MetadataUtils::Metadata::write(const MetadataUtils::String& path, const QIm
 }
 
 /** This is overloaded function. */
-bool MetadataUtils::Metadata::write(const QString &path, const QImage &image) {
-    return write((const MetadataUtils::String&)path, image);
+bool Metadata::write(const QString &path, const QImage &image) {
+    return write((const String&)path, image);
+}
+
+/** Closes last file opened to read or write.
+  * \sa open write
+  */
+void Metadata::close() {
+    image.reset();
 }
 
 /** Clears metadata. */
-void MetadataUtils::Metadata::clearMetadata() {
+void Metadata::clearMetadata() {
     exifData.clear();
     iptcData.clear();
 #ifdef EXV_HAVE_XMP_TOOLKIT
@@ -107,7 +123,12 @@ void MetadataUtils::Metadata::clearMetadata() {
 #endif // EXV_HAVE_XMP_TOOLKIT
 }
 
-void MetadataUtils::Metadata::setData(const QImage& qImage) {
+/** Sets metadata of all supported standards.\n
+  * If \a Exif metadata isn't empty and \a qImage isn't null save image size
+  * in \em Exif.Image.ImageWidth and \em Exif.Image.ImageLength; otherwise this
+  * metadata fields will filled from current Exiv2::Image \a image file.
+  */
+void Metadata::setData(const QImage& qImage) {
     if (!exifData.empty()) {
         if (!exif.isVersionKnown()) {
             Exiv2::byte version[4] = { 48, 50, 50, 48 };
@@ -119,15 +140,19 @@ void MetadataUtils::Metadata::setData(const QImage& qImage) {
             exifData["Exif.Image.ImageWidth"] = qImage.width();
             exifData["Exif.Image.ImageLength"] = qImage.height();
         }
-        if (MetadataUtils::Exif::isArtistOverwrite())
+        else {
+            exifData["Exif.Image.ImageWidth"] = image->pixelWidth();
+            exifData["Exif.Image.ImageLength"] = image->pixelHeight();
+        }
+        if (Exif::isArtistOverwrite())
             exifData["Exif.Image.Artist"] =
-                    MetadataUtils::Exif::stringArtist().toStdString();
-        if (MetadataUtils::Exif::isCopyrightOverwrite())
+                    Exif::stringArtist().toStdString();
+        if (Exif::isCopyrightOverwrite())
             exifData["Exif.Image.Copyright"] =
-                    MetadataUtils::Exif::stringCopyright().toStdString();
-        if (MetadataUtils::Exif::isUserCommentOverwrite())
+                    Exif::stringCopyright().toStdString();
+        if (Exif::isUserCommentOverwrite())
             exifData["Exif.Photo.UserComment"] =
-                    MetadataUtils::Exif::stringUserComment().toNativeStdString();
+                    Exif::stringUserComment().toNativeStdString();
     }
     image->setExifData(exifData);
     image->setIptcData(iptcData);
@@ -137,9 +162,9 @@ void MetadataUtils::Metadata::setData(const QImage& qImage) {
 }
 
 /** Sets \a Exif metadata based on exifStruct_ data.
-  * \sa ExifStruct setExifStruct
+  * \sa ExifStruct setExifStruct setIptcStruct
   */
-void MetadataUtils::Metadata::setExifData() {
+void Metadata::setExifData() {
     // Image section
     exifData["Exif.Image.Orientation"] = exifStruct_.orientation;
     setExifDatum("Exif.Photo.DateTimeOriginal","Exif.Image.DateTimeOriginal",
@@ -152,7 +177,7 @@ void MetadataUtils::Metadata::setExifData() {
     exifData["Exif.Photo.FocalLength"] = rational;
     rational = simpleRational( exifStruct_.aperture * 10 );
     setExifDatum("Exif.Photo.ApertureValue","Exif.Photo.FNumber",rational);
-    MetadataUtils::String mString (exifStruct_.expTime);
+    String mString (exifStruct_.expTime);
     rational = mString.toRational();
     setExifDatum("Exif.Image.ExposureTime","Exif.Photo.ExposureTime",rational);
     rational = simpleRational( exifStruct_.expBias * 10 );
@@ -179,15 +204,15 @@ void MetadataUtils::Metadata::setExifData() {
 }
 
 /** Loads \a exifStruct_ data from \a Exif metadata.
-  * \sa ExifStruct setExifData
+  * \sa ExifStruct setExifData setIptcData
   */
-void MetadataUtils::Metadata::setExifStruct() {
+void Metadata::setExifStruct() {
     // Image section
     exifStruct_.version = exif.getVersion();
-    exifStruct_.processingSoftware = MetadataUtils::String::fromStdString(
+    exifStruct_.processingSoftware = String::fromStdString(
                 exifData["Exif.Image.ProcessingSoftware"].toString() );
     if (exifStruct_.processingSoftware.isEmpty())
-        exifStruct_.processingSoftware = MetadataUtils::String::noData();
+        exifStruct_.processingSoftware = String::noData();
     exifStruct_.imageWidth = QString::number(
                 exifData["Exif.Image.ImageWidth"].toLong() );
     exifStruct_.imageWidth.appendUnit(" px");
@@ -207,15 +232,15 @@ void MetadataUtils::Metadata::setExifStruct() {
                     exifData["Exif.Image.DateTimeDigitized"].toString() );
 
     // Thumbnail section
-    Exiv2::PreviewManager previewMenager(*image);
-    Exiv2::PreviewImage thumbnail = previewMenager.getPreviewImage(
-                previewMenager.getPreviewProperties()[0] );
+    Exiv2::PreviewManager previewManager(*image);
+    Exiv2::PreviewImage thumbnail = previewManager.getPreviewImage(
+                previewManager.getPreviewProperties()[0] );
     exifStruct_.thumbnailImage = QImage(thumbnail.width(), thumbnail.height(),
                                         QImage::Format_ARGB32);
     exifStruct_.thumbnailImage.loadFromData(thumbnail.pData(), thumbnail.size());
-    exifStruct_.thumbnailWidth = MetadataUtils::String::number( thumbnail.width() );
+    exifStruct_.thumbnailWidth = String::number( thumbnail.width() );
     exifStruct_.thumbnailWidth.appendUnit(" px");
-    exifStruct_.thumbnailHeight = MetadataUtils::String::number( thumbnail.height() );
+    exifStruct_.thumbnailHeight = String::number( thumbnail.height() );
     exifStruct_.thumbnailHeight.appendUnit(" px");
 
     // Photo section
@@ -234,7 +259,7 @@ void MetadataUtils::Metadata::setExifStruct() {
         rational = exifData["Exif.Image.ShutterSpeedValue"].toRational();
         isEmpty = (rational.first == -1 && rational.second == 1);
         if (isEmpty)
-            exifStruct_.shutterSpeed = MetadataUtils::String::noData();
+            exifStruct_.shutterSpeed = String::noData();
     }
     if (!isEmpty)
         exifStruct_.shutterSpeed = timeString(rational);
@@ -263,15 +288,112 @@ void MetadataUtils::Metadata::setExifStruct() {
     exifStruct_.artist = QString::fromStdString(
                 exifData["Exif.Image.Artist"].toString() );
     if (exifStruct_.artist.isEmpty())
-        exifStruct_.artist = MetadataUtils::String::noData();
+        exifStruct_.artist = String::noData();
     exifStruct_.copyright = QString::fromStdString(
                 exifData["Exif.Image.Copyright"].toString() );
     if (exifStruct_.copyright.isEmpty())
-        exifStruct_.copyright = MetadataUtils::String::noData();
+        exifStruct_.copyright = String::noData();
     exifStruct_.userComment = QString::fromStdString(
                 exifData["Exif.Photo.UserComment"].toString() );
     if (exifStruct_.userComment.isEmpty())
-        exifStruct_.userComment = MetadataUtils::String::noData();
+        exifStruct_.userComment = String::noData();
+}
+
+/** Loads \a iptcStruct_ data from \a IPTC metadata.
+  * \sa IptcStruct setIptcData setExifData
+  */
+void Metadata::setIptcData() {
+    if (!Iptc::isVersionKnown() || Iptc::version() < 2)
+        iptcData["Iptc.Envelope.ModelVersion"] = 2;
+    std::string keyString = "Iptc.Application2.DateCreated";
+    if (iptcStruct_.dateCreated.isNull())
+        removeDatum(keyString);
+    else
+        iptcData[keyString] = Iptc::dateString(iptcStruct_.dateCreated);
+    keyString = "Iptc.Application2.TimeCreated";
+    if (iptcStruct_.timeCreated.isNull())
+        removeDatum(keyString);
+    else
+        iptcData[keyString] = Iptc::timeString(iptcStruct_.timeCreated);
+    keyString = "Iptc.Application2.DigitizationDate";
+    if (iptcStruct_.digitizationDate.isNull())
+        removeDatum(keyString);
+    else
+        iptcData[keyString] = Iptc::dateString(iptcStruct_.digitizationDate);
+    keyString = "Iptc.Application2.DigitizationTime";
+    if (iptcStruct_.digitizationTime.isNull())
+        removeDatum(keyString);
+    else
+        iptcData[keyString] = Iptc::timeString(iptcStruct_.digitizationTime);
+    iptcData["Iptc.Application2.Byline"] = iptcStruct_.byline.toStdString();
+    iptcData["Iptc.Application2.Copyright"] = iptcStruct_.copyright.toStdString();
+    iptcData["Iptc.Application2.ObjectName"] = iptcStruct_.objectName.toStdString();
+    keyString = "Iptc.Application2.Keywords";
+    Exiv2::IptcKey key(keyString);
+    Exiv2::IptcMetadata::iterator i = iptcData.findKey(key);
+    // erase all old keywords
+    while (i != iptcData.end() && keyString.compare(i->key()) == 0)
+        i = iptcData.erase(i);
+    QStringList keywords = iptcStruct_.keywords.split(' ', QString::SkipEmptyParts);
+    // insert new keywords
+    foreach (QString word, keywords) {
+        Exiv2::Value::AutoPtr value = Exiv2::Value::create(Exiv2::string);
+        value->read(word.toStdString());
+        iptcData.add(key,value.get());
+    }
+    iptcData["Iptc.Application2.Caption"] = iptcStruct_.caption.toStdString();
+    iptcData["Iptc.Application2.CountryName"] = iptcStruct_.countryName.toStdString();
+    iptcData["Iptc.Application2.City"] = iptcStruct_.city.toStdString();
+    iptcData["Iptc.Application2.EditStatus"] = iptcStruct_.editStatus.toStdString();
+}
+
+/** Sets \a IPTC metadata based on iptcStruct_ data.
+  * \sa IptcStruct setIptcStruct setExifStruct
+  */
+void Metadata::setIptcStruct() {
+    if (Iptc::isVersionKnown())
+        iptcStruct_.modelVersion = String::number(Iptc::version());
+    else
+        iptcStruct_.modelVersion = String::noData();
+    iptcStruct_.dateCreated = Iptc::date(
+                iptcData["Iptc.Application2.DateCreated"].toString() );
+    iptcStruct_.timeCreated = Iptc::time(
+                iptcData["Iptc.Application2.TimeCreated"].toString() );
+    iptcStruct_.digitizationDate = Iptc::date(
+                iptcData["Iptc.Application2.DigitizationDate"].toString() );
+    iptcStruct_.digitizationTime = Iptc::time(
+                iptcData["Iptc.Application2.DigitizationTime"].toString() );
+    iptcStruct_.byline = iptcData["Iptc.Application2.Byline"].toString();
+    iptcStruct_.copyright = iptcData["Iptc.Application2.Copyright"].toString();
+    iptcStruct_.objectName = iptcData["Iptc.Application2.ObjectName"].toString();
+    iptcStruct_.keywords = "";
+    std::string keyString = "Iptc.Application2.Keywords";
+    Exiv2::IptcKey key(keyString);
+    Exiv2::IptcMetadata::iterator i = iptcData.findKey(key);
+    Exiv2::IptcMetadata::iterator end = iptcData.end();
+    while (i != end && keyString.compare(i->key()) == 0) {
+        iptcStruct_.keywords += i->value().toString() + " ";
+        ++i;
+    }
+    iptcStruct_.keywords.resize(iptcStruct_.keywords.size()-1); // remove last space
+    iptcStruct_.caption = iptcData["Iptc.Application2.Caption"].toString();
+    iptcStruct_.countryName = iptcData["Iptc.Application2.CountryName"].toString();
+    iptcStruct_.city = iptcData["Iptc.Application2.City"].toString();
+    iptcStruct_.editStatus = iptcData["Iptc.Application2.EditStatus"].toString();
+}
+
+void Metadata::removeDatum(const std::string &key) {
+    QString standard = QString::fromStdString(key).split('.').first();
+    if (standard == "Exif") {
+        Exiv2::ExifMetadata::iterator i = exifData.findKey(Exiv2::ExifKey(key));
+        if (i != exifData.end())
+            exifData.erase(i);
+    }
+    else if (standard == "Iptc") {
+        Exiv2::IptcMetadata::iterator i = iptcData.findKey(Exiv2::IptcKey(key));
+        if (i != iptcData.end())
+            iptcData.erase(i);
+    }
 }
 
 /** This is overloaded function useful for getting exposure time.\n
@@ -281,11 +403,18 @@ void MetadataUtils::Metadata::setExifStruct() {
   * If \b key1 value isn't defined will be read \b key2 value. Otherwise will be
   * returned string based on \b key1.
   */
-QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::string &key2) {
+QString Metadata::timeString(const std::string &key1, const std::string &key2) {
     QString result;
     if (key1.empty())
         return result;
-    Exiv2::Rational rational = exifData[key1].toRational();
+    Exiv2::Exifdatum& tag = exifData[key1];
+    Exiv2::Rational rational;
+    if (tag.size() > 0)
+        rational = tag.toRational();
+    else {
+        rational.first = -1;
+        rational.second = 1;
+    }
     result = timeString(&rational,key2);
     return result;
 }
@@ -293,7 +422,7 @@ QString MetadataUtils::Metadata::timeString(const std::string &key1, const std::
 /** This is overloaded function useful for getting shutter speed.\n
   * Returns valid fractional time string based on \b rationalPower power of 0.5.
   */
-QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rationalPower) {
+QString Metadata::timeString(const Exiv2::Rational &rationalPower) {
     QString result;
     Exiv2::Rational rational = rationalPower;
     if (rationalPower.first == 0)
@@ -346,7 +475,7 @@ QString MetadataUtils::Metadata::timeString(const Exiv2::Rational &rationalPower
   * Returns valid fractional time string based on \b rational value and if it's
   * not defined (-1/1) on \b key value.
   */
-QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
+QString Metadata::timeString(Exiv2::Rational *rational,
                                             const std::string &key) {
     QString result;
     bool isEmpty(rational->first == -1  && rational->second == 1);
@@ -356,7 +485,7 @@ QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
             isEmpty = false;
         }
         else
-            result = MetadataUtils::String::noData();
+            result = String::noData();
     }
     if (!isEmpty) {
         if (rational->first == 0)
@@ -385,7 +514,7 @@ QString MetadataUtils::Metadata::timeString(Exiv2::Rational *rational,
 }
 
 /** Returns simplest fraction which equal \b integer divided by 10. */
-Exiv2::Rational MetadataUtils::Metadata::simpleRational(int integer) {
+Exiv2::Rational Metadata::simpleRational(int integer) {
     Exiv2::Rational result;
     if (integer % 10 == 0) {
         result.first = integer / 10;
@@ -410,7 +539,7 @@ Exiv2::Rational MetadataUtils::Metadata::simpleRational(int integer) {
   * Returns simplest fraction whitch equal \b rational value.
   * Maximum denominator expected is 100 (i.e. 25/100).
   */
-Exiv2::Rational MetadataUtils::Metadata::simpleRational(const Exiv2::Rational &rational) {
+Exiv2::Rational Metadata::simpleRational(const Exiv2::Rational &rational) {
     Exiv2::Rational result = rational;
     if (rational.first == 0)
         result.second = 1;
@@ -445,35 +574,57 @@ Exiv2::Rational MetadataUtils::Metadata::simpleRational(const Exiv2::Rational &r
     return result;
 }
 
+/** Returns metadata value corresponding \b key string. Exif and IPTC metadata
+  * are supported.\n
+  * When this function fault returns negative value (-2 or -3).
+  */
+long Metadata::getLong(const QString &key) {
+    QString standard = key.split('.').first();
+    std::string str = key.toStdString();
+    if (standard == "Exif") {
+        Exiv2::ExifMetadata::iterator i = exifData.findKey(Exiv2::ExifKey(str));
+        if (i != exifData.end())
+            return i->value().toLong();
+    }
+    else if (standard == "Iptc") {
+        Exiv2::IptcMetadata::iterator i = iptcData.findKey(Exiv2::IptcKey(str));
+        if (i != iptcData.end())
+            return i->value().toLong();
+    }
+    else
+        return -3;
+    return -2;
+}
+
 /** Returns true if metadata support is enabled, otherwise false. */
-bool MetadataUtils::Metadata::isEnabled() {
+bool Metadata::isEnabled() {
     return enabled;
 }
 
 /** Enables metadata support if \v is true, otherwise disables this. */
-void MetadataUtils::Metadata::setEnabled(bool v) {
+void Metadata::setEnabled(bool v) {
     enabled = v;
 }
 
 /** Returns true if metadata saving support is enabled, otherwise false. */
-bool MetadataUtils::Metadata::isSave() {
+bool Metadata::isSave() {
     return save;
 }
 
 /** Enables metadata saving support if \v is true, otherwise disables this. */
-void MetadataUtils::Metadata::setSave(bool v) {
+void Metadata::setSave(bool v) {
     save = v;
 }
 
 /** Returns true if typed \b format format file is write supported, otherwise false. */
-bool MetadataUtils::Metadata::isWriteSupportedFormat(const QString &format) {
+bool Metadata::isWriteSupportedFormat(const QString &format) {
     return saveMetadataFormats.contains(format);
 }
 
 /** This is overloaded function.\n
   * Sets \a Exif metadatum corresponding to \b key key to typed \b value.
   */
-void MetadataUtils::Metadata::setExifDatum(const std::string &key, int value) {
+void Metadata::setExifDatum(const std::string &key, int value) {
     if (key.empty())
         return;
     exifData[key] = value;
@@ -485,7 +636,7 @@ void MetadataUtils::Metadata::setExifDatum(const std::string &key, int value) {
   * value. If both keys values are unknown, this function will do nothing and
   * just return.
   */
-void MetadataUtils::Metadata::setExifDatum(
+void Metadata::setExifDatum(
         const std::string &key1, const std::string &key2, int value) {
     if (key1.empty() && key2.empty())
         return;
@@ -506,7 +657,7 @@ void MetadataUtils::Metadata::setExifDatum(
   * value. If both keys values are unknown, this function will do nothing and
   * just return.
   */
-void MetadataUtils::Metadata::setExifDatum(
+void Metadata::setExifDatum(
         const std::string &key1, const std::string &key2, const Exiv2::Rational &value) {
     if (key1.empty() && key2.empty())
         return;
@@ -527,7 +678,7 @@ void MetadataUtils::Metadata::setExifDatum(
   * value. If both keys values are unknown, this function will do nothing and
   * just return.
   */
-void MetadataUtils::Metadata::setExifDatum(
+void Metadata::setExifDatum(
         const std::string &key1, const std::string &key2, const std::string &value) {
     if (key1.empty() && key2.empty())
         return;
@@ -545,7 +696,7 @@ void MetadataUtils::Metadata::setExifDatum(
 /** This is overloaded function.\n
   * Sets \a Exif thumbnail based on image loaded from \b path file path.
   */
-void MetadataUtils::Metadata::setExifThumbnail(const std::string &path) {
+void Metadata::setExifThumbnail(const std::string &path) {
     Exiv2::ExifThumb thumb (exifData);
     thumb.erase();
     thumb.setJpegThumbnail(path);
@@ -557,7 +708,7 @@ void MetadataUtils::Metadata::setExifThumbnail(const std::string &path) {
   * If exception catched this error data will be saved into lastError_ field.
   * \sa lastError
   */
-bool MetadataUtils::Metadata::setExifThumbnail(QImage *image, int tid) {
+bool Metadata::setExifThumbnail(QImage *image, int tid) {
     if (image->isNull())
         return false;
     QString filePath = QDir::tempPath() + QDir::separator() + "sir_thumb";

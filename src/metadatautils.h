@@ -1,7 +1,6 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
 #ifndef METADATA_H
 #define METADATA_H
 
 #include "metadata/exif.h"
+#include "metadata/iptc.h"
 #include "metadata/string.h"
 #include "metadata/error.h"
 #include <QObject>
@@ -40,13 +37,17 @@ namespace MetadataUtils {
         Q_OBJECT
     public:
         Metadata();
+        ~Metadata();
         bool read(const String& path, bool setupStructs = false);
         bool read(const QString& path, bool setupStructs = false);
         bool write(const String& path, const QImage& image = QImage());
         bool write(const QString& path, const QImage& image = QImage());
+        void close();
         void clearMetadata();
         void setExifData();
         void setExifStruct();
+        void setIptcData();
+        void setIptcStruct();
         void setExifDatum(const std::string &key, int value);
         void setExifDatum(const std::string &key1, const std::string &key2, int value);
         void setExifDatum(const std::string &key1, const std::string &key2,
@@ -60,9 +61,14 @@ namespace MetadataUtils {
         QString timeString(Exiv2::Rational *rational, const std::string &key);
         static Exiv2::Rational simpleRational(int integer);
         static Exiv2::Rational simpleRational(const Exiv2::Rational &rationalPower);
-        MetadataUtils::ExifStruct *exifStruct() { return &exifStruct_; } /**< Returns pointer
+        long getLong(const QString &key);
+        Exiv2::Image::AutoPtr imageAutoPtr() { return image; }
+        ExifStruct *exifStruct() { return &exifStruct_; } /**< Returns pointer
             to \a Exif struct. */
-        Error *lastError() { return &lastError_; } /**< Returns pointer to last error object. */
+        IptcStruct *iptcStruct() { return &iptcStruct_; } /**< Returns pointer
+            to \a IPTC struct. */
+        Error *lastError() { return &lastError_; } /**< Returns pointer to last
+            error object. */
         static void setEnabled(bool);
         static bool isEnabled();
         static void setSave(bool);
@@ -72,6 +78,7 @@ namespace MetadataUtils {
 
     private:
         void setData(const QImage &img);
+        void removeDatum(const std::string &key);
 
         Exiv2::Image::AutoPtr image;
         Exiv2::ExifData exifData;
@@ -83,8 +90,9 @@ namespace MetadataUtils {
         static bool enabled;
         static bool save;
         static QStringList saveMetadataFormats;
-        MetadataUtils::ExifStruct exifStruct_;
-        MetadataUtils::Exif exif;
+        ExifStruct exifStruct_;
+        Exif exif;
+        IptcStruct iptcStruct_;
     };
 }
 

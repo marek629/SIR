@@ -4,7 +4,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -38,6 +38,9 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QWindowStateChangeEvent>
+#include <QDebug>
+#include <cmath>
+#include <QSvgRenderer>
 
 #include "convertdialog.h"
 #include "previewdialog.h"
@@ -93,15 +96,16 @@ ConvertDialog::~ConvertDialog() {
 
 /** Connects UI signals to corresponding slots. */
 void ConvertDialog::createConnections() {
-    // tree view's list menagement buttons & actions
+    // tree view's list menagement buttons
     connect(addFilepushButton, SIGNAL(clicked()), this, SLOT(addFile()));
     connect(addDirpushButton, SIGNAL(clicked()), this, SLOT(addDir()));
     connect(RemovepushButton, SIGNAL(clicked()), this,
             SLOT(removeSelectedFromList()));
     connect(RemoveAllpushButton, SIGNAL(clicked()), this, SLOT(removeAll()));
-
+    // & actions
     connect(actionAdd_File, SIGNAL(triggered()), this, SLOT(addFile()));
     connect(actionAdd_Dir, SIGNAL(triggered()), this, SLOT(addDir()));
+    connect(actionSelect, SIGNAL(triggered()), SLOT(showSelectionDialog()));
     connect(actionRemoveAll, SIGNAL(triggered()), SLOT(removeAll()));
 
     // menu actions
@@ -118,6 +122,7 @@ void ConvertDialog::createConnections() {
     connect(filesTreeView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem *, int)),
             SLOT(showPreview(QTreeWidgetItem *, int)));
     connect(filesTreeView, SIGNAL(changed()), SLOT(updateTree()));
+    connect(filesTreeView, SIGNAL(itemSelectionChanged()), SLOT(showDetails()));
 
     // browse button
     connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
@@ -356,6 +361,9 @@ void ConvertDialog::init() {
     completer2->setCaseSensitivity(Qt::CaseInsensitive);
     destPrefixEdit->setCompleter(completer2);
     destSuffixEdit->setCompleter(completer2);
+
+    verticalSplitter->setStretchFactor(0,1000);
+    horizontalSplitter->setStretchFactor(0,1000);
 
     convertProgressBar->setValue(0);
     createConnections();
@@ -719,6 +727,309 @@ void ConvertDialog::showMetadata() {
     metadataForm->show();
 }
 
+void ConvertDialog::showSelectionDialog() {
+
+}
+
+/** Shows file details or few files summary.\n
+  * This function is called when selection items changed in tree view list.\n
+  * When details widget this function will do nothing.
+  */
+void ConvertDialog::showDetails() {
+    if (horizontalSplitter->widget(1)->width() == 0)
+        return;
+    QList<QTreeWidgetItem*> selectedFiles = filesTreeView->selectedItems();
+    const QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+            "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+            "<html><head><meta name=\"qrichtext\" content=\"1\" />"
+            "<style type=\"text/css\">p, li { white-space: pre-wrap; }</style>"
+            "</head><body style=\" font-family:'Sans Serif';"
+            "font-size:9pt; font-weight:400; font-style:normal;\">";
+    QString htmlContent;
+    const QString htmlEnd = "</body></html>";
+    const QString htmlBr = "<br />";
+    const QString htmlHr = "<hr />";
+    detailsBrowser->clear();
+    QSize imageSize;
+    bool isSvg = false;
+    bool metadataEnabled = MetadataUtils::Metadata::isEnabled();
+    MetadataUtils::Metadata metadata;
+    MetadataUtils::ExifStruct *exifStruct = 0;
+    MetadataUtils::IptcStruct *iptcStruct = 0;
+    int usableWidth = detailsBrowser->width() - 12;
+    if (selectedFiles.length() == 1) {
+        QTreeWidgetItem *item = selectedFiles.first();
+        QString ext = item->text(1);
+        MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
+                item->text(0) + '.' + ext;
+        QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb";
+        ext = ext.toUpper();
+        // thumbnail generation
+        if (ext != "SVG" && ext != "SVGZ") {
+            bool fromData(!MetadataUtils::Metadata::isEnabled());
+            if (!fromData) {
+                metadata.read(imagePath, true);
+                exifStruct = metadata.exifStruct();
+                iptcStruct = metadata.iptcStruct();
+                Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
+                imageSize = QSize(image->pixelWidth(), image->pixelHeight());
+                Exiv2::PreviewManager previewManager (*image);
+                Exiv2::PreviewPropertiesList previewList = previewManager.
+                        getPreviewProperties();
+                if (!previewList.empty()) { // read from metadata thumnail
+                    Exiv2::PreviewImage preview = previewManager.getPreviewImage(
+                                previewList[0]);
+                    preview.writeFile(thumbPath.toStdString());
+                    thumbPath += preview.extension().c_str();
+                }
+                else
+                    fromData = true;
+            }
+            if (fromData) { // generate from image data
+                QImage img(imagePath);
+                if (!imageSize.isValid())
+                    imageSize = img.size();
+                thumbPath += ".tif";
+                QImage thumbnail;
+                if (img.width() > usableWidth)
+                    thumbnail = img.scaledToWidth(usableWidth,
+                                                  Qt::SmoothTransformation);
+                else
+                    thumbnail = img;
+                thumbnail.save(thumbPath, "TIFF");
+            }
+        }
+        else { // render from SVG file
+            isSvg = true;
+            metadataEnabled = false;
+            QGraphicsSvgItem svg(imagePath);
+            QSvgRenderer *renderer = svg.renderer();
+            QSize size = renderer->defaultSize();
+            imageSize = size;
+            double sizeRatio = (double) usableWidth / size.width();
+            size *= sizeRatio;
+            QImage thumbnail (size, QImage::Format_ARGB32);
+            thumbnail.fill(Qt::transparent);
+            QPainter painter (&thumbnail);
+            renderer->render(&painter);
+            thumbPath += ".tif";
+            thumbnail.save(thumbPath, "TIFF");
+        }
+        htmlContent = "<center><img src=\"" + thumbPath + "\" /></center>" + htmlBr;
+        htmlContent += imagePath + htmlBr;
+        if (isSvg)
+            htmlContent += tr("Default image size: ");
+        else
+            htmlContent += tr("Image size: ");
+        htmlContent += QString::number(imageSize.width()) + "x"
+                + QString::number(imageSize.height()) + " px" + htmlBr;
+        QFileInfo info(imagePath);
+        htmlContent += tr("File size: ") + QString::number(
+                    info.size() / pow(1024.,fileSizeComboBox->currentIndex()+1.), 'f', 2)
+                + " " + fileSizeComboBox->currentText() + htmlBr;
+        if (metadataEnabled) {
+            if (exifStruct->version != MetadataUtils::String::noData()) {
+                if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
+                    htmlContent += htmlBr;
+                // exif image
+                if (exifImage & DetailsOptions::ExifVersion)
+                    htmlContent += tr("Exif Version") + ": " + exifStruct->version
+                            + htmlBr;
+                if (exifImage & DetailsOptions::ProcessingSoftware)
+                    htmlContent += tr("Processing Software") + ": " +
+                            exifStruct->processingSoftware + htmlBr;
+                if (exifImage & DetailsOptions::Orientation)
+                    htmlContent += tr("Orientation") + ": " +
+                            MetadataUtils::Exif::orientationString(
+                                exifStruct->orientation) + htmlBr;
+                if (exifImage & DetailsOptions::GeneratedDateAndTime)
+                    htmlContent += tr("Generated Date and Time") + ": " +
+                            exifStruct->originalDate + htmlBr;
+                if (exifImage & DetailsOptions::DigitizedDateAndTime)
+                    htmlContent += tr("Digitized Date and Time") + ": " +
+                            exifStruct->digitizedDate + htmlBr;
+                // exif photo
+                if (exifPhoto & DetailsOptions::FocalLenght)
+                    htmlContent += tr("Focal lenght") + ": " +
+                            QString::number(exifStruct->focalLength,'f',1) + " mm"
+                            + htmlBr;
+                if (exifPhoto & DetailsOptions::Aperture)
+                    htmlContent += tr("Aperture") + ": F" +
+                            QString::number(exifStruct->aperture,'f',1) + htmlBr;
+                if (exifPhoto & DetailsOptions::ExposureTime)
+                    htmlContent += tr("Exposure time") + ": " + exifStruct->expTime
+                            + htmlBr;
+                if (exifPhoto & DetailsOptions::ShutterSpeed)
+                    htmlContent += tr("Shutter Speed") + ": " +
+                            exifStruct->shutterSpeed + htmlBr;
+                if (exifPhoto & DetailsOptions::ExposureBias)
+                    htmlContent += tr("Exposure bias") + ": " +
+                            QString::number(exifStruct->expBias,'f',1) + "EV" + htmlBr;
+                if (exifPhoto & DetailsOptions::IsoSpeed)
+                    htmlContent += tr("ISO Speed") + ": " +
+                            QString::number(exifStruct->isoSpeed) + htmlBr;
+                if (exifPhoto & DetailsOptions::ExposureProgram)
+                    htmlContent += tr("Exposure program") + ": " +
+                            MetadataUtils::Exif::expProgramString(
+                                exifStruct->expProgram) + htmlBr;
+                if (exifPhoto & DetailsOptions::LightMeteringMode)
+                    htmlContent += tr("Light metering mode") + ": " +
+                            MetadataUtils::Exif::meteringModeString(
+                                exifStruct->meteringMode) + htmlBr;
+                if (exifPhoto & DetailsOptions::FlashMode)
+                    htmlContent += tr("Flash mode") + ": " +
+                            MetadataUtils::Exif::flashString(exifStruct->flashMode)
+                            + htmlBr;
+                // exif camera
+                if (exifCamera & DetailsOptions::Manufacturer)
+                    htmlContent += tr("Camera manufacturer: ") +
+                            exifStruct->cameraManufacturer + htmlBr;
+                if (exifCamera & DetailsOptions::Model)
+                    htmlContent += tr("Camera model: ") + exifStruct->cameraModel
+                            + htmlBr;
+                // exif author
+                if (exifAuthor & DetailsOptions::Artist)
+                    htmlContent += tr("Artist") + ": " + exifStruct->artist + htmlBr;
+                if (exifAuthor & DetailsOptions::Copyright)
+                    htmlContent += tr("Copyright") + ": " + exifStruct->copyright
+                            + htmlBr;
+                if (exifAuthor & DetailsOptions::UserComment)
+                    htmlContent += tr("User Comment") + ": " + exifStruct->userComment
+                            + htmlBr;
+            }
+            if (MetadataUtils::Iptc::isVersionKnown()) {
+                if (iptcPrint & DetailsOptions::ModelVersion)
+                    htmlContent += tr("Model version") + ": " +
+                            iptcStruct->modelVersion + htmlBr;
+                if (iptcPrint & DetailsOptions::DateCreated)
+                    htmlContent += tr("Created date") + ": " +
+                            iptcStruct->dateCreated.toString(Qt::LocalDate) + htmlBr;
+                if (iptcPrint & DetailsOptions::TimeCreated)
+                    htmlContent += tr("Created time") + ": " +
+                            iptcStruct->timeCreated.toString(Qt::LocalDate) + htmlBr;
+                if (iptcPrint & DetailsOptions::DigitizedDate)
+                    htmlContent += tr("Digitized date") + ": " +
+                            iptcStruct->digitizationDate.toString(Qt::LocalDate)
+                            + htmlBr;
+                if (iptcPrint & DetailsOptions::DigitizedTime)
+                    htmlContent += tr("Digitized time") + ": " +
+                            iptcStruct->digitizationTime.toString(Qt::LocalDate)
+                            + htmlBr;
+                if (iptcPrint & DetailsOptions::Byline)
+                    htmlContent += tr("Author") + ": " + iptcStruct->byline + htmlBr;
+                if (iptcPrint & DetailsOptions::CopyrightIptc)
+                    htmlContent += tr("Copyright") + ": " + iptcStruct->copyright
+                            + htmlBr;
+                if (iptcPrint & DetailsOptions::ObjectName)
+                    htmlContent += tr("Object name") + ": " + iptcStruct->objectName
+                            + htmlBr;
+                if (iptcPrint & DetailsOptions::Keywords)
+                    htmlContent += tr("Keywords") + ": " + iptcStruct->keywords
+                            + htmlBr;
+                if (iptcPrint & DetailsOptions::Caption)
+                    htmlContent += tr("Description") + ": " + iptcStruct->caption
+                            + htmlBr;
+                if (iptcPrint & DetailsOptions::CountryName)
+                    htmlContent += tr("Country") + ": " + iptcStruct->countryName
+                            + htmlBr;
+                if (iptcPrint & DetailsOptions::City)
+                    htmlContent += tr("City") + ": " + iptcStruct->city + htmlBr;
+                if (iptcPrint & DetailsOptions::EditStatus)
+                    htmlContent += tr("Edit status") + ": " + iptcStruct->editStatus
+                            + htmlBr;
+            }
+        }
+    }
+    else if (selectedFiles.length() <= 0) {
+        detailsBrowser->setText(tr("Select image to show this one details."));
+        return;
+    }
+    else { // many files summary
+        QTreeWidgetItem *lastItem = selectedFiles.last();
+        QString lastItemPath = lastItem->text(2) + QDir::separator() +
+                lastItem->text(0) + '.' + lastItem->text(1);
+        if (usableWidth > 180)
+            usableWidth = 180;
+        int i = 0;
+        foreach (QTreeWidgetItem *item, selectedFiles) {
+            QString ext = item->text(1);
+            MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
+                    item->text(0) + '.' + ext;
+            QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
+                    + QString::number(i);
+            ext = ext.toUpper();
+            // thumbnail generation
+            if (ext != "SVG" && ext != "SVGZ") {
+                bool fromData(!MetadataUtils::Metadata::isEnabled());
+                isSvg = false;
+                if (!fromData) {
+                    metadata.read(imagePath, true);
+                    exifStruct = metadata.exifStruct();
+                    iptcStruct = metadata.iptcStruct();
+                    Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
+                    imageSize = QSize(image->pixelWidth(), image->pixelHeight());
+                    Exiv2::PreviewManager previewManager (*image);
+                    Exiv2::PreviewPropertiesList previewList = previewManager.
+                            getPreviewProperties();
+                    if (!previewList.empty()) { // read from metadata thumnail
+                        Exiv2::PreviewImage preview = previewManager.getPreviewImage(
+                                    previewList[0]);
+                        preview.writeFile(thumbPath.toStdString());
+                        thumbPath += preview.extension().c_str();
+                    }
+                    else
+                        fromData = true;
+                }
+                if (fromData) { // generate from image data
+                    QImage img(imagePath);
+                    if (!imageSize.isValid())
+                        imageSize = img.size();
+                    thumbPath += ".tif";
+                    QImage thumbnail;
+                    if (img.width() > usableWidth)
+                        thumbnail = img.scaledToWidth(usableWidth,
+                                                      Qt::SmoothTransformation);
+                    else
+                        thumbnail = img;
+                    thumbnail.save(thumbPath, "TIFF");
+                }
+            }
+            else { // render from SVG file
+                isSvg = true;
+                metadataEnabled = false;
+                QGraphicsSvgItem svg(imagePath);
+                QSvgRenderer *renderer = svg.renderer();
+                QSize size = renderer->defaultSize();
+                imageSize = size;
+                double sizeRatio = (double) usableWidth / size.width();
+                size *= sizeRatio;
+                QImage thumbnail (size, QImage::Format_ARGB32);
+                thumbnail.fill(Qt::transparent);
+                QPainter painter (&thumbnail);
+                renderer->render(&painter);
+                thumbPath += ".tif";
+                thumbnail.save(thumbPath, "TIFF");
+            }
+            htmlContent += "<center><img src=\"" + thumbPath + "\" /></center>" + htmlBr;
+            htmlContent += imagePath + htmlBr;
+            if (isSvg)
+                htmlContent += tr("Default image size: ");
+            else
+                htmlContent += tr("Image size: ");
+            htmlContent += QString::number(imageSize.width()) + "x"
+                    + QString::number(imageSize.height()) + " px" + htmlBr;
+            QFileInfo info(imagePath);
+            htmlContent += tr("File size: ") + QString::number(
+                        info.size() / pow(1024.,fileSizeComboBox->currentIndex()+1.), 'f', 2)
+                    + " " + fileSizeComboBox->currentText();
+            if (imagePath != lastItemPath)
+                htmlContent += htmlHr;
+            i++;
+        }
+    }
+    detailsBrowser->setHtml(htmlOrigin + htmlContent + htmlEnd);
+}
+
 /** Loads files into tree view from main() functions \a argv argument list. */
 void ConvertDialog::initList() {
 
@@ -872,6 +1183,8 @@ void ConvertDialog::readSettings() {
         this->resize( settings.value("size",this->size()).toSize() );
         if (settings.value("maximized",false).toBool())
             this->showMaximized();
+        horizontalSplitter->restoreState(settings.value("horizontalSplitter").toByteArray());
+        verticalSplitter->restoreState(settings.value("verticalSplitter").toByteArray());
     }
     settings.endGroup(); // MainWindow
 
@@ -1013,6 +1326,23 @@ void ConvertDialog::readSettings() {
                     settings.value("userCommentMap").toMap().keys().first() ) );
 
     settings.endGroup(); // Exif
+
+    if (metadataEnabled) {
+        settings.beginGroup("Details");
+        exifAuthor = settings.value("exifAuthor",0x1).toInt();
+        exifCamera = settings.value("exifCamera",0x2).toInt();
+        exifPhoto = settings.value("exifPhoto",0x1f).toInt();
+        exifImage = settings.value("exifImage",0x14).toInt();
+        iptcPrint = settings.value("iptc",0xd00).toInt();
+        settings.endGroup(); // Details
+    }
+    else {
+        exifAuthor = 0;
+        exifCamera = 0;
+        exifPhoto = 0;
+        exifImage = 0;
+        iptcPrint = 0;
+    }
 }
 
 /** Save new window state and size in private fields.

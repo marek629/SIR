@@ -1,7 +1,6 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
 #ifndef EXIF_H
 #define EXIF_H
 
-#include "string.h"
 #include <QImage>
+#include <QObject>
+#include "string.h"
 
-namespace Exiv2
-{
+namespace Exiv2 {
     class Metadatum;
 }
 
-namespace MetadataUtils
-{
+namespace MetadataUtils {
     enum Flip {
         None = 0x0,
         Vertical = 0x1,
@@ -49,9 +44,9 @@ namespace MetadataUtils
       * getting information about user comments, orientation and flash.
       * This class are comlemented by another classes from MetadataUtils namespace,
       * \a vide See also.
-      * \sa ExifStruct Flash Flip String
+      * \sa ExifStruct Iptc Flash Flip String
       */
-    class Exif {
+    class Exif : public QObject {
     public:
         Exif();
         bool isVersionKnown();
@@ -76,6 +71,9 @@ namespace MetadataUtils
         static short rotationAngle(char orientation);
         static short rotationAngle(char orientation, int *flip);
         static Flip flipValue(char orientation);
+        static String orientationString(char orientation);
+        static String expProgramString(uchar programId);
+        static String meteringModeString(short modeId);
 
     private:
         bool versionKnown;
