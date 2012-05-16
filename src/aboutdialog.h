@@ -33,10 +33,20 @@
 class AboutDialog : public QDialog, public Ui::About {
     Q_OBJECT
 
-    public:
-        AboutDialog( QWidget * parent = 0, Qt::WFlags f = 0 );
-        void setVersion(QString version);
+public:
+    AboutDialog( QWidget * parent = 0, Qt::WFlags f = 0 );
+    void setVersion(QString version);
 
+private:
+    inline void setAboutText();
+    QString htmlTableHead(const QString &text1, const QString &text2) const;
+    QString htmlTableHead(const QString &text1, const QString &text2,
+                          const QString &text3) const;
+    QString htmlTableRow(const QString &text1, const QString &text2) const;
+    QString htmlTableRow(const QString &text1, const QString &text2,
+                         const QString &text3) const;
+    QString htmlTableEnd() const { return "</table>"; }
+    QString htmlLink(const QString &url) const;
 };
 #endif
 
