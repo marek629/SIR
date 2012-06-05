@@ -14,7 +14,7 @@
    <string>SIR - Simple Image Resizer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../application.qrc">
+   <iconset>
     <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -765,6 +765,7 @@
     <addaction name="actionAdd_File"/>
     <addaction name="actionAdd_Dir"/>
     <addaction name="actionSelect"/>
+    <addaction name="actionImport_files"/>
     <addaction name="actionRemoveAll"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -792,7 +793,7 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="../application.qrc">
+    <iconset>
      <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
    </property>
    <property name="text">
@@ -856,6 +857,11 @@
     <string>Do advanced selection of images on list</string>
    </property>
   </action>
+  <action name="actionImport_files">
+   <property name="text">
+    <string>Import files...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -867,8 +873,6 @@
  <tabstops>
   <tabstop>destFileEdit</tabstop>
  </tabstops>
- <resources>
-  <include location="../application.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

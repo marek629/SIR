@@ -31,7 +31,7 @@
         </sizepolicy>
        </property>
        <property name="icon">
-        <iconset resource="../application.qrc">
+        <iconset>
          <normaloff>:/images/previous.png</normaloff>:/images/previous.png</iconset>
        </property>
        <property name="flat">
@@ -48,7 +48,7 @@
         </sizepolicy>
        </property>
        <property name="icon">
-        <iconset resource="../application.qrc">
+        <iconset>
          <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
        </property>
        <property name="flat">
@@ -81,15 +81,15 @@
        <item>
         <widget class="QToolBox" name="exifToolBox">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="imagePage">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>272</width>
-            <height>221</height>
+            <width>547</width>
+            <height>317</height>
            </rect>
           </property>
           <attribute name="label">
@@ -309,8 +309,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>272</width>
-            <height>120</height>
+            <width>547</width>
+            <height>317</height>
            </rect>
           </property>
           <attribute name="label">
@@ -422,8 +422,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>395</width>
-            <height>302</height>
+            <width>547</width>
+            <height>317</height>
            </rect>
           </property>
           <attribute name="label">
@@ -933,8 +933,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>186</width>
-            <height>74</height>
+            <width>547</width>
+            <height>317</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1007,8 +1007,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>130</width>
-            <height>219</height>
+            <width>547</width>
+            <height>317</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1295,8 +1295,6 @@
    <header>timecombobox.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../application.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

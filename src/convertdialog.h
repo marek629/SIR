@@ -50,6 +50,8 @@ class MetadataDialog;
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
 
     Q_OBJECT
+    friend class Selection;
+    friend class SelectionDialog;
 
 public:
     ConvertDialog(QWidget *parent = 0, QString args = 0);
@@ -123,6 +125,10 @@ public slots:
     void convertSelected();
     void addDir();
     void addFile();
+    void loadFiles(const QStringList &files);
+    void loadFiles(const QList<QFileInfo> &files);
+    void enableConvertButtons(bool enable = true);
+    void resizeColumnsToContents(myQTreeWidget *tree);
     void removeAll();
     void removeSelectedFromList();
     void showMenu( const QPoint & point);

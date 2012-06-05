@@ -31,12 +31,14 @@ SOURCES += src/main.cpp \
     src/timecombobox.cpp \
     src/metadata/string.cpp \
     src/metadata/error.cpp \
-    src/metadata/iptc.cpp
+    src/metadata/iptc.cpp \
+    src/selection.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
     dialogs/previewdialog.ui \
-    dialogs/metadatadialog.ui
+    dialogs/metadatadialog.ui \
+    dialogs/selectiondialog.ui
 HEADERS += src/main.h \
     src/convertdialog.h \
     src/previewdialog.h \
@@ -57,7 +59,8 @@ HEADERS += src/main.h \
     src/timecombobox.h \
     src/metadata/string.h \
     src/metadata/error.h \
-    src/metadata/iptc.h
+    src/metadata/iptc.h \
+    src/selection.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \

@@ -233,15 +233,23 @@ void Metadata::setExifStruct() {
 
     // Thumbnail section
     Exiv2::PreviewManager previewManager(*image);
-    Exiv2::PreviewImage thumbnail = previewManager.getPreviewImage(
-                previewManager.getPreviewProperties()[0] );
-    exifStruct_.thumbnailImage = QImage(thumbnail.width(), thumbnail.height(),
-                                        QImage::Format_ARGB32);
-    exifStruct_.thumbnailImage.loadFromData(thumbnail.pData(), thumbnail.size());
-    exifStruct_.thumbnailWidth = String::number( thumbnail.width() );
-    exifStruct_.thumbnailWidth.appendUnit(" px");
-    exifStruct_.thumbnailHeight = String::number( thumbnail.height() );
-    exifStruct_.thumbnailHeight.appendUnit(" px");
+    Exiv2::PreviewPropertiesList previewProperties = previewManager.getPreviewProperties();
+    if (previewProperties.empty()) {
+        exifStruct_.thumbnailImage = QImage();
+        exifStruct_.thumbnailWidth = String::noData();
+        exifStruct_.thumbnailHeight = String::noData();
+    }
+    else {
+        Exiv2::PreviewImage thumbnail = previewManager.getPreviewImage(
+                    previewManager.getPreviewProperties()[0] );
+        exifStruct_.thumbnailImage = QImage(thumbnail.width(), thumbnail.height(),
+                                            QImage::Format_ARGB32);
+        exifStruct_.thumbnailImage.loadFromData(thumbnail.pData(), thumbnail.size());
+        exifStruct_.thumbnailWidth = String::number( thumbnail.width() );
+        exifStruct_.thumbnailWidth.appendUnit(" px");
+        exifStruct_.thumbnailHeight = String::number( thumbnail.height() );
+        exifStruct_.thumbnailHeight.appendUnit(" px");
+    }
 
     // Photo section
     Exiv2::Rational rational = exifData["Exif.Photo.FocalLength"].toRational();

@@ -53,6 +53,7 @@
 #include "messagebox.h"
 #include "metadatautils.h"
 #include "metadatadialog.h"
+#include "selection.h"
 
 /** Default constuctor.\n
   * Sets up window with saved settings like window state, position
@@ -106,6 +107,7 @@ void ConvertDialog::createConnections() {
     connect(actionAdd_File, SIGNAL(triggered()), this, SLOT(addFile()));
     connect(actionAdd_Dir, SIGNAL(triggered()), this, SLOT(addDir()));
     connect(actionSelect, SIGNAL(triggered()), SLOT(showSelectionDialog()));
+    connect(actionImport_files, SIGNAL(triggered()), SLOT(showSelectionDialog()));
     connect(actionRemoveAll, SIGNAL(triggered()), SLOT(removeAll()));
 
     // menu actions
@@ -416,61 +418,6 @@ void ConvertDialog::giveNextImage(int threadNum) {
     }
 }
 
-/** Add directory button and action slot.
-  * Load all supported image files from choosed directory (non-recursive)
-  * into tree widget and set state to \em "Not converted yet".\n
-  * This function remember last opened directory in the same session.
-  * Default directory is home directory.
-  * \sa addFile
-  */
-void ConvertDialog::addDir() {
-
-    if(lastDir == "") {
-        lastDir = QDir::homePath();
-    }
-
-    QTreeWidgetItem *item;
-
-    QString fileName = QFileDialog::getExistingDirectory(
-                       this,
-                       tr("Choose a directory"),
-                       lastDir,
-                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
-    fileName = QDir::convertSeparators(fileName);
-
-    lastDir = fileName;
-
-    if (!fileName.isEmpty()) {
-        QDir sourceFolder(fileName,fileFilters);
-        sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-
-        QList<QFileInfo> list = sourceFolder.entryInfoList();
-        QListIterator<QFileInfo> it(list);
-        QFileInfo fi;
-
-        while ( it.hasNext() ) {
-            fi = it.next();
-            QList<QString> itemList;
-            itemList.append(fi.completeBaseName());
-            itemList.append(fi.suffix());
-            itemList.append(fi.path());
-            itemList.append(tr("Not converted yet"));
-            item = new QTreeWidgetItem(itemList);
-            filesTreeView->addTopLevelItem(item);
-            statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
-        }
-
-        convertButton->setEnabled(TRUE);
-        convertSelectedButton->setEnabled(TRUE);
-    }
-
-    filesTreeView->resizeColumnToContents (0);
-    filesTreeView->resizeColumnToContents (1);
-    filesTreeView->resizeColumnToContents (2);
-    filesTreeView->resizeColumnToContents (3);
-}
-
 /** Remove all button and action slot.
   * Remove all items of tree widget.
   * \sa removeSelectedFromList
@@ -522,7 +469,7 @@ void ConvertDialog::removeSelectedFromList() {
   * \em "Not \em converted \em yet".\n
   * This function remember last opened directory in the same session.
   * Default directory is home directory.
-  * \sa addDir
+  * \sa addDir loadFiles(const QStringList&)
   */
 void ConvertDialog::addFile() {
 
@@ -530,7 +477,6 @@ void ConvertDialog::addFile() {
         lastDir = QDir::homePath();
     }
 
-    QString fileName;
     QString aux = tr("Images") + "(" + fileFilters + ")";
 
     QStringList files = QFileDialog::getOpenFileNames(
@@ -539,10 +485,46 @@ void ConvertDialog::addFile() {
                             lastDir,
                             aux
                         );
+    loadFiles(files);
+}
 
+/** Adds directory button and action slot.
+  * Load all supported image files from choosed directory (non-recursive)
+  * into tree widget and set state to \em "Not converted yet".\n
+  * This function remember last opened directory in the same session.
+  * Default directory is home directory.
+  * \sa addFile
+  */
+void ConvertDialog::addDir() {
 
-    QStringList::Iterator it = files.begin();
+    if(lastDir == "") {
+        lastDir = QDir::homePath();
+    }
+
+    QString dirPath = QFileDialog::getExistingDirectory(
+                       this,
+                       tr("Choose a directory"),
+                       lastDir,
+                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    dirPath = QDir::convertSeparators(dirPath);
+    lastDir = dirPath;
+
+    if (!dirPath.isEmpty()) {
+        QDir sourceFolder(dirPath,fileFilters);
+        sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
+        QList<QFileInfo> list = sourceFolder.entryInfoList();
+        loadFiles(list);
+    }
+}
+
+/** Loads files into tree widget.
+  * \param files Full paths list.
+  */
+void ConvertDialog::loadFiles(const QStringList &files) {
+    QStringList::const_iterator it = files.begin();
     QTreeWidgetItem *item;
+    QString fileName;
 
     while ( it != files.end() ) {
         QList<QString> itemList;
@@ -559,13 +541,45 @@ void ConvertDialog::addFile() {
         ++it;
         lastDir = QFileInfo(fileName).path();
     }
+    enableConvertButtons();
+    resizeColumnsToContents(filesTreeView);
+}
 
-    convertButton->setEnabled(TRUE);
-    convertSelectedButton->setEnabled(TRUE);
-    filesTreeView->resizeColumnToContents (0);
-    filesTreeView->resizeColumnToContents (1);
-    filesTreeView->resizeColumnToContents (2);
-    filesTreeView->resizeColumnToContents (3);
+/** Loads files into tree widget.
+  * \param files File infos list.
+  */
+void ConvertDialog::loadFiles(const QList<QFileInfo> &files) {
+    QListIterator<QFileInfo> it(files);
+    QFileInfo fi;
+    QTreeWidgetItem *item;
+
+    while ( it.hasNext() ) {
+        fi = it.next();
+        QList<QString> itemList;
+        itemList.append(fi.completeBaseName());
+        itemList.append(fi.suffix());
+        itemList.append(fi.path());
+        itemList.append(tr("Not converted yet"));
+        item = new QTreeWidgetItem(itemList);
+        filesTreeView->addTopLevelItem(item);
+        statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
+    }
+    if (!files.isEmpty()) {
+        enableConvertButtons();
+        resizeColumnsToContents(filesTreeView);
+    }
+}
+
+/** Enables convertion push buttons if \a enable is true; otherwise disables it. */
+void ConvertDialog::enableConvertButtons(bool enable) {
+    convertButton->setEnabled(enable);
+    convertSelectedButton->setEnabled(enable);
+}
+
+/** Resizes all columns of \a tree to their contents. */
+void ConvertDialog::resizeColumnsToContents(myQTreeWidget *tree) {
+    for (int i=0; i<tree->columnCount(); i++)
+        tree->resizeColumnToContents(i);
 }
 
 /** Convert all button slot.
@@ -728,7 +742,12 @@ void ConvertDialog::showMetadata() {
 }
 
 void ConvertDialog::showSelectionDialog() {
-
+    Selection selection(this);
+    QAction *action = static_cast<QAction*> (sender());
+    if (action == actionSelect)
+        qDebug() << "Selected items:" << selection.selectItems();
+    else if (actionImport_files)
+        qDebug() << "Imported files:" << selection.importFiles();
 }
 
 /** Shows file details or few files summary.\n
@@ -739,16 +758,16 @@ void ConvertDialog::showDetails() {
     if (horizontalSplitter->widget(1)->width() == 0)
         return;
     QList<QTreeWidgetItem*> selectedFiles = filesTreeView->selectedItems();
-    const QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+    static const QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
             "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
             "<html><head><meta name=\"qrichtext\" content=\"1\" />"
             "<style type=\"text/css\">p, li { white-space: pre-wrap; }</style>"
             "</head><body style=\" font-family:'Sans Serif';"
             "font-size:9pt; font-weight:400; font-style:normal;\">";
     QString htmlContent;
-    const QString htmlEnd = "</body></html>";
-    const QString htmlBr = "<br />";
-    const QString htmlHr = "<hr />";
+    static const QString htmlEnd = "</body></html>";
+    static const QString htmlBr = "<br />";
+    static const QString htmlHr = "<hr />";
     detailsBrowser->clear();
     QSize imageSize;
     bool isSvg = false;
