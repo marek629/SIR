@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl">
+<TS version="2.0" language="sr">
 <context>
     <name>About</name>
     <message>
@@ -24,7 +24,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; color:#000000;&quot;&gt;Main Developper: Rafael Sachetto &amp;lt;&lt;a href=&quot;mailto:rsachetto@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;rsachetto@gmail.com&lt;/span&gt;&lt;/a&gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;a href=&quot;http://rsachetto.googlepages.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://rsachetto.googlepages.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;title&gt;Sir&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;(new line)p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;(new line)&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;/p&gt;(new line)&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; color:#000000;&quot;&gt;Hauptentwickler: Rafael Sachetto &amp;lt;&lt;a href=&quot;mailto:rsachetto@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;rsachetto@gmail.com&lt;/span&gt;&lt;/a&gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;a href=&quot;http://rsachetto.googlepages.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://rsachetto.googlepages.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;title&gt;Sir&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;(new line)p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;(new line)&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;/p&gt;(new line)&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; color:#000000;&quot;&gt;Hlavný vývojár: Rafael Sachetto &amp;lt;&lt;a href=&quot;mailto:rsachetto@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;rsachetto@gmail.com&lt;/span&gt;&lt;/a&gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;a href=&quot;http://rsachetto.googlepages.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://rsachetto.googlepages.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -32,7 +32,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/aboutdialog.cpp" line="49"/>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation type="unfinished">Статус</translation>
     </message>
     <message>
         <location filename="../src/aboutdialog.cpp" line="49"/>
@@ -146,139 +146,122 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/convertdialog.cpp" line="183"/>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
-        <translation type="unfinished"></translation>
+        <translation>Већ сте послали информације о вашој SIR инсталацији.Пуно Вам хвала!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="191"/>
         <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
-        <translation type="unfinished"></translation>
+        <translation>ВАЖНО:ова акција неће послати било које личне податке о Вама или вашем рачунару SIR развојном тиму. Једино ће ажурирати бројач инсталација на SIR-u.</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="235"/>
         <source>Thank you for let us know that you are using SIR! You are the user number %1 of this month!</source>
-        <translation type="unfinished"></translation>
+        <translation>Хвала Вам што сте допустили да сазнамо да користите SIR! Ви сте %1 корисник овог месеца!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="263"/>
         <source>You have the lastest version of SIR!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви имате последњу верзију SIR-а!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="273"/>
         <source>Go to SIR website!</source>
-        <translation type="unfinished"></translation>
+        <translation>Иди на SIR веб страницу!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="392"/>
         <location filename="../src/convertdialog.cpp" line="432"/>
         <location filename="../src/convertdialog.cpp" line="545"/>
         <source>Choose a directory</source>
-        <translation>Kies een directory</translation>
+        <translation>Изаберите директоријум</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="679"/>
         <source>Create Folder? -- SIR</source>
-        <translation>Nieuwe map mapen?  -- SIR</translation>
+        <translation>Креирај фолдер? -- SIR</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="680"/>
         <source>The folder %1 do not exists.Do you want to create it?</source>
-        <translation>Deze map  %1 bestaat niet. Wilt u die aanmaken?</translation>
+        <translation>Фолдер %1 не постоји. Да ли хоћете да га креирате?</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="683"/>
         <source>&amp;Yes</source>
-        <translation>&amp;Ja</translation>
+        <translation>&amp;Да</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="683"/>
         <source>&amp;No</source>
-        <translation>&amp;Nee</translation>
+        <translation>&amp;Не</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="688"/>
         <source>Unable to create target folder.</source>
-        <translation>Onmogelijk om deze map aan te maken.</translation>
+        <translation>Није могуће направити циљни фолдер.</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="703"/>
         <source>Cancel</source>
-        <translation>Afbreken</translation>
-    </message>
-    <message>
-        <location filename="../src/convertdialog.cpp" line="1202"/>
-        <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Откажи</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1537"/>
         <source>Overwrite File? -- SIR</source>
-        <translation>Gegevens overschrijven? -- SIR</translation>
+        <translation>Препиши преко фајла? -- SIR</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1538"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
-        <translation>Dit bestaat %1 reeds. Overschrijven?</translation>
+        <translation>Фајл са именом %1 већ постоји. Да ли хоћете да препишет преко њега?</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation type="obsolete">Ja voor &amp;alles</translation>
+        <translation type="obsolete">Да у &amp;Потпуности</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1624"/>
         <source>Converting</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертовање</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1627"/>
         <location filename="../src/convertdialog.cpp" line="1669"/>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Converted</source>
-        <translation type="obsolete"> - umgewandelt</translation>
-    </message>
-    <message>
-        <source> - Failed to Convert</source>
-        <translation type="obsolete"> - umwandeln gescheitert</translation>
-    </message>
-    <message>
-        <source> - Skipped</source>
-        <translation type="obsolete"> - übersprungen</translation>
+        <translation>Отказано</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="635"/>
         <source>Please add at least one image file.</source>
-        <translation>Minstens een image kiezen.</translation>
+        <translation>Молим додајте бар један фајл са сликом.</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="524"/>
         <source>Images</source>
-        <translation>Images</translation>
+        <translation>Слике</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="528"/>
         <source>Select one or more files to open</source>
-        <translation>Kies een of meerder files om te openen</translation>
+        <translation>Изаберите један или више фајлова за отварање</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="152"/>
         <source>Convert Selected</source>
-        <translation>Het gekozen bewerken</translation>
+        <translation>Конвертуј одабрано</translation>
     </message>
     <message>
         <source>Convert the selected images</source>
-        <translation type="obsolete">Gekozen images bewerken</translation>
+        <translation type="obsolete">Конвертуј одабране слике</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="148"/>
         <source>Remove Selected</source>
-        <translation>Keuze verwijderen</translation>
+        <translation>Уклони одабрано</translation>
     </message>
     <message>
         <source>Remove the selected images</source>
-        <translation type="obsolete">Gekozen images verwijderen</translation>
+        <translation type="obsolete">Уклони одабране слике</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="14"/>
@@ -288,99 +271,99 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../dialogs/convertdialog.ui" line="744"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Stoppen</translation>
+        <translation>&amp;Напусти</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="734"/>
         <source>&amp;Convert Selected</source>
-        <translation>&amp;Keuze bewerken</translation>
+        <translation>&amp;Конвертуј одабрано</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="737"/>
         <source>Alt+C</source>
-        <translation></translation>
+        <translation>Alt+C</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="721"/>
         <source>Convert &amp;All</source>
-        <translation>Alles &amp;bewerken</translation>
+        <translation>Конвертуј &amp;Све</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="724"/>
         <source>Alt+A</source>
-        <translation></translation>
+        <translation>Alt+A</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="133"/>
         <source>&amp;Remove File(s)</source>
-        <translation>Images &amp;verwijderen</translation>
+        <translation>&amp;Уклони фајл(ове)</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="98"/>
         <location filename="../dialogs/convertdialog.ui" line="831"/>
         <source>Add &amp;Dir...</source>
-        <translation>Betekenis &amp;toevoegen...</translation>
+        <translation>Додај &amp;Дир...</translation>
     </message>
     <message>
         <source>&amp;Target Format:</source>
-        <translation type="obsolete">&amp;Doelformat:</translation>
+        <translation type="obsolete">&amp;Циљни формат:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="152"/>
         <location filename="../dialogs/convertdialog.ui" line="846"/>
         <source>Remove Al&amp;l</source>
-        <translation>A&amp;lles verwijderen</translation>
+        <translation>Уклони Св&amp;е</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="246"/>
         <source>Target Folder:</source>
-        <translation>Doel map:</translation>
+        <translation>Циљни фолдер:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="217"/>
         <source>Target Prefix:</source>
-        <translation>Doel Prefix:</translation>
+        <translation>Циљни префикс:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="378"/>
         <source>Height:</source>
-        <translation>Hoogte:</translation>
+        <translation>Висина:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="230"/>
         <source>&amp;Browse</source>
-        <translation>&amp;Zoeken</translation>
+        <translation>&amp;Претражи</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="233"/>
         <source>Alt+B</source>
-        <translation></translation>
+        <translation>Alt+B</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="345"/>
         <source>Width:</source>
-        <translation>Breedte:</translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="79"/>
         <location filename="../dialogs/convertdialog.ui" line="826"/>
         <source>Add &amp;File...</source>
-        <translation>&amp;Image toevoegen ...</translation>
+        <translation>Додај &amp;фајл...</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="531"/>
         <source>Options</source>
-        <translation>Optie&apos;s</translation>
+        <translation>Опције</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="537"/>
         <source>Rotation Angle:</source>
-        <translation>Draaihoek:</translation>
+        <translation>Угао ротирања:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="321"/>
         <source>&amp;Maintain Aspect Ratio</source>
-        <translation>&amp;Handhaven van verhoudingen</translation>
+        <translation>&amp;Oдржи однос страна</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="253"/>
@@ -400,7 +383,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../dialogs/convertdialog.ui" line="324"/>
         <source>Alt+M</source>
-        <translation></translation>
+        <translation>Alt+M</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="407"/>
@@ -440,56 +423,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../dialogs/convertdialog.ui" line="544"/>
         <source>Quality:</source>
-        <translation>Kwaliteit:</translation>
+        <translation>Квалитет:</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="558"/>
         <source>No flip</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="836"/>
-        <source>Check for updates...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="841"/>
-        <source>Let us know that you are using SIR...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="849"/>
-        <source>Remove all filles the files list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="854"/>
-        <source>Select...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="857"/>
-        <source>Do advanced selection of images on list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="862"/>
-        <source>Import files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">File</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="784"/>
-        <source>Edit</source>
-        <translation>Bewerken</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/convertdialog.ui" line="775"/>
-        <source>About</source>
-        <translation>Help</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="563"/>
@@ -507,9 +446,49 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dialogs/convertdialog.ui" line="836"/>
+        <source>Check for updates...</source>
+        <translation>Провери за надоградњу...</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="841"/>
+        <source>Let us know that you are using SIR...</source>
+        <translation>Допустите нам да знамо да ли користите SIR...</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="849"/>
+        <source>Remove all filles the files list</source>
+        <translation>Уклони све фајлове, листу фајлова</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="854"/>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="857"/>
+        <source>Do advanced selection of images on list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="862"/>
+        <source>Import files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="784"/>
+        <source>Edit</source>
+        <translation>Уреди</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/convertdialog.ui" line="775"/>
+        <source>About</source>
+        <translation>О програму</translation>
+    </message>
+    <message>
         <location filename="../dialogs/convertdialog.ui" line="763"/>
         <source>Actions</source>
-        <translation>Aktie&apos;s</translation>
+        <translation>Акције</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="800"/>
@@ -517,37 +496,33 @@ p, li { white-space: pre-wrap; }
         <location filename="../dialogs/convertdialog.ui" line="806"/>
         <location filename="../src/convertdialog.cpp" line="1662"/>
         <source>Quit</source>
-        <translation>Stoppen</translation>
+        <translation>Напусти</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="811"/>
         <source>&amp;Options</source>
-        <translation>&amp;Optie&apos; s</translation>
+        <translation>&amp;Опције</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="816"/>
         <source>About Sir...</source>
-        <translation>Over SIR...</translation>
+        <translation>О програму SIR...</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="821"/>
         <source>About Qt...</source>
-        <translation>Over Qt...</translation>
+        <translation>О Qt-u...</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1612"/>
         <location filename="../src/convertdialog.cpp" line="1670"/>
         <source>Converted</source>
-        <translation>umgewandelt</translation>
-    </message>
-    <message>
-        <source>Failed to Convert</source>
-        <translation type="obsolete">umwandeln gescheitert</translation>
+        <translation>Конвертовано</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1615"/>
         <source>Skipped</source>
-        <translation>Overgelsagen</translation>
+        <translation>Прескочено</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="454"/>
@@ -557,7 +532,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertdialog.cpp" line="1136"/>
         <location filename="../src/convertdialog.cpp" line="1621"/>
         <source>Not converted yet</source>
-        <translation></translation>
+        <translation>Није још конвертовано</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="149"/>
@@ -595,49 +570,49 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertdialog.cpp" line="226"/>
         <location filename="../src/convertdialog.cpp" line="234"/>
         <source>Let us know!</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволите нам да знамо!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="197"/>
         <source>Go for it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Уради то!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="200"/>
         <source>No thanks!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не хвала!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="227"/>
         <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
-        <translation type="unfinished"></translation>
+        <translation>Догодила се грешка при покушају конекције на SIR интернет страницу. Проверите Вашу интернет конекцију и покушајте поново!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="254"/>
         <location filename="../src/convertdialog.cpp" line="262"/>
         <location filename="../src/convertdialog.cpp" line="268"/>
         <source>SIR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>SIR надоградња</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="255"/>
         <source>There was an error while trying to connect with SIR update website! Check your internet connection and try again later!</source>
-        <translation type="unfinished"></translation>
+        <translation>Догодила се грешка при покушају конекције на SIR веб страницу за надоградњу. Проверите Вашу интернет конекцију и покушајте поново!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="269"/>
         <source>There is a new version of SIR available for download!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ово је нова верзија SIR-a доступна за преузимање!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="276"/>
         <source>I will check later!</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверићу касније!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="650"/>
         <source>Please select at least one image file.</source>
-        <translation>Kies aub minstens een image file.</translation>
+        <translation>Молим одаберите бар један фајл са сликом.</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="879"/>
@@ -819,6 +794,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/convertdialog.cpp" line="1202"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/convertdialog.cpp" line="1565"/>
         <source>Enlarge File? - SIR</source>
         <translation type="unfinished"></translation>
@@ -831,40 +811,50 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/convertdialog.cpp" line="1595"/>
         <source>Name</source>
-        <translation>Naam</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1596"/>
         <source>Ext</source>
-        <translation>Extentie</translation>
+        <translation>Екстензија</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1597"/>
         <source>Path</source>
-        <translation>PAth</translation>
+        <translation>Путања</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1598"/>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="1618"/>
         <source>Failed to convert</source>
-        <translation>umwandeln gescheitert</translation>
+        <translation>Немогућност конверзије</translation>
     </message>
 </context>
 <context>
     <name>ConvertThread</name>
     <message>
+        <location filename="../src/convertthread.cpp" line="217"/>
+        <location filename="../src/convertthread.cpp" line="350"/>
+        <location filename="../src/convertthread.cpp" line="357"/>
+        <location filename="../src/convertthread.cpp" line="684"/>
+        <location filename="../src/convertthread.cpp" line="718"/>
+        <location filename="../src/convertthread.cpp" line="725"/>
+        <source>Cancelled</source>
+        <translation type="unfinished">Отказано</translation>
+    </message>
+    <message>
         <location filename="../src/convertthread.cpp" line="222"/>
         <source>Converting</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертовање</translation>
     </message>
     <message>
         <location filename="../src/convertthread.cpp" line="265"/>
         <source>Failed to open original image</source>
-        <translation type="unfinished"></translation>
+        <translation>Грешка при отварању оригиналне слике</translation>
     </message>
     <message>
         <location filename="../src/convertthread.cpp" line="344"/>
@@ -872,7 +862,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/convertthread.cpp" line="711"/>
         <location filename="../src/convertthread.cpp" line="729"/>
         <source>Converted</source>
-        <translation>Bewerkt</translation>
+        <translation>Конвертовано</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="347"/>
+        <location filename="../src/convertthread.cpp" line="365"/>
+        <source>Failed to convert</source>
+        <translation>Грешка при конверзији</translation>
     </message>
     <message>
         <location filename="../src/convertthread.cpp" line="385"/>
@@ -892,33 +888,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/convertthread.cpp" line="217"/>
-        <location filename="../src/convertthread.cpp" line="350"/>
-        <location filename="../src/convertthread.cpp" line="357"/>
-        <location filename="../src/convertthread.cpp" line="684"/>
-        <location filename="../src/convertthread.cpp" line="718"/>
-        <location filename="../src/convertthread.cpp" line="725"/>
-        <source>Cancelled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/convertthread.cpp" line="347"/>
-        <location filename="../src/convertthread.cpp" line="365"/>
-        <source>Failed to convert</source>
-        <translation>umwandeln gescheitert</translation>
-    </message>
-    <message>
-        <source>Failed to Convert</source>
-        <translation type="obsolete">Bewerken niet gelukt</translation>
-    </message>
-    <message>
         <location filename="../src/convertthread.cpp" line="352"/>
         <location filename="../src/convertthread.cpp" line="355"/>
         <location filename="../src/convertthread.cpp" line="686"/>
         <location filename="../src/convertthread.cpp" line="720"/>
         <location filename="../src/convertthread.cpp" line="723"/>
         <source>Skipped</source>
-        <translation>Overgelsagen</translation>
+        <translation>Прескочено</translation>
     </message>
 </context>
 <context>
@@ -955,17 +931,17 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../src/messagebox.cpp" line="37"/>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Ja</translation>
+        <translation type="unfinished">&amp;Да</translation>
     </message>
     <message>
         <location filename="../src/messagebox.cpp" line="38"/>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Не</translation>
     </message>
     <message>
         <location filename="../src/messagebox.cpp" line="39"/>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished">Ja voor &amp;alles</translation>
+        <translation type="unfinished">Да у &amp;Потпуности</translation>
     </message>
     <message>
         <location filename="../src/messagebox.cpp" line="40"/>
@@ -986,6 +962,18 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dialogs/metadatadialog.ui" line="62"/>
+        <location filename="../dialogs/metadatadialog.ui" line="127"/>
+        <location filename="../dialogs/metadatadialog.ui" line="137"/>
+        <location filename="../dialogs/metadatadialog.ui" line="177"/>
+        <location filename="../dialogs/metadatadialog.ui" line="210"/>
+        <location filename="../dialogs/metadatadialog.ui" line="352"/>
+        <location filename="../dialogs/metadatadialog.ui" line="385"/>
+        <location filename="../dialogs/metadatadialog.ui" line="1152"/>
+        <source>TextLabel</source>
+        <translation type="unfinished">Текстуални опис</translation>
+    </message>
+    <message>
         <location filename="../dialogs/metadatadialog.ui" line="78"/>
         <source>Exif</source>
         <translation type="unfinished"></translation>
@@ -1004,18 +992,6 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <location filename="../dialogs/metadatadialog.ui" line="113"/>
         <source>Processing Software</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/metadatadialog.ui" line="62"/>
-        <location filename="../dialogs/metadatadialog.ui" line="127"/>
-        <location filename="../dialogs/metadatadialog.ui" line="137"/>
-        <location filename="../dialogs/metadatadialog.ui" line="177"/>
-        <location filename="../dialogs/metadatadialog.ui" line="210"/>
-        <location filename="../dialogs/metadatadialog.ui" line="352"/>
-        <location filename="../dialogs/metadatadialog.ui" line="385"/>
-        <location filename="../dialogs/metadatadialog.ui" line="1152"/>
-        <source>TextLabel</source>
-        <translation type="unfinished">Text label</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="161"/>
@@ -1063,6 +1039,21 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="430"/>
         <source>Photo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="436"/>
+        <source>Exposure program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="455"/>
+        <source>Light metering mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/metadatadialog.ui" line="474"/>
+        <source>Flash mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1348,21 +1339,6 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/metadatadialog.ui" line="436"/>
-        <source>Exposure program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/metadatadialog.ui" line="455"/>
-        <source>Light metering mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/metadatadialog.ui" line="474"/>
-        <source>Flash mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../dialogs/metadatadialog.ui" line="815"/>
         <source>1/2048 s</source>
         <translation type="unfinished"></translation>
@@ -1521,7 +1497,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1278"/>
         <source>Cancel</source>
-        <translation type="unfinished">Afbreken</translation>
+        <translation type="unfinished">Откажи</translation>
     </message>
     <message>
         <location filename="../src/metadatadialog.cpp" line="94"/>
@@ -1709,16 +1685,97 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="17"/>
         <source>Sir - Configure Options</source>
-        <translation>SIR - Instellingen</translation>
+        <translation>SIR - Опције Подешавања</translation>
     </message>
     <message>
         <source>SIR - Options</source>
-        <translation type="obsolete">SIR - Optie&apos;s</translation>
+        <translation type="obsolete">SIR - Опције</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="807"/>
+        <source>Enable RAW images support (needs dcraw)</source>
+        <translation>Омогући RAW подршку за слике (потребан је dcraw)</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="880"/>
+        <source>OK</source>
+        <translation>Уреду</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="887"/>
+        <source>Cancel</source>
+        <translation>Откажи</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="219"/>
+        <source>Default Target Folder:</source>
+        <translation>Подразумевани фолдер:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="49"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="58"/>
+        <source>Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="67"/>
+        <source>File details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="76"/>
+        <source>Raw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="101"/>
+        <source>General Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="138"/>
+        <source>Default Target Format:</source>
+        <translation>Подразумевани формат:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="186"/>
         <source>Detect automatically</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="205"/>
+        <location filename="../dialogs/optionsdialog.ui" line="322"/>
+        <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="212"/>
+        <source>Default Size Unit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="233"/>
+        <source>Default File Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="240"/>
+        <source>Default Target Suffix:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="247"/>
+        <source>Default Width:</source>
+        <translation>Подразумевана ширина:</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="254"/>
+        <source>Default Target Prefix:</source>
+        <translation>Подразумевани префикс:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="275"/>
@@ -1734,6 +1791,11 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="426"/>
         <source>EXIF, IPTC and XMP supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/optionsdialog.ui" line="429"/>
+        <source>Enable metadata support</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1963,125 +2025,39 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/optionsdialog.ui" line="807"/>
-        <source>Enable RAW images support (needs dcraw)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="880"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="887"/>
-        <source>Cancel</source>
-        <translation>Afbreken</translation>
-    </message>
-    <message>
-        <source>Sir - Options</source>
-        <translation type="obsolete">SIR - Optie&apos;s</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="219"/>
-        <source>Default Target Folder:</source>
-        <translation>Standaard doel map:</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="138"/>
-        <source>Default Target Format:</source>
-        <translation>Standaard Beeldformaat:</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="49"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="58"/>
-        <source>Metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="67"/>
-        <source>File details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="76"/>
-        <source>Raw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="101"/>
-        <source>General Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="205"/>
-        <location filename="../dialogs/optionsdialog.ui" line="322"/>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="212"/>
-        <source>Default Size Unit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="233"/>
-        <source>Default File Size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="240"/>
-        <source>Default Target Suffix:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="247"/>
-        <source>Default Width:</source>
-        <translation>Standaard Breedte:</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="254"/>
-        <source>Default Target Prefix:</source>
-        <translation>Standaard doel Prefix:</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/optionsdialog.ui" line="429"/>
-        <source>Enable metadata support</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../dialogs/optionsdialog.ui" line="226"/>
         <source>Default Quality:</source>
-        <translation>Standaard Kwaliteit:</translation>
+        <translation>Подразумевани квалитет:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="131"/>
         <source>Default Language:</source>
-        <translation>Standaard Taal:</translation>
+        <translation>Подразумевани језик:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="145"/>
         <source>Number of Cores:</source>
-        <translation type="unfinished"></translation>
+        <translation>Број језгара (CPU):</translation>
+    </message>
+    <message>
+        <source>RAW Support Options:</source>
+        <translation type="obsolete">Опције RAW подршкe :</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="824"/>
         <source>dcraw Executable Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>dcraw путања извршног фајла:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="817"/>
         <source>dcraw options:</source>
-        <translation type="unfinished"></translation>
+        <translation>dcraw опције:</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="122"/>
         <location filename="../dialogs/optionsdialog.ui" line="831"/>
         <source>Browse</source>
-        <translation>Zoeken</translation>
+        <translation>Претражи</translation>
     </message>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="261"/>
@@ -2091,36 +2067,32 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/optionsdialog.ui" line="268"/>
         <source>Default Height:</source>
-        <translation>Standaard Hoogte:</translation>
-    </message>
-    <message>
-        <source>Default Language</source>
-        <translation type="obsolete">Standaard taal</translation>
+        <translation>Подразумевана висина:</translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="176"/>
         <source>Choose a directory</source>
-        <translation>Kies een directory</translation>
+        <translation>Изаберите директоријум</translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="194"/>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>dcraw извршни фајл није пронађен. RAW подршка неће бити омогућена!</translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="209"/>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Изабрани фајл није извршни. RAW подршка неће бити омогућена!</translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="220"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Изабрани dcraw није извршни. RAW подршка неће бити омогућена!</translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="236"/>
         <source>Select dcraw executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Одаберите dcraw извршни фајл</translation>
     </message>
     <message>
         <location filename="../src/optionsdialog.cpp" line="493"/>
@@ -2141,58 +2113,54 @@ Error message: %2</source>
 <context>
     <name>PreviewDialog</name>
     <message>
-        <source>Sir - Preview Images</source>
-        <translation type="obsolete">Sir - Previeuw Images</translation>
-    </message>
-    <message>
         <location filename="../dialogs/previewdialog.ui" line="41"/>
         <source>Actions</source>
-        <translation>Aktie&apos;s</translation>
+        <translation>Акције</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="139"/>
         <source>Zoom image</source>
-        <translation>Inzoomen</translation>
+        <translation>Увећај слику</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="146"/>
         <source>Back to previous image</source>
-        <translation>Terug naar vorige image</translation>
+        <translation>Назад на предходну слику</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="147"/>
         <source>Go to next image</source>
-        <translation>Ga naar volgende image</translation>
+        <translation>Иди на следећу слику</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="154"/>
         <source>Rotate counter clockwise</source>
-        <translation>Draai tegen de klok in</translation>
+        <translation>Ротирај супротно смеру часовника</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="155"/>
         <source>Rotate clockwise</source>
-        <translation>Draai met de klok mee</translation>
+        <translation>Ротирај у смеру часовника</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="158"/>
         <source>Save image</source>
-        <translation>Bewaar image</translation>
+        <translation>Сачувај слику</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="162"/>
         <source>Save image as...</source>
-        <translation>Bewaar image als...</translation>
+        <translation>Сачувај слику као...</translation>
     </message>
     <message>
         <location filename="../dialogs/previewdialog.ui" line="504"/>
         <source>Quit</source>
-        <translation>Stoppen</translation>
+        <translation>Напусти</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="56"/>
         <source>SIR - Preview Images</source>
-        <translation>SIR - Previeuw Images</translation>
+        <translation>SIR - Преглед слика</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="135"/>
@@ -2204,47 +2172,47 @@ Error message: %2</source>
     <message>
         <location filename="../src/previewdialog.cpp" line="165"/>
         <source>Quit preview</source>
-        <translation>Stop voorbeschouwing</translation>
+        <translation>Заврши преглед</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="168"/>
         <source>Fullscreen</source>
-        <translation>Volledig scherm</translation>
+        <translation>Преко целог екрана</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="172"/>
         <source>Print current image...</source>
-        <translation>Druk huidige image af...</translation>
+        <translation>Штампај тренутну слику...</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="219"/>
         <source>Please enter a valid zoom factor.</source>
-        <translation>Geef een geldige zoom factor in.</translation>
+        <translation>Молим унесите одговарајући фактор величине.</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="413"/>
         <source>Overwrite File? -- SIR</source>
-        <translation>gegevens overschrijven? -- SIR</translation>
+        <translation>Препиши преко фајла? -- SIR</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="414"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
-        <translation>een file %1 bestaat al. Overschrijven?</translation>
+        <translation>Фајл са именом %1 већ постоји. Да ли хоћете да препишет преко њега?</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="416"/>
         <source>&amp;Yes</source>
-        <translation>&amp;Ja</translation>
+        <translation>&amp;Да</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="416"/>
         <source>&amp;No</source>
-        <translation>&amp;Nein</translation>
+        <translation>&amp;Не</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="444"/>
         <source>Save File</source>
-        <translation>Sla bestand op</translation>
+        <translation>Сачувај фајл</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="451"/>
@@ -2260,12 +2228,12 @@ Choose supported file extension:</source>
     <message>
         <location filename="../src/previewdialog.cpp" line="582"/>
         <source>File saved</source>
-        <translation>Besatnd opgeslagen</translation>
+        <translation>Фајл је сачуван</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="586"/>
         <source>Failed to save image</source>
-        <translation>Niet gelukt bestand op te slaan</translation>
+        <translation>Грешка при снимању слике</translation>
     </message>
     <message>
         <location filename="../src/previewdialog.cpp" line="704"/>
@@ -2292,16 +2260,21 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/previewdialog.ui" line="17"/>
         <source>Dialog</source>
-        <translation>Dialoog</translation>
+        <translation>Дијалог</translation>
     </message>
     <message>
         <location filename="../dialogs/previewdialog.ui" line="536"/>
         <source>TextLabel</source>
-        <translation>Text label</translation>
+        <translation>Текстуални опис</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="45"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../src/metadata/exif.h" line="131"/>
         <source>No flash function.</source>
@@ -2318,13 +2291,8 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="150"/>
-        <source>, strobe return light detected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/metadata/exif.h" line="154"/>
-        <source>, strobe return light not detected</source>
+        <location filename="../src/metadata/exif.h" line="140"/>
+        <source>, compulsory flash mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2333,18 +2301,18 @@ Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.h" line="140"/>
-        <source>, compulsory flash mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/metadata/exif.h" line="146"/>
         <source>, red-eye reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/metadata/exif.cpp" line="45"/>
-        <source>Unknown</source>
+        <location filename="../src/metadata/exif.h" line="150"/>
+        <source>, strobe return light detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="154"/>
+        <source>, strobe return light not detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2368,7 +2336,7 @@ Error message: %2</source>
     <message>
         <location filename="../src/selection.cpp" line="224"/>
         <source>Not converted yet</source>
-        <translation type="unfinished">Nog niet bewerkt</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2376,7 +2344,7 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/selectiondialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialoog</translation>
+        <translation type="unfinished">Дијалог</translation>
     </message>
     <message>
         <location filename="../dialogs/selectiondialog.ui" line="54"/>
@@ -2391,7 +2359,7 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/selectiondialog.ui" line="68"/>
         <source>Browse</source>
-        <translation type="unfinished">Zoeken</translation>
+        <translation type="unfinished">Претражи</translation>
     </message>
     <message>
         <location filename="../dialogs/selectiondialog.ui" line="91"/>
@@ -2502,7 +2470,7 @@ Error message: %2</source>
     <message>
         <location filename="../src/selection.cpp" line="667"/>
         <source>Choose a directory</source>
-        <translation type="unfinished">Kies een directory</translation>
+        <translation type="unfinished">Изаберите директоријум</translation>
     </message>
 </context>
 <context>
@@ -2510,28 +2478,28 @@ Error message: %2</source>
     <message>
         <location filename="../src/myqtreewidget.cpp" line="38"/>
         <source>Name</source>
-        <translation>Naam</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/myqtreewidget.cpp" line="39"/>
         <source>Ext</source>
-        <translation>Ext</translation>
+        <translation>Екстензија</translation>
     </message>
     <message>
         <location filename="../src/myqtreewidget.cpp" line="40"/>
         <source>Path</source>
-        <translation>Pad</translation>
+        <translation>Путања</translation>
     </message>
     <message>
         <location filename="../src/myqtreewidget.cpp" line="41"/>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../src/myqtreewidget.cpp" line="118"/>
         <location filename="../src/myqtreewidget.cpp" line="135"/>
         <source>Not converted yet</source>
-        <translation>Nog niet bewerkt</translation>
+        <translation>Није још конвертован</translation>
     </message>
 </context>
 </TS>

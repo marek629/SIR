@@ -72,7 +72,8 @@ TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_ro_RO.ts \
     translations/sir_fr.ts \
     translations/sir_gr.ts \
-    translations/sir_cz.ts
+    translations/sir_cz.ts \
+    translations/sir_sr.ts
 unix {
     target.path += /usr/bin
     images.path = /usr/share/pixmaps

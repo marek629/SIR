@@ -46,5 +46,7 @@
         <file>images/flip_horizontal.png</file>
         <file>images/flip_vertical.png</file>
         <file>images/options_details.png</file>
+        <file>translations/sir_sr.qm</file>
+        <file>images/serbian.png</file>
     </qresource>
 </RCC>

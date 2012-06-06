@@ -65,12 +65,9 @@
   */
 ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent) {
     setupUi(this);
-    numThreads = 1;
     this->args = args;
-    lastDir = "";
     qtTranslator = new QTranslator(this);
     appTranslator = new QTranslator(this);
-    qApp->installTranslator(qtTranslator);
     qApp->installTranslator(appTranslator);
     statusList = new QMap<QString,int>();
     net = NULL;
@@ -323,6 +320,7 @@ void ConvertDialog::setupThreads(int numThreads) {
   * \sa readSettings createConnections createActions
   */
 void ConvertDialog::init() {
+
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
     QStringList list;
     // target format combo box setup
@@ -338,6 +336,7 @@ void ConvertDialog::init() {
     }
     fileFilters = "*.";
     fileFilters.append(list.join(" *.").toLower());
+    fileFilters.append(" *.jpg");
     fileFilters.append(" *.JPG");
     fileFilters.append(" *.JPEG");
     fileFilters.append(" *.Jpg");
@@ -472,11 +471,6 @@ void ConvertDialog::removeSelectedFromList() {
   * \sa addDir loadFiles(const QStringList&)
   */
 void ConvertDialog::addFile() {
-
-    if(lastDir == "") {
-        lastDir = QDir::homePath();
-    }
-
     QString aux = tr("Images") + "(" + fileFilters + ")";
 
     QStringList files = QFileDialog::getOpenFileNames(
@@ -496,11 +490,6 @@ void ConvertDialog::addFile() {
   * \sa addFile
   */
 void ConvertDialog::addDir() {
-
-    if(lastDir == "") {
-        lastDir = QDir::homePath();
-    }
-
     QString dirPath = QFileDialog::getExistingDirectory(
                        this,
                        tr("Choose a directory"),
@@ -1248,6 +1237,7 @@ void ConvertDialog::readSettings() {
     numThreads = settings.value("cores", 0).toInt();
     if (numThreads == 0)
         numThreads = OptionsDialog::detectCoresCount();
+    lastDir = settings.value("lastDir", QDir::homePath()).toString();
 
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
@@ -1277,7 +1267,7 @@ void ConvertDialog::readSettings() {
         heightLineEdit->setText(sizeHeightString);
         heightLineEdit->setText(settings.value("heightPercent", "100").toString());
     }
-    else {
+    else if (sizeUnitComboBox->currentIndex() == 0) {
         sizeWidthString = settings.value("widthPercent", "100").toString();
         sizeHeightString = settings.value("heightPercent", "100").toString();
         widthLineEdit->setText(sizeWidthString);

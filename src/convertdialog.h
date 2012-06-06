@@ -160,8 +160,10 @@ private slots:
     void sizeChanged(const QString &value);
 };
 
-/** Writes window properties like size, position and maximize state for restore
-  * in next session.
+/** Saves window maximized status, possition on screen and size and last
+  * choosed directory by the user in settings file.\n
+  * If window is maximized this function will save last possition and size
+  * of normal size mode (before maximizing).
   */
 void ConvertDialog::writeWindowProperties() {
     QSettings settings("SIR");
@@ -179,9 +181,15 @@ void ConvertDialog::writeWindowProperties() {
     settings.setValue("horizontalSplitter", horizontalSplitter->saveState());
     settings.setValue("verticalSplitter", verticalSplitter->saveState());
     settings.endGroup();
+    settings.beginGroup("Settings");
+    settings.setValue("lastDir", lastDir);
+    settings.endGroup();
 }
 
-/** Resets enlarge and overwrite agree answers. */
+/** Resets user ansers about overwrite file, enlarge image and abort convertion
+  * variables. This function is useful when convertion is starting for reset
+  * user-anser data after last convertion.
+  */
 void ConvertDialog::resetAnswers() {
     ConvertThread::shared->overwriteResult = 1;
     ConvertThread::shared->overwriteAll = false;

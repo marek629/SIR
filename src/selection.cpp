@@ -658,10 +658,6 @@ void SelectionDialog::accept() {
   * on directory line edit widget.
   */
 void SelectionDialog::browseDir() {
-    if(convertDialog->lastDir == "") {
-        convertDialog->lastDir = QDir::homePath();
-    }
-
     QString dirPath = QFileDialog::getExistingDirectory(
                        this,
                        tr("Choose a directory"),
