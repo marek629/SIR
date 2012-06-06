@@ -1,7 +1,7 @@
-SIR (Simple Image Resizer) is a tool created for parallel resizing and
-converting images with metadata support.
+SIR (Simple Image Resizer) is a tool created for batch parallel resizing, rotate
+and converting images with metadata support.
 
-This is free software distributed under GNU GPL 3 license.
+This is free software distributed under GNU GPL v2 license.
 Read LICENSE file for details.
 
 Read/write supported image formats:
@@ -22,11 +22,11 @@ Read only supported image formats:
 
 Supported metadata standards using exiv2:
     * Exif (edition supported)
-    * IPTC
+    * IPTC (edition supported)
     * XMP
 
 Dependences:
-    * Qt4      -> http://qt-project.org/
+    * Qt 4     -> http://qt-project.org/
     * libexiv2 -> http://exiv2.org/
 Optional dependences:
     * dcraw    -> http://www.cybercom.net/~dcoffin/dcraw/
