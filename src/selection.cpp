@@ -262,16 +262,16 @@ void Selection::setupListRegExp(const MetadataUtils::String &strExp,
                                 QList<QRegExp*> *listRx) {
     clearPointerList(listRx);
     if (strExp.isEmpty()) {
-        QRegExp *rx = new QRegExp("*", Qt::CaseInsensitive, QRegExp::WildcardUnix);
+        QRegExp *rx = new QRegExp("*", Qt::CaseSensitive, QRegExp::WildcardUnix);
         listRx->append(rx);
         return;
     }
     foreach (QString str, strExp.split(' ', QString::SkipEmptyParts)) {
-        QRegExp *rx = new QRegExp(str, Qt::CaseInsensitive, QRegExp::WildcardUnix);
+        QRegExp *rx = new QRegExp(str, Qt::CaseSensitive, QRegExp::FixedString);
         listRx->append(rx);
-        rx = new QRegExp(str, Qt::CaseInsensitive, QRegExp::FixedString);
+        rx = new QRegExp(str, Qt::CaseSensitive, QRegExp::WildcardUnix);
         listRx->append(rx);
-        rx = new QRegExp(str, Qt::CaseInsensitive, QRegExp::RegExp2);
+        rx = new QRegExp(str, Qt::CaseSensitive, QRegExp::RegExp2);
         listRx->append(rx);
     }
 }
@@ -663,7 +663,8 @@ void SelectionDialog::browseDir() {
                        tr("Choose a directory"),
                        convertDialog->lastDir,
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
+    if (dirPath.isEmpty())
+        return;
     dirPath = QDir::convertSeparators(dirPath);
     params->path = dirPath;
     convertDialog->lastDir = dirPath;

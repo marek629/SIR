@@ -21,7 +21,7 @@
 
 #include <QtGlobal>
 
-#define VERSION "2.3"
+#define VERSION "2.4 alpha"
 #define NOTCONVERTED 1
 #define CONVERTED 2
 #define SKIPPED 3

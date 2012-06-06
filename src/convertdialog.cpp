@@ -427,8 +427,7 @@ void ConvertDialog::removeAll() {
         filesTreeView->clear();
     }
 
-    convertButton->setEnabled(FALSE);
-    convertSelectedButton->setEnabled(FALSE);
+    enableConvertButtons(false);
     convertProgressBar->reset();
     statusList->clear();
 
@@ -479,7 +478,13 @@ void ConvertDialog::addFile() {
                             lastDir,
                             aux
                         );
-    loadFiles(files);
+    if (files.isEmpty())
+        return;
+    aux = files.first();
+    if (!aux.isEmpty()) {
+        lastDir = aux.left(aux.lastIndexOf(QDir::separator()));
+        loadFiles(files);
+    }
 }
 
 /** Adds directory button and action slot.
@@ -497,14 +502,13 @@ void ConvertDialog::addDir() {
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     dirPath = QDir::convertSeparators(dirPath);
+    if (dirPath.isEmpty())
+        return;
     lastDir = dirPath;
-
-    if (!dirPath.isEmpty()) {
-        QDir sourceFolder(dirPath,fileFilters);
-        sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-        QList<QFileInfo> list = sourceFolder.entryInfoList();
-        loadFiles(list);
-    }
+    QDir sourceFolder(dirPath,fileFilters);
+    sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
+    QList<QFileInfo> list = sourceFolder.entryInfoList();
+    loadFiles(list);
 }
 
 /** Loads files into tree widget.
@@ -664,8 +668,7 @@ void ConvertDialog::convert() {
     convertProgressBar->setRange(0,itemsToConvert.count());
     convertProgressBar->setValue(0);
 
-    convertSelectedButton->setEnabled(false);
-    convertButton->setEnabled(false);
+    enableConvertButtons(false);
 
     if (sizeUnitComboBox->currentIndex() == 2) {
         int multiplier = 1024;
@@ -1097,11 +1100,7 @@ void ConvertDialog::initList() {
         convertButton->setEnabled(TRUE);
         convertSelectedButton->setEnabled(TRUE);
     }
-
-    filesTreeView->resizeColumnToContents (0);
-    filesTreeView->resizeColumnToContents (1);
-    filesTreeView->resizeColumnToContents (2);
-    filesTreeView->resizeColumnToContents (3);
+    resizeColumnsToContents(filesTreeView);
 }
 
 /** Rotate checkbox slot.
@@ -1396,13 +1395,9 @@ QString ConvertDialog::makeImagePath(QTreeWidgetItem *item) {
 /** Updates tree widget when it will change. */
 void ConvertDialog::updateTree() {
     if (filesTreeView->topLevelItemCount() > 0) {
-        convertButton->setEnabled(TRUE);
-        convertSelectedButton->setEnabled(TRUE);
+        enableConvertButtons(true);
     }
-    filesTreeView->resizeColumnToContents (0);
-    filesTreeView->resizeColumnToContents (1);
-    filesTreeView->resizeColumnToContents (2);
-    filesTreeView->resizeColumnToContents (3);
+    resizeColumnsToContents(filesTreeView);
 }
 
 /** Set converting status of image.
@@ -1604,10 +1599,7 @@ void ConvertDialog::updateInterface() {
     converting = false;
     convertSelectedButton->setEnabled(true);
     convertButton->setEnabled(true);
-    filesTreeView->resizeColumnToContents (0);
-    filesTreeView->resizeColumnToContents (1);
-    filesTreeView->resizeColumnToContents (2);
-    filesTreeView->resizeColumnToContents (3);
+    resizeColumnsToContents(filesTreeView);
     setCursor(Qt::ArrowCursor);
     quitButton->setText(tr("Quit"));
 }
