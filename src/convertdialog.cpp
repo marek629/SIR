@@ -63,9 +63,7 @@
  */
 ConvertDialog::ConvertDialog(QWidget *parent, QString args):QMainWindow(parent) {
     setupUi(this);
-    numThreads = 1;
     this->args = args;
-    lastDir = "";
     appTranslator = new QTranslator(this);
     qApp->installTranslator(appTranslator);
     statusList = new QMap<QString,int>();
@@ -408,13 +406,7 @@ void ConvertDialog::giveNextImage(int threadNum) {
  * \sa addFile
  */
 void ConvertDialog::addDir() {
-
-    if(lastDir == "") {
-        lastDir = QDir::homePath();
-    }
-
     QTreeWidgetItem *item;
-
     QString fileName = QFileDialog::getExistingDirectory(
                        this,
                        tr("Choose a directory"),
@@ -509,11 +501,6 @@ void ConvertDialog::removeSelectedFromList() {
  * \sa addDir
  */
 void ConvertDialog::addFile() {
-
-    if(lastDir == "") {
-        lastDir = QDir::homePath();
-    }
-
     QString fileName;
     QString aux = tr("Images") + "(" + fileFilters + ")";
 
@@ -906,6 +893,7 @@ void ConvertDialog::readSettings() {
     numThreads = settings.value("cores", 0).toInt();
     if (numThreads == 0)
         numThreads = OptionsDialog::detectCoresCount();
+    lastDir = settings.value("lastDir", QDir::homePath()).toString();
 
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile += settings.value("languageFileName",
