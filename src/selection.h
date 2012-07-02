@@ -28,6 +28,9 @@
 
 class ConvertDialog;
 
+class LogicalExpressionTree;
+
+//! Conditionaly selection parameters struct.
 struct SelectionParams {
     // directory
     QString path;
@@ -60,9 +63,10 @@ struct SelectionParams {
 //! Files conditionaly selection class.
 class Selection : public QObject {
     Q_OBJECT
+    friend class LogicalExpressionTree;
     typedef bool(Selection::*compareFileSizeFnPtr)(qint64);
     typedef bool(Selection::*compareImageSizeFnPtr)(int, const QList<int>&);
-    enum LogicalOperationFlag { None, And, Or };
+    typedef bool(Selection::*logicalFnPtr)(bool,bool);
 
 public:
     Selection(ConvertDialog *parent = 0);
@@ -83,8 +87,15 @@ private:
     QList<QRegExp*> iptcCountryNameListRx;
     QList<QRegExp*> iptcCityListRx;
     QList<QRegExp*> iptcEditStatusListRx;
-    QList<int> fileSizeComparatorList;
-    QList<int> imageSizeComparatorList[2];
+    static QStringList logicalOperators;
+    static QStringList comparisonOperators;
+    static QStringList allOperators;
+    QStringList fileSizeSymbols;
+    LogicalExpressionTree *fileSizeExpTree;
+    QVector<int> *fileSizeVector;
+    QStringList imageSizeSymbols;
+    LogicalExpressionTree *imageSizeExpTree;
+    QVector<int> *imageSizeVector;
     // methods
     void setupRegExps(const SelectionParams &params);
     void setupListRegExp(const MetadataUtils::String &strExp, QList<QRegExp*> *listRx);
@@ -92,17 +103,6 @@ private:
     bool isCompatible(const QString &string, const QList<QRegExp*> &rxList);
     bool isCompatible(const QStringList &list, const QList<QRegExp*> &rxList);
     void clearPointerList(QList<QRegExp*> *list);
-    compareFileSizeFnPtr getCompareFileSizeFnPtr(const MetadataUtils::String &exp);
-    void appendFileSize(QStringList *expressionList, int index, const QRegExp &rx);
-    bool compareFileSize(qint64);
-    bool compareFileSizeLeft(qint64);
-    bool compareFileSizeRight(qint64);
-    compareImageSizeFnPtr *getCompareImageSizeFnPtrArray(const MetadataUtils::String &exp);
-    void appendImageSize(QStringList *expressionList, int index, const QRegExp &rx, int listid);
-    bool compareImageSize(int, const QList<int>&);
-    bool compareImageSizeLeft(int, const QList<int>&);
-    bool compareImageSizeRight(int, const QList<int>&);
-    bool compareImageSizeTrue(int, const QList<int> &);
 };
 
 //! Selection conditions dialog class.
@@ -120,6 +120,95 @@ public slots:
 private:
     SelectionParams *params;
     ConvertDialog *convertDialog;
+};
+
+//========================== Expression tree section ==========================
+
+/** \brief Base class of logical expression tree using in Selection class.
+  *
+  * This class is empty; exist for derived classes type compatibility only.
+  * \sa LogicalExpressionTree
+  */
+class Node {
+public:
+    virtual ~Node() = 0;
+};
+
+//! The numerical (integer) value node class.
+class IntNode : public Node {
+public:
+    IntNode(int *value, bool constant = true);
+    ~IntNode();
+    bool isConst() const { return constant; }
+    int value() const { return (valuePtr) ? (*valuePtr) : -1; }
+
+private:
+    bool constant;
+    int *valuePtr;
+};
+
+//! Base class of expression solver function nodes.
+class FunctionNode : public Node {
+public:
+    virtual ~FunctionNode();
+    virtual bool solve(); /**< Solves operation function and returns result
+                                   of this function. */
+};
+
+class CompareFunctionNode : public FunctionNode {
+
+public:
+    typedef bool(*fnPtr)(int,int);
+    CompareFunctionNode();
+    CompareFunctionNode(fnPtr fn, IntNode *leftChild, IntNode *rightChild);
+    virtual ~CompareFunctionNode();
+    virtual bool solve();
+    void setFunction(fnPtr);
+    void setLeftChild(IntNode *);
+    void setRightChild(IntNode *);
+    static bool isEqual(int,int);
+    static bool isUpper(int,int);
+    static bool isLower(int,int);
+    static fnPtr fnArray[3];
+
+private:
+    fnPtr function;
+    IntNode *child1;
+    IntNode *child2;
+};
+
+class LogicalFunctionNode : public FunctionNode {
+
+public:
+    typedef bool(*fnPtr)(bool,bool);
+    LogicalFunctionNode();
+    LogicalFunctionNode(fnPtr fn, FunctionNode *leftChild, FunctionNode *rightChild);
+    virtual ~LogicalFunctionNode();
+    virtual bool solve();
+    void setFunction(fnPtr);
+    void setLeftChild(FunctionNode *);
+    void setRightChild(FunctionNode *);
+    static bool logicalAnd(bool,bool);
+    static bool logicalOr(bool,bool);
+    static bool logicalXor(bool,bool);
+    static fnPtr fnArray[3];
+
+private:
+    fnPtr function;
+    FunctionNode *child1;
+    FunctionNode *child2;
+};
+
+//! Binary tree of logical operations needed to solve image size expression.
+class LogicalExpressionTree {
+public:
+    LogicalExpressionTree(const QString &exp, const QStringList &symbols, QVector<int> *vars);
+    ~LogicalExpressionTree();
+    FunctionNode *rootNode() const { return root; }
+
+private:
+    FunctionNode *root;
+    QString rxString(const QString &str, QChar c, const QRegExp &rx, int *from = 0);
 };
 
 #endif // SELECTION_H

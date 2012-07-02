@@ -26,11 +26,33 @@
 #include <QFileDialog>
 #include <QProgressDialog>
 
+// static variables
+QStringList Selection::logicalOperators = QStringList() << "&" << "|" << "^";
+QStringList Selection::comparisonOperators = QStringList() << "=" << "<" << ">";
+QStringList Selection::allOperators = QStringList() <<
+        Selection::logicalOperators << Selection::comparisonOperators;
+CompareFunctionNode::fnPtr CompareFunctionNode::fnArray[3] = {
+    &CompareFunctionNode::isEqual,
+    &CompareFunctionNode::isLower,
+    &CompareFunctionNode::isUpper
+};
+LogicalFunctionNode::fnPtr LogicalFunctionNode::fnArray[3] = {
+    &LogicalFunctionNode::logicalAnd,
+    &LogicalFunctionNode::logicalOr,
+    &LogicalFunctionNode::logicalXor
+};
+
 // ________________________________ Selection ________________________________
 
 /** Selection object default constructor. */
 Selection::Selection(ConvertDialog *parent) : QObject(parent) {
     convertDialog = parent;
+    fileSizeExpTree = 0;
+    fileSizeSymbols << "s";
+    fileSizeVector = new QVector<int>(fileSizeSymbols.count());
+    imageSizeExpTree = 0;
+    imageSizeSymbols << "x" << "y";
+    imageSizeVector = new QVector<int>(imageSizeSymbols.count());
 }
 
 /** Selection object destructor. */
@@ -45,6 +67,10 @@ Selection::~Selection() {
     clearPointerList(&iptcCountryNameListRx);
     clearPointerList(&iptcCityListRx);
     clearPointerList(&iptcEditStatusListRx);
+    delete fileSizeExpTree;
+    delete fileSizeVector;
+    delete imageSizeExpTree;
+    delete imageSizeVector;
 }
 
 /** Shows selection conditions dialog and selects items on parents ConvertDialog
@@ -61,10 +87,12 @@ int Selection::selectItems() {
     qDebug() << "File name expression:" << params.fileName;
     setupRegExps(params);
     qDebug() << "File size expression:" << params.fileSizeExp;
-    bool (Selection::*compareFileSizeFnPtr)(qint64) =
-            getCompareFileSizeFnPtr(params.fileSizeExp);
-    bool (Selection::**compareImageSizeFnPtr)(int, const QList<int>&) =
-            getCompareImageSizeFnPtrArray(params.imageSizeExp);
+    delete fileSizeExpTree;
+    fileSizeExpTree = new LogicalExpressionTree(params.fileSizeExp, fileSizeSymbols,
+                                                fileSizeVector);
+    delete imageSizeExpTree;
+    imageSizeExpTree = new LogicalExpressionTree(params.imageSizeExp, imageSizeSymbols,
+                                                 imageSizeVector);
     convertDialog->setCursor(QCursor(Qt::WaitCursor));
     int itemCount = convertDialog->filesTreeView->topLevelItemCount();
     QProgressDialog progressDialog(convertDialog);
@@ -80,13 +108,17 @@ int Selection::selectItems() {
         QFileInfo info(filePath);
         if (!isCompatible(info.fileName(), fileNameListRx))
             continue;
-        if (compareFileSizeFnPtr && !((this->*compareFileSizeFnPtr)(info.size())))
+        bool b = fileSizeExpTree->rootNode()->solve();
+        qDebug() << "file size" << b;
+        if (!b)
             continue;
         QImage img(info.filePath());
-        if (!((this->*compareImageSizeFnPtr[0])
-               (img.height(),imageSizeComparatorList[0]))
-                && !((this->*compareImageSizeFnPtr[1])
-                     (img.height(),imageSizeComparatorList[1])))
+        imageSizeVector->replace(0, img.width());
+        imageSizeVector->replace(1, img.height());
+        b = imageSizeExpTree->rootNode()->solve();
+        qDebug() << "image size" << b <<
+                    imageSizeVector->size() << imageSizeVector->at(0) << imageSizeVector->at(1);
+        if (!b)
             continue;
         if (params.checkMetadata || params.checkExif || params.checkIPTC) {
             if (info.suffix().contains("svg",Qt::CaseInsensitive))
@@ -129,7 +161,6 @@ int Selection::selectItems() {
         item->setSelected(true);
         itemsSelected++;
     }
-    delete [] compareImageSizeFnPtr;
     convertDialog->enableConvertButtons();
     convertDialog->resizeColumnsToContents(convertDialog->filesTreeView);
     convertDialog->setCursor(QCursor(Qt::ArrowCursor));
@@ -150,15 +181,16 @@ int Selection::importFiles() {
     qDebug() << "File name expression:" << params.fileName;
     setupRegExps(params);
     qDebug() << "File size expression:" << params.fileSizeExp;
-    bool (Selection::*compareFileSizeFnPtr)(qint64) =
-            getCompareFileSizeFnPtr(params.fileSizeExp);
-    qDebug() << "Image size expression:" << params.imageSizeExp;
-    bool (Selection::**compareImageSizeFnPtr)(int, const QList<int>&) =
-            getCompareImageSizeFnPtrArray(params.imageSizeExp);
     if (params.path.isEmpty()) {
         qDebug("Selection::importFiles(): Directory path is empty!");
         return -1;
     }
+    delete fileSizeExpTree;
+    fileSizeExpTree = new LogicalExpressionTree(params.fileSizeExp, fileSizeSymbols,
+                                                fileSizeVector);
+    delete imageSizeExpTree;
+    imageSizeExpTree = new LogicalExpressionTree(params.imageSizeExp, imageSizeSymbols,
+                                                 imageSizeVector);
     convertDialog->setCursor(QCursor(Qt::WaitCursor));
     QFileInfoList fileInfoList;
     qDebug() << "Loaded files into list:"
@@ -173,14 +205,14 @@ int Selection::importFiles() {
         progressDialog.setValue(progressDialog.value()+1);
         if (!isCompatible(info.fileName(), fileNameListRx))
             continue;
-        if (compareFileSizeFnPtr && !((this->*compareFileSizeFnPtr)(info.size())))
-            continue;
+//        if (compareFileSizeFnPtr && !((this->*compareFileSizeFnPtr)(info.size())))
+//            continue;
         QImage img(info.filePath());
-        if (!((this->*compareImageSizeFnPtr[0])
-               (img.height(),imageSizeComparatorList[0]))
-                && !((this->*compareImageSizeFnPtr[1])
-                     (img.height(),imageSizeComparatorList[1])))
-            continue;
+//        if (!((this->*compareImageSizeFnPtr[0])
+//               (img.height(),imageSizeComparatorList[0]))
+//                && !((this->*compareImageSizeFnPtr[1])
+//                     (img.height(),imageSizeComparatorList[1])))
+//            continue;
         if (params.checkMetadata || params.checkExif || params.checkIPTC) {
             if (info.suffix().contains("svg",Qt::CaseInsensitive))
                 continue;
@@ -226,7 +258,6 @@ int Selection::importFiles() {
         convertDialog->filesTreeView->addTopLevelItem(new QTreeWidgetItem(itemList));
         filesImported++;
     }
-    delete [] compareImageSizeFnPtr;
     convertDialog->enableConvertButtons();
     convertDialog->resizeColumnsToContents(convertDialog->filesTreeView);
     convertDialog->setCursor(QCursor(Qt::ArrowCursor));
@@ -336,259 +367,6 @@ bool Selection::isCompatible(const QStringList &list, const QList<QRegExp*> &rxL
     return result;
 }
 
-/** Returns pointer to function basing on \a exp string. Returns null function
-  * pointer if \a exp expression is invalid.
-  * \param exp Math expression string.
-  * \sa compareFileSize compareFileSizeLeft compareFileSizeRight
-  */
-Selection::compareFileSizeFnPtr Selection::getCompareFileSizeFnPtr(
-        const MetadataUtils::String &exp) {
-    fileSizeComparatorList.clear();
-    QRegExp rx("(\\d+)"); // what about float ?
-    QStringList expressions = exp.split('=');
-    if (expressions.length() == 2) {
-        int digitPos = (expressions.at(0).contains(rx)) ? 0 : 1;
-        appendFileSize(&expressions, digitPos, rx);
-        return &Selection::compareFileSize;
-    }
-    expressions = exp.split('<');
-    if (expressions.length() == 2 || expressions.length() == 3) {
-        if (expressions.length() == 2) {
-            int digitPos = (expressions.at(0).contains(rx)) ? 0 : 1;
-            appendFileSize(&expressions, digitPos, rx);
-            if (digitPos == 0)
-                return &Selection::compareFileSizeRight;
-        }
-        else {
-            appendFileSize(&expressions, 0, rx);
-            appendFileSize(&expressions, 2, rx);
-        }
-        return &Selection::compareFileSizeLeft;
-    }
-    expressions = exp.split('>');
-    if (expressions.length() == 2 || expressions.length() == 3) {
-        if (expressions.length() == 2) {
-            int digitPos = (expressions.at(0).contains(rx)) ? 0 : 1;
-            appendFileSize(&expressions, digitPos, rx);
-            if (digitPos == 0)
-                return &Selection::compareFileSizeLeft;
-        }
-        else {
-            appendFileSize(&expressions, 0, rx);
-            appendFileSize(&expressions, 2, rx);
-        }
-        return &Selection::compareFileSizeRight;
-    }
-    int value = exp.toInt();
-    if (expressions.length() == 1 && value > 0) {
-        fileSizeComparatorList << value;
-        return &Selection::compareFileSize;
-    }
-    return 0; // returns null function pointer if expression is invalid
-}
-
-void Selection::appendFileSize(QStringList *expressionList, int index, const QRegExp &rx) {
-    expressionList->replace(index, expressionList->value(index).remove(' '));
-    rx.indexIn(expressionList->at(index));
-    QString digitString = rx.cap();
-    double value = digitString.toDouble();
-    expressionList->replace(index, expressionList->value(index).remove(digitString));
-    if (expressionList->at(index).startsWith('K', Qt::CaseInsensitive))
-        value *= 1024.;
-    else if (expressionList->at(index).startsWith('M', Qt::CaseInsensitive))
-        value *= 1048576.;
-    fileSizeComparatorList << static_cast<qint64> (value);
-}
-
-/** Returns true if \a value is equal first item of file size comparator list.
-  * \sa getCompareFileSizeFnPtr compareFileSizeLeft compareFileSizeRight
-  */
-bool Selection::compareFileSize(qint64 value) {
-    return (value == fileSizeComparatorList.first());
-}
-
-/** Returns true if \a value is lower first item of file size comparator list
-  * (for 1-item list), true if upper first item of file size comparator list and
-  * lower second item of file size comparator list (for 2-items list).
-  * Otherwise returns false.\n
-  * Name of this function corresponding compare operator (<) direction.
-  * I.e. for 1-item list expression is \em s<100; for 2-item \em 100<s<200.
-  * \sa getCompareFileSizeFnPtr compareFileSize compareFileSizeRight
-  */
-bool Selection::compareFileSizeLeft(qint64 value) {
-    if (fileSizeComparatorList.length() == 1)
-        return (value < fileSizeComparatorList.first());
-    else if (fileSizeComparatorList.length() == 2)
-        return (fileSizeComparatorList.first() < value
-                && value < fileSizeComparatorList.last());
-    else
-        return false;
-}
-
-/** Returns true if \a value is upper first item of file size comparator list
-  * (for 1-item list), true if lower first item of file size comparator list and
-  * upper second item of file size comparator list (for 2-items list).
-  * Otherwise returns false.\n
-  * Name of this function corresponding compare operator (>) direction.
-  * I.e. for 1-item list expression is \em s>100; for 2-item \em 100>s>200.
-  * \sa getCompareFileSizeFnPtr compareFileSize compareFileSizeLeft
-  */
-bool Selection::compareFileSizeRight(qint64 value) {
-    if (fileSizeComparatorList.length() == 1)
-        return (value > fileSizeComparatorList.first());
-    else if (fileSizeComparatorList.length() == 2)
-        return (fileSizeComparatorList.first() > value
-                && value > fileSizeComparatorList.last());
-    else
-        return false;
-}
-
-/** Returns double pointer (pointer to dinamic allocated pointers to function array)
-  * to function basing on \a exp string. Returns pointer to compareImageSizeTrue()
-  * function if \a exp expression is invalid.
-  * \param exp Math expression string.
-  * \sa compareImageSize compareImageSizeLeft compareImageSizeRight compareImageSizeTrue
-  */
-Selection::compareImageSizeFnPtr * Selection::getCompareImageSizeFnPtrArray(
-        const MetadataUtils::String &exp) {
-    imageSizeComparatorList[0].clear();
-    imageSizeComparatorList[1].clear();
-    Selection::compareImageSizeFnPtr *fnPtrArray = new Selection::compareImageSizeFnPtr[2];
-    QRegExp rx("(\\d+)");
-    LogicalOperationFlag logicalOperation = None;
-    QStringList clauses = exp.split('&', QString::SkipEmptyParts);
-    if (clauses.length() == 2)
-        logicalOperation = And;
-    if (logicalOperation != And) {
-        clauses = exp.split('|', QString::SkipEmptyParts);
-        if (clauses.length() == 2)
-            logicalOperation = Or;
-    }
-    int arrayIndex = -1;
-    if (clauses.isEmpty() || clauses.length() > 2) {
-        qDebug("Selection::getCompareImageSizeFnPtrArray(): to much logical operators");
-        fnPtrArray[0] = &Selection::compareImageSizeTrue;
-        fnPtrArray[1] = &Selection::compareImageSizeTrue;
-        return fnPtrArray; // if expression is invalid
-    }
-    else if (clauses.at(0).contains('y', Qt::CaseInsensitive)) {
-        if (clauses.length() == 2) { // 'x' clause must be first!
-            QString temp = clauses[0];
-            clauses.replace(0, clauses[1]);
-            clauses.replace(1, temp);
-        }
-        else if (clauses.length() == 1) {
-            fnPtrArray[0] = &Selection::compareImageSizeTrue;
-            arrayIndex = 0;
-        }
-    }
-    foreach (QString clause, clauses) {
-        arrayIndex++;
-        QStringList expressions = clause.split('=');
-        if (expressions.length() == 2) {
-            int digitPos = (expressions.at(0).contains(rx)) ? 0 : 1;
-            appendImageSize(&expressions, digitPos, rx, arrayIndex);
-            fnPtrArray[arrayIndex] = &Selection::compareImageSize;
-            continue;
-        }
-        expressions = clause.split('<');
-        if (expressions.length() == 2 || expressions.length() == 3) {
-            if (expressions.length() == 2) {
-                int digitPos = (expressions.at(0).contains(rx)) ? 0 : 1;
-                appendImageSize(&expressions, digitPos, rx, arrayIndex);
-                if (digitPos == 0) {
-                    fnPtrArray[arrayIndex] = &Selection::compareImageSizeRight;
-                    continue;
-                }
-            }
-            else {
-                appendImageSize(&expressions, 0, rx, arrayIndex);
-                appendImageSize(&expressions, 2, rx, arrayIndex);
-            }
-            fnPtrArray[arrayIndex] = &Selection::compareImageSizeLeft;
-            continue;
-        }
-        expressions = clause.split('>');
-        if (expressions.length() == 2 || expressions.length() == 3) {
-            if (expressions.length() == 2) {
-                int digitPos = (expressions.at(0).contains(rx)) ? 0 : 1;
-                appendImageSize(&expressions, digitPos, rx, arrayIndex);
-                if (digitPos == 0)
-                    fnPtrArray[arrayIndex] = &Selection::compareImageSizeLeft;
-                continue;
-            }
-            else {
-                appendImageSize(&expressions, 0, rx, arrayIndex);
-                appendImageSize(&expressions, 2, rx, arrayIndex);
-            }
-            fnPtrArray[arrayIndex] = &Selection::compareImageSizeRight;
-            continue;
-        }
-        int value = exp.toInt();
-        if (expressions.length() == 1 && value > 0) {
-            imageSizeComparatorList[arrayIndex] << value;
-            fnPtrArray[arrayIndex] = &Selection::compareImageSize;
-            continue;
-        }
-    }
-    return fnPtrArray;
-}
-
-void Selection::appendImageSize(QStringList *expressionList, int index, const QRegExp &rx, int listId) {
-    expressionList->replace(index, expressionList->value(index).remove(' '));
-    rx.indexIn(expressionList->at(index));
-    QString digitString = rx.cap();
-    imageSizeComparatorList[listId] << digitString.toInt();
-}
-
-/** Returns true if \a value is equal first item of image size comparator list.
-  * \sa getCompareImageSizeFnPtrArray compareImageSizeLeft compareImageSizeRight compareImageSizeTrue
-  */
-bool Selection::compareImageSize(int value, const QList<int> &list) {
-    return (value == list.first());
-}
-
-/** Returns true if \a value is lower first item of image size comparator list
-  * (for 1-item list), true if upper first item of image size comparator list and
-  * lower second item of image size comparator list (for 2-items list).
-  * Otherwise returns false.\n
-  * Name of this function corresponding compare operator (<) direction.
-  * I.e. for 1-item list expression is \em x<100; for 2-item \em 100<x<200.
-  * \sa getCompareImageSizeFnPtrArray compareImageSize compareImageSizeRight compareImageSizeTrue
-  */
-bool Selection::compareImageSizeLeft(int value, const QList<int> &list) {
-    if (list.length() == 1)
-        return (value < list.first());
-    else if (list.length() == 2)
-        return (list.first() < value && value < list.last());
-    else
-        return false;
-}
-
-/** Returns true if \a value is upper first item of image size comparator list
-  * (for 1-item list), true if lower first item of image size comparator list and
-  * upper second item of image size comparator list (for 2-items list).
-  * Otherwise returns false.\n
-  * Name of this function corresponding compare operator (>) direction.
-  * I.e. for 1-item list expression is \em x>100; for 2-item \em 100>x>200.
-  * \sa getCompareImageSizeFnPtrArray compareImageSize compareImageSizeLeft compareImageSizeTrue
-  */
-bool Selection::compareImageSizeRight(int value, const QList<int> &list) {
-    if (list.length() == 1)
-        return (value > list.first());
-    else if (list.length() == 2)
-        return (list.first() > value && value > list.last());
-    else
-        return false;
-}
-
-/** Always returns true. This function have provided for pointer to function compatibility.
-  * \sa getCompareImageSizeFnPtrArray compareImageSize compareImageSizeLeft compareImageSizeRight
-  */
-bool Selection::compareImageSizeTrue(int, const QList<int> &) {
-    return true;
-}
-
 // _____________________________ SelectionDialog _____________________________
 
 /** SelectionDialog object constructor.
@@ -669,4 +447,281 @@ void SelectionDialog::browseDir() {
     params->path = dirPath;
     convertDialog->lastDir = dirPath;
     dirLineEdit->setText(dirPath);
+}
+
+// =============================================================================
+// ========================== Expression tree section ==========================
+// =============================================================================
+
+// ___________________________________ Node ___________________________________
+
+Node::~Node() {}
+
+// __________________________________ IntNode __________________________________
+
+IntNode::IntNode(int *value, bool constant) {
+    this->valuePtr = value;
+    this->constant = constant;
+}
+
+IntNode::~IntNode() {
+    if (constant)
+        delete valuePtr;
+}
+
+// ____________________________ CompareFunctionNode ____________________________
+
+FunctionNode::~FunctionNode() {}
+
+bool FunctionNode::solve() { return true; }
+
+// ____________________________ CompareFunctionNode ____________________________
+
+CompareFunctionNode::CompareFunctionNode() {
+    function = 0;
+    child1 = 0;
+    child2 = 0;
+}
+
+CompareFunctionNode::CompareFunctionNode(fnPtr fn, IntNode *leftChild,
+                                         IntNode *rightChild) {
+    setFunction(fn);
+    setLeftChild(leftChild);
+    setRightChild(rightChild);
+}
+
+CompareFunctionNode::~CompareFunctionNode() {
+    delete child1;
+    delete child2;
+}
+
+bool CompareFunctionNode::solve() {
+    if (!function)
+        return true;
+    if (!child1 || !child2)
+        return false;
+    int a = child1->value();
+    int b = child2->value();
+    if (a == -1 || b == -1)
+        return false;
+    return (*function)(a,b);
+}
+
+void CompareFunctionNode::setFunction(fnPtr f) {
+    this->function = f;
+}
+
+void CompareFunctionNode::setLeftChild(IntNode *c) {
+    this->child1 = c;
+}
+
+void CompareFunctionNode::setRightChild(IntNode *c) {
+    this->child2 = c;
+}
+
+bool CompareFunctionNode::isEqual(int a, int b) {
+    return (a == b);
+}
+
+bool CompareFunctionNode::isUpper(int a, int b) {
+    return (a > b);
+}
+
+bool CompareFunctionNode::isLower(int a, int b) {
+    return (a < b);
+}
+
+// ____________________________ LogicalFunctionNode ____________________________
+
+LogicalFunctionNode::LogicalFunctionNode() {
+    function = 0;
+    child1 = 0;
+    child2 = 0;
+}
+
+LogicalFunctionNode::LogicalFunctionNode(fnPtr fn, FunctionNode *leftChild,
+                                       FunctionNode *rightChild) {
+    setFunction(fn);
+    setLeftChild(leftChild);
+    setRightChild(rightChild);
+}
+
+LogicalFunctionNode::~LogicalFunctionNode() {
+    delete child1;
+    delete child2;
+}
+
+bool LogicalFunctionNode::solve() {
+    if (!child1 || !child2 || !function)
+        return false;
+    return ((*function)(child1->solve(), child2->solve()));
+}
+
+void LogicalFunctionNode::setFunction(fnPtr f) {
+    this->function = f;
+}
+
+void LogicalFunctionNode::setLeftChild(FunctionNode *c) {
+    this->child1 = c;
+}
+
+void LogicalFunctionNode::setRightChild(FunctionNode *c) {
+    this->child2 = c;
+}
+
+bool LogicalFunctionNode::logicalAnd(bool a, bool b) {
+    return (a && b);
+}
+
+bool LogicalFunctionNode::logicalOr(bool a, bool b) {
+    return (a || b);
+}
+
+bool LogicalFunctionNode::logicalXor(bool a, bool b) {
+    return (a ^ b);
+}
+
+// ___________________________ LogicalExpressionTree ___________________________
+
+LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
+                                             const QStringList &symbols, QVector<int> *vars) {
+    if (exp.isEmpty()) {
+        root = new FunctionNode();
+        return;
+    }
+    if (symbols.length() != vars->size()) {
+        root = new CompareFunctionNode(0,0,0);
+        return;
+    }
+    QString logicalOperatorRxString = "\\" + Selection::logicalOperators.first();
+    for (int i=1; i<Selection::logicalOperators.count(); i++)
+        logicalOperatorRxString += "|\\" + Selection::logicalOperators[i];
+    QString comparisonOperatorRxString = Selection::comparisonOperators.first();
+    for (int i=1; i<Selection::comparisonOperators.count(); i++)
+        comparisonOperatorRxString += '|' + Selection::comparisonOperators[i];
+    QString symbolRxString = symbols.first();
+    for (int i=1; i<symbols.length(); i++)
+        symbolRxString += '|' + symbols[i];
+    QRegExp logicalOperatorRx(logicalOperatorRxString);
+    QRegExp comparisonOperatorRx(comparisonOperatorRxString);
+    QRegExp symbolRx(symbolRxString);
+    if (!exp.contains(comparisonOperatorRx)) {
+        root = new CompareFunctionNode(0,0,0);
+        return;
+    }
+    QString expression = exp;
+    expression.replace(QRegExp("\\s"),"");
+    foreach (QString comparisonExp, exp.split(logicalOperatorRx, QString::SkipEmptyParts)) {
+        QStringList valueList = comparisonExp.split(comparisonOperatorRx,
+                                                    QString::SkipEmptyParts);
+        if (valueList.length() != 3)
+            continue;
+        QStringList ops;
+        int idx = 0;
+        for (int j=1; j<valueList.length(); j++) {
+            idx++;
+            ops << rxString(comparisonExp, valueList[j][0], comparisonOperatorRx, &idx);
+        }
+        if (ops[0] != ops[1]) {
+            root = new LogicalFunctionNode(0,0,0);
+            return;
+        }
+        QString op = ops[0];
+        QString newComparisonExp = valueList[0] + op + valueList[1]
+                // AND operator should be first operator on logicalOperators list
+                + Selection::logicalOperators[0]
+                + valueList[1] + op + valueList[2];
+        expression.replace(comparisonExp, newComparisonExp);
+    }
+    root = 0;
+    IntNode *leftIntNode = 0;
+    IntNode *rigthIntNode = 0;
+    FunctionNode *leftFunctionNode = 0;
+    FunctionNode *rigthFunctionNode = 0;
+    QStringList comparisonExpList = expression.split(logicalOperatorRx,
+                                                     QString::SkipEmptyParts);
+    for (int i=0; i<comparisonExpList.length(); i++) {
+        QString comparisonExp = comparisonExpList[i];
+        QStringList valuesExpList = comparisonExp.split(comparisonOperatorRx,
+                                                        QString::SkipEmptyParts);
+        if (valuesExpList.count() != 2) {
+            if (i%2 == 0)
+                leftFunctionNode = new CompareFunctionNode(0,0,0);
+            else
+                rigthFunctionNode = new CompareFunctionNode(0,0,0);
+            continue;
+        }
+        if (valuesExpList.first().contains(symbolRx)) {
+            for (int j=0; j<symbols.length(); j++) {
+                if (symbols[j] == valuesExpList.first()) {
+                    leftIntNode = new IntNode((int*)(&vars->at(j)),false);
+                    break;
+                }
+                else
+                    leftIntNode = 0;
+            }
+        }
+        else
+            leftIntNode = new IntNode(new int(valuesExpList.first().toInt()));
+        if (valuesExpList.at(1).contains(symbolRx)) {
+            for (int j=0; j<symbols.length(); j++) {
+                if (symbols[j] == valuesExpList[1]) {
+                    rigthIntNode = new IntNode((int*)(&vars->at(j)),false);
+                    break;
+                }
+                else
+                    rigthIntNode = 0;
+            }
+        }
+        else
+            rigthIntNode = new IntNode(new int(valuesExpList.at(1).toInt()));
+        CompareFunctionNode::fnPtr compareFn = 0;
+        QString op = rxString(comparisonExp, valuesExpList[1][0], comparisonOperatorRx);
+        for (int j=0; j<Selection::comparisonOperators.length(); j++) {
+            if (op == Selection::comparisonOperators[j]) {
+                compareFn = CompareFunctionNode::fnArray[j];
+                break;
+            }
+        }
+        if (i%2 == 0) {
+            leftFunctionNode = new CompareFunctionNode(compareFn, leftIntNode, rigthIntNode);
+            continue;
+        }
+        else
+            rigthFunctionNode = new CompareFunctionNode(compareFn, leftIntNode, rigthIntNode);
+        LogicalFunctionNode::fnPtr logicalFn = 0;
+        op = rxString(expression, comparisonExp[0], logicalOperatorRx);
+        for (int j=0; j<Selection::logicalOperators.length(); j++) {
+            if (op == Selection::logicalOperators[j]) {
+                logicalFn = LogicalFunctionNode::fnArray[j];
+                break;
+            }
+        }
+        if (i > 2) {
+            if (i%2 != 0)
+                root = new LogicalFunctionNode(logicalFn, leftFunctionNode, root);
+            else
+                root = new LogicalFunctionNode(logicalFn, root, rigthFunctionNode);
+        }
+        else
+            root = new LogicalFunctionNode(logicalFn, leftFunctionNode, rigthFunctionNode);
+    }
+    if (!root)
+        root = leftFunctionNode;
+}
+
+LogicalExpressionTree::~LogicalExpressionTree() {
+    delete root;
+}
+
+QString LogicalExpressionTree::rxString(const QString &str, QChar c,
+                                        const QRegExp &rx, int *from) {
+    int index = 0;
+    if (from)
+        index = *from;
+    index = str.indexOf(rx, index);
+    if (from)
+        *from = index;
+    int length = str.indexOf(c, index) - index;
+    return str.mid(index, length);
 }
