@@ -76,6 +76,7 @@ public:
 
 private:
     // fields
+    SelectionParams params;
     ConvertDialog *convertDialog;
     QList<QRegExp*> fileNameListRx;
     QList<QRegExp*> exifProcessingSoftwareListRx;
@@ -97,12 +98,14 @@ private:
     LogicalExpressionTree *imageSizeExpTree;
     QVector<int> *imageSizeVector;
     // methods
-    void setupRegExps(const SelectionParams &params);
+    void setupRegExps();
     void setupListRegExp(const MetadataUtils::String &strExp, QList<QRegExp*> *listRx);
     int loadFileInfo(const QString &dir, QFileInfoList *list, bool recursive);
     bool isCompatible(const QString &string, const QList<QRegExp*> &rxList);
     bool isCompatible(const QStringList &list, const QList<QRegExp*> &rxList);
+    bool testFile(const QFileInfo &info);
     void clearPointerList(QList<QRegExp*> *list);
+    void setupExpressionTrees();
 };
 
 //! Selection conditions dialog class.

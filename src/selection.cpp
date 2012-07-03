@@ -80,19 +80,13 @@ Selection::~Selection() {
   */
 int Selection::selectItems() {
     int itemsSelected = 0;
-    SelectionParams params;
     SelectionDialog dialog(&params,false,convertDialog);
     if (dialog.exec() == QDialog::Rejected)
         return -1; // dialog canceled
     qDebug() << "File name expression:" << params.fileName;
-    setupRegExps(params);
+    setupRegExps();
     qDebug() << "File size expression:" << params.fileSizeExp;
-    delete fileSizeExpTree;
-    fileSizeExpTree = new LogicalExpressionTree(params.fileSizeExp, fileSizeSymbols,
-                                                fileSizeVector);
-    delete imageSizeExpTree;
-    imageSizeExpTree = new LogicalExpressionTree(params.imageSizeExp, imageSizeSymbols,
-                                                 imageSizeVector);
+    setupExpressionTrees();
     convertDialog->setCursor(QCursor(Qt::WaitCursor));
     int itemCount = convertDialog->filesTreeView->topLevelItemCount();
     QProgressDialog progressDialog(convertDialog);
@@ -106,57 +100,8 @@ int Selection::selectItems() {
         progressDialog.setLabelText(filePath);
         progressDialog.setValue(i);
         QFileInfo info(filePath);
-        if (!isCompatible(info.fileName(), fileNameListRx))
+        if (!testFile(info))
             continue;
-        bool b = fileSizeExpTree->rootNode()->solve();
-        qDebug() << "file size" << b;
-        if (!b)
-            continue;
-        QImage img(info.filePath());
-        imageSizeVector->replace(0, img.width());
-        imageSizeVector->replace(1, img.height());
-        b = imageSizeExpTree->rootNode()->solve();
-        qDebug() << "image size" << b <<
-                    imageSizeVector->size() << imageSizeVector->at(0) << imageSizeVector->at(1);
-        if (!b)
-            continue;
-        if (params.checkMetadata || params.checkExif || params.checkIPTC) {
-            if (info.suffix().contains("svg",Qt::CaseInsensitive))
-                continue;
-            MetadataUtils::Metadata metadata;
-            if (!metadata.read(info.filePath(),true))
-                continue;
-            if (params.checkMetadata) {
-                // TODO: check any metadata code block
-            }
-            if (params.checkExif) {
-                MetadataUtils::ExifStruct *str = metadata.exifStruct();
-                if (!isCompatible(str->processingSoftware, exifProcessingSoftwareListRx))
-                    continue;
-                if (!isCompatible(str->cameraManufacturer, exifCameraManufacturerListRx))
-                    continue;
-                if (!isCompatible(str->cameraModel, exifCameraModelListRx))
-                    continue;
-            }
-            if (params.checkIPTC) {
-                MetadataUtils::IptcStruct *str = metadata.iptcStruct();
-                if (!isCompatible(str->objectName, iptcObjectNameListRx))
-                    continue;
-                if (!isCompatible(str->keywords.split(' ', QString::SkipEmptyParts),
-                                  iptcKeywordsListRx))
-                    continue;
-                if (!isCompatible(str->caption.split(' ', QString::SkipEmptyParts),
-                                  iptcDescriptionListRx)
-                        || !isCompatible(str->caption, iptcDescriptionListRx))
-                    continue;
-                if (!isCompatible(str->countryName, iptcCountryNameListRx))
-                    continue;
-                if (!isCompatible(str->city, iptcCityListRx))
-                    continue;
-                if (!isCompatible(str->editStatus, iptcEditStatusListRx))
-                    continue;
-            }
-        }
         // if all conditions succed select item of tree widget and incremate items counter
         item->setSelected(true);
         itemsSelected++;
@@ -174,82 +119,33 @@ int Selection::selectItems() {
   */
 int Selection::importFiles() {
     int filesImported = 0;
-    SelectionParams params;
     SelectionDialog dialog(&params,true,convertDialog);
     if (dialog.exec() == QDialog::Rejected)
         return -1; // dialog canceled
     qDebug() << "File name expression:" << params.fileName;
-    setupRegExps(params);
+    setupRegExps();
     qDebug() << "File size expression:" << params.fileSizeExp;
     if (params.path.isEmpty()) {
         qDebug("Selection::importFiles(): Directory path is empty!");
         return -1;
     }
-    delete fileSizeExpTree;
-    fileSizeExpTree = new LogicalExpressionTree(params.fileSizeExp, fileSizeSymbols,
-                                                fileSizeVector);
-    delete imageSizeExpTree;
-    imageSizeExpTree = new LogicalExpressionTree(params.imageSizeExp, imageSizeSymbols,
-                                                 imageSizeVector);
+    setupExpressionTrees();
     convertDialog->setCursor(QCursor(Qt::WaitCursor));
+    QProgressDialog progressDialog(convertDialog);
+    progressDialog.setWindowTitle(tr("Checking import conditions..."));
+    progressDialog.setLabelText(tr("Scanning directories..."));
+    progressDialog.setRange(0,0);
+    progressDialog.show();
     QFileInfoList fileInfoList;
     qDebug() << "Loaded files into list:"
              << loadFileInfo(params.path, &fileInfoList, params.browseSubdirs);
-    QProgressDialog progressDialog(convertDialog);
-    progressDialog.setWindowTitle(tr("Checking import conditions..."));
     progressDialog.setRange(0, fileInfoList.length());
-    progressDialog.show();
     foreach (QFileInfo info, fileInfoList) {
         qDebug() << info.filePath() << info.size()/1024 << "KiB";
         progressDialog.setLabelText(info.filePath());
         progressDialog.setValue(progressDialog.value()+1);
-        if (!isCompatible(info.fileName(), fileNameListRx))
+        if (!testFile(info))
             continue;
-//        if (compareFileSizeFnPtr && !((this->*compareFileSizeFnPtr)(info.size())))
-//            continue;
-        QImage img(info.filePath());
-//        if (!((this->*compareImageSizeFnPtr[0])
-//               (img.height(),imageSizeComparatorList[0]))
-//                && !((this->*compareImageSizeFnPtr[1])
-//                     (img.height(),imageSizeComparatorList[1])))
-//            continue;
-        if (params.checkMetadata || params.checkExif || params.checkIPTC) {
-            if (info.suffix().contains("svg",Qt::CaseInsensitive))
-                continue;
-            MetadataUtils::Metadata metadata;
-            if (!metadata.read(info.filePath(),true))
-                continue;
-            if (params.checkMetadata) {
-                // TODO: check any metadata code block
-            }
-            if (params.checkExif) {
-                MetadataUtils::ExifStruct *str = metadata.exifStruct();
-                if (!isCompatible(str->processingSoftware, exifProcessingSoftwareListRx))
-                    continue;
-                if (!isCompatible(str->cameraManufacturer, exifCameraManufacturerListRx))
-                    continue;
-                if (!isCompatible(str->cameraModel, exifCameraModelListRx))
-                    continue;
-            }
-            if (params.checkIPTC) {
-                MetadataUtils::IptcStruct *str = metadata.iptcStruct();
-                if (!isCompatible(str->objectName, iptcObjectNameListRx))
-                    continue;
-                if (!isCompatible(str->keywords.split(' ', QString::SkipEmptyParts),
-                                  iptcKeywordsListRx))
-                    continue;
-                if (!isCompatible(str->caption.split(' ', QString::SkipEmptyParts),
-                                  iptcDescriptionListRx)
-                        || !isCompatible(str->caption, iptcDescriptionListRx))
-                    continue;
-                if (!isCompatible(str->countryName, iptcCountryNameListRx))
-                    continue;
-                if (!isCompatible(str->city, iptcCityListRx))
-                    continue;
-                if (!isCompatible(str->editStatus, iptcEditStatusListRx))
-                    continue;
-            }
-        }
         // if all conditions succed add to tree widget and incremate files counter
         QStringList itemList;
         itemList << info.completeBaseName() << info.suffix() << info.path()
@@ -264,11 +160,10 @@ int Selection::importFiles() {
     return filesImported;
 }
 
-/** Sets up this objects regular expression lists corresponding \a params argument
-  * using setupListRegExp() method.
+/** Sets up this objects regular expression lists setupListRegExp() method.
   * \sa setupListRegExp()
   */
-void Selection::setupRegExps(const SelectionParams &params) {
+void Selection::setupRegExps() {
     setupListRegExp(params.fileName, &fileNameListRx);
     // Exif regular expressions lists
     setupListRegExp(params.processingSoftware, &exifProcessingSoftwareListRx);
@@ -365,6 +260,71 @@ bool Selection::isCompatible(const QStringList &list, const QList<QRegExp*> &rxL
             break;
     }
     return result;
+}
+
+/** Clears old trees and constructs new LogicalExpressionTree trees. */
+void Selection::setupExpressionTrees() {
+    delete fileSizeExpTree;
+    fileSizeExpTree = new LogicalExpressionTree(params.fileSizeExp, fileSizeSymbols,
+                                                fileSizeVector);
+    delete imageSizeExpTree;
+    imageSizeExpTree = new LogicalExpressionTree(params.imageSizeExp, imageSizeSymbols,
+                                                 imageSizeVector);
+}
+
+bool Selection::testFile(const QFileInfo &info) {
+    if (!isCompatible(info.fileName(), fileNameListRx))
+        return false;
+    bool b = fileSizeExpTree->rootNode()->solve();
+    qDebug() << "file size" << b;
+    if (!b)
+        return false;
+    QImage img(info.filePath());
+    imageSizeVector->replace(0, img.width());
+    imageSizeVector->replace(1, img.height());
+    b = imageSizeExpTree->rootNode()->solve();
+    qDebug() << "image size" << b <<
+                imageSizeVector->size() << imageSizeVector->at(0) << imageSizeVector->at(1);
+    if (!b)
+        return false;
+    if (params.checkMetadata || params.checkExif || params.checkIPTC) {
+        if (info.suffix().contains("svg",Qt::CaseInsensitive))
+            return false;
+        MetadataUtils::Metadata metadata;
+        if (!metadata.read(info.filePath(),true))
+            return false;
+        if (params.checkMetadata) {
+            // TODO: check any metadata code block
+        }
+        if (params.checkExif) {
+            MetadataUtils::ExifStruct *str = metadata.exifStruct();
+            if (!isCompatible(str->processingSoftware, exifProcessingSoftwareListRx))
+                return false;
+            if (!isCompatible(str->cameraManufacturer, exifCameraManufacturerListRx))
+                return false;
+            if (!isCompatible(str->cameraModel, exifCameraModelListRx))
+                return false;
+        }
+        if (params.checkIPTC) {
+            MetadataUtils::IptcStruct *str = metadata.iptcStruct();
+            if (!isCompatible(str->objectName, iptcObjectNameListRx))
+                return false;
+            if (!isCompatible(str->keywords.split(' ', QString::SkipEmptyParts),
+                              iptcKeywordsListRx))
+                return false;
+            if (!isCompatible(str->caption.split(' ', QString::SkipEmptyParts),
+                              iptcDescriptionListRx)
+                    || !isCompatible(str->caption, iptcDescriptionListRx))
+                return false;
+            if (!isCompatible(str->countryName, iptcCountryNameListRx))
+                return false;
+            if (!isCompatible(str->city, iptcCityListRx))
+                return false;
+            if (!isCompatible(str->editStatus, iptcEditStatusListRx))
+                return false;
+        }
+    }
+    return true;
 }
 
 // _____________________________ SelectionDialog _____________________________
