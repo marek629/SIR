@@ -571,7 +571,7 @@ LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
     }
     QString expression = exp;
     expression.replace(QRegExp("\\s"),"");
-    foreach (QString comparisonExp, exp.split(logicalOperatorRx, QString::SkipEmptyParts)) {
+    foreach (QString comparisonExp, expression.split(logicalOperatorRx, QString::SkipEmptyParts)) {
         QStringList valueList = comparisonExp.split(comparisonOperatorRx,
                                                     QString::SkipEmptyParts);
         if (valueList.length() != 3)

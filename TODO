@@ -8,6 +8,8 @@
     * regular expression support
   ! rotation patch
   ! save last choosed directory in settings
+  ! Polish translation
+    * iprove Pixele to Piksele in size unit combobox
 
 *** next release ***
   ! Correction convert dialog
