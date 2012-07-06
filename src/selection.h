@@ -79,6 +79,8 @@ private:
     SelectionParams params;
     ConvertDialog *convertDialog;
     QList<QRegExp*> fileNameListRx;
+    QList<QRegExp*> anyAuthorListRx;
+    QList<QRegExp*> anyCopyrightListRx;
     QList<QRegExp*> exifProcessingSoftwareListRx;
     QList<QRegExp*> exifCameraManufacturerListRx;
     QList<QRegExp*> exifCameraModelListRx;
@@ -103,6 +105,8 @@ private:
     int loadFileInfo(const QString &dir, QFileInfoList *list, bool recursive);
     bool isCompatible(const QString &string, const QList<QRegExp*> &rxList);
     bool isCompatible(const QStringList &list, const QList<QRegExp*> &rxList);
+    bool isCompatible(const QDate &date, const QTime &time, QDateTime *dtArray);
+    bool isCompatible(const QDateTime &dateTime, QDateTime *dtArray);
     bool testFile(const QFileInfo &info);
     void clearPointerList(QList<QRegExp*> *list);
     void setupExpressionTrees();

@@ -165,6 +165,9 @@ int Selection::importFiles() {
   */
 void Selection::setupRegExps() {
     setupListRegExp(params.fileName, &fileNameListRx);
+    // any metadata regular expressions lists
+    setupListRegExp(params.author, &anyAuthorListRx);
+    setupListRegExp(params.copyright, &anyCopyrightListRx);
     // Exif regular expressions lists
     setupListRegExp(params.processingSoftware, &exifProcessingSoftwareListRx);
     setupListRegExp(params.cameraManufacturer, &exifCameraManufacturerListRx);
@@ -233,7 +236,8 @@ int Selection::loadFileInfo(const QString &dir, QFileInfoList *list, bool recurs
     return result;
 }
 
-/** Returns true if one member of \a rxList list is \a string string compatible.
+/** This is overloaded function.\n
+  * Returns true if one member of \a rxList list is \a string string compatible.
   * \param string Testing string.
   * \param rxList Pointer to list of pointers to regular expression objects.
   */
@@ -247,7 +251,8 @@ bool Selection::isCompatible(const QString &string, const QList<QRegExp*> &rxLis
     return result;
 }
 
-/** Returns true if one member of \a rxList list is one member of \a list
+/** This is overloaded function.\n
+  * Returns true if one member of \a rxList list is one member of \a list
   * list of strings compatible.
   * \param string Testing list of strings.
   * \param rxList Pointer to list of pointers to regular expression objects.
@@ -262,6 +267,27 @@ bool Selection::isCompatible(const QStringList &list, const QList<QRegExp*> &rxL
     return result;
 }
 
+/** This is overloaded function.\n
+  * Returns true if \a date and \a time object values are between value of first
+  * and second item (including extreme values) of \a dtArray; otherwise returns false.
+  * \note \a dtArray must be 2-item (or more) array; otherwise it will send SIGSEGV
+  * (segmentation fault signal) to operating system.
+  */
+bool Selection::isCompatible(const QDate &date, const QTime &time, QDateTime *dtArray) {
+    return ( (dtArray[0].date() <= date && date <= dtArray[1].date()) &&
+             (dtArray[0].time() <= time && time <= dtArray[1].time()) );
+}
+
+/** This is overloaded function.\n
+  * Returns true if \a dateTime object value is between value of first
+  * and second item (including extreme values) of \a dtArray; otherwise returns false.
+  * \note \a dtArray must be 2-item (or more) array; otherwise it will send SIGSEGV
+  * (segmentation fault signal) to operating system.
+  */
+bool Selection::isCompatible(const QDateTime &dateTime, QDateTime *dtArray) {
+    return (dtArray[0] <= dateTime && dateTime <= dtArray[1]);
+}
+
 /** Clears old trees and constructs new LogicalExpressionTree trees. */
 void Selection::setupExpressionTrees() {
     delete fileSizeExpTree;
@@ -272,20 +298,19 @@ void Selection::setupExpressionTrees() {
                                                  imageSizeVector);
 }
 
+/** Compares info and metadata of file with data corresponding selection params.\n
+  * Returns true if all comparisons succed, otherwise returns false; for SVG file
+  * allways returns false.
+  */
 bool Selection::testFile(const QFileInfo &info) {
     if (!isCompatible(info.fileName(), fileNameListRx))
         return false;
-    bool b = fileSizeExpTree->rootNode()->solve();
-    qDebug() << "file size" << b;
-    if (!b)
+    if (!fileSizeExpTree->rootNode()->solve())
         return false;
     QImage img(info.filePath());
     imageSizeVector->replace(0, img.width());
     imageSizeVector->replace(1, img.height());
-    b = imageSizeExpTree->rootNode()->solve();
-    qDebug() << "image size" << b <<
-                imageSizeVector->size() << imageSizeVector->at(0) << imageSizeVector->at(1);
-    if (!b)
+    if (!imageSizeExpTree->rootNode()->solve())
         return false;
     if (params.checkMetadata || params.checkExif || params.checkIPTC) {
         if (info.suffix().contains("svg",Qt::CaseInsensitive))
@@ -293,34 +318,57 @@ bool Selection::testFile(const QFileInfo &info) {
         MetadataUtils::Metadata metadata;
         if (!metadata.read(info.filePath(),true))
             return false;
+        MetadataUtils::ExifStruct *exifStruct = 0;
+        MetadataUtils::IptcStruct *iptcStruct = 0;
         if (params.checkMetadata) {
-            // TODO: check any metadata code block
+            exifStruct = metadata.exifStruct();
+            iptcStruct = metadata.iptcStruct();
+            if (!isCompatible(QDateTime::fromString(exifStruct->originalDate, Qt::ISODate),
+                              params.createdDateTime) &&
+                    !isCompatible(iptcStruct->dateCreated, iptcStruct->timeCreated,
+                                  params.createdDateTime))
+                return false;
+            if (!isCompatible(QDateTime::fromString(exifStruct->digitizedDate, Qt::ISODate),
+                              params.digitizedDateTime) &&
+                    !isCompatible(iptcStruct->digitizationDate, iptcStruct->digitizationTime,
+                                  params.digitizedDateTime))
+                return false;
+            QStringList strList;
+            strList << exifStruct->artist << iptcStruct->byline;
+            if (!isCompatible(strList, anyAuthorListRx))
+                return false;
+            strList.clear();
+            strList << exifStruct->copyright << iptcStruct->copyright;
+            if (!isCompatible(strList, anyCopyrightListRx))
+                return false;
         }
         if (params.checkExif) {
-            MetadataUtils::ExifStruct *str = metadata.exifStruct();
-            if (!isCompatible(str->processingSoftware, exifProcessingSoftwareListRx))
+            if (!exifStruct)
+                exifStruct = metadata.exifStruct();
+            if (!isCompatible(exifStruct->processingSoftware, exifProcessingSoftwareListRx))
                 return false;
-            if (!isCompatible(str->cameraManufacturer, exifCameraManufacturerListRx))
+            if (!isCompatible(exifStruct->cameraManufacturer, exifCameraManufacturerListRx))
                 return false;
-            if (!isCompatible(str->cameraModel, exifCameraModelListRx))
+            if (!isCompatible(exifStruct->cameraModel, exifCameraModelListRx))
                 return false;
         }
         if (params.checkIPTC) {
-            MetadataUtils::IptcStruct *str = metadata.iptcStruct();
-            if (!isCompatible(str->objectName, iptcObjectNameListRx))
+            if (!iptcStruct)
+                iptcStruct = metadata.iptcStruct();
+            if (!isCompatible(iptcStruct->objectName, iptcObjectNameListRx))
                 return false;
-            if (!isCompatible(str->keywords.split(' ', QString::SkipEmptyParts),
+            if (!isCompatible(iptcStruct->keywords.split(' ', QString::SkipEmptyParts),
                               iptcKeywordsListRx))
                 return false;
-            if (!isCompatible(str->caption.split(' ', QString::SkipEmptyParts),
+            if (!isCompatible(iptcStruct->caption.split(' ', QString::SkipEmptyParts),
                               iptcDescriptionListRx)
-                    || !isCompatible(str->caption, iptcDescriptionListRx))
+                    || !isCompatible(iptcStruct->caption, iptcDescriptionListRx))
                 return false;
-            if (!isCompatible(str->countryName, iptcCountryNameListRx))
+            if (!isCompatible(iptcStruct->countryName, iptcCountryNameListRx))
                 return false;
-            if (!isCompatible(str->city, iptcCityListRx))
+            if (!isCompatible(iptcStruct->city, iptcCityListRx))
                 return false;
-            if (!isCompatible(str->editStatus, iptcEditStatusListRx))
+            if (!isCompatible(iptcStruct->editStatus, iptcEditStatusListRx))
                 return false;
         }
     }

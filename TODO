@@ -1,13 +1,9 @@
 *** nearest release ***
-  ! Conditional converting (ie. convert if image width > 1000 px)
-    * create wizard window
   ! MetadataDialog:
     * save the same time and date in Exif and IPTC
   ! Selection:
     * Dialog: add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime
-    * regular expression support
   ! rotation patch
-  ! save last choosed directory in settings
   ! Polish translation
     * iprove Pixele to Piksele in size unit combobox
 
