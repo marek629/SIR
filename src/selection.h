@@ -95,10 +95,10 @@ private:
     static QStringList allOperators;
     QStringList fileSizeSymbols;
     LogicalExpressionTree *fileSizeExpTree;
-    QVector<int> *fileSizeVector;
+    QVector<qint64> *fileSizeVector;
     QStringList imageSizeSymbols;
     LogicalExpressionTree *imageSizeExpTree;
-    QVector<int> *imageSizeVector;
+    QVector<qint64> *imageSizeVector;
     // methods
     void setupRegExps();
     void setupListRegExp(const MetadataUtils::String &strExp, QList<QRegExp*> *listRx);
@@ -131,7 +131,7 @@ private:
 
 //========================== Expression tree section ==========================
 
-/** \brief Base class of logical expression tree using in Selection class.
+/** \brief Base abstract class of logical expression tree using in Selection class.
   *
   * This class is empty; exist for derived classes type compatibility only.
   * \sa LogicalExpressionTree
@@ -141,17 +141,24 @@ public:
     virtual ~Node() = 0;
 };
 
-//! The numerical (integer) value node class.
+//! The numerical (64-bit integer) value node class.
 class IntNode : public Node {
 public:
-    IntNode(int *value, bool constant = true);
+    IntNode(qint64 value = 0);
+    IntNode(qint64 *value);
     ~IntNode();
-    bool isConst() const { return constant; }
-    int value() const { return (valuePtr) ? (*valuePtr) : -1; }
+    bool isConst() const { return (!valuePtr); }
+    qint64 value() const { return (valuePtr) ? (*valuePtr) : valueInt; }
+    int value32() const { return (valuePtr) ? (*valuePtr) : valueInt; }
+    void setValue(qint64 *value);
+    void setValue(qint64 value);
 
 private:
-    bool constant;
-    int *valuePtr;
+    // fields
+    qint64 *valuePtr;
+    qint64 valueInt;
+    // methods
+    void init();
 };
 
 //! Base class of expression solver function nodes.
@@ -165,7 +172,7 @@ public:
 class CompareFunctionNode : public FunctionNode {
 
 public:
-    typedef bool(*fnPtr)(int,int);
+    typedef bool(*fnPtr)(qint64,qint64);
     CompareFunctionNode();
     CompareFunctionNode(fnPtr fn, IntNode *leftChild, IntNode *rightChild);
     virtual ~CompareFunctionNode();
@@ -173,9 +180,9 @@ public:
     void setFunction(fnPtr);
     void setLeftChild(IntNode *);
     void setRightChild(IntNode *);
-    static bool isEqual(int,int);
-    static bool isUpper(int,int);
-    static bool isLower(int,int);
+    static bool isEqual(qint64,qint64);
+    static bool isUpper(qint64,qint64);
+    static bool isLower(qint64,qint64);
     static fnPtr fnArray[3];
 
 private:
@@ -209,12 +216,16 @@ private:
 //! Binary tree of logical operations needed to solve image size expression.
 class LogicalExpressionTree {
 public:
-    LogicalExpressionTree(const QString &exp, const QStringList &symbols, QVector<int> *vars);
+    LogicalExpressionTree();
+    LogicalExpressionTree(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
     ~LogicalExpressionTree();
     FunctionNode *rootNode() const { return root; }
 
 private:
+    // fields
     FunctionNode *root;
+    // methods
+    void init(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
     QString rxString(const QString &str, QChar c, const QRegExp &rx, int *from = 0);
 };
 

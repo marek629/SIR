@@ -49,10 +49,10 @@ Selection::Selection(ConvertDialog *parent) : QObject(parent) {
     convertDialog = parent;
     fileSizeExpTree = 0;
     fileSizeSymbols << "s";
-    fileSizeVector = new QVector<int>(fileSizeSymbols.count());
+    fileSizeVector = new QVector<qint64>(fileSizeSymbols.count());
     imageSizeExpTree = 0;
     imageSizeSymbols << "x" << "y";
-    imageSizeVector = new QVector<int>(imageSizeSymbols.count());
+    imageSizeVector = new QVector<qint64>(imageSizeSymbols.count());
 }
 
 /** Selection object destructor. */
@@ -305,6 +305,7 @@ void Selection::setupExpressionTrees() {
 bool Selection::testFile(const QFileInfo &info) {
     if (!isCompatible(info.fileName(), fileNameListRx))
         return false;
+    fileSizeVector->replace(0, info.size());
     if (!fileSizeExpTree->rootNode()->solve())
         return false;
     QImage img(info.filePath());
@@ -467,14 +468,33 @@ Node::~Node() {}
 
 // __________________________________ IntNode __________________________________
 
-IntNode::IntNode(int *value, bool constant) {
-    this->valuePtr = value;
-    this->constant = constant;
+IntNode::IntNode(qint64 value) {
+    init();
+    setValue(value);
 }
 
-IntNode::~IntNode() {
-    if (constant)
+IntNode::IntNode(qint64 *value) {
+    init();
+    setValue(value);
+}
+
+IntNode::~IntNode() {}
+
+void IntNode::setValue(qint64 *value) {
+    valuePtr = value;
+    valueInt = 0;
+}
+
+void IntNode::setValue(qint64 value) {
+    if (!isConst())
         delete valuePtr;
+    valuePtr = 0;
+    valueInt = value;
+}
+
+void IntNode::init() {
+    valuePtr = 0;
+    valueInt = 0;
 }
 
 // ____________________________ CompareFunctionNode ____________________________
@@ -508,8 +528,8 @@ bool CompareFunctionNode::solve() {
         return true;
     if (!child1 || !child2)
         return false;
-    int a = child1->value();
-    int b = child2->value();
+    qint64 a = child1->value();
+    qint64 b = child2->value();
     if (a == -1 || b == -1)
         return false;
     return (*function)(a,b);
@@ -527,15 +547,15 @@ void CompareFunctionNode::setRightChild(IntNode *c) {
     this->child2 = c;
 }
 
-bool CompareFunctionNode::isEqual(int a, int b) {
+bool CompareFunctionNode::isEqual(qint64 a, qint64 b) {
     return (a == b);
 }
 
-bool CompareFunctionNode::isUpper(int a, int b) {
+bool CompareFunctionNode::isUpper(qint64 a, qint64 b) {
     return (a > b);
 }
 
-bool CompareFunctionNode::isLower(int a, int b) {
+bool CompareFunctionNode::isLower(qint64 a, qint64 b) {
     return (a < b);
 }
 
@@ -591,8 +611,21 @@ bool LogicalFunctionNode::logicalXor(bool a, bool b) {
 
 // ___________________________ LogicalExpressionTree ___________________________
 
-LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
-                                             const QStringList &symbols, QVector<int> *vars) {
+LogicalExpressionTree::LogicalExpressionTree() {
+    root = 0;
+}
+
+LogicalExpressionTree::LogicalExpressionTree(const QString &exp, const QStringList &symbols,
+                                             QVector<qint64> *vars) {
+    init(exp, symbols, vars);
+}
+
+LogicalExpressionTree::~LogicalExpressionTree() {
+    delete root;
+}
+
+void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
+                                 QVector<qint64> *vars) {
     if (exp.isEmpty()) {
         root = new FunctionNode();
         return;
@@ -614,12 +647,23 @@ LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
     QRegExp comparisonOperatorRx(comparisonOperatorRxString);
     QRegExp symbolRx(symbolRxString);
     if (!exp.contains(comparisonOperatorRx)) {
+        if (exp.contains(QRegExp("\\d"))) {
+            bool ok;
+            qint64 digit = exp.toLongLong(&ok);
+            if (ok) {
+                root = new CompareFunctionNode(&CompareFunctionNode::isEqual,
+                                               new IntNode(&vars->first()),
+                                               new IntNode(digit));
+                return;
+            }
+        }
         root = new CompareFunctionNode(0,0,0);
         return;
     }
     QString expression = exp;
     expression.replace(QRegExp("\\s"),"");
-    foreach (QString comparisonExp, expression.split(logicalOperatorRx, QString::SkipEmptyParts)) {
+    foreach (QString comparisonExp,
+             expression.split(logicalOperatorRx, QString::SkipEmptyParts)) {
         QStringList valueList = comparisonExp.split(comparisonOperatorRx,
                                                     QString::SkipEmptyParts);
         if (valueList.length() != 3)
@@ -662,7 +706,7 @@ LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
         if (valuesExpList.first().contains(symbolRx)) {
             for (int j=0; j<symbols.length(); j++) {
                 if (symbols[j] == valuesExpList.first()) {
-                    leftIntNode = new IntNode((int*)(&vars->at(j)),false);
+                    leftIntNode = new IntNode(const_cast<qint64*>(&vars->at(j)));
                     break;
                 }
                 else
@@ -670,11 +714,11 @@ LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
             }
         }
         else
-            leftIntNode = new IntNode(new int(valuesExpList.first().toInt()));
+            leftIntNode = new IntNode(valuesExpList.first().toLongLong());
         if (valuesExpList.at(1).contains(symbolRx)) {
             for (int j=0; j<symbols.length(); j++) {
                 if (symbols[j] == valuesExpList[1]) {
-                    rigthIntNode = new IntNode((int*)(&vars->at(j)),false);
+                    rigthIntNode = new IntNode(const_cast<qint64*>(&vars->at(j)));
                     break;
                 }
                 else
@@ -682,7 +726,7 @@ LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
             }
         }
         else
-            rigthIntNode = new IntNode(new int(valuesExpList.at(1).toInt()));
+            rigthIntNode = new IntNode(valuesExpList.at(1).toLongLong());
         CompareFunctionNode::fnPtr compareFn = 0;
         QString op = rxString(comparisonExp, valuesExpList[1][0], comparisonOperatorRx);
         for (int j=0; j<Selection::comparisonOperators.length(); j++) {
@@ -716,10 +760,6 @@ LogicalExpressionTree::LogicalExpressionTree(const QString &exp,
     }
     if (!root)
         root = leftFunctionNode;
-}
-
-LogicalExpressionTree::~LogicalExpressionTree() {
-    delete root;
 }
 
 QString LogicalExpressionTree::rxString(const QString &str, QChar c,
