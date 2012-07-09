@@ -32,6 +32,8 @@ class LogicalExpressionTree;
 
 //! Conditionaly selection parameters struct.
 struct SelectionParams {
+    // selection
+    bool selectImportedFiles;
     // directory
     QString path;
     bool browseSubdirs;

@@ -81,6 +81,7 @@ Selection::~Selection() {
 int Selection::selectItems() {
     int itemsSelected = 0;
     SelectionDialog dialog(&params,false,convertDialog);
+    dialog.setWindowTitle(tr("Conditions of items selection - SIR"));
     if (dialog.exec() == QDialog::Rejected)
         return -1; // dialog canceled
     qDebug() << "File name expression:" << params.fileName;
@@ -120,6 +121,7 @@ int Selection::selectItems() {
 int Selection::importFiles() {
     int filesImported = 0;
     SelectionDialog dialog(&params,true,convertDialog);
+    dialog.setWindowTitle(tr("Conditions of import files - SIR"));
     if (dialog.exec() == QDialog::Rejected)
         return -1; // dialog canceled
     qDebug() << "File name expression:" << params.fileName;
@@ -127,7 +129,7 @@ int Selection::importFiles() {
     qDebug() << "File size expression:" << params.fileSizeExp;
     if (params.path.isEmpty()) {
         qDebug("Selection::importFiles(): Directory path is empty!");
-        return -1;
+        return -2;
     }
     setupExpressionTrees();
     convertDialog->setCursor(QCursor(Qt::WaitCursor));
@@ -151,7 +153,9 @@ int Selection::importFiles() {
         itemList << info.completeBaseName() << info.suffix() << info.path()
                  << tr("Not converted yet");
         convertDialog->statusList->insert(info.absoluteFilePath(), NOTCONVERTED);
-        convertDialog->filesTreeView->addTopLevelItem(new QTreeWidgetItem(itemList));
+        QTreeWidgetItem *item = new QTreeWidgetItem(itemList);
+        convertDialog->filesTreeView->addTopLevelItem(item);
+        item->setSelected(params.selectImportedFiles);
         filesImported++;
     }
     convertDialog->enableConvertButtons();
@@ -403,6 +407,8 @@ SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
 
 /** Saves selection parameters to \a params structure. */
 void SelectionDialog::accept() {
+    if (clearSelectionCheckBox->isChecked())
+        convertDialog->filesTreeView->clearSelection();
     params->fileName = fileNameComboBox->lineEdit()->text();
     params->fileSizeExp = fileSizeComboBox->lineEdit()->text();
     params->imageSizeExp = imageSizeComboBox->lineEdit()->text();
@@ -433,10 +439,12 @@ void SelectionDialog::accept() {
     if (dirWidget) {
         params->path = dirLineEdit->text();
         params->browseSubdirs = dirCheckBox->isChecked();
+        params->selectImportedFiles = selectImportedCheckBox->isChecked();
     }
     else {
         params->path = "";
         params->browseSubdirs = false;
+        params->selectImportedFiles = false;
     }
     QDialog::accept();
 }
