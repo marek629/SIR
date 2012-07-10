@@ -67,16 +67,14 @@ private:
 class FunctionNode : public Node {
 public:
     virtual ~FunctionNode();
-    virtual bool solve(); /**< Solves operation function and returns result
-                                   of this function. */
+    virtual bool solve();
 };
 
 class CompareFunctionNode : public FunctionNode {
 
 public:
     typedef bool(*fnPtr)(qint64,qint64);
-    CompareFunctionNode();
-    CompareFunctionNode(fnPtr fn, IntNode *leftChild, IntNode *rightChild);
+    CompareFunctionNode(fnPtr fn = 0, IntNode *leftChild = 0, IntNode *rightChild = 0);
     virtual ~CompareFunctionNode();
     virtual bool solve();
     void setFunction(fnPtr);
@@ -97,8 +95,7 @@ class LogicalFunctionNode : public FunctionNode {
 
 public:
     typedef bool(*fnPtr)(bool,bool);
-    LogicalFunctionNode();
-    LogicalFunctionNode(fnPtr fn, FunctionNode *leftChild, FunctionNode *rightChild);
+    LogicalFunctionNode(fnPtr fn = 0, FunctionNode *leftChild = 0, FunctionNode *rightChild = 0);
     virtual ~LogicalFunctionNode();
     virtual bool solve();
     void setFunction(fnPtr);
@@ -121,7 +118,8 @@ public:
     LogicalExpressionTree();
     LogicalExpressionTree(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
     ~LogicalExpressionTree();
-    FunctionNode *rootNode() const { return root; }
+    FunctionNode *rootNode() const { return root; } /**< Returns pointer to root FunctionNode. */
+    void create(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
 
 private:
     // fields

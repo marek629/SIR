@@ -29,20 +29,30 @@
 #include <QSettings>
 
 // static variables
+
+// Remember update also function arrays in FuncionNode derivered classes!
+
+/** Logical operators using in selection logical expressions.
+  * \note And operator (&) must be first item on list! It's required by
+  *       LogicalExpressionTree::init() function.
+  * \note If you wish change or add a operator to this list, remember update
+  *       also LogicalFunctionNode::fnArray array.
+  * \sa comparisonOperators allOperators
+  */
 QStringList Selection::logicalOperators = QStringList() << "&" << "|" << "^";
+
+/** Comparison operators using in selection logical expressions.
+  * \note If you wish change or add a operator to this list, remember update
+  *       also CompareFunctionNode::fnArray array.
+  * \sa logicalOperators allOperators
+  */
 QStringList Selection::comparisonOperators = QStringList() << "=" << "<" << ">";
+
+/** All operators using in selection logical expressions.
+  * \sa comparisonOperators logicalOperators
+  */
 QStringList Selection::allOperators = QStringList() <<
         Selection::logicalOperators << Selection::comparisonOperators;
-CompareFunctionNode::fnPtr CompareFunctionNode::fnArray[3] = {
-    &CompareFunctionNode::isEqual,
-    &CompareFunctionNode::isLower,
-    &CompareFunctionNode::isUpper
-};
-LogicalFunctionNode::fnPtr LogicalFunctionNode::fnArray[3] = {
-    &LogicalFunctionNode::logicalAnd,
-    &LogicalFunctionNode::logicalOr,
-    &LogicalFunctionNode::logicalXor
-};
 
 // ________________________________ Selection ________________________________
 

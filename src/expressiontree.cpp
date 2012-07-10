@@ -24,6 +24,26 @@
 #include <QStringList>
 #include <QRegExp>
 
+// static variables
+
+/** Comparison function pointers array corresponding
+  * Selection::comparisonOperators string list.
+  */
+CompareFunctionNode::fnPtr CompareFunctionNode::fnArray[3] = {
+    &CompareFunctionNode::isEqual,
+    &CompareFunctionNode::isLower,
+    &CompareFunctionNode::isUpper
+};
+
+/** Logical function pointers array corresponding Selection::logicalOperators
+  * string list.
+  */
+LogicalFunctionNode::fnPtr LogicalFunctionNode::fnArray[3] = {
+    &LogicalFunctionNode::logicalAnd,
+    &LogicalFunctionNode::logicalOr,
+    &LogicalFunctionNode::logicalXor
+};
+
 // ___________________________________ Node ___________________________________
 
 /** Pure virtual destructor. */
@@ -67,18 +87,17 @@ void IntNode::init() {
 
 // _______________________________ FunctionNode _______________________________
 
+/** Default constructor of FunctionNode object. */
 FunctionNode::~FunctionNode() {}
 
+/** Always returns true. */
 bool FunctionNode::solve() { return true; }
 
 // ____________________________ CompareFunctionNode ____________________________
 
-CompareFunctionNode::CompareFunctionNode() {
-    function = 0;
-    child1 = 0;
-    child2 = 0;
-}
-
+/** Default constructor of CompareFunctionNode object.
+  * \sa setFunction setLeftChild setRightChild
+  */
 CompareFunctionNode::CompareFunctionNode(fnPtr fn, IntNode *leftChild,
                                          IntNode *rightChild) {
     setFunction(fn);
@@ -86,11 +105,18 @@ CompareFunctionNode::CompareFunctionNode(fnPtr fn, IntNode *leftChild,
     setRightChild(rightChild);
 }
 
+/** Deletes both child nodes. */
 CompareFunctionNode::~CompareFunctionNode() {
     delete child1;
     delete child2;
 }
 
+/** Solves operation function and returns result of this function.
+  * \note If function pointer is null returns true.\n
+  *       If same child pointer is null or value of same children is invalid
+  *       returns false.
+  * \sa isEqual isUpper isLower
+  */
 bool CompareFunctionNode::solve() {
     if (!function)
         return true;
@@ -98,100 +124,136 @@ bool CompareFunctionNode::solve() {
         return false;
     qint64 a = child1->value();
     qint64 b = child2->value();
-    if (a == -1 || b == -1)
+    if (a == 0 || b == 0)
         return false;
     return (*function)(a,b);
 }
 
+/** Sets function pointer to \a f. \sa isEqual isUpper isLower */
 void CompareFunctionNode::setFunction(fnPtr f) {
     this->function = f;
 }
 
+/** Sets left child pointer to \a c. */
 void CompareFunctionNode::setLeftChild(IntNode *c) {
     this->child1 = c;
 }
 
+/** Sets right child pointer to \a c. */
 void CompareFunctionNode::setRightChild(IntNode *c) {
     this->child2 = c;
 }
 
+/** Returns true if \a a equals \a b. */
 bool CompareFunctionNode::isEqual(qint64 a, qint64 b) {
     return (a == b);
 }
 
+/** Returns true if \a a is upper than \a b. */
 bool CompareFunctionNode::isUpper(qint64 a, qint64 b) {
     return (a > b);
 }
 
+/** Returns true if \a a is lower than \a b. */
 bool CompareFunctionNode::isLower(qint64 a, qint64 b) {
     return (a < b);
 }
 
 // ____________________________ LogicalFunctionNode ____________________________
 
-LogicalFunctionNode::LogicalFunctionNode() {
-    function = 0;
-    child1 = 0;
-    child2 = 0;
-}
-
+/** Default constructor of LogicalFunctionNode object.
+  * \sa setFunction setLeftChild setRightChild
+  */
 LogicalFunctionNode::LogicalFunctionNode(fnPtr fn, FunctionNode *leftChild,
-                                       FunctionNode *rightChild) {
+                                         FunctionNode *rightChild) {
     setFunction(fn);
     setLeftChild(leftChild);
     setRightChild(rightChild);
 }
 
+/** Deletes both child nodes. */
 LogicalFunctionNode::~LogicalFunctionNode() {
     delete child1;
     delete child2;
 }
 
+/** Returns result of \a function. If same child or function pointer is null
+  * returns false.
+  * \sa logicalAnd logicalOr logicalXor
+  */
 bool LogicalFunctionNode::solve() {
     if (!child1 || !child2 || !function)
         return false;
     return ((*function)(child1->solve(), child2->solve()));
 }
 
+/** Sets function pointer to \a f. \sa logicalAnd logicalOr logicalXor */
 void LogicalFunctionNode::setFunction(fnPtr f) {
     this->function = f;
 }
 
+/** Sets left child pointer to \a c. */
 void LogicalFunctionNode::setLeftChild(FunctionNode *c) {
     this->child1 = c;
 }
 
+/** Sets right child pointer to \a c. */
 void LogicalFunctionNode::setRightChild(FunctionNode *c) {
     this->child2 = c;
 }
 
+/** Returns true if both arguments are true, otherwise returns false. */
 bool LogicalFunctionNode::logicalAnd(bool a, bool b) {
     return (a && b);
 }
 
+/** Returns true if at least 1 of arguments is true, otherwise returns false. */
 bool LogicalFunctionNode::logicalOr(bool a, bool b) {
     return (a || b);
 }
 
+/** Returns true if just 1 of arguments is true, otherwise returns false. */
 bool LogicalFunctionNode::logicalXor(bool a, bool b) {
     return (a ^ b);
 }
 
 // ___________________________ LogicalExpressionTree ___________________________
 
+/** Default constructor of LogicalExpressionTree object.\n
+  * Sets root FunctionNode pointer to null address.
+  */
 LogicalExpressionTree::LogicalExpressionTree() {
     root = 0;
 }
 
+/** Constructor of LogicalExpressionTree object. \sa init */
 LogicalExpressionTree::LogicalExpressionTree(const QString &exp, const QStringList &symbols,
                                              QVector<qint64> *vars) {
     init(exp, symbols, vars);
 }
 
+/** Destructor of LogicalExpressionTree object. */
 LogicalExpressionTree::~LogicalExpressionTree() {
     delete root;
 }
 
+/** Deletes old root node and create new expression tree. \sa init */
+void LogicalExpressionTree::create(const QString &exp, const QStringList &symbols,
+                                   QVector<qint64> *vars) {
+    delete root;
+    init(exp, symbols, vars);
+}
+
+/** Creates expression tree based function paramethers.
+  * \param exp      Text expression. If it's empty root will store FunctionNode.
+  * \param symbols  Supported symbols of variables. Items are corresponding
+  *                 \a vars items.
+  * \param vars     Vector storing values of supported variables. Items are
+  *                 corresponding \a symbols items.
+  * \note If \a symbols and \a vars are different lenght or \a exp is invalid
+  *       expression root will store null CompareFunctionNode.
+  * \sa FunctionNode::solve CompareFunctionNode::solve
+  */
 void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
                                  QVector<qint64> *vars) {
     if (exp.isEmpty()) {
@@ -199,7 +261,7 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
         return;
     }
     if (symbols.length() != vars->size()) {
-        root = new CompareFunctionNode(0,0,0);
+        root = new CompareFunctionNode();
         return;
     }
     QString logicalOperatorRxString = "\\" + Selection::logicalOperators.first();
@@ -225,7 +287,7 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
                 return;
             }
         }
-        root = new CompareFunctionNode(0,0,0);
+        root = new CompareFunctionNode();
         return;
     }
     QString expression = exp;
@@ -243,7 +305,7 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
             ops << rxString(comparisonExp, valueList[j][0], comparisonOperatorRx, &idx);
         }
         if (ops[0] != ops[1]) {
-            root = new LogicalFunctionNode(0,0,0);
+            root = new LogicalFunctionNode();
             return;
         }
         QString op = ops[0];
@@ -330,6 +392,15 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
         root = leftFunctionNode;
 }
 
+/** Returns string corresponding \a rx contained in \a str.
+  * \param[in]      str  Expression string.
+  * \param[in]      c    First character of second part of \a str string.
+  * \param[in]      rx   Regular expression.
+  * \param[in,out]  from Position in \a str from it's begin searching string
+  *                      compatible with \a rx regular expression. It'll write
+  *                      here new value - position in \a str of first character
+  *                      of returned string.
+  */
 QString LogicalExpressionTree::rxString(const QString &str, QChar c,
                                         const QRegExp &rx, int *from) {
     int index = 0;

@@ -49,6 +49,7 @@
   *   * TIFF - Tagged Image File Format
   *   * XBM  - X11 Bitmap
   *   * XPM  - X11 Pixmap
+  *
   * Read only supported image formats:
   *   * GIF  - Graphic Interchange Format (optional)
   *   * MNG  - Multiple-image Network Graphics
