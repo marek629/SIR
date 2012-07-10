@@ -27,7 +27,6 @@
 #include <QFileInfoList>
 
 class ConvertDialog;
-
 class LogicalExpressionTree;
 
 //! Conditionaly selection parameters struct.
@@ -133,106 +132,6 @@ private:
     // methods
     void loadSettings();
     void saveSettings();
-};
-
-//========================== Expression tree section ==========================
-
-/** \brief Base abstract class of logical expression tree using in Selection class.
-  *
-  * This class is empty; exist for derived classes type compatibility only.
-  * \sa LogicalExpressionTree
-  */
-class Node {
-public:
-    virtual ~Node() = 0;
-};
-
-//! The numerical (64-bit integer) value node class.
-class IntNode : public Node {
-public:
-    IntNode(qint64 value = 0);
-    IntNode(qint64 *value);
-    ~IntNode();
-    bool isConst() const { return (!valuePtr); }
-    qint64 value() const { return (valuePtr) ? (*valuePtr) : valueInt; }
-    int value32() const { return (valuePtr) ? (*valuePtr) : valueInt; }
-    void setValue(qint64 *value);
-    void setValue(qint64 value);
-
-private:
-    // fields
-    qint64 *valuePtr;
-    qint64 valueInt;
-    // methods
-    void init();
-};
-
-//! Base class of expression solver function nodes.
-class FunctionNode : public Node {
-public:
-    virtual ~FunctionNode();
-    virtual bool solve(); /**< Solves operation function and returns result
-                                   of this function. */
-};
-
-class CompareFunctionNode : public FunctionNode {
-
-public:
-    typedef bool(*fnPtr)(qint64,qint64);
-    CompareFunctionNode();
-    CompareFunctionNode(fnPtr fn, IntNode *leftChild, IntNode *rightChild);
-    virtual ~CompareFunctionNode();
-    virtual bool solve();
-    void setFunction(fnPtr);
-    void setLeftChild(IntNode *);
-    void setRightChild(IntNode *);
-    static bool isEqual(qint64,qint64);
-    static bool isUpper(qint64,qint64);
-    static bool isLower(qint64,qint64);
-    static fnPtr fnArray[3];
-
-private:
-    fnPtr function;
-    IntNode *child1;
-    IntNode *child2;
-};
-
-class LogicalFunctionNode : public FunctionNode {
-
-public:
-    typedef bool(*fnPtr)(bool,bool);
-    LogicalFunctionNode();
-    LogicalFunctionNode(fnPtr fn, FunctionNode *leftChild, FunctionNode *rightChild);
-    virtual ~LogicalFunctionNode();
-    virtual bool solve();
-    void setFunction(fnPtr);
-    void setLeftChild(FunctionNode *);
-    void setRightChild(FunctionNode *);
-    static bool logicalAnd(bool,bool);
-    static bool logicalOr(bool,bool);
-    static bool logicalXor(bool,bool);
-    static fnPtr fnArray[3];
-
-private:
-    fnPtr function;
-    FunctionNode *child1;
-    FunctionNode *child2;
-};
-
-//! Binary tree of logical operations needed to solve image size expression.
-class LogicalExpressionTree {
-public:
-    LogicalExpressionTree();
-    LogicalExpressionTree(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
-    ~LogicalExpressionTree();
-    FunctionNode *rootNode() const { return root; }
-
-private:
-    // fields
-    FunctionNode *root;
-    // methods
-    void init(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
-    QString rxString(const QString &str, QChar c, const QRegExp &rx, int *from = 0);
 };
 
 #endif // SELECTION_H

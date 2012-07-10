@@ -116,12 +116,12 @@ void ConvertDialog::createConnections() {
     connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
 
     // tree view events
-    connect(filesTreeView, SIGNAL(customContextMenuRequested (QPoint)),
+    connect(filesTreeWidget, SIGNAL(customContextMenuRequested (QPoint)),
             SLOT(showMenu(QPoint)));
-    connect(filesTreeView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem *, int)),
+    connect(filesTreeWidget, SIGNAL(itemDoubleClicked ( QTreeWidgetItem *, int)),
             SLOT(showPreview(QTreeWidgetItem *, int)));
-    connect(filesTreeView, SIGNAL(changed()), SLOT(updateTree()));
-    connect(filesTreeView, SIGNAL(itemSelectionChanged()), SLOT(showDetails()));
+    connect(filesTreeWidget, SIGNAL(changed()), SLOT(updateTree()));
+    connect(filesTreeWidget, SIGNAL(itemSelectionChanged()), SLOT(showDetails()));
 
     // browse button
     connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
@@ -423,8 +423,8 @@ void ConvertDialog::giveNextImage(int threadNum) {
   */
 void ConvertDialog::removeAll() {
 
-    if (filesTreeView->topLevelItemCount() > 0) {
-        filesTreeView->clear();
+    if (filesTreeWidget->topLevelItemCount() > 0) {
+        filesTreeWidget->clear();
     }
 
     enableConvertButtons(false);
@@ -442,11 +442,11 @@ void ConvertDialog::removeSelectedFromList() {
     QTreeWidgetItem *item;
     QString fileName;
 
-    for (int i = 0; i < filesTreeView->topLevelItemCount(); i++)
+    for (int i = 0; i < filesTreeWidget->topLevelItemCount(); i++)
     {
 
-        if ((filesTreeView->topLevelItem(i))->isSelected()) {
-            item = filesTreeView->takeTopLevelItem(i);
+        if ((filesTreeWidget->topLevelItem(i))->isSelected()) {
+            item = filesTreeWidget->takeTopLevelItem(i);
 
             fileName = item->text(2) + QDir::separator() +item->text(0) + ".";
             fileName += item->text(1);
@@ -456,7 +456,7 @@ void ConvertDialog::removeSelectedFromList() {
 
     }
 
-    if (filesTreeView->topLevelItemCount() == 0) {
+    if (filesTreeWidget->topLevelItemCount() == 0) {
         convertButton->setEnabled(FALSE);
         convertSelectedButton->setEnabled(FALSE);
     }
@@ -530,12 +530,12 @@ void ConvertDialog::loadFiles(const QStringList &files) {
                            NOTCONVERTED);
 
         item = new QTreeWidgetItem(itemList);
-        filesTreeView->addTopLevelItem(item);
+        filesTreeWidget->addTopLevelItem(item);
         ++it;
         lastDir = QFileInfo(fileName).path();
     }
     enableConvertButtons();
-    resizeColumnsToContents(filesTreeView);
+    resizeColumnsToContents(filesTreeWidget);
 }
 
 /** Loads files into tree widget.
@@ -554,12 +554,12 @@ void ConvertDialog::loadFiles(const QList<QFileInfo> &files) {
         itemList.append(fi.path());
         itemList.append(tr("Not converted yet"));
         item = new QTreeWidgetItem(itemList);
-        filesTreeView->addTopLevelItem(item);
+        filesTreeWidget->addTopLevelItem(item);
         statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
     }
     if (!files.isEmpty()) {
         enableConvertButtons();
-        resizeColumnsToContents(filesTreeView);
+        resizeColumnsToContents(filesTreeWidget);
     }
 }
 
@@ -582,8 +582,8 @@ void ConvertDialog::resizeColumnsToContents(myQTreeWidget *tree) {
   */
 void ConvertDialog::convertAll() {
     itemsToConvert.clear();
-    for (int i=0; i<filesTreeView->topLevelItemCount(); i++)
-        itemsToConvert.append( filesTreeView->topLevelItem(i) );
+    for (int i=0; i<filesTreeWidget->topLevelItemCount(); i++)
+        itemsToConvert.append( filesTreeWidget->topLevelItem(i) );
     if (itemsToConvert.isEmpty()) {
         QMessageBox::warning(this, "SIR",
                              tr("Please add at least one image file." ));
@@ -598,7 +598,7 @@ void ConvertDialog::convertAll() {
   * \sa convertAll
   */
 void ConvertDialog::convertSelected() {
-    itemsToConvert = filesTreeView->selectedItems();
+    itemsToConvert = filesTreeWidget->selectedItems();
     if (itemsToConvert.isEmpty()) {
         QMessageBox::warning( this, "SIR",
                               tr("Please select at least one image file." ));
@@ -749,7 +749,7 @@ void ConvertDialog::showSelectionDialog() {
 void ConvertDialog::showDetails() {
     if (horizontalSplitter->widget(1)->width() == 0)
         return;
-    QList<QTreeWidgetItem*> selectedFiles = filesTreeView->selectedItems();
+    QList<QTreeWidgetItem*> selectedFiles = filesTreeWidget->selectedItems();
     static const QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
             "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
             "<html><head><meta name=\"qrichtext\" content=\"1\" />"
@@ -1070,7 +1070,7 @@ void ConvertDialog::initList() {
                     itemList.append(fi.path());
                     itemList.append(tr("Not converted yet"));
                     item = new QTreeWidgetItem(itemList);
-                    filesTreeView->addTopLevelItem(item);
+                    filesTreeWidget->addTopLevelItem(item);
                     statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
                 }
             }
@@ -1088,7 +1088,7 @@ void ConvertDialog::initList() {
                     itemList.append(QFileInfo(fileName).path());
                     itemList.append(tr("Not converted yet"));
                     item = new QTreeWidgetItem(itemList);
-                    filesTreeView->addTopLevelItem(item);
+                    filesTreeWidget->addTopLevelItem(item);
                     statusList->insert(QFileInfo(fileName).absoluteFilePath(),
                                        NOTCONVERTED);
                 }
@@ -1096,11 +1096,11 @@ void ConvertDialog::initList() {
         }
     }
 
-    if (filesTreeView->topLevelItemCount() > 0) {
+    if (filesTreeWidget->topLevelItemCount() > 0) {
         convertButton->setEnabled(TRUE);
         convertSelectedButton->setEnabled(TRUE);
     }
-    resizeColumnsToContents(filesTreeView);
+    resizeColumnsToContents(filesTreeWidget);
 }
 
 /** Rotate checkbox slot.
@@ -1125,7 +1125,7 @@ void ConvertDialog::verifyRotate(int status) {
   */
 void ConvertDialog::showMenu(const QPoint & point) {
 
-    treeMenuItem = filesTreeView->itemAt(point);
+    treeMenuItem = filesTreeWidget->itemAt(point);
 
     if (treeMenuItem) {
         QMenu contextMenu(this);
@@ -1374,10 +1374,10 @@ void ConvertDialog::changeEvent(QEvent *e) {
   * \sa makeImagePath
   */
 QStringList * ConvertDialog::makeList() {
-    int count = filesTreeView->topLevelItemCount();
+    int count = filesTreeWidget->topLevelItemCount();
     QStringList *list = new QStringList();
     for (int i=0; i<count; i++)
-        list->append(makeImagePath(filesTreeView->topLevelItem(i)));
+        list->append(makeImagePath(filesTreeWidget->topLevelItem(i)));
     return list;
 }
 
@@ -1394,10 +1394,10 @@ QString ConvertDialog::makeImagePath(QTreeWidgetItem *item) {
 
 /** Updates tree widget when it will change. */
 void ConvertDialog::updateTree() {
-    if (filesTreeView->topLevelItemCount() > 0) {
+    if (filesTreeWidget->topLevelItemCount() > 0) {
         enableConvertButtons(true);
     }
-    resizeColumnsToContents(filesTreeView);
+    resizeColumnsToContents(filesTreeWidget);
 }
 
 /** Set converting status of image.
@@ -1413,12 +1413,12 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
         //CONVERTING
         convertProgressBar->setValue(convertProgressBar->value()+1);
     }
-    int count = filesTreeView->topLevelItemCount();
+    int count = filesTreeWidget->topLevelItemCount();
     QString fileName;
 
     for (int i = 0; i < count; i++)
     {
-        QTreeWidgetItem *item = filesTreeView->topLevelItem(i);
+        QTreeWidgetItem *item = filesTreeWidget->topLevelItem(i);
         if(item->text(0) == imageData.at(0) && item->text(1) == imageData.at(1)
             && item->text(2) == imageData.at(2)) {
             item->setText(3, status);
@@ -1541,9 +1541,9 @@ void ConvertDialog::retranslateStrings() {
     itemList.append(tr("Ext"));
     itemList.append(tr("Path"));
     itemList.append(tr("Status"));
-    filesTreeView->setHeaderLabels(itemList);
+    filesTreeWidget->setHeaderLabels(itemList);
 
-    QTreeWidgetItemIterator it(filesTreeView);
+    QTreeWidgetItemIterator it(filesTreeWidget);
     int count;
     count = 0;
 
@@ -1599,19 +1599,19 @@ void ConvertDialog::updateInterface() {
     converting = false;
     convertSelectedButton->setEnabled(true);
     convertButton->setEnabled(true);
-    resizeColumnsToContents(filesTreeView);
+    resizeColumnsToContents(filesTreeWidget);
     setCursor(Qt::ArrowCursor);
     quitButton->setText(tr("Quit"));
 }
 
 /** Sets image status to \em Cancelled if the image isn't converted yet. */
 void ConvertDialog::setCanceled() {
-    int count = filesTreeView->topLevelItemCount();
+    int count = filesTreeWidget->topLevelItemCount();
     QTreeWidgetItem *item = new QTreeWidgetItem();
     QString status = tr("Cancelled");
     QString converted = tr("Converted");
     for(int i = 0; i < count; i++) {
-        item = filesTreeView->topLevelItem(i);
+        item = filesTreeWidget->topLevelItem(i);
         if (item->text(3) != converted)
             item->setText(3, status);
     }
