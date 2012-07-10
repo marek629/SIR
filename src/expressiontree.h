@@ -45,8 +45,12 @@ public:
     IntNode(qint64 value = 0);
     IntNode(qint64 *value);
     ~IntNode();
+    /** Returns true if this IntNode object's storing constant value; otherwise
+        returns false, ie. when this object's storing pointer to variable. */
     bool isConst() const { return (!valuePtr); }
+    /** Returns 64-bit representation of storing value. \sa value32 */
     qint64 value() const { return (valuePtr) ? (*valuePtr) : valueInt; }
+    /** Returns 32-bit representation of storing value. \sa value */
     int value32() const { return (valuePtr) ? (*valuePtr) : valueInt; }
     void setValue(qint64 *value);
     void setValue(qint64 value);

@@ -14,7 +14,7 @@
    <string>SIR - Simple Image Resizer</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../application.qrc">
     <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -31,7 +31,7 @@
        <property name="childrenCollapsible">
         <bool>false</bool>
        </property>
-       <widget class="myQTreeWidget" name="filesTreeView">
+       <widget class="myQTreeWidget" name="filesTreeWidget">
         <column>
          <property name="text">
           <string notr="true">1</string>
@@ -793,7 +793,7 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset>
+    <iconset resource="../application.qrc">
      <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
    </property>
    <property name="text">
@@ -873,6 +873,8 @@
  <tabstops>
   <tabstop>destFileEdit</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../application.qrc"/>
+ </resources>
  <connections/>
 </ui>

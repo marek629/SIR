@@ -26,34 +26,40 @@
 
 // ___________________________________ Node ___________________________________
 
+/** Pure virtual destructor. */
 Node::~Node() {}
 
 // __________________________________ IntNode __________________________________
 
+/** Default constructor of IntNode object. \sa init setValue */
 IntNode::IntNode(qint64 value) {
     init();
     setValue(value);
 }
 
+/** Constructor of IntNode object. \sa init setValue */
 IntNode::IntNode(qint64 *value) {
     init();
     setValue(value);
 }
 
+/** Destructor of IntNode object. */
 IntNode::~IntNode() {}
 
+/** Sets value pointer valuePtr to \a value and valueInt to 0. */
 void IntNode::setValue(qint64 *value) {
     valuePtr = value;
     valueInt = 0;
 }
 
+/** Sets valueInt to \a value and valuePtr to null pointer. */
 void IntNode::setValue(qint64 value) {
-    if (!isConst())
-        delete valuePtr;
     valuePtr = 0;
     valueInt = value;
 }
 
+/** Sets value pointer valuePtr to null address and valueInt to 0 while IntNodes
+  * object initialization. */
 void IntNode::init() {
     valuePtr = 0;
     valueInt = 0;
