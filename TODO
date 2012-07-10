@@ -1,8 +1,6 @@
 *** nearest release ***
   ! MetadataDialog:
     * save the same time and date in Exif and IPTC
-  ! Selection:
-    * Dialog: add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime
   ! rotation patch
   ! Polish translation
     * iprove Pixele to Piksele in size unit combobox
@@ -13,6 +11,8 @@
     * improve drag-drop events (myQTreeWidget)
   ! Conditional converting (ie. convert if image width > 1000 px)
     * scripts with exiv2 support
+  ! SelectionDialog:
+    * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
   ! Make recursive screen images with (auto detect of sceeen frame) feature - joke :)
   ! Make simple effects
     * color (sepia, b&w, etc.) and gradient filtres

@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QProgressDialog>
+#include <QSettings>
 
 // static variables
 QStringList Selection::logicalOperators = QStringList() << "&" << "|" << "^";
@@ -403,6 +404,7 @@ SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
         dirLineEdit->setText(this->params->path);
         connect(dirPushButton, SIGNAL(clicked()), this, SLOT(browseDir()));
     }
+    loadSettings();
 }
 
 /** Saves selection parameters to \a params structure. */
@@ -446,6 +448,7 @@ void SelectionDialog::accept() {
         params->browseSubdirs = false;
         params->selectImportedFiles = false;
     }
+    saveSettings();
     QDialog::accept();
 }
 
@@ -464,6 +467,118 @@ void SelectionDialog::browseDir() {
     params->path = dirPath;
     convertDialog->lastDir = dirPath;
     dirLineEdit->setText(dirPath);
+}
+
+void SelectionDialog::loadSettings() {
+    QSettings settings("SIR");
+    settings.beginGroup("Settings");
+    int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
+    settings.endGroup(); // Settings
+    settings.beginGroup("SelectionDialog");
+    // file
+    fileNameComboBox->importHistory(settings.value("fileNameMap").toMap(),
+                                    settings.value("fileNameList").toList(),
+                                    maxHistoryCount);
+    fileSizeComboBox->importHistory(settings.value("fileSizeMap").toMap(),
+                                    settings.value("fileSizeList").toList(),
+                                    maxHistoryCount);
+    imageSizeComboBox->importHistory(settings.value("imageSizeMap").toMap(),
+                                     settings.value("imageSizeList").toList(),
+                                     maxHistoryCount);
+    // any metadata
+    authorComboBox->importHistory(settings.value("anyAuthorMap").toMap(),
+                                  settings.value("anyAuthorList").toList(),
+                                  maxHistoryCount);
+    copyrightComboBox->importHistory(settings.value("anyCopyrightMap").toMap(),
+                                     settings.value("anyCopyrightList").toList(),
+                                     maxHistoryCount);
+    // Exif
+    exifSoftwareComboBox->importHistory(settings.value("exifSoftMap").toMap(),
+                                        settings.value("exifSoftList").toList(),
+                                        maxHistoryCount);
+    exifCameraManufacturerComboBox->importHistory(settings.value("exifCameraManufacturerMap").toMap(),
+                                                  settings.value("exifCameraManufacturerList").toList(),
+                                                  maxHistoryCount);
+    exifCameraModelComboBox->importHistory(settings.value("exifCameraModelMap").toMap(),
+                                           settings.value("exifCameraModelList").toList(),
+                                           maxHistoryCount);
+    // IPTC
+    iptcObjectNameComboBox->importHistory(settings.value("iptcObjectNameMap").toMap(),
+                                          settings.value("iptcObjectNameList").toList(),
+                                          maxHistoryCount);
+    iptcKeywordsComboBox->importHistory(settings.value("iptcKeywordsMap").toMap(),
+                                        settings.value("iptcKeywordsList").toList(),
+                                        maxHistoryCount);
+    iptcDescriptionComboBox->importHistory(settings.value("iptcDescriptionMap").toMap(),
+                                           settings.value("iptcDescriptionList").toList(),
+                                           maxHistoryCount);
+    iptcCountryNameComboBox->importHistory(settings.value("iptcCountryNameMap").toMap(),
+                                           settings.value("iptcCountryNameList").toList(),
+                                           maxHistoryCount);
+    iptcCityComboBox->importHistory(settings.value("iptcCityMap").toMap(),
+                                    settings.value("iptcCityList").toList(),
+                                    maxHistoryCount);
+    iptcEditStatusComboBox->importHistory(settings.value("iptcEditStatusMap").toMap(),
+                                          settings.value("iptcEditStatusList").toList(),
+                                          maxHistoryCount);
+    settings.endGroup(); // SelectionDialog
+}
+
+void SelectionDialog::saveSettings() {
+    QMap<QString,QVariant> map;
+    QList<QVariant> list;
+    QSettings settings("SIR");
+    settings.beginGroup("Settings");
+    int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
+    settings.endGroup(); // Settings
+    settings.beginGroup("SelectionDialog");
+    // file
+    fileNameComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("fileNameMap", map);
+    settings.setValue("fileNameList", list);
+    fileSizeComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("fileSizeMap", map);
+    settings.setValue("fileSizeList", list);
+    imageSizeComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("imageSizeMap", map);
+    settings.setValue("imageSizeList", list);
+    // any metadata
+    authorComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("anyAuthorMap", map);
+    settings.setValue("anyAuthorList", list);
+    copyrightComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("anyCopyrightMap", map);
+    settings.setValue("anyCopyrightList", list);
+    // Exif
+    exifSoftwareComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("exifSoftMap", map);
+    settings.setValue("exifSoftList", list);
+    exifCameraManufacturerComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("exifCameraManufacturerMap", map);
+    settings.setValue("exifCameraManufacturerList", list);
+    exifCameraModelComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("exifCameraModelMap", map);
+    settings.setValue("exifCameraModelList", list);
+    // IPTC
+    iptcObjectNameComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("iptcObjectNameMap", map);
+    settings.setValue("iptcObjectNameList", list);
+    iptcKeywordsComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("iptcKeywordsMap", map);
+    settings.setValue("iptcKeywordsList", list);
+    iptcDescriptionComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("iptcDescriptionMap", map);
+    settings.setValue("iptcDescriptionList", list);
+    iptcCountryNameComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("iptcCountryNameMap", map);
+    settings.setValue("iptcCountryNameList", list);
+    iptcCityComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("iptcCityMap", map);
+    settings.setValue("iptcCityList", list);
+    iptcEditStatusComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("iptcEditStatusMap", map);
+    settings.setValue("iptcEditStatusList", list);
+    settings.endGroup(); // SelectionDialog
 }
 
 // =============================================================================

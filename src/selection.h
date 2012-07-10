@@ -127,8 +127,12 @@ public slots:
     void browseDir();
 
 private:
+    // fields
     SelectionParams *params;
     ConvertDialog *convertDialog;
+    // methods
+    void loadSettings();
+    void saveSettings();
 };
 
 //========================== Expression tree section ==========================
