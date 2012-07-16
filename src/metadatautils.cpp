@@ -44,7 +44,7 @@ Metadata::~Metadata() {
 
 /** Reads metadata from \b path file path and optionaly setup ExifStruct if
   * \b setupStructs is true, and returns read success value.\n
-  * If exception catched this error data will be saved into lastError_ field.
+  * If exception catched this error data will be appended to errorList list.
   * \sa lastError
   */
 bool Metadata::read(const String& path, bool setupStructs) {
@@ -63,15 +63,29 @@ bool Metadata::read(const String& path, bool setupStructs) {
 #ifdef EXV_HAVE_XMP_TOOLKIT
         xmpData = image->xmpData();
 #endif // EXV_HAVE_XMP_TOOLKIT
+
         if (setupStructs) {
-            setExifStruct();
-            setIptcStruct();
+            firstEmptyItemSkipped = true;
+            exifStruct_.clear();
+        }
+        while (setupStructs) {
+            try {
+                setExifStruct();
+                setIptcStruct();
+                break;
+            }
+            catch (Exiv2::Error &e) {
+                firstEmptyItemSkipped = false;
+                QString message = tr("Error open file %1").arg(path.toQString());
+                errorList += new Error(message,e);
+                continue;
+            }
         }
         return true;
     }
     catch (Exiv2::Error &e) {
-        lastError_.setMessage(tr("Error open file %1").arg(path.toQString()));
-        lastError_.copy(e);
+        QString message = tr("Error open file %1").arg(path.toQString());
+        errorList += new Error(message,e);
         return false;
     }
 }
@@ -81,9 +95,9 @@ bool Metadata::read(const QString &path, bool setupStructs) {
     return read((const String&)path,setupStructs);
 }
 
-/** Writes metadata about file corresponding with \b path file path and
-  * \b qImage image, and returns read success value.\n
-  * If exception catched this error data will be saved into lastError_ field.
+/** Writes metadata about file corresponding with \a path file path and
+  * \a qImage image, and returns read success value.\n
+  * If exception catched this error data will be appended to errorList list.
   * \sa lastError
   */
 bool Metadata::write(const String& path, const QImage& qImage) {
@@ -96,8 +110,8 @@ bool Metadata::write(const String& path, const QImage& qImage) {
         return true;
     }
     catch (Exiv2::Error &e) {
-        lastError_.setMessage(tr("Error write file %1").arg( path.toQString() ) );
-        lastError_.copy(e);
+        QString message = tr("Error open file %1").arg(path.toQString());
+        errorList += new Error(message,e);
         return false;
     }
 }
@@ -124,7 +138,7 @@ void Metadata::clearMetadata() {
 }
 
 /** Sets metadata of all supported standards.\n
-  * If \a Exif metadata isn't empty and \a qImage isn't null save image size
+  * If Exif metadata isn't empty and qImage isn't null save image size
   * in \em Exif.Image.ImageWidth and \em Exif.Image.ImageLength; otherwise this
   * metadata fields will filled from current Exiv2::Image \a image file.
   */
@@ -161,7 +175,86 @@ void Metadata::setData(const QImage& qImage) {
 #endif // EXV_HAVE_XMP_TOOLKIT
 }
 
-/** Sets \a Exif metadata based on exifStruct_ data.
+/** This is overloaded function.\n
+  * If \a field value is different from 0 this function has no effect.\n
+  * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
+  * integer representation of metadatum value basing \a key key.
+  * Otherwise, if firstEmptyItemSkipped is false sets them to true.
+  * \sa isNullValue(char) setFieldString
+  */
+void Metadata::setFieldValue(char *field, const std::string &key) {
+    if (!isNullValue(*field))
+        return;
+    if (firstEmptyItemSkipped) {
+        Exiv2::Metadatum *datum;
+        if (key.substr(0,4).compare("Exif") == 0)
+            datum = &exifData[key];
+        else
+            datum = &iptcData[key];
+        *field = datum->toLong();
+    }
+    else
+        firstEmptyItemSkipped = true;
+}
+
+/** This is overloaded function.\n
+  * If \a field value is non null string this function has no effect.\n
+  * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
+  * decimal string based integer representation of metadatum value basing
+  * \a key key and append \a unit c-string using String::appendUnit() function.
+  * Otherwise, if firstEmptyItemSkipped is false sets them to true.
+  * \sa isNullValue(String) String::appendUnit setFieldString
+  */
+void Metadata::setFieldValue(String *field, const std::string &key, const char *unit) {
+    if (!isNullValue(*field))
+        return;
+    if (firstEmptyItemSkipped) {
+        Exiv2::Metadatum *datum;
+        if (key.substr(0,4).compare("Exif") == 0)
+            datum = &exifData[key];
+        else
+            datum = &iptcData[key];
+        *field = String::number(datum->toLong());
+        field->appendUnit(unit);
+    }
+    else
+        firstEmptyItemSkipped = true;
+}
+
+/** If \a field value is non null string this function has no effect.\n
+  * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
+  * string based string representation of metadatum value basing \a key key.
+  * If metadatum corresponding \a key1 key is empty it reads metadatum
+  * coresponding \a key2 key.\n
+  * Otherwise, if firstEmptyItemSkipped is false sets them to true.
+  * \sa isNullValue(String) String::appendUnit setFieldValue
+  */
+void Metadata::setFieldString(String *field, const std::string &key1,
+                              const std::string &key2) {
+    if (!isNullValue(*field))
+        return;
+    if (firstEmptyItemSkipped) {
+        Exiv2::Metadatum *datum;
+        if (key1.substr(0,4).compare("Exif") == 0)
+            datum = &exifData[key1];
+        else
+            datum = &iptcData[key1];
+        *field = String::fromStdString(datum->toString());
+        if (field->isEmpty() && !key2.empty()) {
+            if (key2.substr(0,4).compare("Exif") == 0)
+                datum = &exifData[key2];
+            else
+                datum = &iptcData[key2];
+            *field = String::fromStdString(datum->toString());
+        }
+        if (field->isEmpty())
+            *field = String::noData();
+    }
+    else
+        firstEmptyItemSkipped = true;
+}
+
+/** Sets Exif metadata based on exifStruct_ data.
   * \sa ExifStruct setExifStruct setIptcStruct
   */
 void Metadata::setExifData() {
@@ -203,33 +296,29 @@ void Metadata::setExifData() {
     exifData["Exif.Photo.UserComment"] = exifStruct_.userComment.toNativeStdString();
 }
 
-/** Loads \a exifStruct_ data from \a Exif metadata.
+/** Loads exifStruct_ data from Exif metadata stored in exifData.
   * \sa ExifStruct setExifData setIptcData
   */
 void Metadata::setExifStruct() {
     // Image section
-    exifStruct_.version = exif.getVersion();
-    exifStruct_.processingSoftware = String::fromStdString(
-                exifData["Exif.Image.ProcessingSoftware"].toString() );
-    if (exifStruct_.processingSoftware.isEmpty())
-        exifStruct_.processingSoftware = String::noData();
-    exifStruct_.imageWidth = QString::number(
-                exifData["Exif.Image.ImageWidth"].toLong() );
-    exifStruct_.imageWidth.appendUnit(" px");
-    exifStruct_.imageHeight = QString::number(
-                exifData["Exif.Image.ImageLength"].toLong() );
-    exifStruct_.imageHeight.appendUnit(" px");
-    exifStruct_.orientation = exifData["Exif.Image.Orientation"].toLong();
-    exifStruct_.originalDate = QString::fromStdString(
-                exifData["Exif.Photo.DateTimeOriginal"].toString() );
-    if (exifStruct_.originalDate.isEmpty())
-        exifStruct_.originalDate = QString::fromStdString(
-                    exifData["Exif.Image.DateTimeOriginal"].toString() );
-    exifStruct_.digitizedDate = QString::fromStdString(
-                exifData["Exif.Photo.DateTimeDigitized"].toString() );
-    if (exifStruct_.digitizedDate.isEmpty())
-        exifStruct_.digitizedDate = QString::fromStdString(
-                    exifData["Exif.Image.DateTimeDigitized"].toString() );
+    /* I know from experience that this section often throws an exception
+     * caused by invalid metadata in same files so I provide setField*(...)
+     * functions here. --Marek */
+    if (isNullValue(exifStruct_.version)) // Exif version
+        exifStruct_.version = exif.getVersion();
+    if (isNullValue(exifStruct_.processingSoftware)) { // processing software
+        exifStruct_.processingSoftware = String::fromStdString(
+                    exifData["Exif.Image.ProcessingSoftware"].toString() );
+        if (exifStruct_.processingSoftware.isEmpty())
+            exifStruct_.processingSoftware = String::noData();
+    }
+    setFieldValue(&exifStruct_.imageWidth, "Exif.Image.ImageWidth", " px");
+    setFieldValue(&exifStruct_.imageHeight, "Exif.Image.ImageLength", " px");
+    setFieldValue(&exifStruct_.orientation, "Exif.Image.Orientation");
+    setFieldString(&exifStruct_.originalDate,
+                   "Exif.Photo.DateTimeOriginal", "Exif.Image.DateTimeOriginal");
+    setFieldString(&exifStruct_.digitizedDate,
+                   "Exif.Photo.DateTimeDigitized", "Exif.Image.DateTimeDigitized");
 
     // Thumbnail section
     Exiv2::PreviewManager previewManager(*image);
@@ -307,7 +396,7 @@ void Metadata::setExifStruct() {
         exifStruct_.userComment = String::noData();
 }
 
-/** Loads \a iptcStruct_ data from \a IPTC metadata.
+/** Loads iptcStruct_ data from IPTC metadata.
   * \sa IptcStruct setIptcData setExifData
   */
 void Metadata::setIptcData() {
@@ -355,7 +444,7 @@ void Metadata::setIptcData() {
     iptcData["Iptc.Application2.EditStatus"] = iptcStruct_.editStatus.toStdString();
 }
 
-/** Sets \a IPTC metadata based on iptcStruct_ data.
+/** Sets IPTC metadata based on iptcStruct_ data.
   * \sa IptcStruct setIptcStruct setExifStruct
   */
 void Metadata::setIptcStruct() {
@@ -406,10 +495,10 @@ void Metadata::removeDatum(const std::string &key) {
 
 /** This is overloaded function useful for getting exposure time.\n
   * Returns valid fractional time string suffixed by /em " s" based on metadata
-  * corresponding with \b key1 and \b key2 keys. If \b key1 is empty this function
+  * corresponding with \a key1 and \a key2 keys. If \a key1 is empty this function
   * returns empty string.\n
-  * If \b key1 value isn't defined will be read \b key2 value. Otherwise will be
-  * returned string based on \b key1.
+  * If \a key1 value isn't defined will be read \a key2 value. Otherwise will be
+  * returned string based on \a key1.
   */
 QString Metadata::timeString(const std::string &key1, const std::string &key2) {
     QString result;
@@ -428,7 +517,7 @@ QString Metadata::timeString(const std::string &key1, const std::string &key2) {
 }
 
 /** This is overloaded function useful for getting shutter speed.\n
-  * Returns valid fractional time string based on \b rationalPower power of 0.5.
+  * Returns valid fractional time string based on \a rationalPower power of 0.5.
   */
 QString Metadata::timeString(const Exiv2::Rational &rationalPower) {
     QString result;
@@ -480,8 +569,8 @@ QString Metadata::timeString(const Exiv2::Rational &rationalPower) {
 
 /** This is overloaded function, provides tools useful for both another
   * overloaded functions.\n
-  * Returns valid fractional time string based on \b rational value and if it's
-  * not defined (-1/1) on \b key value.
+  * Returns valid fractional time string based on \a rational value and if it's
+  * not defined (-1/1) on \a key value.
   */
 QString Metadata::timeString(Exiv2::Rational *rational,
                                             const std::string &key) {
@@ -521,7 +610,7 @@ QString Metadata::timeString(Exiv2::Rational *rational,
     return result;
 }
 
-/** Returns simplest fraction which equal \b integer divided by 10. */
+/** Returns simplest fraction which equal \a integer divided by 10. */
 Exiv2::Rational Metadata::simpleRational(int integer) {
     Exiv2::Rational result;
     if (integer % 10 == 0) {
@@ -544,7 +633,7 @@ Exiv2::Rational Metadata::simpleRational(int integer) {
 }
 
 /** This is overloaded function.\n
-  * Returns simplest fraction whitch equal \b rational value.
+  * Returns simplest fraction whitch equal \a rational value.
   * Maximum denominator expected is 100 (i.e. 25/100).
   */
 Exiv2::Rational Metadata::simpleRational(const Exiv2::Rational &rational) {
@@ -582,7 +671,7 @@ Exiv2::Rational Metadata::simpleRational(const Exiv2::Rational &rational) {
     return result;
 }
 
-/** Returns metadata value corresponding \b key string. Exif and IPTC metadata
+/** Returns metadata value corresponding \a key string. Exif and IPTC metadata
   * are supported.\n
   * When this function fault returns negative value (-2 or -3).
   */
@@ -609,7 +698,7 @@ bool Metadata::isEnabled() {
     return enabled;
 }
 
-/** Enables metadata support if \v is true, otherwise disables this. */
+/** Enables metadata support if \a v is true, otherwise disables this. */
 void Metadata::setEnabled(bool v) {
     enabled = v;
 }
@@ -619,18 +708,18 @@ bool Metadata::isSave() {
     return save;
 }
 
-/** Enables metadata saving support if \v is true, otherwise disables this. */
+/** Enables metadata saving support if \a v is true, otherwise disables this. */
 void Metadata::setSave(bool v) {
     save = v;
 }
 
-/** Returns true if typed \b format format file is write supported, otherwise false. */
+/** Returns true if typed \a format format file is write supported, otherwise false. */
 bool Metadata::isWriteSupportedFormat(const QString &format) {
     return saveMetadataFormats.contains(format);
 }
 
 /** This is overloaded function.\n
-  * Sets \a Exif metadatum corresponding to \b key key to typed \b value.
+  * Sets Exif metadatum corresponding to \a key key to typed \a value.
   */
 void Metadata::setExifDatum(const std::string &key, int value) {
     if (key.empty())
@@ -639,7 +728,7 @@ void Metadata::setExifDatum(const std::string &key, int value) {
 }
 
 /** This is overloaded function.\n
-  * Sets \a Exif metadatum corresponding to \b key1 and \b key2 to typed \b value.
+  * Sets Exif metadatum corresponding to \a key1 and \a key2 to typed \a value.
   * \note If value following key1 or key2 isn't set, it will be set just known
   * value. If both keys values are unknown, this function will do nothing and
   * just return.
@@ -660,7 +749,7 @@ void Metadata::setExifDatum(
 }
 
 /** This is overloaded function.\n
-  * Sets \a Exif metadatum corresponding to \b key1 and \b key2 to typed \b value.
+  * Sets Exif metadatum corresponding to \a key1 and \a key2 to typed \a value.
   * \note If value following key1 or key2 isn't set, it will be set just known
   * value. If both keys values are unknown, this function will do nothing and
   * just return.
@@ -681,7 +770,7 @@ void Metadata::setExifDatum(
 }
 
 /** This is overloaded function.\n
-  * Sets \a Exif metadatum corresponding to \b key1 and \b key2 to typed \b value.
+  * Sets Exif metadatum corresponding to \a key1 and \a key2 to typed \a value.
   * \note If value following key1 or key2 isn't set, it will be set just known
   * value. If both keys values are unknown, this function will do nothing and
   * just return.
@@ -702,7 +791,7 @@ void Metadata::setExifDatum(
 }
 
 /** This is overloaded function.\n
-  * Sets \a Exif thumbnail based on image loaded from \b path file path.
+  * Sets Exif thumbnail based on image loaded from \a path file path.
   */
 void Metadata::setExifThumbnail(const std::string &path) {
     Exiv2::ExifThumb thumb (exifData);
@@ -711,9 +800,9 @@ void Metadata::setExifThumbnail(const std::string &path) {
 }
 
 /** This is overloaded function.\n
-  * Sets \a Exif thumbnail based on \b image data saved as temporary file with
-  * \b tid ID.\n
-  * If exception catched this error data will be saved into lastError_ field.
+  * Sets \a Exif thumbnail based on \a image data saved as temporary file with
+  * \a tid ID.\n
+  * If exception catched this error data will be appended to errorList list.
   * \sa lastError
   */
 bool Metadata::setExifThumbnail(QImage *image, int tid) {
@@ -726,9 +815,29 @@ bool Metadata::setExifThumbnail(QImage *image, int tid) {
         setExifThumbnail(filePath.toStdString());
     }
     catch (Exiv2::Error &e) {
-        lastError_.copy(e);
-        lastError_.setMessage(tr("Save thumnail failed"));
+        errorList += new Error(tr("Save thumnail failed"),e);
         return false;
     }
     return true;
 }
+
+/** This is overloaded function.\n
+  * Returns true if \a v value equals null character, otherwise returns false.
+  */
+bool MetadataUtils::isNullValue(char v) { return (v == '\0'); }
+/** This is overloaded function.\n
+  * Returns true if \a v value equals 0, otherwise returns false.
+  */
+bool MetadataUtils::isNullValue(int v) { return (v == 0); }
+/** This is overloaded function.\n
+  * Returns true if \a v value equals 0.0f, otherwise returns false.
+  */
+bool MetadataUtils::isNullValue(float v) { return (v == 0.f); }
+/** This is overloaded function.\n
+  * Returns true if \a v string is null string object, otherwise returns false.
+  */
+bool MetadataUtils::isNullValue(const String &v) { return v.isNull(); }
+/** This is overloaded function.\n
+  * Returns true if \a v image is null image object, otherwise returns false.
+  */
+bool MetadataUtils::isNullValue(const QImage &v) { return v.isNull(); }

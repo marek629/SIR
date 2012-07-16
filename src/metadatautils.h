@@ -36,6 +36,7 @@ namespace MetadataUtils {
     class Metadata : public QObject {
         Q_OBJECT
     public:
+        // methods
         Metadata();
         ~Metadata();
         bool read(const String& path, bool setupStructs = false);
@@ -48,6 +49,9 @@ namespace MetadataUtils {
         void setExifStruct();
         void setIptcData();
         void setIptcStruct();
+        void setFieldValue(char *field, const std::string &key);
+        void setFieldValue(String *field, const std::string &key, const char *unit);
+        void setFieldString(String *field, const std::string &key1, const std::string &key2);
         void setExifDatum(const std::string &key, int value);
         void setExifDatum(const std::string &key1, const std::string &key2, int value);
         void setExifDatum(const std::string &key1, const std::string &key2,
@@ -63,37 +67,45 @@ namespace MetadataUtils {
         static Exiv2::Rational simpleRational(const Exiv2::Rational &rationalPower);
         long getLong(const QString &key);
         Exiv2::Image::AutoPtr imageAutoPtr() { return image; }
-        ExifStruct *exifStruct() { return &exifStruct_; } /**< Returns pointer
-            to \a Exif struct. */
-        IptcStruct *iptcStruct() { return &iptcStruct_; } /**< Returns pointer
-            to \a IPTC struct. */
-        Error *lastError() { return &lastError_; } /**< Returns pointer to last
-            error object. */
+        /** Returns pointer to \a Exif struct. */
+        ExifStruct *exifStruct() { return &exifStruct_; }
+        /** Returns pointer to \a IPTC struct. */
+        IptcStruct *iptcStruct() { return &iptcStruct_; }
+        /** Takes last item from errorList and returns pointer error object. */
+        Error *lastError() { return errorList.takeLast(); }
         static void setEnabled(bool);
         static bool isEnabled();
         static void setSave(bool);
         static bool isSave();
         static bool isWriteSupportedFormat(const QString &format);
 
-
     private:
+        // methods
         void setData(const QImage &img);
         void removeDatum(const std::string &key);
-
+        // fields
         Exiv2::Image::AutoPtr image;
         Exiv2::ExifData exifData;
         Exiv2::IptcData iptcData;
 #ifdef EXV_HAVE_XMP_TOOLKIT
         Exiv2::XmpData xmpData;
 #endif // EXV_HAVE_XMP_TOOLKIT
-        Error lastError_;
+        QList<Error*> errorList;
+        Error *lastError_;
         static bool enabled;
         static bool save;
         static QStringList saveMetadataFormats;
         ExifStruct exifStruct_;
         Exif exif;
         IptcStruct iptcStruct_;
+        bool firstEmptyItemSkipped;
     };
+
+    bool isNullValue(char v);
+    bool isNullValue(int v);
+    bool isNullValue(float v);
+    bool isNullValue(const String &v);
+    bool isNullValue(const QImage &v);
 }
 
 #endif // METADATA_H

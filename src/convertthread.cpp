@@ -395,6 +395,12 @@ void ConvertThread::rotateImage(QImage *image) {
         int alpha = (int)angle;
         if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
             saveExifOrientation = false;
+        // swap dimension variables
+        if (alpha%90 == 0 && alpha%180 != 0) {
+            int tmp = width;
+            width = height;
+            height = tmp;
+        }
         // don't rotate but save Exif orientation tag
         if (saveMetadata && saveExifOrientation) {
             int flip;

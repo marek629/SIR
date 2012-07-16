@@ -120,6 +120,7 @@ namespace MetadataUtils {
 
         // Methods
         void reset();
+        void clear();
     };
 
     /** \brief Stores flash mode strings coresponding with \e Exif.Photo.Flash metadata field.

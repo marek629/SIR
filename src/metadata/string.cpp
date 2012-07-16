@@ -31,41 +31,44 @@ using namespace MetadataUtils;
   */
 String::String() : QString() {}
 
-/** Constructs string from \b str. */
+/** Constructs string from \a str. */
 String::String(const char *str) : QString(str) {}
 
-/** Constructs string from \b other. */
+/** Constructs string from \a other. */
 String::String(const QString &other) : QString(other) {}
 
-/** Assigns \b str to this string and returns a reference to this string. */
+/** Assigns \a str to this string and returns a reference to this string. */
 String & String::operator =(const char *str) {
     QString::operator =(str);
     return *this;
 }
 
-/** Assigns \b other to this string and returns a reference to this string. */
+/** Assigns \a other to this string and returns a reference to this string. */
 String & String::operator =(const QString& other) {
     QString::operator =(other);
     return *this;
 }
 
-/** Assigns \b str to this string and returns a reference to this string. */
+/** Assigns \a str to this string and returns a reference to this string. */
 String & String::operator =(const std::string &str) {
     String::operator =(QString::fromStdString(str));
     return *this;
 }
 
-/** Adds \b str to this string and returns a reference to this string. */
+/** Adds \a str to this string and returns a reference to this string. */
 String & String::operator +=(const std::string &str) {
     this->append(QString::fromStdString(str));
     return *this;
 }
 
-/** Appends \b unit to this string if the string is a number;
-  * otherwise the string will be assigns noData() string.
+/** Appends \a unit to this string if the string is a number;
+  * otherwise the string will be assigns noData() string.\n
+  * If \a unit is null pointer or empty string this function has no effect.
   * \sa noData
   */
 void String::appendUnit(const char *unit) {
+    if (!unit || unit[0] == '\0')
+        return;
     if ( (this->toDouble() == -1.) || this->isEmpty() )
         *this = noData();
     else
@@ -122,12 +125,12 @@ Exiv2::Rational String::toRationalPower() const {
     return result;
 }
 
-/** Returns string converted from \b s. */
+/** Returns string converted from \a s. */
 String String::fromStdString(const std::string &s) {
     return String( QString::fromStdString(s) );
 }
 
-/** Returns translated \em no \em data string. */
+/** Returns translated \em "no data" string. */
 QString String::noData() {
     return QObject::tr("no data");
 }

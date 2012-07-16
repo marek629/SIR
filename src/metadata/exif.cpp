@@ -475,7 +475,9 @@ Flip Exif::flipValue(char orientation) {
     return result;
 }
 
-/** Sets default value of ExifStruct fields, mainly 0 and \em "no data" strings. */
+/** Sets default value of ExifStruct fields, mainly 0 and \em "no data" strings.
+  * \sa clear
+  */
 void ExifStruct::reset() {
     // Image section
     version = String::noData();
@@ -506,4 +508,40 @@ void ExifStruct::reset() {
     artist = String::noData();
     copyright = String::noData();
     userComment = String::noData();
+}
+
+/** Sets null value of ExifStruct fields: for all numeric variables sets 0,
+  * for complex variables (MetadataUtils::String, QImage) sets null objects.
+  * \sa reset
+  */
+void ExifStruct::clear() {
+    // Image section
+    version = String();
+    processingSoftware = String();
+    imageWidth = String();
+    imageHeight = String();
+    orientation = 0;
+    originalDate = String();
+    digitizedDate = String();
+    // Thumbnail section
+    thumbnailImage = QImage();
+    thumbnailWidth = String();
+    thumbnailHeight = String();
+    // Photo section
+    focalLength = 0.0;
+    aperture = 0.0;
+    isoSpeed = 0;
+    expTime = String();
+    shutterSpeed = String();
+    expBias = 0.0;
+    expProgram = 0;
+    meteringMode = 0;
+    flashMode = 0;
+    // Camera section
+    cameraManufacturer = String();
+    cameraModel = String();
+    // Author section
+    artist = String();
+    copyright = String();
+    userComment = String();
 }

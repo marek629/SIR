@@ -1,7 +1,6 @@
 *** nearest release ***
   ! MetadataDialog:
     * save the same time and date in Exif and IPTC
-  ! rotation patch
   ! Polish translation
     * iprove Pixele to Piksele in size unit combobox
 
@@ -18,3 +17,5 @@
     * color (sepia, b&w, etc.) and gradient filtres
     * watermark
     * add frame
+  ! Sessions: save and restore files list in/from text file
+  ! Settings: one, global object manageing SIR settings
