@@ -26,6 +26,8 @@
 #include <QMessageBox>
 #include <exiv2/exif.hpp>
 
+const QString exifDateTimeFormat("yyyy:MM:dd HH:mm:ss");
+
  /** Default constructor.\n
    * Sets up window and reads metadata from file within \b currentImage index
    * into \b images list.
@@ -62,12 +64,7 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
 
     readFile();
     setupValues();
-
-    connect(previousButton, SIGNAL(clicked()), this, SLOT(previousImage()));
-    connect(nextButton, SIGNAL(clicked()), this, SLOT(nextImage()));
-    connect(cancelButton, SIGNAL(clicked()), this, SLOT(close()));
-    connect(saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
-    connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteMetadata()));
+    createConnections();
 }
 
 /** Destructor.
@@ -128,16 +125,10 @@ void MetadataDialog::setupValues() {
     exifWidthLabel->setText( exifStruct->imageWidth );
     exifHeightLabel->setText( exifStruct->imageHeight );
     exifOrientationComboBox->setCurrentIndex( exifStruct->orientation - 1 );
-    exifOriginalDateComboBox->
-                importHistory( settings.value("originalDateMap").toMap(),
-                             settings.value("originalDateList").toList(),
-                             maxHistoryCount );
-    exifOriginalDateComboBox->lineEdit()->setText( exifStruct->originalDate );
-    exifDigitizedDateComboBox->
-            importHistory( settings.value("digitizedDateMap").toMap(),
-                         settings.value("digitizedDateList").toList(),
-                         maxHistoryCount );
-    exifDigitizedDateComboBox->lineEdit()->setText( exifStruct->digitizedDate );
+    exifOriginalDateTimeEdit->setDateTime(
+                QDateTime::fromString(exifStruct->originalDate, exifDateTimeFormat) );
+    exifDigitizedDateTimeEdit->setDateTime(
+                QDateTime::fromString(exifStruct->digitizedDate, exifDateTimeFormat) );
 
     // Thumbnail toolbox
     exifThumbnailLabel->setPixmap(QPixmap::fromImage(exifStruct->thumbnailImage));
@@ -228,6 +219,38 @@ void MetadataDialog::setupValues() {
     settings.endGroup();
 }
 
+/** Connects this dialog widgets signals corresponding slots.
+  * \sa MetadataDialog()
+  */
+void MetadataDialog::createConnections() {
+    // push buttons
+    connect(previousButton, SIGNAL(clicked()), this, SLOT(previousImage()));
+    connect(nextButton, SIGNAL(clicked()), this, SLOT(nextImage()));
+    connect(cancelButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
+    connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteMetadata()));
+
+    // date time editors
+    // original (created) date time
+    connect(exifOriginalDateTimeEdit, SIGNAL(dateChanged(QDate)),
+            iptcCreatedDateEdit, SLOT(setDate(QDate)));
+    connect(exifOriginalDateTimeEdit, SIGNAL(timeChanged(QTime)),
+            iptcCreatedTimeEdit, SLOT(setTime(QTime)));
+    connect(iptcCreatedDateEdit, SIGNAL(dateChanged(QDate)),
+            exifOriginalDateTimeEdit, SLOT(setDate(QDate)));
+    connect(iptcCreatedTimeEdit, SIGNAL(timeChanged(QTime)),
+            exifOriginalDateTimeEdit, SLOT(setTime(QTime)));
+    // digitized date time
+    connect(exifDigitizedDateTimeEdit, SIGNAL(dateChanged(QDate)),
+            iptcDigitizedDateEdit, SLOT(setDate(QDate)));
+    connect(exifDigitizedDateTimeEdit, SIGNAL(timeChanged(QTime)),
+            iptcDigitizedTimeEdit, SLOT(setTime(QTime)));
+    connect(iptcDigitizedDateEdit, SIGNAL(dateChanged(QDate)),
+            exifDigitizedDateTimeEdit, SLOT(setDate(QDate)));
+    connect(iptcDigitizedTimeEdit, SIGNAL(timeChanged(QTime)),
+            exifDigitizedDateTimeEdit, SLOT(setTime(QTime)));
+}
+
 void MetadataDialog::previousImage() {
     currentImage--;
     if (currentImage == 0)
@@ -256,8 +279,10 @@ void MetadataDialog::saveChanges() {
     // Exif tab
     // Image toolbox
     exifStruct->orientation = exifOrientationComboBox->currentIndex();
-    exifStruct->originalDate = exifOriginalDateComboBox->lineEdit()->text();
-    exifStruct->digitizedDate = exifDigitizedDateComboBox->lineEdit()->text();
+    exifStruct->originalDate = exifOriginalDateTimeEdit->dateTime().
+            toString(exifDateTimeFormat);
+    exifStruct->digitizedDate = exifDigitizedDateTimeEdit->dateTime().
+            toString(exifDateTimeFormat);
     // Photo toolbox
     exifStruct->focalLength = exifFocalLengthSpinBox->value();
     exifStruct->expTime = exifExpTimeComboBox->currentText();

@@ -45,9 +45,12 @@ public:
     ~MetadataDialog();
 
 private:
+    // methods
     void resetStructs();
     void setupValues();
     void readFile();
+    void createConnections();
+    // fields
     MetadataUtils::Metadata *metadata;
     MetadataUtils::ExifStruct *exifStruct;
     MetadataUtils::IptcStruct *iptcStruct;

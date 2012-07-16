@@ -31,7 +31,7 @@
         </sizepolicy>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="../application.qrc">
          <normaloff>:/images/previous.png</normaloff>:/images/previous.png</iconset>
        </property>
        <property name="flat">
@@ -48,7 +48,7 @@
         </sizepolicy>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="../application.qrc">
          <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
        </property>
        <property name="flat">
@@ -71,7 +71,7 @@
       <enum>QTabWidget::East</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="exifTab">
       <attribute name="title">
@@ -81,7 +81,7 @@
        <item>
         <widget class="QToolBox" name="exifToolBox">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="imagePage">
           <property name="geometry">
@@ -228,53 +228,45 @@
             </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <layout class="QVBoxLayout" name="exifDateVerticalLayout">
-               <item>
-                <widget class="QLabel" name="label_9">
-                 <property name="text">
-                  <string>Orientation</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Generated Date and Time</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>Digitized Date and Time</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Generated Date and Time</string>
+               </property>
+              </widget>
              </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_11">
-               <item>
-                <widget class="QComboBox" name="exifOrientationComboBox">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="HistoryComboBox" name="exifOriginalDateComboBox"/>
-               </item>
-               <item>
-                <widget class="HistoryComboBox" name="exifDigitizedDateComboBox"/>
-               </item>
-              </layout>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="exifOrientationComboBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
-             <item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Orientation</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDateTimeEdit" name="exifDigitizedDateTimeEdit"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDateTimeEdit" name="exifOriginalDateTimeEdit"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Digitized Date and Time</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
               <spacer name="horizontalSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1295,6 +1287,8 @@
    <header>timecombobox.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../application.qrc"/>
+ </resources>
  <connections/>
 </ui>
