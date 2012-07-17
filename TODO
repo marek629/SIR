@@ -1,9 +1,6 @@
 *** nearest release ***
-  ! MetadataDialog:
-    * save the same time and date in Exif and IPTC
   ! Polish translation
     * iprove Pixele to Piksele in size unit combobox
-  ! remove original and digitized date time text history from settings
   ! OptionsDialog:
     * selection symbols
     * date display format

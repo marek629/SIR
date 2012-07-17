@@ -1195,10 +1195,10 @@ void ConvertDialog::readSettings() {
     }
     settings.endGroup(); // MainWindow
 
-    //Old format settings from SIR 2.2
+    // Old format settings from SIR 2.2
     QString testStr = "Errare humanum est.";
     if (settings.value("Settings/width", testStr).toString() != testStr) {
-        // migrate settings from SIR 2.2
+        // migrate settings from SIR 2.2 to 2.3
         bool sent = settings.value("MainWindow/alreadSent",false).toBool();
         settings.remove("MainWindow/alreadSent");
         settings.setValue("Settings/alreadSent",sent);
@@ -1218,6 +1218,15 @@ void ConvertDialog::readSettings() {
         settings.remove("Settings/raw");
         settings.setValue("Raw/raw",rawEnabled);
     }
+    // migrate settings from SIR 2.3 to 2.4
+    settings.beginGroup("Exif");
+    if (!settings.value("originalDateMap").toMap().isEmpty()) {
+        settings.remove("originalDateMap");
+        settings.remove("originalDateList");
+        settings.remove("digitizedDateMap");
+        settings.remove("digitizedDateList");
+    }
+    settings.endGroup(); // Exif
 
     settings.beginGroup("Settings");
 
