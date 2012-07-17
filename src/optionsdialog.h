@@ -102,16 +102,16 @@ private:
     quint8 maxHistoryCount;
 
 private slots:
-    virtual void writeSettings();
-    virtual void readSettings();
-    virtual void browseDestination();
-    virtual void browseDcraw();
-    virtual void setRawStatus(int state);
-    virtual void respondCoresSpinBox(bool checked);
-    virtual void enableMetadata(bool checked);
-    virtual void saveMetadata(bool save);
-    virtual void updateThumbnail(bool update);
-    virtual void categoryChanged(int current);
+    void writeSettings();
+    void readSettings();
+    void browseDestination();
+    void browseDcraw();
+    void setRawStatus(int state);
+    void respondCoresSpinBox(bool checked);
+    void enableMetadata(bool checked);
+    void saveMetadata(bool save);
+    void updateThumbnail(bool update);
+    void categoryChanged(int current);
 
 signals:
     void ok(); /**< Indicates write settings success. */

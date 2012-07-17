@@ -130,6 +130,10 @@ void OptionsDialog::createConnections() {
     connect(okButton,SIGNAL(clicked()), this, SLOT(writeSettings()));
 }
 
+/** Sets validator objects for same line edits widgets, splitter sizes and
+  * groupBoxes array of pointer for changing categories view.
+  * \sa categoryChanged
+  */
 void OptionsDialog::setupWindow() {
     // validate only ASCII characters
     validator = new QRegExpValidator(QRegExp("^[\\00-\\0177]+"),this);
@@ -156,6 +160,9 @@ void OptionsDialog::setupWindow() {
     groupBoxes[currentListItem]->show();
 }
 
+/** Hides last choosed category (group box) and shows just selected category.
+  * \sa setupWindow
+  */
 void OptionsDialog::categoryChanged(int current) {
     if (current == currentListItem)
         return;
@@ -243,6 +250,9 @@ void OptionsDialog::browseDcraw() {
 
 }
 
+/** Writes settings based values of the user input wigets.
+  * \sa readSettings
+  */
 void OptionsDialog::writeSettings() {
     QSettings settings("SIR");
 
@@ -428,6 +438,9 @@ void OptionsDialog::writeSettings() {
     }
 }
 
+/** Reads settings and sets value of the user input widgets.
+  * \sa writeSettings
+  */
 void OptionsDialog::readSettings() {
 
     QSettings settings("SIR");
@@ -673,10 +686,17 @@ void OptionsDialog::enableMetadata(bool checked) {
     }
 }
 
+/** \em "Save metadata" checkbox slot. Enables or disables and (un)check
+  * checkboxes resposibled saving metadata basing \a save value.
+  */
 void OptionsDialog::saveMetadata(bool save) {
     thumbUpdateCheckBox->setChecked(save);
     thumbUpdateCheckBox->setEnabled(save);
     thumbRotateCheckBox->setEnabled(save);
+    exifOrientationRadioButton->setEnabled(save);
+    exifArtistCheckBox->setEnabled(save);
+    exifCopyrightCheckBox->setEnabled(save);
+    exifUserCommentCheckBox->setEnabled(save);
     if (save)
         exifOrientationRadioButton->setChecked(true);
     else {
