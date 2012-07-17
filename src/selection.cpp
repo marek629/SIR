@@ -59,11 +59,10 @@ QStringList Selection::allOperators = QStringList() <<
 /** Selection object default constructor. */
 Selection::Selection(ConvertDialog *parent) : QObject(parent) {
     convertDialog = parent;
+    loadSymbols();
     fileSizeExpTree = 0;
-    fileSizeSymbols << "s";
     fileSizeVector = new QVector<qint64>(fileSizeSymbols.count());
     imageSizeExpTree = 0;
-    imageSizeSymbols << "x" << "y";
     imageSizeVector = new QVector<qint64>(imageSizeSymbols.count());
 }
 
@@ -174,6 +173,15 @@ int Selection::importFiles() {
     convertDialog->resizeColumnsToContents(convertDialog->filesTreeWidget);
     convertDialog->setCursor(QCursor(Qt::ArrowCursor));
     return filesImported;
+}
+
+void Selection::loadSymbols() {
+    QSettings settings("SIR");
+    settings.beginGroup("Selection");
+    fileSizeSymbols << settings.value("fileSizeSymbol","s").toString();
+    imageSizeSymbols << settings.value("imageWidthSymbol","x").toString()
+                     << settings.value("imageHeightSymbol","y").toString();
+    settings.endGroup(); // Selection
 }
 
 /** Sets up this objects regular expression lists setupListRegExp() method.
@@ -483,8 +491,23 @@ void SelectionDialog::browseDir() {
 void SelectionDialog::loadSettings() {
     QSettings settings("SIR");
     settings.beginGroup("Settings");
+    // set display format for date/time edit widgets
+    QString dateTimeFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString()
+            + ' ' + settings.value("timeDisplayFormat","HH:mm:ss").toString();
+    createdBeforeDateTimeEdit->setDisplayFormat(dateTimeFormat);
+    createdAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
+    digitizedBeforeDateTimeEdit->setDisplayFormat(dateTimeFormat);
+    digitizedAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
+    // max history count for HistoryComboBox's import functions
     int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
     settings.endGroup(); // Settings
+
+    settings.beginGroup("Selection");
+    clearSelectionCheckBox->setChecked(settings.value("clearSelection",false).toBool());
+    dirCheckBox->setChecked(settings.value("subdirs",false).toBool());
+    selectImportedCheckBox->setChecked(settings.value("selectImported",false).toBool());
+    settings.endGroup(); // Selection
+
     settings.beginGroup("SelectionDialog");
     // file
     fileNameComboBox->importHistory(settings.value("fileNameMap").toMap(),

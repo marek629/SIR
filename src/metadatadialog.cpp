@@ -117,11 +117,21 @@ void MetadataDialog::readFile() {
 void MetadataDialog::setupValues() {
     QSettings settings("SIR");
     settings.beginGroup("Settings");
+    // set display format for date/time edit widgets
+    QString dateFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString();
+    QString timeFormat = settings.value("timeDisplayFormat","HH:mm:ss").toString();
+    QString dateTimeFormat = dateFormat + ' ' + timeFormat;
+    exifOriginalDateTimeEdit->setDisplayFormat(dateTimeFormat);
+    exifDigitizedDateTimeEdit->setDisplayFormat(dateTimeFormat);
+    iptcCreatedDateEdit->setDisplayFormat(dateFormat);
+    iptcCreatedTimeEdit->setDisplayFormat(timeFormat);
+    iptcDigitizedDateEdit->setDisplayFormat(dateFormat);
+    iptcDigitizedTimeEdit->setDisplayFormat(timeFormat);
+    // max history count for HistoryComboBox's import functions
     int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
     settings.endGroup();
 
     // Exif tab
-    settings.beginGroup("Exif");
     // Image toolbox
     exifVersionLabel->setText( exifStruct->version );
     exifProcessingSoftLabel->setText( exifStruct->processingSoftware );
@@ -182,6 +192,7 @@ void MetadataDialog::setupValues() {
     exifModelComboBox->lineEdit()->setText( exifStruct->cameraModel );
 
     // Author toolbox
+    settings.beginGroup("Exif");
     exifArtistComboBox->importHistory( settings.value("artistMap").toMap(),
                                      settings.value("artistList").toList(),
                                      maxHistoryCount );
@@ -197,11 +208,9 @@ void MetadataDialog::setupValues() {
                                           maxHistoryCount );
     exifUserCommentComboBox->setCurrentIndex(-1);
     exifUserCommentComboBox->lineEdit()->setText( exifStruct->userComment );
-
-    settings.endGroup();
+    settings.endGroup(); // Exif
 
     // IPTC tab
-    settings.beginGroup("IPTC");
     iptcVersionLabel->setText(iptcStruct->modelVersion);
     iptcCreatedDateEdit->setDate(iptcStruct->dateCreated);
     iptcCreatedTimeEdit->setTime(iptcStruct->timeCreated);
@@ -214,12 +223,13 @@ void MetadataDialog::setupValues() {
     iptcDescriptionTextEdit->setPlainText(iptcStruct->caption);
     iptcCountryLineEdit->setText(iptcStruct->countryName);
     iptcCityLineEdit->setText(iptcStruct->city);
+    settings.beginGroup("IPTC");
     iptcEditStatusComboBox->importHistory(settings.value("editStatusMap").toMap(),
                                           settings.value("editStatusList").toList(),
                                           maxHistoryCount);
     iptcEditStatusComboBox->setCurrentIndex(-1);
     iptcEditStatusComboBox->lineEdit()->setText(iptcStruct->editStatus);
-    settings.endGroup();
+    settings.endGroup(); // IPTC
 }
 
 /** Connects this dialog widgets signals corresponding slots.

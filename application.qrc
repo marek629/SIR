@@ -48,5 +48,6 @@
         <file>images/options_details.png</file>
         <file>translations/sir_sr.qm</file>
         <file>images/serbian.png</file>
+        <file>images/options_selection.png</file>
     </qresource>
 </RCC>

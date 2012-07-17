@@ -149,7 +149,8 @@ void OptionsDialog::setupWindow() {
     groupBoxes[0] = generalBox;
     groupBoxes[1] = metadataBox;
     groupBoxes[2] = detailsBox;
-    groupBoxes[3] = rawBox;
+    groupBoxes[3] = selectionBox;
+    groupBoxes[4] = rawBox;
     for (int i=0; i<categoriesCount; i++)
         groupBoxes[i]->hide();
     groupBoxes[currentListItem]->show();
@@ -255,6 +256,8 @@ void OptionsDialog::writeSettings() {
     settings.setValue("languageNiceName", languagesComboBox->currentText());
     settings.setValue("languageFileName",
                       fileToNiceName->value(languagesComboBox->currentText()));
+    settings.setValue("dateDisplayFormat", dateDisplayFormatLineEdit->text());
+    settings.setValue("timeDisplayFormat", timeDisplayFormatLineEdit->text());
     if (coresCheckBox->isChecked())
         settings.setValue("cores", 0);
     else
@@ -384,6 +387,16 @@ void OptionsDialog::writeSettings() {
     settings.setValue("iptc",hex);
     settings.endGroup(); // Details
 
+    // selection
+    settings.beginGroup("Selection");
+    settings.setValue("clearSelection", clearSelectionCheckBox->isChecked());
+    settings.setValue("subdirs", importSubdirsCheckBox->isChecked());
+    settings.setValue("selectImported", selectImportedCheckBox->isChecked());
+    settings.setValue("fileSizeSymbol", sFileSizeLineEdit->text());
+    settings.setValue("imageWidthSymbol", sImgWidthLineEdit->text());
+    settings.setValue("imageHeightSymbol", sImgHeightLineEdit->text());
+    settings.endGroup(); // Selection
+
     // raw
     settings.beginGroup("Raw");
     bool dcrawOk = false;
@@ -444,6 +457,10 @@ void OptionsDialog::readSettings() {
         coresCheckBox->setChecked(false);
         respondCoresSpinBox(false);
     }
+    dateDisplayFormatLineEdit->setText(
+                settings.value("dateDisplayFormat","dd.MM.yyyy").toString());
+    timeDisplayFormatLineEdit->setText(
+                settings.value("timeDisplayFormat","HH:mm:ss").toString());
     maxHistoryCount = settings.value("maxHistoryCount",5).toInt();
     historySpinBox->setValue(maxHistoryCount);
     settings.endGroup(); // Settings
@@ -563,6 +580,16 @@ void OptionsDialog::readSettings() {
     iptcDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
 
     settings.endGroup(); // Details
+
+    // selection
+    settings.beginGroup("Selection");
+    clearSelectionCheckBox->setChecked(settings.value("clearSelection",false).toBool());
+    importSubdirsCheckBox->setChecked(settings.value("subdirs",false).toBool());
+    selectImportedCheckBox->setChecked(settings.value("selectImported",false).toBool());
+    sFileSizeLineEdit->setText(settings.value("fileSizeSymbol","s").toString());
+    sImgWidthLineEdit->setText(settings.value("imageWidthSymbol","x").toString());
+    sImgHeightLineEdit->setText(settings.value("imageHeightSymbol","y").toString());
+    settings.endGroup(); // Selection
 
     // raw
     settings.beginGroup("Raw");

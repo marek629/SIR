@@ -111,6 +111,7 @@ private:
     bool testFile(const QFileInfo &info);
     void clearPointerList(QList<QRegExp*> *list);
     void setupExpressionTrees();
+    void loadSymbols();
 };
 
 //! Selection conditions dialog class.

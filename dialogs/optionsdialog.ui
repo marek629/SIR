@@ -73,6 +73,15 @@
       </item>
       <item>
        <property name="text">
+        <string>Selection</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../application.qrc">
+         <normaloff>:/images/options_selection.png</normaloff>:/images/options_selection.png</iconset>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>Raw</string>
        </property>
        <property name="icon">
@@ -89,9 +98,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-774</y>
+         <y>-64</y>
          <width>409</width>
-         <height>1237</height>
+         <height>1454</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -101,6 +110,13 @@
            <string>General Settings</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>Default Target Suffix:</string>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="1">
             <widget class="QLineEdit" name="widthLineEdit">
              <property name="sizePolicy">
@@ -139,7 +155,7 @@
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
+           <item row="13" column="0">
             <widget class="QLabel" name="label_7">
              <property name="text">
               <string>Number of Cores:</string>
@@ -156,7 +172,7 @@
              </property>
             </widget>
            </item>
-           <item row="11" column="1" colspan="4">
+           <item row="13" column="1" colspan="4">
             <layout class="QHBoxLayout" name="cores_spacer">
              <property name="spacing">
               <number>6</number>
@@ -234,13 +250,6 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_15">
-             <property name="text">
-              <string>Default Target Suffix:</string>
-             </property>
-            </widget>
-           </item>
            <item row="4" column="0">
             <widget class="QLabel" name="label_2">
              <property name="text">
@@ -248,14 +257,7 @@
              </property>
             </widget>
            </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Default Target Prefix:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="0">
+           <item row="14" column="0">
             <widget class="QLabel" name="label_8">
              <property name="text">
               <string>Text history count:</string>
@@ -283,7 +285,7 @@
              </property>
             </widget>
            </item>
-           <item row="12" column="1">
+           <item row="14" column="1">
             <widget class="QSpinBox" name="historySpinBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -404,6 +406,33 @@
               </sizepolicy>
              </property>
             </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QLabel" name="label_22">
+             <property name="text">
+              <string>Date display format:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Default Target Prefix:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="1" colspan="4">
+            <widget class="QLineEdit" name="dateDisplayFormatLineEdit"/>
+           </item>
+           <item row="12" column="0">
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>Time display format:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="1" colspan="4">
+            <widget class="QLineEdit" name="timeDisplayFormatLineEdit"/>
            </item>
           </layout>
          </widget>
@@ -786,6 +815,66 @@
             <widget class="QLabel" name="label_18">
              <property name="text">
               <string>Print metadata fields:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="selectionBox">
+          <property name="title">
+           <string>Selection Options</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="4" column="2">
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Image height symbol</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="sFileSizeLineEdit"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>File size symbol</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="sImgWidthLineEdit"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Image width symbol</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="sImgHeightLineEdit"/>
+           </item>
+           <item row="2" column="0" colspan="4">
+            <widget class="QCheckBox" name="selectImportedCheckBox">
+             <property name="text">
+              <string>Select imported files</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="4">
+            <widget class="QCheckBox" name="importSubdirsCheckBox">
+             <property name="text">
+              <string>Browse in subdirectories</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="4">
+            <widget class="QCheckBox" name="clearSelectionCheckBox">
+             <property name="text">
+              <string>Clear current selection</string>
              </property>
             </widget>
            </item>
