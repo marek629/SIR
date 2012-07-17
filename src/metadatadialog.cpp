@@ -71,6 +71,9 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
   * \note Deallocates \b images list typed in \ref MetadataDialog() "constructor".
   */
 MetadataDialog::~MetadataDialog() {
+    // export history comboboxes to settings
+    saveHistory();
+    // deallocate memory
     delete metadata;
     delete images;
 }
@@ -251,6 +254,38 @@ void MetadataDialog::createConnections() {
             exifDigitizedDateTimeEdit, SLOT(setTime(QTime)));
 }
 
+/** Saves text edit history to settings.
+  * \sa HistoryComboBox HistoryComboBox::exportHistory
+  */
+void MetadataDialog::saveHistory() {
+    QMap<QString,QVariant> map;
+    QList<QVariant> list;
+    QSettings settings("SIR");
+    settings.beginGroup("Settings");
+    int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
+    settings.endGroup(); // Settings
+
+    // Exif tab
+    settings.beginGroup("Exif");
+    exifArtistComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("artistMap", map);
+    settings.setValue("artistList", list);
+    exifCopyrightComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("copyrightMap", map);
+    settings.setValue("copyrightList", list);
+    exifUserCommentComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("userCommentMap", map);
+    settings.setValue("userCommentList", list);
+    settings.endGroup(); // Exif
+
+    // IPTC tab
+    settings.beginGroup("IPTC");
+    iptcEditStatusComboBox->exportHistory(&map, &list, maxHistoryCount);
+    settings.setValue("editStatusMap", map);
+    settings.setValue("editStatusList", list);
+    settings.endGroup(); // IPTC
+}
+
 void MetadataDialog::previousImage() {
     currentImage--;
     if (currentImage == 0)
@@ -303,22 +338,6 @@ void MetadataDialog::saveChanges() {
     exifStruct->userComment = exifUserCommentComboBox->lineEdit()->text();
 
     // IPTC tab
-    if (iptcCreatedDateEdit->date() == iptcCreatedDateEdit->minimumDate())
-        iptcStruct->dateCreated = QDate();
-    else
-        iptcStruct->dateCreated = iptcCreatedDateEdit->date();
-    if (iptcCreatedTimeEdit->time() == iptcCreatedTimeEdit->minimumTime())
-        iptcStruct->timeCreated = QTime();
-    else
-        iptcStruct->timeCreated = iptcCreatedTimeEdit->time();
-    if (iptcDigitizedDateEdit->date() == iptcDigitizedDateEdit->minimumDate())
-        iptcStruct->digitizationDate = QDate();
-    else
-        iptcStruct->digitizationDate = iptcDigitizedDateEdit->date();
-    if (iptcDigitizedTimeEdit->time() == iptcDigitizedTimeEdit->minimumTime())
-        iptcStruct->digitizationTime = QTime();
-    else
-        iptcStruct->digitizationTime = iptcDigitizedTimeEdit->time();
     iptcStruct->byline = iptcByLineEdit->text();
     iptcStruct->copyright = iptcCopyrightLineEdit->text();
     iptcStruct->objectName = iptcObjectNameLineEdit->text();
@@ -327,6 +346,29 @@ void MetadataDialog::saveChanges() {
     iptcStruct->countryName = iptcCountryLineEdit->text();
     iptcStruct->city = iptcCityLineEdit->text();
     iptcStruct->editStatus = iptcEditStatusComboBox->lineEdit()->text();
+    /* If any sting in iptcStruct isn't empty save date and time values that are
+     * the same as Exif date time strings. */
+    if (!iptcStruct->byline.isEmpty() || !iptcStruct->copyright.isEmpty()
+            || !iptcStruct->objectName.isEmpty() || !iptcStruct->keywords.isEmpty()
+            || !iptcStruct->caption.isEmpty() || !iptcStruct->countryName.isEmpty()
+            || !iptcStruct->city.isEmpty() || !iptcStruct->editStatus.isEmpty()) {
+        if (iptcCreatedDateEdit->date() == iptcCreatedDateEdit->minimumDate())
+            iptcStruct->dateCreated = QDate();
+        else
+            iptcStruct->dateCreated = iptcCreatedDateEdit->date();
+        if (iptcCreatedTimeEdit->time() == iptcCreatedTimeEdit->minimumTime())
+            iptcStruct->timeCreated = QTime();
+        else
+            iptcStruct->timeCreated = iptcCreatedTimeEdit->time();
+        if (iptcDigitizedDateEdit->date() == iptcDigitizedDateEdit->minimumDate())
+            iptcStruct->digitizationDate = QDate();
+        else
+            iptcStruct->digitizationDate = iptcDigitizedDateEdit->date();
+        if (iptcDigitizedTimeEdit->time() == iptcDigitizedTimeEdit->minimumTime())
+            iptcStruct->digitizationTime = QTime();
+        else
+            iptcStruct->digitizationTime = iptcDigitizedTimeEdit->time();
+    }
 
     // saving
     metadata->setExifData();

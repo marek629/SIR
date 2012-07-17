@@ -50,6 +50,7 @@ private:
     void setupValues();
     void readFile();
     void createConnections();
+    void saveHistory();
     // fields
     MetadataUtils::Metadata *metadata;
     MetadataUtils::ExifStruct *exifStruct;
