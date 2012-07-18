@@ -67,6 +67,7 @@ namespace MetadataUtils {
         static Exiv2::Rational simpleRational(const Exiv2::Rational &rationalPower);
         long getLong(const QString &key);
         Exiv2::Image::AutoPtr imageAutoPtr() { return image; }
+        Exiv2::Metadatum &metadatum(const std::string &key);
         /** Returns pointer to \a Exif struct. */
         ExifStruct *exifStruct() { return &exifStruct_; }
         /** Returns pointer to \a IPTC struct. */

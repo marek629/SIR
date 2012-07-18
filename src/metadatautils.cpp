@@ -175,23 +175,30 @@ void Metadata::setData(const QImage& qImage) {
 #endif // EXV_HAVE_XMP_TOOLKIT
 }
 
+/** Returns a reference to metadatum object basing \a key string.
+  * If first 4 characters of \a key string are \em "Exif" searchs metadatum
+  * in exifData, otherwise in iptcData.
+  */
+Exiv2::Metadatum & Metadata::metadatum(const std::string &key) {
+    if (key.substr(0,4).compare("Exif") == 0)
+        return exifData[key];
+    else
+        return iptcData[key];
+}
+
 /** This is overloaded function.\n
   * If \a field value is different from 0 this function has no effect.\n
   * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
   * integer representation of metadatum value basing \a key key.
   * Otherwise, if firstEmptyItemSkipped is false sets them to true.
-  * \sa isNullValue(char) setFieldString
+  * \sa isNullValue(char) setFieldString metadatum
   */
 void Metadata::setFieldValue(char *field, const std::string &key) {
     if (!isNullValue(*field))
         return;
     if (firstEmptyItemSkipped) {
-        Exiv2::Metadatum *datum;
-        if (key.substr(0,4).compare("Exif") == 0)
-            datum = &exifData[key];
-        else
-            datum = &iptcData[key];
-        *field = datum->toLong();
+        Exiv2::Metadatum &datum = metadatum(key);
+        *field = datum.toLong();
     }
     else
         firstEmptyItemSkipped = true;
@@ -203,18 +210,14 @@ void Metadata::setFieldValue(char *field, const std::string &key) {
   * decimal string based integer representation of metadatum value basing
   * \a key key and append \a unit c-string using String::appendUnit() function.
   * Otherwise, if firstEmptyItemSkipped is false sets them to true.
-  * \sa isNullValue(String) String::appendUnit setFieldString
+  * \sa isNullValue(String) String::appendUnit setFieldString metadatum
   */
 void Metadata::setFieldValue(String *field, const std::string &key, const char *unit) {
     if (!isNullValue(*field))
         return;
     if (firstEmptyItemSkipped) {
-        Exiv2::Metadatum *datum;
-        if (key.substr(0,4).compare("Exif") == 0)
-            datum = &exifData[key];
-        else
-            datum = &iptcData[key];
-        *field = String::number(datum->toLong());
+        Exiv2::Metadatum &datum = metadatum(key);
+        *field = String::number(datum.toLong());
         field->appendUnit(unit);
     }
     else
@@ -227,24 +230,17 @@ void Metadata::setFieldValue(String *field, const std::string &key, const char *
   * If metadatum corresponding \a key1 key is empty it reads metadatum
   * coresponding \a key2 key.\n
   * Otherwise, if firstEmptyItemSkipped is false sets them to true.
-  * \sa isNullValue(String) String::appendUnit setFieldValue
+  * \sa isNullValue(String) String::appendUnit setFieldValue metadatum
   */
 void Metadata::setFieldString(String *field, const std::string &key1,
                               const std::string &key2) {
     if (!isNullValue(*field))
         return;
     if (firstEmptyItemSkipped) {
-        Exiv2::Metadatum *datum;
-        if (key1.substr(0,4).compare("Exif") == 0)
-            datum = &exifData[key1];
-        else
-            datum = &iptcData[key1];
+        Exiv2::Metadatum *datum = &metadatum(key1);
         *field = String::fromStdString(datum->toString());
         if (field->isEmpty() && !key2.empty()) {
-            if (key2.substr(0,4).compare("Exif") == 0)
-                datum = &exifData[key2];
-            else
-                datum = &iptcData[key2];
+            datum = &metadatum(key2);
             *field = String::fromStdString(datum->toString());
         }
         if (field->isEmpty())
@@ -376,24 +372,18 @@ void Metadata::setExifStruct() {
         exifStruct_.flashMode = exifData["Exif.Image.Flash"].toLong();
 
     // Camera section
-    exifStruct_.cameraManufacturer = QString::fromStdString(
+    exifStruct_.cameraManufacturer = String::fromStdString(
                 exifData["Exif.Image.Make"].toString() );
-    exifStruct_.cameraModel = QString::fromStdString(
+    exifStruct_.cameraModel = String::fromStdString(
                 exifData["Exif.Image.Model"].toString() );
 
     // Author section
-    exifStruct_.artist = QString::fromStdString(
+    exifStruct_.artist = String::fromStdString(
                 exifData["Exif.Image.Artist"].toString() );
-    if (exifStruct_.artist.isEmpty())
-        exifStruct_.artist = String::noData();
-    exifStruct_.copyright = QString::fromStdString(
+    exifStruct_.copyright = String::fromStdString(
                 exifData["Exif.Image.Copyright"].toString() );
-    if (exifStruct_.copyright.isEmpty())
-        exifStruct_.copyright = String::noData();
-    exifStruct_.userComment = QString::fromStdString(
+    exifStruct_.userComment = String::fromStdString(
                 exifData["Exif.Photo.UserComment"].toString() );
-    if (exifStruct_.userComment.isEmpty())
-        exifStruct_.userComment = String::noData();
 }
 
 /** Loads iptcStruct_ data from IPTC metadata.
@@ -572,10 +562,10 @@ QString Metadata::timeString(const Exiv2::Rational &rationalPower) {
   * Returns valid fractional time string based on \a rational value and if it's
   * not defined (-1/1) on \a key value.
   */
-QString Metadata::timeString(Exiv2::Rational *rational,
-                                            const std::string &key) {
+QString Metadata::timeString(Exiv2::Rational *rational, const std::string &key) {
     QString result;
-    bool isEmpty(rational->first == -1  && rational->second == 1);
+    bool isEmpty((rational->first == -1  && rational->second == 1) ||
+                 (rational->first == 1  && rational->second == -1));
     if (isEmpty) {
         if (!key.empty()) {
             *rational = exifData[key].toRational();

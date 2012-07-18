@@ -26,6 +26,8 @@
 #include <QMessageBox>
 #include <exiv2/exif.hpp>
 
+using namespace MetadataUtils;
+
 const QString exifDateTimeFormat("yyyy:MM:dd HH:mm:ss");
 
  /** Default constructor.\n
@@ -38,23 +40,27 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     this->images = images;
     this->currentImage = currentImage;
     this->imagePath = this->images->at(this->currentImage);
-    metadata = new MetadataUtils::Metadata;
+    metadata = new Metadata;
 
     // setup Exif orientation combo box
     for (char i=1; i<=8; i++)
-        exifOrientationComboBox->addItem(MetadataUtils::Exif::orientationString(i));
+        exifOrientationComboBox->addItem(Exif::orientationString(i));
     // setup Exif exposure program combo box
     for (uchar i=0; i<=8; i++)
-        exifExpProgramComboBox->addItem(MetadataUtils::Exif::expProgramString(i));
+        exifExpProgramComboBox->addItem(Exif::expProgramString(i));
     // setup Exif light metering mode combo box
     for (short i=0; i<8; i++)
-        exifLightMeteringModeComboBox->addItem(
-                    MetadataUtils::Exif::meteringModeString(i));
+        exifLightMeteringModeComboBox->addItem(Exif::meteringModeString(i));
 
-    iptcCreatedDateEdit->setSpecialValueText(MetadataUtils::String::noData());
-    iptcCreatedTimeEdit->setSpecialValueText(MetadataUtils::String::noData());
-    iptcDigitizedDateEdit->setSpecialValueText(MetadataUtils::String::noData());
-    iptcDigitizedTimeEdit->setSpecialValueText(MetadataUtils::String::noData());
+    QString noDataString = String::noData();
+    exifOriginalDateEdit->setSpecialValueText(noDataString);
+    exifOriginalTimeEdit->setSpecialValueText(noDataString);
+    exifDigitizedDateEdit->setSpecialValueText(noDataString);
+    exifDigitizedTimeEdit->setSpecialValueText(noDataString);
+    iptcCreatedDateEdit->setSpecialValueText(noDataString);
+    iptcCreatedTimeEdit->setSpecialValueText(noDataString);
+    iptcDigitizedDateEdit->setSpecialValueText(noDataString);
+    iptcDigitizedTimeEdit->setSpecialValueText(noDataString);
 
     if (currentImage == 0)
         previousButton->setEnabled(false);
@@ -92,7 +98,7 @@ void MetadataDialog::readFile() {
     iptcStruct = metadata->iptcStruct();
     if (!readSuccess) {
         QString errorTitle = tr("Metadata error");
-        MetadataUtils::Error *e = metadata->lastError();
+        Error *e = metadata->lastError();
         QString errorMessage = e->message();
         errorMessage += tr("\nError code: %1\nError message: %2").
                 arg(e->code()).arg(e->what());
@@ -120,9 +126,10 @@ void MetadataDialog::setupValues() {
     // set display format for date/time edit widgets
     QString dateFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString();
     QString timeFormat = settings.value("timeDisplayFormat","HH:mm:ss").toString();
-    QString dateTimeFormat = dateFormat + ' ' + timeFormat;
-    exifOriginalDateTimeEdit->setDisplayFormat(dateTimeFormat);
-    exifDigitizedDateTimeEdit->setDisplayFormat(dateTimeFormat);
+    exifOriginalDateEdit->setDisplayFormat(dateFormat);
+    exifOriginalTimeEdit->setDisplayFormat(timeFormat);
+    exifDigitizedDateEdit->setDisplayFormat(dateFormat);
+    exifDigitizedTimeEdit->setDisplayFormat(timeFormat);
     iptcCreatedDateEdit->setDisplayFormat(dateFormat);
     iptcCreatedTimeEdit->setDisplayFormat(timeFormat);
     iptcDigitizedDateEdit->setDisplayFormat(dateFormat);
@@ -138,10 +145,17 @@ void MetadataDialog::setupValues() {
     exifWidthLabel->setText( exifStruct->imageWidth );
     exifHeightLabel->setText( exifStruct->imageHeight );
     exifOrientationComboBox->setCurrentIndex( exifStruct->orientation - 1 );
-    exifOriginalDateTimeEdit->setDateTime(
-                QDateTime::fromString(exifStruct->originalDate, exifDateTimeFormat) );
-    exifDigitizedDateTimeEdit->setDateTime(
-                QDateTime::fromString(exifStruct->digitizedDate, exifDateTimeFormat) );
+    QDateTime dt = QDateTime::fromString(exifStruct->originalDate, exifDateTimeFormat);
+    QDate minDate(1,1,1);
+    if (!dt.date().isValid())
+        dt.setDate(minDate);
+    exifOriginalDateEdit->setDate(dt.date());
+    exifOriginalTimeEdit->setTime(dt.time());
+    dt = QDateTime::fromString(exifStruct->digitizedDate, exifDateTimeFormat);
+    if (!dt.date().isValid())
+        dt.setDate(minDate);
+    exifDigitizedDateEdit->setDate(dt.date());
+    exifDigitizedTimeEdit->setTime(dt.time());
 
     // Thumbnail toolbox
     exifThumbnailLabel->setPixmap(QPixmap::fromImage(exifStruct->thumbnailImage));
@@ -149,50 +163,58 @@ void MetadataDialog::setupValues() {
     exifThumbnailHeightLabel->setText( exifStruct->thumbnailHeight );
 
     // Photo toolbox
-    exifFocalLengthSpinBox->setSpecialValueText(MetadataUtils::String::noData());
+    exifFocalLengthSpinBox->setSpecialValueText(String::noData());
     exifFocalLengthSpinBox->setValue( exifStruct->focalLength );
-    exifExpTimeComboBox->insertItem(0,MetadataUtils::String::noData());
-    if (exifStruct->expTime.isEmpty() || exifStruct->expTime == "0/0 s")
+    exifExpTimeComboBox->insertItem(0,String::noData());
+    if (exifStruct->expTime.isEmpty() || exifStruct->expTime == "1/-1 s")
         exifExpTimeComboBox->setCurrentIndex(0);
     else
         exifExpTimeComboBox->addItem( exifStruct->expTime );
-    exifShutterTimeComboBox->insertItem(0,MetadataUtils::String::noData());
+    exifShutterTimeComboBox->insertItem(0,String::noData());
     if(exifStruct->shutterSpeed.isEmpty())
         exifShutterTimeComboBox->setCurrentIndex(0);
     else
         exifShutterTimeComboBox->addItem(exifStruct->shutterSpeed);
-    exifExpBiasSpinBox->setSpecialValueText(MetadataUtils::String::noData());
+    exifExpBiasSpinBox->setSpecialValueText(String::noData());
     exifExpBiasSpinBox->setValue( exifStruct->expBias );
-    exifApertureSpinBox->setSpecialValueText(MetadataUtils::String::noData());
+    exifApertureSpinBox->setSpecialValueText(String::noData());
     exifApertureSpinBox->setValue( exifStruct->aperture );
-    exifIsoSpeedSpinBox->setSpecialValueText(MetadataUtils::String::noData());
+    exifIsoSpeedSpinBox->setSpecialValueText(String::noData());
     exifIsoSpeedSpinBox->setValue( exifStruct->isoSpeed );
     exifExpProgramComboBox->setCurrentIndex( exifStruct->expProgram );
     exifLightMeteringModeComboBox->setCurrentIndex( exifStruct->meteringMode );
     // setup flashmode combobox
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(-1));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(1));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(7));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(9));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x18));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x19));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x1d));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x1f));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x41));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x45));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x4d));
-    exifFlashModeComboBox->addItem(MetadataUtils::Exif::flashString(0x47));
+    exifFlashModeComboBox->addItem(Exif::flashString(-1));
+    exifFlashModeComboBox->addItem(Exif::flashString(0));
+    exifFlashModeComboBox->addItem(Exif::flashString(1));
+    exifFlashModeComboBox->addItem(Exif::flashString(7));
+    exifFlashModeComboBox->addItem(Exif::flashString(9));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x18));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x19));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x1d));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x1f));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x41));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x45));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x4d));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x47));
     exifFlashModeComboBox->setCurrentIndex(
-                exifFlashModeComboBox->findText( MetadataUtils::Exif::flashString(
+                exifFlashModeComboBox->findText( Exif::flashString(
                                                      exifStruct->flashMode) ));
 
     // Camera toolbox
+    settings.beginGroup("Exif");
+    exifManufacturerComboBox->importHistory(settings.value("manufacturerMap").toMap(),
+                                            settings.value("manufacturerList").toList(),
+                                            maxHistoryCount);
+    exifManufacturerComboBox->setCurrentIndex(-1);
     exifManufacturerComboBox->lineEdit()->setText( exifStruct->cameraManufacturer );
+    exifModelComboBox->importHistory(settings.value("cameraModelMap").toMap(),
+                                     settings.value("cameraModelList").toList(),
+                                     maxHistoryCount);
+    exifModelComboBox->setCurrentIndex(-1);
     exifModelComboBox->lineEdit()->setText( exifStruct->cameraModel );
 
     // Author toolbox
-    settings.beginGroup("Exif");
     exifArtistComboBox->importHistory( settings.value("artistMap").toMap(),
                                      settings.value("artistList").toList(),
                                      maxHistoryCount );
@@ -245,23 +267,23 @@ void MetadataDialog::createConnections() {
 
     // date time editors
     // original (created) date time
-    connect(exifOriginalDateTimeEdit, SIGNAL(dateChanged(QDate)),
+    connect(exifOriginalDateEdit, SIGNAL(dateChanged(QDate)),
             iptcCreatedDateEdit, SLOT(setDate(QDate)));
-    connect(exifOriginalDateTimeEdit, SIGNAL(timeChanged(QTime)),
+    connect(exifOriginalTimeEdit, SIGNAL(timeChanged(QTime)),
             iptcCreatedTimeEdit, SLOT(setTime(QTime)));
     connect(iptcCreatedDateEdit, SIGNAL(dateChanged(QDate)),
-            exifOriginalDateTimeEdit, SLOT(setDate(QDate)));
+            exifOriginalDateEdit, SLOT(setDate(QDate)));
     connect(iptcCreatedTimeEdit, SIGNAL(timeChanged(QTime)),
-            exifOriginalDateTimeEdit, SLOT(setTime(QTime)));
+            exifOriginalTimeEdit, SLOT(setTime(QTime)));
     // digitized date time
-    connect(exifDigitizedDateTimeEdit, SIGNAL(dateChanged(QDate)),
+    connect(exifDigitizedDateEdit, SIGNAL(dateChanged(QDate)),
             iptcDigitizedDateEdit, SLOT(setDate(QDate)));
-    connect(exifDigitizedDateTimeEdit, SIGNAL(timeChanged(QTime)),
+    connect(exifDigitizedTimeEdit, SIGNAL(timeChanged(QTime)),
             iptcDigitizedTimeEdit, SLOT(setTime(QTime)));
     connect(iptcDigitizedDateEdit, SIGNAL(dateChanged(QDate)),
-            exifDigitizedDateTimeEdit, SLOT(setDate(QDate)));
+            exifDigitizedDateEdit, SLOT(setDate(QDate)));
     connect(iptcDigitizedTimeEdit, SIGNAL(timeChanged(QTime)),
-            exifDigitizedDateTimeEdit, SLOT(setTime(QTime)));
+            exifDigitizedTimeEdit, SLOT(setTime(QTime)));
 }
 
 /** Saves text edit history to settings.
@@ -324,10 +346,13 @@ void MetadataDialog::saveChanges() {
     // Exif tab
     // Image toolbox
     exifStruct->orientation = exifOrientationComboBox->currentIndex();
-    exifStruct->originalDate = exifOriginalDateTimeEdit->dateTime().
-            toString(exifDateTimeFormat);
-    exifStruct->digitizedDate = exifDigitizedDateTimeEdit->dateTime().
-            toString(exifDateTimeFormat);
+    QDateTime dt;
+    dt.setDate(exifOriginalDateEdit->date());
+    dt.setTime(exifOriginalTimeEdit->time());
+    exifStruct->originalDate = dt.toString(exifDateTimeFormat);
+    dt.setDate(exifDigitizedDateEdit->date());
+    dt.setTime(exifDigitizedTimeEdit->time());
+    exifStruct->digitizedDate = dt.toString(exifDateTimeFormat);
     // Photo toolbox
     exifStruct->focalLength = exifFocalLengthSpinBox->value();
     exifStruct->expTime = exifExpTimeComboBox->currentText();
@@ -337,8 +362,7 @@ void MetadataDialog::saveChanges() {
     exifStruct->isoSpeed = exifIsoSpeedSpinBox->value();
     exifStruct->expProgram = exifExpProgramComboBox->currentIndex();
     exifStruct->meteringMode = exifLightMeteringModeComboBox->currentIndex();
-    exifStruct->flashMode = MetadataUtils::Exif::flashShort(
-                exifFlashModeComboBox->currentText() );
+    exifStruct->flashMode = Exif::flashShort(exifFlashModeComboBox->currentText());
     // Camera toolbox
     exifStruct->cameraManufacturer = exifManufacturerComboBox->lineEdit()->text();
     exifStruct->cameraModel = exifModelComboBox->lineEdit()->text();

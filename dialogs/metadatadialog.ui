@@ -236,28 +236,12 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="exifOrientationComboBox">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label_9">
                <property name="text">
                 <string>Orientation</string>
                </property>
               </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QDateTimeEdit" name="exifDigitizedDateTimeEdit"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QDateTimeEdit" name="exifOriginalDateTimeEdit"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_3">
@@ -266,7 +250,7 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
+             <item row="1" column="3">
               <spacer name="horizontalSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -278,6 +262,36 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDateEdit" name="exifOriginalDateEdit">
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDateEdit" name="exifDigitizedDateEdit">
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QTimeEdit" name="exifOriginalTimeEdit"/>
+             </item>
+             <item row="2" column="2">
+              <widget class="QTimeEdit" name="exifDigitizedTimeEdit"/>
+             </item>
+             <item row="0" column="1" colspan="2">
+              <widget class="QComboBox" name="exifOrientationComboBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
