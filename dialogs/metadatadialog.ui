@@ -773,7 +773,7 @@
               <number>1</number>
              </property>
              <property name="minimum">
-              <double>-100.000000000000000</double>
+              <double>-100.099999999999994</double>
              </property>
              <property name="singleStep">
               <double>0.500000000000000</double>

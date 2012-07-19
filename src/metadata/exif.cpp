@@ -492,12 +492,12 @@ void ExifStruct::reset() {
     thumbnailWidth = String::noData();
     thumbnailHeight = String::noData();
     // Photo section
-    focalLength = 0.0;
-    aperture = 0.0;
+    focalLength = 0.f;
+    aperture = 0.f;
     isoSpeed = 0;
     expTime = String::noData();
     shutterSpeed = String::noData();
-    expBias = 0.0;
+    expBias = 0.f;
     expProgram = 0;
     meteringMode = 0;
     flashMode = -1;
@@ -528,12 +528,12 @@ void ExifStruct::clear() {
     thumbnailWidth = String();
     thumbnailHeight = String();
     // Photo section
-    focalLength = 0.0;
-    aperture = 0.0;
+    focalLength = 0.f;
+    aperture = 0.f;
     isoSpeed = 0;
     expTime = String();
     shutterSpeed = String();
-    expBias = 0.0;
+    expBias = 0.f;
     expProgram = 0;
     meteringMode = 0;
     flashMode = 0;

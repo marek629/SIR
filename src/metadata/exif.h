@@ -107,7 +107,7 @@ namespace MetadataUtils {
         String shutterSpeed; /**< Contains Shutter Speed. */
         String expTime;  /**< Contains Exposure time. */
         float expBias;  /**< Contains Exposure bias value in EV. */
-        uchar expProgram; /**< Contains information about Exposure program. */
+        char expProgram; /**< Contains information about Exposure program. */
         short meteringMode; /**< Contains information about Light metering mode. */
         short flashMode; /**< Contains information about flash mode. \sa Flash */
         // Camera section

@@ -51,6 +51,7 @@ private:
     void readFile();
     void createConnections();
     void saveHistory();
+    void setupInputWidgets();
     // fields
     MetadataUtils::Metadata *metadata;
     MetadataUtils::ExifStruct *exifStruct;

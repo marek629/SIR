@@ -31,8 +31,8 @@ using namespace MetadataUtils;
 const QString exifDateTimeFormat("yyyy:MM:dd HH:mm:ss");
 
  /** Default constructor.\n
-   * Sets up window and reads metadata from file within \b currentImage index
-   * into \b images list.
+   * Sets up window and reads metadata from file within \a currentImage index
+   * into \a images list.
    */
 MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
                                int currentImage) : QDialog(parent) {
@@ -42,39 +42,20 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     this->imagePath = this->images->at(this->currentImage);
     metadata = new Metadata;
 
-    // setup Exif orientation combo box
-    for (char i=1; i<=8; i++)
-        exifOrientationComboBox->addItem(Exif::orientationString(i));
-    // setup Exif exposure program combo box
-    for (uchar i=0; i<=8; i++)
-        exifExpProgramComboBox->addItem(Exif::expProgramString(i));
-    // setup Exif light metering mode combo box
-    for (short i=0; i<8; i++)
-        exifLightMeteringModeComboBox->addItem(Exif::meteringModeString(i));
-
-    QString noDataString = String::noData();
-    exifOriginalDateEdit->setSpecialValueText(noDataString);
-    exifOriginalTimeEdit->setSpecialValueText(noDataString);
-    exifDigitizedDateEdit->setSpecialValueText(noDataString);
-    exifDigitizedTimeEdit->setSpecialValueText(noDataString);
-    iptcCreatedDateEdit->setSpecialValueText(noDataString);
-    iptcCreatedTimeEdit->setSpecialValueText(noDataString);
-    iptcDigitizedDateEdit->setSpecialValueText(noDataString);
-    iptcDigitizedTimeEdit->setSpecialValueText(noDataString);
-
     if (currentImage == 0)
         previousButton->setEnabled(false);
     if (currentImage == images->length()-1)
         nextButton->setEnabled(false);
     filePathLabel->setText(imagePath);
 
+    setupInputWidgets();
     readFile();
     setupValues();
     createConnections();
 }
 
 /** Destructor.
-  * \note Deallocates \b images list typed in \ref MetadataDialog() "constructor".
+  * \note Deallocates \a images list typed in \ref MetadataDialog() "constructor".
   */
 MetadataDialog::~MetadataDialog() {
     // export history comboboxes to settings
@@ -87,6 +68,105 @@ MetadataDialog::~MetadataDialog() {
 /** Resets metadata structs to default values. */
 void MetadataDialog::resetStructs() {
     exifStruct->reset();
+    iptcStruct->reset();
+}
+
+/** Sets up items and properties of all user input widgets, including text edit
+  * history import from settings.
+  */
+void MetadataDialog::setupInputWidgets() {
+    QString noDataString = String::noData();
+    // special value text of date/time editors
+    exifOriginalDateEdit->setSpecialValueText(noDataString);
+    exifOriginalTimeEdit->setSpecialValueText(noDataString);
+    exifDigitizedDateEdit->setSpecialValueText(noDataString);
+    exifDigitizedTimeEdit->setSpecialValueText(noDataString);
+    iptcCreatedDateEdit->setSpecialValueText(noDataString);
+    iptcCreatedTimeEdit->setSpecialValueText(noDataString);
+    iptcDigitizedDateEdit->setSpecialValueText(noDataString);
+    iptcDigitizedTimeEdit->setSpecialValueText(noDataString);
+    // spin boxes
+    exifFocalLengthSpinBox->setSpecialValueText(noDataString);
+    exifExpBiasSpinBox->setSpecialValueText(noDataString);
+    exifApertureSpinBox->setSpecialValueText(noDataString);
+    exifIsoSpeedSpinBox->setSpecialValueText(noDataString);
+    // time combo boxes
+    exifExpTimeComboBox->insertItem(0, noDataString);
+    exifShutterTimeComboBox->insertItem(0, noDataString);
+    // setup Exif orientation combo box
+    for (char i=1; i<=8; i++)
+        exifOrientationComboBox->addItem(Exif::orientationString(i));
+    // setup Exif exposure program combo box
+    for (uchar i=0; i<=8; i++)
+        exifExpProgramComboBox->addItem(Exif::expProgramString(i));
+    // setup Exif light metering mode combo box
+    for (short i=0; i<8; i++)
+        exifLightMeteringModeComboBox->addItem(Exif::meteringModeString(i));
+    // flashmode combobox
+    exifFlashModeComboBox->addItem(Exif::flashString(-1));
+    exifFlashModeComboBox->addItem(Exif::flashString(0));
+    exifFlashModeComboBox->addItem(Exif::flashString(1));
+    exifFlashModeComboBox->addItem(Exif::flashString(7));
+    exifFlashModeComboBox->addItem(Exif::flashString(9));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x18));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x19));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x1d));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x1f));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x41));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x45));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x4d));
+    exifFlashModeComboBox->addItem(Exif::flashString(0x47));
+
+    QSettings settings("SIR");
+    settings.beginGroup("Settings");
+    QString dateFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString();
+    QString timeFormat = settings.value("timeDisplayFormat","HH:mm:ss").toString();
+    // max history count for HistoryComboBox's import functions
+    int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
+    settings.endGroup(); // Settings
+    // display format of date/time editors
+    exifOriginalDateEdit->setDisplayFormat(dateFormat);
+    exifOriginalTimeEdit->setDisplayFormat(timeFormat);
+    exifDigitizedDateEdit->setDisplayFormat(dateFormat);
+    exifDigitizedTimeEdit->setDisplayFormat(timeFormat);
+    iptcCreatedDateEdit->setDisplayFormat(dateFormat);
+    iptcCreatedTimeEdit->setDisplayFormat(timeFormat);
+    iptcDigitizedDateEdit->setDisplayFormat(dateFormat);
+    iptcDigitizedTimeEdit->setDisplayFormat(timeFormat);
+
+    // Exif tab
+    settings.beginGroup("Exif");
+    // Camera toolbox
+    exifManufacturerComboBox->importHistory(settings.value("manufacturerMap").toMap(),
+                                            settings.value("manufacturerList").toList(),
+                                            maxHistoryCount);
+    exifManufacturerComboBox->setCurrentIndex(-1);
+    exifModelComboBox->importHistory(settings.value("cameraModelMap").toMap(),
+                                     settings.value("cameraModelList").toList(),
+                                     maxHistoryCount);
+    exifModelComboBox->setCurrentIndex(-1);
+    // Author toolbox
+    exifArtistComboBox->importHistory( settings.value("artistMap").toMap(),
+                                     settings.value("artistList").toList(),
+                                     maxHistoryCount );
+    exifArtistComboBox->setCurrentIndex(-1);
+    exifCopyrightComboBox->importHistory( settings.value("copyrightMap").toMap(),
+                                        settings.value("copyrightList").toList(),
+                                        maxHistoryCount );
+    exifCopyrightComboBox->setCurrentIndex(-1);
+    exifUserCommentComboBox->importHistory( settings.value("userCommentMap").toMap(),
+                                          settings.value("userCommentList").toList(),
+                                          maxHistoryCount );
+    exifUserCommentComboBox->setCurrentIndex(-1);
+    settings.endGroup(); // Exif
+
+    // IPTC tab
+    settings.beginGroup("IPTC");
+    iptcEditStatusComboBox->importHistory(settings.value("editStatusMap").toMap(),
+                                          settings.value("editStatusList").toList(),
+                                          maxHistoryCount);
+    iptcEditStatusComboBox->setCurrentIndex(-1);
+    settings.endGroup(); // IPTC
 }
 
 /** Read current image file and shows information about issues if exist.\n
@@ -121,23 +201,6 @@ void MetadataDialog::readFile() {
 }
 
 void MetadataDialog::setupValues() {
-    QSettings settings("SIR");
-    settings.beginGroup("Settings");
-    // set display format for date/time edit widgets
-    QString dateFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString();
-    QString timeFormat = settings.value("timeDisplayFormat","HH:mm:ss").toString();
-    exifOriginalDateEdit->setDisplayFormat(dateFormat);
-    exifOriginalTimeEdit->setDisplayFormat(timeFormat);
-    exifDigitizedDateEdit->setDisplayFormat(dateFormat);
-    exifDigitizedTimeEdit->setDisplayFormat(timeFormat);
-    iptcCreatedDateEdit->setDisplayFormat(dateFormat);
-    iptcCreatedTimeEdit->setDisplayFormat(timeFormat);
-    iptcDigitizedDateEdit->setDisplayFormat(dateFormat);
-    iptcDigitizedTimeEdit->setDisplayFormat(timeFormat);
-    // max history count for HistoryComboBox's import functions
-    int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
-    settings.endGroup();
-
     // Exif tab
     // Image toolbox
     exifVersionLabel->setText( exifStruct->version );
@@ -156,81 +219,35 @@ void MetadataDialog::setupValues() {
         dt.setDate(minDate);
     exifDigitizedDateEdit->setDate(dt.date());
     exifDigitizedTimeEdit->setTime(dt.time());
-
     // Thumbnail toolbox
     exifThumbnailLabel->setPixmap(QPixmap::fromImage(exifStruct->thumbnailImage));
     exifThumbnailWidthLabel->setText( exifStruct->thumbnailWidth );
     exifThumbnailHeightLabel->setText( exifStruct->thumbnailHeight );
-
     // Photo toolbox
-    exifFocalLengthSpinBox->setSpecialValueText(String::noData());
     exifFocalLengthSpinBox->setValue( exifStruct->focalLength );
-    exifExpTimeComboBox->insertItem(0,String::noData());
     if (exifStruct->expTime.isEmpty() || exifStruct->expTime == "1/-1 s")
         exifExpTimeComboBox->setCurrentIndex(0);
     else
         exifExpTimeComboBox->addItem( exifStruct->expTime );
-    exifShutterTimeComboBox->insertItem(0,String::noData());
     if(exifStruct->shutterSpeed.isEmpty())
         exifShutterTimeComboBox->setCurrentIndex(0);
     else
         exifShutterTimeComboBox->addItem(exifStruct->shutterSpeed);
-    exifExpBiasSpinBox->setSpecialValueText(String::noData());
     exifExpBiasSpinBox->setValue( exifStruct->expBias );
-    exifApertureSpinBox->setSpecialValueText(String::noData());
     exifApertureSpinBox->setValue( exifStruct->aperture );
-    exifIsoSpeedSpinBox->setSpecialValueText(String::noData());
     exifIsoSpeedSpinBox->setValue( exifStruct->isoSpeed );
     exifExpProgramComboBox->setCurrentIndex( exifStruct->expProgram );
     exifLightMeteringModeComboBox->setCurrentIndex( exifStruct->meteringMode );
-    // setup flashmode combobox
-    exifFlashModeComboBox->addItem(Exif::flashString(-1));
-    exifFlashModeComboBox->addItem(Exif::flashString(0));
-    exifFlashModeComboBox->addItem(Exif::flashString(1));
-    exifFlashModeComboBox->addItem(Exif::flashString(7));
-    exifFlashModeComboBox->addItem(Exif::flashString(9));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x18));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x19));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x1d));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x1f));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x41));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x45));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x4d));
-    exifFlashModeComboBox->addItem(Exif::flashString(0x47));
     exifFlashModeComboBox->setCurrentIndex(
                 exifFlashModeComboBox->findText( Exif::flashString(
                                                      exifStruct->flashMode) ));
-
     // Camera toolbox
-    settings.beginGroup("Exif");
-    exifManufacturerComboBox->importHistory(settings.value("manufacturerMap").toMap(),
-                                            settings.value("manufacturerList").toList(),
-                                            maxHistoryCount);
-    exifManufacturerComboBox->setCurrentIndex(-1);
     exifManufacturerComboBox->lineEdit()->setText( exifStruct->cameraManufacturer );
-    exifModelComboBox->importHistory(settings.value("cameraModelMap").toMap(),
-                                     settings.value("cameraModelList").toList(),
-                                     maxHistoryCount);
-    exifModelComboBox->setCurrentIndex(-1);
     exifModelComboBox->lineEdit()->setText( exifStruct->cameraModel );
-
     // Author toolbox
-    exifArtistComboBox->importHistory( settings.value("artistMap").toMap(),
-                                     settings.value("artistList").toList(),
-                                     maxHistoryCount );
-    exifArtistComboBox->setCurrentIndex(-1);
     exifArtistComboBox->lineEdit()->setText( exifStruct->artist );
-    exifCopyrightComboBox->importHistory( settings.value("copyrightMap").toMap(),
-                                        settings.value("copyrightList").toList(),
-                                        maxHistoryCount );
-    exifCopyrightComboBox->setCurrentIndex(-1);
     exifCopyrightComboBox->lineEdit()->setText( exifStruct->copyright );
-    exifUserCommentComboBox->importHistory( settings.value("userCommentMap").toMap(),
-                                          settings.value("userCommentList").toList(),
-                                          maxHistoryCount );
-    exifUserCommentComboBox->setCurrentIndex(-1);
     exifUserCommentComboBox->lineEdit()->setText( exifStruct->userComment );
-    settings.endGroup(); // Exif
 
     // IPTC tab
     iptcVersionLabel->setText(iptcStruct->modelVersion);
@@ -245,13 +262,7 @@ void MetadataDialog::setupValues() {
     iptcDescriptionTextEdit->setPlainText(iptcStruct->caption);
     iptcCountryLineEdit->setText(iptcStruct->countryName);
     iptcCityLineEdit->setText(iptcStruct->city);
-    settings.beginGroup("IPTC");
-    iptcEditStatusComboBox->importHistory(settings.value("editStatusMap").toMap(),
-                                          settings.value("editStatusList").toList(),
-                                          maxHistoryCount);
-    iptcEditStatusComboBox->setCurrentIndex(-1);
     iptcEditStatusComboBox->lineEdit()->setText(iptcStruct->editStatus);
-    settings.endGroup(); // IPTC
 }
 
 /** Connects this dialog widgets signals corresponding slots.

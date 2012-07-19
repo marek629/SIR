@@ -67,7 +67,7 @@ bool Metadata::read(const String& path, bool setupStructs) {
         if (setupStructs) {
             firstEmptyItemSkipped = true;
             exifStruct_.clear();
-        }
+            }
         while (setupStructs) {
             try {
                 setExifStruct();
@@ -80,6 +80,7 @@ bool Metadata::read(const String& path, bool setupStructs) {
                 errorList += new Error(message,e);
                 continue;
             }
+
         }
         return true;
     }
@@ -186,7 +187,7 @@ Exiv2::Metadatum & Metadata::metadatum(const std::string &key) {
         return iptcData[key];
 }
 
-/** This is overloaded function.\n
+/** This is overloaded function, created for Exif orientation metadatum.\n
   * If \a field value is different from 0 this function has no effect.\n
   * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
   * integer representation of metadatum value basing \a key key.
@@ -199,6 +200,9 @@ void Metadata::setFieldValue(char *field, const std::string &key) {
     if (firstEmptyItemSkipped) {
         Exiv2::Metadatum &datum = metadatum(key);
         *field = datum.toLong();
+        // validation structs field for rigth combobox index
+        if (*field == -1)
+            *field = 1;
     }
     else
         firstEmptyItemSkipped = true;
@@ -360,11 +364,18 @@ void Metadata::setExifStruct() {
     if ( exifStruct_.isoSpeed == -1 )
         exifStruct_.isoSpeed = exifData["Exif.Image.ISOSpeedRatings"].toLong();
     rational = exifData["Exif.Photo.ExposureBiasValue"].toRational();
-    exifStruct_.expBias = (float)rational.first / rational.second;
+    if (rational.first == -1 && rational.second == 1)
+        exifStruct_.expBias = -101.f;
+    else
+        exifStruct_.expBias = (float)rational.first / rational.second;
     exifStruct_.expProgram = exifData["Exif.Photo.ExposureProgram"].toLong();
+    if ( exifStruct_.expProgram == -1 ) //when value is unknown
+        exifStruct_.expProgram = 0; //index of first item of combobox in MetadataDialog
     exifStruct_.meteringMode = exifData["Exif.Photo.MeteringMode"].toLong();
     if ( exifStruct_.meteringMode == -1 )
         exifStruct_.meteringMode = exifData["Exif.Image.MeteringMode"].toLong();
+    if ( exifStruct_.meteringMode == -1 )  //when value is unknown
+        exifStruct_.meteringMode = 0; //index of first item of combobox in MetadataDialog
     if ( exifStruct_.meteringMode == 255 ) //when value equal 'other'
         exifStruct_.meteringMode = 7;
     exifStruct_.flashMode = exifData["Exif.Photo.Flash"].toLong();
