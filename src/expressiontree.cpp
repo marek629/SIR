@@ -226,9 +226,12 @@ LogicalExpressionTree::LogicalExpressionTree() {
     root = 0;
 }
 
-/** Constructor of LogicalExpressionTree object. \sa init */
+/** Constructor of LogicalExpressionTree object. Sets parent pointer to \a parent address.
+  * \sa init
+  */
 LogicalExpressionTree::LogicalExpressionTree(const QString &exp, const QStringList &symbols,
-                                             QVector<qint64> *vars) {
+                                             QVector<qint64> *vars, Selection *parent) {
+    this->parent = parent;
     init(exp, symbols, vars);
 }
 
@@ -237,7 +240,9 @@ LogicalExpressionTree::~LogicalExpressionTree() {
     delete root;
 }
 
-/** Deletes old root node and create new expression tree. \sa init */
+/** Deletes old root node and create new expression tree.
+  * \sa init
+  */
 void LogicalExpressionTree::create(const QString &exp, const QStringList &symbols,
                                    QVector<qint64> *vars) {
     delete root;
@@ -322,6 +327,7 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
     FunctionNode *rigthFunctionNode = 0;
     QStringList comparisonExpList = expression.split(logicalOperatorRx,
                                                      QString::SkipEmptyParts);
+    bool isFileSizeTest(symbols == parent->fileSizeSymbols);
     for (int i=0; i<comparisonExpList.length(); i++) {
         QString comparisonExp = comparisonExpList[i];
         QStringList valuesExpList = comparisonExp.split(comparisonOperatorRx,
@@ -343,6 +349,8 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
                     leftIntNode = 0;
             }
         }
+        else if (isFileSizeTest)
+            leftIntNode = createFileSizeNode(valuesExpList.first());
         else
             leftIntNode = new IntNode(valuesExpList.first().toLongLong());
         if (valuesExpList.at(1).contains(symbolRx)) {
@@ -355,6 +363,8 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
                     rigthIntNode = 0;
             }
         }
+        else if (isFileSizeTest)
+            rigthIntNode = createFileSizeNode(valuesExpList[1]);
         else
             rigthIntNode = new IntNode(valuesExpList.at(1).toLongLong());
         CompareFunctionNode::fnPtr compareFn = 0;
@@ -390,6 +400,24 @@ void LogicalExpressionTree::init(const QString &exp, const QStringList &symbols,
     }
     if (!root)
         root = leftFunctionNode;
+}
+
+/** Dynamically allocates IntNode object based \a valueStr string and returns
+  * pointer to this object.\n
+  * This function supports size multipliers: \em K and \em M. It's corresponding
+  * file size units: \em KiB and \em MiB.
+  */
+IntNode * LogicalExpressionTree::createFileSizeNode(const QString &valueStr) {
+    qint32 lastDigitPos = valueStr.lastIndexOf(QRegExp("\\d"));
+    qint64 value = valueStr.left(lastDigitPos+1).toLongLong();
+    if (lastDigitPos != valueStr.length()-1) {
+        QString unit = valueStr.right(valueStr.length()-lastDigitPos);
+        if (unit.contains('K',Qt::CaseInsensitive))
+            value *= 1024;
+        else if (unit.contains('M',Qt::CaseInsensitive))
+            value *= 1048576;
+    }
+    return new IntNode(value);
 }
 
 /** Returns string corresponding \a rx contained in \a str.

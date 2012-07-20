@@ -59,6 +59,7 @@ HistoryComboBox::~HistoryComboBox() {
     delete surviveAction;
 }
 
+/** Creates and connects popup widgets menu actions to slots. */
 void HistoryComboBox::createActions() {
     favAction = new QAction(this);
     connect(favAction, SIGNAL(triggered()), this, SLOT(favoriteAct()));
@@ -77,7 +78,7 @@ void HistoryComboBox::createActions() {
   * unless the text is a member of the combo box; otherwise item containg
   * the text will be moved to top of this combo box.
   * \note If this combo box is full of favorite items this method will show
-  * adequate information.
+  *       adequate information.
   * \sa promoteItem disconnectPromoteItem connectPromoteItem
   */
 void HistoryComboBox::prependText() {
@@ -105,7 +106,7 @@ void HistoryComboBox::prependText() {
 /** Removes last unfavorite item from this combo box and returns remove success
   * code: if item removed returns true, otherwise false.\n
   * \note Favorite items can't be removed. If all items are favorites this method
-  * will return false.
+  *       will return false.
   */
 bool HistoryComboBox::removeFromEnd() {
     for (int i=count()-1; i>=0; i--) {
@@ -141,7 +142,7 @@ void HistoryComboBox::showMenu(const QPoint &point){
     menu.exec(QCursor::pos());
 }
 
-/** Moves item corresponding with \b i index to top of combo box.
+/** Moves item corresponding with \a i index to top of combo box.
   * \sa prependText disconnectPromoteItem connectPromoteItem
   */
 void HistoryComboBox::promoteItem(int i){
@@ -204,13 +205,13 @@ void HistoryComboBox::surviveAct() {
         showPopup();
 }
 
-/** Imports list of items from \b historyList and \b currentMap (as current item)
-  * into this combo box and sets maximum count of combo box to \b maxCount.
+/** Imports list of items from \a historyList and \a currentMap (as current item)
+  * into this combo box and sets maximum count of combo box to \a maxCount.
   * \sa exportHistory
   */
 void HistoryComboBox::importHistory(const QMap<QString, QVariant> &currentMap,
-                                  const QList< QVariant > &historyList,
-                                  int maxCount) {
+                                    const QList< QVariant > &historyList,
+                                    int maxCount) {
     setMaxCount(maxCount);
     disconnectPromoteItem();
 
@@ -242,16 +243,17 @@ void HistoryComboBox::importHistory(const QMap<QString, QVariant> &currentMap,
     connectPromoteItem();
 }
 
-/** Exports current item of combo box into \b currentMap and other up to
-  * \b newMaxCount items into \b historyList.
-  * \note \b currentMap and \b historyList is cleared before export.
+/** Exports current item of combo box into \a currentMap and other up to
+  * \a newMaxCount items into \a historyList.
+  * \note \a currentMap and \a historyList is cleared before export.
   * \sa importHistory
   */
 void HistoryComboBox::exportHistory(QMap<QString, QVariant> *currentMap,
                                     QList<QVariant> *historyList,
                                     int newMaxCount) {
     currentMap->clear();
-    currentMap->insert( currentText(), itemData(currentIndex()).toBool() );
+    if (!currentText().isEmpty())
+        currentMap->insert(currentText(), itemData(currentIndex()).toBool());
 
     int skip;
     if (newMaxCount == -1)

@@ -316,10 +316,10 @@ bool Selection::isCompatible(const QDateTime &dateTime, QDateTime *dtArray) {
 void Selection::setupExpressionTrees() {
     delete fileSizeExpTree;
     fileSizeExpTree = new LogicalExpressionTree(params.fileSizeExp, fileSizeSymbols,
-                                                fileSizeVector);
+                                                fileSizeVector, this);
     delete imageSizeExpTree;
     imageSizeExpTree = new LogicalExpressionTree(params.imageSizeExp, imageSizeSymbols,
-                                                 imageSizeVector);
+                                                 imageSizeVector, this);
 }
 
 /** Compares info and metadata of file with data corresponding selection params.\n
@@ -488,6 +488,10 @@ void SelectionDialog::browseDir() {
     dirLineEdit->setText(dirPath);
 }
 
+/** Loads selection settings and imports selection dialogs text edit history
+  * from settings file.
+  * \sa saveSettings
+  */
 void SelectionDialog::loadSettings() {
     QSettings settings("SIR");
     settings.beginGroup("Settings");
@@ -504,8 +508,10 @@ void SelectionDialog::loadSettings() {
 
     settings.beginGroup("Selection");
     clearSelectionCheckBox->setChecked(settings.value("clearSelection",false).toBool());
-    dirCheckBox->setChecked(settings.value("subdirs",false).toBool());
-    selectImportedCheckBox->setChecked(settings.value("selectImported",false).toBool());
+    if (dirWidget) {
+        dirCheckBox->setChecked(settings.value("subdirs",false).toBool());
+        selectImportedCheckBox->setChecked(settings.value("selectImported",false).toBool());
+    }
     settings.endGroup(); // Selection
 
     settings.beginGroup("SelectionDialog");
@@ -558,6 +564,9 @@ void SelectionDialog::loadSettings() {
     settings.endGroup(); // SelectionDialog
 }
 
+/** Exports selection dialogs text edit history to settings file.
+  * \sa loadSettings
+  */
 void SelectionDialog::saveSettings() {
     QMap<QString,QVariant> map;
     QList<QVariant> list;

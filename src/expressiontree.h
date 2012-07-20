@@ -28,6 +28,7 @@
 class QChar;
 class QStringList;
 class QRegExp;
+class Selection;
 
 /** \brief Base abstract class of logical expression tree using in Selection class.
   *
@@ -116,7 +117,8 @@ private:
 class LogicalExpressionTree {
 public:
     LogicalExpressionTree();
-    LogicalExpressionTree(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
+    LogicalExpressionTree(const QString &exp, const QStringList &symbols,
+                          QVector<qint64> *vars, Selection *parent = 0);
     ~LogicalExpressionTree();
     FunctionNode *rootNode() const { return root; } /**< Returns pointer to root FunctionNode. */
     void create(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
@@ -124,9 +126,11 @@ public:
 private:
     // fields
     FunctionNode *root;
+    Selection *parent;
     // methods
     void init(const QString &exp, const QStringList &symbols, QVector<qint64> *vars);
     QString rxString(const QString &str, QChar c, const QRegExp &rx, int *from = 0);
+    IntNode *createFileSizeNode(const QString &valueStr);
 };
 
 #endif // EXPRESSIONTREE_H
