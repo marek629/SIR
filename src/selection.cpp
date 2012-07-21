@@ -59,6 +59,7 @@ QStringList Selection::allOperators = QStringList() <<
 /** Selection object default constructor. */
 Selection::Selection(ConvertDialog *parent) : QObject(parent) {
     convertDialog = parent;
+    progressDialog = 0;
     loadSymbols();
     fileSizeExpTree = 0;
     fileSizeVector = new QVector<qint64>(fileSizeSymbols.count());
@@ -68,6 +69,7 @@ Selection::Selection(ConvertDialog *parent) : QObject(parent) {
 
 /** Selection object destructor. */
 Selection::~Selection() {
+    delete progressDialog;
     clearPointerList(&fileNameListRx);
     clearPointerList(&exifProcessingSoftwareListRx);
     clearPointerList(&exifCameraManufacturerListRx);
@@ -101,26 +103,32 @@ int Selection::selectItems() {
     setupExpressionTrees();
     convertDialog->setCursor(QCursor(Qt::WaitCursor));
     int itemCount = convertDialog->filesTreeWidget->topLevelItemCount();
-    QProgressDialog progressDialog(convertDialog);
-    progressDialog.setWindowTitle(tr("Checking selection conditions..."));
-    progressDialog.setMaximumWidth(convertDialog->width());
-    progressDialog.setRange(0, itemCount);
-    progressDialog.show();
-    for (int i=0; i<itemCount; i++) {
+    if (!progressDialog)
+        progressDialog = new QProgressDialog(convertDialog);
+    progressDialog->setWindowTitle(tr("Checking selection conditions..."));
+    progressDialog->setMaximumWidth(convertDialog->width());
+    progressDialog->setRange(0, itemCount);
+    progressDialog->show();
+    for (int i=0; i<itemCount && !progressDialog->wasCanceled(); i++) {
         QTreeWidgetItem *item = convertDialog->filesTreeWidget->topLevelItem(i);
-        QString filePath = item->text(2) + QDir::separator() + item->text(0) + '.' + item->text(1);
+        QString filePath = item->text(2) + QDir::separator() + item->text(0) +
+                           '.' + item->text(1);
         qDebug() << filePath;
-        progressDialog.setLabelText(filePath);
-        progressDialog.setValue(i);
+        progressDialog->setLabelText(filePath);
+        progressDialog->setValue(i);
         QFileInfo info(filePath);
         if (!testFile(info))
             continue;
         // if all conditions succed select item of tree widget and incremate items counter
         item->setSelected(true);
         itemsSelected++;
+        QApplication::processEvents();
     }
-    convertDialog->enableConvertButtons();
-    convertDialog->resizeColumnsToContents(convertDialog->filesTreeWidget);
+    progressDialog->close();
+    if (itemsSelected > 0) {
+        convertDialog->enableConvertButtons();
+        convertDialog->resizeColumnsToContents(convertDialog->filesTreeWidget);
+    }
     convertDialog->setCursor(QCursor(Qt::ArrowCursor));
     return itemsSelected;
 }
@@ -145,21 +153,25 @@ int Selection::importFiles() {
     }
     setupExpressionTrees();
     convertDialog->setCursor(QCursor(Qt::WaitCursor));
-    QProgressDialog progressDialog(convertDialog);
-    progressDialog.setWindowTitle(tr("Checking import conditions..."));
-    progressDialog.setLabelText(tr("Scanning directories..."));
-    progressDialog.setMaximumWidth(convertDialog->width());
-    progressDialog.setRange(0,0);
-    progressDialog.setValue(0);
-    progressDialog.show();
+    if (!progressDialog)
+        progressDialog = new QProgressDialog(convertDialog);
+    progressDialog->setWindowTitle(tr("Checking import conditions..."));
+    progressDialog->setLabelText(tr("Scanning directories..."));
+    progressDialog->setMaximumWidth(convertDialog->width());
+    progressDialog->setRange(0,0);
+    progressDialog->setValue(0);
+    progressDialog->show();
     QFileInfoList fileInfoList;
     qDebug() << "Loaded files into list:"
              << loadFileInfo(params.path, &fileInfoList, params.browseSubdirs);
-    progressDialog.setMaximum(fileInfoList.length());
+    progressDialog->setMaximum(fileInfoList.length());
     foreach (QFileInfo info, fileInfoList) {
         qDebug() << info.filePath() << info.size()/1024 << "KiB";
-        progressDialog.setLabelText(info.filePath());
-        progressDialog.setValue(progressDialog.value()+1);
+        QApplication::processEvents();
+        if (progressDialog->wasCanceled())
+            break;
+        progressDialog->setLabelText(info.filePath());
+        progressDialog->setValue(progressDialog->value()+1);
         if (!testFile(info))
             continue;
         // if all conditions succed add to tree widget and incremate files counter
@@ -172,8 +184,11 @@ int Selection::importFiles() {
         item->setSelected(params.selectImportedFiles);
         filesImported++;
     }
-    convertDialog->enableConvertButtons();
-    convertDialog->resizeColumnsToContents(convertDialog->filesTreeWidget);
+    progressDialog->close();
+    if (filesImported > 0) {
+        convertDialog->enableConvertButtons();
+        convertDialog->resizeColumnsToContents(convertDialog->filesTreeWidget);
+    }
     convertDialog->setCursor(QCursor(Qt::ArrowCursor));
     return filesImported;
 }
@@ -244,8 +259,7 @@ void Selection::clearPointerList(QList<QRegExp *> *list) {
   * \param dir Full path of directory.
   * \param list List contain file info objects.
   * \param recursive If true this function will browse directory recursive.
-  * \note This function calls QApplication::processEvents() function at every
-  *       10th directory if \a recursive is true.
+  * \note This function calls QApplication::processEvents().
   * \return Count of file info loaded into \a list.
   */
 int Selection::loadFileInfo(const QString &dir, QFileInfoList *list, bool recursive) {
@@ -256,12 +270,13 @@ int Selection::loadFileInfo(const QString &dir, QFileInfoList *list, bool recurs
     QFileInfoList fileInfoList = sourceDir.entryInfoList();
     list->append(fileInfoList);
     result += fileInfoList.length();
-    if (recursive) {
+    QApplication::processEvents();
+    if (progressDialog->wasCanceled())
+        qDebug() << "canceled";
+    if (recursive && !progressDialog->wasCanceled()) {
         QDir directory(dir);
         directory.setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::Readable
                             | QDir::NoDotAndDotDot);
-        if (result % 10 == 0)
-            QApplication::processEvents();
         foreach (QString d, directory.entryList())
             result += loadFileInfo(dir + QDir::separator() + d, list, recursive);
     }

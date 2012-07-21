@@ -26,6 +26,7 @@
 #include "metadatautils.h"
 #include <QFileInfoList>
 
+class QProgressDialog;
 class ConvertDialog;
 class LogicalExpressionTree;
 
@@ -79,6 +80,7 @@ private:
     // fields
     SelectionParams params;
     ConvertDialog *convertDialog;
+    QProgressDialog *progressDialog;
     QList<QRegExp*> fileNameListRx;
     QList<QRegExp*> anyAuthorListRx;
     QList<QRegExp*> anyCopyrightListRx;
