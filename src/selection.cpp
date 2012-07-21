@@ -103,6 +103,7 @@ int Selection::selectItems() {
     int itemCount = convertDialog->filesTreeWidget->topLevelItemCount();
     QProgressDialog progressDialog(convertDialog);
     progressDialog.setWindowTitle(tr("Checking selection conditions..."));
+    progressDialog.setMaximumWidth(convertDialog->width());
     progressDialog.setRange(0, itemCount);
     progressDialog.show();
     for (int i=0; i<itemCount; i++) {
@@ -147,12 +148,14 @@ int Selection::importFiles() {
     QProgressDialog progressDialog(convertDialog);
     progressDialog.setWindowTitle(tr("Checking import conditions..."));
     progressDialog.setLabelText(tr("Scanning directories..."));
+    progressDialog.setMaximumWidth(convertDialog->width());
     progressDialog.setRange(0,0);
+    progressDialog.setValue(0);
     progressDialog.show();
     QFileInfoList fileInfoList;
     qDebug() << "Loaded files into list:"
              << loadFileInfo(params.path, &fileInfoList, params.browseSubdirs);
-    progressDialog.setRange(0, fileInfoList.length());
+    progressDialog.setMaximum(fileInfoList.length());
     foreach (QFileInfo info, fileInfoList) {
         qDebug() << info.filePath() << info.size()/1024 << "KiB";
         progressDialog.setLabelText(info.filePath());
@@ -241,6 +244,9 @@ void Selection::clearPointerList(QList<QRegExp *> *list) {
   * \param dir Full path of directory.
   * \param list List contain file info objects.
   * \param recursive If true this function will browse directory recursive.
+  * \note This function calls QApplication::processEvents() function at every
+  *       10th directory if \a recursive is true.
+  * \return Count of file info loaded into \a list.
   */
 int Selection::loadFileInfo(const QString &dir, QFileInfoList *list, bool recursive) {
     int result = 0;
@@ -254,6 +260,8 @@ int Selection::loadFileInfo(const QString &dir, QFileInfoList *list, bool recurs
         QDir directory(dir);
         directory.setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::Readable
                             | QDir::NoDotAndDotDot);
+        if (result % 10 == 0)
+            QApplication::processEvents();
         foreach (QString d, directory.entryList())
             result += loadFileInfo(dir + QDir::separator() + d, list, recursive);
     }
