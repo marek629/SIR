@@ -1,6 +1,4 @@
 *** nearest release ***
-  ! Polish translation
-    * iprove Pixele to Piksele in size unit combobox
 
 *** next release ***
   ! Correction convert dialog
@@ -8,6 +6,8 @@
     * improve drag-drop events (myQTreeWidget)
   ! Conditional converting (ie. convert if image width > 1000 px)
     * scripts with exiv2 support
+  ! Selection:
+    * don't create QImage object in testImage() if file format is supported by exiv2 (may be faster)
   ! SelectionDialog:
     * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
   ! Make recursive screen images with (auto detect of sceeen frame) feature - joke :)

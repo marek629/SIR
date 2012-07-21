@@ -98,7 +98,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-64</y>
+         <y>-1138</y>
          <width>409</width>
          <height>1454</height>
         </rect>
@@ -867,7 +867,7 @@
            <item row="1" column="0" colspan="4">
             <widget class="QCheckBox" name="importSubdirsCheckBox">
              <property name="text">
-              <string>Browse in subdirectories</string>
+              <string>Browse subdirectories</string>
              </property>
             </widget>
            </item>

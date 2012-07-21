@@ -19,8 +19,8 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include <exiv2/metadatum.hpp>
 #include "exif.h"
+#include <exiv2/metadatum.hpp>
 
 using namespace MetadataUtils;
 

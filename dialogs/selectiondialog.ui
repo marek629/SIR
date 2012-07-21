@@ -28,7 +28,7 @@
         <x>0</x>
         <y>0</y>
         <width>606</width>
-        <height>558</height>
+        <height>556</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
@@ -80,7 +80,7 @@
           <item row="3" column="0" colspan="2">
            <widget class="QCheckBox" name="dirCheckBox">
             <property name="text">
-             <string>Browse in subdirectories</string>
+             <string>Browse subdirectories</string>
             </property>
            </widget>
           </item>
@@ -442,6 +442,36 @@
    <header>historycombobox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>dirLineEdit</tabstop>
+  <tabstop>dirPushButton</tabstop>
+  <tabstop>dirCheckBox</tabstop>
+  <tabstop>selectImportedCheckBox</tabstop>
+  <tabstop>fileNameComboBox</tabstop>
+  <tabstop>fileSizeComboBox</tabstop>
+  <tabstop>imageSizeComboBox</tabstop>
+  <tabstop>anyGroupBox</tabstop>
+  <tabstop>createdAfterDateTimeEdit</tabstop>
+  <tabstop>createdBeforeDateTimeEdit</tabstop>
+  <tabstop>digitizedAfterDateTimeEdit</tabstop>
+  <tabstop>digitizedBeforeDateTimeEdit</tabstop>
+  <tabstop>authorComboBox</tabstop>
+  <tabstop>copyrightComboBox</tabstop>
+  <tabstop>exifGroupBox</tabstop>
+  <tabstop>exifSoftwareComboBox</tabstop>
+  <tabstop>exifCameraManufacturerComboBox</tabstop>
+  <tabstop>exifCameraModelComboBox</tabstop>
+  <tabstop>iptcGroupBox</tabstop>
+  <tabstop>iptcObjectNameComboBox</tabstop>
+  <tabstop>iptcKeywordsComboBox</tabstop>
+  <tabstop>iptcDescriptionComboBox</tabstop>
+  <tabstop>iptcCountryNameComboBox</tabstop>
+  <tabstop>iptcCityComboBox</tabstop>
+  <tabstop>iptcEditStatusComboBox</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>clearSelectionCheckBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
