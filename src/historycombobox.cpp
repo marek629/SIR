@@ -39,7 +39,7 @@ HistoryComboBox::HistoryComboBox(QWidget *parent) : QComboBox(parent) {
     setEditable(true);
 
     lineEdit()->disconnect(this);
-    connect(lineEdit(),SIGNAL(returnPressed()),this,SLOT(prependText()));
+    connect(lineEdit(),SIGNAL(editingFinished()),this,SLOT(prependText()));
 
     view()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(view(), SIGNAL(customContextMenuRequested(QPoint)),
@@ -253,7 +253,7 @@ void HistoryComboBox::exportHistory(QMap<QString, QVariant> *currentMap,
                                     int newMaxCount) {
     currentMap->clear();
     if (!currentText().isEmpty())
-        currentMap->insert(currentText(), itemData(currentIndex()).toBool());
+        currentMap->insert(currentText(), itemData(currentIndex()));
 
     int skip;
     if (newMaxCount == -1)

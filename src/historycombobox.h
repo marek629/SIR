@@ -28,8 +28,6 @@
 
 #include <QComboBox>
 
-template <typename T> class QList;
-
 /** \brief Combo box with text edition history support.
   * \par Favorite items
   * This class provides favorites items marked by star icon.\n
@@ -44,14 +42,14 @@ public:
     ~HistoryComboBox();
     bool removeFromEnd();
     void importHistory(const QMap<QString,QVariant> &currentMap,
-                     const QList<QVariant> &historyList,
-                     int maxCount);
+                       const QList<QVariant> &historyList,
+                       int maxCount);
     void exportHistory(QMap<QString,QVariant> *currentMap,
                        QList<QVariant> *historyList,
                        int newMaxCount = -1);
 
 private:
-    void createActions();
+    // fields
     QIcon favIcon;
     QIcon unfavIcon;
     int listViewRow;
@@ -59,6 +57,10 @@ private:
     QAction *rmAction;
     QAction *clearAction;
     QAction *surviveAction;
+    // methods
+    void createActions();
+    inline bool connectPromoteItem();
+    inline bool disconnectPromoteItem();
 
 public slots:
     void prependText();
@@ -68,10 +70,6 @@ public slots:
     void clearAct();
     void surviveAct();
     void showMenu(const QPoint&);
-
-protected:
-    inline bool connectPromoteItem();
-    inline bool disconnectPromoteItem();
 };
 
 /** Connects currentIndexChanged(int) signal to promoteItem(int) slot.\n
