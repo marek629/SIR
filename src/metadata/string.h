@@ -26,13 +26,15 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include <QString>
+#include <QCoreApplication>
 #include <exiv2/types.hpp>
 
 namespace MetadataUtils
 {
     //! Class provides additional methods for QString.
     class String : public QString {
+        Q_DECLARE_TR_FUNCTIONS(MetadataUtils::String)
+
     public:
         String();
         String(const char *str);

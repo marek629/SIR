@@ -29,12 +29,3 @@
 #define REMOVED 5
 #define CONVERTING 6
 #define CANCELLED 7
-
-#ifndef QT_TRANSLATIONS_DIR
-    #ifdef Q_OS_WIN32
-        // Qt translations included in application.qrc file needed
-        #define QT_TRANSLATIONS_DIR ":/translations/"
-    #else
-        #define QT_TRANSLATIONS_DIR "/usr/share/qt/translations/"
-    #endif // Q_OS_WIN32
-#endif // QT_TRANSLATIONS_DIR

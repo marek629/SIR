@@ -132,5 +132,5 @@ String String::fromStdString(const std::string &s) {
 
 /** Returns translated \em "no data" string. */
 QString String::noData() {
-    return QObject::tr("no data");
+    return tr("no data");
 }

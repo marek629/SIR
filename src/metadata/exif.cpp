@@ -42,7 +42,7 @@ Exif::Exif() {
   */
 QString Exif::flashString(short num) {
     if (num == -1)
-        return QObject::tr("Unknown");
+        return tr("Unknown");
     QString result;
     QString bin = QString::number(num,2);
     // invert bin

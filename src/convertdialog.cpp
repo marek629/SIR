@@ -41,6 +41,7 @@
 #include <QDebug>
 #include <cmath>
 #include <QSvgRenderer>
+#include <QLibraryInfo>
 
 #include "convertdialog.h"
 #include "previewdialog.h"
@@ -68,6 +69,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent
     this->args = args;
     qtTranslator = new QTranslator(this);
     appTranslator = new QTranslator(this);
+    qApp->installTranslator(qtTranslator);
     qApp->installTranslator(appTranslator);
     statusList = new QMap<QString,int>();
     net = NULL;
@@ -1253,7 +1255,7 @@ void ConvertDialog::readSettings() {
     QString qtTranslationFile = "qt_" +
             selectedTranslationFile.split('_').at(1).split('.').first();
 
-    qtTranslator->load(qtTranslationFile, QT_TRANSLATIONS_DIR);
+    qtTranslator->load(qtTranslationFile, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     appTranslator->load(selectedTranslationFile);
 
     alreadSent = settings.value("alreadSent",false).toBool();

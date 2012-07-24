@@ -22,8 +22,8 @@
 #ifndef EXIF_H
 #define EXIF_H
 
+#include <QCoreApplication>
 #include <QImage>
-#include <QObject>
 #include "string.h"
 
 namespace Exiv2 {
@@ -46,7 +46,9 @@ namespace MetadataUtils {
       * \a vide See also.
       * \sa ExifStruct Iptc Flash Flip String
       */
-    class Exif : public QObject {
+    class Exif {
+        Q_DECLARE_TR_FUNCTIONS(MetadataUtils::Exif)
+
     public:
         Exif();
         bool isVersionKnown();
@@ -127,32 +129,34 @@ namespace MetadataUtils {
       * \sa ExifStruct::flashMode
       */
     class Flash {
+        Q_DECLARE_TR_FUNCTIONS(MetadataUtils::Flash)
+
     public:
         /** Returns translated string containing information about the lack of flash function. */
-        static QString noFlashFunction() { return QObject::tr("No flash function."); }
+        static QString noFlashFunction() { return tr("No flash function."); }
         /** Returns translated string containing information about flash fired.
           * \sa noFired */
-        static QString fired() { return QObject::tr("Flash fired"); }
+        static QString fired() { return tr("Flash fired"); }
         /** Returns translated string containing information about flash didn't fire.
           * \sa fired */
-        static QString noFired() { return QObject::tr("Flash didn't fire"); }
+        static QString noFired() { return tr("Flash didn't fire"); }
         /** Returns translated string containing information about flash fired in
           * compulsory mode. */
-        static QString compulsoryMode() { return QObject::tr(", compulsory flash mode"); }
+        static QString compulsoryMode() { return tr(", compulsory flash mode"); }
         /** Returns translated string containing information about flash fired in
           * auto mode. */
-        static QString autoMode() { return QObject::tr(", auto mode"); }
+        static QString autoMode() { return tr(", auto mode"); }
         /** Returns translated string containing information about flash fired in
           * red-eye reduction mode. */
-        static QString redEyeReduction() { return QObject::tr(", red-eye reduction"); }
+        static QString redEyeReduction() { return tr(", red-eye reduction"); }
         /** Returns translated string containing information about detection of
           * returning strobe ligth. \sa strobeReturnNotDetected */
         static QString strobeReturnDetected() {
-            return QObject::tr(", strobe return light detected"); }
+            return tr(", strobe return light detected"); }
         /** Returns translated string containing information about failed to
           * detection of returning strobe ligth. \sa strobeReturnDetected */
         static QString strobeReturnNotDetected() {
-            return QObject::tr(", strobe return light not detected"); }
+            return tr(", strobe return light not detected"); }
     };
 }
 
