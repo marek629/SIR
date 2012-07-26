@@ -1,0 +1,100 @@
+* Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.4
+    - Changelog file provided
+    - Selected file (or files) details in splitter on rigth option added
+    - Easier translations of about dialog, about dialog corrected
+    - Droped QObject::tr() translated strings, non QObject inherited classes are using Q_DECLARE_TR_FUNCTIONS() macro now
+    - Added selection/import dialog
+    - Added Selection category in options dialog containing a few settings
+    - Bugfix loading preview from Exif metadata
+    - Added main page in documentation
+    - Save last visited directory
+    - Bugfix image rotation
+    - In metadata dialog Exif's original and digitized date and time edit field was separated
+    - Save text edit history when metadata is saved only
+    - Minor improvements in metadata dialog and history combo box
+    - Corrected LICENSE file and Free Software Foundation's address in SIR source files. Thanks Praveen Kumar
+    - Polish translation updated
+
+* Mon May 07 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.3.1
+    - saving image size in Exif metadata bugfix
+    - Serbian translation added
+    - Czech translation updated
+
+* Tue Apr 10 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.3
+    - flip support in convert and preview dialogs
+    - full support of Exif.Image.Orientation field
+    - metadata dialog with view and edit features for same Exif metadata fields
+    - documentation in Doxygen for non private members (private members will be documented latter)
+    - conversion options in convert dialog is shown in tabs now
+    - target file size in convert dialog can be set in pixels, percent and Ki-/Mi- bytes now
+    - new options dialog with categories panel on the left
+    - suffix file name support
+    - Polish translation updated
+
+* Sun Sep 25 2011 - Marek Jędryka <jedryka89@gmail.com> - v2.2
+    - Bug fixes in convert threads
+    - New message box
+    - Metadata support using exiv2 library
+
+* Wed Dec 15 2010 - Rafael Sachetto <rsachetto@gmail.com> - v2.1.1
+    - Russian translation updated (Thanks Timur Antipin)
+
+* Sun Apr 11 2010 - Rafael Sachetto <rsachetto@gmail.com> - v2.1
+    - Czech translation added (Thanks Pavel Fric).
+    - Corrected some possible memory leak.
+    - Now sir can check for updates.
+    - Now the user can the us that he/she installed sir.
+    - File menu now is called actions.
+    - Corrected some name inconsistencies.
+    - Translations Updates.
+    - Corrected the about dialog
+    - Windows Installer Released!
+
+* Sat Mar 13 2010 - Rafael Sachetto <rsachetto@gmail.com> - v2.0.2
+    - Greek Translation Added (Thanks Steve Jemens)
+
+* Sun Mar 07 2010 - Rafael Sachetto <rsachetto@gmail.com> - v2.0.1
+    - Translations update
+    - Debian control file updated to recommend dcraw
+    - Corrected some bugs in Preview Dialog
+    - Raw utils does not need to be a QOBJECT
+    - Changed rawutils to be compatible with older Qt versions
+
+* Sun Feb 28 2010 - Rafael Sachetto <rsachetto@gmail.com> - v2.0
+    - Added option to use dcraw to convert raw images
+    - Added Cancel Button when converting images
+    - Added a browse button on options dialog
+    - Improved about dialog
+    - Corrected mouse icon when cancel the new folder creation
+    - Minor bug fixes
+
+* Sun Feb 21 2010 - Rafael Sachetto <rsachetto@gmail.com> - v1.9.8
+    - French translation added. Thanks Jérôme Launay.
+
+* Sat Feb 06 2010 - Rafael Sachetto <rsachetto@gmail.com> - v1.9.7
+    - Restore convert selected function because in last release was commented
+    - Setup conversion threads added - parralel conversion added
+    - Multiple CPU cores support added
+    - sir.desktop file impoved
+
+* Thu May 28 2009 - Rafael Sachetto <rsachetto@gmail.com> - v1.9.6
+    - Code refactorization
+    - Multithreading support added. SharedInformation class provided.
+    - LanguageUtils class provided
+    - Language menu in options dialog added
+    - SIR window icon added
+    - Tranlations updated
+    - Romanian translation added. Thanks Ovidiu Pop
+    - Created files: translations/translation_info.txt, TODO
+
+* Fri Sep 12 2008 - Rafael Sachetto <rsachetto@gmail.com> - v1.9.5
+    - Debian directory added containign Debian package build rules
+
+* Sun May 04 2008 - Rafael Sachetto <rsachetto@gmail.com> - v1.9.4
+    - Polish translation added. Thanks zoteek
+    - Dutch translation added. Thanks Youp
+    - Code refactorization
+    - Header file defines.h provided
+
+* Tue Jul 17 2007 - Rafael Sachetto <rsachetto@gmail.com> - v1.9.3
+    - It's first release in SVN repository. It's all I know.

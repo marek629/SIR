@@ -99,4 +99,5 @@ OTHER_FILES += \
     TODO \
     LICENSE \
     INSTALL \
-    README.txt
+    README.txt \
+    CHANGELOG.txt
