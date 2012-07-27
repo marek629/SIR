@@ -20,9 +20,9 @@
  */
 
 #include "string.h"
-#include <QObject>
 #include <QStringList>
 #include <cmath>
+#include <QDateTime>
 
 using namespace MetadataUtils;
 
@@ -128,6 +128,14 @@ Exiv2::Rational String::toRationalPower() const {
 /** Returns string converted from \a s. */
 String String::fromStdString(const std::string &s) {
     return String( QString::fromStdString(s) );
+}
+
+/** Returns date and time string in \a formatOut format converted from
+  * \a dateTimeStr date and time string in \a formatIn format.
+  */
+String String::fromDateTimeString(const String &dateTimeStr,
+                                  const QString &formatIn, const QString &formatOut) {
+    return QDateTime::fromString(dateTimeStr, formatIn).toString(formatOut);
 }
 
 /** Returns translated \em "no data" string. */

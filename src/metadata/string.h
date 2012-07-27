@@ -31,26 +31,28 @@
 
 namespace MetadataUtils
 {
-    //! Class provides additional methods for QString.
-    class String : public QString {
-        Q_DECLARE_TR_FUNCTIONS(MetadataUtils::String)
+//! Class provides additional methods for QString.
+class String : public QString {
+    Q_DECLARE_TR_FUNCTIONS(MetadataUtils::String)
 
-    public:
-        String();
-        String(const char *str);
-        String(const QString &other);
-        void appendUnit(const char *unit);
-        std::string toNativeStdString() const;
-        QString toQString() const { return *this; }
-        Exiv2::Rational toRational() const;
-        Exiv2::Rational toRationalPower() const;
-        String & operator =(const char *str);
-        String & operator =(const QString &other);
-        String & operator =(const std::string &str);
-        String & operator +=(const std::string &str);
-        static QString noData();
-        static String fromStdString(const std::string &s);
-    };
+public:
+    String();
+    String(const char *str);
+    String(const QString &other);
+    void appendUnit(const char *unit);
+    std::string toNativeStdString() const;
+    QString toQString() const { return *this; }
+    Exiv2::Rational toRational() const;
+    Exiv2::Rational toRationalPower() const;
+    String & operator =(const char *str);
+    String & operator =(const QString &other);
+    String & operator =(const std::string &str);
+    String & operator +=(const std::string &str);
+    static QString noData();
+    static String fromStdString(const std::string &s);
+    static String fromDateTimeString(const String &dateTimeStr,
+                                     const QString &formatIn, const QString &formatOut);
+};
 }
 
 #endif // STRING_H

@@ -28,8 +28,6 @@
 
 using namespace MetadataUtils;
 
-const QString exifDateTimeFormat("yyyy:MM:dd HH:mm:ss");
-
  /** Default constructor.\n
    * Sets up window and reads metadata from file within \a currentImage index
    * into \a images list.
@@ -208,13 +206,13 @@ void MetadataDialog::setupValues() {
     exifWidthLabel->setText( exifStruct->imageWidth );
     exifHeightLabel->setText( exifStruct->imageHeight );
     exifOrientationComboBox->setCurrentIndex( exifStruct->orientation - 1 );
-    QDateTime dt = QDateTime::fromString(exifStruct->originalDate, exifDateTimeFormat);
+    QDateTime dt = QDateTime::fromString(exifStruct->originalDate, Exif::dateTimeFormat);
     QDate minDate(1,1,1);
     if (!dt.date().isValid())
         dt.setDate(minDate);
     exifOriginalDateEdit->setDate(dt.date());
     exifOriginalTimeEdit->setTime(dt.time());
-    dt = QDateTime::fromString(exifStruct->digitizedDate, exifDateTimeFormat);
+    dt = QDateTime::fromString(exifStruct->digitizedDate, Exif::dateTimeFormat);
     if (!dt.date().isValid())
         dt.setDate(minDate);
     exifDigitizedDateEdit->setDate(dt.date());
@@ -360,10 +358,10 @@ void MetadataDialog::saveChanges() {
     QDateTime dt;
     dt.setDate(exifOriginalDateEdit->date());
     dt.setTime(exifOriginalTimeEdit->time());
-    exifStruct->originalDate = dt.toString(exifDateTimeFormat);
+    exifStruct->originalDate = dt.toString(Exif::dateTimeFormat);
     dt.setDate(exifDigitizedDateEdit->date());
     dt.setTime(exifDigitizedTimeEdit->time());
-    exifStruct->digitizedDate = dt.toString(exifDateTimeFormat);
+    exifStruct->digitizedDate = dt.toString(Exif::dateTimeFormat);
     // Photo toolbox
     exifStruct->focalLength = exifFocalLengthSpinBox->value();
     exifStruct->expTime = exifExpTimeComboBox->currentText();

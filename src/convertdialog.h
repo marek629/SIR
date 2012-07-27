@@ -59,25 +59,21 @@ public:
     void retranslateStrings();
 
 private:
+    // structs
+    /** \brief Struct storing data useful in user question functions.
+      * \sa ConvertDialog::questionOverwrite ConvertDialog::questionEnlarge
+      */
     struct QueryData {
+        /** Path to currently converted file by \a tid thread.
+          *\sa tid
+          */
         QString filePath;
+        /** The thread ID.
+          * \sa ConvertDialog::convertThreads
+          */
         int tid;
     };
-    void initList();
-    void init();
-    void createConnections();
-    inline void connectSizeLinesEdit();
-    inline void disconnectSizeLinesEdit();
-    void createActions();
-    void createRawFilesList();
-    void questionOverwrite(QueryData data);
-    void questionEnlarge(QueryData data);
-    inline void writeWindowProperties();
-    inline void resetAnswers();
-    QStringList *makeList();
-    QString makeImagePath(QTreeWidgetItem *item);
-    void convert();
-
+    // fields
     QQueue<QueryData> overwriteQueue;
     QQueue<QueryData> enlargeQueue;
     QList<ConvertThread*> convertThreads;
@@ -115,6 +111,24 @@ private:
     int exifPhoto;
     int exifImage;
     int iptcPrint;
+    QString dateFormat;
+    QString timeFormat;
+    QString dateTimeFormat;
+    // methods
+    void initList();
+    void init();
+    void createConnections();
+    inline void connectSizeLinesEdit();
+    inline void disconnectSizeLinesEdit();
+    void createActions();
+    void createRawFilesList();
+    void questionOverwrite(QueryData data);
+    void questionEnlarge(QueryData data);
+    inline void writeWindowProperties();
+    inline void resetAnswers();
+    QStringList *makeList();
+    QString makeImagePath(QTreeWidgetItem *item);
+    void convert();
 
 protected:
     virtual void changeEvent(QEvent *e);

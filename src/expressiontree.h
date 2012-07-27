@@ -71,9 +71,10 @@ public:
     virtual bool solve();
 };
 
+//! The compare function node of LogicalExpressionTree
 class CompareFunctionNode : public FunctionNode {
-
 public:
+    /** Simply name for pointer to function taking 2 value of children IntNode nodes. */
     typedef bool(*fnPtr)(qint64,qint64);
     CompareFunctionNode(fnPtr fn = 0, IntNode *leftChild = 0, IntNode *rightChild = 0);
     virtual ~CompareFunctionNode();
@@ -84,7 +85,7 @@ public:
     static bool isEqual(qint64,qint64);
     static bool isUpper(qint64,qint64);
     static bool isLower(qint64,qint64);
-    static fnPtr fnArray[3];
+    static const fnPtr fnArray[3];
 
 private:
     fnPtr function;
@@ -92,9 +93,12 @@ private:
     IntNode *child2;
 };
 
+//! The compare function node of LogicalExpressionTree
 class LogicalFunctionNode : public FunctionNode {
-
 public:
+    /** Simply name for pointer to function taking 2 value of children FunctionNode
+      * (or a inheriting class) nodes.
+      */
     typedef bool(*fnPtr)(bool,bool);
     LogicalFunctionNode(fnPtr fn = 0, FunctionNode *leftChild = 0, FunctionNode *rightChild = 0);
     virtual ~LogicalFunctionNode();
@@ -105,7 +109,7 @@ public:
     static bool logicalAnd(bool,bool);
     static bool logicalOr(bool,bool);
     static bool logicalXor(bool,bool);
-    static fnPtr fnArray[3];
+    static const fnPtr fnArray[3];
 
 private:
     fnPtr function;

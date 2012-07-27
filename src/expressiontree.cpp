@@ -24,12 +24,12 @@
 #include <QStringList>
 #include <QRegExp>
 
-// static variables
+// static const variables
 
 /** Comparison function pointers array corresponding
   * Selection::comparisonOperators string list.
   */
-CompareFunctionNode::fnPtr CompareFunctionNode::fnArray[3] = {
+const CompareFunctionNode::fnPtr CompareFunctionNode::fnArray[3] = {
     &CompareFunctionNode::isEqual,
     &CompareFunctionNode::isLower,
     &CompareFunctionNode::isUpper
@@ -38,7 +38,7 @@ CompareFunctionNode::fnPtr CompareFunctionNode::fnArray[3] = {
 /** Logical function pointers array corresponding Selection::logicalOperators
   * string list.
   */
-LogicalFunctionNode::fnPtr LogicalFunctionNode::fnArray[3] = {
+const LogicalFunctionNode::fnPtr LogicalFunctionNode::fnArray[3] = {
     &LogicalFunctionNode::logicalAnd,
     &LogicalFunctionNode::logicalOr,
     &LogicalFunctionNode::logicalXor

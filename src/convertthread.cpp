@@ -27,7 +27,6 @@
 #include <QDebug>
 #include <cmath>
 #include <QPainter>
-
 #include "convertthread.h"
 #include "defines.h"
 #include "rawutils.h"

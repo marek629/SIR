@@ -19,9 +19,7 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include <QtGlobal>
-
-#define VERSION "2.4 alpha"
+#define VERSION "2.4"
 #define NOTCONVERTED 1
 #define CONVERTED 2
 #define SKIPPED 3

@@ -32,7 +32,13 @@ class LanguageUtils;
 
 using namespace std;
 
+/** \brief File details options flags namespace.
+  *
+  * Flags are used to store settings whitch metadata print in file details view.
+  * \sa ConvertDialog::showDetails
+  */
 namespace DetailsOptions {
+/** Corresponding picture section in MetadataDialog's tool box. */
 enum ExifPicture {
     ExifVersion = 0x1,
     ProcessingSoftware = 0x2,
@@ -40,6 +46,7 @@ enum ExifPicture {
     DigitizedDateAndTime = 0x8,
     Orientation = 0x10
 };
+/** Corresponding photo section in MetadataDialog's tool box. */
 enum ExifPhoto {
     FocalLenght = 0x1,
     Aperture = 0x2,
@@ -51,15 +58,18 @@ enum ExifPhoto {
     LightMeteringMode = 0x80,
     FlashMode = 0x100
 };
+/** Corresponding camera section in MetadataDialog's tool box. */
 enum ExifCamera {
     Manufacturer = 0x1,
     Model = 0x2
 };
+/** Corresponding author section in MetadataDialog's tool box. */
 enum ExifAuthor {
     Artist = 0x1,
     Copyright = 0x2,
     UserComment = 0x4
 };
+/** Corresponding IPTC tab in MetadataDialog's tab widget. */
 enum Iptc {
     ModelVersion = 0x1,
     DateCreated = 0x2,
@@ -87,11 +97,7 @@ public:
     static quint8 detectCoresCount();
 
 private:
-    void createLanguageMenu();
-    void createConnections();
-    bool checkDcrawPath(QString fileName);
-    void setupWindow();
-
+    // fields
     LanguageUtils * languages;
     QMap<QString, QString> * fileToNiceName;
     QRegExpValidator* validator;
@@ -100,6 +106,11 @@ private:
     quint8 coresCount;
     static quint8 maxCoresCount;
     quint8 maxHistoryCount;
+    // methods
+    void createLanguageMenu();
+    void createConnections();
+    bool checkDcrawPath(QString fileName);
+    void setupWindow();
 
 private slots:
     void writeSettings();

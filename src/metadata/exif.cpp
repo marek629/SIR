@@ -24,12 +24,16 @@
 
 using namespace MetadataUtils;
 
-bool Exif::artistOverwrite = false;
-String Exif::artistString = "";
-bool Exif::copyrightOverwrite = false;
-String Exif::copyrightString = "";
-bool Exif::userCommentOverwrite = false;
-String Exif::userCommentString = "";
+// static variables initialization
+bool    Exif::artistOverwrite = false;
+String  Exif::artistString = "";
+bool    Exif::copyrightOverwrite = false;
+String  Exif::copyrightString = "";
+bool    Exif::userCommentOverwrite = false;
+String  Exif::userCommentString = "";
+// static const variables initialization
+/** Write format for date and time strings in \em "Exif" metadata. */
+const QString Exif::dateTimeFormat = "yyyy:MM:dd HH:mm:ss";
 
 /** Default constructor. */
 Exif::Exif() {

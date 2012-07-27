@@ -19,12 +19,9 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include <QString>
 #include <QDropEvent>
 #include <QMenu>
 #include <QPicture>
-#include <QStringList>
-#include <QDir>
 #include <QFileDialog>
 #include <QImageReader>
 #include <QImageWriter>
@@ -857,10 +854,16 @@ void ConvertDialog::showDetails() {
                                 exifStruct->orientation) + htmlBr;
                 if (exifImage & DetailsOptions::GeneratedDateAndTime)
                     htmlContent += tr("Generated Date and Time") + ": " +
-                            exifStruct->originalDate + htmlBr;
+                            MetadataUtils::String::fromDateTimeString(
+                                exifStruct->originalDate,
+                                MetadataUtils::Exif::dateTimeFormat,
+                                dateTimeFormat) + htmlBr;
                 if (exifImage & DetailsOptions::DigitizedDateAndTime)
                     htmlContent += tr("Digitized Date and Time") + ": " +
-                            exifStruct->digitizedDate + htmlBr;
+                            MetadataUtils::String::fromDateTimeString(
+                                exifStruct->digitizedDate,
+                                MetadataUtils::Exif::dateTimeFormat,
+                                dateTimeFormat) + htmlBr;
                 // exif photo
                 if (exifPhoto & DetailsOptions::FocalLenght)
                     htmlContent += tr("Focal lenght") + ": " +
@@ -916,17 +919,17 @@ void ConvertDialog::showDetails() {
                             iptcStruct->modelVersion + htmlBr;
                 if (iptcPrint & DetailsOptions::DateCreated)
                     htmlContent += tr("Created date") + ": " +
-                            iptcStruct->dateCreated.toString(Qt::LocalDate) + htmlBr;
+                            iptcStruct->dateCreated.toString(dateFormat) + htmlBr;
                 if (iptcPrint & DetailsOptions::TimeCreated)
                     htmlContent += tr("Created time") + ": " +
-                            iptcStruct->timeCreated.toString(Qt::LocalDate) + htmlBr;
+                            iptcStruct->timeCreated.toString(timeFormat) + htmlBr;
                 if (iptcPrint & DetailsOptions::DigitizedDate)
                     htmlContent += tr("Digitized date") + ": " +
-                            iptcStruct->digitizationDate.toString(Qt::LocalDate)
+                            iptcStruct->digitizationDate.toString(dateFormat)
                             + htmlBr;
                 if (iptcPrint & DetailsOptions::DigitizedTime)
                     htmlContent += tr("Digitized time") + ": " +
-                            iptcStruct->digitizationTime.toString(Qt::LocalDate)
+                            iptcStruct->digitizationTime.toString(timeFormat)
                             + htmlBr;
                 if (iptcPrint & DetailsOptions::Byline)
                     htmlContent += tr("Author") + ": " + iptcStruct->byline + htmlBr;
@@ -1255,10 +1258,15 @@ void ConvertDialog::readSettings() {
     QString qtTranslationFile = "qt_" +
             selectedTranslationFile.split('_').at(1).split('.').first();
 
-    qtTranslator->load(qtTranslationFile, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    qtTranslator->load(qtTranslationFile,
+                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     appTranslator->load(selectedTranslationFile);
 
     alreadSent = settings.value("alreadSent",false).toBool();
+
+    dateFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString();
+    timeFormat = settings.value("timeDisplayFormat","HH:mm:ss").toString();
+    dateTimeFormat = dateFormat + ' ' + timeFormat;
 
     retranslateStrings();
     settings.endGroup(); // Settings
