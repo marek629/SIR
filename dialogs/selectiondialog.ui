@@ -26,7 +26,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-131</y>
         <width>606</width>
         <height>556</height>
        </rect>
@@ -39,6 +39,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Accepts regular expression</string>
          </property>
         </widget>
        </item>
@@ -102,6 +105,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Accepts regular expression</string>
+         </property>
         </widget>
        </item>
        <item row="3" column="0">
@@ -118,6 +124,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Accepts regular expression</string>
          </property>
         </widget>
        </item>
@@ -155,6 +164,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
+            </property>
            </widget>
           </item>
           <item row="1" column="0">
@@ -179,6 +191,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
+            </property>
            </widget>
           </item>
           <item row="0" column="1" colspan="3">
@@ -188,6 +203,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
             </property>
            </widget>
           </item>
@@ -274,19 +292,24 @@
            </widget>
           </item>
           <item row="2" column="1" colspan="4">
-           <widget class="HistoryComboBox" name="authorComboBox"/>
+           <widget class="HistoryComboBox" name="authorComboBox">
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
+            </property>
+           </widget>
           </item>
           <item row="3" column="1" colspan="4">
-           <widget class="HistoryComboBox" name="copyrightComboBox"/>
+           <widget class="HistoryComboBox" name="copyrightComboBox">
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="fileNameLabel">
-         <property name="toolTip">
-          <string>Accepts regular expression</string>
-         </property>
          <property name="text">
           <string>File name</string>
          </property>
@@ -319,6 +342,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
+            </property>
            </widget>
           </item>
           <item row="3" column="3">
@@ -328,6 +354,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
             </property>
            </widget>
           </item>
@@ -346,6 +375,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
+            </property>
            </widget>
           </item>
           <item row="3" column="1">
@@ -355,6 +387,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
             </property>
            </widget>
           </item>
@@ -372,6 +407,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
             </property>
            </widget>
           </item>
@@ -403,6 +441,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Accepts regular expression</string>
             </property>
            </widget>
           </item>
