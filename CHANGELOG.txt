@@ -8,11 +8,12 @@
     - Bugfix loading preview from Exif metadata
     - Added main page in documentation
     - Save last visited directory
-    - Bugfix image rotation
+    - Simplification of mutual exlusions in ConvertThread
+    - Bugfix image rotation and set empty iptcData
     - In metadata dialog Exif's original and digitized date and time edit field was separated
     - Save text edit history when metadata is saved only
     - Minor improvements in metadata dialog and history combo box
-    - Corrected LICENSE file and Free Software Foundation's address in SIR source files. Thanks Praveen Kumar
+    - Corrected LICENSE file and Free Software Foundation's address in SIR source files. Reported by Praveen Kumar
     - Polish translation updated
 
 * Mon May 07 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.3.1

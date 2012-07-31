@@ -30,7 +30,9 @@
 #include "convertthread.h"
 #include "defines.h"
 #include "rawutils.h"
+#include "messagebox.h"
 
+// setup static fields
 SharedInformation* ConvertThread::shared = new SharedInformation();
 
 /** Default constructor.
@@ -165,7 +167,6 @@ void ConvertThread::setDestFolder(const QDir& destFolder) {
 
 /** Allow overwrite all files. */
 void ConvertThread::setOverwriteAll(bool overwriteAll) {
-    QMutexLocker locker(&(shared->mutex));
     shared->overwriteAll = overwriteAll;
 }
 
@@ -173,26 +174,8 @@ void ConvertThread::convertImage(const QString& name, const QString& extension,
                                  const QString& path) {
     imageData.clear();
     imageData << name << extension << path;
-    if(!isRunning()) {
+    if(!isRunning())
         start();
-    }
-}
-
-void ConvertThread::confirmOverwrite(int result) {
-    shared->overwriteResult = result;
-    overwriteMutex.unlock();
-    overwriteCondition.wakeOne();
-}
-
-void ConvertThread::confirmEnlarge(int result) {
-    shared->enlargeResult = result;
-    enlargeMutex.unlock();
-    enlargeCondition.wakeOne();
-}
-
-void ConvertThread::confirmImage() {
-    QMutexLocker locker(&imageMutex);
-    imageCondition.wakeOne();
 }
 
 /** This is main function of thread.\n
@@ -203,6 +186,7 @@ void ConvertThread::run() {
     bool rawEnabled = RawUtils::isRawEnabled();
 
     while(work) {
+        QStringList imgData = this->imageData; // imageData change protection by convertImage()
         sizeComputed = 0;
         width = shared->width;
         height = shared->height;
@@ -213,15 +197,15 @@ void ConvertThread::run() {
         angle = shared->angle;
 
         if (shared->abort) {
-            emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+            emit imageStatus(imgData, tr("Cancelled"), CANCELLED);
             getNextOrStop();
             continue;
         }
 
-        emit imageStatus(imageData, tr("Converting"), CONVERTING);
+        emit imageStatus(imgData, tr("Converting"), CONVERTING);
 
-        QString imageName = imageData.at(0);
-        QString originalFormat = imageData.at(1);
+        QString imageName = imgData.at(0);
+        QString originalFormat = imgData.at(1);
 
         targetFilePath = shared->destFolder.absolutePath() + QDir::separator();
         if (!shared->prefix.isEmpty())
@@ -231,8 +215,8 @@ void ConvertThread::run() {
             targetFilePath += "_" + shared->suffix;
         targetFilePath += "." + shared->format;
 
-        QString imagePath = imageData.at(2) + QDir::separator() +
-                            imageData.at(0) + "." + originalFormat;
+        QString imagePath = imgData.at(2) + QDir::separator() +
+                            imgData.at(0) + "." + originalFormat;
         originalFormat = originalFormat.toLower();
 
         QImage *image = 0;
@@ -261,7 +245,7 @@ void ConvertThread::run() {
 
         if(image->isNull()) {
             //For some reason we where not able to open the image file
-            emit imageStatus(imageData, tr("Failed to open original image"),
+            emit imageStatus(imgData, tr("Failed to open original image"),
                               FAILED);
             delete image;
 
@@ -330,38 +314,38 @@ void ConvertThread::run() {
         // ask overwrite
         if ( QFile::exists( targetFilePath ) &&
              !(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
-            if (!(shared->overwriteAll
-               || shared->abort || shared->noOverwriteAll)) {
-                overwriteMutex.lock();
-                emit question(targetFilePath,tid,"overwrite");
-                overwriteCondition.wait(&overwriteMutex);
+            if (!(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
+                shared->mutex.lock();
+                emit question(targetFilePath, Overwrite);
+                shared->mutex.unlock();
             }
-            if(shared->overwriteResult == 0 || shared->overwriteResult == 2) {
+            if(shared->overwriteResult == QMessageBox::Yes ||
+                    shared->overwriteResult == QMessageBox::YesToAll) {
                 if (destImg.save(targetFilePath, 0, shared->quality)) {
-                    if (saveMetadata)
-                        metadata.write(targetFilePath, destImg);
-                    emit imageStatus(imageData, tr("Converted"), CONVERTED);
+                    if (saveMetadata && !metadata.write(targetFilePath, destImg))
+                        printError();
+                    emit imageStatus(imgData, tr("Converted"), CONVERTED);
                 }
                 else
-                    emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+                    emit imageStatus(imgData, tr("Failed to convert"), FAILED);
             }
-            else if (shared->overwriteResult == 4)
-                emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+            else if (shared->overwriteResult == QMessageBox::Cancel)
+                emit imageStatus(imgData, tr("Cancelled"), CANCELLED);
             else
-                emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+                emit imageStatus(imgData, tr("Skipped"), SKIPPED);
         }
         else if (shared->noOverwriteAll)
-            emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+            emit imageStatus(imgData, tr("Skipped"), SKIPPED);
         else if (shared->abort)
-            emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+            emit imageStatus(imgData, tr("Cancelled"), CANCELLED);
         else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFilePath, 0, shared->quality)) {
-                if (saveMetadata)
-                    metadata.write(targetFilePath, destImg);
-                emit imageStatus(imageData, tr("Converted"), CONVERTED);
+                if (saveMetadata && !metadata.write(targetFilePath, destImg))
+                    printError();
+                emit imageStatus(imgData, tr("Converted"), CONVERTED);
             }
             else
-                emit imageStatus(imageData, tr("Failed to convert"), FAILED);
+                emit imageStatus(imgData, tr("Failed to convert"), FAILED);
         }
         delete image;
         getNextOrStop();
@@ -370,19 +354,19 @@ void ConvertThread::run() {
 
 /** Gets next image for converting or stops this thread. */
 void ConvertThread::getNextOrStop() {
-    imageMutex.lock();
+    static QMutex m;
+    QMutexLocker locker(&m);
     emit getNextImage(this->tid);
-    imageCondition.wait(&imageMutex);
-    imageMutex.unlock();
 }
 
 /** Prints metadata error message on standard error output. */
 void ConvertThread::printError() {
     MetadataUtils::Error *error = metadata.lastError();
-    qWarning() << "tid:" << tid << "/n"
-               << "    " << error->message() << "/n"
-               << "    " << tr("Error code:") << error->code() << "/n"
+    qWarning() << "tid:" << tid << '\n'
+               << "    " << error->message() << '\n'
+               << "    " << tr("Error code:") << error->code() << '\n'
                << "    " << error->what();
+    delete error;
 }
 
 /** Rotates \b image */
@@ -680,12 +664,13 @@ char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
     if ( (image.width()<width && image.width()>=image.height()) ||
          (image.height()<height && image.width()<=image.height()) ) {
         if (!(shared->enlargeAll || shared->noEnlargeAll || shared->abort)) {
-            enlargeMutex.lock();
-            emit question(imagePath,tid,"enlarge");
-            enlargeCondition.wait(&enlargeMutex);
+            shared->mutex.lock();
+            emit question(imagePath, Enlarge);
+            shared->mutex.unlock();
         }
-        if (shared->enlargeResult != 0 && shared->enlargeResult != 2) {
-            if (shared->enlargeResult == 4)
+        if (shared->enlargeResult != QMessageBox::Yes &&
+                shared->enlargeResult != QMessageBox::YesToAll) {
+            if (shared->enlargeResult == QMessageBox::Cancel)
                 emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
             else
                 emit imageStatus(imageData, tr("Skipped"), SKIPPED);
@@ -702,15 +687,14 @@ char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
   */
 char ConvertThread::askOverwrite(QFile *tempFile) {
     if ( QFile::exists( targetFilePath ) &&
-         !(shared->overwriteAll || shared->abort
-           || shared->noOverwriteAll)) {
-        if (!(shared->overwriteAll || shared->abort
-              || shared->noOverwriteAll)) {
-            overwriteMutex.lock();
-            emit question(targetFilePath,tid,"overwrite");
-            overwriteCondition.wait(&overwriteMutex);
+         !(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
+        if (!(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
+            shared->mutex.lock();
+            emit question(targetFilePath, Overwrite);
+            shared->mutex.unlock();
         }
-        if(shared->overwriteResult == 0 || shared->overwriteResult == 2) {
+        if(shared->overwriteResult == QMessageBox::Yes ||
+                shared->overwriteResult == QMessageBox::YesToAll) {
             QFile::remove(targetFilePath);
             if (tempFile->copy(targetFilePath))
                 emit imageStatus(imageData, tr("Converted"), CONVERTED);
@@ -719,7 +703,7 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
                 return -1;
             }
         }
-        else if (shared->overwriteResult == 4)
+        else if (shared->overwriteResult == QMessageBox::Cancel)
             emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
         else
             emit imageStatus(imageData, tr("Skipped"), SKIPPED);

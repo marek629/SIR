@@ -292,24 +292,21 @@ void ConvertDialog::setupThreads(int numThreads) {
     // clearing list of threads
     while (!convertThreads.isEmpty())
         delete convertThreads.takeFirst();
-
+    // setup threads
     for(int i = 0; i < numThreads; i++) {
+        // creating new thread
         convertThreads.append(new ConvertThread(this, i));
-    }
-
-    for (int i = 0; i < numThreads; i++) {
+        // connecting
         connect(convertThreads[i],
-                SIGNAL(question(const QString &, int, const QString&)),this,
-                SLOT(query(const QString &, int, const QString&)),
-                Qt::QueuedConnection);
-
+                SIGNAL(question(const QString &, Question)),
+                SLOT(query(const QString &, Question)),
+                Qt::BlockingQueuedConnection);
         connect(convertThreads[i],
                 SIGNAL(imageStatus(const QStringList &, const QString &, int)),
                 SLOT(setImageStatus(const QStringList &, const QString &, int)),
                 Qt::QueuedConnection);
-
-        connect(convertThreads[i], SIGNAL(getNextImage(int)),this,
-                SLOT(giveNextImage(int)), Qt::QueuedConnection);
+        connect(convertThreads[i], SIGNAL(getNextImage(int)),
+                SLOT(giveNextImage(int)), Qt::BlockingQueuedConnection);
     }
 }
 
@@ -398,7 +395,7 @@ void ConvertDialog::browseDestination() {
     }
 }
 
-/** Gives next image for worker thread legitimazed \a tid thread ID. */
+/** Gives next image for worker thread legitimazed \a threadNum thread ID. */
 void ConvertDialog::giveNextImage(int threadNum) {
 
     QTreeWidgetItem *item = NULL;
@@ -407,17 +404,16 @@ void ConvertDialog::giveNextImage(int threadNum) {
         item = itemsToConvert[convertedImages];
         convertThreads[threadNum]->convertImage(item->text(0), item->text(1),
                                                 item->text(2));
-        convertThreads[threadNum]->confirmImage();
+//        convertThreads[threadNum]->confirmImage();
         convertedImages++;
     }
     else {
         convertThreads[threadNum]->setAcceptWork(false);
-        convertThreads[threadNum]->confirmImage();
+//        convertThreads[threadNum]->confirmImage();
     }
 }
 
-/** Remove all button and action slot.
-  * Remove all items of tree widget.
+/** Remove all button and action slot. Removes all items of tree widget.
   * \sa removeSelectedFromList
   */
 void ConvertDialog::removeAll() {
@@ -1426,7 +1422,6 @@ void ConvertDialog::updateTree() {
   */
 void ConvertDialog::setImageStatus(const QStringList& imageData,
                                    const QString& status, int statusNum) {
-
     if(statusNum != CONVERTING) {
         //We don't want to update the status bar if the statusValue is
         //CONVERTING
@@ -1434,7 +1429,6 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
     }
     int count = filesTreeWidget->topLevelItemCount();
     QString fileName;
-
     for (int i = 0; i < count; i++)
     {
         QTreeWidgetItem *item = filesTreeWidget->topLevelItem(i);
@@ -1447,10 +1441,8 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
             break;
         }
     }
-
-    if(convertProgressBar->value() == convertProgressBar->maximum()) {
+    if(convertProgressBar->value() == convertProgressBar->maximum())
         updateInterface();
-    }
 }
 
 /** Ask for users agreement of typed action on file.
@@ -1458,90 +1450,56 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
   * \param tid Worker thread ID.
   * \param whatToDo Action on target file. Support for \em overwrite and \em enlarge only.
   */
-void ConvertDialog::query(const QString& targetFile, int tid, const QString& whatToDo) {
-
-    QueryData data = {targetFile,tid};
-    QString what = whatToDo.toLower();
-    if (what == "overwrite")
-        overwriteQueue.enqueue(data);
-    else if (what == "enlarge")
-        enlargeQueue.enqueue(data);
-    else {
-        qWarning("ConvertDialog::query(): bad \"whatToDo\" argument");
-        convertThreads[tid]->confirmEnlarge(1);
-        convertThreads[tid]->confirmOverwrite(1);
-        return;
+void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
+    switch (whatToDo) {
+    case Enlarge:
+        if (ConvertThread::shared->noEnlargeAll)
+            ConvertThread::shared->enlargeResult = QMessageBox::NoToAll;
+        else if (ConvertThread::shared->abort)
+            ConvertThread::shared->enlargeResult = QMessageBox::Cancel;
+        else if (!ConvertThread::shared->enlargeAll) {
+            int result = MessageBox::question(
+                        this,
+                        tr("Enlarge File? - SIR"),
+                        tr("A file called %1 is smaller than the requested size. "
+                           "Enlargement can cause deterioration of picture quality. "
+                           "Do you want enlarge it?").arg(targetFile) );
+            if (result == MessageBox::YesToAll)
+                ConvertThread::shared->enlargeAll = true;
+            else if (result == MessageBox::NoToAll)
+                ConvertThread::shared->noEnlargeAll = true;
+            else if (result == MessageBox::Cancel)
+                ConvertThread::shared->abort = true;
+            ConvertThread::shared->enlargeResult = result;
+        }
+        else
+            ConvertThread::shared->enlargeResult = QMessageBox::YesToAll;
+        break;
+    case Overwrite:
+        if (ConvertThread::shared->noOverwriteAll)
+            ConvertThread::shared->overwriteResult = QMessageBox::NoToAll;
+        else if(ConvertThread::shared->abort)
+            ConvertThread::shared->overwriteResult = QMessageBox::Cancel;
+        else if(!ConvertThread::shared->overwriteAll) {
+            int result = MessageBox::question(
+                             this,
+                             tr("Overwrite File? -- SIR"),
+                             tr("A file called %1 already exists."
+                                "Do you want to overwrite it?").arg(targetFile) );
+            if (result == QMessageBox::YesToAll)
+                ConvertThread::shared->overwriteAll = true;
+            else if (result == QMessageBox::NoToAll)
+                ConvertThread::shared->noOverwriteAll = true;
+            else if (result == QMessageBox::Cancel)
+                ConvertThread::shared->abort = true;
+            ConvertThread::shared->overwriteResult = result;
+        }
+        else
+            ConvertThread::shared->overwriteResult = QMessageBox::YesToAll;
+        break;
+    default:
+        break;
     }
-    static bool flag = true;
-    static int id = -1;
-    if (id == -1)
-        id = tid;
-    if (tid==id && flag) {
-        flag = false;
-        while (!enlargeQueue.isEmpty())
-            questionEnlarge(enlargeQueue.dequeue());
-        while (!overwriteQueue.isEmpty())
-            questionOverwrite(overwriteQueue.dequeue());
-        id = -1;
-        flag = true;
-    }
-}
-
-/** Asks the user for agree to overwrite image corresponding to \b data. */
-void ConvertDialog::questionOverwrite(QueryData data) {
-
-    if (ConvertThread::shared->noOverwriteAll)
-        convertThreads[data.tid]->confirmOverwrite(3);
-    else if(ConvertThread::shared->abort)
-        convertThreads[data.tid]->confirmOverwrite(4);
-    else if(!ConvertThread::shared->overwriteAll) {
-
-        int result = MessageBox::question(
-                         this,
-                         tr("Overwrite File? -- SIR"),
-                         tr("A file called %1 already exists."
-                            "Do you want to overwrite it?").arg( data.filePath) );
-
-        if (result == MessageBox::YesToAll)
-            ConvertThread::shared->overwriteAll = true;
-        else if (result == MessageBox::NoToAll)
-            ConvertThread::shared->noOverwriteAll = true;
-        else if (result == MessageBox::Cancel)
-            ConvertThread::shared->abort = true;
-
-        convertThreads[data.tid]->confirmOverwrite(result);
-    }
-    else
-        convertThreads[data.tid]->confirmOverwrite(2);
-}
-
-/** Asks the user for agree to enlarge image corresponding to \b data. */
-void ConvertDialog::questionEnlarge(QueryData data) {
-
-    if (ConvertThread::shared->noEnlargeAll)
-        convertThreads[data.tid]->confirmEnlarge(3);
-    else if (ConvertThread::shared->abort)
-        convertThreads[data.tid]->confirmEnlarge(4);
-    else if (!ConvertThread::shared->enlargeAll) {
-
-        int result = MessageBox::question(
-                    this,
-                    tr("Enlarge File? - SIR"),
-                    tr("A file called %1 is smaller than the requested size. "
-                       "Enlargement can cause deterioration of picture quality. "
-                       "Do you want enlarge it?").arg(data.filePath));
-
-        if (result == MessageBox::YesToAll)
-            ConvertThread::shared->enlargeAll = true;
-        else if (result == MessageBox::NoToAll)
-            ConvertThread::shared->noEnlargeAll = true;
-        else if (result == MessageBox::Cancel)
-            ConvertThread::shared->abort = true;
-
-        convertThreads[data.tid]->confirmEnlarge(result);
-    }
-    else
-        convertThreads[data.tid]->confirmEnlarge(2);
 }
 
 /** Retranslates GUI. */

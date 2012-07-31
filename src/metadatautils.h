@@ -89,7 +89,6 @@ private:
     Exiv2::XmpData xmpData;
 #endif // EXV_HAVE_XMP_TOOLKIT
     QList<Error*> errorList;
-    Error *lastError_;
     static bool enabled;
     static bool save;
     static QStringList saveMetadataFormats;
@@ -98,7 +97,7 @@ private:
     IptcStruct iptcStruct_;
     bool firstEmptyItemSkipped;
     // methods
-    void setData(const QImage &img);
+    bool setData(const QImage &img);
     void removeDatum(const std::string &key);
 };
 

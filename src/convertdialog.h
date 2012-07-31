@@ -23,8 +23,6 @@
 #define CONVERTDIALOG_H
 
 #include <QSettings>
-#include <QQueue>
-
 #include "ui_convertdialog.h"
 #include "convertthread.h"
 
@@ -48,7 +46,6 @@ class MetadataDialog;
 
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
-
     Q_OBJECT
     friend class Selection;
     friend class SelectionDialog;
@@ -59,23 +56,7 @@ public:
     void retranslateStrings();
 
 private:
-    // structs
-    /** \brief Struct storing data useful in user question functions.
-      * \sa ConvertDialog::questionOverwrite ConvertDialog::questionEnlarge
-      */
-    struct QueryData {
-        /** Path to currently converted file by \a tid thread.
-          *\sa tid
-          */
-        QString filePath;
-        /** The thread ID.
-          * \sa ConvertDialog::convertThreads
-          */
-        int tid;
-    };
     // fields
-    QQueue<QueryData> overwriteQueue;
-    QQueue<QueryData> enlargeQueue;
     QList<ConvertThread*> convertThreads;
     QString args;
     QStringList argsList;
@@ -122,8 +103,6 @@ private:
     inline void disconnectSizeLinesEdit();
     void createActions();
     void createRawFilesList();
-    void questionOverwrite(QueryData data);
-    void questionEnlarge(QueryData data);
     inline void writeWindowProperties();
     inline void resetAnswers();
     QStringList *makeList();
@@ -155,7 +134,7 @@ public slots:
     void readSettings();
     void updateTree();
     void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
-    void query(const QString& targetFile, int tid, const QString& whatToDo);
+    void query(const QString& targetFile, Question whatToDo);
     void giveNextImage(int tid);
     void setupThreads(int numThreads);
     void closeOrCancel();

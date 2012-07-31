@@ -30,21 +30,25 @@
 
 class QSvgRenderer;
 
-//! Image convertion thread class.
-/** Threads converting images work in main loop implemented in run method.
+//! Enumerator for ConvertThread::question signal.
+enum Question {
+    Overwrite,
+    Enlarge
+};
+
+/** \brief Image convertion thread class.
+  *
+  * Threads converting images work in main loop implemented in run method.
   * \sa run
   */
 class ConvertThread : public QThread {
-
     Q_OBJECT
+    friend class ConvertDialog;
 
 public:
     ConvertThread(QObject *parent, int tid);
     void convertImage(const QString& name, const QString& extension,
                       const QString& path);
-    void confirmOverwrite(int result);
-    void confirmEnlarge(int result);
-    void confirmImage();
     void setAcceptWork(bool work);
     void getNextOrStop();
     void printError();
@@ -66,27 +70,16 @@ public:
     static void setUpdateThumbnail(bool update);
     static void setRotateThumbnail(bool rotate);
 
-    static SharedInformation *shared;
-
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
-    void question(const QString& targetFilePath, int tid, const QString& whatToDo);
+    void question(const QString& targetFilePath, Question whatToDo);
     void getNextImage(int tid);
 
 private:
-    void run();
-    void rotateImage(QImage *image);
-    void updateThumbnail(const QImage *image);
-    char computeSize(const QImage *image, const QString &imagePath);
-    char computeSize(QSvgRenderer *renderer, const QString &imagePath);
-    bool isLinearFileSizeFormat(double *destSize);
-    char askEnlarge(const QImage &image, const QString &imagePath);
-    char askOverwrite(QFile *tempFile);
-
+    // fields
+    static SharedInformation *shared;
     bool work;
     QStringList imageData;
-    QMutex imageMutex;
-    QWaitCondition imageCondition;
     int tid;
     bool hasWidth;
     bool hasHeight;
@@ -96,12 +89,17 @@ private:
     bool saveMetadata;
     bool rotate;
     double angle;
-    QMutex overwriteMutex;
-    QWaitCondition overwriteCondition;
-    QMutex enlargeMutex;
-    QWaitCondition enlargeCondition;
     MetadataUtils::Metadata metadata;
     QString targetFilePath;
+    // methods
+    void run();
+    void rotateImage(QImage *image);
+    void updateThumbnail(const QImage *image);
+    char computeSize(const QImage *image, const QString &imagePath);
+    char computeSize(QSvgRenderer *renderer, const QString &imagePath);
+    bool isLinearFileSizeFormat(double *destSize);
+    char askEnlarge(const QImage &image, const QString &imagePath);
+    char askOverwrite(QFile *tempFile);
 };
 
 #endif

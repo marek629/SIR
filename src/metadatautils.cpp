@@ -19,11 +19,11 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
+#include "metadatautils.h"
+#include "defines.h"
 #include <QStringList>
 #include <QDir>
 #include <cmath>
-#include "metadatautils.h"
-#include "defines.h"
 
 using namespace MetadataUtils;
 
@@ -106,15 +106,18 @@ bool Metadata::write(const String& path, const QImage& qImage) {
     try {
         std::string filePath = path.toNativeStdString();
         image = Exiv2::ImageFactory::open(filePath);
-        setData(qImage);
-        image->writeMetadata();
-        return true;
+        image->readMetadata();
+        image->clearMetadata();
+        if (setData(qImage)) {
+            image->writeMetadata();
+            return true;
+        }
     }
     catch (Exiv2::Error &e) {
-        QString message = tr("Error open file %1").arg(path.toQString());
+        QString message = tr("Write file %1 error").arg(path.toQString());
         errorList += new Error(message,e);
-        return false;
     }
+    return false;
 }
 
 /** This is overloaded function. */
@@ -143,7 +146,8 @@ void Metadata::clearMetadata() {
   * in \em Exif.Image.ImageWidth and \em Exif.Image.ImageLength; otherwise this
   * metadata fields will filled from current Exiv2::Image \a image file.
   */
-void Metadata::setData(const QImage& qImage) {
+bool Metadata::setData(const QImage& qImage) {
+    bool result = false;
     if (!exifData.empty()) {
         if (!exif.isVersionKnown()) {
             Exiv2::byte version[4] = { 48, 50, 50, 48 };
@@ -168,12 +172,20 @@ void Metadata::setData(const QImage& qImage) {
         if (Exif::isUserCommentOverwrite())
             exifData["Exif.Photo.UserComment"] =
                     Exif::stringUserComment().toNativeStdString();
+        image->setExifData(exifData);
+        result = true;
     }
-    image->setExifData(exifData);
-    image->setIptcData(iptcData);
+    if (!iptcData.empty() && iptcData["Iptc.Envelope.ModelVersion"].toLong() != -1) {
+        image->setIptcData(iptcData);
+        result = true;
+    }
 #ifdef EXV_HAVE_XMP_TOOLKIT
-    image->setXmpData(xmpData);
+    if (!xmpData.empty()) {
+        image->setXmpData(xmpData);
+        result = true;
+    }
 #endif // EXV_HAVE_XMP_TOOLKIT
+    return result;
 }
 
 /** Returns a reference to metadatum object basing \a key string.
