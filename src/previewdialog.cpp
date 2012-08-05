@@ -35,11 +35,10 @@
 #include <QDebug>
 #include <QtSvg/QSvgRenderer>
 #include <QDialogButtonBox>
-#include <QSettings>
-
 #include "previewdialog.h"
 #include "rawutils.h"
 #include "metadatautils.h"
+#include "settings.h"
 
 #define H 115
 #define W 50
@@ -461,7 +460,7 @@ bool PreviewDialog::saveAs() {
         connect(comboBox, SIGNAL(currentIndexChanged(QString)),
                 this, SLOT(setDestFileExt(QString)) );
         comboBox->setCurrentIndex(
-                    QSettings("SIR").value("Settings/targetFormat",0).toInt() );
+                    comboBox->findText(Settings::instance().settings.targetFormat));
         layout->addWidget(comboBox);
         QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
                                                            QDialogButtonBox::Cancel,

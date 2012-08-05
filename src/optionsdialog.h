@@ -24,13 +24,7 @@
 
 #include "ui_optionsdialog.h"
 
-class QSettings;
-class QDir;
-class QImageWriter;
-class ConvertDialog;
 class LanguageUtils;
-
-using namespace std;
 
 /** \brief File details options flags namespace.
   *
@@ -113,8 +107,8 @@ private:
     void setupWindow();
 
 private slots:
-    void writeSettings();
-    void readSettings();
+    void saveSettings();
+    void loadSettings();
     void browseDestination();
     void browseDcraw();
     void setRawStatus(int state);

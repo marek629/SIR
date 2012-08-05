@@ -19,7 +19,6 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include <QSettings>
 #include <QDir>
 #include <QImageWriter>
 #include <QCompleter>
@@ -30,7 +29,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QThread>
-
 #include "optionsdialog.h"
 #include "languageutils.h"
 #include "convertdialog.h"
@@ -83,7 +81,7 @@ OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, 
     createLanguageMenu();
     createConnections();
     setupWindow();
-    readSettings();
+    loadSettings();
 
     delete dir;
     delete completer;
@@ -127,7 +125,7 @@ void OptionsDialog::createConnections() {
     connect(rawCheckBox, SIGNAL(stateChanged(int)), SLOT(setRawStatus(int)));
 
     // ok button
-    connect(okButton,SIGNAL(clicked()), this, SLOT(writeSettings()));
+    connect(okButton,SIGNAL(clicked()), this, SLOT(saveSettings()));
 }
 
 /** Sets validator objects for same line edits widgets, splitter sizes and
@@ -253,73 +251,54 @@ void OptionsDialog::browseDcraw() {
 /** Writes settings based values of the user input wigets.
   * \sa readSettings
   */
-void OptionsDialog::writeSettings() {
-    QSettings settings("SIR");
-
-    // general
-    settings.beginGroup("Settings");
-    settings.setValue("targetFolder", targetFolderLineEdit->text());
-    settings.setValue("targetFormat", targetFormatComboBox->currentIndex());
-    settings.setValue("targetPrefix",targetPrefixLineEdit->text());
-    settings.setValue("targetSuffix", targetSuffixLineEdit->text());
-    settings.setValue("quality", qualitySpinBox->value());
-    settings.setValue("languageNiceName", languagesComboBox->currentText());
-    settings.setValue("languageFileName",
-                      fileToNiceName->value(languagesComboBox->currentText()));
-    settings.setValue("dateDisplayFormat", dateDisplayFormatLineEdit->text());
-    settings.setValue("timeDisplayFormat", timeDisplayFormatLineEdit->text());
+void OptionsDialog::saveSettings() {
+    Settings &s = Settings::instance();
+    // general settings
+    s.settings.targetFolder         = targetFolderLineEdit->text();
+    s.settings.targetFormat         = targetFormatComboBox->currentIndex();
+    s.settings.targetPrefix         = targetPrefixLineEdit->text();
+    s.settings.targetSuffix         = targetSuffixLineEdit->text();
+    s.settings.quality              = qualitySpinBox->value();
+    s.settings.languageNiceName     = languagesComboBox->currentText();
+    s.settings.languageFileName     = fileToNiceName->value(
+                                            languagesComboBox->currentText() );
+    s.settings.dateDisplayFormat    = dateDisplayFormatLineEdit->text();
+    s.settings.timeDisplayFormat    = timeDisplayFormatLineEdit->text();
     if (coresCheckBox->isChecked())
-        settings.setValue("cores", 0);
+        s.settings.cores            = 0;
     else
-        settings.setValue("cores", coresSpinBox->value());
-    settings.setValue("maxHistoryCount", historySpinBox->value());
-    settings.endGroup(); // Settings
-
+        s.settings.cores            = coresSpinBox->value();
+    s.settings.maxHistoryCount      = historySpinBox->value();
     // size
-    settings.beginGroup("Size");
-    settings.setValue("sizeUnit", sizeUnitComboBox->currentIndex());
-    settings.setValue("widthPx",widthLineEdit->text());
-    settings.setValue("widthPercent", widthPercentLineEdit->text());
-    settings.setValue("heightPx",heightLineEdit->text());
-    settings.setValue("heightPercent", heightPercentLineEdit->text());
-    settings.setValue("fileSizeValue", fileSizeSpinBox->value());
-    settings.setValue("fileSizeUnit", fileSizeComboBox->currentIndex());
-    settings.endGroup(); // Size
-
+    s.size.sizeUnit         = sizeUnitComboBox->currentIndex();
+    s.size.widthPx          = widthLineEdit->text();
+    s.size.widthPercent     = widthPercentLineEdit->text();
+    s.size.heightPx         = heightLineEdit->text();
+    s.size.heightPercent    = heightPercentLineEdit->text();
+    s.size.fileSizeValue    = fileSizeSpinBox->value();
+    s.size.fileSizeUnit     = fileSizeComboBox->currentIndex();
     // metadata (general part)
-    settings.beginGroup("Metadata");
-    settings.setValue("metadata", metadataCheckBox->isChecked());
-    settings.setValue("saveMetadata", saveMetadataCheckBox->isChecked());
-    settings.setValue("realRotate", rotateRadioButton->isChecked());
-    settings.setValue("updateThumbnail", thumbUpdateCheckBox->isChecked());
-    settings.setValue("rotateThumbnail", thumbRotateCheckBox->isChecked());
-    settings.endGroup(); // Metadata
-
+    s.metadata.enabled          = metadataCheckBox->isChecked();
+    s.metadata.saveMetadata     = saveMetadataCheckBox->isChecked();
+    s.metadata.realRotate       = rotateRadioButton->isChecked();
+    s.metadata.updateThumbnail  = thumbUpdateCheckBox->isChecked();
+    s.metadata.rotateThumbnail  = thumbRotateCheckBox->isChecked();
     // metadata (Exif part)
-    settings.beginGroup("Exif");
-    QMap<QString,QVariant> exifMap;
-    QList<QVariant> exifList;
-
-    settings.setValue("artistOverwrite", exifArtistCheckBox->isChecked());
-    exifArtistComboBox->exportHistory(&exifMap,&exifList,maxHistoryCount);
-    settings.setValue("artistMap", exifMap);
-    settings.setValue("artistList", exifList);
-
-    settings.setValue("copyrightOverwrite", exifCopyrightCheckBox->isChecked());
-    exifCopyrightComboBox->exportHistory(&exifMap,&exifList,maxHistoryCount);
-    settings.setValue("copyrightMap", exifMap);
-    settings.setValue("copyrightList", exifList);
-
-    settings.setValue("userCommentOverwrite",
-                      exifUserCommentCheckBox->isChecked());
-    exifUserCommentComboBox->exportHistory(&exifMap,&exifList,maxHistoryCount);
-    settings.setValue("userCommentMap", exifMap);
-    settings.setValue("userCommentList", exifList);
-
-    settings.endGroup(); // Exif
-
+    HistoryMap  historyMap;
+    HistoryList historyList;
+    s.exif.artistOverwrite      = exifArtistCheckBox->isChecked();
+    exifArtistComboBox->exportHistory(&historyMap,&historyList,maxHistoryCount);
+    s.exif.artistMap            = historyMap;
+    s.exif.artistList           = historyList;
+    s.exif.copyrightOverwrite   = exifCopyrightCheckBox->isChecked();
+    exifCopyrightComboBox->exportHistory(&historyMap,&historyList,maxHistoryCount);
+    s.exif.copyrightMap         = historyMap;
+    s.exif.copyrightList        = historyList;
+    s.exif.userCommentOverwrite = exifUserCommentCheckBox->isChecked();
+    exifUserCommentComboBox->exportHistory(&historyMap,&historyList,maxHistoryCount);
+    s.exif.userCommentMap       = historyMap;
+    s.exif.userCommentList      = historyList;
     // details
-    settings.beginGroup("Details");
     int hex = 0;
     if (exifVersionCheckBox->isChecked())
         hex |= DetailsOptions::ExifVersion;
@@ -331,7 +310,7 @@ void OptionsDialog::writeSettings() {
         hex |= DetailsOptions::GeneratedDateAndTime;
     if (exifDigitizedTimeCheckBox->isChecked())
         hex |= DetailsOptions::DigitizedDateAndTime;
-    settings.setValue("exifImage",hex);
+    s.details.exifImage     = hex;
     hex = 0;
     if (exifFocalLengthCheckBox->isChecked())
         hex |= DetailsOptions::FocalLenght;
@@ -351,13 +330,13 @@ void OptionsDialog::writeSettings() {
         hex |= DetailsOptions::LightMeteringMode;
     if (exifFlashCheckBox->isChecked())
         hex |= DetailsOptions::FlashMode;
-    settings.setValue("exifPhoto",hex);
+    s.details.exifPhoto     = hex;
     hex = 0;
     if (exifManufacturerCheckBox->isChecked())
         hex |= DetailsOptions::Manufacturer;
     if (exifModelCheckBox->isChecked())
         hex |= DetailsOptions::Model;
-    settings.setValue("exifCamera",hex);
+    s.details.exifCamera    = hex;
     hex = 0;
     if (exifArtistCheckBox->isChecked())
         hex |= DetailsOptions::Artist;
@@ -365,8 +344,7 @@ void OptionsDialog::writeSettings() {
         hex |= DetailsOptions::Copyright;
     if (exifUserCommentCheckBox_D->isChecked())
         hex |= DetailsOptions::UserComment;
-    settings.setValue("exifAuthor",hex);
-
+    s.details.exifAuthor    = hex;
     hex = 0;
     if (iptcVersionCheckBox->isChecked())
         hex |= DetailsOptions::ModelVersion;
@@ -394,44 +372,37 @@ void OptionsDialog::writeSettings() {
         hex |= DetailsOptions::DigitizedDate;
     if (iptcDigitizedTimeCheckBox->isChecked())
         hex |= DetailsOptions::DigitizedTime;
-    settings.setValue("iptc",hex);
-    settings.endGroup(); // Details
-
+    s.details.iptc          = hex;
     // selection
-    settings.beginGroup("Selection");
-    settings.setValue("clearSelection", clearSelectionCheckBox->isChecked());
-    settings.setValue("subdirs", importSubdirsCheckBox->isChecked());
-    settings.setValue("selectImported", selectImportedCheckBox->isChecked());
-    settings.setValue("fileSizeSymbol", sFileSizeLineEdit->text());
-    settings.setValue("imageWidthSymbol", sImgWidthLineEdit->text());
-    settings.setValue("imageHeightSymbol", sImgHeightLineEdit->text());
-    settings.endGroup(); // Selection
-
+    s.selection.clearSelection      = clearSelectionCheckBox->isChecked();
+    s.selection.subdirs             = importSubdirsCheckBox->isChecked();
+    s.selection.selectImported      = selectImportedCheckBox->isChecked();
+    s.selection.fileSizeSymbol      = sFileSizeLineEdit->text();
+    s.selection.imageWidthSymbol    = sImgWidthLineEdit->text();
+    s.selection.imageHeightSymbol   = sImgHeightLineEdit->text();
     // raw
-    settings.beginGroup("Raw");
     bool dcrawOk = false;
     bool firstState = rawCheckBox->isChecked();
     //check dcraw executable
     if(rawCheckBox->isChecked()) {
         if((dcrawOk = checkDcrawPath(dcrawLineEdit->text()))) {
-            settings.setValue("raw", true);
-            settings.setValue("dcrawPath", dcrawLineEdit->text());
-            settings.setValue("dcrawOptions", dcrawOptions->text());
+            s.raw.enabled       = true;
+            s.raw.dcrawPath     = dcrawLineEdit->text();
+            s.raw.dcrawOptions  = dcrawOptions->text();
         }
         else {
-            settings.setValue("raw", false);
+            s.raw.enabled       = false;
             rawCheckBox->setChecked(false);
-            settings.setValue("dcrawPath", dcrawLineEdit->text());
-            settings.setValue("dcrawOptions", dcrawOptions->text());
+            s.raw.dcrawPath     = dcrawLineEdit->text();
+            s.raw.dcrawOptions  = dcrawOptions->text();
             setRawStatus(false);
         }
     }
     else {
-        settings.setValue("raw", false);
-        settings.setValue("dcrawPath", dcrawLineEdit->text());
-        settings.setValue("dcrawOptions", dcrawOptions->text());
+        s.raw.enabled           = false;
+        s.raw.dcrawPath         = dcrawLineEdit->text();
+        s.raw.dcrawOptions      = dcrawOptions->text();
     }
-    settings.endGroup(); // Raw
     if(dcrawOk || !firstState) {
         emit ok();
         this->close();
@@ -441,27 +412,19 @@ void OptionsDialog::writeSettings() {
 /** Reads settings and sets value of the user input widgets.
   * \sa writeSettings
   */
-void OptionsDialog::readSettings() {
-
-    QSettings settings("SIR");
-
-    QString locale = QLocale::system().name();
-
-    QString defaultLanguage = languages->getLanguageInfo("sir_"+locale+".qm").niceName;
-
-    // general
-    settings.beginGroup("Settings");
-    targetFolderLineEdit->setText(settings.value("targetFolder",
-                                                 QDir::homePath()).toString());
-    targetFormatComboBox->setCurrentIndex(settings.value("targetFormat", 0).toInt());
-    targetPrefixLineEdit->setText(settings.value("targetPrefix", "web").toString());
-    targetSuffixLineEdit->setText(settings.value("targetSuffix", "thumb").toString());
-    qualitySpinBox->setValue(settings.value("quality", 100).toInt());
-    languagesComboBox->setCurrentIndex(languagesComboBox->findText(
-        settings.value("languageNiceName",defaultLanguage).toString(),
-        Qt::MatchExactly)
-    );
-    coresCount = settings.value("cores",0).toInt();
+void OptionsDialog::loadSettings() {
+    Settings &s = Settings::instance();
+    // general settings
+    targetFolderLineEdit->setText(              s.settings.targetFolder);
+    targetFormatComboBox->setCurrentIndex(
+                targetFormatComboBox->findText( s.settings.targetFormat));
+    targetPrefixLineEdit->setText(              s.settings.targetPrefix);
+    targetSuffixLineEdit->setText(              s.settings.targetSuffix);
+    qualitySpinBox->setValue(                   s.settings.quality);
+    languagesComboBox->setCurrentIndex(
+                languagesComboBox->findText(    s.settings.languageNiceName,
+                                            Qt::MatchExactly) );
+    coresCount =                                s.settings.cores;
     if (coresCount == 0) {
         coresCheckBox->setChecked(true);
         respondCoresSpinBox(true);
@@ -470,96 +433,73 @@ void OptionsDialog::readSettings() {
         coresCheckBox->setChecked(false);
         respondCoresSpinBox(false);
     }
-    dateDisplayFormatLineEdit->setText(
-                settings.value("dateDisplayFormat","dd.MM.yyyy").toString());
-    timeDisplayFormatLineEdit->setText(
-                settings.value("timeDisplayFormat","HH:mm:ss").toString());
-    maxHistoryCount = settings.value("maxHistoryCount",5).toInt();
+    dateDisplayFormatLineEdit->setText(         s.settings.dateDisplayFormat);
+    timeDisplayFormatLineEdit->setText(         s.settings.timeDisplayFormat);
+    maxHistoryCount =                           s.settings.maxHistoryCount;
     historySpinBox->setValue(maxHistoryCount);
-    settings.endGroup(); // Settings
-
     // size
-    settings.beginGroup("Size");
-    sizeUnitComboBox->setCurrentIndex(settings.value("sizeUnit", 0).toInt());
-    widthLineEdit->setText(settings.value("widthPx", "800").toString());
-    widthPercentLineEdit->setText(settings.value("widthPercent", "100").toString());
-    heightLineEdit->setText(settings.value("heightPx", "600").toString());
-    heightPercentLineEdit->setText(settings.value("heightPercent", "100").toString());
-    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
-    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
-    settings.endGroup(); // Size
-
+    sizeUnitComboBox->setCurrentIndex(  s.size.sizeUnit);
+    widthLineEdit->setText(             s.size.widthPx);
+    widthPercentLineEdit->setText(      s.size.widthPercent);
+    heightLineEdit->setText(            s.size.heightPx);
+    heightPercentLineEdit->setText(     s.size.heightPercent);
+    fileSizeSpinBox->setValue(          s.size.fileSizeValue);
+    fileSizeComboBox->setCurrentIndex(  s.size.fileSizeUnit);
     // metadata (general part)
-    settings.beginGroup("Metadata");
-    metadataCheckBox->setChecked(settings.value("metadata",true).toBool());
+    metadataCheckBox->setChecked(           s.metadata.enabled);
     if (!metadataCheckBox->isChecked()) {
         saveMetadataCheckBox->setEnabled(false);
         thumbUpdateCheckBox->setEnabled(false);
         thumbRotateCheckBox->setEnabled(false);
     }
     else
-        saveMetadataCheckBox->setChecked(settings.value("saveMetadata",true).toBool());
-
+        saveMetadataCheckBox->setChecked(   s.metadata.saveMetadata);
     if (saveMetadataCheckBox->isChecked()) {
-        thumbUpdateCheckBox->setChecked(settings.value("updateThumbnail",true).toBool());
+        thumbUpdateCheckBox->setChecked(    s.metadata.updateThumbnail);
         if (thumbUpdateCheckBox->isChecked())
-            thumbRotateCheckBox->setChecked(settings.value("rotateThumbnail",false).toBool());
-        rotateRadioButton->setChecked(settings.value("realRotate",false).toBool());
+            thumbRotateCheckBox->setChecked(s.metadata.rotateThumbnail);
+        rotateRadioButton->setChecked(      s.metadata.realRotate);
     }
     else {
         thumbUpdateCheckBox->setEnabled(false);
         thumbRotateCheckBox->setEnabled(false);
         rotateRadioButton->setChecked(true);
     }
-    settings.endGroup(); // Metadata
-
     // metadata (Exif part)
-    settings.beginGroup("Exif");
     bool exifOverwrite;
-    QMap<QString,QVariant> exifDefaultMap;
-
-    exifOverwrite = settings.value("artistOverwrite",false).toBool();
+    HistoryMap exifDefaultMap;
+    exifOverwrite =                         s.exif.artistOverwrite;
     exifArtistCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.insert(tr("Camera owner: ; Photographer: "),false);
-    exifArtistComboBox->
-            importHistory(settings.value("artistMap",exifDefaultMap).toMap(),
-                        settings.value("artistList").toList(),
-                        maxHistoryCount);
+    exifArtistComboBox->importHistory(      s.exif.artistMap,
+                                            s.exif.artistList, maxHistoryCount);
     exifArtistComboBox->setEnabled(exifOverwrite);
-
-    exifOverwrite = settings.value("copyrightOverwrite",false).toBool();
+    exifOverwrite =                         s.exif.copyrightOverwrite;
     exifCopyrightCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.clear();
     exifDefaultMap.insert(tr("Copyright owner"),false);
-    exifCopyrightComboBox->
-            importHistory(settings.value("copyrightMap",exifDefaultMap).toMap(),
-                        settings.value("copyrightList").toList(),
-                        maxHistoryCount);
+    exifCopyrightComboBox->importHistory(   s.exif.copyrightMap,
+                                            s.exif.copyrightList, maxHistoryCount);
     exifCopyrightComboBox->setEnabled(exifOverwrite);
 
-    exifOverwrite = settings.value("userCommentOverwrite",false).toBool();
+    exifOverwrite =                         s.exif.userCommentOverwrite;
     exifUserCommentCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.clear();
     exifDefaultMap.insert(
                 tr("This picture was edited with Simple Image Resizer"),false);
-    exifUserCommentComboBox->
-            importHistory(settings.value("userCommentMap",exifDefaultMap).toMap(),
-                        settings.value("userCommentList").toList(),
-                        maxHistoryCount);
+    exifUserCommentComboBox->importHistory( s.exif.userCommentMap,
+                                            s.exif.userCommentList, maxHistoryCount);
     exifUserCommentComboBox->setEnabled(exifOverwrite);
-
-    settings.endGroup(); // Exif
-
     // details
-    settings.beginGroup("Details");
-
-    int hex = settings.value("exifImage",0x14).toInt();
+    int hex;
+    // exif
+    hex = s.details.exifImage;
     exifVersionCheckBox->setChecked(hex & DetailsOptions::ExifVersion);
     exifSoftCheckBox->setChecked(hex & DetailsOptions::ProcessingSoftware);
     exifOrientationCheckBox->setChecked(hex & DetailsOptions::Orientation);
     exifGeneratedTimeCheckBox->setChecked(hex & DetailsOptions::GeneratedDateAndTime);
     exifDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedDateAndTime);
-    hex = settings.value("exifPhoto",0x1f).toInt();
+    hex = s.details.exifPhoto;
     exifFocalLengthCheckBox->setChecked(hex & DetailsOptions::FocalLenght);
     exifApertureCheckBox->setChecked(hex & DetailsOptions::Aperture);
     exifIsoCheckBox->setChecked(hex & DetailsOptions::IsoSpeed);
@@ -569,15 +509,15 @@ void OptionsDialog::readSettings() {
     exifExpProgramCheckBox->setChecked(hex & DetailsOptions::ExposureProgram);
     exifMeteringCheckBox->setChecked(hex & DetailsOptions::LightMeteringMode);
     exifFlashCheckBox->setChecked(hex & DetailsOptions::FlashMode);
-    hex = settings.value("exifCamera",0x2).toInt();
+    hex = s.details.exifCamera;
     exifManufacturerCheckBox->setChecked(hex & DetailsOptions::Manufacturer);
     exifModelCheckBox->setChecked(hex & DetailsOptions::Model);
-    hex = settings.value("exifAuthor",0x1).toInt();
+    hex = s.details.exifAuthor;
     exifArtistCheckBox_D->setChecked(hex & DetailsOptions::Artist);
     exifCopyrightCheckBox_D->setChecked(hex & DetailsOptions::Copyright);
     exifUserCommentCheckBox_D->setChecked(hex & DetailsOptions::UserComment);
-
-    hex = settings.value("iptc",0xd00).toInt();
+    // iptc
+    hex = s.details.iptc;
     iptcVersionCheckBox->setChecked(hex & DetailsOptions::ModelVersion);
     iptcBylineCheckBox->setChecked(hex & DetailsOptions::Byline);
     iptcCopyrightCheckBox->setChecked(hex & DetailsOptions::CopyrightIptc);
@@ -591,27 +531,19 @@ void OptionsDialog::readSettings() {
     iptcCreatedTimeCheckBox->setChecked(hex & DetailsOptions::TimeCreated);
     iptcDigitizedDateCheckBox->setChecked(hex & DetailsOptions::DigitizedDate);
     iptcDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
-
-    settings.endGroup(); // Details
-
     // selection
-    settings.beginGroup("Selection");
-    clearSelectionCheckBox->setChecked(settings.value("clearSelection",false).toBool());
-    importSubdirsCheckBox->setChecked(settings.value("subdirs",false).toBool());
-    selectImportedCheckBox->setChecked(settings.value("selectImported",false).toBool());
-    sFileSizeLineEdit->setText(settings.value("fileSizeSymbol","s").toString());
-    sImgWidthLineEdit->setText(settings.value("imageWidthSymbol","x").toString());
-    sImgHeightLineEdit->setText(settings.value("imageHeightSymbol","y").toString());
-    settings.endGroup(); // Selection
-
+    clearSelectionCheckBox->setChecked( s.selection.clearSelection);
+    importSubdirsCheckBox->setChecked(  s.selection.subdirs);
+    selectImportedCheckBox->setChecked( s.selection.selectImported);
+    sFileSizeLineEdit->setText(         s.selection.fileSizeSymbol);
+    sImgWidthLineEdit->setText(         s.selection.imageWidthSymbol);
+    sImgHeightLineEdit->setText(        s.selection.imageHeightSymbol);
     // raw
-    settings.beginGroup("Raw");
-    int state = settings.value("raw", false).toBool();
+    int state =             s.raw.enabled;
     rawCheckBox->setChecked(state);
     setRawStatus(state);
-    dcrawLineEdit->setText(settings.value("dcrawPath", "/usr/bin/dcraw").toString());
-    dcrawOptions->setText(settings.value("dcrawOptions", "").toString());
-    settings.endGroup(); // Raw
+    dcrawLineEdit->setText( s.raw.dcrawPath);
+    dcrawOptions->setText(  s.raw.dcrawOptions);
 }
 
 void OptionsDialog::createLanguageMenu() {

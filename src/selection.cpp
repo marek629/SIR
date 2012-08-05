@@ -19,14 +19,13 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
+#include <QDebug>
+#include <QFileDialog>
+#include <QProgressDialog>
 #include "selection.h"
 #include "convertdialog.h"
 #include "defines.h"
 #include "expressiontree.h"
-#include <QDebug>
-#include <QFileDialog>
-#include <QProgressDialog>
-#include <QSettings>
 
 // static variables
 
@@ -194,12 +193,10 @@ int Selection::importFiles() {
 }
 
 void Selection::loadSymbols() {
-    QSettings settings("SIR");
-    settings.beginGroup("Selection");
-    fileSizeSymbols << settings.value("fileSizeSymbol","s").toString();
-    imageSizeSymbols << settings.value("imageWidthSymbol","x").toString()
-                     << settings.value("imageHeightSymbol","y").toString();
-    settings.endGroup(); // Selection
+    Settings &s = Settings::instance();
+    fileSizeSymbols <<  s.selection.fileSizeSymbol;
+    imageSizeSymbols << s.selection.imageWidthSymbol
+                     << s.selection.imageHeightSymbol;
 }
 
 /** Sets up this objects regular expression lists setupListRegExp() method.
@@ -516,133 +513,127 @@ void SelectionDialog::browseDir() {
   * \sa saveSettings
   */
 void SelectionDialog::loadSettings() {
-    QSettings settings("SIR");
-    settings.beginGroup("Settings");
+    Settings &s = Settings::instance();
+    // general settings
     // set display format for date/time edit widgets
-    QString dateTimeFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString()
-            + ' ' + settings.value("timeDisplayFormat","HH:mm:ss").toString();
+    QString dateTimeFormat =    s.settings.dateDisplayFormat
+            + ' ' + s.settings.timeDisplayFormat;
     createdBeforeDateTimeEdit->setDisplayFormat(dateTimeFormat);
     createdAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
     digitizedBeforeDateTimeEdit->setDisplayFormat(dateTimeFormat);
     digitizedAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
     // max history count for HistoryComboBox's import functions
-    int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
-    settings.endGroup(); // Settings
-
-    settings.beginGroup("Selection");
-    clearSelectionCheckBox->setChecked(settings.value("clearSelection",false).toBool());
+    int maxHistoryCount =       s.settings.maxHistoryCount;
+    // selection settings
+    clearSelectionCheckBox->setChecked(     s.selection.clearSelection);
     if (dirWidget) {
-        dirCheckBox->setChecked(settings.value("subdirs",false).toBool());
-        selectImportedCheckBox->setChecked(settings.value("selectImported",false).toBool());
+        dirCheckBox->setChecked(            s.selection.subdirs);
+        selectImportedCheckBox->setChecked( s.selection.selectImported);
     }
-    settings.endGroup(); // Selection
-
-    settings.beginGroup("SelectionDialog");
+    // settings of selection dialog
+    Settings::SelectionDialogGroup &sd = s.selectionDialog;
     // file
-    fileNameComboBox->importHistory(settings.value("fileNameMap").toMap(),
-                                    settings.value("fileNameList").toList(),
-                                    maxHistoryCount);
-    fileSizeComboBox->importHistory(settings.value("fileSizeMap").toMap(),
-                                    settings.value("fileSizeList").toList(),
-                                    maxHistoryCount);
-    imageSizeComboBox->importHistory(settings.value("imageSizeMap").toMap(),
-                                     settings.value("imageSizeList").toList(),
-                                     maxHistoryCount);
+    fileNameComboBox->importHistory(                sd.fileNameMap,
+                                                    sd.fileNameList,
+                                                    maxHistoryCount);
+    fileSizeComboBox->importHistory(                sd.fileSizeMap,
+                                                    sd.fileSizeList,
+                                                    maxHistoryCount);
+    imageSizeComboBox->importHistory(               sd.imageSizeMap,
+                                                    sd.imageSizeList,
+                                                    maxHistoryCount);
     // any metadata
-    authorComboBox->importHistory(settings.value("anyAuthorMap").toMap(),
-                                  settings.value("anyAuthorList").toList(),
-                                  maxHistoryCount);
-    copyrightComboBox->importHistory(settings.value("anyCopyrightMap").toMap(),
-                                     settings.value("anyCopyrightList").toList(),
-                                     maxHistoryCount);
+    authorComboBox->importHistory(                  sd.anyAuthorMap,
+                                                    sd.anyAuthorList,
+                                                    maxHistoryCount);
+    copyrightComboBox->importHistory(               sd.anyCopyrightMap,
+                                                    sd.anyCopyrightList,
+                                                    maxHistoryCount);
     // Exif
-    exifSoftwareComboBox->importHistory(settings.value("exifSoftMap").toMap(),
-                                        settings.value("exifSoftList").toList(),
-                                        maxHistoryCount);
-    exifCameraManufacturerComboBox->importHistory(settings.value("exifCameraManufacturerMap").toMap(),
-                                                  settings.value("exifCameraManufacturerList").toList(),
-                                                  maxHistoryCount);
-    exifCameraModelComboBox->importHistory(settings.value("exifCameraModelMap").toMap(),
-                                           settings.value("exifCameraModelList").toList(),
-                                           maxHistoryCount);
+    exifSoftwareComboBox->importHistory(            sd.exifSoftMap,
+                                                    sd.exifSoftList,
+                                                    maxHistoryCount);
+    exifCameraManufacturerComboBox->importHistory(  sd.exifCameraManufacturerMap,
+                                                    sd.exifCameraManufacturerList,
+                                                    maxHistoryCount);
+    exifCameraModelComboBox->importHistory(         sd.exifCameraModelMap,
+                                                    sd.exifCameraModelList,
+                                                    maxHistoryCount);
     // IPTC
-    iptcObjectNameComboBox->importHistory(settings.value("iptcObjectNameMap").toMap(),
-                                          settings.value("iptcObjectNameList").toList(),
-                                          maxHistoryCount);
-    iptcKeywordsComboBox->importHistory(settings.value("iptcKeywordsMap").toMap(),
-                                        settings.value("iptcKeywordsList").toList(),
-                                        maxHistoryCount);
-    iptcDescriptionComboBox->importHistory(settings.value("iptcDescriptionMap").toMap(),
-                                           settings.value("iptcDescriptionList").toList(),
-                                           maxHistoryCount);
-    iptcCountryNameComboBox->importHistory(settings.value("iptcCountryNameMap").toMap(),
-                                           settings.value("iptcCountryNameList").toList(),
-                                           maxHistoryCount);
-    iptcCityComboBox->importHistory(settings.value("iptcCityMap").toMap(),
-                                    settings.value("iptcCityList").toList(),
-                                    maxHistoryCount);
-    iptcEditStatusComboBox->importHistory(settings.value("iptcEditStatusMap").toMap(),
-                                          settings.value("iptcEditStatusList").toList(),
-                                          maxHistoryCount);
-    settings.endGroup(); // SelectionDialog
+    iptcObjectNameComboBox->importHistory(          sd.iptcObjectNameMap,
+                                                    sd.iptcObjectNameList,
+                                                    maxHistoryCount);
+    iptcKeywordsComboBox->importHistory(            sd.iptcKeywordsMap,
+                                                    sd.iptcKeywordsList,
+                                                    maxHistoryCount);
+    iptcDescriptionComboBox->importHistory(         sd.iptcDescriptionMap,
+                                                    sd.iptcDescriptionList,
+                                                    maxHistoryCount);
+    iptcCountryNameComboBox->importHistory(         sd.iptcCountryNameMap,
+                                                    sd.iptcCountryNameList,
+                                                    maxHistoryCount);
+    iptcCityComboBox->importHistory(                sd.iptcCityMap,
+                                                    sd.iptcCityList,
+                                                    maxHistoryCount);
+    iptcEditStatusComboBox->importHistory(          sd.iptcEditStatusMap,
+                                                    sd.iptcEditStatusList,
+                                                    maxHistoryCount);
 }
 
 /** Exports selection dialogs text edit history to settings file.
   * \sa loadSettings
   */
 void SelectionDialog::saveSettings() {
-    QMap<QString,QVariant> map;
-    QList<QVariant> list;
-    QSettings settings("SIR");
-    settings.beginGroup("Settings");
-    int maxHistoryCount = settings.value("maxHistoryCount", 5).toInt();
-    settings.endGroup(); // Settings
-    settings.beginGroup("SelectionDialog");
+    Settings &s = Settings::instance();
+    HistoryMap  map;
+    HistoryList list;
+    // general settings
+    int maxHistoryCount = s.settings.maxHistoryCount;
+    // settings of selection dialog
     // file
     fileNameComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("fileNameMap", map);
-    settings.setValue("fileNameList", list);
+    s.selectionDialog.fileNameMap                   = map;
+    s.selectionDialog.fileNameList                  = list;
     fileSizeComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("fileSizeMap", map);
-    settings.setValue("fileSizeList", list);
+    s.selectionDialog.fileSizeMap                   = map;
+    s.selectionDialog.fileSizeList                  = list;
     imageSizeComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("imageSizeMap", map);
-    settings.setValue("imageSizeList", list);
+    s.selectionDialog.imageSizeMap                  = map;
+    s.selectionDialog.imageSizeList                 = list;
     // any metadata
     authorComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("anyAuthorMap", map);
-    settings.setValue("anyAuthorList", list);
+    s.selectionDialog.anyAuthorMap                  = map;
+    s.selectionDialog.anyAuthorList                 = list;
     copyrightComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("anyCopyrightMap", map);
-    settings.setValue("anyCopyrightList", list);
+    s.selectionDialog.anyCopyrightMap               = map;
+    s.selectionDialog.anyCopyrightList              = list;
     // Exif
     exifSoftwareComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("exifSoftMap", map);
-    settings.setValue("exifSoftList", list);
+    s.selectionDialog.exifSoftMap                   = map;
+    s.selectionDialog.exifSoftList                  = list;
     exifCameraManufacturerComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("exifCameraManufacturerMap", map);
-    settings.setValue("exifCameraManufacturerList", list);
+    s.selectionDialog.exifCameraManufacturerMap     = map;
+    s.selectionDialog.exifCameraManufacturerList    = list;
     exifCameraModelComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("exifCameraModelMap", map);
-    settings.setValue("exifCameraModelList", list);
+    s.selectionDialog.exifCameraModelMap            = map;
+    s.selectionDialog.exifCameraModelList           = list;
     // IPTC
     iptcObjectNameComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("iptcObjectNameMap", map);
-    settings.setValue("iptcObjectNameList", list);
+    s.selectionDialog.iptcObjectNameMap             = map;
+    s.selectionDialog.iptcObjectNameList            = list;
     iptcKeywordsComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("iptcKeywordsMap", map);
-    settings.setValue("iptcKeywordsList", list);
+    s.selectionDialog.iptcKeywordsMap               = map;
+    s.selectionDialog.iptcKeywordsList              = list;
     iptcDescriptionComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("iptcDescriptionMap", map);
-    settings.setValue("iptcDescriptionList", list);
+    s.selectionDialog.iptcDescriptionMap            = map;
+    s.selectionDialog.iptcDescriptionList           = list;
     iptcCountryNameComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("iptcCountryNameMap", map);
-    settings.setValue("iptcCountryNameList", list);
+    s.selectionDialog.iptcCountryNameMap            = map;
+    s.selectionDialog.iptcCountryNameList           = list;
     iptcCityComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("iptcCityMap", map);
-    settings.setValue("iptcCityList", list);
+    s.selectionDialog.iptcCityMap                   = map;
+    s.selectionDialog.iptcCityList                  = list;
     iptcEditStatusComboBox->exportHistory(&map, &list, maxHistoryCount);
-    settings.setValue("iptcEditStatusMap", map);
-    settings.setValue("iptcEditStatusList", list);
-    settings.endGroup(); // SelectionDialog
+    s.selectionDialog.iptcEditStatusMap             = map;
+    s.selectionDialog.iptcEditStatusList            = list;
 }

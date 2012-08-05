@@ -22,26 +22,13 @@
 #ifndef CONVERTDIALOG_H
 #define CONVERTDIALOG_H
 
-#include <QSettings>
 #include "ui_convertdialog.h"
 #include "convertthread.h"
+#include "settings.h"
 
-class QString;
-class QDropEvent;
-class QPicture;
-class QStringList;
-class QDir;
-class QMessageBox;
-class QFileDialog;
-class QImageWriter;
-class QMenu;
-class QCompleter;
-class myQTreeWidget;
 class PreviewDialog;
 class QTranslator;
 class NetworkUtils;
-class QPoint;
-class QSize;
 class MetadataDialog;
 
 //! Main window class provides images convertion dialog.
@@ -76,7 +63,7 @@ private:
     QList<QTreeWidgetItem *> itemsToConvert;
     bool converting;
     bool rawEnabled;
-    bool alreadSent;
+    bool alreadySent;
     NetworkUtils *net;
     QPoint windowPossition;
     QSize windowSize;
@@ -131,7 +118,7 @@ public slots:
     void verifyRotate(int status);
     void about();
     void setOptions();
-    void readSettings();
+    void loadSettings();
     void updateTree();
     void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
     void query(const QString& targetFile, Question whatToDo);
@@ -159,24 +146,20 @@ private slots:
   * of normal size mode (before maximizing).
   */
 void ConvertDialog::writeWindowProperties() {
-    QSettings settings("SIR");
-    settings.beginGroup("MainWindow");
+    Settings &s = Settings::instance();
     if (this->isMaximized()) {
-        settings.setValue("maximized",true);
-        settings.setValue("possition",windowPossition);
-        settings.setValue("size",windowSize);
+        s.mainWindow.maximized      = true;
+        s.mainWindow.possition      = windowPossition;
+        s.mainWindow.size           = windowSize;
     }
     else {
-        settings.setValue("maximized",false);
-        settings.setValue("possition",this->pos());
-        settings.setValue("size",this->size());
+        s.mainWindow.maximized      = false;
+        s.mainWindow.possition      = this->pos();
+        s.mainWindow.size           = this->size();
     }
-    settings.setValue("horizontalSplitter", horizontalSplitter->saveState());
-    settings.setValue("verticalSplitter", verticalSplitter->saveState());
-    settings.endGroup();
-    settings.beginGroup("Settings");
-    settings.setValue("lastDir", lastDir);
-    settings.endGroup();
+    s.mainWindow.horizontalSplitter = horizontalSplitter->saveState();
+    s.mainWindow.verticalSplitter   = verticalSplitter->saveState();
+    s.settings.lastDir = lastDir;
 }
 
 /** Resets user ansers about overwrite file, enlarge image and abort convertion

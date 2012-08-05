@@ -1,19 +1,23 @@
 *** nearest release ***
+  ! Sessions: save and restore files list in/from text file
+  ! Settings: one, global object manageing SIR settings
+  ! Conditional compilation: disable or enable metadata support
+  ! ConvertDialog: change size line edits to combo boxes
+  ! SelectionDialog:
+    * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
+  ! Selection:
+    * don't create QImage object in testImage() if file format is supported by exiv2 (may be faster)
 
 *** next release ***
   ! Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
     * improve drag-drop events (myQTreeWidget)
+
+*** wishlist ***
   ! Conditional converting (ie. convert if image width > 1000 px)
     * scripts with exiv2 support
-  ! Selection:
-    * don't create QImage object in testImage() if file format is supported by exiv2 (may be faster)
-  ! SelectionDialog:
-    * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
   ! Make recursive screen images with (auto detect of sceeen frame) feature - joke :)
   ! Make simple effects
     * color (sepia, b&w, etc.) and gradient filtres
     * watermark
     * add frame
-  ! Sessions: save and restore files list in/from text file
-  ! Settings: one, global object manageing SIR settings

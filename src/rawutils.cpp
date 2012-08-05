@@ -21,14 +21,14 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include "rawutils.h"
 #include <QImage>
 #include <QString>
 #include <QStringList>
 #include <QProcess>
 #include <QImageReader>
-#include <QSettings>
 #include <QPixmap>
+#include "rawutils.h"
+#include "settings.h"
 
 /** Returns true if \b imagePath is path to raw image, otherwise returns false. */
 bool RawUtils::isRaw(QString imagePath) {
@@ -127,29 +127,27 @@ QPixmap *RawUtils::loadRawPixmap(QString imagePath) {
     return image;
 }
 
-/** Returns true if raw support is enabled, otherwise returns false. */
+/** Reads from settings and returns true if raw support is enabled,
+  * otherwise returns false.
+  * \sa readDcrawPath readDcrawOptions
+  */
 bool RawUtils::isRawEnabled() {
-    QSettings settings("SIR");
-    settings.beginGroup("Raw");
-    bool rawEnabled = settings.value("raw", false).toBool();
-    settings.endGroup();
-    return rawEnabled;
+    return Settings::instance().raw.enabled;
 }
 
+/** Reads from settings and returns path string to dcraw executable file.
+  * \sa readDcrawOptions isRawEnabled
+  */
 QString RawUtils::readDcrawPath() {
-    QSettings settings("SIR");
-    settings.beginGroup("Raw");
-    QString dcraw = settings.value("dcrawPath", "").toString();
-    settings.endGroup();
-    return dcraw;
+    return Settings::instance().raw.dcrawPath;
 }
 
+/** Reads from settings and returns dcraw options string splited by
+  * " " (space string); empty items in returned list are skiped.
+  * \sa readDcrawPath isRawEnabled
+  */
 QStringList RawUtils::readDcrawOptions() {
-    QSettings settings("SIR");
-    settings.beginGroup("Raw");
-    QStringList options = settings.value("dcrawOptions", "").toString().split(" ");
-    settings.endGroup();
-    return options;
+    return Settings::instance().raw.dcrawOptions.split(" ", QString::SkipEmptyParts);
 }
 
 /** Creates list of supported image file extensions into \b rawFormats. */

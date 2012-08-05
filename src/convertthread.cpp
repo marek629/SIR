@@ -21,7 +21,6 @@
 
 #include <QImage>
 #include <QDir>
-#include <QSettings>
 #include <QtSvg/QGraphicsSvgItem>
 #include <QtSvg/QSvgRenderer>
 #include <QDebug>
@@ -31,6 +30,7 @@
 #include "defines.h"
 #include "rawutils.h"
 #include "messagebox.h"
+#include "settings.h"
 
 // setup static fields
 SharedInformation* ConvertThread::shared = new SharedInformation();
@@ -118,8 +118,7 @@ void ConvertThread::setDesiredFormat(const QString& format) {
                  format.toAscii().constData());
     }
     else
-        shared->saveMetadata = QSettings("SIR").value("Metadata/saveMetadata",
-                                                      true).toBool();
+        shared->saveMetadata = Settings::instance().metadata.saveMetadata;
 }
 
 /** Allow rotate and set desired rotation angle.

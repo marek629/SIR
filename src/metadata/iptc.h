@@ -27,7 +27,6 @@
 #include "string.h"
 
 namespace MetadataUtils {
-
     /** \brief IPTC metadata storage and manipulation class.
       *
       * IPTC class provide general manipulation IPTC metadata methods like

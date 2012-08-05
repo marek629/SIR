@@ -25,10 +25,8 @@
 #define _MAIN_H_
 
 #include <QApplication>
-#include <QTranslator>
 #include <QString>
 #include <QLocale>
-
 #include "convertdialog.h"
 
 #endif // _MAIN_H_

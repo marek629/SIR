@@ -19,7 +19,7 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#define VERSION "2.4"
+#define VERSION "2.5 dev"
 #define NOTCONVERTED 1
 #define CONVERTED 2
 #define SKIPPED 3

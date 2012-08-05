@@ -19,13 +19,9 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include <QDropEvent>
-#include <QMenu>
-#include <QPicture>
 #include <QFileDialog>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QTextCharFormat>
 #include <QCompleter>
 #include <QDirModel>
 #include <QTranslator>
@@ -39,7 +35,6 @@
 #include <cmath>
 #include <QSvgRenderer>
 #include <QLibraryInfo>
-
 #include "convertdialog.h"
 #include "previewdialog.h"
 #include "myqtreewidget.h"
@@ -176,7 +171,7 @@ void ConvertDialog::checkUpdates() {
   */
 void ConvertDialog::sendInstall() {
 
-    if(alreadSent) {
+    if(alreadySent) {
         QMessageBox::information(this, tr("Let us know!"),
                                  tr("You alread sent information about your " \
                                     "SIR installation. Thank you very much!")
@@ -219,7 +214,6 @@ void ConvertDialog::sendInstall() {
   * \sa sendInstall
   */
 void ConvertDialog::showSendInstallResult(QString *result, bool error) {
-
     if(error) {
         QMessageBox::warning(this, tr("Let us know!"),
                              tr("There was an error while trying to " \
@@ -227,20 +221,14 @@ void ConvertDialog::showSendInstallResult(QString *result, bool error) {
                                 "Check your internet connection and " \
                                 "try again later!"));
     }
-
     else {
         QMessageBox::information(this, tr("Let us know!"),
                                  tr("Thank you for let us know that you are "\
                                     "using SIR! You are the user number %1 of "\
                                     "this month!").arg(*result));
-
-        QSettings settings("SIR");
-        settings.beginGroup("Settings");
-        settings.setValue("alreadSent", true);
-        settings.endGroup();
-        alreadSent = true;
+        alreadySent = true;
+        Settings::instance().settings.alreadySent = alreadySent;
     }
-
 }
 
 /** Show result of checkUpdates() in message box.
@@ -339,7 +327,7 @@ void ConvertDialog::init() {
     fileFilters.append(" *.Jpeg");
 
     RawUtils::createRawFilesList(rawFormats);
-    readSettings();
+    loadSettings();
 
     if (!args.isEmpty()) {
         argsList = args.split("**");
@@ -1158,141 +1146,70 @@ void ConvertDialog::about() {
 void ConvertDialog::setOptions() {
     writeWindowProperties();
     OptionsDialog *options = new OptionsDialog(this);
-    connect( options, SIGNAL( ok() ), SLOT( readSettings() ) );
+    connect( options, SIGNAL( ok() ), SLOT( loadSettings() ) );
     options->exec();
     delete options;
 }
 
 /** Reads settings and sets up window state, position and convertion preferences. */
-void ConvertDialog::readSettings() {
-
-    QString locale = QLocale::system().name();
-
-    QString defaultLanguage = "sir_"+locale+".qm";
-
-    QSettings settings("SIR");
-    settings.beginGroup("MainWindow");
-    if (settings.value("cores",-1).toInt() != -1) {
-        //Old format settings from SIR 2.1 - need migration to SIR 2.2 format
-        QFile configFile(settings.fileName());
-        if (configFile.open(QIODevice::ReadWrite)) {
-            QString fileContent = configFile.read(configFile.size());
-            fileContent.replace("[MainWindow]","[Settings]");
-            configFile.resize(fileContent.size());
-            if (configFile.seek(0))
-                configFile.write(fileContent.toAscii());
-            else
-                qWarning("ConvertDialog: settings migration failed");
-            configFile.close();
-        }
-    }
-    else {
-        this->move( settings.value("possition",this->pos()).toPoint() );
-        this->resize( settings.value("size",this->size()).toSize() );
-        if (settings.value("maximized",false).toBool())
-            this->showMaximized();
-        horizontalSplitter->restoreState(settings.value("horizontalSplitter").toByteArray());
-        verticalSplitter->restoreState(settings.value("verticalSplitter").toByteArray());
-    }
-    settings.endGroup(); // MainWindow
-
-    // Old format settings from SIR 2.2
-    QString testStr = "Errare humanum est.";
-    if (settings.value("Settings/width", testStr).toString() != testStr) {
-        // migrate settings from SIR 2.2 to 2.3
-        bool sent = settings.value("MainWindow/alreadSent",false).toBool();
-        settings.remove("MainWindow/alreadSent");
-        settings.setValue("Settings/alreadSent",sent);
-        sizeWidthString = settings.value("Settings/width", "800").toString();
-        settings.remove("Settings/width");
-        settings.setValue("Size/widthPx",sizeWidthString);
-        sizeHeightString = settings.value("Settings/height", "600").toString();
-        settings.remove("Settings/height");
-        settings.setValue("Size/heightPx",sizeHeightString);
-        bool metadata = settings.value("Settings/metadata",true).toBool();
-        settings.remove("Settings/metadata");
-        settings.setValue("Metadata/metadata",metadata);
-        bool saveMetadata = settings.value("Settings/saveMetadata",true).toBool();
-        settings.remove("Settings/saveMetadata");
-        settings.setValue("Metadata/saveMetadata",saveMetadata);
-        rawEnabled = settings.value("Settings/raw", false).toBool();
-        settings.remove("Settings/raw");
-        settings.setValue("Raw/raw",rawEnabled);
-    }
-    // migrate settings from SIR 2.3 to 2.4
-    settings.beginGroup("Exif");
-    if (!settings.value("originalDateMap").toMap().isEmpty()) {
-        settings.remove("originalDateMap");
-        settings.remove("originalDateList");
-        settings.remove("digitizedDateMap");
-        settings.remove("digitizedDateList");
-    }
-    settings.endGroup(); // Exif
-
-    settings.beginGroup("Settings");
-
-    destFileEdit->setText(settings.value("targetFolder",
-                                         QDir::homePath()).toString());
-
-    targetFormatComboBox->setCurrentIndex(settings.value("targetFormat",
-                                                         0).toInt());
-
-    destPrefixEdit->setText(settings.value("targetPrefix", "web").toString());
-    destSuffixEdit->setText(settings.value("targetSuffix", "thumb").toString());
-    int quality = settings.value("quality", 100).toInt();
+void ConvertDialog::loadSettings() {
+    Settings &s = Settings::instance();
+    // main window
+    if (                                s.mainWindow.maximized)
+        showMaximized();
+    move(                               s.mainWindow.possition);
+    resize(                             s.mainWindow.size);
+    horizontalSplitter->restoreState(   s.mainWindow.horizontalSplitter);
+    verticalSplitter->restoreState(     s.mainWindow.verticalSplitter);
+    // settings
+    destFileEdit->setText(                      s.settings.targetFolder);
+    targetFormatComboBox->setCurrentIndex(
+                targetFormatComboBox->findText( s.settings.targetFormat));
+    destPrefixEdit->setText(                    s.settings.targetPrefix);
+    destSuffixEdit->setText(                    s.settings.targetSuffix);
+    int quality =                               s.settings.quality;
     qualitySpinBox->setValue(quality);
     qualitySlider->setValue(quality);
-
-    numThreads = settings.value("cores", 0).toInt();
+    numThreads =                                s.settings.cores;
     if (numThreads == 0)
         numThreads = OptionsDialog::detectCoresCount();
-    lastDir = settings.value("lastDir", QDir::homePath()).toString();
-
+    lastDir =                                   s.settings.lastDir;
     QString selectedTranslationFile = ":/translations/";
-    selectedTranslationFile += settings.value("languageFileName",
-                                              defaultLanguage).toString();
+    selectedTranslationFile +=                  s.settings.languageFileName;
     QString qtTranslationFile = "qt_" +
             selectedTranslationFile.split('_').at(1).split('.').first();
-
     qtTranslator->load(qtTranslationFile,
                        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     appTranslator->load(selectedTranslationFile);
-
-    alreadSent = settings.value("alreadSent",false).toBool();
-
-    dateFormat = settings.value("dateDisplayFormat","dd.MM.yyyy").toString();
-    timeFormat = settings.value("timeDisplayFormat","HH:mm:ss").toString();
-    dateTimeFormat = dateFormat + ' ' + timeFormat;
-
     retranslateStrings();
-    settings.endGroup(); // Settings
-
-    settings.beginGroup("Size");
-    int sizeUnitIndex = settings.value("sizeUnit", 0).toInt();
+    alreadySent =                               s.settings.alreadySent;
+    dateFormat =                                s.settings.dateDisplayFormat;
+    timeFormat =                                s.settings.timeDisplayFormat;
+    dateTimeFormat = dateFormat + ' ' + timeFormat;
+    // size
+    int sizeUnitIndex =                 s.size.sizeUnit;
     setSizeUnit(sizeUnitIndex);
     sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
-    fileSizeSpinBox->setValue(settings.value("fileSizeValue", 300.).toDouble());
-    fileSizeComboBox->setCurrentIndex(settings.value("fileSizeUnit", 0).toInt());
+    fileSizeSpinBox->setValue(          s.size.fileSizeValue);
+    fileSizeComboBox->setCurrentIndex(  s.size.fileSizeUnit);
     if (sizeUnitComboBox->currentIndex() == 1) {
-        sizeWidthString = settings.value("widthPx", "800").toString();
-        sizeHeightString = settings.value("heightPx", "600").toString();
+        sizeWidthString =               s.size.widthPx;
+        sizeHeightString =              s.size.heightPx;
         widthLineEdit->setText(sizeWidthString);
-        widthLineEdit->setText(settings.value("widthPercent", "100").toString());
+        widthLineEdit->setText(         s.size.widthPercent);
         heightLineEdit->setText(sizeHeightString);
-        heightLineEdit->setText(settings.value("heightPercent", "100").toString());
+        heightLineEdit->setText(        s.size.heightPercent);
     }
     else if (sizeUnitComboBox->currentIndex() == 0) {
-        sizeWidthString = settings.value("widthPercent", "100").toString();
-        sizeHeightString = settings.value("heightPercent", "100").toString();
+        sizeWidthString =               s.size.widthPercent;
+        sizeHeightString =              s.size.heightPercent;
         widthLineEdit->setText(sizeWidthString);
-        widthLineEdit->setText(settings.value("widthPx", "800").toString());
+        widthLineEdit->setText(         s.size.widthPx);
         heightLineEdit->setText(sizeHeightString);
-        heightLineEdit->setText(settings.value("heightPx", "600").toString());
+        heightLineEdit->setText(        s.size.heightPx);
     }
-    settings.endGroup(); // Size
-
-    settings.beginGroup("Raw");
-    rawEnabled = settings.value("raw", false).toBool();
+    // raw
+    rawEnabled = s.raw.enabled;
     if(rawEnabled) {
         foreach(QString ext, rawFormats) {
             if(!fileFilters.contains(ext)) {
@@ -1307,57 +1224,44 @@ void ConvertDialog::readSettings() {
             }
         }
     }
-    settings.endGroup(); // Raw
-
-    settings.beginGroup("Metadata");
-    bool metadataEnabled = settings.value("metadata",true).toBool();
-    MetadataUtils::Metadata::setEnabled(metadataEnabled);
+    // metadata
+    using namespace MetadataUtils;
+    bool metadataEnabled =                  s.metadata.enabled;
+    Metadata::setEnabled(metadataEnabled);
     ConvertThread::setMetadataEnabled(metadataEnabled);
-    bool saveMetadata = settings.value("saveMetadata",true).toBool();
-    MetadataUtils::Metadata::setSave(saveMetadata);
+    bool saveMetadata =                     s.metadata.saveMetadata;
+    Metadata::setSave(saveMetadata);
     ConvertThread::setSaveMetadata(saveMetadata);
     if (saveMetadata) {
-        ConvertThread::setRealRotate(settings.value("realRotate",false).toBool());
-        ConvertThread::setUpdateThumbnail(
-                    settings.value("updateThumbnail",true).toBool() );
-        ConvertThread::setRotateThumbnail(
-                    settings.value("rotateThumbnail",false).toBool() );
+        ConvertThread::setRealRotate(       s.metadata.realRotate);
+        ConvertThread::setUpdateThumbnail(  s.metadata.updateThumbnail);
+        ConvertThread::setRotateThumbnail(  s.metadata.rotateThumbnail);
     }
     else
         ConvertThread::setRealRotate(true);
-    settings.endGroup(); // Metadata
-
-    settings.beginGroup("Exif");
+    // exif
     bool exifOverwrite;
-
-    exifOverwrite = settings.value("artistOverwrite",false).toBool();
-    MetadataUtils::Exif::setArtistOverwrite(exifOverwrite);
+    exifOverwrite =                         s.exif.artistOverwrite;
+    Exif::setArtistOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::Exif::setArtistString( MetadataUtils::String(
-                    settings.value("artistMap").toMap().keys().first() ) );
+        Exif::setArtistString(String(       s.exif.artistMap.keys().first()));
 
-    exifOverwrite = settings.value("copyrightOverwrite",false).toBool();
-    MetadataUtils::Exif::setCopyrightOverwrite(exifOverwrite);
+    exifOverwrite =                         s.exif.copyrightOverwrite;
+    Exif::setCopyrightOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::Exif::setCopyrightString( MetadataUtils::String(
-                    settings.value("copyrightMap").toMap().keys().first() ) );
+        Exif::setCopyrightString(String(    s.exif.copyrightMap.keys().first()));
 
-    exifOverwrite = settings.value("userCommentOverwrite",false).toBool();
-    MetadataUtils::Exif::setUserCommentOverwrite(exifOverwrite);
+    exifOverwrite =                         s.exif.userCommentOverwrite;
+    Exif::setUserCommentOverwrite(exifOverwrite);
     if (exifOverwrite)
-        MetadataUtils::Exif::setUserCommentString( MetadataUtils::String(
-                    settings.value("userCommentMap").toMap().keys().first() ) );
-
-    settings.endGroup(); // Exif
-
+        Exif::setUserCommentString(String(  s.exif.userCommentMap.keys().first()));
     if (metadataEnabled) {
-        settings.beginGroup("Details");
-        exifAuthor = settings.value("exifAuthor",0x1).toInt();
-        exifCamera = settings.value("exifCamera",0x2).toInt();
-        exifPhoto = settings.value("exifPhoto",0x1f).toInt();
-        exifImage = settings.value("exifImage",0x14).toInt();
-        iptcPrint = settings.value("iptc",0xd00).toInt();
-        settings.endGroup(); // Details
+        // details
+        exifAuthor  = s.details.exifAuthor;
+        exifCamera  = s.details.exifCamera;
+        exifPhoto   = s.details.exifPhoto;
+        exifImage   = s.details.exifImage;
+        iptcPrint   = s.details.iptc;
     }
     else {
         exifAuthor = 0;
