@@ -108,11 +108,11 @@ void Settings::readSettings() {
     settings.maxHistoryCount    = value("maxHistoryCount",5).toInt();
     endGroup(); // Settings
     beginGroup("Size");
-    size.widthPx        = value("widthPx","800").toString();
-    size.widthPercent   = value("widthPercent","100").toString();
-    size.heightPx       = value("heightPx","600").toString();
-    size.heightPercent  = value("heightPercent","100").toString();
-    size.fileSizeValue  = value("fileSizeValue",300.0).toDouble();
+    size.widthPx        = value("widthPx",800).toInt();
+    size.widthPercent   = value("widthPercent",100.f).toFloat();
+    size.heightPx       = value("heightPx",600).toInt();
+    size.heightPercent  = value("heightPercent",100.f).toFloat();
+    size.fileSizeValue  = value("fileSizeValue",300.f).toFloat();
     size.fileSizeUnit   = value("fileSizeUnit",0).toInt();
     size.sizeUnit       = value("sizeUnit",0).toInt();
     endGroup(); // Size
@@ -342,10 +342,10 @@ void Settings::migrateFrom_2_2() {
     setValue("Settings/alreadySent",tempBool);
     tempString = value("Settings/width", "800").toString();
     remove("Settings/width");
-    setValue("Size/widthPx",tempString);
+    setValue("Size/widthPx",tempString.toInt());
     tempString = value("Settings/height", "600").toString();
     remove("Settings/height");
-    setValue("Size/heightPx",tempString);
+    setValue("Size/heightPx",tempString.toInt());
     tempBool = value("Settings/metadata",true).toBool();
     remove("Settings/metadata");
     setValue("Metadata/enabled",tempBool);
@@ -381,8 +381,9 @@ void Settings::migrateFrom_2_3() {
   */
 void Settings::migrateFrom_2_4() {
     // migrate from SIR 2.4 format
-    bool tempBool;
-    int  tempInt;
+    bool    tempBool;
+    QString tempString;
+    int     tempInt;
     beginGroup("Settings");
     tempBool = value("alreadSent",false).toBool();
     remove("alreadSent");
@@ -399,5 +400,15 @@ void Settings::migrateFrom_2_4() {
     tempBool = value("raw",false).toBool();
     remove("raw");
     setValue("enabled",tempBool);
-    endGroup(); // Metadata
+    endGroup(); // Raw
+    beginGroup("Size");
+    tempString = value("widthPx","800").toString();
+    setValue("widthPx",tempString.toInt());
+    tempString = value("widthPercent","100").toString();
+    setValue("widthPercent",tempString.toFloat());
+    tempString = value("heightPx","800").toString();
+    setValue("heightPx",tempString.toInt());
+    tempString = value("heightPercent","100").toString();
+    setValue("heightPercent",tempString.toFloat());
+    endGroup(); // Size
 }

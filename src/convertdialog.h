@@ -72,8 +72,8 @@ private:
     QAction *previewAction;
     QAction *metadataAction;
     QTreeWidgetItem *treeMenuItem;
-    QString sizeWidthString;
-    QString sizeHeightString;
+    float sizeWidth;
+    float sizeHeight;
     int exifAuthor;
     int exifCamera;
     int exifPhoto;
@@ -137,7 +137,7 @@ public slots:
 
 private slots:
     void setSizeUnit(int index);
-    void sizeChanged(const QString &value);
+    void sizeChanged(double value);
 };
 
 /** Saves window maximized status, possition on screen and size and last
@@ -181,18 +181,18 @@ void ConvertDialog::resetAnswers() {
   * \sa disconnectSizeLinesEdit
   */
 void ConvertDialog::connectSizeLinesEdit() {
-    connect(widthLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(sizeChanged(QString)));
-    connect(heightLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(sizeChanged(QString)));
+    connect(widthDoubleSpinBox, SIGNAL(valueChanged(double)),
+            this, SLOT(sizeChanged(double)));
+    connect(heightDoubleSpinBox, SIGNAL(valueChanged(double)),
+            this, SLOT(sizeChanged(double)));
 }
 
 /** Disconnects sizeChanged() slot.
   * \sa connectSizeLinesEdit
   */
 void ConvertDialog::disconnectSizeLinesEdit() {
-    widthLineEdit->disconnect(this,SLOT(sizeChanged(QString)));
-    heightLineEdit->disconnect(this, SLOT(sizeChanged(QString)));
+    widthDoubleSpinBox->disconnect(this,SLOT(sizeChanged(double)));
+    heightDoubleSpinBox->disconnect(this, SLOT(sizeChanged(double)));
 }
 
 #endif // CONVERTDIALOG_H

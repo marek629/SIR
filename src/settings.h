@@ -72,13 +72,13 @@ public:
         int maxHistoryCount;
     } settings;
     struct SizeGroup {
-        QString widthPx;
-        QString widthPercent;
-        QString heightPx;
-        QString heightPercent;
-        double fileSizeValue;
-        int fileSizeUnit;
-        int sizeUnit;
+        int     widthPx;
+        float   widthPercent;
+        int     heightPx;
+        float   heightPercent;
+        float   fileSizeValue;
+        int     fileSizeUnit;
+        int     sizeUnit;
     } size;
     struct MetadataGroup {
         bool enabled;

@@ -1,3 +1,7 @@
+* Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.5
+    - Settings class added
+    - Image width and height line edit replaced by spin box
+
 * Tue Jul 31 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.4
     - Changelog file provided
     - Selected file (or files) details in splitter on rigth option added

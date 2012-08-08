@@ -270,13 +270,13 @@ void OptionsDialog::saveSettings() {
         s.settings.cores            = coresSpinBox->value();
     s.settings.maxHistoryCount      = historySpinBox->value();
     // size
-    s.size.sizeUnit         = sizeUnitComboBox->currentIndex();
-    s.size.widthPx          = widthLineEdit->text();
-    s.size.widthPercent     = widthPercentLineEdit->text();
-    s.size.heightPx         = heightLineEdit->text();
-    s.size.heightPercent    = heightPercentLineEdit->text();
+    s.size.widthPx          = widthPxSpinBox->value();
+    s.size.widthPercent     = widthPercentDoubleSpinBox->value();
+    s.size.heightPx         = heightPxSpinBox->value();
+    s.size.heightPercent    = heightPercentDoubleSpinBox->value();
     s.size.fileSizeValue    = fileSizeSpinBox->value();
     s.size.fileSizeUnit     = fileSizeComboBox->currentIndex();
+    s.size.sizeUnit         = sizeUnitComboBox->currentIndex();
     // metadata (general part)
     s.metadata.enabled          = metadataCheckBox->isChecked();
     s.metadata.saveMetadata     = saveMetadataCheckBox->isChecked();
@@ -438,13 +438,13 @@ void OptionsDialog::loadSettings() {
     maxHistoryCount =                           s.settings.maxHistoryCount;
     historySpinBox->setValue(maxHistoryCount);
     // size
-    sizeUnitComboBox->setCurrentIndex(  s.size.sizeUnit);
-    widthLineEdit->setText(             s.size.widthPx);
-    widthPercentLineEdit->setText(      s.size.widthPercent);
-    heightLineEdit->setText(            s.size.heightPx);
-    heightPercentLineEdit->setText(     s.size.heightPercent);
-    fileSizeSpinBox->setValue(          s.size.fileSizeValue);
-    fileSizeComboBox->setCurrentIndex(  s.size.fileSizeUnit);
+    widthPxSpinBox->setValue(               s.size.widthPx);
+    widthPercentDoubleSpinBox->setValue(    s.size.widthPercent);
+    heightPxSpinBox->setValue(              s.size.heightPx);
+    heightPercentDoubleSpinBox->setValue(   s.size.heightPercent);
+    fileSizeSpinBox->setValue(              s.size.fileSizeValue);
+    fileSizeComboBox->setCurrentIndex(      s.size.fileSizeUnit);
+    sizeUnitComboBox->setCurrentIndex(      s.size.sizeUnit);
     // metadata (general part)
     metadataCheckBox->setChecked(           s.metadata.enabled);
     if (!metadataCheckBox->isChecked()) {

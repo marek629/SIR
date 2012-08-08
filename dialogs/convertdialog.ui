@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>769</width>
+    <width>843</width>
     <height>531</height>
    </rect>
   </property>
@@ -347,14 +347,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="widthLineEdit">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
+                     <widget class="QDoubleSpinBox" name="widthDoubleSpinBox"/>
                     </item>
                     <item>
                      <spacer name="horizontalSpacer_6">
@@ -380,14 +373,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="heightLineEdit">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
+                     <widget class="QDoubleSpinBox" name="heightDoubleSpinBox"/>
                     </item>
                    </layout>
                   </widget>
@@ -754,7 +740,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>769</width>
+     <width>843</width>
      <height>24</height>
     </rect>
    </property>

@@ -603,12 +603,12 @@ void ConvertDialog::convert() {
 
     QDir destFolder(destFileEdit->text());
 
-    if (!widthLineEdit->text().isEmpty()) {
-        w = widthLineEdit->text().toInt();
+    if (!widthDoubleSpinBox->text().isEmpty()) {
+        w = widthDoubleSpinBox->text().toInt();
         hasWidth = true;
     }
-    if (!heightLineEdit->text().isEmpty()) {
-        h = heightLineEdit->text().toInt();
+    if (!heightDoubleSpinBox->text().isEmpty()) {
+        h = heightDoubleSpinBox->text().toInt();
         hasHeight = true;
     }
 
@@ -1193,20 +1193,20 @@ void ConvertDialog::loadSettings() {
     fileSizeSpinBox->setValue(          s.size.fileSizeValue);
     fileSizeComboBox->setCurrentIndex(  s.size.fileSizeUnit);
     if (sizeUnitComboBox->currentIndex() == 1) {
-        sizeWidthString =               s.size.widthPx;
-        sizeHeightString =              s.size.heightPx;
-        widthLineEdit->setText(sizeWidthString);
-        widthLineEdit->setText(         s.size.widthPercent);
-        heightLineEdit->setText(sizeHeightString);
-        heightLineEdit->setText(        s.size.heightPercent);
+        sizeWidth =                     s.size.widthPx;
+        sizeHeight =                    s.size.heightPx;
+        widthDoubleSpinBox->setValue(sizeWidth);
+        widthDoubleSpinBox->setValue(   s.size.widthPercent);
+        heightDoubleSpinBox->setValue(sizeHeight);
+        heightDoubleSpinBox->setValue(  s.size.heightPercent);
     }
     else if (sizeUnitComboBox->currentIndex() == 0) {
-        sizeWidthString =               s.size.widthPercent;
-        sizeHeightString =              s.size.heightPercent;
-        widthLineEdit->setText(sizeWidthString);
-        widthLineEdit->setText(         s.size.widthPx);
-        heightLineEdit->setText(sizeHeightString);
-        heightLineEdit->setText(        s.size.heightPx);
+        sizeWidth =                     s.size.widthPercent;
+        sizeHeight =                    s.size.heightPercent;
+        widthDoubleSpinBox->setValue(sizeWidth);
+        widthDoubleSpinBox->setValue(   s.size.widthPx);
+        heightDoubleSpinBox->setValue(sizeHeight);
+        heightDoubleSpinBox->setValue(  s.size.heightPx);
     }
     // raw
     rawEnabled = s.raw.enabled;
@@ -1517,38 +1517,57 @@ void ConvertDialog::setSizeUnit(int index) {
         geometryWidget->show();
         disconnectSizeLinesEdit();
         if (lastIndexPxPercent != index) {
-            QString tmp = sizeWidthString;
-            sizeWidthString = widthLineEdit->text();
-            widthLineEdit->setText(tmp);
-            tmp = sizeHeightString;
-            sizeHeightString = heightLineEdit->text();
-            heightLineEdit->setText(tmp);
+            float tmp = sizeWidth;
+            sizeWidth = widthDoubleSpinBox->value();
+            widthDoubleSpinBox->setValue(tmp);
+            tmp = sizeHeight;
+            sizeHeight = heightDoubleSpinBox->value();
+            heightDoubleSpinBox->setValue(tmp);
             lastIndexPxPercent = index;
+            QString suffix;
+            int decimals;
+            double min, max;
+            if (index == 0) { // px
+                suffix = " px";
+                decimals = 0;
+                min = 1.;
+                max = 100000.;
+            }
+            else { // %
+                suffix = " %";
+                decimals = 2;
+                min = 0.01;
+                max = 10000.;
+            }
+            widthDoubleSpinBox->setSuffix(suffix);
+            widthDoubleSpinBox->setDecimals(decimals);
+            widthDoubleSpinBox->setRange(min,max);
+            heightDoubleSpinBox->setSuffix(suffix);
+            heightDoubleSpinBox->setDecimals(decimals);
+            heightDoubleSpinBox->setRange(min,max);
         }
         if (lastIndex == 2) {
             maintainCheckBox->setEnabled(true);
             maintainCheckBox->setChecked(maintainRatioAspect);
         }
         if (maintainCheckBox->isChecked() && index == 1) // %
-            heightLineEdit->setText( widthLineEdit->text() );
+            heightDoubleSpinBox->setValue(widthDoubleSpinBox->value());
         connectSizeLinesEdit();
     }
     lastIndex = index;
 }
 
-/** If desired size unit is percent and it keeps aspect ratio it will be change
-  * width or heigth percent value following the user change in adjacent line edit.
+/** If desired size unit is percent and it keeps aspect ratio this function will
+  * be change width or heigth percent value following the user change in
+  * adjacent spin box. Otherwise do nothing.
   */
-void ConvertDialog::sizeChanged(const QString &value) {
+void ConvertDialog::sizeChanged(double value) {
+    if (sizeUnitComboBox->currentIndex() != 1 && !maintainCheckBox->isChecked())
+        return;
     // size unit is % and maintainCheckBox is checked
-    if (sizeUnitComboBox->currentIndex() == 1 && maintainCheckBox->isChecked()) {
-        QLineEdit *line = static_cast<QLineEdit*>(sender());
-        int pos = line->cursorPosition();
-        QString senderName = sender()->objectName();
-        if (senderName == "widthLineEdit")
-            heightLineEdit->setText(value);
-        else if(senderName == "heightLineEdit")
-            widthLineEdit->setText(value);
-        line->setCursorPosition(pos);
-    }
+    QDoubleSpinBox *spinBox = static_cast<QDoubleSpinBox*>(sender());
+    if (spinBox == widthDoubleSpinBox)
+        heightDoubleSpinBox->setValue(value);
+    else if (spinBox == heightDoubleSpinBox)
+        widthDoubleSpinBox->setValue(value);
 }

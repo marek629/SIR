@@ -1,6 +1,5 @@
 *** nearest release ***
   ! Sessions: save and restore files list in/from text file
-  ! Settings: one, global object manageing SIR settings
   ! Conditional compilation: disable or enable metadata support
   ! ConvertDialog: change size line edits to combo boxes
   ! SelectionDialog:
