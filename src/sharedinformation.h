@@ -26,15 +26,34 @@
 #include <QString>
 #include <QDir>
 
-class ConvertThread;
-
 //! ConvertThread threads shared information.
 class SharedInformation {
+    friend class ConvertThread;
+    friend class ConvertDialog;
 
 public:
-    // methods
+    // constructor
     SharedInformation();
+    // methods
+    void setDesiredSize(int width, int height, bool percent = false,
+                        bool widthSet = false, bool heightSet = false,
+                        bool keepAspect = true);
+    void setDesiredSize(quint32 bytes);
+    void setDesiredFormat(const QString& format);
+    void setDesiredRotation(bool rotate, double angle = 0.0);
+    void setDesiredFlip(int flip);
+    void setQuality(int quality);
+    void setDestPrefix(const QString& destPrefix);
+    void setDestSuffix(const QString& destSuffix);
+    void setDestFolder(const QDir& destFolder);
+    void setOverwriteAll(bool overwriteAll = false);
+    void setMetadataEnabled(bool value);
+    void setSaveMetadata(bool value);
+    void setRealRotate(bool rotate);
+    void setUpdateThumbnail(bool update);
+    void setRotateThumbnail(bool rotate);
 
+private:
     // fields
     // image data
     // destinated size
@@ -61,9 +80,11 @@ public:
     bool realRotate; /**< Real rotation indicator - not save into \em Exif.Image.Orientation field. */
     bool updateThumbnail; /**< Update thumbnail of target image indicator. */
     bool rotateThumbnail; /**< Rotate thumbnail of target image indicator. */
-
     // thread synchronization data
+    // mutexes
     QMutex mutex; /**< Mutual exclusion object using for worker threads synchronization. */
+    // user conversation data
+    // cancel
     bool abort; /**< Abort indicator. */
     // overwrite
     bool overwriteAll; /**< Overwrite all conflicting files indicator. */

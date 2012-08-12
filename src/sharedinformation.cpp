@@ -24,6 +24,8 @@
  */
 
 #include "sharedinformation.h"
+#include "settings.h"
+#include "metadatautils.h"
 
 /** Default constructor.\n
   * Sets default field values.
@@ -53,4 +55,136 @@ SharedInformation::SharedInformation() {
     realRotate = false;
     updateThumbnail = true;
     rotateThumbnail = false;
+}
+
+/** Set desired size in pixels or percent, depend on \a percent value.
+  * \param width Width of desired image.
+  * \param height Height of desired image.
+  * \param percent Sets desired width and height in pixels if false, otherwise
+  *     sets size as percent of original image size.
+  * \param hasWidth Sets desired width to \a width if true.
+  * \param hasHeight Sets desired height to \a height if true.
+  * \param maintainAspect If true image will be scaled with keeping apsect ratio.
+  */
+void SharedInformation::setDesiredSize(int width, int height, bool percent,
+                                       bool widthSet, bool heightSet,
+                                       bool keepAspect) {
+    this->width = width;
+    this->height = height;
+    this->hasWidth = widthSet;
+    this->hasHeight = heightSet;
+    this->maintainAspect = keepAspect;
+    if (percent)
+        sizeUnit = 1;
+    else
+        sizeUnit = 0;
+}
+
+/** Sets disired size in bytes. Result file size can be lower
+  * but never grower than \a bytes.
+  * \par
+  * This is overloaded function.
+  */
+void SharedInformation::setDesiredSize(quint32 bytes) {
+    sizeBytes = bytes;
+    sizeUnit = 2;
+}
+
+/** Sets desired format string without point prefix.
+  * \note Call this function after calling #setSaveMetadata.
+  */
+void SharedInformation::setDesiredFormat(const QString &format) {
+    this->format = format;
+    if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
+        saveMetadata = false;
+        realRotate = true;
+        qWarning("Format \"%s\" haven't write metadata support",
+                 format.toAscii().constData());
+    }
+    else
+        saveMetadata = Settings::instance().metadata.saveMetadata;
+}
+
+/** Allows rotate and set desired rotation angle.
+  * \param rotate Allows rotate.
+  * \param angle Clockwise rotation angle.
+  */
+void SharedInformation::setDesiredRotation(bool rotate, double angle) {
+    this->rotate = rotate;
+    int multipler = angle / 360;
+    this->angle = angle - multipler*360;
+}
+
+/** Sets desired flip mode.
+  * \param flip Index of flip combo box. Supported values:
+  * \li 0 <c>None flip</c>
+  * \li 1 <c>Flip verticaly</c>
+  * \li 2 <c>Flip horizontaly</c>
+  * \li 3 <c>Flip verticaly and horizontaly</c>
+  * \sa MetadataUtils::Flip
+  */
+void SharedInformation::setDesiredFlip(int flip) {
+    this->flip = flip;
+}
+
+/** Sets desired image quality.
+  * \param quality Integer factor in range 0 to 100.
+  */
+void SharedInformation::setQuality(int quality) {
+    this->quality = quality;
+}
+
+/** Sets destination file name prefix. */
+void SharedInformation::setDestPrefix(const QString& destPrefix) {
+    this->prefix = destPrefix;
+}
+
+/** Sets destination file name suffix. */
+void SharedInformation::setDestSuffix(const QString &destSuffix) {
+    this->suffix = destSuffix;
+}
+
+/** Sets destination directory path. */
+void SharedInformation::setDestFolder(const QDir& destFolder) {
+    this->destFolder = destFolder;
+}
+
+/** Allows overwrite all files. */
+void SharedInformation::setOverwriteAll(bool overwriteAll) {
+    this->overwriteAll = overwriteAll;
+}
+
+/** Enables (or disables) metadata support if true, otherwise disables metadata
+  * support.
+  * \sa setSaveMetadata
+  */
+void SharedInformation::setMetadataEnabled(bool value) {
+    this->metadataEnabled = value;
+}
+
+/** Enables (or disables) save metadata option if true, otherwise disables
+  * saving metadata.
+  * \note Call this function before calling #setDesiredFormat.
+  * \sa setMetadataEnabled
+  */
+void SharedInformation::setSaveMetadata(bool value) {
+    this->saveMetadata = value;
+}
+
+/** Enables (or disables) real rotation for converted images.
+  * \note If metadata disabled image converting thread always do real rotate.
+  * \sa setMetadataEnabled
+  */
+void SharedInformation::setRealRotate(bool rotate) {
+    this->realRotate = rotate;
+}
+
+/** Enables (or disables) thumbnail update for converted images. */
+void SharedInformation::setUpdateThumbnail(bool update) {
+    this->updateThumbnail = update;
+}
+
+/** Enables (or disables) thumbnail rotation for converted images. */
+void SharedInformation::setRotateThumbnail(bool rotate) {
+    this->rotateThumbnail = rotate;
 }

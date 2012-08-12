@@ -33,7 +33,13 @@
 #include "settings.h"
 
 // setup static fields
-SharedInformation* ConvertThread::shared = new SharedInformation();
+SharedInformation * ConvertThread::shared = new SharedInformation();
+
+// access method to static fields
+/** Returns pointer to static SharedInformation object. */
+SharedInformation * ConvertThread::sharedInfo() {
+    return shared;
+}
 
 /** Default constructor.
   * \param parent parent object
@@ -44,129 +50,8 @@ ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
     work = true;
 }
 
-/** Enable metadata support if true, otherwise disables metadata support. */
-void ConvertThread::setMetadataEnabled(bool value) {
-    shared->metadataEnabled = value;
-}
-
-/** Enable save metadata option if true, otherwise disables saving metadata.
-  * \note Call this function before calling #setDesiredFormat.
-  */
-void ConvertThread::setSaveMetadata(bool value) {
-    shared->saveMetadata = value;
-}
-
-void ConvertThread::setRealRotate(bool rotate) {
-    shared->realRotate = rotate;
-}
-
-void ConvertThread::setUpdateThumbnail(bool update) {
-    shared->updateThumbnail = update;
-}
-
-void ConvertThread::setRotateThumbnail(bool rotate) {
-    shared->rotateThumbnail = rotate;
-}
-
 void ConvertThread::setAcceptWork(bool work) {
     this->work = work;
-}
-
-/** Set desired size in pixels or percent, depend on \a percent value.
-  * \param width Width of desired image.
-  * \param height Height of desired image.
-  * \param percent Sets desired width and height in pixels if false, otherwise
-  *     sets size as percent of original image size.
-  * \param hasWidth Sets desired width to \a width if true.
-  * \param hasHeight Sets desired height to \a height if true.
-  * \param maintainAspect If true image will be scaled with keeping apsect ratio.
-  */
-void ConvertThread::setDesiredSize(int width, int height, bool percent,
-                                   bool hasWidth, bool hasHeight,
-                                   bool maintainAspect) {
-
-    shared->width = width;
-    shared->height = height;
-    shared->hasWidth = hasWidth;
-    shared->hasHeight = hasHeight;
-    shared->maintainAspect = maintainAspect;
-    if (percent)
-        shared->sizeUnit = 1;
-    else
-        shared->sizeUnit = 0;
-}
-
-/** Sets disired size in bytes. Result file size can be lower
-  * but never grower than \a bytes.
-  * \par
-  * This is overloaded function.
-  */
-void ConvertThread::setDesiredSize(quint32 bytes) {
-    shared->sizeBytes = bytes;
-    shared->sizeUnit = 2;
-}
-
-/** Set desired format string without point prefix.
-  * \note Call this function after calling #setSaveMetadata.
-  */
-void ConvertThread::setDesiredFormat(const QString& format) {
-    shared->format = format;
-    if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
-        shared->saveMetadata = false;
-        shared->realRotate = true;
-        qWarning("Format \"%s\" haven't write metadata support",
-                 format.toAscii().constData());
-    }
-    else
-        shared->saveMetadata = Settings::instance().metadata.saveMetadata;
-}
-
-/** Allow rotate and set desired rotation angle.
-  * \param rotate Allows rotate.
-  * \param angle Clockwise rotation angle.
-  */
-void ConvertThread::setDesiredRotation(bool rotate, double angle) {
-    shared->rotate = rotate;
-    int multipler = angle / 360;
-    shared->angle = angle - multipler*360;
-}
-
-/** Set desired flip mode.
-  * \param flip Index of flip combo box. Supported values:
-  * \li 0 <c>None flip</c>
-  * \li 1 <c>Flip verticaly</c>
-  * \li 2 <c>Flip horizontaly</c>
-  * \li 3 <c>Flip verticaly and horizontaly</c>
-  */
-void ConvertThread::setDesiredFlip(int flip) {
-    shared->flip = flip;
-}
-
-/** Set desired image quality.
-  * \param quality Integer factor in range 0 to 100.
-  */
-void ConvertThread::setQuality(int quality) {
-    shared->quality = quality;
-}
-
-/** Set destination file name prefix. */
-void ConvertThread::setDestPrefix(const QString& destPrefix) {
-    shared->prefix = destPrefix;
-}
-
-/** Set destination file name suffix. */
-void ConvertThread::setDestSuffix(const QString &destSuffix) {
-    shared->suffix = destSuffix;
-}
-
-/** Set destination directory path. */
-void ConvertThread::setDestFolder(const QDir& destFolder) {
-    shared->destFolder = destFolder;
-}
-
-/** Allow overwrite all files. */
-void ConvertThread::setOverwriteAll(bool overwriteAll) {
-    shared->overwriteAll = overwriteAll;
 }
 
 void ConvertThread::convertImage(const QString& name, const QString& extension,
@@ -247,12 +132,10 @@ void ConvertThread::run() {
             emit imageStatus(imgData, tr("Failed to open original image"),
                               FAILED);
             delete image;
-
             //Ask for the next image and go to the beginning of the loop
             getNextOrStop();
             continue;
         }
-
         // read metadata
         saveMetadata = false;
         if (shared->metadataEnabled) {
@@ -273,7 +156,6 @@ void ConvertThread::run() {
             if (saveMetadata)
                 saveMetadata = shared->saveMetadata;
         }
-
         // compute dest size in px
         if (sizeComputed == 0) { // false if converting from SVG file
                 sizeComputed = computeSize(image,imagePath);
@@ -283,33 +165,30 @@ void ConvertThread::run() {
                 continue;
             }
         }
-
         // ask enlarge
         if (sizeComputed == -3 || askEnlarge(*image,imagePath) < 0) {
             delete image;
             getNextOrStop();
             continue;
         }
-
         // rotate image and update thumbnail
         rotateImage(image);
         updateThumbnail(image);
-
+        // create null destination image object
         QImage destImg;
-
+        // scale image
         if (hasWidth && hasHeight && !maintainAspect)
             destImg = image->scaled(width, height, Qt::IgnoreAspectRatio,
                                     Qt::SmoothTransformation);
         else if (hasWidth && hasHeight && maintainAspect)
-            destImg =  image->scaled(width, height, Qt::KeepAspectRatio,
-                                     Qt::SmoothTransformation);
+            destImg = image->scaled(width, height, Qt::KeepAspectRatio,
+                                    Qt::SmoothTransformation);
         else if (hasWidth && !hasHeight)
             destImg = image->scaledToWidth(width, Qt::SmoothTransformation);
         else if (!hasWidth && hasHeight)
             destImg = image->scaledToHeight(height, Qt::SmoothTransformation);
         else if (!hasWidth && !hasHeight)
             destImg = *image;
-
         // ask overwrite
         if ( QFile::exists( targetFilePath ) &&
              !(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {

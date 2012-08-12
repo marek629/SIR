@@ -32,6 +32,7 @@ namespace Exiv2 {
 }
 
 namespace MetadataUtils {
+//! Exif's orientation flip enumerator.
 enum Flip {
     None = 0x0,
     Vertical = 0x1,

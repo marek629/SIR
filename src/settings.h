@@ -35,7 +35,7 @@ typedef QList<QVariant>         HistoryList;
   * \e Group suffix.
   *
   * Access to settings object is available by instance() method only because
-  * this class is implemented using singleton pattern.
+  * this class is implemented using singleton design pattern.
   */
 class Settings : public QSettings {
     Q_OBJECT
@@ -43,8 +43,6 @@ class Settings : public QSettings {
 public:
     // singletons pattern instance
     static Settings &instance();
-    // destructor
-    ~Settings();
     // I/O operations
     void readSettings();
     void writeSettings();
@@ -162,6 +160,8 @@ private:
     explicit Settings(QObject *parent = 0);
     explicit Settings(const QString &organization,
                       const QString &application = QString(), QObject *parent = 0);
+    // destructor
+    ~Settings();
     // methods
     void migrateFrom_2_1();
     void migrateFrom_2_2();

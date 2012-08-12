@@ -373,7 +373,11 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="heightDoubleSpinBox"/>
+                     <widget class="QDoubleSpinBox" name="heightDoubleSpinBox">
+                      <property name="specialValueText">
+                       <string>auto</string>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>

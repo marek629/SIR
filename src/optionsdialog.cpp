@@ -255,7 +255,7 @@ void OptionsDialog::saveSettings() {
     Settings &s = Settings::instance();
     // general settings
     s.settings.targetFolder         = targetFolderLineEdit->text();
-    s.settings.targetFormat         = targetFormatComboBox->currentIndex();
+    s.settings.targetFormat         = targetFormatComboBox->currentText();
     s.settings.targetPrefix         = targetPrefixLineEdit->text();
     s.settings.targetSuffix         = targetSuffixLineEdit->text();
     s.settings.quality              = qualitySpinBox->value();
@@ -407,6 +407,8 @@ void OptionsDialog::saveSettings() {
         emit ok();
         this->close();
     }
+    // Write file settings
+    s.writeSettings();
 }
 
 /** Reads settings and sets value of the user input widgets.

@@ -52,23 +52,7 @@ public:
     void setAcceptWork(bool work);
     void getNextOrStop();
     void printError();
-    static void setDesiredSize(int width, int height, bool percent = false,
-                        bool hasWidth = false, bool hasHeight = false,
-                        bool maintainAspect = true);
-    static void setDesiredSize(quint32 bytes);
-    static void setDesiredFormat(const QString& format);
-    static void setDesiredRotation(bool rotate, double angle = 0.0);
-    static void setDesiredFlip(int flip);
-    static void setQuality(int quality);
-    static void setDestPrefix(const QString& destPrefix);
-    static void setDestSuffix(const QString& destSuffix);
-    static void setDestFolder(const QDir& destFolder);
-    static void setOverwriteAll(bool overwriteAll = false);
-    static void setMetadataEnabled(bool value);
-    static void setSaveMetadata(bool value);
-    static void setRealRotate(bool rotate);
-    static void setUpdateThumbnail(bool update);
-    static void setRotateThumbnail(bool rotate);
+    static SharedInformation *sharedInfo();
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);

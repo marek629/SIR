@@ -65,6 +65,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent
     qApp->installTranslator(appTranslator);
     statusList = new QMap<QString,int>();
     net = NULL;
+    sharedInfo = ConvertThread::sharedInfo();
     init();
 }
 
@@ -83,7 +84,6 @@ ConvertDialog::~ConvertDialog() {
     delete removeAction;
     delete previewAction;
     delete metadataAction;
-    delete ConvertThread::shared;
 }
 
 /** Connects UI signals to corresponding slots. */
@@ -425,7 +425,7 @@ void ConvertDialog::removeSelectedFromList() {
     QTreeWidgetItem *item;
     QString fileName;
 
-    for (int i = 0; i < filesTreeWidget->topLevelItemCount(); i++)
+    for (int i=filesTreeWidget->topLevelItemCount()-1; i>=0; i--)
     {
 
         if ((filesTreeWidget->topLevelItem(i))->isSelected()) {
@@ -603,12 +603,12 @@ void ConvertDialog::convert() {
 
     QDir destFolder(destFileEdit->text());
 
-    if (!widthDoubleSpinBox->text().isEmpty()) {
-        w = widthDoubleSpinBox->text().toInt();
+    if (widthDoubleSpinBox->value() != widthDoubleSpinBox->minimum()) {
+        w = widthDoubleSpinBox->value();
         hasWidth = true;
     }
-    if (!heightDoubleSpinBox->text().isEmpty()) {
-        h = heightDoubleSpinBox->text().toInt();
+    if (heightDoubleSpinBox->value() != heightDoubleSpinBox->minimum()) {
+        h = heightDoubleSpinBox->value();
         hasHeight = true;
     }
 
@@ -655,24 +655,24 @@ void ConvertDialog::convert() {
 
     if (sizeUnitComboBox->currentIndex() == 2) {
         int multiplier = 1024;
-        if (fileSizeComboBox->currentIndex() == 1)
+        if (fileSizeComboBox->currentIndex() == 1) // MiB
             multiplier *= 1024;
-        ConvertThread::setDesiredSize( fileSizeSpinBox->value() * multiplier );
+        sharedInfo->setDesiredSize( fileSizeSpinBox->value() * multiplier );
     }
     else
-        ConvertThread::setDesiredSize( w, h, (sizeUnitComboBox->currentIndex() == 1),
+        sharedInfo->setDesiredSize( w, h, (sizeUnitComboBox->currentIndex() == 1),
                                        hasWidth, hasHeight,
                                        maintainCheckBox->isChecked() );
     QString desiredFormat = targetFormatComboBox->currentText().toLower();
-    ConvertThread::setDesiredFormat( desiredFormat );
-    ConvertThread::setDesiredFlip(flipComboBox->currentIndex());
-    ConvertThread::setDesiredRotation( rotateCheckBox->isChecked(),
+    sharedInfo->setDesiredFormat( desiredFormat );
+    sharedInfo->setDesiredFlip(flipComboBox->currentIndex());
+    sharedInfo->setDesiredRotation( rotateCheckBox->isChecked(),
                                            rotateLineEdit->text().toDouble() );
-    ConvertThread::setQuality(qualitySpinBox->value());
-    ConvertThread::setDestPrefix(destPrefixEdit->text());
-    ConvertThread::setDestSuffix(destSuffixEdit->text());
-    ConvertThread::setDestFolder(destFolder);
-    ConvertThread::setOverwriteAll(false);
+    sharedInfo->setQuality(qualitySpinBox->value());
+    sharedInfo->setDestPrefix(destPrefixEdit->text());
+    sharedInfo->setDestSuffix(destSuffixEdit->text());
+    sharedInfo->setDestFolder(destFolder);
+    sharedInfo->setOverwriteAll(false);
 
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
@@ -1228,17 +1228,17 @@ void ConvertDialog::loadSettings() {
     using namespace MetadataUtils;
     bool metadataEnabled =                  s.metadata.enabled;
     Metadata::setEnabled(metadataEnabled);
-    ConvertThread::setMetadataEnabled(metadataEnabled);
+    sharedInfo->setMetadataEnabled(metadataEnabled);
     bool saveMetadata =                     s.metadata.saveMetadata;
     Metadata::setSave(saveMetadata);
-    ConvertThread::setSaveMetadata(saveMetadata);
+    sharedInfo->setSaveMetadata(saveMetadata);
     if (saveMetadata) {
-        ConvertThread::setRealRotate(       s.metadata.realRotate);
-        ConvertThread::setUpdateThumbnail(  s.metadata.updateThumbnail);
-        ConvertThread::setRotateThumbnail(  s.metadata.rotateThumbnail);
+        sharedInfo->setRealRotate(       s.metadata.realRotate);
+        sharedInfo->setUpdateThumbnail(  s.metadata.updateThumbnail);
+        sharedInfo->setRotateThumbnail(  s.metadata.rotateThumbnail);
     }
     else
-        ConvertThread::setRealRotate(true);
+        sharedInfo->setRealRotate(true);
     // exif
     bool exifOverwrite;
     exifOverwrite =                         s.exif.artistOverwrite;
@@ -1357,11 +1357,11 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
 void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
     switch (whatToDo) {
     case Enlarge:
-        if (ConvertThread::shared->noEnlargeAll)
-            ConvertThread::shared->enlargeResult = QMessageBox::NoToAll;
-        else if (ConvertThread::shared->abort)
-            ConvertThread::shared->enlargeResult = QMessageBox::Cancel;
-        else if (!ConvertThread::shared->enlargeAll) {
+        if (sharedInfo->noEnlargeAll)
+            sharedInfo->enlargeResult = QMessageBox::NoToAll;
+        else if (sharedInfo->abort)
+            sharedInfo->enlargeResult = QMessageBox::Cancel;
+        else if (!sharedInfo->enlargeAll) {
             int result = MessageBox::question(
                         this,
                         tr("Enlarge File? - SIR"),
@@ -1369,37 +1369,37 @@ void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
                            "Enlargement can cause deterioration of picture quality. "
                            "Do you want enlarge it?").arg(targetFile) );
             if (result == MessageBox::YesToAll)
-                ConvertThread::shared->enlargeAll = true;
+                sharedInfo->enlargeAll = true;
             else if (result == MessageBox::NoToAll)
-                ConvertThread::shared->noEnlargeAll = true;
+                sharedInfo->noEnlargeAll = true;
             else if (result == MessageBox::Cancel)
-                ConvertThread::shared->abort = true;
-            ConvertThread::shared->enlargeResult = result;
+                sharedInfo->abort = true;
+            sharedInfo->enlargeResult = result;
         }
         else
-            ConvertThread::shared->enlargeResult = QMessageBox::YesToAll;
+            sharedInfo->enlargeResult = QMessageBox::YesToAll;
         break;
     case Overwrite:
-        if (ConvertThread::shared->noOverwriteAll)
-            ConvertThread::shared->overwriteResult = QMessageBox::NoToAll;
-        else if(ConvertThread::shared->abort)
-            ConvertThread::shared->overwriteResult = QMessageBox::Cancel;
-        else if(!ConvertThread::shared->overwriteAll) {
+        if (sharedInfo->noOverwriteAll)
+            sharedInfo->overwriteResult = QMessageBox::NoToAll;
+        else if(sharedInfo->abort)
+            sharedInfo->overwriteResult = QMessageBox::Cancel;
+        else if(!sharedInfo->overwriteAll) {
             int result = MessageBox::question(
                              this,
                              tr("Overwrite File? -- SIR"),
                              tr("A file called %1 already exists."
                                 "Do you want to overwrite it?").arg(targetFile) );
             if (result == QMessageBox::YesToAll)
-                ConvertThread::shared->overwriteAll = true;
+                sharedInfo->overwriteAll = true;
             else if (result == QMessageBox::NoToAll)
-                ConvertThread::shared->noOverwriteAll = true;
+                sharedInfo->noOverwriteAll = true;
             else if (result == QMessageBox::Cancel)
-                ConvertThread::shared->abort = true;
-            ConvertThread::shared->overwriteResult = result;
+                sharedInfo->abort = true;
+            sharedInfo->overwriteResult = result;
         }
         else
-            ConvertThread::shared->overwriteResult = QMessageBox::YesToAll;
+            sharedInfo->overwriteResult = QMessageBox::YesToAll;
         break;
     default:
         break;
@@ -1526,25 +1526,23 @@ void ConvertDialog::setSizeUnit(int index) {
             lastIndexPxPercent = index;
             QString suffix;
             int decimals;
-            double min, max;
+            double max;
             if (index == 0) { // px
                 suffix = " px";
                 decimals = 0;
-                min = 1.;
                 max = 100000.;
             }
             else { // %
                 suffix = " %";
                 decimals = 2;
-                min = 0.01;
                 max = 10000.;
             }
             widthDoubleSpinBox->setSuffix(suffix);
             widthDoubleSpinBox->setDecimals(decimals);
-            widthDoubleSpinBox->setRange(min,max);
+            widthDoubleSpinBox->setMaximum(max);
             heightDoubleSpinBox->setSuffix(suffix);
             heightDoubleSpinBox->setDecimals(decimals);
-            heightDoubleSpinBox->setRange(min,max);
+            heightDoubleSpinBox->setMaximum(max);
         }
         if (lastIndex == 2) {
             maintainCheckBox->setEnabled(true);

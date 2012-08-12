@@ -44,6 +44,7 @@ public:
 
 private:
     // fields
+    SharedInformation *sharedInfo;
     QList<ConvertThread*> convertThreads;
     QString args;
     QStringList argsList;
@@ -167,13 +168,13 @@ void ConvertDialog::writeWindowProperties() {
   * user-anser data after last convertion.
   */
 void ConvertDialog::resetAnswers() {
-    ConvertThread::shared->overwriteResult = 1;
-    ConvertThread::shared->overwriteAll = false;
-    ConvertThread::shared->noOverwriteAll = false;
-    ConvertThread::shared->abort = false;
-    ConvertThread::shared->enlargeResult = 1;
-    ConvertThread::shared->enlargeAll = false;
-    ConvertThread::shared->noEnlargeAll = false;
+    sharedInfo->overwriteResult = 1;
+    sharedInfo->overwriteAll = false;
+    sharedInfo->noOverwriteAll = false;
+    sharedInfo->abort = false;
+    sharedInfo->enlargeResult = 1;
+    sharedInfo->enlargeAll = false;
+    sharedInfo->noEnlargeAll = false;
 }
 
 /** Connects width and height lines edit's textChanged() signal to sizeChanged()
