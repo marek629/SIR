@@ -1503,11 +1503,11 @@ void ConvertDialog::setSizeUnit(int index) {
         return;
     static int lastIndex = index;
     static int lastIndexPxPercent = index+1;
-    static bool maintainRatioAspect = maintainCheckBox->isChecked();
+    static bool keepAspectRatio = false;
     if (index == 2) { // bytes
         geometryWidget->hide();
         fileSizeWidget->show();
-        maintainRatioAspect = maintainCheckBox->isCheckable();
+        keepAspectRatio = maintainCheckBox->isChecked();
         maintainCheckBox->setChecked(true);
         maintainCheckBox->setEnabled(false);
     }
@@ -1545,7 +1545,7 @@ void ConvertDialog::setSizeUnit(int index) {
         }
         if (lastIndex == 2) {
             maintainCheckBox->setEnabled(true);
-            maintainCheckBox->setChecked(maintainRatioAspect);
+            maintainCheckBox->setChecked(keepAspectRatio);
         }
         if (maintainCheckBox->isChecked() && index == 1) // %
             heightDoubleSpinBox->setValue(widthDoubleSpinBox->value());

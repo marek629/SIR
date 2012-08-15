@@ -78,6 +78,9 @@
              <property name="text">
               <string>Add &amp;File...</string>
              </property>
+             <property name="shortcut">
+              <string>Alt+F</string>
+             </property>
             </widget>
            </item>
            <item>
@@ -96,6 +99,9 @@
              </property>
              <property name="text">
               <string>Add &amp;Dir...</string>
+             </property>
+             <property name="shortcut">
+              <string>Alt+D</string>
              </property>
             </widget>
            </item>
@@ -132,6 +138,9 @@
              <property name="text">
               <string>&amp;Remove File(s)</string>
              </property>
+             <property name="shortcut">
+              <string>Alt+R</string>
+             </property>
             </widget>
            </item>
            <item>
@@ -150,6 +159,9 @@
              </property>
              <property name="text">
               <string>Remove Al&amp;l</string>
+             </property>
+             <property name="shortcut">
+              <string>Alt+L</string>
              </property>
             </widget>
            </item>
@@ -323,9 +335,6 @@
                  <property name="shortcut">
                   <string>Alt+M</string>
                  </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
                 </widget>
                </item>
                <item>
@@ -347,7 +356,11 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="widthDoubleSpinBox"/>
+                     <widget class="QDoubleSpinBox" name="widthDoubleSpinBox">
+                      <property name="specialValueText">
+                       <string>auto</string>
+                      </property>
+                     </widget>
                     </item>
                     <item>
                      <spacer name="horizontalSpacer_6">
@@ -800,6 +813,9 @@
    <property name="text">
     <string>&amp;Options</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+O</string>
+   </property>
   </action>
   <action name="actionAbout_Sir">
    <property name="text">
@@ -841,15 +857,21 @@
   </action>
   <action name="actionSelect">
    <property name="text">
-    <string>Select...</string>
+    <string>&amp;Select...</string>
    </property>
    <property name="toolTip">
     <string>Do advanced selection of images on list</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+S</string>
+   </property>
   </action>
   <action name="actionImport_files">
    <property name="text">
-    <string>Import files...</string>
+    <string>&amp;Import files...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
    </property>
   </action>
  </widget>
