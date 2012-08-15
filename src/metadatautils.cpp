@@ -27,8 +27,7 @@
 
 using namespace MetadataUtils;
 
-bool Metadata::enabled = false;
-bool Metadata::save = false;
+// setup static variables
 QStringList Metadata::saveMetadataFormats =
         QStringList() << "jpeg" << "jpg" << "png" << "tif" << "tiff";
 
@@ -49,42 +48,44 @@ Metadata::~Metadata() {
   */
 bool Metadata::read(const String& path, bool setupStructs) {
     close();
+    std::string filePath = path.toNativeStdString();
+    image = Exiv2::ImageFactory::open(filePath);
+    if (!image->good())
+        return false;
     try {
-        std::string filePath = path.toNativeStdString();
-        image = Exiv2::ImageFactory::open(filePath);
         image->readMetadata();
-
+        // load Exif data
         exifData = image->exifData();
         exif.setVersion(exifData["Exif.Photo.ExifVersion"]);
-
+        // load IPTC data
         iptcData = image->iptcData();
         Iptc::setVersion(iptcData["Iptc.Envelope.ModelVersion"].toLong());
-
 #ifdef EXV_HAVE_XMP_TOOLKIT
+        // load XMP data
         xmpData = image->xmpData();
 #endif // EXV_HAVE_XMP_TOOLKIT
-
+        // prepare structs setup
         if (setupStructs) {
             firstEmptyItemSkipped = true;
             exifStruct_.clear();
-            }
+        }
+        // setup struct supporting skipping invalid metadata items
         while (setupStructs) {
             try {
                 setExifStruct();
                 setIptcStruct();
                 break;
             }
-            catch (Exiv2::Error &e) {
+            catch (Exiv2::Error &e) { // invalid metadatum
                 firstEmptyItemSkipped = false;
                 QString message = tr("Error open file %1").arg(path.toQString());
                 errorList += new Error(message,e);
                 continue;
             }
-
         }
         return true;
     }
-    catch (Exiv2::Error &e) {
+    catch (Exiv2::Error &e) { // read error
         QString message = tr("Error open file %1").arg(path.toQString());
         errorList += new Error(message,e);
         return false;
@@ -704,26 +705,6 @@ long Metadata::getLong(const QString &key) {
     else
         return -3;
     return -2;
-}
-
-/** Returns true if metadata support is enabled, otherwise false. */
-bool Metadata::isEnabled() {
-    return enabled;
-}
-
-/** Enables metadata support if \a v is true, otherwise disables this. */
-void Metadata::setEnabled(bool v) {
-    enabled = v;
-}
-
-/** Returns true if metadata saving support is enabled, otherwise false. */
-bool Metadata::isSave() {
-    return save;
-}
-
-/** Enables metadata saving support if \a v is true, otherwise disables this. */
-void Metadata::setSave(bool v) {
-    save = v;
 }
 
 /** Returns true if typed \a format format file is write supported, otherwise false. */

@@ -38,7 +38,6 @@
 #include "previewdialog.h"
 #include "rawutils.h"
 #include "metadatautils.h"
-#include "settings.h"
 
 #define H 115
 #define W 50
@@ -64,7 +63,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
 
     rawEnabled = RawUtils::isRawEnabled();
     metadataEnabled = isntTiffImage();
-    saveMetadata = MetadataUtils::Metadata::isSave();
+    saveMetadata = Settings::instance().metadata.saveMetadata;
     initBar();
     createConnections();
     saveImageButton->setEnabled(

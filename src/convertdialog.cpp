@@ -743,10 +743,11 @@ void ConvertDialog::showDetails() {
     static const QString htmlEnd = "</body></html>";
     static const QString htmlBr = "<br />";
     static const QString htmlHr = "<hr />";
+    static Settings &settings = Settings::instance();
     detailsBrowser->clear();
     QSize imageSize;
     bool isSvg = false;
-    bool metadataEnabled = MetadataUtils::Metadata::isEnabled();
+    bool metadataEnabled(settings.metadata.enabled);
     MetadataUtils::Metadata metadata;
     MetadataUtils::ExifStruct *exifStruct = 0;
     MetadataUtils::IptcStruct *iptcStruct = 0;
@@ -760,7 +761,7 @@ void ConvertDialog::showDetails() {
         ext = ext.toUpper();
         // thumbnail generation
         if (ext != "SVG" && ext != "SVGZ") {
-            bool fromData(!MetadataUtils::Metadata::isEnabled());
+            bool fromData(!settings.metadata.enabled);
             if (!fromData) {
                 metadata.read(imagePath, true);
                 exifStruct = metadata.exifStruct();
@@ -960,7 +961,7 @@ void ConvertDialog::showDetails() {
             ext = ext.toUpper();
             // thumbnail generation
             if (ext != "SVG" && ext != "SVGZ") {
-                bool fromData(!MetadataUtils::Metadata::isEnabled());
+                bool fromData(!settings.metadata.enabled);
                 isSvg = false;
                 if (!fromData) {
                     metadata.read(imagePath, true);
@@ -1227,10 +1228,8 @@ void ConvertDialog::loadSettings() {
     // metadata
     using namespace MetadataUtils;
     bool metadataEnabled =                  s.metadata.enabled;
-    Metadata::setEnabled(metadataEnabled);
     sharedInfo->setMetadataEnabled(metadataEnabled);
     bool saveMetadata =                     s.metadata.saveMetadata;
-    Metadata::setSave(saveMetadata);
     sharedInfo->setSaveMetadata(saveMetadata);
     if (saveMetadata) {
         sharedInfo->setRealRotate(       s.metadata.realRotate);

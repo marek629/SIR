@@ -22,18 +22,15 @@
 #ifndef PREVIEWDIALOG_H
 #define PREVIEWDIALOG_H
 
-#include <QString>
 #include <QGraphicsSvgItem>
-
 #include "ui_previewdialog.h"
 #include "metadatautils.h"
-
-class QStringList;
-class QKeyEvent;
+#include "settings.h"
 
 //! Preview image window.
 class PreviewDialog : public QDialog, public Ui::PreviewDialog {
     Q_OBJECT
+
 public:
     PreviewDialog(QWidget *parent = 0, QStringList *images = 0,
                   int currentImage = 0);
@@ -48,7 +45,6 @@ private:
     void loadPixmap();
     inline bool isntTiffImage();
     inline QGraphicsItem *addImageIntoScene();
-
     //Class Variables
     QGraphicsScene *scene;
     QString imagePath;
@@ -71,7 +67,6 @@ private:
     QString destFileExtension;
 
 public slots:
-    //Slots
     void zoom(const QString &text);
     void rotatecw( );
     void rotateccw( );
@@ -92,8 +87,8 @@ protected:
 
 bool PreviewDialog::isntTiffImage() {
     QString ext = imagePath.split('.').last().toLower();
-    bool tiffMetadataDisabled = !(ext == "tif" || ext == "tiff");
-    if (MetadataUtils::Metadata::isEnabled() && tiffMetadataDisabled) {
+    bool tiffMetadataDisabled(!(ext == "tif" || ext == "tiff"));
+    if (Settings::instance().metadata.enabled && tiffMetadataDisabled) {
         metadata = new MetadataUtils::Metadata();
         return true;
     }

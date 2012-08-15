@@ -90,6 +90,7 @@ unix {
     INSTALLS += images
     INSTALLS += desktop
     INSTALLS += service
+    DEFINES += SIR_METADATA_SUPPORT
 }
 win32 {
     RC_FILE = windows/res.rc

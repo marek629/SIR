@@ -82,6 +82,7 @@ private:
     ConvertDialog *convertDialog;
     QProgressDialog *progressDialog;
     QList<QRegExp*> fileNameListRx;
+#ifdef SIR_METADATA_SUPPORT
     QList<QRegExp*> anyAuthorListRx;
     QList<QRegExp*> anyCopyrightListRx;
     QList<QRegExp*> exifProcessingSoftwareListRx;
@@ -93,6 +94,7 @@ private:
     QList<QRegExp*> iptcCountryNameListRx;
     QList<QRegExp*> iptcCityListRx;
     QList<QRegExp*> iptcEditStatusListRx;
+#endif // SIR_METADATA_SUPPORT
     static QStringList logicalOperators;
     static QStringList comparisonOperators;
     static QStringList allOperators;

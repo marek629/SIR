@@ -22,19 +22,20 @@
 #ifndef METADATA_H
 #define METADATA_H
 
+#include <QObject>
+#include <QImage>
+#include <exiv2/exiv2.hpp>
 #include "metadata/exif.h"
 #include "metadata/iptc.h"
 #include "metadata/string.h"
 #include "metadata/error.h"
-#include <QObject>
-#include <QImage>
-#include <exiv2/exiv2.hpp>
 
 //! Metadata tools.
 namespace MetadataUtils {
 //! Main metadata manipulating class.
 class Metadata : public QObject {
     Q_OBJECT
+
 public:
     // methods
     Metadata();
@@ -68,16 +69,14 @@ public:
     long getLong(const QString &key);
     Exiv2::Image::AutoPtr imageAutoPtr() { return image; }
     Exiv2::Metadatum &metadatum(const std::string &key);
+    /** Returns size of readed image in pixels. */
+    QSize imageSize() const { return QSize(image->pixelWidth(), image->pixelHeight()); }
     /** Returns pointer to \a Exif struct. */
     ExifStruct *exifStruct() { return &exifStruct_; }
     /** Returns pointer to \a IPTC struct. */
     IptcStruct *iptcStruct() { return &iptcStruct_; }
     /** Takes last item from errorList and returns pointer error object. */
     Error *lastError() { return errorList.takeLast(); }
-    static void setEnabled(bool);
-    static bool isEnabled();
-    static void setSave(bool);
-    static bool isSave();
     static bool isWriteSupportedFormat(const QString &format);
 
 private:
@@ -89,8 +88,6 @@ private:
     Exiv2::XmpData xmpData;
 #endif // EXV_HAVE_XMP_TOOLKIT
     QList<Error*> errorList;
-    static bool enabled;
-    static bool save;
     static QStringList saveMetadataFormats;
     ExifStruct exifStruct_;
     Exif exif;

@@ -1,11 +1,8 @@
 *** nearest release ***
   ! Sessions: save and restore files list in/from text file
   ! Conditional compilation: disable or enable metadata support
-  ! ConvertDialog: change size line edits to combo boxes
   ! SelectionDialog:
     * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
-  ! Selection:
-    * don't create QImage object in testImage() if file format is supported by exiv2 (may be faster)
 
 *** next release ***
   ! Correction convert dialog

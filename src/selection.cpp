@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QProgressDialog>
+#include <QElapsedTimer>
 #include "selection.h"
 #include "convertdialog.h"
 #include "defines.h"
@@ -70,15 +71,22 @@ Selection::Selection(ConvertDialog *parent) : QObject(parent) {
 Selection::~Selection() {
     delete progressDialog;
     clearPointerList(&fileNameListRx);
+#ifdef SIR_METADATA_SUPPORT
+    // any
+    clearPointerList(&anyAuthorListRx);
+    clearPointerList(&anyCopyrightListRx);
+    // Exif
     clearPointerList(&exifProcessingSoftwareListRx);
     clearPointerList(&exifCameraManufacturerListRx);
     clearPointerList(&exifCameraModelListRx);
+    // IPTC
     clearPointerList(&iptcObjectNameListRx);
     clearPointerList(&iptcKeywordsListRx);
     clearPointerList(&iptcDescriptionListRx);
     clearPointerList(&iptcCountryNameListRx);
     clearPointerList(&iptcCityListRx);
     clearPointerList(&iptcEditStatusListRx);
+#endif // SIR_METADATA_SUPPORT
     delete fileSizeExpTree;
     delete fileSizeVector;
     delete imageSizeExpTree;
@@ -108,6 +116,8 @@ int Selection::selectItems() {
     progressDialog->setMaximumWidth(convertDialog->width());
     progressDialog->setRange(0, itemCount);
     progressDialog->show();
+    QElapsedTimer timer;
+    timer.start();
     for (int i=0; i<itemCount && !progressDialog->wasCanceled(); i++) {
         QTreeWidgetItem *item = convertDialog->filesTreeWidget->topLevelItem(i);
         QString filePath = item->text(2) + QDir::separator() + item->text(0) +
@@ -123,6 +133,7 @@ int Selection::selectItems() {
         itemsSelected++;
         QApplication::processEvents();
     }
+    qDebug() << timer.elapsed() << "ms";
     progressDialog->close();
     if (itemsSelected > 0) {
         convertDialog->enableConvertButtons();
@@ -164,6 +175,8 @@ int Selection::importFiles() {
     qDebug() << "Loaded files into list:"
              << loadFileInfo(params.path, &fileInfoList, params.browseSubdirs);
     progressDialog->setMaximum(fileInfoList.length());
+    QElapsedTimer timer;
+    timer.start();
     foreach (QFileInfo info, fileInfoList) {
         qDebug() << info.filePath() << info.size()/1024 << "KiB";
         QApplication::processEvents();
@@ -183,6 +196,7 @@ int Selection::importFiles() {
         item->setSelected(params.selectImportedFiles);
         filesImported++;
     }
+    qDebug() << timer.elapsed() << "ms";
     progressDialog->close();
     if (filesImported > 0) {
         convertDialog->enableConvertButtons();
@@ -204,6 +218,7 @@ void Selection::loadSymbols() {
   */
 void Selection::setupRegExps() {
     setupListRegExp(params.fileName, &fileNameListRx);
+#ifdef SIR_METADATA_SUPPORT
     // any metadata regular expressions lists
     setupListRegExp(params.author, &anyAuthorListRx);
     setupListRegExp(params.copyright, &anyCopyrightListRx);
@@ -218,6 +233,7 @@ void Selection::setupRegExps() {
     setupListRegExp(params.countryName, &iptcCountryNameListRx);
     setupListRegExp(params.city, &iptcCityListRx);
     setupListRegExp(params.editStatus, &iptcEditStatusListRx);
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Clears and sets up list of pointers to regular expressions. This function
@@ -347,27 +363,45 @@ void Selection::setupExpressionTrees() {
   * allways returns false.
   */
 bool Selection::testFile(const QFileInfo &info) {
+    // file name
     if (!isCompatible(info.fileName(), fileNameListRx))
         return false;
+    // file size
     fileSizeVector->replace(0, info.size());
     if (!fileSizeExpTree->rootNode()->solve())
         return false;
-    QImage img(info.filePath());
-    imageSizeVector->replace(0, img.width());
-    imageSizeVector->replace(1, img.height());
+    // image size
+    QSize imgSize;
+//#undef SIR_METADATA_SUPPORT
+#ifdef SIR_METADATA_SUPPORT
+    MetadataUtils::Metadata *metadata = 0;
+    bool setupStructs;
+    if (Settings::instance().metadata.enabled) {
+        setupStructs = (params.checkMetadata || params.checkExif || params.checkIPTC);
+        metadata = new MetadataUtils::Metadata();
+    }
+    else
+        setupStructs = false;
+    if (metadata && metadata->read(info.filePath(), setupStructs))
+        imgSize = metadata->imageSize();
+    else {
+        imgSize = QImage(info.filePath()).size();
+        setupStructs = false;
+    }
+#else
+    imgSize = QImage(info.filePath()).size();
+#endif // SIR_METADATA_SUPPORT
+    imageSizeVector->replace(0, imgSize.width());
+    imageSizeVector->replace(1, imgSize.height());
     if (!imageSizeExpTree->rootNode()->solve())
         return false;
-    if (params.checkMetadata || params.checkExif || params.checkIPTC) {
-        if (info.suffix().contains("svg",Qt::CaseInsensitive))
-            return false;
-        MetadataUtils::Metadata metadata;
-        if (!metadata.read(info.filePath(),true))
-            return false;
-        MetadataUtils::ExifStruct *exifStruct = 0;
-        MetadataUtils::IptcStruct *iptcStruct = 0;
+    // metadata
+#ifdef SIR_METADATA_SUPPORT
+    if (setupStructs) {
+        MetadataUtils::ExifStruct *exifStruct = metadata->exifStruct();
+        MetadataUtils::IptcStruct *iptcStruct = metadata->iptcStruct();
+        // check any metadata
         if (params.checkMetadata) {
-            exifStruct = metadata.exifStruct();
-            iptcStruct = metadata.iptcStruct();
             if (!isCompatible(QDateTime::fromString(exifStruct->originalDate, Qt::ISODate),
                               params.createdDateTime) &&
                     !isCompatible(iptcStruct->dateCreated, iptcStruct->timeCreated,
@@ -387,9 +421,8 @@ bool Selection::testFile(const QFileInfo &info) {
             if (!isCompatible(strList, anyCopyrightListRx))
                 return false;
         }
+        // check Exif metadata
         if (params.checkExif) {
-            if (!exifStruct)
-                exifStruct = metadata.exifStruct();
             if (!isCompatible(exifStruct->processingSoftware, exifProcessingSoftwareListRx))
                 return false;
             if (!isCompatible(exifStruct->cameraManufacturer, exifCameraManufacturerListRx))
@@ -397,9 +430,8 @@ bool Selection::testFile(const QFileInfo &info) {
             if (!isCompatible(exifStruct->cameraModel, exifCameraModelListRx))
                 return false;
         }
+        // check IPTC metadata
         if (params.checkIPTC) {
-            if (!iptcStruct)
-                iptcStruct = metadata.iptcStruct();
             if (!isCompatible(iptcStruct->objectName, iptcObjectNameListRx))
                 return false;
             if (!isCompatible(iptcStruct->keywords.split(' ', QString::SkipEmptyParts),
@@ -417,6 +449,8 @@ bool Selection::testFile(const QFileInfo &info) {
                 return false;
         }
     }
+#endif // SIR_METADATA_SUPPORT
+    // test success!
     return true;
 }
 
