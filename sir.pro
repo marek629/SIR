@@ -34,7 +34,8 @@ SOURCES += src/main.cpp \
     src/metadata/iptc.cpp \
     src/selection.cpp \
     src/expressiontree.cpp \
-    src/settings.cpp
+    src/settings.cpp \
+    src/detailsbrowser.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
@@ -64,7 +65,9 @@ HEADERS += src/main.h \
     src/metadata/iptc.h \
     src/selection.h \
     src/expressiontree.h \
-    src/settings.h
+    src/settings.h \
+    src/detailsbrowser.h \
+    src/detailsoptions.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \

@@ -36,6 +36,7 @@ class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     Q_OBJECT
     friend class Selection;
     friend class SelectionDialog;
+    friend class DetailsBrowser;
 
 public:
     ConvertDialog(QWidget *parent = 0, QString args = 0);
@@ -75,11 +76,6 @@ private:
     QTreeWidgetItem *treeMenuItem;
     float sizeWidth;
     float sizeHeight;
-    int exifAuthor;
-    int exifCamera;
-    int exifPhoto;
-    int exifImage;
-    int iptcPrint;
     QString dateFormat;
     QString timeFormat;
     QString dateTimeFormat;
@@ -133,7 +129,6 @@ public slots:
     void showUpdateResult(QString *result, bool error);
     void sendInstall();
     void showSendInstallResult(QString *result, bool error);
-    void showDetails();
     void showSelectionDialog();
 
 private slots:

@@ -32,6 +32,7 @@
 #include "optionsdialog.h"
 #include "languageutils.h"
 #include "convertdialog.h"
+#include "detailsoptions.h"
 
 quint8 OptionsDialog::maxCoresCount = 50;
 

@@ -26,61 +26,6 @@
 
 class LanguageUtils;
 
-/** \brief File details options flags namespace.
-  *
-  * Flags are used to store settings whitch metadata print in file details view.
-  * \sa ConvertDialog::showDetails
-  */
-namespace DetailsOptions {
-/** Corresponding picture section in MetadataDialog's tool box. */
-enum ExifPicture {
-    ExifVersion = 0x1,
-    ProcessingSoftware = 0x2,
-    GeneratedDateAndTime = 0x4,
-    DigitizedDateAndTime = 0x8,
-    Orientation = 0x10
-};
-/** Corresponding photo section in MetadataDialog's tool box. */
-enum ExifPhoto {
-    FocalLenght = 0x1,
-    Aperture = 0x2,
-    ShutterSpeed = 0x4,
-    IsoSpeed = 0x8,
-    ExposureTime = 0x10,
-    ExposureBias = 0x20,
-    ExposureProgram = 0x40,
-    LightMeteringMode = 0x80,
-    FlashMode = 0x100
-};
-/** Corresponding camera section in MetadataDialog's tool box. */
-enum ExifCamera {
-    Manufacturer = 0x1,
-    Model = 0x2
-};
-/** Corresponding author section in MetadataDialog's tool box. */
-enum ExifAuthor {
-    Artist = 0x1,
-    Copyright = 0x2,
-    UserComment = 0x4
-};
-/** Corresponding IPTC tab in MetadataDialog's tab widget. */
-enum Iptc {
-    ModelVersion = 0x1,
-    DateCreated = 0x2,
-    TimeCreated = 0x4,
-    DigitizedDate = 0x8,
-    DigitizedTime = 0x10,
-    Byline = 0x20,
-    CopyrightIptc = 0x40,
-    ObjectName = 0x80,
-    Keywords = 0x100,
-    Caption = 0x200,
-    CountryName = 0x400,
-    City = 0x800,
-    EditStatus = 0x1000
-};
-}
-
 //! Settings wizard window.
 class OptionsDialog : public QDialog, public Ui::OptionsDialog {
     Q_OBJECT

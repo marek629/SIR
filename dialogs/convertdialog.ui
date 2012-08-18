@@ -691,7 +691,7 @@
         </layout>
        </widget>
       </widget>
-      <widget class="QTextBrowser" name="detailsBrowser"/>
+      <widget class="DetailsBrowser" name="detailsBrowser"/>
      </widget>
     </item>
     <item>
@@ -880,6 +880,11 @@
    <class>myQTreeWidget</class>
    <extends>QTreeWidget</extends>
    <header>myqtreewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DetailsBrowser</class>
+   <extends>QTextEdit</extends>
+   <header>detailsbrowser.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

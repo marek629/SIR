@@ -23,7 +23,6 @@
 #define CONVERTTHREAD_H
 
 #include <QThread>
-#include <QWaitCondition>
 #include <QMutex>
 #include "metadatautils.h"
 #include "sharedinformation.h"
