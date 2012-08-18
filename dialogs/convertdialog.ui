@@ -879,12 +879,12 @@
   <customwidget>
    <class>myQTreeWidget</class>
    <extends>QTreeWidget</extends>
-   <header>myqtreewidget.h</header>
+   <header>widgets/myqtreewidget.h</header>
   </customwidget>
   <customwidget>
    <class>DetailsBrowser</class>
    <extends>QTextEdit</extends>
-   <header>detailsbrowser.h</header>
+   <header>widgets/detailsbrowser.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

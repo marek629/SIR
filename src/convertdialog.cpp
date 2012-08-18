@@ -31,16 +31,16 @@
 #include <QDebug>
 #include <QLibraryInfo>
 #include "convertdialog.h"
-#include "previewdialog.h"
-#include "myqtreewidget.h"
-#include "aboutdialog.h"
-#include "optionsdialog.h"
+#include "widgets/previewdialog.h"
+#include "widgets/myqtreewidget.h"
+#include "widgets/aboutdialog.h"
+#include "widgets/optionsdialog.h"
 #include "defines.h"
 #include "rawutils.h"
 #include "networkutils.h"
-#include "messagebox.h"
+#include "widgets/messagebox.h"
 #include "metadatautils.h"
-#include "metadatadialog.h"
+#include "widgets/metadatadialog.h"
 #include "selection.h"
 
 /** Default constuctor.\n

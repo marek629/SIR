@@ -19,7 +19,6 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include <myqtreewidget.h>
 #include <QKeyEvent>
 #include <QDropEvent>
 #include <QDragEnterEvent>
@@ -28,6 +27,7 @@
 #include <QFileInfo>
 #include <QImageReader>
 #include <QMenu>
+#include "myqtreewidget.h"
 
 /** Default constructor. */
 myQTreeWidget::myQTreeWidget(QWidget *parent) : QTreeWidget(parent) {

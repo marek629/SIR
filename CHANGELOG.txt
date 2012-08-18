@@ -1,10 +1,12 @@
 * Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.5
-    - Settings class added
+    - Settings and DetailsBrowser classes added
     - Image width and height line edit replaced by spin box
     - faster selection using Exiv2 image size detection if it's available
     - bugfix: delete selected items from list in ConvertDialog - now delete all selected items
     - shared data manipulation methods moved to SharedInformation;
-    - save and enabled fields in MetadataUtils::Metadata removed - now used  Settings fields
+    - save and enabled fields in MetadataUtils::Metadata removed - now used Settings fields
+    - DetailsOptions namespace moved to separated file
+    - widgets moved to separated directory
 
 * Tue Jul 31 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.4
     - Changelog file provided

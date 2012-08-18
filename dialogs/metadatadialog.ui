@@ -1293,12 +1293,12 @@
   <customwidget>
    <class>HistoryComboBox</class>
    <extends>QComboBox</extends>
-   <header>historycombobox.h</header>
+   <header>widgets/historycombobox.h</header>
   </customwidget>
   <customwidget>
    <class>TimeComboBox</class>
    <extends>QComboBox</extends>
-   <header>timecombobox.h</header>
+   <header>widgets/timecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -14,28 +14,28 @@ INCLUDEPATH += src/
 LIBS += -lexiv2
 SOURCES += src/main.cpp \
     src/convertdialog.cpp \
-    src/previewdialog.cpp \
-    src/optionsdialog.cpp \
-    src/myqtreewidget.cpp \
+    src/widgets/previewdialog.cpp \
+    src/widgets/optionsdialog.cpp \
+    src/widgets/myqtreewidget.cpp \
     src/convertthread.cpp \
-    src/aboutdialog.cpp \
+    src/widgets/aboutdialog.cpp \
     src/languageutils.cpp \
     src/sharedinformation.cpp \
     src/rawutils.cpp \
     src/networkutils.cpp \
-    src/messagebox.cpp \
+    src/widgets/messagebox.cpp \
     src/metadatautils.cpp \
-    src/historycombobox.cpp \
+    src/widgets/historycombobox.cpp \
     src/metadata/exif.cpp \
-    src/metadatadialog.cpp \
-    src/timecombobox.cpp \
+    src/widgets/metadatadialog.cpp \
+    src/widgets/timecombobox.cpp \
     src/metadata/string.cpp \
     src/metadata/error.cpp \
     src/metadata/iptc.cpp \
     src/selection.cpp \
     src/expressiontree.cpp \
     src/settings.cpp \
-    src/detailsbrowser.cpp
+    src/widgets/detailsbrowser.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
@@ -44,29 +44,29 @@ FORMS += dialogs/convertdialog.ui \
     dialogs/selectiondialog.ui
 HEADERS += src/main.h \
     src/convertdialog.h \
-    src/previewdialog.h \
-    src/optionsdialog.h \
-    src/myqtreewidget.h \
+    src/widgets/previewdialog.h \
+    src/widgets/optionsdialog.h \
+    src/widgets/myqtreewidget.h \
     src/convertthread.h \
-    src/aboutdialog.h \
+    src/widgets/aboutdialog.h \
     src/defines.h \
     src/languageutils.h \
     src/sharedinformation.h \
     src/rawutils.h \
     src/networkutils.h \
-    src/messagebox.h \
+    src/widgets/messagebox.h \
     src/metadatautils.h \
-    src/historycombobox.h \
+    src/widgets/historycombobox.h \
     src/metadata/exif.h \
-    src/metadatadialog.h \
-    src/timecombobox.h \
+    src/widgets/metadatadialog.h \
+    src/widgets/timecombobox.h \
     src/metadata/string.h \
     src/metadata/error.h \
     src/metadata/iptc.h \
     src/selection.h \
     src/expressiontree.h \
     src/settings.h \
-    src/detailsbrowser.h \
+    src/widgets/detailsbrowser.h \
     src/detailsoptions.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \

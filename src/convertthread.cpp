@@ -29,7 +29,7 @@
 #include "convertthread.h"
 #include "defines.h"
 #include "rawutils.h"
-#include "messagebox.h"
+#include "widgets/messagebox.h"
 #include "settings.h"
 
 // setup static fields
