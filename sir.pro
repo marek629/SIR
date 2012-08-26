@@ -35,13 +35,18 @@ SOURCES += src/main.cpp \
     src/selection.cpp \
     src/expressiontree.cpp \
     src/settings.cpp \
-    src/widgets/detailsbrowser.cpp
+    src/widgets/detailsbrowser.cpp \
+    src/widgets/selectiondialog.cpp \
+    src/widgets/selection/anymetadatagroupbox.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
     dialogs/optionsdialog.ui \
     dialogs/previewdialog.ui \
     dialogs/metadatadialog.ui \
-    dialogs/selectiondialog.ui
+    dialogs/selection/anymetadatagroupbox.ui \
+    dialogs/selection/dirwidget.ui \
+    dialogs/selection/exifgroupbox.ui \
+    dialogs/selection/iptcgroupbox.ui
 HEADERS += src/main.h \
     src/convertdialog.h \
     src/widgets/previewdialog.h \
@@ -67,7 +72,9 @@ HEADERS += src/main.h \
     src/expressiontree.h \
     src/settings.h \
     src/widgets/detailsbrowser.h \
-    src/detailsoptions.h
+    src/detailsoptions.h \
+    src/widgets/selectiondialog.h \
+    src/widgets/selection/anymetadatagroupbox.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \

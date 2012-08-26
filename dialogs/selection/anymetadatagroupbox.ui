@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AnyMetadataGroupBox</class>
+ <widget class="QGroupBox" name="AnyMetadataGroupBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>516</width>
+    <height>136</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>GroupBox</string>
+  </property>
+  <property name="title">
+   <string>Check any metadata</string>
+  </property>
+  <property name="checkable">
+   <bool>true</bool>
+  </property>
+  <property name="checked">
+   <bool>false</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
+    <widget class="QLabel" name="createdTimeLabel1">
+     <property name="text">
+      <string>Created between</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QDateTimeEdit" name="digitizedAfterDateTimeEdit"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Author</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="4">
+    <widget class="HistoryComboBox" name="copyrightComboBox">
+     <property name="toolTip">
+      <string>Accepts regular expression</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="2">
+    <widget class="QDateTimeEdit" name="createdAfterDateTimeEdit"/>
+   </item>
+   <item row="2" column="2" colspan="4">
+    <widget class="HistoryComboBox" name="authorComboBox">
+     <property name="toolTip">
+      <string>Accepts regular expression</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Copyright</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QLabel" name="digitizedTimeLabel2">
+     <property name="text">
+      <string>and</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QDateTimeEdit" name="digitizedBeforeDateTimeEdit"/>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="createdTimeLabel2">
+     <property name="text">
+      <string>and</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLabel" name="digitizedTimeLabel1">
+     <property name="text">
+      <string>Digitized between</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QDateTimeEdit" name="createdBeforeDateTimeEdit"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="createdTimeCheckBox">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="digitizedTimeCheckBox">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HistoryComboBox</class>
+   <extends>QComboBox</extends>
+   <header>widgets/historycombobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>createdTimeCheckBox</tabstop>
+  <tabstop>createdAfterDateTimeEdit</tabstop>
+  <tabstop>createdBeforeDateTimeEdit</tabstop>
+  <tabstop>digitizedTimeCheckBox</tabstop>
+  <tabstop>digitizedAfterDateTimeEdit</tabstop>
+  <tabstop>digitizedBeforeDateTimeEdit</tabstop>
+  <tabstop>authorComboBox</tabstop>
+  <tabstop>copyrightComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

@@ -22,9 +22,9 @@
 #ifndef SELECTION_H
 #define SELECTION_H
 
-#include "ui_selectiondialog.h"
 #include "metadatautils.h"
 #include <QFileInfoList>
+#include <QStringList>
 
 class QProgressDialog;
 class ConvertDialog;
@@ -116,27 +116,6 @@ private:
     void clearPointerList(QList<QRegExp*> *list);
     void setupExpressionTrees();
     void loadSymbols();
-};
-
-//! Selection conditions dialog class.
-class SelectionDialog : public QDialog, public Ui::SelectionDialog {
-    Q_OBJECT
-
-public:
-    explicit SelectionDialog(SelectionParams *params, bool getDirPath,
-                             QWidget *parent = 0, Qt::WindowFlags f = 0);
-
-public slots:
-    void accept();
-    void browseDir();
-
-private:
-    // fields
-    SelectionParams *params;
-    ConvertDialog *convertDialog;
-    // methods
-    void loadSettings();
-    void saveSettings();
 };
 
 #endif // SELECTION_H
