@@ -23,7 +23,6 @@
 #define SELECTIONDIALOG_H
 
 #include <QDialog>
-//#include "ui_selectiondialog.h"
 #include "ui_dirwidget.h"
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/selection/anymetadatagroupbox.h"
@@ -36,7 +35,7 @@ class QScrollArea;
 class QDialogButtonBox;
 
 //! Selection conditions dialog class.
-class SelectionDialog : public QDialog {//, public Ui::SelectionDialog {
+class SelectionDialog : public QDialog {
     Q_OBJECT
 
 public:
@@ -54,8 +53,6 @@ private:
     Ui::DirWidget *uiDirWidget;
     QWidget *dirWidget;
 #ifdef SIR_METADATA_SUPPORT
-//    Ui::AnyMetadataGroupBox uiAnyMetadata;
-//    QGroupBox *anyMetadataGroupBox;
     AnyMetadataGroupBox *anyMetadataGroupBox;
     Ui::ExifGroupBox uiExif;
     QGroupBox *exifGroupBox;
@@ -77,7 +74,7 @@ private:
     // methods
     void loadSettings();
     void saveSettings();
-    void setupUi(QDialog *selectionDialog);
+    void setupUi();
     void setupTabOrder();
 };
 #endif // SELECTIONDIALOG_H

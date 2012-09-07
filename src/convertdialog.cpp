@@ -35,6 +35,7 @@
 #include "widgets/myqtreewidget.h"
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"
+#include "widgets/options/generalgroupbox.h"
 #include "defines.h"
 #include "rawutils.h"
 #include "networkutils.h"
@@ -837,7 +838,6 @@ void ConvertDialog::about() {
 void ConvertDialog::setOptions() {
     writeWindowProperties();
     OptionsDialog *options = new OptionsDialog(this);
-    connect( options, SIGNAL( ok() ), SLOT( loadSettings() ) );
     options->exec();
     delete options;
 }
@@ -863,7 +863,7 @@ void ConvertDialog::loadSettings() {
     qualitySlider->setValue(quality);
     numThreads =                                s.settings.cores;
     if (numThreads == 0)
-        numThreads = OptionsDialog::detectCoresCount();
+        numThreads = GeneralGroupBox::detectCoresCount();
     lastDir =                                   s.settings.lastDir;
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile +=                  s.settings.languageFileName;

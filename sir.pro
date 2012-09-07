@@ -37,16 +37,26 @@ SOURCES += src/main.cpp \
     src/settings.cpp \
     src/widgets/detailsbrowser.cpp \
     src/widgets/selectiondialog.cpp \
-    src/widgets/selection/anymetadatagroupbox.cpp
+    src/widgets/selection/anymetadatagroupbox.cpp \
+    src/widgets/options/rawgroupbox.cpp \
+    src/widgets/options/abstractoptions.cpp \
+    src/widgets/options/selectiongroupbox.cpp \
+    src/widgets/options/detailsgroupbox.cpp \
+    src/widgets/options/metadatagroupbox.cpp \
+    src/widgets/options/generalgroupbox.cpp
 FORMS += dialogs/convertdialog.ui \
     dialogs/about.ui \
-    dialogs/optionsdialog.ui \
     dialogs/previewdialog.ui \
     dialogs/metadatadialog.ui \
     dialogs/selection/anymetadatagroupbox.ui \
     dialogs/selection/dirwidget.ui \
     dialogs/selection/exifgroupbox.ui \
-    dialogs/selection/iptcgroupbox.ui
+    dialogs/selection/iptcgroupbox.ui \
+    dialogs/options/rawgroupbox.ui \
+    dialogs/options/selectiongroupbox.ui \
+    dialogs/options/detailsgroupbox.ui \
+    dialogs/options/metadatagroupbox.ui \
+    dialogs/options/generalgroupbox.ui
 HEADERS += src/main.h \
     src/convertdialog.h \
     src/widgets/previewdialog.h \
@@ -74,7 +84,13 @@ HEADERS += src/main.h \
     src/widgets/detailsbrowser.h \
     src/detailsoptions.h \
     src/widgets/selectiondialog.h \
-    src/widgets/selection/anymetadatagroupbox.h
+    src/widgets/selection/anymetadatagroupbox.h \
+    src/widgets/options/rawgroupbox.h \
+    src/widgets/options/abstractoptions.h \
+    src/widgets/options/selectiongroupbox.h \
+    src/widgets/options/detailsgroupbox.h \
+    src/widgets/options/metadatagroupbox.h \
+    src/widgets/options/generalgroupbox.h
 TRANSLATIONS += translations/sir_pt_BR.ts \
     translations/sir_de.ts \
     translations/sir_es.ts \

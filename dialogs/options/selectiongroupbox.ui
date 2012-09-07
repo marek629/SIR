@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SelectionGroupBox</class>
+ <widget class="QGroupBox" name="SelectionGroupBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>341</width>
+    <height>151</height>
+   </rect>
+  </property>
+  <property name="title">
+   <string>Selection Options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_20">
+     <property name="text">
+      <string>Image width symbol</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QCheckBox" name="selectImportedCheckBox">
+     <property name="text">
+      <string>Select imported files</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <widget class="QCheckBox" name="clearSelectionCheckBox">
+     <property name="text">
+      <string>Clear current selection</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QCheckBox" name="importSubdirsCheckBox">
+     <property name="text">
+      <string>Browse subdirectories</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QLineEdit" name="sImgHeightLineEdit"/>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLabel" name="label_21">
+     <property name="text">
+      <string>Image height symbol</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="sImgWidthLineEdit"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="sFileSizeLineEdit"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_19">
+     <property name="text">
+      <string>File size symbol</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

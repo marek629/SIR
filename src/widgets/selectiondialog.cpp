@@ -40,7 +40,7 @@ SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
     this->convertDialog = static_cast<ConvertDialog*> (parent);
     this->params = params;
     this->params->path = this->convertDialog->lastDir;
-    setupUi(this);
+    setupUi();
     QGridLayout *scrollGridLayout = (QGridLayout*)scrollAreaWidgetContents->layout();
     int columnSpan = scrollGridLayout->columnCount();
     // add dir widget
@@ -84,19 +84,19 @@ SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
   * \ref SelectionDialog() "constructor".
   * \sa SelectionDialog() setupTabOrder
   */
-void SelectionDialog::setupUi(QDialog *selectionDialog) {
+void SelectionDialog::setupUi() {
     /* tooltip string for line edits (e.g. in history combo boxes) accepting
      * regular expressions */
     QString acceptRegExpString = tr("Accepts regular expression");
     // preparing dialog
-    if (selectionDialog->objectName().isEmpty())
-        selectionDialog->setObjectName(QString::fromUtf8("SelectionDialog"));
-    selectionDialog->resize(640, 480);
+    if (this->objectName().isEmpty())
+        this->setObjectName(QString::fromUtf8("SelectionDialog"));
+    this->resize(640, 480);
     // main layout
-    verticalLayout = new QVBoxLayout(selectionDialog);
+    verticalLayout = new QVBoxLayout(this);
     verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
     // scroll area
-    scrollArea = new QScrollArea(selectionDialog);
+    scrollArea = new QScrollArea(this);
     scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
     scrollArea->setFrameShape(QFrame::NoFrame);
     scrollArea->setWidgetResizable(true);
@@ -166,14 +166,14 @@ void SelectionDialog::setupUi(QDialog *selectionDialog) {
     // add scroll area to main layout
     verticalLayout->addWidget(scrollArea);
     // button box
-    buttonBox = new QDialogButtonBox(selectionDialog);
+    buttonBox = new QDialogButtonBox(this);
     buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
     buttonBox->setOrientation(Qt::Horizontal);
     buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
     verticalLayout->addWidget(buttonBox);
     // create connections
-    connect(buttonBox, SIGNAL(accepted()), selectionDialog, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), selectionDialog, SLOT(reject()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
 /** Sets swich widgets order by tabulator key in this dialog.
@@ -276,6 +276,7 @@ void SelectionDialog::browseDir() {
 void SelectionDialog::loadSettings() {
     Settings &s = Settings::instance();
     // general settings
+#ifdef SIR_METADATA_SUPPORT
     // set display format for date/time edit widgets
     QString dateTimeFormat =    s.settings.dateDisplayFormat
             + ' ' + s.settings.timeDisplayFormat;
@@ -283,6 +284,7 @@ void SelectionDialog::loadSettings() {
     anyMetadataGroupBox->createdAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
     anyMetadataGroupBox->digitizedBeforeDateTimeEdit->setDisplayFormat(dateTimeFormat);
     anyMetadataGroupBox->digitizedAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
+#endif // SIR_METADATA_SUPPORT
     // max history count for HistoryComboBox's import functions
     int maxHistoryCount =       s.settings.maxHistoryCount;
     // selection settings
@@ -305,10 +307,10 @@ void SelectionDialog::loadSettings() {
                                                         maxHistoryCount);
 #ifdef SIR_METADATA_SUPPORT
     // any metadata
-    anyMetadataGroupBox->authorComboBox->importHistory(        sd.anyAuthorMap,
+    anyMetadataGroupBox->authorComboBox->importHistory( sd.anyAuthorMap,
                                                         sd.anyAuthorList,
                                                         maxHistoryCount);
-    anyMetadataGroupBox->copyrightComboBox->importHistory(     sd.anyCopyrightMap,
+    anyMetadataGroupBox->copyrightComboBox->importHistory(sd.anyCopyrightMap,
                                                         sd.anyCopyrightList,
                                                         maxHistoryCount);
     // Exif

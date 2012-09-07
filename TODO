@@ -3,6 +3,7 @@
   ! Conditional compilation: disable or enable metadata support
   ! SelectionDialog:
     * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
+  ! remove temporary files at end of session
 
 *** next release ***
   ! Correction convert dialog

@@ -22,48 +22,57 @@
 #ifndef OPTIONSDIALOG_H
 #define OPTIONSDIALOG_H
 
-#include "ui_optionsdialog.h"
+#include <QDialog>
 
-class LanguageUtils;
+class QSplitter;
+class QListWidget;
+class QScrollArea;
+class QGroupBox;
+class QDialogButtonBox;
+class QVBoxLayout;
+class QHBoxLayout;
+class QSpacerItem;
+class GeneralGroupBox;
+class DetailsGroupBox;
+class MetadataGroupBox;
+class SelectionGroupBox;
+class RawGroupBox;
 
 //! Settings wizard window.
-class OptionsDialog : public QDialog, public Ui::OptionsDialog {
+class OptionsDialog : public QDialog {
     Q_OBJECT
 
 public:
     OptionsDialog( QWidget * parent = 0, Qt::WFlags f = 0);
     ~OptionsDialog();
-    static quint8 detectCoresCount();
 
 private:
     // fields
-    LanguageUtils * languages;
-    QMap<QString, QString> * fileToNiceName;
-    QRegExpValidator* validator;
     QGroupBox** groupBoxes;
     quint8 currentListItem;
-    quint8 coresCount;
-    static quint8 maxCoresCount;
-    quint8 maxHistoryCount;
+    // basic UI fields
+    QVBoxLayout *verticalLayout;
+    QListWidget *listWidget;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QVBoxLayout *verticalLayout_2;
+    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
+    QDialogButtonBox *buttonBox;
+    QPushButton *okButton;
+    QPushButton *cancelButton;
+    // group boxes
+    GeneralGroupBox *generalGroupBox;
+    DetailsGroupBox *detailsGroupBox;
+    MetadataGroupBox *metadataGroupBox;
+    SelectionGroupBox *selectionGroupBox;
+    RawGroupBox *rawGroupBox;
     // methods
-    void createLanguageMenu();
     void createConnections();
-    bool checkDcrawPath(QString fileName);
-    void setupWindow();
+    void setupUi();
 
 private slots:
     void saveSettings();
-    void loadSettings();
-    void browseDestination();
-    void browseDcraw();
-    void setRawStatus(int state);
-    void respondCoresSpinBox(bool checked);
-    void enableMetadata(bool checked);
-    void saveMetadata(bool save);
-    void updateThumbnail(bool update);
     void categoryChanged(int current);
-
-signals:
-    void ok(); /**< Indicates write settings success. */
 };
 #endif
