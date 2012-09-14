@@ -1,4 +1,6 @@
 * Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.5
+    - project moved to CMake
+    - Conditional compilation: disable or enable metadata support
     - Settings and DetailsBrowser classes added
     - Image width and height line edit replaced by spin box
     - faster selection using Exiv2 image size detection if it's available

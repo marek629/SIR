@@ -55,7 +55,6 @@ private:
     QStringList rawFormats;
     QString lastDir;
     PreviewDialog  *previewForm;
-    MetadataDialog *metadataForm;
     quint8 numThreads;
     QTranslator *qtTranslator;
     QTranslator *appTranslator;
@@ -72,7 +71,10 @@ private:
     QAction *removeAction;
     QAction *convertAction;
     QAction *previewAction;
+#ifdef SIR_METADATA_SUPPORT
+    MetadataDialog *metadataForm;
     QAction *metadataAction;
+#endif // SIR_METADATA_SUPPORT
     QTreeWidgetItem *treeMenuItem;
     float sizeWidth;
     float sizeHeight;
@@ -111,7 +113,9 @@ public slots:
     void showMenu( const QPoint & point);
     void previewAct();
     void showPreview(QTreeWidgetItem *item, int col);
+#ifdef SIR_METADATA_SUPPORT
     void showMetadata();
+#endif // SIR_METADATA_SUPPORT
     void verifyRotate(int status);
     void about();
     void setOptions();

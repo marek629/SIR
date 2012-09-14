@@ -6,3 +6,5 @@
 /.project
 /.svn/*
 /sir.pro.user*
+/*.user
+/Makefile

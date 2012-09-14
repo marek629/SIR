@@ -47,11 +47,13 @@ public:
     void setDestSuffix(const QString& destSuffix);
     void setDestFolder(const QDir& destFolder);
     void setOverwriteAll(bool overwriteAll = false);
+#ifdef SIR_METADATA_SUPPORT
     void setMetadataEnabled(bool value);
     void setSaveMetadata(bool value);
     void setRealRotate(bool rotate);
     void setUpdateThumbnail(bool update);
     void setRotateThumbnail(bool rotate);
+#endif // SIR_METADATA_SUPPORT
 
 private:
     // fields
@@ -74,12 +76,14 @@ private:
     bool rotate; /**< Rotation indicator. */
     double angle; /**< Rotation angle. */
     int flip; /**< MetadataUtils::Flip code. */
+#ifdef SIR_METADATA_SUPPORT
     // metadata settings
     bool metadataEnabled; /**< Indicates that metadata support enabled. */
     bool saveMetadata; /**< Saving metadata into target image indicator. */
     bool realRotate; /**< Real rotation indicator - not save into \em Exif.Image.Orientation field. */
     bool updateThumbnail; /**< Update thumbnail of target image indicator. */
     bool rotateThumbnail; /**< Rotate thumbnail of target image indicator. */
+#endif // SIR_METADATA_SUPPORT
     // thread synchronization data
     // mutexes
     QMutex mutex; /**< Mutual exclusion object using for worker threads synchronization. */

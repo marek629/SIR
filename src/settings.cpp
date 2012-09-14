@@ -116,6 +116,7 @@ void Settings::readSettings() {
     size.fileSizeUnit   = value("fileSizeUnit",0).toInt();
     size.sizeUnit       = value("sizeUnit",0).toInt();
     endGroup(); // Size
+#ifdef SIR_METADATA_SUPPORT
     beginGroup("Metadata");
     metadata.enabled            = value("enabled",true).toBool();
     metadata.saveMetadata       = value("saveMetadata",true).toBool();
@@ -145,6 +146,7 @@ void Settings::readSettings() {
     details.exifAuthor = value("exifAuthor",0x1).toInt();
     details.iptc = value("iptc",0xd00).toInt();
     endGroup(); // Details
+#endif // SIR_METADATA_SUPPORT
     beginGroup("Selection");
     selection.subdirs           = value("subdirs",false).toBool();
     selection.clearSelection    = value("clearSelection",false).toBool();
@@ -227,6 +229,7 @@ void Settings::writeSettings() {
     setValue("fileSizeUnit",    size.fileSizeUnit);
     setValue("sizeUnit",        size.sizeUnit);
     endGroup(); // Size
+#ifdef SIR_METADATA_SUPPORT
     beginGroup("Metadata");
     setValue("enabled",         metadata.enabled);
     setValue("saveMetadata",    metadata.saveMetadata);
@@ -256,6 +259,7 @@ void Settings::writeSettings() {
     setValue("exifAuthor",  details.exifAuthor);
     setValue("iptc",        details.iptc);
     endGroup(); // Details
+#endif // SIR_METADATA_SUPPORT
     beginGroup("Selection");
     setValue("subdirs",             selection.subdirs);
     setValue("clearSelection",      selection.clearSelection);

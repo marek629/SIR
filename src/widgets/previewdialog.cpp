@@ -62,8 +62,10 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->setModal(true);
 
     rawEnabled = RawUtils::isRawEnabled();
+#ifdef SIR_METADATA_SUPPORT
     metadataEnabled = isntTiffImage();
     saveMetadata = Settings::instance().metadata.saveMetadata;
+#endif // SIR_METADATA_SUPPORT
     initBar();
     createConnections();
     saveImageButton->setEnabled(
@@ -71,8 +73,10 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     rotation = 0;
     flip = MetadataUtils::None;
 
+#ifdef SIR_METADATA_SUPPORT
     if (metadataEnabled)
         metadata = new MetadataUtils::Metadata();
+#endif // SIR_METADATA_SUPPORT
 
     loadPixmap();
 
@@ -105,8 +109,10 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
 PreviewDialog::~PreviewDialog() {
     delete scene;
     delete images;
+#ifdef SIR_METADATA_SUPPORT
     if (metadataEnabled)
         delete metadata;
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Connects signals emited by \em Actions toolbar for corresponding slots. */
@@ -318,7 +324,9 @@ void  PreviewDialog::nextImage( ) {
     delete image;
     rotation = 0;
     flip = MetadataUtils::None;
+#ifdef SIR_METADATA_SUPPORT
     metadataEnabled = isntTiffImage();
+#endif // SIR_METADATA_SUPPORT
     saveImageButton->setEnabled(
                     QImageWriter::supportedImageFormats().contains(fileExt) );
 
@@ -349,7 +357,9 @@ void  PreviewDialog::previousImage( ) {
         delete image;
         rotation = 0;
         flip = MetadataUtils::None;
+#ifdef SIR_METADATA_SUPPORT
         metadataEnabled = isntTiffImage();
+#endif // SIR_METADATA_SUPPORT
         saveImageButton->setEnabled(
                         QImageWriter::supportedImageFormats().contains(fileExt) );
 
@@ -489,13 +499,14 @@ void PreviewDialog::setDestFileExt(const QString &ext) {
 bool PreviewDialog::saveFile(const QString &fileName) {
     int w = (int)(imageW*zoomFactor);
     int h = (int)(imageH*zoomFactor);
-
+#ifdef SIR_METADATA_SUPPORT
     if (flip == MetadataUtils::VerticalAndHorizontal) {
         flip = MetadataUtils::None;
         rotation += 180;
         if (rotation >= 360)
             rotation %= 360;
     }
+#endif // SIR_METADATA_SUPPORT
 
     if (rotation == -270)
         rotation = 90;
@@ -506,6 +517,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
 
     char orientation = 0;
     short rt = rotation;
+#ifdef SIR_METADATA_SUPPORT
     int fl = flip;
     if (metadataEnabled && saveMetadata) {
         orientation = metadata->exifStruct()->orientation;
@@ -549,6 +561,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
         else
             orientation = 0;
     }
+#endif // SIR_METADATA_SUPPORT
     if (orientation < 1 && rt%180 != 0) {
         int aux = w;
         w = h;
@@ -573,10 +586,12 @@ bool PreviewDialog::saveFile(const QString &fileName) {
                                               Qt::SmoothTransformation) );
 
     if (destImg.save(fileName, 0 ,100)) {
+#ifdef SIR_METADATA_SUPPORT
         if (saveMetadata) {
             metadata->setExifData();
             metadata->write(fileName, destImg.toImage());
         }
+#endif // SIR_METADATA_SUPPORT
         statusBar->setText(tr("File saved"));
         return true;
     }
@@ -602,7 +617,9 @@ void PreviewDialog::reloadImage(QString imageName) {
     flip = MetadataUtils::None;
     imagePath = imageName;
     fileExt = imagePath.split('.').last().toLower().toAscii();
+#ifdef SIR_METADATA_SUPPORT
     metadataEnabled = isntTiffImage();
+#endif // SIR_METADATA_SUPPORT
     saveImageButton->setEnabled(
                     QImageWriter::supportedImageFormats().contains(fileExt) );
 
@@ -618,8 +635,10 @@ void PreviewDialog::reloadImage(QString imageName) {
         int index = zoomComboBox->findText("100%");
         zoomComboBox->setCurrentIndex(index);
     }
+#ifdef SIR_METADATA_SUPPORT
     if (metadataEnabled)
         view->repaint();
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Loads image's pixmap from imagePath file path into corresponding graphics
@@ -649,6 +668,7 @@ void PreviewDialog::loadPixmap() {
     else // other image formats
         readSuccess = image->load(imagePath);
 
+#ifdef SIR_METADATA_SUPPORT
     bool metadataReadError = false;
     if (readSuccess && metadataEnabled) {
         // reading metadata
@@ -697,12 +717,14 @@ void PreviewDialog::loadPixmap() {
             }
         }
     }
+#endif // SIR_METADATA_SUPPORT
 
     if (!readSuccess) {
         QString errorTitle = tr("Image file error");
         QString errorMessage = tr("Load image %1 failed").arg(imagePath);
         QMessageBox::critical(this, errorTitle, errorMessage);
     }
+#ifdef SIR_METADATA_SUPPORT
     else if (metadataReadError) {
         MetadataUtils::Error *e = metadata->lastError();
         MetadataUtils::String str(e->message() +
@@ -711,6 +733,7 @@ void PreviewDialog::loadPixmap() {
         qWarning() << tr("Metadata error!");
         qWarning() << str;
     }
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Print button slot. Prints current image. */

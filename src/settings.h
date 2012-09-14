@@ -78,6 +78,7 @@ public:
         int     fileSizeUnit;
         int     sizeUnit;
     } size;
+#ifdef SIR_METADATA_SUPPORT
     struct MetadataGroup {
         bool enabled;
         bool saveMetadata;
@@ -111,6 +112,7 @@ public:
         int exifAuthor;
         int iptc;
     } details;
+#endif // SIR_METADATA_SUPPORT
     struct SelectionGroup {
         bool subdirs;
         bool clearSelection;

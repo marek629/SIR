@@ -145,7 +145,9 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     }
     else { // render from SVG file
         isSvg = true;
+#ifdef SIR_METADATA_SUPPORT
         metadataEnabled = false;
+#endif // SIR_METADATA_SUPPORT
         QGraphicsSvgItem svg(imagePath);
         QSvgRenderer *renderer = svg.renderer();
         QSize size = renderer->defaultSize();
@@ -178,8 +180,11 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
 #endif // SIR_METADATA_SUPPORT
 }
 
-/** Loads settings. */
+/** Loads settings.
+  * \note If SIR_METADATA_SUPPORT isn't defined this function has no effect.
+  */
 void DetailsBrowser::loadSettings() {
+#ifdef SIR_METADATA_SUPPORT
     if (settings.metadata.enabled) {
         // details
         exifAuthor  = settings.details.exifAuthor;
@@ -195,6 +200,7 @@ void DetailsBrowser::loadSettings() {
         exifImage = 0;
         iptcPrint = 0;
     }
+#endif // SIR_METADATA_SUPPORT
 }
 
 #ifdef SIR_METADATA_SUPPORT

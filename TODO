@@ -1,11 +1,12 @@
 *** nearest release ***
-  ! Sessions: save and restore files list in/from text file
-  ! Conditional compilation: disable or enable metadata support
   ! SelectionDialog:
     * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
   ! remove temporary files at end of session
+  ! width of SVG images render in DetailsBrowser patch
 
 *** next release ***
+  ! Sessions: save and restore files list in/from text file
+  ! Load translations from file, not resources
   ! Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
     * improve drag-drop events (myQTreeWidget)

@@ -22,7 +22,6 @@
 #ifndef METADATA_H
 #define METADATA_H
 
-#include <QObject>
 #include <QImage>
 #include <exiv2/exiv2.hpp>
 #include "metadata/exif.h"
@@ -34,7 +33,7 @@
 namespace MetadataUtils {
 //! Main metadata manipulating class.
 class Metadata : public QObject {
-    Q_OBJECT
+    Q_DECLARE_TR_FUNCTIONS(MetadataUtils::Metadata)
 
 public:
     // methods

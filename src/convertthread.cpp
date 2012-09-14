@@ -45,7 +45,7 @@ SharedInformation * ConvertThread::sharedInfo() {
   * \param parent parent object
   * \param tid thread ID
   */
-ConvertThread::ConvertThread(QObject *parent, int tid):QThread(parent) {
+ConvertThread::ConvertThread(QObject *parent, int tid) : QThread(parent) {
     this->tid = tid;
     work = true;
 }
@@ -136,6 +136,7 @@ void ConvertThread::run() {
             getNextOrStop();
             continue;
         }
+#ifdef SIR_METADATA_SUPPORT
         // read metadata
         saveMetadata = false;
         if (shared->metadataEnabled) {
@@ -156,6 +157,7 @@ void ConvertThread::run() {
             if (saveMetadata)
                 saveMetadata = shared->saveMetadata;
         }
+#endif // SIR_METADATA_SUPPORT
         // compute dest size in px
         if (sizeComputed == 0) { // false if converting from SVG file
                 sizeComputed = computeSize(image,imagePath);
@@ -173,7 +175,9 @@ void ConvertThread::run() {
         }
         // rotate image and update thumbnail
         rotateImage(image);
+#ifdef SIR_METADATA_SUPPORT
         updateThumbnail(image);
+#endif // SIR_METADATA_SUPPORT
         // create null destination image object
         QImage destImg;
         // scale image
@@ -200,8 +204,10 @@ void ConvertThread::run() {
             if(shared->overwriteResult == QMessageBox::Yes ||
                     shared->overwriteResult == QMessageBox::YesToAll) {
                 if (destImg.save(targetFilePath, 0, shared->quality)) {
+#ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata && !metadata.write(targetFilePath, destImg))
                         printError();
+#endif // SIR_METADATA_SUPPORT
                     emit imageStatus(imgData, tr("Converted"), CONVERTED);
                 }
                 else
@@ -218,8 +224,10 @@ void ConvertThread::run() {
             emit imageStatus(imgData, tr("Cancelled"), CANCELLED);
         else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFilePath, 0, shared->quality)) {
+#ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata && !metadata.write(targetFilePath, destImg))
                     printError();
+#endif // SIR_METADATA_SUPPORT
                 emit imageStatus(imgData, tr("Converted"), CONVERTED);
             }
             else
@@ -237,7 +245,10 @@ void ConvertThread::getNextOrStop() {
     emit getNextImage(this->tid);
 }
 
-/** Prints metadata error message on standard error output. */
+#ifdef SIR_METADATA_SUPPORT
+/** Prints metadata error message on standard error output. This function is
+  * available if SIR_METADATA_SUPPORT is defined only.
+  */
 void ConvertThread::printError() {
     MetadataUtils::Error *error = metadata.lastError();
     qWarning() << "tid:" << tid << '\n'
@@ -246,22 +257,27 @@ void ConvertThread::printError() {
                << "    " << error->what();
     delete error;
 }
+#endif // SIR_METADATA_SUPPORT
 
 /** Rotates \b image */
 void ConvertThread::rotateImage(QImage *image) {
-
+#ifdef SIR_METADATA_SUPPORT
     bool saveExifOrientation = !shared->realRotate;
+#endif // SIR_METADATA_SUPPORT
     // rotate image
     if (rotate && angle != 0.0) {
         int alpha = (int)angle;
+#ifdef SIR_METADATA_SUPPORT
         if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
             saveExifOrientation = false;
+#endif // SIR_METADATA_SUPPORT
         // swap dimension variables
         if (alpha%90 == 0 && alpha%180 != 0) {
             int tmp = width;
             width = height;
             height = tmp;
         }
+#ifdef SIR_METADATA_SUPPORT
         // don't rotate but save Exif orientation tag
         if (saveMetadata && saveExifOrientation) {
             int flip;
@@ -292,10 +308,14 @@ void ConvertThread::rotateImage(QImage *image) {
             else
                 metadata.setExifDatum("Exif.Image.Orientation",orientation);
         }
+#endif // SIR_METADATA_SUPPORT
     }
     // really rotate without saving Exif orientation tag
+#ifdef SIR_METADATA_SUPPORT
     if (!saveExifOrientation || shared->realRotate) {
+#endif // SIR_METADATA_SUPPORT
         QTransform transform;
+#ifdef SIR_METADATA_SUPPORT
         if (saveMetadata) {
             metadata.setExifDatum("Exif.Image.Orientation",1);
             int flip;
@@ -308,15 +328,20 @@ void ConvertThread::rotateImage(QImage *image) {
             else if (flip == MetadataUtils::VerticalAndHorizontal)
                 angle += 360;
         }
+#endif // SIR_METADATA_SUPPORT
         transform.rotate(angle);
         *image = image->transformed(transform, Qt::SmoothTransformation);
+#ifdef SIR_METADATA_SUPPORT
     }
+#endif // SIR_METADATA_SUPPORT
 }
 
+#ifdef SIR_METADATA_SUPPORT
 /** Updates Exif thumnail after conversion and (if required) rotates this thumbnail.
   * New thumbnail will set as \a exifThumbnail in metadata object.\n
   * If setting thumbnail fails, this function will print error using printError()
-  * function.
+  * function.\n
+  * This function is available if SIR_METADATA_SUPPORT is defined only.
   */
 void ConvertThread::updateThumbnail(const QImage *image) {
     // update thumbnail
@@ -357,6 +382,7 @@ void ConvertThread::updateThumbnail(const QImage *image) {
             printError();
     }
 }
+#endif // SIR_METADATA_SUPPORT
 
 char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     if (shared->sizeUnit == 0) ; // px
@@ -396,10 +422,14 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 tempImage = image->scaled(width, height, Qt::IgnoreAspectRatio,
                                              Qt::SmoothTransformation);
                 rotateImage(&tempImage);
+#ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(&tempImage);
+#endif // SIR_METADATA_SUPPORT
                 if (tempImage.save(&tempFile, 0, shared->quality)) {
+#ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
+#endif // SIR_METADATA_SUPPORT
                 }
                 else {
                     qWarning("tid %d: Save temporary image file "
@@ -474,10 +504,14 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                 renderer->render(&painter);
                 painter.end();
                 rotateImage(&tempImage);
+#ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(&tempImage);
+#endif // SIR_METADATA_SUPPORT
                 if (tempImage.save(&tempFile, 0, shared->quality)) {
+#ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
+#endif // SIR_METADATA_SUPPORT
                 }
                 else {
                     qWarning("tid %d: Save temporary image file "

@@ -79,7 +79,9 @@ ConvertDialog::~ConvertDialog() {
     delete convertAction;
     delete removeAction;
     delete previewAction;
+#ifdef SIR_METADATA_SUPPORT
     delete metadataAction;
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Connects UI signals to corresponding slots. */
@@ -147,9 +149,11 @@ void ConvertDialog::createActions() {
     previewAction->setStatusTip(tr("Show preview selected image"));
     connect(previewAction, SIGNAL(triggered()), this, SLOT(previewAct()));
 
+#ifdef SIR_METADATA_SUPPORT
     metadataAction = new QAction(tr("Show Metadata"), this);
     metadataAction->setStatusTip(tr("Show metadata of selected image"));
     connect(metadataAction, SIGNAL(triggered()), this, SLOT(showMetadata()));
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Check updates on SIR website.
@@ -700,8 +704,10 @@ void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
     previewForm->show();
 }
 
+#ifdef SIR_METADATA_SUPPORT
 /** Metadata action slot.
-  * Shows metadata dialog containg selected tree widgets item image metadata.
+  * Shows metadata dialog containg selected tree widgets item image metadata.\n
+  * This function is available if SIR_METADATA_SUPPORT is defined only.
   * \sa showMenu showPreview
   */
 void ConvertDialog::showMetadata() {
@@ -712,6 +718,7 @@ void ConvertDialog::showMetadata() {
     metadataForm = new MetadataDialog(this, list, index);
     metadataForm->show();
 }
+#endif // SIR_METADATA_SUPPORT
 
 void ConvertDialog::showSelectionDialog() {
     Selection selection(this);
@@ -811,7 +818,9 @@ void ConvertDialog::showMenu(const QPoint & point) {
     if (treeMenuItem) {
         QMenu contextMenu(this);
         contextMenu.addAction(previewAction);
+#ifdef SIR_METADATA_SUPPORT
         contextMenu.addAction(metadataAction);
+#endif // SIR_METADATA_SUPPORT
         contextMenu.addSeparator();
         contextMenu.addAction(convertAction);
         contextMenu.addAction(removeAction);
@@ -915,6 +924,7 @@ void ConvertDialog::loadSettings() {
             }
         }
     }
+#ifdef SIR_METADATA_SUPPORT
     // metadata
     using namespace MetadataUtils;
     bool metadataEnabled =                  s.metadata.enabled;
@@ -944,6 +954,7 @@ void ConvertDialog::loadSettings() {
     Exif::setUserCommentOverwrite(exifOverwrite);
     if (exifOverwrite)
         Exif::setUserCommentString(String(  s.exif.userCommentMap.keys().first()));
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Save new window state and size in private fields.

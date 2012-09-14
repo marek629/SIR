@@ -24,7 +24,9 @@
 
 #include <QGraphicsSvgItem>
 #include "ui_previewdialog.h"
+#ifdef SIR_METADATA_SUPPORT
 #include "metadatautils.h"
+#endif // SIR_METADATA_SUPPORT
 #include "settings.h"
 
 //! Preview image window.
@@ -43,7 +45,9 @@ private:
     void verifyImages();
     void reloadImage(QString imagePath);
     void loadPixmap();
+#ifdef SIR_METADATA_SUPPORT
     inline bool isntTiffImage();
+#endif // SIR_METADATA_SUPPORT
     inline QGraphicsItem *addImageIntoScene();
     //Class Variables
     QGraphicsScene *scene;
@@ -61,9 +65,11 @@ private:
     int imageH;
     bool rawEnabled;
     bool svgLoaded;
+#ifdef SIR_METADATA_SUPPORT
     bool metadataEnabled;
     bool saveMetadata;
     MetadataUtils::Metadata* metadata;
+#endif // SIR_METADATA_SUPPORT
     QString destFileExtension;
 
 public slots:
@@ -85,6 +91,7 @@ protected:
     virtual void resizeEvent(QResizeEvent *);
 };
 
+#ifdef SIR_METADATA_SUPPORT
 bool PreviewDialog::isntTiffImage() {
     QString ext = imagePath.split('.').last().toLower();
     bool tiffMetadataDisabled(!(ext == "tif" || ext == "tiff"));
@@ -94,6 +101,7 @@ bool PreviewDialog::isntTiffImage() {
     }
     return false;
 }
+#endif // SIR_METADATA_SUPPORT
 
 QGraphicsItem * PreviewDialog::addImageIntoScene() {
     if (svgLoaded) {

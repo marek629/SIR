@@ -50,11 +50,13 @@ SharedInformation::SharedInformation() {
     quality = 100;
     rotate = false;
     angle = 0.;
+#ifdef SIR_METADATA_SUPPORT
     // metadata settings
     saveMetadata = true;
     realRotate = false;
     updateThumbnail = true;
     rotateThumbnail = false;
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Set desired size in pixels or percent, depend on \a percent value.
@@ -95,6 +97,7 @@ void SharedInformation::setDesiredSize(quint32 bytes) {
   */
 void SharedInformation::setDesiredFormat(const QString &format) {
     this->format = format;
+#ifdef SIR_METADATA_SUPPORT
     if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
         saveMetadata = false;
         realRotate = true;
@@ -103,6 +106,7 @@ void SharedInformation::setDesiredFormat(const QString &format) {
     }
     else
         saveMetadata = Settings::instance().metadata.saveMetadata;
+#endif // SIR_METADATA_SUPPORT
 }
 
 /** Allows rotate and set desired rotation angle.
@@ -154,6 +158,7 @@ void SharedInformation::setOverwriteAll(bool overwriteAll) {
     this->overwriteAll = overwriteAll;
 }
 
+#ifdef SIR_METADATA_SUPPORT
 /** Enables (or disables) metadata support if true, otherwise disables metadata
   * support.
   * \sa setSaveMetadata
@@ -188,3 +193,4 @@ void SharedInformation::setUpdateThumbnail(bool update) {
 void SharedInformation::setRotateThumbnail(bool rotate) {
     this->rotateThumbnail = rotate;
 }
+#endif // SIR_METADATA_SUPPORT

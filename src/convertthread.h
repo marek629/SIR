@@ -24,10 +24,17 @@
 
 #include <QThread>
 #include <QMutex>
+#ifdef SIR_METADATA_SUPPORT
 #include "metadatautils.h"
+#else
+#include "metadata/string.h"
+#endif // SIR_METADATA_SUPPORT
 #include "sharedinformation.h"
 
 class QSvgRenderer;
+#ifndef SIR_METADATA_SUPPORT
+class QImage;
+#endif // SIR_METADATA_SUPPORT
 
 //! Enumerator for ConvertThread::question signal.
 enum Question {
@@ -50,7 +57,9 @@ public:
                       const QString& path);
     void setAcceptWork(bool work);
     void getNextOrStop();
+#ifdef SIR_METADATA_SUPPORT
     void printError();
+#endif // SIR_METADATA_SUPPORT
     static SharedInformation *sharedInfo();
 
 signals:
@@ -69,15 +78,19 @@ private:
     int width;
     int height;
     char sizeComputed;
-    bool saveMetadata;
     bool rotate;
     double angle;
+#ifdef SIR_METADATA_SUPPORT
+    bool saveMetadata;
     MetadataUtils::Metadata metadata;
+#endif // SIR_METADATA_SUPPORT
     QString targetFilePath;
     // methods
     void run();
     void rotateImage(QImage *image);
+#ifdef SIR_METADATA_SUPPORT
     void updateThumbnail(const QImage *image);
+#endif // SIR_METADATA_SUPPORT
     char computeSize(const QImage *image, const QString &imagePath);
     char computeSize(QSvgRenderer *renderer, const QString &imagePath);
     bool isLinearFileSizeFormat(double *destSize);

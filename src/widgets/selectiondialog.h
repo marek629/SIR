@@ -33,6 +33,9 @@
 
 class QScrollArea;
 class QDialogButtonBox;
+#ifndef SIR_METADATA_SUPPORT
+class HistoryComboBox;
+#endif // SIR_METADATA_SUPPORT
 
 //! Selection conditions dialog class.
 class SelectionDialog : public QDialog {

@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>705</width>
+    <width>729</width>
     <height>563</height>
    </rect>
   </property>
@@ -214,8 +214,14 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>22</width>
+            <height>22</height>
+           </size>
+          </property>
           <property name="icon">
-           <iconset>
+           <iconset resource="../application.qrc">
             <normaloff>:/images/flip_horizontal.png</normaloff>:/images/flip_horizontal.png</iconset>
           </property>
           <property name="iconSize">
@@ -237,8 +243,14 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>22</width>
+            <height>22</height>
+           </size>
+          </property>
           <property name="icon">
-           <iconset>
+           <iconset resource="../application.qrc">
             <normaloff>:/images/flip_vertical.png</normaloff>:/images/flip_vertical.png</iconset>
           </property>
           <property name="iconSize">
