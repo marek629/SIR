@@ -27,6 +27,7 @@
 
 class LanguageUtils;
 
+//! General group box class used in OptionsDialog dialog.
 class GeneralGroupBox : public QGroupBox, public Ui::GeneralGroupBox,
                         public AbstractOptions {
     Q_OBJECT

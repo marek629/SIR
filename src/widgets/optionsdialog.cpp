@@ -72,10 +72,12 @@ void OptionsDialog::categoryChanged(int current) {
 void OptionsDialog::saveSettings() {
     // general
     generalGroupBox->saveSettings();
+#ifdef SIR_METADATA_SUPPORT
     // metadata
     metadataGroupBox->saveSettings();
     // details
     detailsGroupBox->saveSettings();
+#endif // SIR_METADATA_SUPPORT
     // selection
     selectionGroupBox->saveSettings();
     // raw
@@ -84,6 +86,7 @@ void OptionsDialog::saveSettings() {
     Settings::instance().writeSettings();
 }
 
+/** Setups user interface of options dialog. */
 void OptionsDialog::setupUi() {
     if (this->objectName().isEmpty())
         this->setObjectName(QString::fromUtf8("OptionsDialog"));
@@ -92,7 +95,7 @@ void OptionsDialog::setupUi() {
     this->resize(680,550);
     verticalLayout = new QVBoxLayout(this);
     verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    horizontalLayout = new QHBoxLayout(this);
+    horizontalLayout = new QHBoxLayout();
     horizontalLayout->setObjectName("horizontalLayout");
     horizontalLayout->setSpacing(8);
     listWidget = new QListWidget(this);

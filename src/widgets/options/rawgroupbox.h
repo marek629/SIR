@@ -25,6 +25,7 @@
 #include <ui_rawgroupbox.h>
 #include <widgets/options/abstractoptions.h>
 
+//! Raw group box class used in OptionsDialog dialog.
 class RawGroupBox : public QGroupBox, public Ui::RawGroupBox,
                     public AbstractOptions {
     Q_OBJECT

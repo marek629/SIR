@@ -24,6 +24,7 @@
 
 #include "ui_anymetadatagroupbox.h"
 
+//! \em "Any metadata" group box class used in SelectionDialog dialog.
 class AnyMetadataGroupBox : public QGroupBox, public Ui::AnyMetadataGroupBox {
     Q_OBJECT
 

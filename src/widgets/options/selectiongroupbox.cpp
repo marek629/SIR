@@ -22,11 +22,18 @@
 #include "selectiongroupbox.h"
 #include "settings.h"
 
+/** Default constructor.\n
+  * Sets UI and loads settings.
+  * \sa setupUi() loadSettings()
+  */
 SelectionGroupBox::SelectionGroupBox(QWidget *parent) : QGroupBox(parent) {
     setupUi(this);
     loadSettings();
 }
 
+/** Load settings and sets member widgets values.
+  * \sa Settings saveSettings()
+  */
 void SelectionGroupBox::loadSettings() {
     Settings &s = Settings::instance();
     clearSelectionCheckBox->setChecked( s.selection.clearSelection);
@@ -37,6 +44,9 @@ void SelectionGroupBox::loadSettings() {
     sImgHeightLineEdit->setText(        s.selection.imageHeightSymbol);
 }
 
+/** Saves settings basing member widgets values.
+  * \sa Settings loadSettings()
+  */
 void SelectionGroupBox::saveSettings() {
     Settings &s = Settings::instance();
     s.selection.clearSelection      = clearSelectionCheckBox->isChecked();

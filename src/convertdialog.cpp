@@ -44,13 +44,14 @@
 #include "widgets/metadatadialog.h"
 #include "selection.h"
 
-/** Default constuctor.\n
+/** Default constuctor.
+  *
   * Sets up window with saved settings like window state, position
   * and convertion preferences.
   * \param parent Pointer to parent object.
   * \param args String containing aplication argv tables records
   *     separated by ** (double star-sign).
-  * \sa init
+  * \sa init()
   */
 ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent) {
     setupUi(this);
@@ -67,7 +68,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent
 
 /** Destructor.\n
   * Writes window state and position and dealocates dynamic allocated memory.
-  * \sa writeWindowProperties
+  * \sa writeWindowProperties()
   */
 ConvertDialog::~ConvertDialog() {
     writeWindowProperties();
@@ -157,7 +158,7 @@ void ConvertDialog::createActions() {
 }
 
 /** Check updates on SIR website.
-  * \sa showUpdateResult
+  * \sa showUpdateResult()
   */
 void ConvertDialog::checkUpdates() {
     net = new NetworkUtils();
@@ -168,7 +169,7 @@ void ConvertDialog::checkUpdates() {
 
 /** Notify SIR installation on project website if alread didn't notified;
   * otherwise show message box about alread sended.
-  * \sa showSendInstallResult
+  * \sa showSendInstallResult()
   */
 void ConvertDialog::sendInstall() {
 
@@ -212,7 +213,7 @@ void ConvertDialog::sendInstall() {
 }
 
 /** Show message box about notified installation.
-  * \sa sendInstall
+  * \sa sendInstall()
   */
 void ConvertDialog::showSendInstallResult(QString *result, bool error) {
     if(error) {
@@ -233,7 +234,7 @@ void ConvertDialog::showSendInstallResult(QString *result, bool error) {
 }
 
 /** Show result of checkUpdates() in message box.
-  * \sa checkUpdates
+  * \sa checkUpdates()
   */
 void ConvertDialog::showUpdateResult(QString *result, bool error) {
 
@@ -302,7 +303,7 @@ void ConvertDialog::setupThreads(int numThreads) {
 /** Creates lists of write and read supported images including raw images,
   * restore saved settings in last session, setups completers for lines edit
   * and creates connections and actions.
-  * \sa readSettings createConnections createActions
+  * \sa readSettings() createConnections() createActions()
   */
 void ConvertDialog::init() {
 
@@ -360,7 +361,7 @@ void ConvertDialog::init() {
 
 /** Browse destination directory button slot.
   * Choose destination directory in QFileDialog.
-  * \par
+  *
   * Path from neighboring line edit is setting as origin directory in QFileDialog.
   * If the path is empty origin directory will be set to home path.
   */
@@ -393,12 +394,10 @@ void ConvertDialog::giveNextImage(int threadNum) {
         item = itemsToConvert[convertedImages];
         convertThreads[threadNum]->convertImage(item->text(0), item->text(1),
                                                 item->text(2));
-//        convertThreads[threadNum]->confirmImage();
         convertedImages++;
     }
     else {
         convertThreads[threadNum]->setAcceptWork(false);
-//        convertThreads[threadNum]->confirmImage();
     }
 }
 
@@ -451,7 +450,7 @@ void ConvertDialog::removeSelectedFromList() {
   * \em "Not \em converted \em yet".\n
   * This function remember last opened directory in the same session.
   * Default directory is home directory.
-  * \sa addDir loadFiles(const QStringList&)
+  * \sa addDir() loadFiles(const QStringList&)
   */
 void ConvertDialog::addFile() {
     QString aux = tr("Images") + "(" + fileFilters + ")";
@@ -476,7 +475,7 @@ void ConvertDialog::addFile() {
   * into tree widget and set state to \em "Not converted yet".\n
   * This function remember last opened directory in the same session.
   * Default directory is home directory.
-  * \sa addFile
+  * \sa addFile()
   */
 void ConvertDialog::addDir() {
     QString dirPath = QFileDialog::getExistingDirectory(
@@ -562,7 +561,7 @@ void ConvertDialog::resizeColumnsToContents(myQTreeWidget *tree) {
 /** Convert all button slot.
   * Load all items from tree widget into list of images to convert and
   * call #convert() function.
-  * \sa convertSelected
+  * \sa convertSelected()
   */
 void ConvertDialog::convertAll() {
     itemsToConvert.clear();
@@ -579,7 +578,7 @@ void ConvertDialog::convertAll() {
 /** Convert selected button slot.
   * Load selected items from tree widget into list of images to convert and
   * call #convert() function.
-  * \sa convertAll
+  * \sa convertAll()
   */
 void ConvertDialog::convertSelected() {
     itemsToConvert = filesTreeWidget->selectedItems();
@@ -592,7 +591,7 @@ void ConvertDialog::convertSelected() {
 }
 
 /** Reset answers, setups and starts convertion threads.
-  * \sa resetAnswers ConvertThread
+  * \sa resetAnswers() ConvertThread
   */
 void ConvertDialog::convert() {
     resetAnswers();
@@ -690,7 +689,7 @@ void ConvertDialog::convert() {
   * This slot is called when tree widgets \a item was double clicked.
   * \param item Pointer to selected tree widgets item.
   * \param col Is ignored, exists for signal-slot compatibility only.
-  * \sa showMenu previewAct
+  * \sa showMenu() previewAct()
   */
 void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
 
@@ -708,7 +707,7 @@ void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
 /** Metadata action slot.
   * Shows metadata dialog containg selected tree widgets item image metadata.\n
   * This function is available if SIR_METADATA_SUPPORT is defined only.
-  * \sa showMenu showPreview
+  * \sa showMenu() showPreview()
   */
 void ConvertDialog::showMetadata() {
     QString imagePath = makeImagePath(treeMenuItem);
@@ -809,7 +808,7 @@ void ConvertDialog::verifyRotate(int status) {
 /** Shows context menu.
   * Shows context menu for selected tree widgets item.
   * \param point Global position of context menu.
-  * \sa showPreview showMetadata convertSelected removeSelectedFromList
+  * \sa showPreview() showMetadata() convertSelected() removeSelectedFromList()
   */
 void ConvertDialog::showMenu(const QPoint & point) {
 
@@ -958,7 +957,7 @@ void ConvertDialog::loadSettings() {
 }
 
 /** Save new window state and size in private fields.
-  * \par
+  *
   * This is overloaded QWidget's method.
   */
 void ConvertDialog::changeEvent(QEvent *e) {
@@ -975,7 +974,7 @@ void ConvertDialog::changeEvent(QEvent *e) {
 
 /** Creates (dynamic allocated) and returns pointer to new string list.
   * In the list is stored files path to images on tree view.
-  * \sa makeImagePath
+  * \sa makeImagePath()
   */
 QStringList * ConvertDialog::makeList() {
     int count = filesTreeWidget->topLevelItemCount();
@@ -986,7 +985,7 @@ QStringList * ConvertDialog::makeList() {
 }
 
 /** Returns image file path corresponding to \b item.
-  * \sa makeList
+  * \sa makeList()
   */
 QString ConvertDialog::makeImagePath(QTreeWidgetItem *item) {
     QString imagePath = item->text(2);

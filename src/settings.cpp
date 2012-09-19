@@ -49,7 +49,7 @@ Settings::Settings(QObject *parent) : QSettings(parent) {}
 
 /** Current used in instance() method constructor. Reads settings from settings
   * file corresponding \a organization and \a application.
-  * \sa Settings() readSettings
+  * \sa Settings() readSettings()
   */
 Settings::Settings(const QString &organization, const QString &application,
                    QObject *parent)
@@ -58,7 +58,7 @@ Settings::Settings(const QString &organization, const QString &application,
 }
 
 /** Destructor of Settings object. Writes settings to settings file.
-  * \sa writeSettings
+  * \sa writeSettings()
   */
 Settings::~Settings() {
     writeSettings();
@@ -67,8 +67,8 @@ Settings::~Settings() {
 /** Reads settings from settings file. Migrates old settings (i.e. from old SIR
   * releases) if it's necessary and load settings data to public structs with
   * \e Group suffix.
-  * \sa migrateFrom_2_1 migrateFrom_2_2 migrateFrom_2_3 migrateFrom_2_4
-  *     writeSettings
+  * \sa migrateFrom_2_1() migrateFrom_2_2() migrateFrom_2_3() migrateFrom_2_4()
+  *     writeSettings()
   */
 void Settings::readSettings() {
     // old settings migration
@@ -195,7 +195,7 @@ void Settings::readSettings() {
 
 /** Writes settings data from public structs with \e Group suffix to settings
   * file.
-  * \sa readSettings
+  * \sa readSettings()
   */
 void Settings::writeSettings() {
     beginGroup("MainWindow");
@@ -307,7 +307,7 @@ void Settings::writeSettings() {
 }
 
 /** Migrates settings from SIR 2.1 format to format of current version.
-  * \sa readSettings migrateFrom_2_2 migrateFrom_2_3 migrateFrom_2_4
+  * \sa readSettings() migrateFrom_2_2() migrateFrom_2_3() migrateFrom_2_4()
   */
 void Settings::migrateFrom_2_1() {
     // migration to SIR 2.2 format
@@ -334,7 +334,7 @@ void Settings::migrateFrom_2_1() {
 }
 
 /** Migrates settings from SIR 2.2 format to format of current version.
-  * \sa readSettings migrateFrom_2_1 migrateFrom_2_3 migrateFrom_2_4
+  * \sa readSettings() migrateFrom_2_1() migrateFrom_2_3() migrateFrom_2_4()
   */
 void Settings::migrateFrom_2_2() {
     // migrate settings from SIR 2.2
@@ -366,7 +366,7 @@ void Settings::migrateFrom_2_2() {
 }
 
 /** Migrates settings from SIR 2.3 format to format of current version.
-  * \sa readSettings migrateFrom_2_1 migrateFrom_2_2 migrateFrom_2_4
+  * \sa readSettings() migrateFrom_2_1() migrateFrom_2_2() migrateFrom_2_4()
   */
 void Settings::migrateFrom_2_3() {
     // migrate settings from SIR 2.3 to 2.4
@@ -375,13 +375,13 @@ void Settings::migrateFrom_2_3() {
     remove("originalDateList");
     remove("digitizedDateMap");
     remove("digitizedDateList");
-    endGroup(); // Exif
+    endGroup(); // Exifproperti
     // finally migration from SIR 2.4 format
     migrateFrom_2_4();
 }
 
 /** Migrates settings from SIR 2.4 format to format of current version.
-  * \sa readSettings migrateFrom_2_1 migrateFrom_2_2 migrateFrom_2_3
+  * \sa readSettings() migrateFrom_2_1() migrateFrom_2_2() migrateFrom_2_3()
   */
 void Settings::migrateFrom_2_4() {
     // migrate from SIR 2.4 format

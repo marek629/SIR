@@ -52,7 +52,7 @@ DetailsBrowser::DetailsBrowser(QWidget *parent) : QTextEdit(parent) {
   * This function is called when selection items changed in tree view list.\n
   * When horizontal spliters widgets containing this details widget width equal
   * 0 this function will do nothing.
-  * \sa addItem
+  * \sa addItem()
   */
 void DetailsBrowser::showDetails() {
     if (convertDialog->horizontalSplitter->widget(1)->width() == 0)
@@ -84,7 +84,7 @@ void DetailsBrowser::showDetails() {
 /** Adds detailed information (including thumbnail) about \a item.
   * \param item Files tree widget item.
   * \param index Serial number of thumbnail for \a item.
-  * \sa addMetadataToContent
+  * \sa addMetadataToContent()
   */
 void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     QSize imageSize;
@@ -208,7 +208,7 @@ void DetailsBrowser::loadSettings() {
   * stored in exifStruct and iptcStruct structs and exifPhoto, exifImage,
   * exifAuthor, exifCamera and iptcPrint enumeration fields.\n
   * This function is available if SIR_METADATA_SUPPORT is defined.
-  * \sa DetailsOptions addItem
+  * \sa DetailsOptions addItem()
   */
 void DetailsBrowser::addMetadataToContent() {
     if (exifStruct->version != MetadataUtils::String::noData()) {

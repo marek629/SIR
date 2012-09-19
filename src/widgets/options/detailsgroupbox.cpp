@@ -23,11 +23,18 @@
 #include "settings.h"
 #include "detailsoptions.h"
 
+/** Default constructor.\n
+  * Sets UI and loads settings.
+  * \sa setupUi() loadSettings()
+  */
 DetailsGroupBox::DetailsGroupBox(QWidget *parent) : QGroupBox(parent) {
     setupUi(this);
     loadSettings();
 }
 
+/** Load settings and sets member widgets values.
+  * \sa Settings saveSettings()
+  */
 void DetailsGroupBox::loadSettings() {
     Settings &s = Settings::instance();
     int hex;
@@ -72,8 +79,12 @@ void DetailsGroupBox::loadSettings() {
     iptcDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
 }
 
+/** Saves settings basing member widgets values.
+  * \sa Settings loadSettings()
+  */
 void DetailsGroupBox::saveSettings() {
     Settings &s = Settings::instance();
+    // Exif image
     int hex = 0;
     if (exifVersionCheckBox->isChecked())
         hex |= DetailsOptions::ExifVersion;
@@ -86,6 +97,7 @@ void DetailsGroupBox::saveSettings() {
     if (exifDigitizedTimeCheckBox->isChecked())
         hex |= DetailsOptions::DigitizedDateAndTime;
     s.details.exifImage     = hex;
+    // Exif photo
     hex = 0;
     if (exifFocalLengthCheckBox->isChecked())
         hex |= DetailsOptions::FocalLenght;
@@ -106,12 +118,14 @@ void DetailsGroupBox::saveSettings() {
     if (exifFlashCheckBox->isChecked())
         hex |= DetailsOptions::FlashMode;
     s.details.exifPhoto     = hex;
+    // Exif camera
     hex = 0;
     if (exifManufacturerCheckBox->isChecked())
         hex |= DetailsOptions::Manufacturer;
     if (exifModelCheckBox->isChecked())
         hex |= DetailsOptions::Model;
     s.details.exifCamera    = hex;
+    // Exif author
     hex = 0;
     if (exifArtistCheckBox_D->isChecked())
         hex |= DetailsOptions::Artist;
@@ -120,6 +134,7 @@ void DetailsGroupBox::saveSettings() {
     if (exifUserCommentCheckBox_D->isChecked())
         hex |= DetailsOptions::UserComment;
     s.details.exifAuthor    = hex;
+    // IPTC
     hex = 0;
     if (iptcVersionCheckBox->isChecked())
         hex |= DetailsOptions::ModelVersion;

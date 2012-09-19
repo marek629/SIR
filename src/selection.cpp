@@ -96,7 +96,7 @@ Selection::~Selection() {
 /** Shows selection conditions dialog and selects items on parents ConvertDialog
   * files tree widget.
   * \return Count of selected items.
-  * \sa SelectionDialog importFiles
+  * \sa SelectionDialog() importFiles()
   */
 int Selection::selectItems() {
     int itemsSelected = 0;
@@ -146,7 +146,7 @@ int Selection::selectItems() {
 /** Shows selection conditions dialog and loads items to parents ConvertDialog
   * files tree widget.
   * \return Count of imported files; -1 if directory path is empty.
-  * \sa SelectionDialog selectItems
+  * \sa SelectionDialog() selectItems()
   */
 int Selection::importFiles() {
     int filesImported = 0;
@@ -240,7 +240,7 @@ void Selection::setupRegExps() {
   * clears safe list using clearPointerList() method.
   * \param strExp Regular expression string.
   * \param listRx Pointer to list of pointers to regular expression objects.
-  * \sa clearPointerList
+  * \sa clearPointerList()
   */
 void Selection::setupListRegExp(const MetadataUtils::String &strExp,
                                 QList<QRegExp*> *listRx) {
@@ -372,7 +372,6 @@ bool Selection::testFile(const QFileInfo &info) {
         return false;
     // image size
     QSize imgSize;
-//#undef SIR_METADATA_SUPPORT
 #ifdef SIR_METADATA_SUPPORT
     MetadataUtils::Metadata *metadata = 0;
     bool setupStructs;
@@ -395,8 +394,8 @@ bool Selection::testFile(const QFileInfo &info) {
     imageSizeVector->replace(1, imgSize.height());
     if (!imageSizeExpTree->rootNode()->solve())
         return false;
-    // metadata
 #ifdef SIR_METADATA_SUPPORT
+    // metadata
     if (setupStructs) {
         MetadataUtils::ExifStruct *exifStruct = metadata->exifStruct();
         MetadataUtils::IptcStruct *iptcStruct = metadata->iptcStruct();

@@ -25,6 +25,7 @@
 #include <QGroupBox>
 #include <QDir>
 
+//! Common options data for classes inherited from AbstractOptions class.
 class CommonOptions {
 public:
     // constructor
@@ -42,6 +43,7 @@ private:
     int maxHistoryCount_;
 };
 
+//! Abstract base class for all children widgets of OptionsDialog dialog.
 class AbstractOptions {
 public:
     AbstractOptions(QWidget *parent = 0) { Q_UNUSED(parent) }

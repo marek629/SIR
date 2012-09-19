@@ -35,7 +35,7 @@
   * \param getDirPath If true shows directory widget in this dialog.
   * \param parent Pointer to parent widget.
   * \param f Window flags.
-  * \sa setupUi setupTabOrder loadSettings
+  * \sa setupUi() setupTabOrder() loadSettings()
   */
 SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
                                  QWidget *parent, Qt::WindowFlags f)
@@ -85,7 +85,7 @@ SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
 
 /** Setup base GUI. Additional widgets are added in
   * \ref SelectionDialog() "constructor".
-  * \sa SelectionDialog() setupTabOrder
+  * \sa SelectionDialog() setupTabOrder()
   */
 void SelectionDialog::setupUi() {
     /* tooltip string for line edits (e.g. in history combo boxes) accepting
@@ -180,7 +180,7 @@ void SelectionDialog::setupUi() {
 }
 
 /** Sets swich widgets order by tabulator key in this dialog.
-  * \sa setupUi
+  * \sa setupUi()
   */
 void SelectionDialog::setupTabOrder() {
     setTabOrder(scrollArea, clearSelectionCheckBox);
@@ -274,7 +274,7 @@ void SelectionDialog::browseDir() {
 
 /** Loads selection settings and imports selection dialogs text edit history
   * from settings file.
-  * \sa saveSettings
+  * \sa saveSettings()
   */
 void SelectionDialog::loadSettings() {
     Settings &s = Settings::instance();
@@ -349,7 +349,7 @@ void SelectionDialog::loadSettings() {
 }
 
 /** Exports selection dialogs text edit history to settings file.
-  * \sa loadSettings
+  * \sa loadSettings()
   */
 void SelectionDialog::saveSettings() {
     Settings &s = Settings::instance();

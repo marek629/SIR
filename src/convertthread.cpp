@@ -259,7 +259,7 @@ void ConvertThread::printError() {
 }
 #endif // SIR_METADATA_SUPPORT
 
-/** Rotates \b image */
+/** Rotates \a image */
 void ConvertThread::rotateImage(QImage *image) {
 #ifdef SIR_METADATA_SUPPORT
     bool saveExifOrientation = !shared->realRotate;
@@ -384,6 +384,13 @@ void ConvertThread::updateThumbnail(const QImage *image) {
 }
 #endif // SIR_METADATA_SUPPORT
 
+/** This is overloaded function. It's version for \e normal, raster image.
+  *
+  * Sets required image size.
+  * \return negative value when an error has occured
+  * \return 0 when an unsupported SharedInformation::sizeUnit value was set
+  * \return 1 when success
+  */
 char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     if (shared->sizeUnit == 0) ; // px
     // compute size when it wasn't typed in pixels
@@ -459,6 +466,13 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     return 0;
 }
 
+/** This is overloaded function. It's version for SVG vector image.
+  *
+  * Sets required image size.
+  * \return negative value when an error has occured
+  * \return 0 when an unsupported SharedInformation::sizeUnit value was set
+  * \return 1 when success
+  */
 char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath) {
     QSize defaultSize = renderer->defaultSize();
     if (shared->sizeUnit == 0) ; // px
@@ -572,6 +586,12 @@ bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
     return linearSize;
 }
 
+/** Asks the user in message box if enlarge image by emiting question() signal.\n
+  * \return -1 when the user didn't answered \em yes\n
+  * \return 0  when the user answered \em yes\n
+  * \return 1  when enlarge of image isn't necessary
+  * \sa askOverwrite() question()
+  */
 char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
     if ( (image.width()<width && image.width()>=image.height()) ||
          (image.height()<height && image.width()<=image.height()) ) {
@@ -593,9 +613,10 @@ char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
     return 1;
 }
 
-/** Asks the user in message box if overwrite file.\n
+/** Asks the user in message box if overwrite file by emiting question() signal.\n
   * Returns negative value if overwriting failed, otherwise returns 0.
   * \note This function was created for SVG images.
+  * \sa askEnlarge() question()
   */
 char ConvertThread::askOverwrite(QFile *tempFile) {
     if ( QFile::exists( targetFilePath ) &&

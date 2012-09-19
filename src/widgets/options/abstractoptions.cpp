@@ -22,8 +22,10 @@
 #include "abstractoptions.h"
 #include "settings.h"
 
+/** Default constructor.\n
+  * Sets default value of fields of common options object.
+  */
 CommonOptions::CommonOptions() {
-    qDebug("CommonOptions constuctor");
     targetDirPath_ = QDir::homePath();
     maxHistoryCount_ = Settings::instance().settings.maxHistoryCount;
 }

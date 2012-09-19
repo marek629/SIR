@@ -161,7 +161,7 @@ void SharedInformation::setOverwriteAll(bool overwriteAll) {
 #ifdef SIR_METADATA_SUPPORT
 /** Enables (or disables) metadata support if true, otherwise disables metadata
   * support.
-  * \sa setSaveMetadata
+  * \sa setSaveMetadata()
   */
 void SharedInformation::setMetadataEnabled(bool value) {
     this->metadataEnabled = value;
@@ -170,7 +170,7 @@ void SharedInformation::setMetadataEnabled(bool value) {
 /** Enables (or disables) save metadata option if true, otherwise disables
   * saving metadata.
   * \note Call this function before calling #setDesiredFormat.
-  * \sa setMetadataEnabled
+  * \sa setMetadataEnabled()
   */
 void SharedInformation::setSaveMetadata(bool value) {
     this->saveMetadata = value;
@@ -178,7 +178,7 @@ void SharedInformation::setSaveMetadata(bool value) {
 
 /** Enables (or disables) real rotation for converted images.
   * \note If metadata disabled image converting thread always do real rotate.
-  * \sa setMetadataEnabled
+  * \sa setMetadataEnabled()
   */
 void SharedInformation::setRealRotate(bool rotate) {
     this->realRotate = rotate;

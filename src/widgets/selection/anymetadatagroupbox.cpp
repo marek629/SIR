@@ -21,6 +21,10 @@
 
 #include "anymetadatagroupbox.h"
 
+/** Default constructor.\n
+  * Sets UI and create connections.
+  * \sa setupUi()
+  */
 AnyMetadataGroupBox::AnyMetadataGroupBox(QWidget *parent) : QGroupBox(parent) {
     // setup GUI
     setupUi(this);
@@ -39,6 +43,7 @@ AnyMetadataGroupBox::AnyMetadataGroupBox(QWidget *parent) : QGroupBox(parent) {
             SLOT(enableDateTimeEdits(int)));
 }
 
+/** Enables or disables date time widgets depending on \a state value. */
 void AnyMetadataGroupBox::enableDateTimeEdits(int state) {
     QWidgetList widgetList;
     QCheckBox *checkBox = (QCheckBox*)sender();

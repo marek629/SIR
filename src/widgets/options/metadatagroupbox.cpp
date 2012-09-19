@@ -22,6 +22,10 @@
 #include "metadatagroupbox.h"
 #include "settings.h"
 
+/** Default constructor.\n
+  * Sets UI, loads settings and create connections.
+  * \sa setupUi() loadSettings()
+  */
 MetadataGroupBox::MetadataGroupBox(QWidget *parent) : QGroupBox(parent) {
     setupUi(this);
 
@@ -45,10 +49,14 @@ MetadataGroupBox::MetadataGroupBox(QWidget *parent) : QGroupBox(parent) {
             exifUserCommentComboBox, SLOT(setEnabled(bool)));
 }
 
+/** Destructor. */
 MetadataGroupBox::~MetadataGroupBox() {
     delete validator;
 }
 
+/** Load settings and sets member widgets values.
+  * \sa Settings saveSettings()
+  */
 void MetadataGroupBox::loadSettings() {
     Settings &s = Settings::instance();
     // general metadata part
@@ -100,6 +108,9 @@ void MetadataGroupBox::loadSettings() {
     exifUserCommentComboBox->setEnabled(exifOverwrite);
 }
 
+/** Saves settings basing member widgets values.
+  * \sa Settings loadSettings()
+  */
 void MetadataGroupBox::saveSettings() {
     Settings &s = Settings::instance();
     // general part
@@ -125,6 +136,7 @@ void MetadataGroupBox::saveSettings() {
     s.exif.userCommentList      = historyList;
 }
 
+/** Enable or disable metadata check boxes depending on \a checked value. */
 void MetadataGroupBox::enableMetadata(bool checked) {
     if (checked) {
         saveMetadataCheckBox->setEnabled(true);
@@ -162,6 +174,7 @@ void MetadataGroupBox::saveMetadata(bool save) {
     }
 }
 
+/** Unchecks thumbRotateCheckBox if \a update is false, otherwise does nothing. */
 void MetadataGroupBox::updateThumbnail(bool update) {
     if (!update)
         thumbRotateCheckBox->setChecked(false);

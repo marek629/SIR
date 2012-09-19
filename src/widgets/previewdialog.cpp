@@ -175,7 +175,6 @@ void PreviewDialog::initBar() {
     printButton->setFixedSize(22,22);
     printButton->setToolTip(tr("Print current image..."));
     printButton->setShortcut(Qt::CTRL + Qt::Key_P);
-
 }
 
 /** Zoom combo box slot.

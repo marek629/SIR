@@ -24,8 +24,13 @@
 #include "rawgroupbox.h"
 #include "settings.h"
 
+/** Default constructor.\n
+  * Sets UI, loads settings and create connections.
+  * \sa setupUi() loadSettings()
+  */
 RawGroupBox::RawGroupBox(QWidget *parent) : QGroupBox(parent) {
     setupUi(this);
+    loadSettings();
     connect(dcrawPushButton, SIGNAL(clicked()), this, SLOT(browseDcraw()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)), SLOT(setRawStatus(int)));
 }
@@ -41,12 +46,16 @@ void RawGroupBox::browseDcraw() {
     dcrawLineEdit->setText(fileName);
 }
 
+/** Enables or disables member widgets depending on \a state value. */
 void RawGroupBox::setRawStatus(int state) {
     dcrawLineEdit->setEnabled(state);
     dcrawPushButton->setEnabled(state);
     dcrawOptions->setEnabled(state);
 }
 
+/** Load settings and sets member widgets values.
+  * \sa Settings saveSettings()
+  */
 void RawGroupBox::loadSettings() {
     Settings &s = Settings::instance();
     int state =             s.raw.enabled;
@@ -56,6 +65,9 @@ void RawGroupBox::loadSettings() {
     dcrawOptions->setText(  s.raw.dcrawOptions);
 }
 
+/** Saves settings basing member widgets values.
+  * \sa Settings loadSettings()
+  */
 void RawGroupBox::saveSettings() {
     Settings &s = Settings::instance();
     bool dcrawOk = false;
@@ -86,6 +98,10 @@ void RawGroupBox::saveSettings() {
     }
 }
 
+/** Checks \a fileName dcraw path and returns true if this path is valid
+  * (file exists and is executalbe). Otherwise returns false.\n
+  * This function shows user warning dialog before returns false.
+  */
 bool RawGroupBox::checkDcrawPath(QString fileName) {
     if (!fileName.isEmpty()) {
         QFile dcraw(fileName);

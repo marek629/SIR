@@ -25,6 +25,7 @@
 #include "ui_selectiongroupbox.h"
 #include "widgets/options/abstractoptions.h"
 
+//! Selection group box class used in OptionsDialog dialog.
 class SelectionGroupBox : public QGroupBox, public Ui::SelectionGroupBox,
                           public AbstractOptions {
     Q_OBJECT

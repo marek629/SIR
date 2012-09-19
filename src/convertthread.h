@@ -45,7 +45,7 @@ enum Question {
 /** \brief Image convertion thread class.
   *
   * Threads converting images work in main loop implemented in run method.
-  * \sa run
+  * \sa run()
   */
 class ConvertThread : public QThread {
     Q_OBJECT

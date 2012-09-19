@@ -30,6 +30,10 @@
 
 quint8 GeneralGroupBox::maxCoresCount = 50;
 
+/** Default constructor.\n
+  * Sets UI, loads settings and create connections.
+  * \sa setupUi() loadSettings()
+  */
 GeneralGroupBox::GeneralGroupBox(QWidget *parent) : QGroupBox(parent) {
     setupUi(this);
 
@@ -72,6 +76,7 @@ GeneralGroupBox::GeneralGroupBox(QWidget *parent) : QGroupBox(parent) {
     delete completer2;
 }
 
+/** Destructor. */
 GeneralGroupBox::~GeneralGroupBox() {
     delete fileToNiceName;
 }
@@ -88,6 +93,9 @@ quint8 GeneralGroupBox::detectCoresCount() {
     return (quint8)cores;
 }
 
+/** Load settings and sets member widgets values.
+  * \sa Settings saveSettings()
+  */
 void GeneralGroupBox::loadSettings() {
     Settings &s = Settings::instance();
     // settings
@@ -122,6 +130,9 @@ void GeneralGroupBox::loadSettings() {
     sizeUnitComboBox->setCurrentIndex(      s.size.sizeUnit);
 }
 
+/** Saves settings basing member widgets values.
+  * \sa Settings loadSettings()
+  */
 void GeneralGroupBox::saveSettings() {
     Settings &s = Settings::instance();
     // settings
@@ -150,6 +161,7 @@ void GeneralGroupBox::saveSettings() {
     s.size.sizeUnit         = sizeUnitComboBox->currentIndex();
 }
 
+/** Allows the user to set target directory path. */
 void GeneralGroupBox::browseDestination() {
     QString initialName = targetFolderLineEdit->text();
     if (initialName.isEmpty())
@@ -159,11 +171,13 @@ void GeneralGroupBox::browseDestination() {
                                                          initialName,
                                                          QFileDialog::ShowDirsOnly );
     fileName = QDir::convertSeparators(fileName);
-    if (!fileName.isEmpty()) {
+    if (!fileName.isEmpty())
         targetFolderLineEdit->setText(fileName);
-    }
 }
 
+/** Detects cores count and makes coresSpinBox read-only if \a checked is true.
+  * Otherwise restore old value of coresSpinBox and makes them read-write.
+  */
 void GeneralGroupBox::respondCoresSpinBox(bool checked) {
     if (checked) {
         coresCount = detectCoresCount();
@@ -176,6 +190,7 @@ void GeneralGroupBox::respondCoresSpinBox(bool checked) {
     }
 }
 
+/** Sets up language combo box. */
 void GeneralGroupBox::createLanguageMenu() {
     QDir dir(":translations/");
     QStringList filter;

@@ -44,7 +44,7 @@ Metadata::~Metadata() {
 /** Reads metadata from \b path file path and optionaly setup ExifStruct if
   * \b setupStructs is true, and returns read success value.\n
   * If exception catched this error data will be appended to errorList list.
-  * \sa lastError
+  * \sa lastError()
   */
 bool Metadata::read(const String& path, bool setupStructs) {
     close();
@@ -100,7 +100,7 @@ bool Metadata::read(const QString &path, bool setupStructs) {
 /** Writes metadata about file corresponding with \a path file path and
   * \a qImage image, and returns read success value.\n
   * If exception catched this error data will be appended to errorList list.
-  * \sa lastError
+  * \sa lastError()
   */
 bool Metadata::write(const String& path, const QImage& qImage) {
     close();
@@ -127,7 +127,7 @@ bool Metadata::write(const QString &path, const QImage &image) {
 }
 
 /** Closes last file opened to read or write.
-  * \sa open write
+  * \sa open() write()
   */
 void Metadata::close() {
     image.reset();
@@ -205,7 +205,7 @@ Exiv2::Metadatum & Metadata::metadatum(const std::string &key) {
   * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
   * integer representation of metadatum value basing \a key key.
   * Otherwise, if firstEmptyItemSkipped is false sets them to true.
-  * \sa isNullValue(char) setFieldString metadatum
+  * \sa isNullValue(char) setFieldString() metadatum()
   */
 void Metadata::setFieldValue(char *field, const std::string &key) {
     if (!isNullValue(*field))
@@ -227,7 +227,7 @@ void Metadata::setFieldValue(char *field, const std::string &key) {
   * decimal string based integer representation of metadatum value basing
   * \a key key and append \a unit c-string using String::appendUnit() function.
   * Otherwise, if firstEmptyItemSkipped is false sets them to true.
-  * \sa isNullValue(String) String::appendUnit setFieldString metadatum
+  * \sa isNullValue(String) String::appendUnit() setFieldString() metadatum()
   */
 void Metadata::setFieldValue(String *field, const std::string &key, const char *unit) {
     if (!isNullValue(*field))
@@ -247,7 +247,7 @@ void Metadata::setFieldValue(String *field, const std::string &key, const char *
   * If metadatum corresponding \a key1 key is empty it reads metadatum
   * coresponding \a key2 key.\n
   * Otherwise, if firstEmptyItemSkipped is false sets them to true.
-  * \sa isNullValue(String) String::appendUnit setFieldValue metadatum
+  * \sa isNullValue(String) String::appendUnit() setFieldValue() metadatum()
   */
 void Metadata::setFieldString(String *field, const std::string &key1,
                               const std::string &key2) {
@@ -268,7 +268,7 @@ void Metadata::setFieldString(String *field, const std::string &key1,
 }
 
 /** Sets Exif metadata based on exifStruct_ data.
-  * \sa ExifStruct setExifStruct setIptcStruct
+  * \sa ExifStruct setExifStruct() setIptcStruct()
   */
 void Metadata::setExifData() {
     // Image section
@@ -310,7 +310,7 @@ void Metadata::setExifData() {
 }
 
 /** Loads exifStruct_ data from Exif metadata stored in exifData.
-  * \sa ExifStruct setExifData setIptcData
+  * \sa ExifStruct setExifData() setIptcData()
   */
 void Metadata::setExifStruct() {
     // Image section
@@ -411,7 +411,7 @@ void Metadata::setExifStruct() {
 }
 
 /** Loads iptcStruct_ data from IPTC metadata.
-  * \sa IptcStruct setIptcData setExifData
+  * \sa IptcStruct setIptcData() setExifData()
   */
 void Metadata::setIptcData() {
     if (!Iptc::isVersionKnown() || Iptc::version() < 2)
@@ -459,7 +459,7 @@ void Metadata::setIptcData() {
 }
 
 /** Sets IPTC metadata based on iptcStruct_ data.
-  * \sa IptcStruct setIptcStruct setExifStruct
+  * \sa IptcStruct setIptcStruct() setExifStruct()
   */
 void Metadata::setIptcStruct() {
     if (Iptc::isVersionKnown())
@@ -797,7 +797,7 @@ void Metadata::setExifThumbnail(const std::string &path) {
   * Sets \a Exif thumbnail based on \a image data saved as temporary file with
   * \a tid ID.\n
   * If exception catched this error data will be appended to errorList list.
-  * \sa lastError
+  * \sa lastError()
   */
 bool Metadata::setExifThumbnail(QImage *image, int tid) {
     if (image->isNull())

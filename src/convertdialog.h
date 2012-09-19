@@ -178,7 +178,7 @@ void ConvertDialog::resetAnswers() {
 
 /** Connects width and height lines edit's textChanged() signal to sizeChanged()
   * slot.
-  * \sa disconnectSizeLinesEdit
+  * \sa disconnectSizeLinesEdit()
   */
 void ConvertDialog::connectSizeLinesEdit() {
     connect(widthDoubleSpinBox, SIGNAL(valueChanged(double)),
@@ -188,7 +188,7 @@ void ConvertDialog::connectSizeLinesEdit() {
 }
 
 /** Disconnects sizeChanged() slot.
-  * \sa connectSizeLinesEdit
+  * \sa connectSizeLinesEdit()
   */
 void ConvertDialog::disconnectSizeLinesEdit() {
     widthDoubleSpinBox->disconnect(this,SLOT(sizeChanged(double)));
