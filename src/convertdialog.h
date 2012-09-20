@@ -94,6 +94,7 @@ private:
     QStringList *makeList();
     QString makeImagePath(QTreeWidgetItem *item);
     void convert();
+    inline void clearTempDir();
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -193,6 +194,12 @@ void ConvertDialog::connectSizeLinesEdit() {
 void ConvertDialog::disconnectSizeLinesEdit() {
     widthDoubleSpinBox->disconnect(this,SLOT(sizeChanged(double)));
     heightDoubleSpinBox->disconnect(this, SLOT(sizeChanged(double)));
+}
+
+/** Removes all files created by SIR from temporary directory. */
+void ConvertDialog::clearTempDir() {
+    foreach (QString path, QDir::temp().entryList(QStringList("sir_*")))
+        QFile::remove(path);
 }
 
 #endif // CONVERTDIALOG_H

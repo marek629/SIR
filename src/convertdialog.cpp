@@ -67,8 +67,9 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent
 }
 
 /** Destructor.\n
-  * Writes window state and position and dealocates dynamic allocated memory.
-  * \sa writeWindowProperties()
+  * Writes window state and position, dealocates dynamic allocated memory
+  * and clears temporary directory.
+  * \sa writeWindowProperties() clearTempDir()
   */
 ConvertDialog::~ConvertDialog() {
     writeWindowProperties();
@@ -83,6 +84,7 @@ ConvertDialog::~ConvertDialog() {
 #ifdef SIR_METADATA_SUPPORT
     delete metadataAction;
 #endif // SIR_METADATA_SUPPORT
+    clearTempDir();
 }
 
 /** Connects UI signals to corresponding slots. */
