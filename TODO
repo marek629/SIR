@@ -1,8 +1,6 @@
 *** nearest release ***
   ! SelectionDialog:
     * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
-  ! remove temporary files at end of session
-  ! width of SVG images render in DetailsBrowser patch
 
 *** next release ***
   ! Sessions: save and restore files list in/from text file

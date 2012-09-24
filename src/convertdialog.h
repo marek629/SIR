@@ -198,8 +198,8 @@ void ConvertDialog::disconnectSizeLinesEdit() {
 
 /** Removes all files created by SIR from temporary directory. */
 void ConvertDialog::clearTempDir() {
-    foreach (QString path, QDir::temp().entryList(QStringList("sir_*")))
-        QFile::remove(path);
+    foreach (QFileInfo info, QDir::temp().entryInfoList(QStringList("sir_*")))
+        QFile::remove(info.absoluteFilePath());
 }
 
 #endif // CONVERTDIALOG_H

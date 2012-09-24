@@ -10,6 +10,8 @@
     - DetailsOptions namespace moved to separated file
     - widgets moved to separated directory
     - option and selection dialogs splited to few widgets for more flexibility
+    - remove temporary files at end of session
+    - width of SVG images render in DetailsBrowser patch
 
 * Tue Jul 31 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.4
     - Changelog file provided

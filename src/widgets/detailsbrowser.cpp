@@ -333,8 +333,6 @@ void DetailsBrowser::addMetadataToContent() {
 /** Calls QTextEdit::resizeEvent() and changes usableWidth property. */
 void DetailsBrowser::resizeEvent(QResizeEvent *e) {
     QTextEdit::resizeEvent(e);
-    if (verticalScrollBar()->isVisible())
-        usableWidth_ = this->width() - this->verticalScrollBar()->width();
-    else
-        usableWidth_ = this->width();
+    // vertical scroll bars width (16 px) + horizontal margins (16 px) = 32 px
+    usableWidth_ = this->width() - 32;
 }
