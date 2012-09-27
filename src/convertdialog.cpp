@@ -32,7 +32,7 @@
 #include <QLibraryInfo>
 #include "convertdialog.h"
 #include "widgets/previewdialog.h"
-#include "widgets/myqtreewidget.h"
+#include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"
 #include "widgets/options/generalgroupbox.h"
@@ -555,7 +555,7 @@ void ConvertDialog::enableConvertButtons(bool enable) {
 }
 
 /** Resizes all columns of \a tree to their contents. */
-void ConvertDialog::resizeColumnsToContents(myQTreeWidget *tree) {
+void ConvertDialog::resizeColumnsToContents(TreeWidget *tree) {
     for (int i=0; i<tree->columnCount(); i++)
         tree->resizeColumnToContents(i);
 }

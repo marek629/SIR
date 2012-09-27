@@ -27,10 +27,11 @@
 #include <QFileInfo>
 #include <QImageReader>
 #include <QMenu>
-#include "myqtreewidget.h"
+#include <QUrl>
+#include "treewidget.h"
 
 /** Default constructor. */
-myQTreeWidget::myQTreeWidget(QWidget *parent) : QTreeWidget(parent) {
+TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
     QList<QString> itemList;
     setRootIsDecorated(false);
     setAlternatingRowColors(true);
@@ -49,7 +50,7 @@ myQTreeWidget::myQTreeWidget(QWidget *parent) : QTreeWidget(parent) {
 }
 
 /** Removes selected items when \a Delete key pressed by user. */
-void myQTreeWidget::keyPressEvent( QKeyEvent *k ) {
+void TreeWidget::keyPressEvent( QKeyEvent *k ) {
     if(k->key() == Qt::Key_Delete) {
         for (int i = 0; i < this->topLevelItemCount(); i++) {
             if ((this->topLevelItem(i))->isSelected()) {
@@ -60,63 +61,50 @@ void myQTreeWidget::keyPressEvent( QKeyEvent *k ) {
 }
 
 /** Accepts proposed action. \sa dragMoveEvent */
-void myQTreeWidget::dragEnterEvent(QDragEnterEvent *event) {
+void TreeWidget::dragEnterEvent(QDragEnterEvent *event) {
      event->acceptProposedAction();
 }
 
 /** Accepts proposed action. \sa dragEnterEvent */
-void myQTreeWidget::dragMoveEvent(QDragMoveEvent *event) {
-     event->acceptProposedAction();
+void TreeWidget::dragMoveEvent(QDragMoveEvent *event) {
+    event->acceptProposedAction();
 }
 
 /** Appends droped files or directories into this tree widget.\n
   * Emits changed() signal if any file added.
   */
-void myQTreeWidget::dropEvent(QDropEvent *event) {
+void TreeWidget::dropEvent(QDropEvent *event) {
 
-    const QMimeData *mimeData = event->mimeData();
-    QString fileName = mimeData->text();
+    QString fileName;
     QTreeWidgetItem *item;
-    QStringList argsList;
     bool change = false;
-    argsList = fileName.split("\n");
 
-    QStringList::Iterator it2 = argsList.begin();
-
-    for ( ; it2 != argsList.end(); ++it2 ) {
-        fileName = *it2;
-        fileName = fileName.section("/",2);
-
-        QList<QByteArray> imageFormats = QImageReader::supportedImageFormats();
+    // image file filters
+    static QString fileFilters;
+    if (fileFilters.isEmpty()) {
         QStringList list;
-
-        foreach(QByteArray format, imageFormats) {
-            list.append(*new QString(format));
-        }
-
-        QString fileFilters = "*.";
+        foreach(QByteArray format, QImageReader::supportedImageFormats())
+            list.append(QString(format));
+        fileFilters += "*.";
         fileFilters += list.join(" *.").toLower() + " *.jpg"+ " *.JPG";
         fileFilters += " *.JPEG *.Jpg *.Jpeg";
+    }
 
+    foreach (QUrl url, event->mimeData()->urls()) {
+        fileName = url.path();
+        QFileInfo info(fileName);
 
-        if (!fileName.isEmpty() && QFileInfo(fileName).exists()) {
+        if (!fileName.isEmpty() && info.exists()) {
             //Directory
-            if (QFileInfo(fileName).isDir()) {
+            if (info.isDir()) {
                 QDir sourceFolder(fileName,fileFilters);
                 sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
 
                 QList<QFileInfo> list = sourceFolder.entryInfoList();
                 QListIterator<QFileInfo> it(list);
-                QFileInfo fi;
 
                 while ( it.hasNext() ) {
-                    fi = it.next();
-                    QList<QString> itemList;
-                    itemList.append(fi.completeBaseName());
-                    itemList.append(fi.suffix());
-                    itemList.append(fi.path());
-                    itemList.append(tr("Not converted yet"));
-                    item = new QTreeWidgetItem(itemList);
+                    item = new QTreeWidgetItem(itemList(it.next()));
                     addTopLevelItem(item);
                     change = true;
                 }
@@ -128,12 +116,7 @@ void myQTreeWidget::dropEvent(QDropEvent *event) {
                 if((fileFilters.contains(QFileInfo(fileName).suffix()))
                     && (comp !=0)) {
 
-                    QList<QString> itemList;
-                    itemList.append(QFileInfo(fileName).completeBaseName());
-                    itemList.append(QFileInfo(fileName).suffix());
-                    itemList.append(QFileInfo(fileName).path());
-                    itemList.append(tr("Not converted yet"));
-                    item = new QTreeWidgetItem(itemList);
+                    item = new QTreeWidgetItem(itemList(info));
                     addTopLevelItem(item);
                     change = true;
                 }
@@ -143,7 +126,19 @@ void myQTreeWidget::dropEvent(QDropEvent *event) {
 
     event->acceptProposedAction();
 
-    if(change) {
+    if (change)
         emit changed();
-    }
+}
+
+QStringList TreeWidget::itemList(const QFileInfo &info) {
+    QStringList result;
+    // file name
+    result += info.completeBaseName();
+    // file expression
+    result += info.suffix();
+    // file path
+    result += info.path();
+    // convertion status
+    result += tr("Not converted yet");
+    return result;
 }

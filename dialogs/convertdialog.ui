@@ -31,7 +31,7 @@
        <property name="childrenCollapsible">
         <bool>false</bool>
        </property>
-       <widget class="myQTreeWidget" name="filesTreeWidget">
+       <widget class="TreeWidget" name="filesTreeWidget">
         <column>
          <property name="text">
           <string notr="true">1</string>
@@ -880,9 +880,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>myQTreeWidget</class>
+   <class>TreeWidget</class>
    <extends>QTreeWidget</extends>
-   <header>widgets/myqtreewidget.h</header>
+   <header>widgets/treewidget.h</header>
   </customwidget>
   <customwidget>
    <class>DetailsBrowser</class>

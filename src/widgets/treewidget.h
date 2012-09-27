@@ -1,7 +1,6 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
  #ifndef MYQLISTWIDGET_H
@@ -32,18 +28,22 @@ class QKeyEvent;
 class QDropEvent;
 class QDragEnterEvent;
 class QDragMoveEvent;
+class QFileInfo;
 
 //! QTreeWidget reimplementation for ConvertDialog with custom contex menu.
-class myQTreeWidget : public QTreeWidget {
+class TreeWidget : public QTreeWidget {
     Q_OBJECT
 public:
-    myQTreeWidget(QWidget *parent = 0);
+    TreeWidget(QWidget *parent = 0);
 
 protected:
     virtual void keyPressEvent( QKeyEvent *k );
     virtual void dropEvent(QDropEvent *event);
     virtual void dragEnterEvent(QDragEnterEvent *event);
     virtual void dragMoveEvent(QDragMoveEvent *event);
+
+private:
+    QStringList itemList(const QFileInfo &info);
 
 signals:
     void changed(); /**< Indicates changes in this tree widget. \sa dropEvent */

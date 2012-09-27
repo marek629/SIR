@@ -6,100 +6,100 @@ add_definitions ( -Wall )
 find_package ( Qt4 REQUIRED )
 include ( ${QT_USE_FILE} )
 include_directories (
-	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-	${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTNETWORK_INCLUDE_DIR} ${QT_QTSVG_INCLUDE_DIR}
-	src/
-	windows/include)
+        ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
+        ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTNETWORK_INCLUDE_DIR} ${QT_QTSVG_INCLUDE_DIR}
+        src/
+        windows/include)
 set ( sir_HDRS
-	src/main.h
-	src/defines.h
-	src/languageutils.h
-	src/sharedinformation.h
-	src/rawutils.h
-	src/expressiontree.h
-	src/detailsoptions.h
+        src/main.h
+        src/defines.h
+        src/languageutils.h
+        src/sharedinformation.h
+        src/rawutils.h
+        src/expressiontree.h
+        src/detailsoptions.h
         src/metadata/string.h
         )
 
 set ( sir_SRCS
-	src/main.cpp
-	src/convertdialog.cpp
-	src/widgets/previewdialog.cpp
-	src/widgets/optionsdialog.cpp
-	src/widgets/myqtreewidget.cpp
-	src/convertthread.cpp
-	src/widgets/aboutdialog.cpp
-	src/languageutils.cpp
-	src/sharedinformation.cpp
-	src/rawutils.cpp
-	src/networkutils.cpp
-	src/widgets/messagebox.cpp
-	src/widgets/historycombobox.cpp
-	src/widgets/timecombobox.cpp
-	src/selection.cpp
-	src/expressiontree.cpp
-	src/settings.cpp
-	src/widgets/detailsbrowser.cpp
-	src/widgets/selectiondialog.cpp
+        src/main.cpp
+        src/convertdialog.cpp
+        src/widgets/previewdialog.cpp
+        src/widgets/optionsdialog.cpp
+        src/widgets/treewidget.cpp
+        src/convertthread.cpp
+        src/widgets/aboutdialog.cpp
+        src/languageutils.cpp
+        src/sharedinformation.cpp
+        src/rawutils.cpp
+        src/networkutils.cpp
+        src/widgets/messagebox.cpp
+        src/widgets/historycombobox.cpp
+        src/widgets/timecombobox.cpp
+        src/selection.cpp
+        src/expressiontree.cpp
+        src/settings.cpp
+        src/widgets/detailsbrowser.cpp
+        src/widgets/selectiondialog.cpp
         src/widgets/options/abstractoptions.cpp
         src/widgets/options/generalgroupbox.cpp
         src/widgets/options/selectiongroupbox.cpp
         src/widgets/options/rawgroupbox.cpp
         src/metadata/string.cpp
-	)
+        )
 
 set ( sir_UIS
-	dialogs/convertdialog.ui
-	dialogs/about.ui
-	dialogs/previewdialog.ui
+        dialogs/convertdialog.ui
+        dialogs/about.ui
+        dialogs/previewdialog.ui
         dialogs/selection/dirwidget.ui
         dialogs/options/generalgroupbox.ui
         dialogs/options/selectiongroupbox.ui
         dialogs/options/rawgroupbox.ui
-	)
+        )
 
 set ( sir_RSCS
-	application.qrc
-	)
+        application.qrc
+        )
 QT4_ADD_RESOURCES(RSCS ${sir_RSCS})
 
 set ( sir_TRS
-	translations/sir_pt_BR.ts
-	translations/sir_de.ts
-	translations/sir_es.ts
-	translations/sir_sk.ts
-	translations/sir_ru_RU.ts
-	translations/sir_hu_HU.ts
-	translations/sir_pl.ts
-	translations/sir_nl.ts
-	translations/sir_ro_RO.ts
-	translations/sir_fr.ts
-	translations/sir_gr.ts
-	translations/sir_cz.ts
-	translations/sir_sr.ts
-	)
+        translations/sir_pt_BR.ts
+        translations/sir_de.ts
+        translations/sir_es.ts
+        translations/sir_sk.ts
+        translations/sir_ru_RU.ts
+        translations/sir_hu_HU.ts
+        translations/sir_pl.ts
+        translations/sir_nl.ts
+        translations/sir_ro_RO.ts
+        translations/sir_fr.ts
+        translations/sir_gr.ts
+        translations/sir_cz.ts
+        translations/sir_sr.ts
+        )
 QT4_ADD_TRANSLATION(TRS ${sir_TRS})
 
 set ( sir_MOCS
-	src/convertdialog.h
-	src/widgets/previewdialog.h
-	src/widgets/optionsdialog.h
-	src/widgets/myqtreewidget.h
-	src/convertthread.h
-	src/widgets/aboutdialog.h
-	src/networkutils.h
-	src/widgets/messagebox.h
-	src/widgets/historycombobox.h
-	src/widgets/timecombobox.h
-	src/selection.h
-	src/settings.h
-	src/widgets/detailsbrowser.h
-	src/widgets/selectiondialog.h
+        src/convertdialog.h
+        src/widgets/previewdialog.h
+        src/widgets/optionsdialog.h
+        src/widgets/treewidget.h
+        src/convertthread.h
+        src/widgets/aboutdialog.h
+        src/networkutils.h
+        src/widgets/messagebox.h
+        src/widgets/historycombobox.h
+        src/widgets/timecombobox.h
+        src/selection.h
+        src/settings.h
+        src/widgets/detailsbrowser.h
+        src/widgets/selectiondialog.h
         src/widgets/options/generalgroupbox.h
         src/widgets/options/selectiongroupbox.h
         src/widgets/options/rawgroupbox.h
         src/widgets/options/abstractoptions.h
-	)
+        )
 
 set ( sir_LINKING_LIBS
     ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY}

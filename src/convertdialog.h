@@ -108,7 +108,7 @@ public slots:
     void loadFiles(const QStringList &files);
     void loadFiles(const QList<QFileInfo> &files);
     void enableConvertButtons(bool enable = true);
-    void resizeColumnsToContents(myQTreeWidget *tree);
+    void resizeColumnsToContents(TreeWidget *tree);
     void removeAll();
     void removeSelectedFromList();
     void showMenu( const QPoint & point);

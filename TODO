@@ -1,15 +1,15 @@
 *** nearest release ***
-  ! SelectionDialog:
-    * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
-
-*** next release ***
-  ! Sessions: save and restore files list in/from text file
-  ! Load translations from file, not resources
   ! Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
     * improve drag-drop events (myQTreeWidget)
 
+*** next release ***
+  ! Sessions: save and restore files list in/from text file
+  ! Load translations from file, not resources
+
 *** wishlist ***
+  ! SelectionDialog:
+    * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
   ! Conditional converting (ie. convert if image width > 1000 px)
     * scripts with exiv2 support
   ! Make recursive screen images with (auto detect of sceeen frame) feature - joke :)
