@@ -723,6 +723,9 @@
         <property name="text">
          <string>Convert &amp;All</string>
         </property>
+        <property name="icon">
+         <iconset theme="system-run"/>
+        </property>
         <property name="shortcut">
          <string>Alt+A</string>
         </property>
@@ -746,6 +749,10 @@
         <property name="text">
          <string>&amp;Quit</string>
         </property>
+        <property name="icon">
+         <iconset theme="application-exit" resource="../application.qrc">
+          <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -758,7 +765,7 @@
      <x>0</x>
      <y>0</y>
      <width>843</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -796,7 +803,7 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="../application.qrc">
+    <iconset theme="application-exit" resource="../application.qrc">
      <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
    </property>
    <property name="text">
@@ -813,6 +820,9 @@
    </property>
   </action>
   <action name="actionOptions">
+   <property name="icon">
+    <iconset theme="preferences-desktop"/>
+   </property>
    <property name="text">
     <string>&amp;Options</string>
    </property>
@@ -821,36 +831,57 @@
    </property>
   </action>
   <action name="actionAbout_Sir">
+   <property name="icon">
+    <iconset theme="help-about"/>
+   </property>
    <property name="text">
     <string>About Sir...</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
+   <property name="icon">
+    <iconset theme="help-about"/>
+   </property>
    <property name="text">
     <string>About Qt...</string>
    </property>
   </action>
   <action name="actionAdd_File">
+   <property name="icon">
+    <iconset theme="list-add"/>
+   </property>
    <property name="text">
     <string>Add &amp;File...</string>
    </property>
   </action>
   <action name="actionAdd_Dir">
+   <property name="icon">
+    <iconset theme="list-add"/>
+   </property>
    <property name="text">
     <string>Add &amp;Dir...</string>
    </property>
   </action>
   <action name="actionCheckforUpdates">
+   <property name="icon">
+    <iconset theme="system-software-update"/>
+   </property>
    <property name="text">
     <string>Check for updates...</string>
    </property>
   </action>
   <action name="actionSendInstall">
+   <property name="icon">
+    <iconset theme="network-transmit"/>
+   </property>
    <property name="text">
     <string>Let us know that you are using SIR...</string>
    </property>
   </action>
   <action name="actionRemoveAll">
+   <property name="icon">
+    <iconset theme="edit-clear"/>
+   </property>
    <property name="text">
     <string>Remove Al&amp;l</string>
    </property>
@@ -859,6 +890,9 @@
    </property>
   </action>
   <action name="actionSelect">
+   <property name="icon">
+    <iconset theme="edit-select-all"/>
+   </property>
    <property name="text">
     <string>&amp;Select...</string>
    </property>
@@ -870,6 +904,9 @@
    </property>
   </action>
   <action name="actionImport_files">
+   <property name="icon">
+    <iconset theme="edit-find"/>
+   </property>
    <property name="text">
     <string>&amp;Import files...</string>
    </property>

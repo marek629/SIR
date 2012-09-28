@@ -1,7 +1,6 @@
 *** nearest release ***
   ! Correction convert dialog
     * add external columns into tree view like size (px,k/MiB)
-    * improve drag-drop events (myQTreeWidget)
 
 *** next release ***
   ! Sessions: save and restore files list in/from text file

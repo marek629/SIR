@@ -669,7 +669,7 @@ void PreviewDialog::loadPixmap() {
 
 #ifdef SIR_METADATA_SUPPORT
     bool metadataReadError = false;
-    if (readSuccess && metadataEnabled) {
+    if (readSuccess && metadataEnabled && !svgLoaded) {
         // reading metadata
         metadataReadError = !metadata->read(imagePath,true);
         if (!metadataReadError) {

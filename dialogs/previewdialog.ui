@@ -64,7 +64,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="go-previous" resource="../application.qrc">
             <normaloff>:/images/previous.png</normaloff>:/images/previous.png</iconset>
           </property>
           <property name="iconSize">
@@ -96,7 +96,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="go-next" resource="../application.qrc">
             <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
           </property>
           <property name="iconSize">
@@ -144,7 +144,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="object-rotate-left" resource="../application.qrc">
             <normaloff>:/images/rotate_ccw.png</normaloff>:/images/rotate_ccw.png</iconset>
           </property>
           <property name="iconSize">
@@ -176,7 +176,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="object-rotate-right" resource="../application.qrc">
             <normaloff>:/images/rotate_cw.png</normaloff>:/images/rotate_cw.png</iconset>
           </property>
           <property name="iconSize">
@@ -221,7 +221,7 @@
            </size>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="object-flip-horizontal" resource="../application.qrc">
             <normaloff>:/images/flip_horizontal.png</normaloff>:/images/flip_horizontal.png</iconset>
           </property>
           <property name="iconSize">
@@ -250,7 +250,7 @@
            </size>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="object-flip-vertical" resource="../application.qrc">
             <normaloff>:/images/flip_vertical.png</normaloff>:/images/flip_vertical.png</iconset>
           </property>
           <property name="iconSize">
@@ -340,7 +340,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="view-fullscreen" resource="../application.qrc">
             <normaloff>:/images/window_fullscreen.png</normaloff>:/images/window_fullscreen.png</iconset>
           </property>
           <property name="iconSize">
@@ -388,7 +388,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="document-save" resource="../application.qrc">
             <normaloff>:/images/filesave.png</normaloff>:/images/filesave.png</iconset>
           </property>
           <property name="iconSize">
@@ -420,7 +420,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="document-save-as" resource="../application.qrc">
             <normaloff>:/images/filesaveas.png</normaloff>:/images/filesaveas.png</iconset>
           </property>
           <property name="iconSize">
@@ -468,7 +468,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="document-print" resource="../application.qrc">
             <normaloff>:/images/print.png</normaloff>:/images/print.png</iconset>
           </property>
           <property name="iconSize">
@@ -516,7 +516,7 @@
            <string>Quit</string>
           </property>
           <property name="icon">
-           <iconset resource="../application.qrc">
+           <iconset theme="application-exit" resource="../application.qrc">
             <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
           </property>
           <property name="iconSize">
