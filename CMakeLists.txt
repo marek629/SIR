@@ -5,11 +5,15 @@ set ( CMAKE_BUILD_TYPE Debug )
 add_definitions ( -Wall )
 find_package ( Qt4 REQUIRED )
 include ( ${QT_USE_FILE} )
+
 include_directories (
         ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
         ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTNETWORK_INCLUDE_DIR} ${QT_QTSVG_INCLUDE_DIR}
-        src/
-        windows/include)
+        src/ )
+if (WIN32)
+        include_directories ( ${include_directories} windows/include )
+endif ()
+
 set ( sir_HDRS
         src/main.h
         src/defines.h

@@ -26,10 +26,8 @@
 #include "convertthread.h"
 #include "settings.h"
 
-class PreviewDialog;
 class QTranslator;
 class NetworkUtils;
-class MetadataDialog;
 
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
@@ -37,6 +35,7 @@ class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     friend class Selection;
     friend class SelectionDialog;
     friend class DetailsBrowser;
+    friend class TreeWidget;
 
 public:
     ConvertDialog(QWidget *parent = 0, QString args = 0);
@@ -53,12 +52,9 @@ private:
     QString targetFile;
     QString fileFilters;
     QStringList rawFormats;
-    QString lastDir;
-    PreviewDialog  *previewForm;
     quint8 numThreads;
     QTranslator *qtTranslator;
     QTranslator *appTranslator;
-    QMap<QString, int>  *statusList;
     int convertedImages;
     int numImages;
     QList<QTreeWidgetItem *> itemsToConvert;
@@ -68,31 +64,19 @@ private:
     NetworkUtils *net;
     QPoint windowPossition;
     QSize windowSize;
-    QAction *removeAction;
-    QAction *convertAction;
-    QAction *previewAction;
-#ifdef SIR_METADATA_SUPPORT
-    MetadataDialog *metadataForm;
-    QAction *metadataAction;
-#endif // SIR_METADATA_SUPPORT
-    QTreeWidgetItem *treeMenuItem;
     float sizeWidth;
     float sizeHeight;
     QString dateFormat;
     QString timeFormat;
     QString dateTimeFormat;
     // methods
-    void initList();
     void init();
     void createConnections();
     inline void connectSizeLinesEdit();
     inline void disconnectSizeLinesEdit();
-    void createActions();
     void createRawFilesList();
     inline void writeWindowProperties();
     inline void resetAnswers();
-    QStringList *makeList();
-    QString makeImagePath(QTreeWidgetItem *item);
     void convert();
     inline void clearTempDir();
 
@@ -103,25 +87,11 @@ public slots:
     void browseDestination();
     void convertAll();
     void convertSelected();
-    void addDir();
-    void addFile();
-    void loadFiles(const QStringList &files);
-    void loadFiles(const QList<QFileInfo> &files);
     void enableConvertButtons(bool enable = true);
-    void resizeColumnsToContents(TreeWidget *tree);
-    void removeAll();
-    void removeSelectedFromList();
-    void showMenu( const QPoint & point);
-    void previewAct();
-    void showPreview(QTreeWidgetItem *item, int col);
-#ifdef SIR_METADATA_SUPPORT
-    void showMetadata();
-#endif // SIR_METADATA_SUPPORT
     void verifyRotate(int status);
     void about();
     void setOptions();
     void loadSettings();
-    void updateTree();
     void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
     void query(const QString& targetFile, Question whatToDo);
     void giveNextImage(int tid);
@@ -160,7 +130,6 @@ void ConvertDialog::writeWindowProperties() {
     }
     s.mainWindow.horizontalSplitter = horizontalSplitter->saveState();
     s.mainWindow.verticalSplitter   = verticalSplitter->saveState();
-    s.settings.lastDir = lastDir;
 }
 
 /** Resets user ansers about overwrite file, enlarge image and abort convertion

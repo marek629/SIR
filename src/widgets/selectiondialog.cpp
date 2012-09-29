@@ -42,7 +42,7 @@ SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
     : QDialog(parent,f) {
     this->convertDialog = static_cast<ConvertDialog*> (parent);
     this->params = params;
-    this->params->path = this->convertDialog->lastDir;
+    this->params->path = Settings::instance().settings.lastDir;
     setupUi();
     QGridLayout *scrollGridLayout = (QGridLayout*)scrollAreaWidgetContents->layout();
     int columnSpan = scrollGridLayout->columnCount();
@@ -262,13 +262,13 @@ void SelectionDialog::browseDir() {
     QString dirPath = QFileDialog::getExistingDirectory(
                        this,
                        tr("Choose a directory"),
-                       convertDialog->lastDir,
+                       Settings::instance().settings.lastDir,
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if (dirPath.isEmpty())
         return;
     dirPath = QDir::convertSeparators(dirPath);
     params->path = dirPath;
-    convertDialog->lastDir = dirPath;
+    Settings::instance().settings.lastDir = dirPath;
     uiDirWidget->dirLineEdit->setText(dirPath);
 }
 

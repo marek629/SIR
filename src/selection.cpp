@@ -137,7 +137,7 @@ int Selection::selectItems() {
     progressDialog->close();
     if (itemsSelected > 0) {
         convertDialog->enableConvertButtons();
-        convertDialog->resizeColumnsToContents(convertDialog->filesTreeWidget);
+        convertDialog->filesTreeWidget->resizeColumnsToContents();
     }
     convertDialog->setCursor(QCursor(Qt::ArrowCursor));
     return itemsSelected;
@@ -190,7 +190,8 @@ int Selection::importFiles() {
         QStringList itemList;
         itemList << info.completeBaseName() << info.suffix() << info.path()
                  << tr("Not converted yet");
-        convertDialog->statusList->insert(info.absoluteFilePath(), NOTCONVERTED);
+        convertDialog->filesTreeWidget->statusList->insert(info.absoluteFilePath(),
+                                                           NOTCONVERTED);
         QTreeWidgetItem *item = new QTreeWidgetItem(itemList);
         convertDialog->filesTreeWidget->addTopLevelItem(item);
         item->setSelected(params.selectImportedFiles);
@@ -200,7 +201,7 @@ int Selection::importFiles() {
     progressDialog->close();
     if (filesImported > 0) {
         convertDialog->enableConvertButtons();
-        convertDialog->resizeColumnsToContents(convertDialog->filesTreeWidget);
+        convertDialog->filesTreeWidget->resizeColumnsToContents();
     }
     convertDialog->setCursor(QCursor(Qt::ArrowCursor));
     return filesImported;

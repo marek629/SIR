@@ -30,8 +30,14 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
        <property name="icon">
-        <iconset resource="../application.qrc">
+        <iconset theme="go-previous" resource="../application.qrc">
          <normaloff>:/images/previous.png</normaloff>:/images/previous.png</iconset>
        </property>
        <property name="flat">
@@ -47,8 +53,14 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
        <property name="icon">
-        <iconset resource="../application.qrc">
+        <iconset theme="go-next" resource="../application.qrc">
          <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
        </property>
        <property name="flat">
@@ -88,8 +100,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>547</width>
-            <height>317</height>
+            <width>540</width>
+            <height>321</height>
            </rect>
           </property>
           <attribute name="label">
@@ -315,8 +327,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>547</width>
-            <height>317</height>
+            <width>540</width>
+            <height>321</height>
            </rect>
           </property>
           <attribute name="label">
@@ -428,8 +440,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>547</width>
-            <height>317</height>
+            <width>540</width>
+            <height>321</height>
            </rect>
           </property>
           <attribute name="label">
@@ -939,8 +951,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>547</width>
-            <height>317</height>
+            <width>540</width>
+            <height>321</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1013,8 +1025,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>547</width>
-            <height>317</height>
+            <width>540</width>
+            <height>321</height>
            </rect>
           </property>
           <attribute name="label">

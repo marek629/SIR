@@ -159,10 +159,10 @@ void MetadataDialog::setupInputWidgets() {
   */
 void MetadataDialog::readFile() {
     bool readSuccess = metadata->read(imagePath,true);
+    QString errorTitle = tr("Metadata error");
     exifStruct = metadata->exifStruct();
     iptcStruct = metadata->iptcStruct();
     if (!readSuccess) {
-        QString errorTitle = tr("Metadata error");
         Error *e = metadata->lastError();
         QString errorMessage = e->message();
         errorMessage += tr("\nError code: %1\nError message: %2").
@@ -170,10 +170,20 @@ void MetadataDialog::readFile() {
         QMessageBox::critical(this, errorTitle, errorMessage);
         resetStructs();
         tabWidget->setCurrentWidget(iptcTab);
+        return;
     }
     Exiv2::Image::AutoPtr image = metadata->imageAutoPtr();
+    if (image.get() == 0) {
+        QMessageBox::critical(this, errorTitle,
+                              tr("Unexpected metadata read error occured."));
+        return;
+    }
     QString message;
-    if (image->exifData().empty()) {
+    if (image->exifData().empty() && image->iptcData().empty()) {
+        tabWidget->setCurrentWidget(iptcTab);
+        message = tr("No Exif and IPTC metadata.");
+    }
+    else if (image->exifData().empty()) {
         tabWidget->setCurrentWidget(iptcTab);
         message = tr("No Exif metadata.");
     }

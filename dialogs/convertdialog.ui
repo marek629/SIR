@@ -122,7 +122,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="RemovepushButton">
+            <widget class="QPushButton" name="removePushButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -144,7 +144,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="RemoveAllpushButton">
+            <widget class="QPushButton" name="removeAllPushButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -724,7 +724,9 @@
          <string>Convert &amp;All</string>
         </property>
         <property name="icon">
-         <iconset theme="system-run"/>
+         <iconset theme="system-run">
+          <normaloff/>
+         </iconset>
         </property>
         <property name="shortcut">
          <string>Alt+A</string>
@@ -821,7 +823,9 @@
   </action>
   <action name="actionOptions">
    <property name="icon">
-    <iconset theme="preferences-desktop"/>
+    <iconset theme="preferences-desktop">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Options</string>
@@ -832,7 +836,9 @@
   </action>
   <action name="actionAbout_Sir">
    <property name="icon">
-    <iconset theme="help-about"/>
+    <iconset theme="help-about">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>About Sir...</string>
@@ -840,7 +846,9 @@
   </action>
   <action name="actionAbout_Qt">
    <property name="icon">
-    <iconset theme="help-about"/>
+    <iconset theme="help-about">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>About Qt...</string>
@@ -848,7 +856,9 @@
   </action>
   <action name="actionAdd_File">
    <property name="icon">
-    <iconset theme="list-add"/>
+    <iconset theme="list-add">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Add &amp;File...</string>
@@ -856,7 +866,9 @@
   </action>
   <action name="actionAdd_Dir">
    <property name="icon">
-    <iconset theme="list-add"/>
+    <iconset theme="list-add">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Add &amp;Dir...</string>
@@ -864,7 +876,9 @@
   </action>
   <action name="actionCheckforUpdates">
    <property name="icon">
-    <iconset theme="system-software-update"/>
+    <iconset theme="system-software-update">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Check for updates...</string>
@@ -872,7 +886,9 @@
   </action>
   <action name="actionSendInstall">
    <property name="icon">
-    <iconset theme="network-transmit"/>
+    <iconset theme="network-transmit">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Let us know that you are using SIR...</string>
@@ -880,7 +896,9 @@
   </action>
   <action name="actionRemoveAll">
    <property name="icon">
-    <iconset theme="edit-clear"/>
+    <iconset theme="edit-clear">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Remove Al&amp;l</string>
@@ -891,7 +909,9 @@
   </action>
   <action name="actionSelect">
    <property name="icon">
-    <iconset theme="edit-select-all"/>
+    <iconset theme="edit-select-all">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Select...</string>
@@ -905,7 +925,9 @@
   </action>
   <action name="actionImport_files">
    <property name="icon">
-    <iconset theme="edit-find"/>
+    <iconset theme="edit-find">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Import files...</string>

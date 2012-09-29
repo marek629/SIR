@@ -31,7 +31,6 @@
 #include <QDebug>
 #include <QLibraryInfo>
 #include "convertdialog.h"
-#include "widgets/previewdialog.h"
 #include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"
@@ -41,7 +40,6 @@
 #include "networkutils.h"
 #include "widgets/messagebox.h"
 #include "metadatautils.h"
-#include "widgets/metadatadialog.h"
 #include "selection.h"
 
 /** Default constuctor.
@@ -60,7 +58,6 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent
     appTranslator = new QTranslator(this);
     qApp->installTranslator(qtTranslator);
     qApp->installTranslator(appTranslator);
-    statusList = new QMap<QString,int>();
     net = NULL;
     sharedInfo = ConvertThread::sharedInfo();
     init();
@@ -73,34 +70,30 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent
   */
 ConvertDialog::~ConvertDialog() {
     writeWindowProperties();
-    delete statusList;
     delete qtTranslator;
     delete appTranslator;
     if(net)
         delete net;
-    delete convertAction;
-    delete removeAction;
-    delete previewAction;
-#ifdef SIR_METADATA_SUPPORT
-    delete metadataAction;
-#endif // SIR_METADATA_SUPPORT
     clearTempDir();
 }
 
 /** Connects UI signals to corresponding slots. */
 void ConvertDialog::createConnections() {
     // tree view's list menagement buttons
-    connect(addFilepushButton, SIGNAL(clicked()), this, SLOT(addFile()));
-    connect(addDirpushButton, SIGNAL(clicked()), this, SLOT(addDir()));
-    connect(RemovepushButton, SIGNAL(clicked()), this,
-            SLOT(removeSelectedFromList()));
-    connect(RemoveAllpushButton, SIGNAL(clicked()), this, SLOT(removeAll()));
+    connect(addFilepushButton, SIGNAL(clicked()),
+            filesTreeWidget, SLOT(addFile()));
+    connect(addDirpushButton, SIGNAL(clicked()), filesTreeWidget, SLOT(addDir()));
+    connect(removePushButton, SIGNAL(clicked()),
+            filesTreeWidget, SLOT(removeSelectedFromList()));
+    connect(removeAllPushButton, SIGNAL(clicked()),
+            filesTreeWidget, SLOT(removeAll()));
     // & actions
-    connect(actionAdd_File, SIGNAL(triggered()), this, SLOT(addFile()));
-    connect(actionAdd_Dir, SIGNAL(triggered()), this, SLOT(addDir()));
+    connect(actionAdd_File, SIGNAL(triggered()), filesTreeWidget, SLOT(addFile()));
+    connect(actionAdd_Dir, SIGNAL(triggered()), filesTreeWidget, SLOT(addDir()));
     connect(actionSelect, SIGNAL(triggered()), SLOT(showSelectionDialog()));
     connect(actionImport_files, SIGNAL(triggered()), SLOT(showSelectionDialog()));
-    connect(actionRemoveAll, SIGNAL(triggered()), SLOT(removeAll()));
+    connect(actionRemoveAll, SIGNAL(triggered()),
+            filesTreeWidget, SLOT(removeAll()));
 
     // menu actions
     connect(actionExit, SIGNAL(triggered()), SLOT(close()));
@@ -111,11 +104,6 @@ void ConvertDialog::createConnections() {
     connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
 
     // tree view events
-    connect(filesTreeWidget, SIGNAL(customContextMenuRequested (QPoint)),
-            SLOT(showMenu(QPoint)));
-    connect(filesTreeWidget, SIGNAL(itemDoubleClicked ( QTreeWidgetItem *, int)),
-            SLOT(showPreview(QTreeWidgetItem *, int)));
-    connect(filesTreeWidget, SIGNAL(changed()), SLOT(updateTree()));
     connect(filesTreeWidget, SIGNAL(itemSelectionChanged()),
             detailsBrowser, SLOT(showDetails()));
 
@@ -136,27 +124,6 @@ void ConvertDialog::createConnections() {
     // quality spin box & slider
     connect(qualitySpinBox, SIGNAL(valueChanged(int)), qualitySlider, SLOT(setValue(int)));
     connect(qualitySlider, SIGNAL(valueChanged(int)), qualitySpinBox, SLOT(setValue(int)));
-}
-
-/** Creates actions and connects their signals to corresponding slots. */
-void ConvertDialog::createActions() {
-    removeAction = new QAction(tr("Remove Selected"), this);
-    removeAction->setStatusTip(tr("Remove selected images"));
-    connect(removeAction, SIGNAL(triggered()), this, SLOT(removeSelectedFromList()));
-
-    convertAction = new QAction(tr("Convert Selected"), this);
-    convertAction->setStatusTip(tr("Convert selected images"));
-    connect(convertAction, SIGNAL(triggered()), this, SLOT(convertSelected()));
-
-    previewAction = new QAction(tr("Show Image"), this);
-    previewAction->setStatusTip(tr("Show preview selected image"));
-    connect(previewAction, SIGNAL(triggered()), this, SLOT(previewAct()));
-
-#ifdef SIR_METADATA_SUPPORT
-    metadataAction = new QAction(tr("Show Metadata"), this);
-    metadataAction->setStatusTip(tr("Show metadata of selected image"));
-    connect(metadataAction, SIGNAL(triggered()), this, SLOT(showMetadata()));
-#endif // SIR_METADATA_SUPPORT
 }
 
 /** Check updates on SIR website.
@@ -333,10 +300,8 @@ void ConvertDialog::init() {
     RawUtils::createRawFilesList(rawFormats);
     loadSettings();
 
-    if (!args.isEmpty()) {
-        argsList = args.split("**");
-        initList();
-    }
+    if (!args.isEmpty())
+        filesTreeWidget->initList(args.split("**"));
 
     QCompleter *completer = new QCompleter(this);
     QDirModel *dir = new QDirModel(completer);
@@ -356,7 +321,6 @@ void ConvertDialog::init() {
 
     convertProgressBar->setValue(0);
     createConnections();
-    createActions();
 
     converting = false;
 }
@@ -403,161 +367,10 @@ void ConvertDialog::giveNextImage(int threadNum) {
     }
 }
 
-/** Remove all button and action slot. Removes all items of tree widget.
-  * \sa removeSelectedFromList
-  */
-void ConvertDialog::removeAll() {
-
-    if (filesTreeWidget->topLevelItemCount() > 0) {
-        filesTreeWidget->clear();
-    }
-
-    enableConvertButtons(false);
-    convertProgressBar->reset();
-    statusList->clear();
-
-}
-
-/** Remove selected button and action slot.
-  * Remove selected items of tree widget.
-  * \sa removeAll
-  */
-void ConvertDialog::removeSelectedFromList() {
-
-    QTreeWidgetItem *item;
-    QString fileName;
-
-    for (int i=filesTreeWidget->topLevelItemCount()-1; i>=0; i--)
-    {
-
-        if ((filesTreeWidget->topLevelItem(i))->isSelected()) {
-            item = filesTreeWidget->takeTopLevelItem(i);
-
-            fileName = item->text(2) + QDir::separator() +item->text(0) + ".";
-            fileName += item->text(1);
-
-            statusList->remove(fileName);
-        }
-
-    }
-
-    if (filesTreeWidget->topLevelItemCount() == 0) {
-        convertButton->setEnabled(FALSE);
-        convertSelectedButton->setEnabled(FALSE);
-    }
-}
-
-/** Add file button and action slot.
-  * Load selected image files into tree widget and set state to
-  * \em "Not \em converted \em yet".\n
-  * This function remember last opened directory in the same session.
-  * Default directory is home directory.
-  * \sa addDir() loadFiles(const QStringList&)
-  */
-void ConvertDialog::addFile() {
-    QString aux = tr("Images") + "(" + fileFilters + ")";
-
-    QStringList files = QFileDialog::getOpenFileNames(
-                            this,
-                            tr("Select one or more files to open"),
-                            lastDir,
-                            aux
-                        );
-    if (files.isEmpty())
-        return;
-    aux = files.first();
-    if (!aux.isEmpty()) {
-        lastDir = aux.left(aux.lastIndexOf(QDir::separator()));
-        loadFiles(files);
-    }
-}
-
-/** Adds directory button and action slot.
-  * Load all supported image files from choosed directory (non-recursive)
-  * into tree widget and set state to \em "Not converted yet".\n
-  * This function remember last opened directory in the same session.
-  * Default directory is home directory.
-  * \sa addFile()
-  */
-void ConvertDialog::addDir() {
-    QString dirPath = QFileDialog::getExistingDirectory(
-                       this,
-                       tr("Choose a directory"),
-                       lastDir,
-                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
-    dirPath = QDir::convertSeparators(dirPath);
-    if (dirPath.isEmpty())
-        return;
-    lastDir = dirPath;
-    QDir sourceFolder(dirPath,fileFilters);
-    sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-    QList<QFileInfo> list = sourceFolder.entryInfoList();
-    loadFiles(list);
-}
-
-/** Loads files into tree widget.
-  * \param files Full paths list.
-  */
-void ConvertDialog::loadFiles(const QStringList &files) {
-    QStringList::const_iterator it = files.begin();
-    QTreeWidgetItem *item;
-    QString fileName;
-
-    while ( it != files.end() ) {
-        QList<QString> itemList;
-        fileName = QDir::convertSeparators(*it);
-        itemList.append(QFileInfo(fileName).completeBaseName());
-        itemList.append(QFileInfo(fileName).suffix());
-        itemList.append(QFileInfo(fileName).path());
-        itemList.append(tr("Not converted yet"));
-        statusList->insert(QFileInfo(fileName).absoluteFilePath(),
-                           NOTCONVERTED);
-
-        item = new QTreeWidgetItem(itemList);
-        filesTreeWidget->addTopLevelItem(item);
-        ++it;
-        lastDir = QFileInfo(fileName).path();
-    }
-    enableConvertButtons();
-    resizeColumnsToContents(filesTreeWidget);
-}
-
-/** Loads files into tree widget.
-  * \param files File infos list.
-  */
-void ConvertDialog::loadFiles(const QList<QFileInfo> &files) {
-    QListIterator<QFileInfo> it(files);
-    QFileInfo fi;
-    QTreeWidgetItem *item;
-
-    while ( it.hasNext() ) {
-        fi = it.next();
-        QList<QString> itemList;
-        itemList.append(fi.completeBaseName());
-        itemList.append(fi.suffix());
-        itemList.append(fi.path());
-        itemList.append(tr("Not converted yet"));
-        item = new QTreeWidgetItem(itemList);
-        filesTreeWidget->addTopLevelItem(item);
-        statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
-    }
-    if (!files.isEmpty()) {
-        enableConvertButtons();
-        resizeColumnsToContents(filesTreeWidget);
-    }
-}
-
 /** Enables convertion push buttons if \a enable is true; otherwise disables it. */
 void ConvertDialog::enableConvertButtons(bool enable) {
     convertButton->setEnabled(enable);
     convertSelectedButton->setEnabled(enable);
-}
-
-/** Resizes all columns of \a tree to their contents. */
-void ConvertDialog::resizeColumnsToContents(TreeWidget *tree) {
-    for (int i=0; i<tree->columnCount(); i++)
-        tree->resizeColumnToContents(i);
 }
 
 /** Convert all button slot.
@@ -686,41 +499,6 @@ void ConvertDialog::convert() {
     }
 }
 
-/** Show preview dialog.
-  * Show preview dialog containig selected \a item image.\n
-  * This slot is called when tree widgets \a item was double clicked.
-  * \param item Pointer to selected tree widgets item.
-  * \param col Is ignored, exists for signal-slot compatibility only.
-  * \sa showMenu() previewAct()
-  */
-void ConvertDialog::showPreview(QTreeWidgetItem *item, int col) {
-
-    Q_UNUSED(col);
-
-    QString imagePath = makeImagePath(item);
-    QStringList *list = makeList();
-    int index = list->indexOf(imagePath);
-
-    previewForm = new PreviewDialog(this, list, index);
-    previewForm->show();
-}
-
-#ifdef SIR_METADATA_SUPPORT
-/** Metadata action slot.
-  * Shows metadata dialog containg selected tree widgets item image metadata.\n
-  * This function is available if SIR_METADATA_SUPPORT is defined only.
-  * \sa showMenu() showPreview()
-  */
-void ConvertDialog::showMetadata() {
-    QString imagePath = makeImagePath(treeMenuItem);
-    QStringList *list = makeList();
-    int index = list->indexOf(imagePath);
-
-    metadataForm = new MetadataDialog(this, list, index);
-    metadataForm->show();
-}
-#endif // SIR_METADATA_SUPPORT
-
 void ConvertDialog::showSelectionDialog() {
     Selection selection(this);
     QAction *action = static_cast<QAction*> (sender());
@@ -728,68 +506,6 @@ void ConvertDialog::showSelectionDialog() {
         qDebug() << "Selected items:" << selection.selectItems();
     else if (actionImport_files)
         qDebug() << "Imported files:" << selection.importFiles();
-}
-
-/** Loads files into tree view from main() functions \a argv argument list. */
-void ConvertDialog::initList() {
-
-    QStringList::Iterator it2 = argsList.begin();
-    QString fileName;
-    QTreeWidgetItem *item;
-
-    for ( ; it2 != argsList.end(); ++it2 ) {
-        fileName = *it2;
-        fileName = QDir::convertSeparators(fileName);
-
-        if (!fileName.isEmpty() && QFileInfo(fileName).exists()) {
-            //Directory
-            if (QFileInfo(fileName).isDir()) {
-                QDir sourceFolder(fileName,fileFilters);
-                sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-
-                QList<QFileInfo> list = sourceFolder.entryInfoList();
-                QListIterator<QFileInfo> it(list);
-                QFileInfo fi;
-
-                while ( it.hasNext() ) {
-                    fi = it.next();
-                    QList<QString> itemList;
-                    itemList.append(fi.completeBaseName());
-                    itemList.append(fi.suffix());
-                    itemList.append(fi.path());
-                    itemList.append(tr("Not converted yet"));
-                    item = new QTreeWidgetItem(itemList);
-                    filesTreeWidget->addTopLevelItem(item);
-                    statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
-                }
-            }
-            //File
-            else {
-
-                int comp = QString::compare("",QFileInfo(fileName).suffix());
-
-                if((fileFilters.contains(QFileInfo(fileName).suffix()))
-                    && (comp !=0)) {
-
-                    QList<QString> itemList;
-                    itemList.append(QFileInfo(fileName).completeBaseName());
-                    itemList.append(QFileInfo(fileName).suffix());
-                    itemList.append(QFileInfo(fileName).path());
-                    itemList.append(tr("Not converted yet"));
-                    item = new QTreeWidgetItem(itemList);
-                    filesTreeWidget->addTopLevelItem(item);
-                    statusList->insert(QFileInfo(fileName).absoluteFilePath(),
-                                       NOTCONVERTED);
-                }
-            }
-        }
-    }
-
-    if (filesTreeWidget->topLevelItemCount() > 0) {
-        convertButton->setEnabled(TRUE);
-        convertSelectedButton->setEnabled(TRUE);
-    }
-    resizeColumnsToContents(filesTreeWidget);
 }
 
 /** Rotate checkbox slot.
@@ -805,35 +521,6 @@ void ConvertDialog::verifyRotate(int status) {
         rotateLineEdit->setEnabled(FALSE);
     }
 
-}
-
-/** Shows context menu.
-  * Shows context menu for selected tree widgets item.
-  * \param point Global position of context menu.
-  * \sa showPreview() showMetadata() convertSelected() removeSelectedFromList()
-  */
-void ConvertDialog::showMenu(const QPoint & point) {
-
-    treeMenuItem = filesTreeWidget->itemAt(point);
-
-    if (treeMenuItem) {
-        QMenu contextMenu(this);
-        contextMenu.addAction(previewAction);
-#ifdef SIR_METADATA_SUPPORT
-        contextMenu.addAction(metadataAction);
-#endif // SIR_METADATA_SUPPORT
-        contextMenu.addSeparator();
-        contextMenu.addAction(convertAction);
-        contextMenu.addAction(removeAction);
-        contextMenu.setDefaultAction(previewAction);
-        contextMenu.exec(QCursor::pos());
-    }
-}
-
-/** previewAction slot. \sa showPreview */
-void ConvertDialog::previewAct()
-{
-    showPreview(treeMenuItem, 0);
 }
 
 /** Shows window containing information about SIR. */
@@ -874,7 +561,6 @@ void ConvertDialog::loadSettings() {
     numThreads =                                s.settings.cores;
     if (numThreads == 0)
         numThreads = GeneralGroupBox::detectCoresCount();
-    lastDir =                                   s.settings.lastDir;
     QString selectedTranslationFile = ":/translations/";
     selectedTranslationFile +=                  s.settings.languageFileName;
     QString qtTranslationFile = "qt_" +
@@ -974,37 +660,6 @@ void ConvertDialog::changeEvent(QEvent *e) {
     }
 }
 
-/** Creates (dynamic allocated) and returns pointer to new string list.
-  * In the list is stored files path to images on tree view.
-  * \sa makeImagePath()
-  */
-QStringList * ConvertDialog::makeList() {
-    int count = filesTreeWidget->topLevelItemCount();
-    QStringList *list = new QStringList();
-    for (int i=0; i<count; i++)
-        list->append(makeImagePath(filesTreeWidget->topLevelItem(i)));
-    return list;
-}
-
-/** Returns image file path corresponding to \b item.
-  * \sa makeList()
-  */
-QString ConvertDialog::makeImagePath(QTreeWidgetItem *item) {
-    QString imagePath = item->text(2);
-    if (!item->text(2).endsWith("/"))
-        imagePath += QDir::separator();
-    imagePath += item->text(0) + "." + item->text(1);
-    return QDir::fromNativeSeparators(imagePath);
-}
-
-/** Updates tree widget when it will change. */
-void ConvertDialog::updateTree() {
-    if (filesTreeWidget->topLevelItemCount() > 0) {
-        enableConvertButtons(true);
-    }
-    resizeColumnsToContents(filesTreeWidget);
-}
-
 /** Set converting status of image.
   * \param imageData List of strings containing path, image name and file extension.
   * \param status Status message.
@@ -1027,7 +682,7 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
             item->setText(3, status);
             fileName = item->text(2) + QDir::separator() +item->text(0) + ".";
             fileName += item->text(1);
-            statusList->insert(fileName,statusNum);
+            filesTreeWidget->statusList->insert(fileName,statusNum);
             break;
         }
     }
@@ -1119,7 +774,7 @@ void ConvertDialog::retranslateStrings() {
         fileName = (*it)->text(2) + QDir::separator() +(*it)->text(0) + ".";
         fileName += (*it)->text(1);
 
-        switch(statusList->value(fileName)) {
+        switch (filesTreeWidget->statusList->value(fileName)) {
             case CONVERTED:
             (*it)->setText(3,tr("Converted"));
             break;
@@ -1166,7 +821,7 @@ void ConvertDialog::updateInterface() {
     converting = false;
     convertSelectedButton->setEnabled(true);
     convertButton->setEnabled(true);
-    resizeColumnsToContents(filesTreeWidget);
+    filesTreeWidget->resizeColumnsToContents();
     setCursor(Qt::ArrowCursor);
     quitButton->setText(tr("Quit"));
 }

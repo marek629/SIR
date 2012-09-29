@@ -49,10 +49,8 @@ Metadata::~Metadata() {
 bool Metadata::read(const String& path, bool setupStructs) {
     close();
     std::string filePath = path.toNativeStdString();
-    image = Exiv2::ImageFactory::open(filePath);
-    if (!image->good())
-        return false;
     try {
+        image = Exiv2::ImageFactory::open(filePath);
         image->readMetadata();
         // load Exif data
         exifData = image->exifData();

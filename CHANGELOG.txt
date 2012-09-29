@@ -13,6 +13,7 @@
     - remove temporary files at end of session
     - width of SVG images render in DetailsBrowser patch
     - drop event improved
+    - myQTreeWidget renamed to TreeWidget, some code moved from ConvertDialog
 
 * Tue Jul 31 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.4
     - Changelog file provided
