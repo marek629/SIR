@@ -41,6 +41,7 @@ public:
     ConvertDialog(QWidget *parent = 0, QString args = 0);
     ~ConvertDialog();
     void retranslateStrings();
+    QString fileSizeString(qint64 size);
 
 private:
     // fields

@@ -26,10 +26,12 @@
 
 class QTreeWidgetItem;
 class ConvertDialog;
+#ifdef SIR_METADATA_SUPPORT
 namespace MetadataUtils {
 struct ExifStruct;
 struct IptcStruct;
 }
+#endif // SIR_METADATA_SUPPORT
 
 //! Image file details browser.
 class DetailsBrowser : public QTextEdit {

@@ -120,8 +120,8 @@ int Selection::selectItems() {
     timer.start();
     for (int i=0; i<itemCount && !progressDialog->wasCanceled(); i++) {
         QTreeWidgetItem *item = convertDialog->filesTreeWidget->topLevelItem(i);
-        QString filePath = item->text(2) + QDir::separator() + item->text(0) +
-                           '.' + item->text(1);
+        QString filePath = item->text(PathColumn) + QDir::separator()
+                + item->text(NameColumn) + '.' + item->text(ExtColumn);
         qDebug() << filePath;
         progressDialog->setLabelText(filePath);
         progressDialog->setValue(i);

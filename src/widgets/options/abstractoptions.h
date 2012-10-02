@@ -22,7 +22,6 @@
 #ifndef ABSTRACTOPTIONS_H
 #define ABSTRACTOPTIONS_H
 
-#include <QGroupBox>
 #include <QDir>
 
 //! Common options data for classes inherited from AbstractOptions class.

@@ -32,6 +32,21 @@ class QFileInfo;
 class ConvertDialog;
 class MetadataDialog;
 class PreviewDialog;
+namespace MetadataUtils {
+class String;
+}
+
+/** \brief TreeWidget widgets column indexes enumerator.
+  * \sa TreeWidget::columnsNames()
+  */
+enum TreeWidgetColumns {
+    NameColumn,
+    ExtColumn,
+    PathColumn,
+    ImageSizeColumn,
+    FileSizeColumn,
+    StatusColumn
+};
 
 //! QTreeWidget reimplementation for ConvertDialog with custom contex menu.
 class TreeWidget : public QTreeWidget {
@@ -43,6 +58,7 @@ public:
     TreeWidget(QWidget *parent = 0);
     ~TreeWidget();
     void initList(const QStringList &argList);
+    QSize imageSize(QTreeWidgetItem *item);
 
 protected:
     virtual void keyPressEvent( QKeyEvent *k );
@@ -65,8 +81,10 @@ private:
     QTreeWidgetItem *treeMenuItem;
     // methods
     QStringList itemList(const QFileInfo &info);
+    QStringList columnsNames();
     QStringList *makeList();
     QString makeImagePath(QTreeWidgetItem *item);
+    QString imageSizeString(const MetadataUtils::String &imagePath);
     void createActions();
 
 public slots:
@@ -84,6 +102,7 @@ public slots:
 #ifdef SIR_METADATA_SUPPORT
     void showMetadata();
 #endif // SIR_METADATA_SUPPORT
+    void retranslateStrings();
     inline void resizeColumnsToContents();
 
 signals:

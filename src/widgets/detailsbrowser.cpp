@@ -23,7 +23,6 @@
 #include <QSvgRenderer>
 #include <QGraphicsSvgItem>
 #include <QPainter>
-#include <cmath>
 #include "detailsbrowser.h"
 #include "convertdialog.h"
 #include "detailsoptions.h"
@@ -95,9 +94,9 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     exifStruct = 0;
     iptcStruct = 0;
 #endif // SIR_METADATA_SUPPORT
-    QString ext = item->text(1);
-    MetadataUtils::String imagePath = item->text(2) + QDir::separator() +
-            item->text(0) + '.' + ext;
+    QString ext = item->text(ExtColumn);
+    MetadataUtils::String imagePath = item->text(PathColumn) + QDir::separator()
+            + item->text(NameColumn) + '.' + ext;
     QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
             + QString::number(index);
     ext = ext.toUpper();
@@ -170,10 +169,8 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     htmlContent += QString::number(imageSize.width()) + "x"
             + QString::number(imageSize.height()) + " px" + htmlBr;
     QFileInfo info(imagePath);
-    double fileSize_M_B = info.size()
-            / pow(1024.,convertDialog->fileSizeComboBox->currentIndex()+1.);
-    htmlContent += tr("File size: ") + QString::number(fileSize_M_B, 'f', 2)
-            + " " + convertDialog->fileSizeComboBox->currentText() + htmlBr;
+    htmlContent += tr("File size: ");
+    htmlContent += convertDialog->fileSizeString(info.size()) + htmlBr;
 #ifdef SIR_METADATA_SUPPORT
     if (metadataEnabled)
         addMetadataToContent();

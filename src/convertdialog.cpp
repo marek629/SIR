@@ -30,6 +30,7 @@
 #include <QWindowStateChangeEvent>
 #include <QDebug>
 #include <QLibraryInfo>
+#include <cmath>
 #include "convertdialog.h"
 #include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
@@ -358,8 +359,9 @@ void ConvertDialog::giveNextImage(int threadNum) {
 
     if(convertedImages < numImages) {
         item = itemsToConvert[convertedImages];
-        convertThreads[threadNum]->convertImage(item->text(0), item->text(1),
-                                                item->text(2));
+        convertThreads[threadNum]->convertImage(item->text(NameColumn),
+                                                item->text(ExtColumn),
+                                                item->text(PathColumn));
         convertedImages++;
     }
     else {
@@ -493,8 +495,9 @@ void ConvertDialog::convert() {
     for(int i = 0; i < nt; i++) {
         convertThreads[i]->setAcceptWork( true );
         item = itemsToConvert[convertedImages];
-        convertThreads[i]->convertImage(item->text(0), item->text(1),
-                                        item->text(2));
+        convertThreads[i]->convertImage(item->text(NameColumn),
+                                        item->text(ExtColumn),
+                                        item->text(PathColumn));
         convertedImages++;
     }
 }
@@ -677,11 +680,12 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
     for (int i = 0; i < count; i++)
     {
         QTreeWidgetItem *item = filesTreeWidget->topLevelItem(i);
-        if(item->text(0) == imageData.at(0) && item->text(1) == imageData.at(1)
-            && item->text(2) == imageData.at(2)) {
-            item->setText(3, status);
-            fileName = item->text(2) + QDir::separator() +item->text(0) + ".";
-            fileName += item->text(1);
+        if(item->text(NameColumn) == imageData.at(0)
+                && item->text(ExtColumn) == imageData.at(1)
+                && item->text(PathColumn) == imageData.at(2)) {
+            item->setText(StatusColumn, status);
+            fileName = item->text(PathColumn) + QDir::separator()
+                     + item->text(NameColumn) + '.' + item->text(ExtColumn);
             filesTreeWidget->statusList->insert(fileName,statusNum);
             break;
         }
@@ -749,54 +753,25 @@ void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
 
 /** Retranslates GUI. */
 void ConvertDialog::retranslateStrings() {
-
-    QList<QString> itemList;
-    QString fileName;
     int sizeUnitIndex = sizeUnitComboBox->currentIndex();
     int fileSizeIndex = fileSizeComboBox->currentIndex();
     retranslateUi(this);
+    filesTreeWidget->retranslateStrings();
     // restoring nulled indexes
     sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
     fileSizeComboBox->setCurrentIndex(fileSizeIndex);
+}
 
-    itemList.append(tr("Name"));
-    itemList.append(tr("Ext"));
-    itemList.append(tr("Path"));
-    itemList.append(tr("Status"));
-    filesTreeWidget->setHeaderLabels(itemList);
-
-    QTreeWidgetItemIterator it(filesTreeWidget);
-    int count;
-    count = 0;
-
-    while (*it)
-    {
-        fileName = (*it)->text(2) + QDir::separator() +(*it)->text(0) + ".";
-        fileName += (*it)->text(1);
-
-        switch (filesTreeWidget->statusList->value(fileName)) {
-            case CONVERTED:
-            (*it)->setText(3,tr("Converted"));
-            break;
-            case SKIPPED:
-            (*it)->setText(3,tr("Skipped"));
-            break;
-            case FAILED:
-            (*it)->setText(3,tr("Failed to convert"));
-            break;
-            case NOTCONVERTED:
-            (*it)->setText(3,tr("Not converted yet"));
-            break;
-            case CONVERTING:
-            (*it)->setText(3,tr("Converting"));
-            break;
-            case CANCELLED:
-            (*it)->setText(3,tr("Cancelled"));
-            break;
-        }
-        count++;
-        ++it;
-    }
+/** Returns file size string with \e KiB or \e MiB suffix (depending
+  * fileSizeComboBox current text).
+  * \param size File size in bytes.
+  */
+QString ConvertDialog::fileSizeString(qint64 size) {
+    double fileSize_M_B = size
+            / pow(1024., this->fileSizeComboBox->currentIndex()+1.);
+    QString fileSizeString = QString::number(fileSize_M_B, 'f', 2)
+            + ' ' + this->fileSizeComboBox->currentText();
+    return fileSizeString;
 }
 
 /** Cancels converting if converting runs; otherwise close window. */
@@ -834,8 +809,8 @@ void ConvertDialog::setCanceled() {
     QString converted = tr("Converted");
     for(int i = 0; i < count; i++) {
         item = filesTreeWidget->topLevelItem(i);
-        if (item->text(3) != converted)
-            item->setText(3, status);
+        if (item->text(StatusColumn) != converted)
+            item->setText(StatusColumn, status);
     }
 }
 

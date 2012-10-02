@@ -29,6 +29,7 @@
 #include <QMenu>
 #include <QUrl>
 #include <QFileDialog>
+#include <QSvgRenderer>
 #include "treewidget.h"
 #include "convertdialog.h"
 #include "defines.h"
@@ -41,12 +42,7 @@ TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
     convertDialog = (ConvertDialog*)(parent->window());
     statusList = new QMap<QString,int>();
     // setup columns
-    QList<QString> itemList;
-    itemList.append(tr("Name"));
-    itemList.append(tr("Ext"));
-    itemList.append(tr("Path"));
-    itemList.append(tr("Status"));
-    setHeaderLabels(itemList);
+    setHeaderLabels(columnsNames());
     // setup widgets parameters
     setRootIsDecorated(false);
     setAlternatingRowColors(true);
@@ -128,6 +124,20 @@ void TreeWidget::initList(const QStringList &argList) {
     resizeColumnsToContents();
 }
 
+QSize TreeWidget::imageSize(QTreeWidgetItem *item) {
+    QSize result;
+    QString sizeString = item->text(ImageSizeColumn);
+    if (!sizeString.isEmpty()) {
+        sizeString = sizeString.section(' ', 1, 1);
+        QStringList dimensions = sizeString.split('x', QString::SkipEmptyParts);
+        if (dimensions.length() > 1) {
+            result.setWidth(dimensions.first().toInt());
+            result.setHeight(dimensions.last().toInt());
+        }
+    }
+    return result;
+}
+
 /** Add file button and action slot.
   * Load selected image files into tree widget and set state to
   * \em "Not \em converted \em yet".\n
@@ -196,8 +206,10 @@ void TreeWidget::loadFiles(const QStringList &files) {
         ++it;
         Settings::instance().settings.lastDir = info.path();
     }
-    convertDialog->enableConvertButtons();
-    resizeColumnsToContents();
+    if (!files.isEmpty()) {
+        convertDialog->enableConvertButtons();
+        resizeColumnsToContents();
+    }
 }
 
 /** Loads files into tree widget.
@@ -248,8 +260,8 @@ void TreeWidget::removeSelectedFromList() {
         if ((this->topLevelItem(i))->isSelected()) {
             item = this->takeTopLevelItem(i);
 
-            fileName = item->text(2) + QDir::separator() +item->text(0) + ".";
-            fileName += item->text(1);
+            fileName = item->text(PathColumn) + QDir::separator()
+                    + item->text(NameColumn) + '.' + item->text(ExtColumn);
 
             statusList->remove(fileName);
         }
@@ -283,7 +295,7 @@ void TreeWidget::showMenu(const QPoint & point) {
         contextMenu.addAction(previewAction);
 #ifdef SIR_METADATA_SUPPORT
         contextMenu.addAction(metadataAction);
-        QString ext = treeMenuItem->text(1).left(3).toUpper();
+        QString ext = treeMenuItem->text(ExtColumn).left(3).toUpper();
         if (ext == "SVG")
             metadataAction->setEnabled(false);
         else
@@ -335,6 +347,38 @@ void TreeWidget::showMetadata() {
     metadataForm->show();
 }
 #endif // SIR_METADATA_SUPPORT
+
+/** Retranslates this tree widgets header and status column. */
+void TreeWidget::retranslateStrings() {
+    setHeaderLabels(columnsNames());
+    QTreeWidgetItemIterator it(this);
+    QString fileName;
+    while (*it) {
+        fileName = (*it)->text(PathColumn) + QDir::separator()
+                + (*it)->text(NameColumn) + '.' + (*it)->text(1);
+        switch (statusList->value(fileName)) {
+            case CONVERTED:
+            (*it)->setText(StatusColumn,tr("Converted"));
+            break;
+            case SKIPPED:
+            (*it)->setText(StatusColumn,tr("Skipped"));
+            break;
+            case FAILED:
+            (*it)->setText(StatusColumn,tr("Failed to convert"));
+            break;
+            case NOTCONVERTED:
+            (*it)->setText(StatusColumn,tr("Not converted yet"));
+            break;
+            case CONVERTING:
+            (*it)->setText(StatusColumn,tr("Converting"));
+            break;
+            case CANCELLED:
+            (*it)->setText(StatusColumn,tr("Cancelled"));
+            break;
+        }
+        ++it;
+    }
+}
 
 /** Removes selected items when \a Delete key pressed by user. */
 void TreeWidget::keyPressEvent( QKeyEvent *k ) {
@@ -421,13 +465,27 @@ void TreeWidget::dropEvent(QDropEvent *event) {
 QStringList TreeWidget::itemList(const QFileInfo &info) {
     QStringList result;
     // file name
-    result += info.completeBaseName();
+    result << info.completeBaseName();
     // file expression
-    result += info.suffix();
+    result << info.suffix();
     // file path
-    result += info.path();
+    result << info.path();
+    // image size
+    result << imageSizeString(info.absoluteFilePath());
+    // file size
+    result << convertDialog->fileSizeString(info.size());
     // convertion status
-    result += tr("Not converted yet");
+    result << tr("Not converted yet");
+    return result;
+}
+
+/** Returns translated list of columns names.
+  * \sa TreeWidgetColumns
+  */
+QStringList TreeWidget::columnsNames() {
+    QStringList result;
+    result << tr("Name") << tr("Ext") << tr("Path") << tr("Image size")
+           << tr("File size") << tr("Status");
     return result;
 }
 
@@ -447,11 +505,57 @@ QStringList * TreeWidget::makeList() {
   * \sa makeList()
   */
 QString TreeWidget::makeImagePath(QTreeWidgetItem *item) {
-    QString imagePath = item->text(2);
-    if (!item->text(2).endsWith("/"))
+    QString imagePath = item->text(PathColumn);
+    if (!imagePath.endsWith("/"))
         imagePath += QDir::separator();
-    imagePath += item->text(0) + "." + item->text(1);
+    imagePath += item->text(NameColumn) + "." + item->text(ExtColumn);
     return QDir::fromNativeSeparators(imagePath);
+}
+
+/** Returns image size string in format \em "WxH px" of image file corresponding
+  * \a imagePath path. If image size is invalid (i.e. read error occured)
+  * returns empty string.
+  * \sa imageSize() DetailsBrowser::addItem()
+  */
+QString TreeWidget::imageSizeString(const MetadataUtils::String &imagePath) {
+    // image size reading code is came from DetailsBrowser::addItem() function
+    QSize imageSize;
+#ifdef SIR_METADATA_SUPPORT
+    MetadataUtils::Metadata metadata;
+#endif // SIR_METADATA_SUPPORT
+    QString ext = imagePath.section('.', -1).toUpper();
+    // thumbnail generation
+    if (ext != "SVG" && ext != "SVGZ") {
+#ifdef SIR_METADATA_SUPPORT
+        bool fromData(!Settings::instance().metadata.enabled);
+        if (!fromData) {
+            if (!metadata.read(imagePath, true))
+                fromData = true;
+            else {
+                Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
+                imageSize = QSize(image->pixelWidth(), image->pixelHeight());
+            }
+        }
+#else
+        bool fromData(true);
+#endif // SIR_METADATA_SUPPORT
+        if (fromData) { // generate from image data
+            QImage img(imagePath);
+            if (!imageSize.isValid())
+                imageSize = img.size();
+        }
+    }
+    else { // render from SVG file
+        QGraphicsSvgItem svg(imagePath);
+        QSvgRenderer *renderer = svg.renderer();
+        imageSize = renderer->defaultSize();
+    }
+    // creating result string
+    QString result;
+    if (imageSize.isValid())
+        result = QString::number(imageSize.width()) + 'x'
+                + QString::number(imageSize.height()) + " px";
+    return result;
 }
 
 /** Creates actions and connects their signals to corresponding slots. */

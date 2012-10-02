@@ -33,8 +33,10 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QSpacerItem;
 class GeneralGroupBox;
+#ifdef SIR_METADATA_SUPPORT
 class DetailsGroupBox;
 class MetadataGroupBox;
+#endif // SIR_METADATA_SUPPORT
 class SelectionGroupBox;
 class RawGroupBox;
 
@@ -63,8 +65,10 @@ private:
     QPushButton *cancelButton;
     // group boxes
     GeneralGroupBox *generalGroupBox;
+#ifdef SIR_METADATA_SUPPORT
     DetailsGroupBox *detailsGroupBox;
     MetadataGroupBox *metadataGroupBox;
+#endif //SIR_METADATA_SUPPORT
     SelectionGroupBox *selectionGroupBox;
     RawGroupBox *rawGroupBox;
     // methods
