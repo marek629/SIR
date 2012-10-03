@@ -25,12 +25,11 @@
 #include "settings.h"
 
 /** Default constructor.\n
-  * Sets UI, loads settings and create connections.
-  * \sa setupUi() loadSettings()
+  * Sets UI and creates connections.
+  * \sa setupUi()
   */
-RawGroupBox::RawGroupBox(QWidget *parent) : QGroupBox(parent) {
+RawGroupBox::RawGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
-    loadSettings();
     connect(dcrawPushButton, SIGNAL(clicked()), this, SLOT(browseDcraw()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)), SLOT(setRawStatus(int)));
 }

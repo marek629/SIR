@@ -23,10 +23,10 @@
 #include "settings.h"
 
 /** Default constructor.\n
-  * Sets UI, loads settings and create connections.
-  * \sa setupUi() loadSettings()
+  * Sets UI and creates connections.
+  * \sa setupUi()
   */
-MetadataGroupBox::MetadataGroupBox(QWidget *parent) : QGroupBox(parent) {
+MetadataGroupBox::MetadataGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
 
     // validate only ASCII characters
@@ -34,7 +34,6 @@ MetadataGroupBox::MetadataGroupBox(QWidget *parent) : QGroupBox(parent) {
     exifArtistComboBox->setValidator(validator);
     exifCopyrightComboBox->setValidator(validator);
 
-    loadSettings();
     connect(metadataCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableMetadata(bool)));
     connect(saveMetadataCheckBox, SIGNAL(toggled(bool)),

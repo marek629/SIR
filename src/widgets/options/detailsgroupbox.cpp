@@ -24,12 +24,11 @@
 #include "detailsoptions.h"
 
 /** Default constructor.\n
-  * Sets UI and loads settings.
-  * \sa setupUi() loadSettings()
+  * Sets UI.
+  * \sa setupUi()
   */
-DetailsGroupBox::DetailsGroupBox(QWidget *parent) : QGroupBox(parent) {
+DetailsGroupBox::DetailsGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
-    loadSettings();
 }
 
 /** Load settings and sets member widgets values.

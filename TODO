@@ -1,7 +1,6 @@
 *** nearest release ***
   ! new options group box: "File List" for TreeWidget settings
   ! SVG convertion patch
-  ! options group boxes: load settings after setup UI
 
 *** next release ***
   ! Sessions: save and restore files list in/from text file

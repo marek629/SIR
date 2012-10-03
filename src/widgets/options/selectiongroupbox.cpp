@@ -23,12 +23,11 @@
 #include "settings.h"
 
 /** Default constructor.\n
-  * Sets UI and loads settings.
-  * \sa setupUi() loadSettings()
+  * Sets UI.
+  * \sa setupUi()
   */
-SelectionGroupBox::SelectionGroupBox(QWidget *parent) : QGroupBox(parent) {
+SelectionGroupBox::SelectionGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
-    loadSettings();
 }
 
 /** Load settings and sets member widgets values.

@@ -26,17 +26,14 @@
 #include "widgets/options/abstractoptions.h"
 
 //! Metadata group box class used in OptionsDialog dialog.
-class MetadataGroupBox : public QGroupBox, public Ui::MetadataGroupBox,
-                         public AbstractOptions {
+class MetadataGroupBox : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
     Q_OBJECT
 
 public:
     explicit MetadataGroupBox(QWidget *parent = 0);
     ~MetadataGroupBox();
-    void saveSettings();
-    
-protected:
     void loadSettings();
+    void saveSettings();
 
 private slots:
     void enableMetadata(bool checked);

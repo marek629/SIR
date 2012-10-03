@@ -27,11 +27,11 @@
 class QSplitter;
 class QListWidget;
 class QScrollArea;
-class QGroupBox;
 class QDialogButtonBox;
 class QVBoxLayout;
 class QHBoxLayout;
 class QSpacerItem;
+class AbstractOptionsGroupBox;
 class GeneralGroupBox;
 #ifdef SIR_METADATA_SUPPORT
 class DetailsGroupBox;
@@ -50,8 +50,13 @@ public:
 
 private:
     // fields
-    QGroupBox** groupBoxes;
+    AbstractOptionsGroupBox** groupBoxes;
     quint8 currentListItem;
+#ifdef SIR_METADATA_SUPPORT
+    const quint8 categoriesCount = 5;
+#else
+    const quint8 categoriesCount = 3;
+#endif // SIR_METADATA_SUPPORT
     // basic UI fields
     QVBoxLayout *verticalLayout;
     QListWidget *listWidget;
@@ -74,6 +79,7 @@ private:
     // methods
     void createConnections();
     void setupUi();
+    void loadSettings();
 
 private slots:
     void saveSettings();

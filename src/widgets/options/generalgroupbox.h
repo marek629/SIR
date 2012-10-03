@@ -28,8 +28,7 @@
 class LanguageUtils;
 
 //! General group box class used in OptionsDialog dialog.
-class GeneralGroupBox : public QGroupBox, public Ui::GeneralGroupBox,
-                        public AbstractOptions {
+class GeneralGroupBox : public AbstractOptionsGroupBox, public Ui::GeneralGroupBox {
     Q_OBJECT
     friend class OptionsDialog;
 
@@ -37,10 +36,8 @@ public:
     explicit GeneralGroupBox(QWidget *parent = 0);
     ~GeneralGroupBox();
     static quint8 detectCoresCount();
-    void saveSettings();
-
-protected:
     void loadSettings();
+    void saveSettings();
 
 private slots:
     void browseDestination();

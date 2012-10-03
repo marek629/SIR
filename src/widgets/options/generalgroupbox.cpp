@@ -31,10 +31,10 @@
 quint8 GeneralGroupBox::maxCoresCount = 50;
 
 /** Default constructor.\n
-  * Sets UI, loads settings and create connections.
-  * \sa setupUi() loadSettings()
+  * Sets UI and creates connections.
+  * \sa setupUi()
   */
-GeneralGroupBox::GeneralGroupBox(QWidget *parent) : QGroupBox(parent) {
+GeneralGroupBox::GeneralGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
 
     languages = new LanguageUtils();
@@ -65,7 +65,6 @@ GeneralGroupBox::GeneralGroupBox(QWidget *parent) : QGroupBox(parent) {
 
     createLanguageMenu();
 
-    loadSettings();
     connect(browsePushButton, SIGNAL(clicked()),
             this, SLOT(browseDestination()));
     connect(coresCheckBox, SIGNAL(toggled(bool)),

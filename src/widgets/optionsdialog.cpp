@@ -31,10 +31,12 @@
 #include "widgets/options/rawgroupbox.h"
 
 /** Default constructor.\n
-  * Sets up window and read settings.
+  * Sets up window, loads settings and creates connections.
+  * \sa setupUi() loadSettings() createConnections()
   */
 OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, f) {
     setupUi();
+    loadSettings();
     createConnections();
 }
 
@@ -66,22 +68,22 @@ void OptionsDialog::categoryChanged(int current) {
     currentListItem = current;
 }
 
+/** Load settings for the user input wigets.
+  * \sa saveSettings()
+  */
+void OptionsDialog::loadSettings() {
+    // load settings for eatch group box
+    for (quint8 i=0; i<categoriesCount; i++)
+        groupBoxes[i]->loadSettings();
+}
+
 /** Writes settings based values of the user input wigets.
-  * \sa readSettings
+  * \sa loadSettings()
   */
 void OptionsDialog::saveSettings() {
-    // general
-    generalGroupBox->saveSettings();
-#ifdef SIR_METADATA_SUPPORT
-    // metadata
-    metadataGroupBox->saveSettings();
-    // details
-    detailsGroupBox->saveSettings();
-#endif // SIR_METADATA_SUPPORT
-    // selection
-    selectionGroupBox->saveSettings();
-    // raw
-    rawGroupBox->saveSettings();
+    // save settings for eatch group box
+    for (quint8 i=0; i<categoriesCount; i++)
+        groupBoxes[i]->saveSettings();
     // Write file settings
     Settings::instance().writeSettings();
 }
@@ -161,12 +163,7 @@ void OptionsDialog::setupUi() {
     verticalLayout_2->addItem(verticalSpacer);
     scrollAreaWidgetContents->setLayout(verticalLayout_2);
 
-#ifdef SIR_METADATA_SUPPORT
-    const quint8 categoriesCount = 5;
-#else
-    const quint8 categoriesCount = 3;
-#endif // SIR_METADATA_SUPPORT
-    groupBoxes = new QGroupBox*[categoriesCount];
+    groupBoxes = new AbstractOptionsGroupBox*[categoriesCount];
     quint8 i = 0;
     groupBoxes[i++] = generalGroupBox;
 #ifdef SIR_METADATA_SUPPORT

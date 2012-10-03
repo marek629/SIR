@@ -23,6 +23,7 @@
 #define ABSTRACTOPTIONS_H
 
 #include <QDir>
+#include <QGroupBox>
 
 //! Common options data for classes inherited from AbstractOptions class.
 class CommonOptions {
@@ -42,7 +43,7 @@ private:
     int maxHistoryCount_;
 };
 
-//! Abstract base class for all children widgets of OptionsDialog dialog.
+//! Abstract base class for all derived classes from OptionsDialog.
 class AbstractOptions {
 public:
     AbstractOptions(QWidget *parent = 0) { Q_UNUSED(parent) }
@@ -54,6 +55,15 @@ protected:
     virtual void saveSettings() = 0;
     // fields
     static CommonOptions common;
+};
+
+//! Abstract base class for all derived classes from QGroupBox and AbstractOptions.
+class AbstractOptionsGroupBox : public QGroupBox, public AbstractOptions {
+public:
+    AbstractOptionsGroupBox(QWidget *parent = 0) : QGroupBox(parent) {}
+    // pure virtual functions
+    virtual void loadSettings() = 0;
+    virtual void saveSettings() = 0;
 };
 
 #endif // ABSTRACTOPTIONS_H

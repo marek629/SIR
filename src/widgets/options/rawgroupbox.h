@@ -26,20 +26,17 @@
 #include <widgets/options/abstractoptions.h>
 
 //! Raw group box class used in OptionsDialog dialog.
-class RawGroupBox : public QGroupBox, public Ui::RawGroupBox,
-                    public AbstractOptions {
+class RawGroupBox : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
     Q_OBJECT
 
 public:
     explicit RawGroupBox(QWidget *parent = 0);
-    void saveSettings();
-
-protected:
     void loadSettings();
+    void saveSettings();
 
 signals:
     void ok(); /**< Indicates write settings success. */
-    
+
 private slots:
     void browseDcraw();
     void setRawStatus(int state);

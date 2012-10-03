@@ -26,16 +26,13 @@
 #include "widgets/options/abstractoptions.h"
 
 //! Details group box class used in OptionsDialog dialog.
-class DetailsGroupBox : public QGroupBox, public Ui::DetailsGroupBox,
-                        public AbstractOptions {
+class DetailsGroupBox : public AbstractOptionsGroupBox, public Ui::DetailsGroupBox  {
     Q_OBJECT
 
 public:
     explicit DetailsGroupBox(QWidget *parent = 0);
-    void saveSettings();
-
-protected:
     void loadSettings();
+    void saveSettings();
 };
 
 #endif // DETAILSGROUPBOX_H

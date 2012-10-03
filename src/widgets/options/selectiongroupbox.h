@@ -26,16 +26,13 @@
 #include "widgets/options/abstractoptions.h"
 
 //! Selection group box class used in OptionsDialog dialog.
-class SelectionGroupBox : public QGroupBox, public Ui::SelectionGroupBox,
-                          public AbstractOptions {
+class SelectionGroupBox : public AbstractOptionsGroupBox, public Ui::SelectionGroupBox {
     Q_OBJECT
 
 public:
     explicit SelectionGroupBox(QWidget *parent = 0);
-    void saveSettings();
-    
-protected:
     void loadSettings();
+    void saveSettings();
 };
 
 #endif // SELECTIONGROUPBOX_H
