@@ -116,6 +116,10 @@ void Settings::readSettings() {
     size.fileSizeUnit   = value("fileSizeUnit",0).toInt();
     size.sizeUnit       = value("sizeUnit",0).toInt();
     endGroup(); // Size
+    beginGroup("TreeWidget");
+    // all columns are visible by default
+    treeWidget.columns = value("columns",0x3F).toInt();
+    endGroup(); // TreeWidget
 #ifdef SIR_METADATA_SUPPORT
     beginGroup("Metadata");
     metadata.enabled            = value("enabled",true).toBool();
@@ -229,6 +233,9 @@ void Settings::writeSettings() {
     setValue("fileSizeUnit",    size.fileSizeUnit);
     setValue("sizeUnit",        size.sizeUnit);
     endGroup(); // Size
+    beginGroup("TreeWidget");
+    setValue("columns", treeWidget.columns);
+    endGroup(); // TreeWidget
 #ifdef SIR_METADATA_SUPPORT
     beginGroup("Metadata");
     setValue("enabled",         metadata.enabled);

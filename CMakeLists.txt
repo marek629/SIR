@@ -21,7 +21,7 @@ set ( sir_HDRS
         src/sharedinformation.h
         src/rawutils.h
         src/expressiontree.h
-        src/detailsoptions.h
+        src/optionsenums.h
         src/metadata/string.h
         )
 
@@ -47,6 +47,7 @@ set ( sir_SRCS
         src/widgets/selectiondialog.cpp
         src/widgets/options/abstractoptions.cpp
         src/widgets/options/generalgroupbox.cpp
+        src/widgets/options/filelistgroupbox.cpp
         src/widgets/options/selectiongroupbox.cpp
         src/widgets/options/rawgroupbox.cpp
         src/metadata/string.cpp
@@ -58,6 +59,7 @@ set ( sir_UIS
         dialogs/previewdialog.ui
         dialogs/selection/dirwidget.ui
         dialogs/options/generalgroupbox.ui
+        dialogs/options/filelistgroupbox.ui
         dialogs/options/selectiongroupbox.ui
         dialogs/options/rawgroupbox.ui
         )
@@ -100,6 +102,7 @@ set ( sir_MOCS
         src/widgets/detailsbrowser.h
         src/widgets/selectiondialog.h
         src/widgets/options/generalgroupbox.h
+        src/widgets/options/filelistgroupbox.h
         src/widgets/options/selectiongroupbox.h
         src/widgets/options/rawgroupbox.h
         src/widgets/options/abstractoptions.h

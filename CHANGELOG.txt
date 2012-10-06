@@ -15,6 +15,7 @@
     - drop event improved
     - myQTreeWidget renamed to TreeWidget, some code moved from ConvertDialog
     - external columns into tree view like size (px,K/MiB) added
+    - new options group box: "File list" for TreeWidget settings
 
 * Tue Jul 31 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.4
     - Changelog file provided

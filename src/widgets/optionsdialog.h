@@ -33,6 +33,7 @@ class QHBoxLayout;
 class QSpacerItem;
 class AbstractOptionsGroupBox;
 class GeneralGroupBox;
+class FileListGroupBox;
 #ifdef SIR_METADATA_SUPPORT
 class DetailsGroupBox;
 class MetadataGroupBox;
@@ -53,9 +54,9 @@ private:
     AbstractOptionsGroupBox** groupBoxes;
     quint8 currentListItem;
 #ifdef SIR_METADATA_SUPPORT
-    const quint8 categoriesCount = 5;
+    static const quint8 categoriesCount = 6;
 #else
-    const quint8 categoriesCount = 3;
+    static const quint8 categoriesCount = 4;
 #endif // SIR_METADATA_SUPPORT
     // basic UI fields
     QVBoxLayout *verticalLayout;
@@ -66,10 +67,9 @@ private:
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout;
     QDialogButtonBox *buttonBox;
-    QPushButton *okButton;
-    QPushButton *cancelButton;
     // group boxes
     GeneralGroupBox *generalGroupBox;
+    FileListGroupBox *fileListGroupBox;
 #ifdef SIR_METADATA_SUPPORT
     DetailsGroupBox *detailsGroupBox;
     MetadataGroupBox *metadataGroupBox;
@@ -80,9 +80,10 @@ private:
     void createConnections();
     void setupUi();
     void loadSettings();
+    void saveSettings();
 
 private slots:
-    void saveSettings();
+    void okButtonClicked();
     void categoryChanged(int current);
 };
 #endif

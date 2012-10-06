@@ -58,6 +58,7 @@ public:
     TreeWidget(QWidget *parent = 0);
     ~TreeWidget();
     void initList(const QStringList &argList);
+    void loadSettings();
     QSize imageSize(QTreeWidgetItem *item);
 
 protected:
@@ -65,6 +66,7 @@ protected:
     virtual void dropEvent(QDropEvent *event);
     virtual void dragEnterEvent(QDragEnterEvent *event);
     virtual void dragMoveEvent(QDragMoveEvent *event);
+    virtual void showEvent(QShowEvent *event);
 
 private:
     // fields

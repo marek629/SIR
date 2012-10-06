@@ -544,6 +544,9 @@ void ConvertDialog::setOptions() {
 
 /** Reads settings and sets up window state, position and convertion preferences. */
 void ConvertDialog::loadSettings() {
+    // load tree widget settings
+    filesTreeWidget->loadSettings();
+
     Settings &s = Settings::instance();
     // main window
     if (                                s.mainWindow.maximized)

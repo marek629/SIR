@@ -25,7 +25,7 @@
 #include <QPainter>
 #include "detailsbrowser.h"
 #include "convertdialog.h"
-#include "detailsoptions.h"
+#include "optionsenums.h"
 
 // this file specifed variables
 // HTML constants

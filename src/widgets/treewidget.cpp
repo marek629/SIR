@@ -33,6 +33,7 @@
 #include "treewidget.h"
 #include "convertdialog.h"
 #include "defines.h"
+#include "optionsenums.h"
 #include "widgets/previewdialog.h"
 #include "widgets/metadatadialog.h"
 
@@ -124,6 +125,30 @@ void TreeWidget::initList(const QStringList &argList) {
     resizeColumnsToContents();
 }
 
+/** Loads settings of tree widget.
+  *
+  * Hides unwanted columns if parent window is visible, otherwise do nothing.
+  *
+  * \note setColumnHidden() method doesn't work before ConvertDialog parent
+  *       window was showed, so this method brakes if said situation occurred
+  * \sa showEvent()
+  */
+void TreeWidget::loadSettings() {
+    /* */
+    if (window()->isHidden())
+        return;
+    int hex = Settings::instance().treeWidget.columns;
+    setColumnHidden(NameColumn,      !(hex & TreeWidgetOptions::NameColumn));
+    setColumnHidden(ExtColumn,       !(hex & TreeWidgetOptions::ExtColumn));
+    setColumnHidden(PathColumn,      !(hex & TreeWidgetOptions::PathColumn));
+    setColumnHidden(ImageSizeColumn, !(hex & TreeWidgetOptions::ImageSizeColumn));
+    setColumnHidden(FileSizeColumn,  !(hex & TreeWidgetOptions::FileSizeColumn));
+    setColumnHidden(StatusColumn,    !(hex & TreeWidgetOptions::StatusColumn));
+}
+
+/** Returns image size in pixels of \a item. If an error occurred returns a null
+  * size object.
+  */
 QSize TreeWidget::imageSize(QTreeWidgetItem *item) {
     QSize result;
     QString sizeString = item->text(ImageSizeColumn);
@@ -140,7 +165,7 @@ QSize TreeWidget::imageSize(QTreeWidgetItem *item) {
 
 /** Add file button and action slot.
   * Load selected image files into tree widget and set state to
-  * \em "Not \em converted \em yet".\n
+  * \em "Not converted yet".\n
   * This function remember last opened directory in the same session.
   * Default directory is home directory.
   * \sa addDir() loadFiles(const QStringList&)
@@ -233,7 +258,7 @@ void TreeWidget::loadFiles(const QList<QFileInfo> &files) {
 }
 
 /** Remove all button and action slot. Removes all items of tree widget.
-  * \sa removeSelectedFromList
+  * \sa removeSelectedFromList()
   */
 void TreeWidget::removeAll() {
     // clear list
@@ -247,7 +272,7 @@ void TreeWidget::removeAll() {
 
 /** Remove selected button and action slot.
   * Remove selected items of tree widget.
-  * \sa removeAll
+  * \sa removeAll()
   */
 void TreeWidget::removeSelectedFromList() {
 
@@ -391,18 +416,31 @@ void TreeWidget::keyPressEvent( QKeyEvent *k ) {
     }
 }
 
-/** Accepts proposed action. \sa dragMoveEvent */
+/** Accepts proposed action.
+  * \sa dragMoveEvent() dropEvent()
+  */
 void TreeWidget::dragEnterEvent(QDragEnterEvent *event) {
      event->acceptProposedAction();
 }
 
-/** Accepts proposed action. \sa dragEnterEvent */
+/** Accepts proposed action.
+  * \sa dragEnterEvent() dropEvent()
+  */
 void TreeWidget::dragMoveEvent(QDragMoveEvent *event) {
     event->acceptProposedAction();
 }
 
+/** Loads settings if \a event is QEvent::Show (tree widget just was showed).
+  * \sa loadSettings()
+  */
+void TreeWidget::showEvent(QShowEvent *event) {
+    if (event->type() == QEvent::Show)
+        loadSettings();
+}
+
 /** Appends droped files or directories into this tree widget.\n
   * Emits changed() signal if any file added.
+  * \sa dragEnterEvent() dragMoveEvent()
   */
 void TreeWidget::dropEvent(QDropEvent *event) {
 

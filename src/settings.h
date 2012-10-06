@@ -78,6 +78,9 @@ public:
         int     fileSizeUnit;
         int     sizeUnit;
     } size;
+    struct TreeWidgetGroup {
+        int columns;
+    } treeWidget;
 #ifdef SIR_METADATA_SUPPORT
     struct MetadataGroup {
         bool enabled;

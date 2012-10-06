@@ -21,11 +21,10 @@
 
 #include "detailsgroupbox.h"
 #include "settings.h"
-#include "detailsoptions.h"
+#include "optionsenums.h"
 
 /** Default constructor.\n
   * Sets UI.
-  * \sa setupUi()
   */
 DetailsGroupBox::DetailsGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
