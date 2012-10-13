@@ -23,6 +23,7 @@
 #define TREEWIDGET_H
 
 #include <QTreeWidget>
+#include "treewidgetheader.h"
 
 class QKeyEvent;
 class QDropEvent;
@@ -58,15 +59,16 @@ public:
     TreeWidget(QWidget *parent = 0);
     ~TreeWidget();
     void initList(const QStringList &argList);
-    void loadSettings();
     QSize imageSize(QTreeWidgetItem *item);
+    QStringList columnsNames();
+    TreeWidgetHeader *header() { return (TreeWidgetHeader*)QTreeWidget::header(); }
+    void setHeader(TreeWidgetHeader *header) { QTreeWidget::setHeader(header); }
 
 protected:
     virtual void keyPressEvent( QKeyEvent *k );
     virtual void dropEvent(QDropEvent *event);
     virtual void dragEnterEvent(QDragEnterEvent *event);
     virtual void dragMoveEvent(QDragMoveEvent *event);
-    virtual void showEvent(QShowEvent *event);
 
 private:
     // fields
@@ -83,7 +85,6 @@ private:
     QTreeWidgetItem *treeMenuItem;
     // methods
     QStringList itemList(const QFileInfo &info);
-    QStringList columnsNames();
     QStringList *makeList();
     QString makeImagePath(QTreeWidgetItem *item);
     QString imageSizeString(const MetadataUtils::String &imagePath);

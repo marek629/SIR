@@ -31,6 +31,7 @@ set ( sir_SRCS
         src/widgets/previewdialog.cpp
         src/widgets/optionsdialog.cpp
         src/widgets/treewidget.cpp
+        src/widgets/treewidgetheader.cpp
         src/convertthread.cpp
         src/widgets/aboutdialog.cpp
         src/languageutils.cpp
@@ -91,6 +92,7 @@ set ( sir_MOCS
         src/widgets/previewdialog.h
         src/widgets/optionsdialog.h
         src/widgets/treewidget.h
+        src/widgets/treewidgetheader.h
         src/convertthread.h
         src/widgets/aboutdialog.h
         src/networkutils.h

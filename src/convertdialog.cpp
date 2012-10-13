@@ -537,6 +537,7 @@ void ConvertDialog::about() {
 /** Writes window state and position and show options dialog. */
 void ConvertDialog::setOptions() {
     writeWindowProperties();
+    filesTreeWidget->header()->saveSettings();
     OptionsDialog *options = new OptionsDialog(this);
     options->exec();
     delete options;
@@ -545,7 +546,7 @@ void ConvertDialog::setOptions() {
 /** Reads settings and sets up window state, position and convertion preferences. */
 void ConvertDialog::loadSettings() {
     // load tree widget settings
-    filesTreeWidget->loadSettings();
+    filesTreeWidget->header()->loadSettings();
 
     Settings &s = Settings::instance();
     // main window

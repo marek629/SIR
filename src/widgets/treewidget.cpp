@@ -42,7 +42,8 @@ TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
     // setup fields
     convertDialog = (ConvertDialog*)(parent->window());
     statusList = new QMap<QString,int>();
-    // setup columns
+    // setup header
+    setHeader(new TreeWidgetHeader(this));
     setHeaderLabels(columnsNames());
     // setup widgets parameters
     setRootIsDecorated(false);
@@ -123,27 +124,6 @@ void TreeWidget::initList(const QStringList &argList) {
         convertDialog->convertSelectedButton->setEnabled(true);
     }
     resizeColumnsToContents();
-}
-
-/** Loads settings of tree widget.
-  *
-  * Hides unwanted columns if parent window is visible, otherwise do nothing.
-  *
-  * \note setColumnHidden() method doesn't work before ConvertDialog parent
-  *       window was showed, so this method brakes if said situation occurred
-  * \sa showEvent()
-  */
-void TreeWidget::loadSettings() {
-    /* */
-    if (window()->isHidden())
-        return;
-    int hex = Settings::instance().treeWidget.columns;
-    setColumnHidden(NameColumn,      !(hex & TreeWidgetOptions::NameColumn));
-    setColumnHidden(ExtColumn,       !(hex & TreeWidgetOptions::ExtColumn));
-    setColumnHidden(PathColumn,      !(hex & TreeWidgetOptions::PathColumn));
-    setColumnHidden(ImageSizeColumn, !(hex & TreeWidgetOptions::ImageSizeColumn));
-    setColumnHidden(FileSizeColumn,  !(hex & TreeWidgetOptions::FileSizeColumn));
-    setColumnHidden(StatusColumn,    !(hex & TreeWidgetOptions::StatusColumn));
 }
 
 /** Returns image size in pixels of \a item. If an error occurred returns a null
@@ -428,14 +408,6 @@ void TreeWidget::dragEnterEvent(QDragEnterEvent *event) {
   */
 void TreeWidget::dragMoveEvent(QDragMoveEvent *event) {
     event->acceptProposedAction();
-}
-
-/** Loads settings if \a event is QEvent::Show (tree widget just was showed).
-  * \sa loadSettings()
-  */
-void TreeWidget::showEvent(QShowEvent *event) {
-    if (event->type() == QEvent::Show)
-        loadSettings();
 }
 
 /** Appends droped files or directories into this tree widget.\n
