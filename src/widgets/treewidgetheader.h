@@ -24,6 +24,7 @@
 
 #include <QHeaderView>
 
+//! Header view of TreeWidget class with custom context menu.
 class TreeWidgetHeader : public QHeaderView {
     Q_OBJECT
 

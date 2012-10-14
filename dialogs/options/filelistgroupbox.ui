@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>FileListGroupBox</class>
  <widget class="QGroupBox" name="FileListGroupBox">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>218</width>
-    <height>190</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>GroupBox</string>
   </property>
@@ -23,20 +15,6 @@
       <string>Show columns</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="nameCheckBox">
-        <property name="text">
-         <string>Name</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QCheckBox" name="imageSizeCheckBox">
-        <property name="text">
-         <string>Image size</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QCheckBox" name="extCheckBox">
         <property name="text">
@@ -64,6 +42,51 @@
          <string>Status</string>
         </property>
        </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="nameCheckBox">
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="imageSizeCheckBox">
+        <property name="text">
+         <string>Image size</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="showPushButton">
+          <property name="text">
+           <string>Show all</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="hidePushButton">
+          <property name="text">
+           <string>Hide all</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

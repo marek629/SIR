@@ -1,14 +1,48 @@
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ *
+ * Program URL: http://sir.projet-libre.org/
+ */
+
 #include "filelistgroupbox.h"
 #include "settings.h"
 #include "optionsenums.h"
 
 using namespace TreeWidgetOptions;
 
-/** Default constructor.\n
-  * Sets UI.
+/** Default constructor.
+  *
+  * Sets up UI and create connections.
   */
 FileListGroupBox::FileListGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
+
+    // setup check box list
+    checkBoxList = columnsGroupBox->findChildren<QCheckBox*>();
+    visibleColumnsCount = 0;
+
+    // create connections
+    // check boxes
+    foreach (QCheckBox *checkBox, checkBoxList)
+        connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(columnToggled(bool)));
+    // push buttons
+    connect(showPushButton, SIGNAL(clicked()), this, SLOT(showAllColumns()));
+    connect(hidePushButton, SIGNAL(clicked()), this, SLOT(hideAllColumns()));
 }
 
 /** Load settings and sets member widgets values.
@@ -48,10 +82,40 @@ void FileListGroupBox::saveSettings() {
   * false.
   */
 bool FileListGroupBox::isColumnChecked() {
-    QList<QCheckBox*> checkBoxList = columnsGroupBox->findChildren<QCheckBox*>();
-    foreach (QCheckBox *checkBox, checkBoxList) {
-        if (checkBox->isChecked())
-            return true;
-    }
-    return false;
+    return bool(visibleColumnsCount > 0);
+}
+
+/** Counts how much check boxes are checked and enables or disables
+  * \em "Show all" and \em "Hide all" push buttons.
+  * \sa enableColumnButtons()
+  */
+void FileListGroupBox::columnToggled(bool checked) {
+    if (checked)
+        visibleColumnsCount++;
+    else
+        visibleColumnsCount--;
+    if (visibleColumnsCount == checkBoxList.count()) // all columns checked
+        enableColumnButtons(false, true);
+    else if (visibleColumnsCount == 0) // no column checked
+        enableColumnButtons(true, false);
+    else
+        enableColumnButtons();
+}
+
+/** Checks all columns check boxes.
+  * \sa hideAllColumns() enableColumnButtons()
+  */
+void FileListGroupBox::showAllColumns() {
+    foreach (QCheckBox *checkBox, checkBoxList)
+        checkBox->setChecked(true);
+    enableColumnButtons(false, true);
+}
+
+/** Unchecks all columns check boxes.
+  * \sa showAllColumns() enableColumnButtons()
+  */
+void FileListGroupBox::hideAllColumns() {
+    foreach (QCheckBox *checkBox, checkBoxList)
+        checkBox->setChecked(false);
+    enableColumnButtons(true, false);
 }
