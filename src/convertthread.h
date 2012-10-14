@@ -36,7 +36,7 @@ class QSvgRenderer;
 class QImage;
 #endif // SIR_METADATA_SUPPORT
 
-//! Enumerator for ConvertThread::question signal.
+//! Enumerator for ConvertThread::question() signal.
 enum Question {
     Overwrite,
     Enlarge

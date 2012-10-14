@@ -2,7 +2,10 @@ project( SIR )
 
 cmake_minimum_required( VERSION 2.8.3 )
 set ( CMAKE_BUILD_TYPE Debug )
-add_definitions ( -Wall )
+
+# SIR_CMAKE preprocessor define added for QtCreator code parsing and highlighting
+add_definitions ( -Wall -DSIR_CMAKE )
+
 find_package ( Qt4 REQUIRED )
 include ( ${QT_USE_FILE} )
 

@@ -32,6 +32,10 @@
 #include "widgets/messagebox.h"
 #include "settings.h"
 
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
 // setup static fields
 SharedInformation * ConvertThread::shared = new SharedInformation();
 
@@ -102,6 +106,7 @@ void ConvertThread::run() {
         QString imagePath = imgData.at(2) + QDir::separator() +
                             imgData.at(0) + "." + originalFormat;
         originalFormat = originalFormat.toLower();
+        bool svgSource(originalFormat == "svg" || originalFormat == "svgz");
 
         QImage *image = 0;
 
@@ -112,15 +117,20 @@ void ConvertThread::run() {
             else
                 image->load(imagePath);
         }
-        else if (originalFormat == "svg" || originalFormat == "svgz") {
+        else if (svgSource) {
             QGraphicsSvgItem svgImage(imagePath);
             sizeComputed = computeSize(svgImage.renderer(), imagePath);
             if (sizeComputed == 1) {
                 getNextOrStop();
                 continue;
             }
-            image = new QImage();
-            image->load(imagePath);
+            image = new QImage(width, height, QImage::Format_ARGB32);
+            if (shared->format == "gif" || shared->format == "png")
+                image->fill(Qt::transparent);
+            else // in other formats tranparency isn't supported
+                image->fill(Qt::white);
+            QPainter painter(image);
+            svgImage.renderer()->render(&painter);
         }
         else {
             image = new QImage();
@@ -139,7 +149,7 @@ void ConvertThread::run() {
 #ifdef SIR_METADATA_SUPPORT
         // read metadata
         saveMetadata = false;
-        if (shared->metadataEnabled) {
+        if (!svgSource && shared->metadataEnabled) {
             saveMetadata = metadata.read(imagePath,true);
             int beta = MetadataUtils::Exif::rotationAngle(
                         metadata.exifStruct()->orientation);
@@ -389,7 +399,7 @@ void ConvertThread::updateThumbnail(const QImage *image) {
   * Sets required image size.
   * \return negative value when an error has occured
   * \return 0 when an unsupported SharedInformation::sizeUnit value was set
-  * \return 1 when success
+  * \return 1 when success (for 2 (\e bytes) value of SharedInformation::sizeUnit only)
   */
 char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     if (shared->sizeUnit == 0) ; // px
@@ -471,7 +481,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
   * Sets required image size.
   * \return negative value when an error has occured
   * \return 0 when an unsupported SharedInformation::sizeUnit value was set
-  * \return 1 when success
+  * \return 1 when success (for 2 (\e bytes) value of SharedInformation::sizeUnit only)
   */
 char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath) {
     QSize defaultSize = renderer->defaultSize();
