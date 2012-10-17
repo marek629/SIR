@@ -586,6 +586,7 @@ void ConvertDialog::loadSettings() {
     sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
     fileSizeSpinBox->setValue(          s.size.fileSizeValue);
     fileSizeComboBox->setCurrentIndex(  s.size.fileSizeUnit);
+    maintainCheckBox->setChecked(       s.size.keepAspectRatio);
     if (sizeUnitComboBox->currentIndex() == 1) {
         sizeWidth =                     s.size.widthPx;
         sizeHeight =                    s.size.heightPx;

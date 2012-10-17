@@ -108,13 +108,14 @@ void Settings::readSettings() {
     settings.maxHistoryCount    = value("maxHistoryCount",5).toInt();
     endGroup(); // Settings
     beginGroup("Size");
-    size.widthPx        = value("widthPx",800).toInt();
-    size.widthPercent   = value("widthPercent",100.f).toFloat();
-    size.heightPx       = value("heightPx",600).toInt();
-    size.heightPercent  = value("heightPercent",100.f).toFloat();
-    size.fileSizeValue  = value("fileSizeValue",300.f).toFloat();
-    size.fileSizeUnit   = value("fileSizeUnit",0).toInt();
-    size.sizeUnit       = value("sizeUnit",0).toInt();
+    size.widthPx            = value("widthPx",800).toInt();
+    size.widthPercent       = value("widthPercent",100.f).toFloat();
+    size.heightPx           = value("heightPx",600).toInt();
+    size.heightPercent      = value("heightPercent",100.f).toFloat();
+    size.fileSizeValue      = value("fileSizeValue",300.f).toFloat();
+    size.fileSizeUnit       = value("fileSizeUnit",0).toInt();
+    size.sizeUnit           = value("sizeUnit",0).toInt();
+    size.keepAspectRatio    = value("keepAspectRatio",true).toBool();
     endGroup(); // Size
     beginGroup("TreeWidget");
     // all columns are visible by default
@@ -232,6 +233,7 @@ void Settings::writeSettings() {
     setValue("fileSizeValue",   size.fileSizeValue);
     setValue("fileSizeUnit",    size.fileSizeUnit);
     setValue("sizeUnit",        size.sizeUnit);
+    setValue("keepAspectRatio", size.keepAspectRatio);
     endGroup(); // Size
     beginGroup("TreeWidget");
     setValue("columns", treeWidget.columns);

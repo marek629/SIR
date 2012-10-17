@@ -1,7 +1,9 @@
 *** nearest release ***
-  ! SVG convertion patch
+  ! show and hide all buttons in file details options
+  ! apply Exif::Orientation tag for thumbnail bugfix
 
 *** next release ***
+  ! substitution color for transparency
   ! Sessions: save and restore files list in/from text file
   ! Load translations from file, not resources
 

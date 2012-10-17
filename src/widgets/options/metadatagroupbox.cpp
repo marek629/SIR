@@ -175,6 +175,7 @@ void MetadataGroupBox::saveMetadata(bool save) {
 
 /** Unchecks thumbRotateCheckBox if \a update is false, otherwise does nothing. */
 void MetadataGroupBox::updateThumbnail(bool update) {
+    thumbRotateCheckBox->setEnabled(update);
     if (!update)
         thumbRotateCheckBox->setChecked(false);
 }

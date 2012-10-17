@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>MetadataGroupBox</class>
  <widget class="QGroupBox" name="MetadataGroupBox">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>341</width>
-    <height>394</height>
-   </rect>
-  </property>
   <property name="title">
    <string>Metadata Options</string>
   </property>

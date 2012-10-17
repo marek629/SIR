@@ -127,6 +127,7 @@ void GeneralGroupBox::loadSettings() {
     fileSizeSpinBox->setValue(              s.size.fileSizeValue);
     fileSizeComboBox->setCurrentIndex(      s.size.fileSizeUnit);
     sizeUnitComboBox->setCurrentIndex(      s.size.sizeUnit);
+    aspectRatioCheckBox->setChecked(        s.size.keepAspectRatio);
 }
 
 /** Saves settings basing member widgets values.
@@ -158,6 +159,7 @@ void GeneralGroupBox::saveSettings() {
     s.size.fileSizeValue    = fileSizeSpinBox->value();
     s.size.fileSizeUnit     = fileSizeComboBox->currentIndex();
     s.size.sizeUnit         = sizeUnitComboBox->currentIndex();
+    s.size.keepAspectRatio  = aspectRatioCheckBox->isChecked();
 }
 
 /** Allows the user to set target directory path. */

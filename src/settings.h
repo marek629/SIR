@@ -77,6 +77,7 @@ public:
         float   fileSizeValue;
         int     fileSizeUnit;
         int     sizeUnit;
+        bool    keepAspectRatio;
     } size;
     struct TreeWidgetGroup {
         int columns;
