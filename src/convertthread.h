@@ -22,6 +22,10 @@
 #ifndef CONVERTTHREAD_H
 #define CONVERTTHREAD_H
 
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
 #include <QThread>
 #include <QMutex>
 #ifdef SIR_METADATA_SUPPORT

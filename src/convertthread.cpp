@@ -32,10 +32,6 @@
 #include "widgets/messagebox.h"
 #include "settings.h"
 
-#ifndef SIR_CMAKE
-#define SIR_METADATA_SUPPORT
-#endif // SIR_CMAKE
-
 // setup static fields
 SharedInformation * ConvertThread::shared = new SharedInformation();
 
@@ -191,12 +187,14 @@ void ConvertThread::run() {
         // create null destination image object
         QImage destImg;
         // scale image
-        if (hasWidth && hasHeight && !maintainAspect)
-            destImg = image->scaled(width, height, Qt::IgnoreAspectRatio,
-                                    Qt::SmoothTransformation);
-        else if (hasWidth && hasHeight && maintainAspect)
-            destImg = image->scaled(width, height, Qt::KeepAspectRatio,
-                                    Qt::SmoothTransformation);
+        if (hasWidth && hasHeight) {
+            if (maintainAspect)
+                destImg = image->scaled(width, height, Qt::KeepAspectRatio,
+                                        Qt::SmoothTransformation);
+            else
+                destImg = image->scaled(width, height, Qt::IgnoreAspectRatio,
+                                        Qt::SmoothTransformation);
+        }
         else if (hasWidth && !hasHeight)
             destImg = image->scaledToWidth(width, Qt::SmoothTransformation);
         else if (!hasWidth && hasHeight)
@@ -271,23 +269,15 @@ void ConvertThread::printError() {
 
 /** Rotates \a image */
 void ConvertThread::rotateImage(QImage *image) {
+    int alpha = (int)angle;
 #ifdef SIR_METADATA_SUPPORT
     bool saveExifOrientation = !shared->realRotate;
 #endif // SIR_METADATA_SUPPORT
     // rotate image
     if (rotate && angle != 0.0) {
-        int alpha = (int)angle;
 #ifdef SIR_METADATA_SUPPORT
         if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
             saveExifOrientation = false;
-#endif // SIR_METADATA_SUPPORT
-        // swap dimension variables
-        if (alpha%90 == 0 && alpha%180 != 0) {
-            int tmp = width;
-            width = height;
-            height = tmp;
-        }
-#ifdef SIR_METADATA_SUPPORT
         // don't rotate but save Exif orientation tag
         if (saveMetadata && saveExifOrientation) {
             int flip;
@@ -313,10 +303,13 @@ void ConvertThread::rotateImage(QImage *image) {
             char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
             if (orientation < 1) { // really rotate when getOrientation() failed
                 metadata.setExifDatum("Exif.Image.Orientation",1);
+                metadata.exifStruct()->orientation = 1;
                 saveExifOrientation = false;
             }
-            else
+            else {
                 metadata.setExifDatum("Exif.Image.Orientation",orientation);
+                metadata.exifStruct()->orientation = orientation;
+            }
         }
 #endif // SIR_METADATA_SUPPORT
     }
@@ -324,6 +317,13 @@ void ConvertThread::rotateImage(QImage *image) {
 #ifdef SIR_METADATA_SUPPORT
     if (!saveExifOrientation || shared->realRotate) {
 #endif // SIR_METADATA_SUPPORT
+        // flip dimension variables
+        if (alpha%90 == 0 && alpha%180 != 0) {
+            int tmp = width;
+            width = height;
+            height = tmp;
+        }
+        // image tranformation matrix
         QTransform transform;
 #ifdef SIR_METADATA_SUPPORT
         if (saveMetadata) {
