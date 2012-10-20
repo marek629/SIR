@@ -120,7 +120,8 @@ void ConvertDialog::createConnections() {
     connect(rotateCheckBox,SIGNAL(stateChanged (int)), SLOT(verifyRotate(int)));
     connect(sizeUnitComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(setSizeUnit(int)));
-    connectSizeLinesEdit();
+    if (maintainCheckBox->isChecked() && sizeUnitComboBox->currentIndex()==1) // %
+        connectSizeLinesEdit();
 
     // quality spin box & slider
     connect(qualitySpinBox, SIGNAL(valueChanged(int)), qualitySlider, SLOT(setValue(int)));
@@ -273,7 +274,7 @@ void ConvertDialog::setupThreads(int numThreads) {
 /** Creates lists of write and read supported images including raw images,
   * restore saved settings in last session, setups completers for lines edit
   * and creates connections and actions.
-  * \sa readSettings() createConnections() createActions()
+  * \sa loadSettings() createConnections()
   */
 void ConvertDialog::init() {
 
@@ -869,9 +870,10 @@ void ConvertDialog::setSizeUnit(int index) {
             maintainCheckBox->setEnabled(true);
             maintainCheckBox->setChecked(keepAspectRatio);
         }
-        if (maintainCheckBox->isChecked() && index == 1) // %
+        if (maintainCheckBox->isChecked() && index == 1) { // %
             heightDoubleSpinBox->setValue(widthDoubleSpinBox->value());
-        connectSizeLinesEdit();
+            connectSizeLinesEdit();
+        }
     }
     lastIndex = index;
 }
