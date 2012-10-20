@@ -64,10 +64,10 @@ bool Metadata::read(const String& path, bool setupStructs) {
 #endif // EXV_HAVE_XMP_TOOLKIT
         // prepare structs setup
         if (setupStructs) {
-            firstEmptyItemSkipped = true;
+            firstEmptyFieldSkipped = true;
             exifStruct_.clear();
         }
-        // setup struct supporting skipping invalid metadata items
+        // setup struct skipping invalid metadata items
         while (setupStructs) {
             try {
                 setExifStruct();
@@ -75,7 +75,7 @@ bool Metadata::read(const String& path, bool setupStructs) {
                 break;
             }
             catch (Exiv2::Error &e) { // invalid metadatum
-                firstEmptyItemSkipped = false;
+                firstEmptyFieldSkipped = false;
                 QString message = tr("Error open file %1").arg(path.toQString());
                 errorList += new Error(message,e);
                 continue;
@@ -96,9 +96,12 @@ bool Metadata::read(const QString &path, bool setupStructs) {
 }
 
 /** Writes metadata about file corresponding with \a path file path and
-  * \a qImage image, and returns read success value.\n
+  * \a qImage image, and returns read success value.
+  *
+  * Before write removes empty and broken metadata fields.
+  *
   * If exception catched this error data will be appended to errorList list.
-  * \sa lastError()
+  * \sa lastError() removeEmptyFields()
   */
 bool Metadata::write(const String& path, const QImage& qImage) {
     close();
@@ -107,6 +110,7 @@ bool Metadata::write(const String& path, const QImage& qImage) {
         image = Exiv2::ImageFactory::open(filePath);
         image->readMetadata();
         image->clearMetadata();
+        removeEmptyFields();
         if (setData(qImage)) {
             image->writeMetadata();
             return true;
@@ -200,58 +204,62 @@ Exiv2::Metadatum & Metadata::metadatum(const std::string &key) {
 
 /** This is overloaded function, created for Exif orientation metadatum.\n
   * If \a field value is different from 0 this function has no effect.\n
-  * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
+  * Otherwise if firstEmptyFieldSkipped is true sets the \a field value to
   * integer representation of metadatum value basing \a key key.
-  * Otherwise, if firstEmptyItemSkipped is false sets them to true.
+  * Otherwise, if firstEmptyFieldSkipped is false sets them to true.
   * \sa isNullValue(char) setFieldString() metadatum()
   */
 void Metadata::setFieldValue(char *field, const std::string &key) {
     if (!isNullValue(*field))
         return;
-    if (firstEmptyItemSkipped) {
+    if (firstEmptyFieldSkipped) {
         Exiv2::Metadatum &datum = metadatum(key);
         *field = datum.toLong();
         // validation structs field for rigth combobox index
         if (*field == -1)
             *field = 1;
     }
-    else
-        firstEmptyItemSkipped = true;
+    else {
+        firstEmptyFieldSkipped = true;
+        emptyFieldKeyList.push_back(key);
+    }
 }
 
 /** This is overloaded function.\n
   * If \a field value is non null string this function has no effect.\n
-  * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
+  * Otherwise if firstEmptyFieldSkipped is true sets the \a field value to
   * decimal string based integer representation of metadatum value basing
   * \a key key and append \a unit c-string using String::appendUnit() function.
-  * Otherwise, if firstEmptyItemSkipped is false sets them to true.
+  * Otherwise, if firstEmptyFieldSkipped is false sets them to true.
   * \sa isNullValue(String) String::appendUnit() setFieldString() metadatum()
   */
 void Metadata::setFieldValue(String *field, const std::string &key, const char *unit) {
     if (!isNullValue(*field))
         return;
-    if (firstEmptyItemSkipped) {
+    if (firstEmptyFieldSkipped) {
         Exiv2::Metadatum &datum = metadatum(key);
         *field = String::number(datum.toLong());
         field->appendUnit(unit);
     }
-    else
-        firstEmptyItemSkipped = true;
+    else {
+        firstEmptyFieldSkipped = true;
+        emptyFieldKeyList.push_back(key);
+    }
 }
 
 /** If \a field value is non null string this function has no effect.\n
-  * Otherwise if firstEmptyItemSkipped is true sets the \a field value to
+  * Otherwise if firstEmptyFieldSkipped is true sets the \a field value to
   * string based string representation of metadatum value basing \a key key.
   * If metadatum corresponding \a key1 key is empty it reads metadatum
   * coresponding \a key2 key.\n
-  * Otherwise, if firstEmptyItemSkipped is false sets them to true.
+  * Otherwise, if firstEmptyFieldSkipped is false sets them to true.
   * \sa isNullValue(String) String::appendUnit() setFieldValue() metadatum()
   */
 void Metadata::setFieldString(String *field, const std::string &key1,
                               const std::string &key2) {
     if (!isNullValue(*field))
         return;
-    if (firstEmptyItemSkipped) {
+    if (firstEmptyFieldSkipped) {
         Exiv2::Metadatum *datum = &metadatum(key1);
         *field = String::fromStdString(datum->toString());
         if (field->isEmpty() && !key2.empty()) {
@@ -261,8 +269,11 @@ void Metadata::setFieldString(String *field, const std::string &key1,
         if (field->isEmpty())
             *field = String::noData();
     }
-    else
-        firstEmptyItemSkipped = true;
+    else {
+        firstEmptyFieldSkipped = true;
+        emptyFieldKeyList.push_back(key1);
+        emptyFieldKeyList.push_back(key2);
+    }
 }
 
 /** Sets Exif metadata based on exifStruct_ data.
@@ -502,6 +513,33 @@ void Metadata::removeDatum(const std::string &key) {
         Exiv2::IptcMetadata::iterator i = iptcData.findKey(Exiv2::IptcKey(key));
         if (i != iptcData.end())
             iptcData.erase(i);
+    }
+}
+
+/** Removes empty and broken fields from exifData and iptcData.
+  * \sa emptyFieldKeyList
+  */
+void Metadata::removeEmptyFields() {
+    emptyFieldKeyList.unique();
+    std::list<std::string>::iterator it;
+    for (it = emptyFieldKeyList.begin(); it != emptyFieldKeyList.end(); it++) {
+        std::string familyName = (*it).substr(0,4);
+        if (familyName.compare("Exif") == 0) {
+            Exiv2::ExifKey key(*it);
+            Exiv2::ExifMetadata::iterator itField = exifData.findKey(key);
+            while (itField != exifData.end()) {
+                exifData.erase(itField);
+                itField = exifData.findKey(key);
+            }
+        }
+        else {
+            Exiv2::IptcKey key(*it);
+            Exiv2::IptcMetadata::iterator itField = iptcData.findKey(key);
+            while (itField != iptcData.end()) {
+                iptcData.erase(itField);
+                itField = iptcData.findKey(key);
+            }
+        }
     }
 }
 
@@ -782,7 +820,8 @@ void Metadata::setExifDatum(
     }
 }
 
-/** This is overloaded function.\n
+/** This is overloaded function.
+  *
   * Sets Exif thumbnail based on image loaded from \a path file path.
   */
 void Metadata::setExifThumbnail(const std::string &path) {
@@ -791,15 +830,27 @@ void Metadata::setExifThumbnail(const std::string &path) {
     thumb.setJpegThumbnail(path);
 }
 
-/** This is overloaded function.\n
+/** This is overloaded function.
+  *
   * Sets \a Exif thumbnail based on \a image data saved as temporary file with
-  * \a tid ID.\n
+  * \a tid ID.
+  *
   * If exception catched this error data will be appended to errorList list.
+  *
+  * If \a image is null pointer or image this function removes thumbnail from
+  * exifData.
+  *
+  * \return True value if setting EXIF thumbnail succed or \a image is
+  *         null pointer or image.
+  * \return False value if setting EXIF thumbnail failed.
   * \sa lastError()
   */
 bool Metadata::setExifThumbnail(QImage *image, int tid) {
-    if (image->isNull())
-        return false;
+    if (!image || image->isNull()) {
+        Exiv2::ExifThumb thumb(exifData);
+        thumb.erase();
+        return true;
+    }
     QString filePath = QDir::tempPath() + QDir::separator() + "sir_thumb";
     filePath += QString::number(tid) + ".jpg";
     image->save(filePath);

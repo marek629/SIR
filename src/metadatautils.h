@@ -91,10 +91,12 @@ private:
     ExifStruct exifStruct_;
     Exif exif;
     IptcStruct iptcStruct_;
-    bool firstEmptyItemSkipped;
+    bool firstEmptyFieldSkipped;
+    std::list<std::string> emptyFieldKeyList;
     // methods
     bool setData(const QImage &img);
     void removeDatum(const std::string &key);
+    void removeEmptyFields();
 };
 
 bool isNullValue(char v);
