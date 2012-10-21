@@ -103,19 +103,17 @@ void FileListGroupBox::columnToggled(bool checked) {
 }
 
 /** Checks all columns check boxes.
-  * \sa hideAllColumns() enableColumnButtons()
+  * \sa hideAllColumns()
   */
 void FileListGroupBox::showAllColumns() {
     foreach (QCheckBox *checkBox, checkBoxList)
         checkBox->setChecked(true);
-    enableColumnButtons(false, true);
 }
 
 /** Unchecks all columns check boxes.
-  * \sa showAllColumns() enableColumnButtons()
+  * \sa showAllColumns()
   */
 void FileListGroupBox::hideAllColumns() {
     foreach (QCheckBox *checkBox, checkBoxList)
         checkBox->setChecked(false);
-    enableColumnButtons(true, false);
 }

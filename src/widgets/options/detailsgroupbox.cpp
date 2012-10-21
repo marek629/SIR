@@ -24,10 +24,27 @@
 #include "optionsenums.h"
 
 /** Default constructor.\n
-  * Sets UI.
+  * Sets up UI, private data and creates connections.
   */
 DetailsGroupBox::DetailsGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);
+    // setup check box lists
+    exifCheckBoxes = exifTab->findChildren<QCheckBox*>();
+    iptcCheckBoxes = iptcTab->findChildren<QCheckBox*>();
+    exifSelectedFields = 0;
+    iptcSelectedFields = 0;
+
+    // create connections
+    // check boxes
+    foreach (QCheckBox *checkBox, exifCheckBoxes)
+        connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(exifFieldToggled(bool)));
+    foreach (QCheckBox *checkBox, iptcCheckBoxes)
+        connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(iptcFieldToggled(bool)));
+    // push buttons
+    connect(showPushButton, SIGNAL(clicked()), this, SLOT(showAllFields()));
+    connect(hidePushButton, SIGNAL(clicked()), this, SLOT(hideAllFields()));
+    // tabs
+    connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 }
 
 /** Load settings and sets member widgets values.
@@ -161,4 +178,91 @@ void DetailsGroupBox::saveSettings() {
     if (iptcDigitizedTimeCheckBox->isChecked())
         hex |= DetailsOptions::DigitizedTime;
     s.details.iptc          = hex;
+}
+
+/** Counts how much check boxes are checked and enables or disables
+  * \em "Show all" and \em "Hide all" push buttons.
+  * \sa enableFieldButtons() iptcFieldToggled()
+  */
+void DetailsGroupBox::exifFieldToggled(bool checked) {
+    if (checked)
+        exifSelectedFields++;
+    else
+        exifSelectedFields--;
+    if (exifSelectedFields == exifCheckBoxes.count()) // all columns checked
+        enableFieldButtons(false, true);
+    else if (exifSelectedFields == 0) // no column checked
+        enableFieldButtons(true, false);
+    else
+        enableFieldButtons();
+}
+
+/** Counts how much check boxes are checked and enables or disables
+  * \em "Show all" and \em "Hide all" push buttons.
+  * \sa enableFieldButtons() exifFieldToggled()
+  */
+void DetailsGroupBox::iptcFieldToggled(bool checked) {
+    if (checked)
+        iptcSelectedFields++;
+    else
+        iptcSelectedFields--;
+    if (iptcSelectedFields == iptcCheckBoxes.count()) // all columns checked
+        enableFieldButtons(false, true);
+    else if (iptcSelectedFields == 0) // no column checked
+        enableFieldButtons(true, false);
+    else
+        enableFieldButtons();
+}
+
+/** Checks all fields in current metadata tab.
+  * \sa hideAllFields()
+  */
+void DetailsGroupBox::showAllFields() {
+    if (tabWidget->currentWidget() == exifTab) {
+        foreach (QCheckBox *checkBox, exifCheckBoxes)
+            checkBox->setChecked(true);
+    }
+    else {
+        foreach (QCheckBox *checkBox, iptcCheckBoxes)
+            checkBox->setChecked(true);
+    }
+}
+
+/** Unchecks all fields in current metadata tab.
+  * \sa showAllFields()
+  */
+void DetailsGroupBox::hideAllFields() {
+    if (tabWidget->currentWidget() == exifTab) {
+        foreach (QCheckBox *checkBox, exifCheckBoxes)
+            checkBox->setChecked(false);
+    }
+    else {
+        foreach (QCheckBox *checkBox, iptcCheckBoxes)
+            checkBox->setChecked(false);
+    }
+}
+
+/** Enables and disables \em "Show all" and \em "Hide all" fields push buttons
+  * depending content of \a currentTab current tab in tabWidget.
+  * \sa enableFieldButtons()
+  */
+void DetailsGroupBox::tabChanged(int currentTab) {
+    if (currentTab == 0) { // Exif
+        if (exifSelectedFields == exifCheckBoxes.count())
+            enableFieldButtons(false, true);
+        else if (exifSelectedFields == 0)
+            enableFieldButtons(true, false);
+        else
+            enableFieldButtons();
+    }
+    else if (currentTab == 1) { // IPTC
+        if (iptcSelectedFields == iptcCheckBoxes.count())
+            enableFieldButtons(false, true);
+        else if (iptcSelectedFields == 0)
+            enableFieldButtons(true, false);
+        else
+            enableFieldButtons();
+    }
+    else
+        enableFieldButtons(false, false);
 }
