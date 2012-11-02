@@ -8,3 +8,15 @@
 /sir.pro.user*
 /*.user
 /Makefile
+/CMakeCache.txt
+/CMakeFiles/*
+/*.qm
+/*.cxx
+/*/*.cxx
+/*/*/*.cxx
+/*/*/*/*.cxx
+/ui_*.h
+/application.qrc.depends
+/cmake_install.cmake
+/install_manifest.txt
+/sir

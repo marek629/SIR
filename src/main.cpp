@@ -25,7 +25,7 @@
 #include "main.h"
 
 int main(int argc, char *argv[]) {
-    Q_INIT_RESOURCE(application);
+//    Q_INIT_RESOURCE(application);
     QApplication app(argc, argv);
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));

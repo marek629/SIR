@@ -50,7 +50,7 @@ void LanguageUtils::readLanguages() {
 
     languageInfoMap = new QMap<QString, LanguageInfo>;
 
-    QFile translationsFile(":translations/translation_info.txt");
+    QFile translationsFile("../share/sir/translations/translation_info.txt");
 
     if (!translationsFile.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
@@ -84,7 +84,7 @@ void LanguageUtils::readLanguages() {
 
 }
 
-/** Returns LanguageInfo about typed \b language name. */
+/** Returns LanguageInfo about typed \a language name. */
 const LanguageInfo LanguageUtils::getLanguageInfo(const QString & language) const {
     return languageInfoMap->value(language);
 }

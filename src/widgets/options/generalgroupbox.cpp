@@ -193,7 +193,7 @@ void GeneralGroupBox::respondCoresSpinBox(bool checked) {
 
 /** Sets up language combo box. */
 void GeneralGroupBox::createLanguageMenu() {
-    QDir dir(":translations/");
+    QDir dir("../share/sir/translations/");
     QStringList filter;
     filter << "sir_*.qm";
     QStringList fileNames = dir.entryList(filter);
@@ -206,7 +206,7 @@ void GeneralGroupBox::createLanguageMenu() {
     languageName = info.niceName;
     QString trlangName = tr(languageName.toStdString().c_str());
 
-    countryFlag = new QIcon(":images/" + info.flagFile);
+    countryFlag = new QIcon("../share/sir/images/" + info.flagFile);
 
     languagesComboBox->insertItem(0, *(countryFlag), trlangName);
 
@@ -217,7 +217,7 @@ void GeneralGroupBox::createLanguageMenu() {
         languageName = info.niceName;
 
         trlangName = tr(languageName.toStdString().c_str());
-        countryFlag = new QIcon(":images/" + info.flagFile);
+        countryFlag = new QIcon("../share/sir/images/" + info.flagFile);
 
         languagesComboBox->insertItem(i+1, *(countryFlag), trlangName);
 

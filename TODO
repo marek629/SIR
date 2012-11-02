@@ -1,9 +1,9 @@
 *** nearest release ***
+  ! Load translations from file, not resources
 
 *** next release ***
   ! substitution color for transparency
   ! Sessions: save and restore files list in/from text file
-  ! Load translations from file, not resources
 
 *** wishlist ***
   ! SelectionDialog:

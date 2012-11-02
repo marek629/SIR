@@ -569,7 +569,7 @@ void ConvertDialog::loadSettings() {
     numThreads =                                s.settings.cores;
     if (numThreads == 0)
         numThreads = GeneralGroupBox::detectCoresCount();
-    QString selectedTranslationFile = ":/translations/";
+    QString selectedTranslationFile = "../share/sir/translations/";
     selectedTranslationFile +=                  s.settings.languageFileName;
     QString qtTranslationFile = "qt_" +
             selectedTranslationFile.split('_').at(1).split('.').first();
