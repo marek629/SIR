@@ -2,8 +2,13 @@
 
 -If you want to get up and running quickly and easily-
 
-sir/> ./qmake sir.pro
-sir/> make
-sir/> make install (as root)
+~/> cd sir-build
+
+sir-build/> cmake ../sir -DCMAKE_INSTALL_PREFIX=./usr
+-or if you don't want metadata support (enabled by default)
+sir-build/> cmake ../sir -DCMAKE_INSTALL_PREFIX=./usr -Dmetadata=OFF
+
+sir-build/> make -j<number_of_cores+1> (ie. -j5 for quad core processor)
+sir-build/> make install
 
 ==================

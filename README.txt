@@ -26,9 +26,11 @@ Supported metadata standards using exiv2:
     * XMP
 
 Dependences:
-    * Qt 4     -> http://qt-project.org/
-    * libexiv2 -> http://exiv2.org/
+    * Qt 4          -> http://qt-project.org/
 Optional dependences:
-    * dcraw    -> http://www.cybercom.net/~dcoffin/dcraw/
+    * libexiv2      -> http://exiv2.org/
+    * dcraw         -> http://www.cybercom.net/~dcoffin/dcraw/
+Build dependences:
+    * CMake 2.8.3+  -> http://www.cmake.org/
 
-SIR documentation was created using Doxygen.
+SIR documentation was created using Doxygen -> http://www.stack.nl/~dimitri/doxygen/

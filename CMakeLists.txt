@@ -8,22 +8,22 @@ project( sir )
 cmake_minimum_required( VERSION 2.8.3 )
 
 # SIR_CMAKE preprocessor define added for QtCreator code parsing and highlighting
-add_definitions ( -Wall -DSIR_CMAKE )
+add_definitions( -Wall -DSIR_CMAKE )
 
-find_package ( Qt4 REQUIRED )
-include ( ${QT_USE_FILE} )
+find_package( Qt4 REQUIRED QtCore QtGui QtNetwork QtSvg )
+include( ${QT_USE_FILE} )
 
-include_directories (
+include_directories(
         ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
         ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTNETWORK_INCLUDE_DIR} ${QT_QTSVG_INCLUDE_DIR}
         src/
     )
-if (WIN32)
+if(WIN32)
         include_directories ( ${include_directories} windows/include )
-endif ()
+endif()
 
 # Headers
-set ( sir_HDRS
+set( sir_HDRS
         src/main.h
         src/defines.h
         src/languageutils.h
@@ -35,7 +35,7 @@ set ( sir_HDRS
     )
 
 # Source files
-set ( sir_SRCS
+set( sir_SRCS
         src/main.cpp
         src/convertdialog.cpp
         src/widgets/previewdialog.cpp
@@ -65,7 +65,7 @@ set ( sir_SRCS
     )
 
 # User interface files
-set ( sir_UIS
+set( sir_UIS
         dialogs/convertdialog.ui
         dialogs/about.ui
         dialogs/previewdialog.ui
@@ -76,13 +76,13 @@ set ( sir_UIS
         dialogs/options/rawgroupbox.ui
     )
 
-set ( sir_RSCS
+set( sir_RSCS
         application.qrc
     )
 QT4_ADD_RESOURCES(RSCS ${sir_RSCS})
 
 # Translations
-set ( sir_TRANSLATIONS
+set( sir_TRANSLATIONS
         translations/sir_cz.ts
         translations/sir_de.ts
         translations/sir_es.ts
@@ -100,7 +100,7 @@ set ( sir_TRANSLATIONS
 QT4_ADD_TRANSLATION( QMS ${sir_TRANSLATIONS} )
 
 # Images
-set ( sir_IMGS
+set( sir_IMGS
         images/favorite.png
         images/unfavorite.png
         images/czech.png
@@ -120,7 +120,7 @@ set ( sir_IMGS
     )
 
 # Meta-object code files
-set ( sir_MOCS
+set( sir_MOCS
         src/convertdialog.h
         src/widgets/previewdialog.h
         src/widgets/optionsdialog.h
@@ -143,31 +143,31 @@ set ( sir_MOCS
         src/widgets/options/abstractoptions.h
     )
 
-set ( sir_LINKING_LIBS
+set( sir_LINKING_LIBS
         ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY}
         ${QT_QTNETWORK_LIBRARY} ${QT_QTSVG_LIBRARY}
     )
 
-option ( metadata "Metadata support using exiv2 library." ON)
-if ( metadata )
-    set ( CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR} )
-    find_package ( Exiv2 )
-    if ( EXISTS ${EXIV2_LIBRARY} )
-        message ( STATUS "exiv2 found" )
-        add_definitions ( -DSIR_METADATA_SUPPORT )
-        set ( sir_MOCS ${sir_MOCS}
+option( metadata "Metadata support using exiv2 library." ON)
+if( metadata )
+    set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR} )
+    find_package( Exiv2 )
+    if( EXISTS ${EXIV2_LIBRARY} )
+        message( STATUS "exiv2 found" )
+        add_definitions( -DSIR_METADATA_SUPPORT )
+        set( sir_MOCS ${sir_MOCS}
                 src/widgets/metadatadialog.h
                 src/widgets/selection/anymetadatagroupbox.h
                 src/widgets/options/detailsgroupbox.h
                 src/widgets/options/metadatagroupbox.h
             )
-        set ( sir_HDRS ${sir_HDRS}
+        set( sir_HDRS ${sir_HDRS}
                 src/metadatautils.h
                 src/metadata/exif.h
                 src/metadata/error.h
                 src/metadata/iptc.h
             )
-        set ( sir_SRCS ${sir_SRCS}
+        set( sir_SRCS ${sir_SRCS}
                 src/metadatautils.cpp
                 src/metadata/exif.cpp
                 src/widgets/metadatadialog.cpp
@@ -177,7 +177,7 @@ if ( metadata )
                 src/widgets/options/metadatagroupbox.cpp
                 src/widgets/selection/anymetadatagroupbox.cpp
             )
-        set ( sir_UIS ${sir_UIS}
+        set( sir_UIS ${sir_UIS}
                 dialogs/metadatadialog.ui
                 dialogs/selection/anymetadatagroupbox.ui
                 dialogs/selection/exifgroupbox.ui
@@ -185,30 +185,30 @@ if ( metadata )
                 dialogs/options/metadatagroupbox.ui
                 dialogs/options/detailsgroupbox.ui
             )
-        set ( sir_LINKING_LIBS ${sir_LINKING_LIBS} ${EXIV2_LIBRARY} )
-    else ( EXISTS ${EXIV2_LIBRARY} )
+        set( sir_LINKING_LIBS ${sir_LINKING_LIBS} ${EXIV2_LIBRARY} )
+    else( EXISTS ${EXIV2_LIBRARY} )
         message ( FATAL_ERROR "eviv2 library not found! Disable metadata support calling -Dmetadata=OFF in cmake command." )
-    endif ( EXISTS ${EXIV2_LIBRARY} )
-endif ( metadata )
+    endif( EXISTS ${EXIV2_LIBRARY} )
+endif( metadata )
 
-QT4_WRAP_UI ( UIS ${sir_UIS} )
-QT4_WRAP_CPP ( MOCS ${sir_MOCS} )
+QT4_WRAP_UI( UIS ${sir_UIS} )
+QT4_WRAP_CPP( MOCS ${sir_MOCS} )
 
-add_executable ( sir ${sir_SRCS} ${UIS} ${MOCS} ${QMS} ${RSCS} )
-target_link_libraries ( sir ${sir_LINKING_LIBS} )
+add_executable( sir ${sir_SRCS} ${UIS} ${MOCS} ${QMS} ${RSCS} )
+target_link_libraries( sir ${sir_LINKING_LIBS} )
 
 # installation
 # bin
-install ( TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin )
+install( TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin )
 # translations
-install ( FILES ${QMS} translations/translation_info.txt DESTINATION share/sir/translations )
+install( FILES ${QMS} translations/translation_info.txt DESTINATION share/sir/translations )
 # icon and desktop file
-if ( WIN32 )
-    install ( FILES images/sir.ico DESTINATION share/pixmaps )
-else ( UNIX )
-    install ( FILES images/sir.png DESTINATION share/pixmaps )
-    install ( FILES sir.desktop DESTINATION share/applications )
-endif ( )
+if( WIN32 )
+    install( FILES images/sir.ico DESTINATION share/pixmaps )
+else( UNIX )
+    install( FILES images/sir.png DESTINATION share/pixmaps )
+    install( FILES sir.desktop DESTINATION share/applications )
+endif( )
 # images
-install ( FILES ${sir_IMGS} DESTINATION share/sir/images )
+install( FILES ${sir_IMGS} DESTINATION share/sir/images )
 
