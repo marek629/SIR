@@ -232,7 +232,7 @@
         <source>Remove Al&amp;l</source>
         <translation>Usuń w&amp;szystkie</translation>
     </message>
-        <message>
+    <message>
         <location filename="../dialogs/convertdialog.ui" line="164"/>
         <source>Alt+L</source>
         <translation>Alt+S</translation>
@@ -442,6 +442,7 @@
         <location filename="../dialogs/convertdialog.ui" line="812"/>
         <location filename="../dialogs/convertdialog.ui" line="815"/>
         <location filename="../dialogs/convertdialog.ui" line="818"/>
+        <location filename="../src/convertdialog.cpp" line="807"/>
         <source>Quit</source>
         <translation>Wyjście</translation>
     </message>
@@ -464,6 +465,219 @@
         <location filename="../dialogs/convertdialog.ui" line="854"/>
         <source>About Qt...</source>
         <translation>O Qt...</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="148"/>
+        <location filename="../src/convertdialog.cpp" line="156"/>
+        <location filename="../src/convertdialog.cpp" line="191"/>
+        <location filename="../src/convertdialog.cpp" line="198"/>
+        <source>Let us know!</source>
+        <translation>Daj nam znak!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="149"/>
+        <source>You alread sent information about your SIR installation. Thank you very much!</source>
+        <translation>Już wysłałeś informację o Twojej instalacji SIR. Dziękujemy!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="157"/>
+        <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
+        <translation>WAŻNE: ta akcja nie wysyła żadnych prywatnych danych o Tobie i Twoim komputerze do twórców SIR! Jedynie zwiększa liczbę unikalnych instalacji SIR.</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="163"/>
+        <source>Go for it!</source>
+        <translation>Prześlij!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="166"/>
+        <source>No thanks!</source>
+        <translation>Nie, dziękuję!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="192"/>
+        <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
+        <translation>Wystąpił błąd podczas łączenia z serwerem SIR! Sprawdź połączenie z Internetem i spróbuj ponownie!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="199"/>
+        <source>Thank you for let us know that you are using SIR! You are the user number %1 of this month!</source>
+        <translation>Dziękujemy za informację, że używasz SIR! Jesteś %1 użytkownikiem w tym miesiącu!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="213"/>
+        <location filename="../src/convertdialog.cpp" line="221"/>
+        <location filename="../src/convertdialog.cpp" line="227"/>
+        <source>SIR Updates</source>
+        <translation>Aktualizacje SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="214"/>
+        <source>There was an error while trying to connect with SIR update website! Check your internet connection and try again later!</source>
+        <translation>Wystąpił błąd podczas łączenia z serwerem SIR! Sprawdź połączenie z Internetem i spróbuj ponownie!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="222"/>
+        <source>You have the lastest version of SIR!</source>
+        <translation>Masz najnowszą wersję SIR!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="228"/>
+        <source>There is a new version of SIR available for download!</source>
+        <translation>Nowa wersja SIR jest dostępna do pobrania!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="232"/>
+        <source>Go to SIR website!</source>
+        <translation>Idź do strony internetowej SIR!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="235"/>
+        <source>I will check later!</source>
+        <translation>Sprawdzę później!</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="345"/>
+        <source>Choose a directory</source>
+        <translation>Wybierz katalog</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="390"/>
+        <source>Please add at least one image file.</source>
+        <translation>Proszę, dodaj co najmniej jeden plik obrazu.</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="405"/>
+        <source>Please select at least one image file.</source>
+        <translation>Proszę, wybierz co najmniej jeden plik obrazu.</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="434"/>
+        <source>Create Folder? -- SIR</source>
+        <translation>Utworzyć katalog? - SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="435"/>
+        <source>The folder %1 do not exists.Do you want to create it?</source>
+        <translation>Katalog %1 nie istnieje. Chcesz go utworzyć?</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="438"/>
+        <source>&amp;Yes</source>
+        <translation>&amp;Tak</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="438"/>
+        <source>&amp;No</source>
+        <translation>&amp;Nie</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="443"/>
+        <source>Unable to create target folder.</source>
+        <translation>Nie można stworzyć docelowego katalogu.</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="458"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="533"/>
+        <source>Version</source>
+        <translation>Wersja</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="718"/>
+        <source>Enlarge File? - SIR</source>
+        <translation>Powiększyć plik? - SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="719"/>
+        <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
+        <translation>Plik %1 jest mniejszy od rządanego rozmiaru. Powiększenie może spowodować pogorszenie jakości zdjęcia. Czy chcesz powiększyć?</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="741"/>
+        <source>Overwrite File? -- SIR</source>
+        <translation>Nadpisać plik? -- SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="742"/>
+        <source>A file called %1 already exists.Do you want to overwrite it?</source>
+        <translation>Plik %1 już istnieje. Czy chcesz go nadpisać?</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="814"/>
+        <source>Cancelled</source>
+        <translation>Anulowano</translation>
+    </message>
+    <message>
+        <location filename="../src/convertdialog.cpp" line="815"/>
+        <source>Converted</source>
+        <translation>Skonwertowany</translation>
+    </message>
+</context>
+<context>
+    <name>ConvertThread</name>
+    <message>
+        <location filename="../src/convertthread.cpp" line="84"/>
+        <location filename="../src/convertthread.cpp" line="225"/>
+        <location filename="../src/convertthread.cpp" line="232"/>
+        <location filename="../src/convertthread.cpp" line="616"/>
+        <location filename="../src/convertthread.cpp" line="650"/>
+        <location filename="../src/convertthread.cpp" line="657"/>
+        <source>Cancelled</source>
+        <translation>Anulowano</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="89"/>
+        <source>Converting</source>
+        <translation>Konwertuję</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="138"/>
+        <source>Failed to open original image</source>
+        <translation>Błąd otwarcia obrazu źródłowego</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="219"/>
+        <location filename="../src/convertthread.cpp" line="239"/>
+        <location filename="../src/convertthread.cpp" line="643"/>
+        <location filename="../src/convertthread.cpp" line="661"/>
+        <source>Converted</source>
+        <translation>Skonwertowany</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="222"/>
+        <location filename="../src/convertthread.cpp" line="242"/>
+        <source>Failed to convert</source>
+        <translation>Nieudana konwersja</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="227"/>
+        <location filename="../src/convertthread.cpp" line="230"/>
+        <location filename="../src/convertthread.cpp" line="618"/>
+        <location filename="../src/convertthread.cpp" line="652"/>
+        <location filename="../src/convertthread.cpp" line="655"/>
+        <source>Skipped</source>
+        <translation>Pominięty</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="264"/>
+        <source>Error code:</source>
+        <translation>Kod błędu:</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="456"/>
+        <location filename="../src/convertthread.cpp" line="545"/>
+        <source>Failed to compute image size</source>
+        <translation>Błąd obliczenia rozmiaru obrazu</translation>
+    </message>
+    <message>
+        <location filename="../src/convertthread.cpp" line="645"/>
+        <location filename="../src/convertthread.cpp" line="663"/>
+        <source>Failed to save</source>
+        <translation>Nieudany zapis</translation>
     </message>
 </context>
 <context>
@@ -1785,6 +1999,207 @@ Informacja: %2</translation>
     </message>
 </context>
 <context>
+    <name>MetadataUtils::Exif</name>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="49"/>
+        <location filename="../src/metadata/exif.cpp" line="354"/>
+        <source>Unknown</source>
+        <translation>Nieznany</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="315"/>
+        <location filename="../src/metadata/exif.cpp" line="323"/>
+        <source>No rotation</source>
+        <translation>Brak obrotu</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="316"/>
+        <source>No rotation, flip verticaly</source>
+        <translation>Brak obrotu, odbij pionowo</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="317"/>
+        <source>Rotation 180Â°</source>
+        <translation>Obróć o 180°</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="318"/>
+        <source>Rotation 180Â°, flip verticaly</source>
+        <translation>Obróć o 180°, odbij pionowo</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="319"/>
+        <source>Clockwise rotation, flip horizontaly</source>
+        <translation>Obróć zgodnie z ruchem wskazówek zegara, odbij pionowo</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="320"/>
+        <source>Clockwise rotation</source>
+        <translation>Obróć zgodnie z kierunkiem ruchu wskazówek zegara</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="321"/>
+        <source>Counterclockwise rotation, flip horizontaly</source>
+        <translation>Obróć przeciwnie do kierunku ruchu wskazówek zegara, odbij pionowo</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="322"/>
+        <source>Counterclockwise rotation</source>
+        <translation>Obróć przeciwnie do kierunku ruchu wskazówek zegara</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="334"/>
+        <location filename="../src/metadata/exif.cpp" line="343"/>
+        <source>Not defined</source>
+        <translation>Niezdefiniowany</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="335"/>
+        <source>Manual</source>
+        <translation>Ręczny</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="336"/>
+        <source>Auto</source>
+        <translation>Automatyczny</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="337"/>
+        <source>Aperture priority</source>
+        <translation>Priorytet przesłony</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="338"/>
+        <source>Shutter priority</source>
+        <translation>Priorytet migawki</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="339"/>
+        <source>Creative program (biased toward depth of field)</source>
+        <translation>Kreatywny (duża głębia ostrości)</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="340"/>
+        <source>Action program (biased toward fast shutter speed)</source>
+        <translation>Akcja (krótki czas naświetlania)</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="341"/>
+        <source>Portrait mode (for closeup photos with the background out of focus)</source>
+        <translation>Potret (zdjęcia z bliska z odciętym tłem)</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="342"/>
+        <source>Landscape mode (for landscape photos with the background in focus)</source>
+        <translation>Krajobraz (zdjęcia krajobrazu z ostrym tłem)</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="355"/>
+        <source>Average</source>
+        <translation>Średnia</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="356"/>
+        <source>Center weighted average</source>
+        <translation>Centralnie ważony uśredniony</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="357"/>
+        <source>Spot</source>
+        <translation>Punktowy</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="358"/>
+        <source>Multi spot</source>
+        <translation>Wielopunktowy</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="359"/>
+        <source>Pattern</source>
+        <translation>Wzorcowy</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="360"/>
+        <source>Partial</source>
+        <translation>Częściowy</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.cpp" line="361"/>
+        <source>Other</source>
+        <translation>Inny</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataUtils::Flash</name>
+    <message>
+        <location filename="../src/metadata/exif.h" line="142"/>
+        <source>No flash function.</source>
+        <translation>Brak lampy błyskowej.</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="146"/>
+        <source>Flash fired</source>
+        <translation>Błysk</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="150"/>
+        <source>Flash didn&apos;t fire</source>
+        <translation>Brak błysku</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="154"/>
+        <source>, compulsory flash mode</source>
+        <translation>, wymuszony</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="158"/>
+        <source>, auto mode</source>
+        <translation>, automatycznie</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="161"/>
+        <source>, red-eye reduction</source>
+        <translation>, redukcja czerwonych oczu</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="167"/>
+        <source>, strobe return light detected</source>
+        <translation>, wykryto światło stroboskopowe</translation>
+    </message>
+    <message>
+        <location filename="../src/metadata/exif.h" line="173"/>
+        <source>, strobe return light not detected</source>
+        <translation>, nie wykryto światła stroboskopowego</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataUtils::Metadata</name>
+    <message>
+        <location filename="../src/metadatautils.cpp" line="79"/>
+        <location filename="../src/metadatautils.cpp" line="87"/>
+        <source>Error open file %1</source>
+        <translation>Błąd otwarcia pliku %1</translation>
+    </message>
+    <message>
+        <location filename="../src/metadatautils.cpp" line="120"/>
+        <source>Write file %1 error</source>
+        <translation>Błąd zapisu pliku %1</translation>
+    </message>
+    <message>
+        <location filename="../src/metadatautils.cpp" line="861"/>
+        <source>Save thumnail failed</source>
+        <translation>Nieudany zapis miniaturki</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataUtils::String</name>
+    <message>
+        <location filename="../src/metadata/string.cpp" line="143"/>
+        <source>no data</source>
+        <translation>brak danych</translation>
+    </message>
+</context>
+<context>
     <name>OptionsDialog</name>
     <message>
         <location filename="../src/widgets/optionsdialog.cpp" line="116"/>
@@ -2039,6 +2454,39 @@ Informacja: %2</translation>
         <location filename="../src/widgets/options/rawgroupbox.cpp" line="137"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
         <translation>Nie wybrano pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+</context>
+<context>
+    <name>Selection</name>
+    <message>
+        <location filename="../src/selection.cpp" line="104"/>
+        <source>Conditions of items selection - SIR</source>
+        <translation>Warunki zaznaczenia pozycji - SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/selection.cpp" line="115"/>
+        <source>Checking selection conditions...</source>
+        <translation>Sprawdzanie warunków zaznaczenia...</translation>
+    </message>
+    <message>
+        <location filename="../src/selection.cpp" line="154"/>
+        <source>Conditions of import files - SIR</source>
+        <translation>Warunki importu plików - SIR</translation>
+    </message>
+    <message>
+        <location filename="../src/selection.cpp" line="168"/>
+        <source>Checking import conditions...</source>
+        <translation>Sprawdzanie warunków importu...</translation>
+    </message>
+    <message>
+        <location filename="../src/selection.cpp" line="169"/>
+        <source>Scanning directories...</source>
+        <translation>Skanowanie katalogów...</translation>
+    </message>
+    <message>
+        <location filename="../src/selection.cpp" line="192"/>
+        <source>Not converted yet</source>
+        <translation>Nie skonwertowany</translation>
     </message>
 </context>
 <context>

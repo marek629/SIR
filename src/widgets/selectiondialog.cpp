@@ -94,7 +94,9 @@ void SelectionDialog::setupUi() {
     // preparing dialog
     if (this->objectName().isEmpty())
         this->setObjectName(QString::fromUtf8("SelectionDialog"));
+#ifdef SIR_METADATA_SUPPORT
     this->resize(640, 480);
+#endif // SIR_METADATA_SUPPORT
     // main layout
     verticalLayout = new QVBoxLayout(this);
     verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
