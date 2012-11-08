@@ -23,10 +23,11 @@
 #define METADATA_H
 
 #include <QImage>
-#include <exiv2/exiv2.hpp>
 #include "metadata/exif.h"
-#include "metadata/iptc.h"
 #include "metadata/string.h"
+#ifdef SIR_METADATA_SUPPORT
+#include <exiv2/exiv2.hpp>
+#include "metadata/iptc.h"
 #include "metadata/error.h"
 
 //! Metadata tools.
@@ -105,5 +106,6 @@ bool isNullValue(float v);
 bool isNullValue(const String &v);
 bool isNullValue(const QImage &v);
 }
+#endif // SIR_METADATA_SUPPORT
 
 #endif // METADATA_H

@@ -86,6 +86,7 @@ std::string String::toNativeStdString() const {
 #endif
 }
 
+#ifdef SIR_METADATA_SUPPORT
 /** Converts this string to improper fraction and returns this fraction. */
 Exiv2::Rational String::toRational() const {
     Exiv2::Rational result;
@@ -124,6 +125,7 @@ Exiv2::Rational String::toRationalPower() const {
     result.second = multiplier * log(0.5);
     return result;
 }
+#endif // SIR_METADATA_SUPPORT
 
 /** Returns string converted from \a s. */
 String String::fromStdString(const std::string &s) {

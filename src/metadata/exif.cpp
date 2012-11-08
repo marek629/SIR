@@ -19,6 +19,8 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
+#ifdef SIR_METADATA_SUPPORT
+
 #include "exif.h"
 #include <exiv2/metadatum.hpp>
 
@@ -549,3 +551,5 @@ void ExifStruct::clear() {
     copyright = String();
     userComment = String();
 }
+
+#endif // SIR_METADATA_SUPPORT

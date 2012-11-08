@@ -27,7 +27,9 @@
 #define STRING_H
 
 #include <QCoreApplication>
+#ifdef SIR_METADATA_SUPPORT
 #include <exiv2/types.hpp>
+#endif // SIR_METADATA_SUPPORT
 
 namespace MetadataUtils
 {
@@ -42,8 +44,10 @@ public:
     void appendUnit(const char *unit);
     std::string toNativeStdString() const;
     QString toQString() const { return *this; }
+#ifdef SIR_METADATA_SUPPORT
     Exiv2::Rational toRational() const;
     Exiv2::Rational toRationalPower() const;
+#endif // SIR_METADATA_SUPPORT
     String & operator =(const char *str);
     String & operator =(const QString &other);
     String & operator =(const std::string &str);

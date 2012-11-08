@@ -22,9 +22,10 @@
 #ifndef SELECTION_H
 #define SELECTION_H
 
-#include "metadatautils.h"
 #include <QFileInfoList>
 #include <QStringList>
+#include <QDateTime>
+#include "metadatautils.h"
 
 class QProgressDialog;
 class ConvertDialog;

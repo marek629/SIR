@@ -26,10 +26,12 @@
 #include <QImage>
 #include "string.h"
 
+#ifdef SIR_METADATA_SUPPORT
 //! The namespace of exiv2 library API.
 namespace Exiv2 {
     class Metadatum;
 }
+#endif // SIR_METADATA_SUPPORT
 
 namespace MetadataUtils {
 //! Exif's orientation flip enumerator.
@@ -40,6 +42,7 @@ enum Flip {
     VerticalAndHorizontal = 0x3
 };
 
+#ifdef SIR_METADATA_SUPPORT
 /** \brief Exif metadata storage and manipulation class.
   *
   * Exif class provide general manipulation Exif metadata methods like
@@ -172,6 +175,7 @@ public:
     static QString strobeReturnNotDetected() {
         return tr(", strobe return light not detected"); }
 };
+#endif // SIR_METADATA_SUPPORT
 }
 
 #endif // EXIF_H

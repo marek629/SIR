@@ -19,6 +19,8 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
+#ifdef SIR_METADATA_SUPPORT
+
 #include "metadatautils.h"
 #include "defines.h"
 #include <QStringList>
@@ -884,3 +886,5 @@ bool MetadataUtils::isNullValue(const String &v) { return v.isNull(); }
   * Returns true if \a v image is null image object, otherwise returns false.
   */
 bool MetadataUtils::isNullValue(const QImage &v) { return v.isNull(); }
+
+#endif // SIR_METADATA_SUPPORT

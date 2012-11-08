@@ -35,7 +35,9 @@
 #include "defines.h"
 #include "optionsenums.h"
 #include "widgets/previewdialog.h"
+#ifdef SIR_METADATA_SUPPORT
 #include "widgets/metadatadialog.h"
+#endif // SIR_METADATA_SUPPORT
 
 /** Default constructor. */
 TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
