@@ -43,6 +43,7 @@ public:
     const LanguageInfo getLanguageInfo(const QString & language) const;
 private:
     void readLanguages();
+    /** Language information map. Key is compiled translation file name. */
     QMap<QString, LanguageInfo> *languageInfoMap;
 };
 

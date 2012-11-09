@@ -45,7 +45,13 @@ private slots:
 
 private:
     // fields
+    /** Count of threads created for convertion. It's mean count of images
+      * converted at the same moment.
+      */
     quint8 coresCount;
+    /** Maximum count of threads created for convertion.
+      * \sa coresCount
+      */
     static quint8 maxCoresCount;
     LanguageUtils * languages;
     QMap<QString, QString> * fileToNiceName;

@@ -201,26 +201,12 @@ void GeneralGroupBox::createLanguageMenu() {
     QString languageName;
     QIcon * countryFlag;
     LanguageInfo info;
-    info = languages->getLanguageInfo("sir_en_US.qm");
-
-    languageName = info.niceName;
-    QString trlangName = tr(languageName.toStdString().c_str());
-
-    countryFlag = new QIcon("../share/sir/images/" + info.flagFile);
-
-    languagesComboBox->insertItem(0, *(countryFlag), trlangName);
-
-    fileToNiceName->insert(trlangName, "sir_en_US.qm");
 
     for (int i = 0; i < (int)fileNames.size(); ++i) {
         info = languages->getLanguageInfo(fileNames[i]);
         languageName = info.niceName;
-
-        trlangName = tr(languageName.toStdString().c_str());
         countryFlag = new QIcon("../share/sir/images/" + info.flagFile);
-
-        languagesComboBox->insertItem(i+1, *(countryFlag), trlangName);
-
-        fileToNiceName->insert(trlangName, fileNames[i]);
+        languagesComboBox->insertItem(i, *(countryFlag), languageName);
+        fileToNiceName->insert(languageName, fileNames[i]);
     }
 }

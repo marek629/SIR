@@ -85,6 +85,7 @@ QT4_ADD_RESOURCES(RSCS ${sir_RSCS})
 set( sir_TRANSLATIONS
         translations/sir_cz.ts
         translations/sir_de.ts
+        translations/sir_en.ts
         translations/sir_es.ts
         translations/sir_fr.ts
         translations/sir_gr.ts
@@ -201,7 +202,7 @@ target_link_libraries( sir ${sir_LINKING_LIBS} )
 # bin
 install( TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin )
 # translations
-install( FILES ${QMS} translations/translation_info.txt DESTINATION share/sir/translations )
+install( FILES ${QMS} translations/translation_info.csv DESTINATION share/sir/translations )
 # icon and desktop file
 if( WIN32 )
     install( FILES images/sir.ico DESTINATION share/pixmaps )

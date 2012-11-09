@@ -29,18 +29,23 @@
 #include <QTextStream>
 
 /** Default constructor.\n
-  * Reads informations about languages and loads into private QMap<QString,LanguageInfo>.
-  * \sa LanguageInfo
+  * Reads informations about languages and loads into languageInfoMap language
+  * information map.
+  * \sa LanguageInfo readLanguages()
   */
 LanguageUtils::LanguageUtils() {
     this->readLanguages();
 }
 
-/** Deallocates private QMap<QString,LanguageInfo>. */
+/** Deallocates memory. */
 LanguageUtils::~LanguageUtils() {
     delete languageInfoMap;
 }
 
+/** Reads translation info file and creates languageInfoMap language information
+  * map.
+  * \sa languageInfoMap
+  */
 void LanguageUtils::readLanguages() {
 
     /*
@@ -50,20 +55,12 @@ void LanguageUtils::readLanguages() {
 
     languageInfoMap = new QMap<QString, LanguageInfo>;
 
-    QFile translationsFile("../share/sir/translations/translation_info.txt");
+    QFile translationsFile("../share/sir/translations/translation_info.csv");
 
     if (!translationsFile.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
     QTextStream in(&translationsFile);
-
-    //We have to initialize en language by hand
-
-    LanguageInfo info;
-    info.niceName = "English";
-    info.flagFile = "english.png";
-
-    languageInfoMap->insert("sir_en_US.qm", info);
 
     while (!in.atEnd()) {
 
@@ -81,7 +78,6 @@ void LanguageUtils::readLanguages() {
         languageInfoMap->insert(languageData[0], info);
 
     }
-
 }
 
 /** Returns LanguageInfo about typed \a language name. */
