@@ -23,13 +23,14 @@
  *
  */
 
-#include "historycombobox.h"
 #include <QMessageBox>
 #include <QLineEdit>
 #include <QList>
 #include <QAbstractItemView>
 #include <QAction>
 #include <QMenu>
+#include <QCoreApplication>
+#include "historycombobox.h"
 
 /** Default constructor.\n
   * Constucts by default editable combo box which insert at top policy.
@@ -46,8 +47,10 @@ HistoryComboBox::HistoryComboBox(QWidget *parent) : QComboBox(parent) {
             this, SLOT(showMenu(QPoint)));
     connectPromoteItem();
 
-    favIcon = QIcon(":/images/favorite.png");
-    unfavIcon = QIcon(":/images/unfavorite.png");
+    favIcon = QIcon(QCoreApplication::applicationDirPath() +
+                    "/../share/sir/images/favorite.png");
+    unfavIcon = QIcon(QCoreApplication::applicationDirPath() +
+                      "/../share/sir/images/unfavorite.png");
     createActions();
 }
 

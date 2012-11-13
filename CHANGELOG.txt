@@ -1,3 +1,6 @@
+* Wed Nov 14 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.5.1
+    - relative path bug-fix
+
 * Tue Nov 13 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.5
     - project moved to CMake
     - Conditional compilation: disable or enable metadata support

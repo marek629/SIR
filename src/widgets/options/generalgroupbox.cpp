@@ -24,6 +24,7 @@
 #include <QImageWriter>
 #include <QCompleter>
 #include <QDirModel>
+#include <QCoreApplication>
 #include "generalgroupbox.h"
 #include "settings.h"
 #include "languageutils.h"
@@ -193,7 +194,7 @@ void GeneralGroupBox::respondCoresSpinBox(bool checked) {
 
 /** Sets up language combo box. */
 void GeneralGroupBox::createLanguageMenu() {
-    QDir dir("../share/sir/translations/");
+    QDir dir(QCoreApplication::applicationDirPath() + "/../share/sir/translations/");
     QStringList filter;
     filter << "sir_*.qm";
     QStringList fileNames = dir.entryList(filter);
@@ -205,7 +206,8 @@ void GeneralGroupBox::createLanguageMenu() {
     for (int i = 0; i < (int)fileNames.size(); ++i) {
         info = languages->getLanguageInfo(fileNames[i]);
         languageName = info.niceName;
-        countryFlag = new QIcon("../share/sir/images/" + info.flagFile);
+        countryFlag = new QIcon(QCoreApplication::applicationDirPath() +
+                                "/../share/sir/images/" + info.flagFile);
         languagesComboBox->insertItem(i, *(countryFlag), languageName);
         fileToNiceName->insert(languageName, fileNames[i]);
     }

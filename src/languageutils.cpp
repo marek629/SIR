@@ -23,10 +23,11 @@
  *
  */
 
-#include "languageutils.h"
 #include <QStringList>
 #include <QFile>
 #include <QTextStream>
+#include <QCoreApplication>
+#include "languageutils.h"
 
 /** Default constructor.\n
   * Reads informations about languages and loads into languageInfoMap language
@@ -55,7 +56,8 @@ void LanguageUtils::readLanguages() {
 
     languageInfoMap = new QMap<QString, LanguageInfo>;
 
-    QFile translationsFile("../share/sir/translations/translation_info.csv");
+    QFile translationsFile(QCoreApplication::applicationDirPath() +
+                           "/../share/sir/translations/translation_info.csv");
 
     if (!translationsFile.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
