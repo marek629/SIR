@@ -63,9 +63,9 @@
   *
   * Dependences:
   *   * [Qt 4](http://qt-project.org/)
-  *   * [libexiv2](http://exiv2.org/)
   *
   * Optional dependences:
+  *   * [libexiv2](http://exiv2.org/)
   *   * [dcraw](http://www.cybercom.net/~dcoffin/dcraw/)
   *
   * SIR documentation was created using Doxygen.

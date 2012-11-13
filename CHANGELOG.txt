@@ -1,4 +1,4 @@
-* Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.5
+* Tue Nov 13 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.5
     - project moved to CMake
     - Conditional compilation: disable or enable metadata support
     - Settings and DetailsBrowser classes added
@@ -18,7 +18,8 @@
     - new options group box "File list" and header view context menu for TreeWidget settings
     - converting from SVG bug when dest size is more than default size fixed
     - keep aspect ratio added to settings
-    - Polish translation updated
+    - English translation added, Polish translation updated
+    - many files moved from resource file to another files
 
 * Tue Jul 31 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.4
     - Changelog file provided

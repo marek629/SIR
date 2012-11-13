@@ -26,6 +26,10 @@
 #ifndef STRING_H
 #define STRING_H
 
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
 #include <QCoreApplication>
 #ifdef SIR_METADATA_SUPPORT
 #include <exiv2/types.hpp>

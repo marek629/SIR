@@ -22,6 +22,10 @@
 #ifndef OPTIONSENUM_H
 #define OPTIONSENUM_H
 
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
 //! Options dialog namespace.
 namespace Options {
 /** Categories indexes on list widgets model and group boxes pointer array. */

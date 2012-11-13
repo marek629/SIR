@@ -151,7 +151,7 @@ set( sir_LINKING_LIBS
 
 option( metadata "Metadata support using exiv2 library." ON)
 if( metadata )
-    set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR} )
+    set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake )
     find_package( Exiv2 )
     if( EXISTS ${EXIV2_LIBRARY} )
         message( STATUS "exiv2 found" )

@@ -19,7 +19,11 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#define VERSION "2.5 dev"
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
+#define VERSION "2.5"
 #define NOTCONVERTED 1
 #define CONVERTED 2
 #define SKIPPED 3

@@ -22,6 +22,10 @@
 #ifndef EXIF_H
 #define EXIF_H
 
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
 #include <QCoreApplication>
 #include <QImage>
 #include "string.h"

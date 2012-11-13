@@ -302,7 +302,7 @@
     <message>
         <location filename="../dialogs/convertdialog.ui" line="489"/>
         <source>Choose unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Choose Unit</translation>
     </message>
     <message>
         <location filename="../dialogs/convertdialog.ui" line="496"/>
@@ -473,7 +473,7 @@
     <message>
         <location filename="../src/convertdialog.cpp" line="149"/>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
-        <translation type="unfinished"></translation>
+        <translation>You already sent information about your SIR installation. Thank you very much!</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="157"/>
@@ -550,12 +550,12 @@
     <message>
         <location filename="../src/convertdialog.cpp" line="434"/>
         <source>Create Folder? -- SIR</source>
-        <translation type="unfinished"></translation>
+        <translation>Create Folder? - SIR</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="435"/>
         <source>The folder %1 do not exists.Do you want to create it?</source>
-        <translation type="unfinished"></translation>
+        <translation>The folder %1 do not exists. Do you want to create it?</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="438"/>
@@ -595,12 +595,12 @@
     <message>
         <location filename="../src/convertdialog.cpp" line="741"/>
         <source>Overwrite File? -- SIR</source>
-        <translation type="unfinished"></translation>
+        <translation>Overwrite File? - SIR</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="742"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>A file called %1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
         <location filename="../src/convertdialog.cpp" line="814"/>
@@ -860,7 +860,7 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="14"/>
         <source>File details options</source>
-        <translation type="unfinished"></translation>
+        <translation>File Details Options</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="24"/>
@@ -870,7 +870,7 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="30"/>
         <source>Flash mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Flash Mode</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="37"/>
@@ -880,7 +880,7 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="44"/>
         <source>Exposure bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposure Bias</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="51"/>
@@ -911,12 +911,12 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="86"/>
         <source>Exposure program</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposure Program</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="93"/>
         <source>Exposure time</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposure Time</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="100"/>
@@ -951,12 +951,12 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="142"/>
         <source>Focal length</source>
-        <translation type="unfinished"></translation>
+        <translation>Focal Length</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="149"/>
         <source>Light metering mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Light Metering Mode</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="156"/>
@@ -976,22 +976,22 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="177"/>
         <source>Digitized date</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitized Date</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="184"/>
         <source>Edit status</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit Status</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="191"/>
         <source>Created date</source>
-        <translation type="unfinished"></translation>
+        <translation>Created Date</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="198"/>
         <source>Created time</source>
-        <translation type="unfinished"></translation>
+        <translation>Created Time</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="205"/>
@@ -1006,17 +1006,17 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="226"/>
         <source>Object name</source>
-        <translation type="unfinished"></translation>
+        <translation>Object Name</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="233"/>
         <source>Model version</source>
-        <translation type="unfinished"></translation>
+        <translation>Model Version</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="240"/>
         <source>Digitized time</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitized Time</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="247"/>
@@ -1036,12 +1036,12 @@
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="300"/>
         <source>Show all</source>
-        <translation type="unfinished"></translation>
+        <translation>Show All</translation>
     </message>
     <message>
         <location filename="../dialogs/options/detailsgroupbox.ui" line="307"/>
         <source>Hide all</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide All</translation>
     </message>
 </context>
 <context>
@@ -1117,7 +1117,7 @@
     <message>
         <location filename="../dialogs/options/filelistgroupbox.ui" line="25"/>
         <source>File size</source>
-        <translation type="unfinished"></translation>
+        <translation>File Size</translation>
     </message>
     <message>
         <location filename="../dialogs/options/filelistgroupbox.ui" line="32"/>
@@ -1137,17 +1137,17 @@
     <message>
         <location filename="../dialogs/options/filelistgroupbox.ui" line="53"/>
         <source>Image size</source>
-        <translation type="unfinished"></translation>
+        <translation>Image Size</translation>
     </message>
     <message>
         <location filename="../dialogs/options/filelistgroupbox.ui" line="75"/>
         <source>Show all</source>
-        <translation type="unfinished"></translation>
+        <translation>Show All</translation>
     </message>
     <message>
         <location filename="../dialogs/options/filelistgroupbox.ui" line="82"/>
         <source>Hide all</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide All</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1165,7 @@
     <message>
         <location filename="../dialogs/options/generalgroupbox.ui" line="38"/>
         <source>Text history count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Text History Count:</translation>
     </message>
     <message>
         <location filename="../dialogs/options/generalgroupbox.ui" line="93"/>
@@ -1205,17 +1205,17 @@
     <message>
         <location filename="../dialogs/options/generalgroupbox.ui" line="218"/>
         <source>Detect automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Detect Automatically</translation>
     </message>
     <message>
         <location filename="../dialogs/options/generalgroupbox.ui" line="269"/>
         <source>Time display format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Time Display Format:</translation>
     </message>
     <message>
         <location filename="../dialogs/options/generalgroupbox.ui" line="289"/>
         <source>Date display format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Date Display Format:</translation>
     </message>
     <message>
         <location filename="../dialogs/options/generalgroupbox.ui" line="296"/>
@@ -1245,7 +1245,7 @@
     <message>
         <location filename="../src/widgets/options/generalgroupbox.cpp" line="171"/>
         <source>Choose a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Choose a Directory</translation>
     </message>
 </context>
 <context>
@@ -1415,32 +1415,32 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="454"/>
         <source>Exposure program</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposure Program</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="473"/>
         <source>Light metering mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Light Metering Mode</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="492"/>
         <source>Flash mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Flash Mode</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="511"/>
         <source>Focal length</source>
-        <translation type="unfinished"></translation>
+        <translation>Focal Length</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="518"/>
         <source>Exposure time</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposure Time</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="525"/>
         <source>Exposure bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposure Bias</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="532"/>
@@ -1807,12 +1807,12 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1127"/>
         <source>Digitized date:</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitized Date:</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1134"/>
         <source>Created date:</source>
-        <translation type="unfinished"></translation>
+        <translation>Created Date:</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1150"/>
@@ -1822,7 +1822,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1157"/>
         <source>Digitized time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitized Time:</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1184"/>
@@ -1832,7 +1832,7 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1210"/>
         <source>Created time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Created Time:</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1217"/>
@@ -1847,23 +1847,23 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1231"/>
         <source>Edit status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit Status:</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1244"/>
         <source>Object name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Object Name:</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1263"/>
         <location filename="../src/widgets/metadatadialog.cpp" line="423"/>
         <source>Delete metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete Metadata</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1286"/>
         <source>Save changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Save Changes</translation>
     </message>
     <message>
         <location filename="../dialogs/metadatadialog.ui" line="1296"/>
@@ -1928,37 +1928,37 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="21"/>
         <source>Enable metadata support</source>
-        <translation type="unfinished"></translation>
+        <translation>Enable Metadata Support</translation>
     </message>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="34"/>
         <source>Save also metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Save also Metadata</translation>
     </message>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="44"/>
         <source>Update thumbnail</source>
-        <translation type="unfinished"></translation>
+        <translation>Update Thumbnail</translation>
     </message>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="51"/>
         <source>Apply Exif Orientation tag to thumbnail</source>
-        <translation type="unfinished"></translation>
+        <translation>Apply Exif Orientation Tag to Thumbnail</translation>
     </message>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="58"/>
         <source>When image is rotated</source>
-        <translation type="unfinished"></translation>
+        <translation>When Image Is Rotated</translation>
     </message>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="64"/>
         <source>rotate seriously</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotate Seriously</translation>
     </message>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="71"/>
         <source>save orientation in Exif</source>
-        <translation type="unfinished"></translation>
+        <translation>Save Orientation in Exif</translation>
     </message>
     <message>
         <location filename="../dialogs/options/metadatagroupbox.ui" line="81"/>
@@ -2013,12 +2013,12 @@ Error message: %2</source>
     <message>
         <location filename="../src/metadata/exif.cpp" line="319"/>
         <source>Rotation 180Â°</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation 180°</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.cpp" line="320"/>
         <source>Rotation 180Â°, flip verticaly</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation 180°, flip verticaly</translation>
     </message>
     <message>
         <location filename="../src/metadata/exif.cpp" line="321"/>
@@ -2332,12 +2332,12 @@ Error message: %2</source>
     <message>
         <location filename="../src/widgets/previewdialog.cpp" line="420"/>
         <source>Overwrite File? -- SIR</source>
-        <translation type="unfinished"></translation>
+        <translation>Overwrite File? - SIR</translation>
     </message>
     <message>
         <location filename="../src/widgets/previewdialog.cpp" line="421"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>A file called %1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
         <location filename="../src/widgets/previewdialog.cpp" line="423"/>
@@ -2423,7 +2423,7 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/options/rawgroupbox.ui" line="44"/>
         <source>dcraw options:</source>
-        <translation type="unfinished"></translation>
+        <translation>dcraw Options:</translation>
     </message>
     <message>
         <location filename="../src/widgets/options/rawgroupbox.cpp" line="42"/>
@@ -2499,17 +2499,17 @@ Error message: %2</source>
     <message>
         <location filename="../src/widgets/selectiondialog.cpp" line="126"/>
         <source>File name</source>
-        <translation type="unfinished"></translation>
+        <translation>File Name</translation>
     </message>
     <message>
         <location filename="../src/widgets/selectiondialog.cpp" line="153"/>
         <source>File size</source>
-        <translation type="unfinished"></translation>
+        <translation>File Size</translation>
     </message>
     <message>
         <location filename="../src/widgets/selectiondialog.cpp" line="158"/>
         <source>Image size [px]</source>
-        <translation type="unfinished"></translation>
+        <translation>Image Size [px]</translation>
     </message>
     <message>
         <location filename="../src/widgets/selectiondialog.cpp" line="266"/>
@@ -2527,32 +2527,32 @@ Error message: %2</source>
     <message>
         <location filename="../dialogs/options/selectiongroupbox.ui" line="20"/>
         <source>Image width symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Image Width Symbol</translation>
     </message>
     <message>
         <location filename="../dialogs/options/selectiongroupbox.ui" line="27"/>
         <source>Select imported files</source>
-        <translation type="unfinished"></translation>
+        <translation>Select Imported Files</translation>
     </message>
     <message>
         <location filename="../dialogs/options/selectiongroupbox.ui" line="34"/>
         <source>Clear current selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Clear Current Selection</translation>
     </message>
     <message>
         <location filename="../dialogs/options/selectiongroupbox.ui" line="41"/>
         <source>Browse subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Browse Subdirectories</translation>
     </message>
     <message>
         <location filename="../dialogs/options/selectiongroupbox.ui" line="51"/>
         <source>Image height symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Image Height Symbol</translation>
     </message>
     <message>
         <location filename="../dialogs/options/selectiongroupbox.ui" line="64"/>
         <source>File size symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>File Size Symbol</translation>
     </message>
 </context>
 <context>
@@ -2621,12 +2621,12 @@ Error message: %2</source>
     <message>
         <location filename="../src/widgets/treewidget.cpp" line="499"/>
         <source>Image size</source>
-        <translation type="unfinished"></translation>
+        <translation>Image Size</translation>
     </message>
     <message>
         <location filename="../src/widgets/treewidget.cpp" line="500"/>
         <source>File size</source>
-        <translation type="unfinished"></translation>
+        <translation>File Size</translation>
     </message>
     <message>
         <location filename="../src/widgets/treewidget.cpp" line="500"/>

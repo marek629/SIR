@@ -22,6 +22,10 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
 #include <QSettings>
 #include <QPoint>
 #include <QSize>
