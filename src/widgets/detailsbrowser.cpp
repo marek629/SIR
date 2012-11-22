@@ -38,8 +38,6 @@ const QString htmlOrigin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
 const QString htmlEnd = "</body></html>";
 const QString htmlBr = "<br />";
 const QString htmlHr = "<hr />";
-// settings object reference
-Settings &settings = Settings::instance();
 
 DetailsBrowser::DetailsBrowser(QWidget *parent) : QTextEdit(parent) {
     setReadOnly(true);
@@ -89,7 +87,8 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     QSize imageSize;
     bool isSvg = false;
 #ifdef SIR_METADATA_SUPPORT
-    bool metadataEnabled(settings.metadata.enabled);
+    Settings *s = Settings::instance();
+    bool metadataEnabled(s->metadata.enabled);
     MetadataUtils::Metadata metadata;
     exifStruct = 0;
     iptcStruct = 0;
@@ -103,7 +102,7 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     // thumbnail generation
     if (ext != "SVG" && ext != "SVGZ") {
 #ifdef SIR_METADATA_SUPPORT
-        bool fromData(!settings.metadata.enabled);
+        bool fromData(!s->metadata.enabled);
         if (!fromData) {
             if (!metadata.read(imagePath, true))
                 fromData = true;
@@ -182,13 +181,14 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
   */
 void DetailsBrowser::loadSettings() {
 #ifdef SIR_METADATA_SUPPORT
-    if (settings.metadata.enabled) {
+    Settings *s = Settings::instance();
+    if (s->metadata.enabled) {
         // details
-        exifAuthor  = settings.details.exifAuthor;
-        exifCamera  = settings.details.exifCamera;
-        exifPhoto   = settings.details.exifPhoto;
-        exifImage   = settings.details.exifImage;
-        iptcPrint   = settings.details.iptc;
+        exifAuthor  = s->details.exifAuthor;
+        exifCamera  = s->details.exifCamera;
+        exifPhoto   = s->details.exifPhoto;
+        exifImage   = s->details.exifImage;
+        iptcPrint   = s->details.iptc;
     }
     else {
         exifAuthor = 0;

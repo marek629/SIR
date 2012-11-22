@@ -19,20 +19,37 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include "abstractoptions.h"
-#include "settings.h"
+#ifndef COMMANDLINEASSISTANT_H
+#define COMMANDLINEASSISTANT_H
 
-/** Default constructor.\n
-  * Sets default value of fields of common options object.
+#include <QStringList>
+#include <QCoreApplication>
+
+/** \brief Command line arguments parser class.
+  *
+  * Supported arguments:
+  *     * --help or -h      print help message and quit
+  *     * --lang or -l LANG set application language to LANG witch is language symbol
+  *
+  * The same language symbols are used to naming SIR translation files.
+  *
+  * SIR supports also common Qt command line options described on
+  * http://qt-project.org/doc/qt-4.8/qapplication.html#QApplication
+  *
+  * Unexpected and invalid options are ignored.
+  *
+  * Example:
+  * $ sir -hl pl
+  * is equivalent to
+  * $ sir --help --lang pl
+  * both print help message in Polish language and quit.
   */
-CommonOptions::CommonOptions() {
-    targetDirPath_ = QDir::homePath();
-    maxHistoryCount_ = Settings::instance()->settings.maxHistoryCount;
-}
+class CommandLineAssistant {
+    Q_DECLARE_TR_FUNCTIONS(CommandLineAssistant)
 
-CommonOptions * CommonOptions::instance() {
-    static CommonOptions *object = 0;
-    if (!object && Settings::instance())
-        object = new CommonOptions();
-    return object;
-}
+public:
+    CommandLineAssistant();
+    int parse(const QStringList &args = QStringList());
+};
+
+#endif // COMMANDLINEASSISTANT_H

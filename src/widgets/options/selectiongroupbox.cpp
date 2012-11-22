@@ -34,24 +34,24 @@ SelectionGroupBox::SelectionGroupBox(QWidget *parent) : AbstractOptionsGroupBox(
   * \sa Settings saveSettings()
   */
 void SelectionGroupBox::loadSettings() {
-    Settings &s = Settings::instance();
-    clearSelectionCheckBox->setChecked( s.selection.clearSelection);
-    importSubdirsCheckBox->setChecked(  s.selection.subdirs);
-    selectImportedCheckBox->setChecked( s.selection.selectImported);
-    sFileSizeLineEdit->setText(         s.selection.fileSizeSymbol);
-    sImgWidthLineEdit->setText(         s.selection.imageWidthSymbol);
-    sImgHeightLineEdit->setText(        s.selection.imageHeightSymbol);
+    Settings *s = Settings::instance();
+    clearSelectionCheckBox->setChecked( s->selection.clearSelection);
+    importSubdirsCheckBox->setChecked(  s->selection.subdirs);
+    selectImportedCheckBox->setChecked( s->selection.selectImported);
+    sFileSizeLineEdit->setText(         s->selection.fileSizeSymbol);
+    sImgWidthLineEdit->setText(         s->selection.imageWidthSymbol);
+    sImgHeightLineEdit->setText(        s->selection.imageHeightSymbol);
 }
 
 /** Saves settings basing member widgets values.
   * \sa Settings loadSettings()
   */
 void SelectionGroupBox::saveSettings() {
-    Settings &s = Settings::instance();
-    s.selection.clearSelection      = clearSelectionCheckBox->isChecked();
-    s.selection.subdirs             = importSubdirsCheckBox->isChecked();
-    s.selection.selectImported      = selectImportedCheckBox->isChecked();
-    s.selection.fileSizeSymbol      = sFileSizeLineEdit->text();
-    s.selection.imageWidthSymbol    = sImgWidthLineEdit->text();
-    s.selection.imageHeightSymbol   = sImgHeightLineEdit->text();
+    Settings *s = Settings::instance();
+    s->selection.clearSelection      = clearSelectionCheckBox->isChecked();
+    s->selection.subdirs             = importSubdirsCheckBox->isChecked();
+    s->selection.selectImported      = selectImportedCheckBox->isChecked();
+    s->selection.fileSizeSymbol      = sFileSizeLineEdit->text();
+    s->selection.imageWidthSymbol    = sImgWidthLineEdit->text();
+    s->selection.imageHeightSymbol   = sImgHeightLineEdit->text();
 }

@@ -40,7 +40,7 @@ RawGroupBox::RawGroupBox(QWidget *parent) : AbstractOptionsGroupBox(parent) {
 void RawGroupBox::browseDcraw() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Select dcraw executable"),
-                                                    common.targetDirPath() );
+                                                    CommonOptions::instance()->targetDirPath() );
     fileName = QDir::convertSeparators(fileName);
     dcrawLineEdit->setText(fileName);
 }
@@ -56,40 +56,40 @@ void RawGroupBox::setRawStatus(int state) {
   * \sa Settings saveSettings()
   */
 void RawGroupBox::loadSettings() {
-    Settings &s = Settings::instance();
-    int state =             s.raw.enabled;
+    Settings *s = Settings::instance();
+    int state =             s->raw.enabled;
     rawCheckBox->setChecked(state);
     setRawStatus(state);
-    dcrawLineEdit->setText( s.raw.dcrawPath);
-    dcrawOptions->setText(  s.raw.dcrawOptions);
+    dcrawLineEdit->setText( s->raw.dcrawPath);
+    dcrawOptions->setText(  s->raw.dcrawOptions);
 }
 
 /** Saves settings basing member widgets values.
   * \sa Settings loadSettings()
   */
 void RawGroupBox::saveSettings() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     bool dcrawOk = false;
     bool firstState = rawCheckBox->isChecked();
     //check dcraw executable
     if(rawCheckBox->isChecked()) {
         if((dcrawOk = checkDcrawPath(dcrawLineEdit->text()))) {
-            s.raw.enabled       = true;
-            s.raw.dcrawPath     = dcrawLineEdit->text();
-            s.raw.dcrawOptions  = dcrawOptions->text();
+            s->raw.enabled       = true;
+            s->raw.dcrawPath     = dcrawLineEdit->text();
+            s->raw.dcrawOptions  = dcrawOptions->text();
         }
         else {
-            s.raw.enabled       = false;
+            s->raw.enabled       = false;
             rawCheckBox->setChecked(false);
-            s.raw.dcrawPath     = dcrawLineEdit->text();
-            s.raw.dcrawOptions  = dcrawOptions->text();
+            s->raw.dcrawPath     = dcrawLineEdit->text();
+            s->raw.dcrawOptions  = dcrawOptions->text();
             setRawStatus(false);
         }
     }
     else {
-        s.raw.enabled           = false;
-        s.raw.dcrawPath         = dcrawLineEdit->text();
-        s.raw.dcrawOptions      = dcrawOptions->text();
+        s->raw.enabled           = false;
+        s->raw.dcrawPath         = dcrawLineEdit->text();
+        s->raw.dcrawOptions      = dcrawOptions->text();
     }
     if(dcrawOk || !firstState) {
         emit ok();

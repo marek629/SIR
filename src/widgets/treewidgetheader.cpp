@@ -58,7 +58,7 @@ TreeWidgetHeader::~TreeWidgetHeader() {
 void TreeWidgetHeader::loadSettings() {
     if (window()->isHidden())
         return;
-    int hex = Settings::instance().treeWidget.columns;
+    int hex = Settings::instance()->treeWidget.columns;
     setSectionHidden(NameColumn,      !(hex & TreeWidgetOptions::NameColumn));
     setSectionHidden(ExtColumn,       !(hex & TreeWidgetOptions::ExtColumn));
     setSectionHidden(PathColumn,      !(hex & TreeWidgetOptions::PathColumn));
@@ -86,7 +86,7 @@ void TreeWidgetHeader::saveSettings() {
         hex |= TreeWidgetOptions::FileSizeColumn;
     if (actions[StatusColumn]->isChecked())
             hex |= TreeWidgetOptions::StatusColumn;
-    Settings::instance().treeWidget.columns = hex;
+    Settings::instance()->treeWidget.columns = hex;
 }
 
 /** Loads settings if \a event is QEvent::Show (tree widget just was showed).

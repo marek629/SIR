@@ -46,7 +46,7 @@ class Settings : public QSettings {
 
 public:
     // singletons pattern instance
-    static Settings &instance();
+    static Settings *instance();
     // I/O operations
     void readSettings();
     void writeSettings();

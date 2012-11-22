@@ -42,6 +42,7 @@
 #include "widgets/messagebox.h"
 #include "metadatautils.h"
 #include "selection.h"
+#include "languageutils.h"
 
 /** Default constuctor.
   *
@@ -52,13 +53,9 @@
   *     separated by ** (double star-sign).
   * \sa init()
   */
-ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent) {
+ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args) : QMainWindow(parent) {
     setupUi(this);
     this->args = args;
-    qtTranslator = new QTranslator(this);
-    appTranslator = new QTranslator(this);
-    qApp->installTranslator(qtTranslator);
-    qApp->installTranslator(appTranslator);
     net = NULL;
     sharedInfo = ConvertThread::sharedInfo();
     init();
@@ -71,8 +68,6 @@ ConvertDialog::ConvertDialog(QWidget *parent, QString args) : QMainWindow(parent
   */
 ConvertDialog::~ConvertDialog() {
     writeWindowProperties();
-    delete qtTranslator;
-    delete appTranslator;
     if(net)
         delete net;
     clearTempDir();
@@ -200,7 +195,7 @@ void ConvertDialog::showSendInstallResult(QString *result, bool error) {
                                     "using SIR! You are the user number %1 of "\
                                     "this month!").arg(*result));
         alreadySent = true;
-        Settings::instance().settings.alreadySent = alreadySent;
+        Settings::instance()->settings.alreadySent = alreadySent;
     }
 }
 
@@ -303,7 +298,7 @@ void ConvertDialog::init() {
     loadSettings();
 
     if (!args.isEmpty())
-        filesTreeWidget->initList(args.split("**"));
+        filesTreeWidget->initList(args);
 
     QCompleter *completer = new QCompleter(this);
     QDirModel *dir = new QDirModel(completer);
@@ -549,64 +544,65 @@ void ConvertDialog::loadSettings() {
     // load tree widget settings
     filesTreeWidget->header()->loadSettings();
 
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     // main window
-    if (                                s.mainWindow.maximized)
+    if (                                s->mainWindow.maximized)
         showMaximized();
-    move(                               s.mainWindow.possition);
-    resize(                             s.mainWindow.size);
-    horizontalSplitter->restoreState(   s.mainWindow.horizontalSplitter);
-    verticalSplitter->restoreState(     s.mainWindow.verticalSplitter);
+    move(                               s->mainWindow.possition);
+    resize(                             s->mainWindow.size);
+    horizontalSplitter->restoreState(   s->mainWindow.horizontalSplitter);
+    verticalSplitter->restoreState(     s->mainWindow.verticalSplitter);
     // settings
-    destFileEdit->setText(                      s.settings.targetFolder);
+    destFileEdit->setText(                      s->settings.targetFolder);
     targetFormatComboBox->setCurrentIndex(
-                targetFormatComboBox->findText( s.settings.targetFormat));
-    destPrefixEdit->setText(                    s.settings.targetPrefix);
-    destSuffixEdit->setText(                    s.settings.targetSuffix);
-    int quality =                               s.settings.quality;
+                targetFormatComboBox->findText( s->settings.targetFormat));
+    destPrefixEdit->setText(                    s->settings.targetPrefix);
+    destSuffixEdit->setText(                    s->settings.targetSuffix);
+    int quality =                               s->settings.quality;
     qualitySpinBox->setValue(quality);
     qualitySlider->setValue(quality);
-    numThreads =                                s.settings.cores;
+    numThreads =                                s->settings.cores;
     if (numThreads == 0)
         numThreads = GeneralGroupBox::detectCoresCount();
     QString selectedTranslationFile =
             QCoreApplication::applicationDirPath() + "/../share/sir/translations/";
-    selectedTranslationFile +=                  s.settings.languageFileName;
+    selectedTranslationFile +=                  s->settings.languageFileName;
     QString qtTranslationFile = "qt_" +
             selectedTranslationFile.split('_').at(1).split('.').first();
-    qtTranslator->load(qtTranslationFile,
-                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    appTranslator->load(selectedTranslationFile);
+    LanguageUtils *languages = LanguageUtils::instance();
+    languages->qtTranslator->load(qtTranslationFile,
+                                 QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    languages->appTranslator->load(selectedTranslationFile);
     retranslateStrings();
-    alreadySent =                               s.settings.alreadySent;
-    dateFormat =                                s.settings.dateDisplayFormat;
-    timeFormat =                                s.settings.timeDisplayFormat;
+    alreadySent =                               s->settings.alreadySent;
+    dateFormat =                                s->settings.dateDisplayFormat;
+    timeFormat =                                s->settings.timeDisplayFormat;
     dateTimeFormat = dateFormat + ' ' + timeFormat;
     // size
-    int sizeUnitIndex =                 s.size.sizeUnit;
+    int sizeUnitIndex =                 s->size.sizeUnit;
     setSizeUnit(sizeUnitIndex);
     sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
-    fileSizeSpinBox->setValue(          s.size.fileSizeValue);
-    fileSizeComboBox->setCurrentIndex(  s.size.fileSizeUnit);
-    maintainCheckBox->setChecked(       s.size.keepAspectRatio);
+    fileSizeSpinBox->setValue(          s->size.fileSizeValue);
+    fileSizeComboBox->setCurrentIndex(  s->size.fileSizeUnit);
+    maintainCheckBox->setChecked(       s->size.keepAspectRatio);
     if (sizeUnitComboBox->currentIndex() == 1) {
-        sizeWidth =                     s.size.widthPx;
-        sizeHeight =                    s.size.heightPx;
+        sizeWidth =                     s->size.widthPx;
+        sizeHeight =                    s->size.heightPx;
         widthDoubleSpinBox->setValue(sizeWidth);
-        widthDoubleSpinBox->setValue(   s.size.widthPercent);
+        widthDoubleSpinBox->setValue(   s->size.widthPercent);
         heightDoubleSpinBox->setValue(sizeHeight);
-        heightDoubleSpinBox->setValue(  s.size.heightPercent);
+        heightDoubleSpinBox->setValue(  s->size.heightPercent);
     }
     else if (sizeUnitComboBox->currentIndex() == 0) {
-        sizeWidth =                     s.size.widthPercent;
-        sizeHeight =                    s.size.heightPercent;
+        sizeWidth =                     s->size.widthPercent;
+        sizeHeight =                    s->size.heightPercent;
         widthDoubleSpinBox->setValue(sizeWidth);
-        widthDoubleSpinBox->setValue(   s.size.widthPx);
+        widthDoubleSpinBox->setValue(   s->size.widthPx);
         heightDoubleSpinBox->setValue(sizeHeight);
-        heightDoubleSpinBox->setValue(  s.size.heightPx);
+        heightDoubleSpinBox->setValue(  s->size.heightPx);
     }
     // raw
-    rawEnabled = s.raw.enabled;
+    rawEnabled = s->raw.enabled;
     if(rawEnabled) {
         foreach(QString ext, rawFormats) {
             if(!fileFilters.contains(ext)) {
@@ -624,33 +620,33 @@ void ConvertDialog::loadSettings() {
 #ifdef SIR_METADATA_SUPPORT
     // metadata
     using namespace MetadataUtils;
-    bool metadataEnabled =                  s.metadata.enabled;
+    bool metadataEnabled =               s->metadata.enabled;
     sharedInfo->setMetadataEnabled(metadataEnabled);
-    bool saveMetadata =                     s.metadata.saveMetadata;
+    bool saveMetadata =                  s->metadata.saveMetadata;
     sharedInfo->setSaveMetadata(saveMetadata);
     if (saveMetadata) {
-        sharedInfo->setRealRotate(       s.metadata.realRotate);
-        sharedInfo->setUpdateThumbnail(  s.metadata.updateThumbnail);
-        sharedInfo->setRotateThumbnail(  s.metadata.rotateThumbnail);
+        sharedInfo->setRealRotate(       s->metadata.realRotate);
+        sharedInfo->setUpdateThumbnail(  s->metadata.updateThumbnail);
+        sharedInfo->setRotateThumbnail(  s->metadata.rotateThumbnail);
     }
     else
         sharedInfo->setRealRotate(true);
     // exif
     bool exifOverwrite;
-    exifOverwrite =                         s.exif.artistOverwrite;
+    exifOverwrite =                         s->exif.artistOverwrite;
     Exif::setArtistOverwrite(exifOverwrite);
     if (exifOverwrite)
-        Exif::setArtistString(String(       s.exif.artistMap.keys().first()));
+        Exif::setArtistString(String(       s->exif.artistMap.keys().first()));
 
-    exifOverwrite =                         s.exif.copyrightOverwrite;
+    exifOverwrite =                         s->exif.copyrightOverwrite;
     Exif::setCopyrightOverwrite(exifOverwrite);
     if (exifOverwrite)
-        Exif::setCopyrightString(String(    s.exif.copyrightMap.keys().first()));
+        Exif::setCopyrightString(String(    s->exif.copyrightMap.keys().first()));
 
-    exifOverwrite =                         s.exif.userCommentOverwrite;
+    exifOverwrite =                         s->exif.userCommentOverwrite;
     Exif::setUserCommentOverwrite(exifOverwrite);
     if (exifOverwrite)
-        Exif::setUserCommentString(String(  s.exif.userCommentMap.keys().first()));
+        Exif::setUserCommentString(String(  s->exif.userCommentMap.keys().first()));
 #endif // SIR_METADATA_SUPPORT
 }
 

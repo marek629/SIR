@@ -64,7 +64,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     rawEnabled = RawUtils::isRawEnabled();
 #ifdef SIR_METADATA_SUPPORT
     metadataEnabled = isntTiffImage();
-    saveMetadata = Settings::instance().metadata.saveMetadata;
+    saveMetadata = Settings::instance()->metadata.saveMetadata;
 #endif // SIR_METADATA_SUPPORT
     initBar();
     createConnections();
@@ -468,7 +468,7 @@ bool PreviewDialog::saveAs() {
         connect(comboBox, SIGNAL(currentIndexChanged(QString)),
                 this, SLOT(setDestFileExt(QString)) );
         comboBox->setCurrentIndex(
-                    comboBox->findText(Settings::instance().settings.targetFormat));
+                    comboBox->findText(Settings::instance()->settings.targetFormat));
         layout->addWidget(comboBox);
         QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
                                                            QDialogButtonBox::Cancel,

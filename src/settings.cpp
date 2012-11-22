@@ -23,13 +23,14 @@
 #include <QDir>
 #include <QLocale>
 #include <QImageWriter>
+#include <QCoreApplication>
 #include "settings.h"
 #include "languageutils.h"
 
-/** Returns reference to the instance of Settings class.
+/** Returns pointer to the instance of Settings class.
   * \sa Settings(const QString &, const QString &, QObject *)
   */
-Settings & Settings::instance() {
+Settings * Settings::instance() {
 #ifdef Q_OS_WIN32
     // avoid registry
     Settings::setDefaultFormat(Settings::IniFormat);
@@ -37,7 +38,9 @@ Settings & Settings::instance() {
     // UNIX *.conf files in INI format
     Settings::setDefaultFormat(Settings::NativeFormat);
 #endif // Q_OS_WIN32
-    static Settings object("SIR");
+    static Settings *object = 0;
+    if (!object && QCoreApplication::instance())
+        object = new Settings("SIR", QString(), QCoreApplication::instance());
     return object;
 }
 
@@ -95,9 +98,9 @@ void Settings::readSettings() {
     settings.targetFormat       = value("targetFormat","bmp").toString();
     settings.targetPrefix       = value("targetPrefix","web").toString();
     settings.targetSuffix       = value("targetSuffix","thumb").toString();
-    LanguageUtils languages;
+    LanguageUtils *languages = LanguageUtils::instance();
     QString localeFile = "sir_" + QLocale::system().name() + ".qm";
-    QString defaultLanguage = languages.getLanguageInfo(localeFile).niceName;
+    QString defaultLanguage = languages->languageInfo(localeFile).niceName;
     settings.languageNiceName   = value("languageNiceName",defaultLanguage).toString();
     settings.languageFileName   = value("languageFileName",localeFile).toString();
     settings.dateDisplayFormat  = value("dateDisplayFormat","dd.MM.yyyy").toString();

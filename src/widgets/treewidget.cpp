@@ -158,14 +158,14 @@ void TreeWidget::addFile() {
     QStringList files = QFileDialog::getOpenFileNames(
                             this,
                             tr("Select one or more files to open"),
-                            Settings::instance().settings.lastDir,
+                            Settings::instance()->settings.lastDir,
                             aux
                         );
     if (files.isEmpty())
         return;
     aux = files.first();
     if (!aux.isEmpty()) {
-        Settings::instance().settings.lastDir =
+        Settings::instance()->settings.lastDir =
                 aux.left(aux.lastIndexOf(QDir::separator()));
         loadFiles(files);
     }
@@ -182,13 +182,13 @@ void TreeWidget::addDir() {
     QString dirPath = QFileDialog::getExistingDirectory(
                        this,
                        tr("Choose a directory"),
-                       Settings::instance().settings.lastDir,
+                       Settings::instance()->settings.lastDir,
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     dirPath = QDir::convertSeparators(dirPath);
     if (dirPath.isEmpty())
         return;
-    Settings::instance().settings.lastDir = dirPath;
+    Settings::instance()->settings.lastDir = dirPath;
     QDir sourceFolder(dirPath, convertDialog->fileFilters);
     sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
     QList<QFileInfo> list = sourceFolder.entryInfoList();
@@ -211,7 +211,7 @@ void TreeWidget::loadFiles(const QStringList &files) {
         item = new QTreeWidgetItem(itemList(info));
         this->addTopLevelItem(item);
         ++it;
-        Settings::instance().settings.lastDir = info.path();
+        Settings::instance()->settings.lastDir = info.path();
     }
     if (!files.isEmpty()) {
         convertDialog->enableConvertButtons();
@@ -539,7 +539,7 @@ QString TreeWidget::imageSizeString(const MetadataUtils::String &imagePath) {
     // thumbnail generation
     if (ext != "SVG" && ext != "SVGZ") {
 #ifdef SIR_METADATA_SUPPORT
-        bool fromData(!Settings::instance().metadata.enabled);
+        bool fromData(!Settings::instance()->metadata.enabled);
         if (!fromData) {
             if (!metadata.read(imagePath, true))
                 fromData = true;

@@ -49,7 +49,7 @@ FileListGroupBox::FileListGroupBox(QWidget *parent) : AbstractOptionsGroupBox(pa
   * \sa Settings saveSettings()
   */
 void FileListGroupBox::loadSettings() {
-    int hex = Settings::instance().treeWidget.columns;
+    int hex = Settings::instance()->treeWidget.columns;
     nameCheckBox->setChecked (hex & NameColumn);
     extCheckBox->setChecked  (hex & ExtColumn);
     pathCheckBox->setChecked (hex & PathColumn);
@@ -75,7 +75,7 @@ void FileListGroupBox::saveSettings() {
         hex |= FileSizeColumn;
     if (statusCheckBox->isChecked())
         hex |= StatusColumn;
-    Settings::instance().treeWidget.columns = hex;
+    Settings::instance()->treeWidget.columns = hex;
 }
 
 /** Returns true if at least 1 column check box is checked, otherwise returns

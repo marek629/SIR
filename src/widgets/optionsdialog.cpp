@@ -90,7 +90,7 @@ void OptionsDialog::saveSettings() {
     for (quint8 i=0; i<categoriesCount; i++)
         groupBoxes[i]->saveSettings();
     // Write file settings
-    Settings::instance().writeSettings();
+    Settings::instance()->writeSettings();
 }
 
 /** \e Ok button clicked slot.\n

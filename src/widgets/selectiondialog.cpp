@@ -42,7 +42,7 @@ SelectionDialog::SelectionDialog(SelectionParams *params, bool getDirPath,
     : QDialog(parent,f) {
     this->convertDialog = static_cast<ConvertDialog*> (parent);
     this->params = params;
-    this->params->path = Settings::instance().settings.lastDir;
+    this->params->path = Settings::instance()->settings.lastDir;
     setupUi();
     QGridLayout *scrollGridLayout = (QGridLayout*)scrollAreaWidgetContents->layout();
     int columnSpan = scrollGridLayout->columnCount();
@@ -264,13 +264,13 @@ void SelectionDialog::browseDir() {
     QString dirPath = QFileDialog::getExistingDirectory(
                        this,
                        tr("Choose a directory"),
-                       Settings::instance().settings.lastDir,
+                       Settings::instance()->settings.lastDir,
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if (dirPath.isEmpty())
         return;
     dirPath = QDir::convertSeparators(dirPath);
     params->path = dirPath;
-    Settings::instance().settings.lastDir = dirPath;
+    Settings::instance()->settings.lastDir = dirPath;
     uiDirWidget->dirLineEdit->setText(dirPath);
 }
 
@@ -279,27 +279,27 @@ void SelectionDialog::browseDir() {
   * \sa saveSettings()
   */
 void SelectionDialog::loadSettings() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     // general settings
 #ifdef SIR_METADATA_SUPPORT
     // set display format for date/time edit widgets
-    QString dateTimeFormat =    s.settings.dateDisplayFormat
-            + ' ' + s.settings.timeDisplayFormat;
+    QString dateTimeFormat =    s->settings.dateDisplayFormat
+            + ' ' + s->settings.timeDisplayFormat;
     anyMetadataGroupBox->createdBeforeDateTimeEdit->setDisplayFormat(dateTimeFormat);
     anyMetadataGroupBox->createdAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
     anyMetadataGroupBox->digitizedBeforeDateTimeEdit->setDisplayFormat(dateTimeFormat);
     anyMetadataGroupBox->digitizedAfterDateTimeEdit->setDisplayFormat(dateTimeFormat);
 #endif // SIR_METADATA_SUPPORT
     // max history count for HistoryComboBox's import functions
-    int maxHistoryCount =       s.settings.maxHistoryCount;
+    int maxHistoryCount =       s->settings.maxHistoryCount;
     // selection settings
-    clearSelectionCheckBox->setChecked(     s.selection.clearSelection);
+    clearSelectionCheckBox->setChecked(     s->selection.clearSelection);
     if (dirWidget) {
-        uiDirWidget->dirCheckBox->setChecked(            s.selection.subdirs);
-        uiDirWidget->selectImportedCheckBox->setChecked( s.selection.selectImported);
+        uiDirWidget->dirCheckBox->setChecked(            s->selection.subdirs);
+        uiDirWidget->selectImportedCheckBox->setChecked( s->selection.selectImported);
     }
     // settings of selection dialog
-    Settings::SelectionDialogGroup &sd = s.selectionDialog;
+    Settings::SelectionDialogGroup &sd = s->selectionDialog;
     // file
     fileNameComboBox->importHistory(                    sd.fileNameMap,
                                                         sd.fileNameList,
@@ -354,58 +354,58 @@ void SelectionDialog::loadSettings() {
   * \sa loadSettings()
   */
 void SelectionDialog::saveSettings() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     HistoryMap  map;
     HistoryList list;
     // general settings
-    int maxHistoryCount = s.settings.maxHistoryCount;
+    int maxHistoryCount = s->settings.maxHistoryCount;
     // settings of selection dialog
     // file
     fileNameComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.fileNameMap                   = map;
-    s.selectionDialog.fileNameList                  = list;
+    s->selectionDialog.fileNameMap                   = map;
+    s->selectionDialog.fileNameList                  = list;
     fileSizeComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.fileSizeMap                   = map;
-    s.selectionDialog.fileSizeList                  = list;
+    s->selectionDialog.fileSizeMap                   = map;
+    s->selectionDialog.fileSizeList                  = list;
     imageSizeComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.imageSizeMap                  = map;
-    s.selectionDialog.imageSizeList                 = list;
+    s->selectionDialog.imageSizeMap                  = map;
+    s->selectionDialog.imageSizeList                 = list;
 #ifdef SIR_METADATA_SUPPORT
     // any metadata
     anyMetadataGroupBox->authorComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.anyAuthorMap                  = map;
-    s.selectionDialog.anyAuthorList                 = list;
+    s->selectionDialog.anyAuthorMap                  = map;
+    s->selectionDialog.anyAuthorList                 = list;
     anyMetadataGroupBox->copyrightComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.anyCopyrightMap               = map;
-    s.selectionDialog.anyCopyrightList              = list;
+    s->selectionDialog.anyCopyrightMap               = map;
+    s->selectionDialog.anyCopyrightList              = list;
     // Exif
     uiExif.softwareComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.exifSoftMap                   = map;
-    s.selectionDialog.exifSoftList                  = list;
+    s->selectionDialog.exifSoftMap                   = map;
+    s->selectionDialog.exifSoftList                  = list;
     uiExif.cameraManufacturerComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.exifCameraManufacturerMap     = map;
-    s.selectionDialog.exifCameraManufacturerList    = list;
+    s->selectionDialog.exifCameraManufacturerMap     = map;
+    s->selectionDialog.exifCameraManufacturerList    = list;
     uiExif.cameraModelComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.exifCameraModelMap            = map;
-    s.selectionDialog.exifCameraModelList           = list;
+    s->selectionDialog.exifCameraModelMap            = map;
+    s->selectionDialog.exifCameraModelList           = list;
     // IPTC
     uiIptc.objectNameComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.iptcObjectNameMap             = map;
-    s.selectionDialog.iptcObjectNameList            = list;
+    s->selectionDialog.iptcObjectNameMap             = map;
+    s->selectionDialog.iptcObjectNameList            = list;
     uiIptc.keywordsComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.iptcKeywordsMap               = map;
-    s.selectionDialog.iptcKeywordsList              = list;
+    s->selectionDialog.iptcKeywordsMap               = map;
+    s->selectionDialog.iptcKeywordsList              = list;
     uiIptc.descriptionComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.iptcDescriptionMap            = map;
-    s.selectionDialog.iptcDescriptionList           = list;
+    s->selectionDialog.iptcDescriptionMap            = map;
+    s->selectionDialog.iptcDescriptionList           = list;
     uiIptc.countryNameComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.iptcCountryNameMap            = map;
-    s.selectionDialog.iptcCountryNameList           = list;
+    s->selectionDialog.iptcCountryNameMap            = map;
+    s->selectionDialog.iptcCountryNameList           = list;
     uiIptc.cityComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.iptcCityMap                   = map;
-    s.selectionDialog.iptcCityList                  = list;
+    s->selectionDialog.iptcCityMap                   = map;
+    s->selectionDialog.iptcCityList                  = list;
     uiIptc.editStatusComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.selectionDialog.iptcEditStatusMap             = map;
-    s.selectionDialog.iptcEditStatusList            = list;
+    s->selectionDialog.iptcEditStatusMap             = map;
+    s->selectionDialog.iptcEditStatusList            = list;
 #endif // SIR_METADATA_SUPPORT
 }

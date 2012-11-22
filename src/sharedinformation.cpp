@@ -107,7 +107,7 @@ void SharedInformation::setDesiredFormat(const QString &format) {
                  format.toAscii().constData());
     }
     else
-        saveMetadata = Settings::instance().metadata.saveMetadata;
+        saveMetadata = Settings::instance()->metadata.saveMetadata;
 #endif // SIR_METADATA_SUPPORT
 }
 

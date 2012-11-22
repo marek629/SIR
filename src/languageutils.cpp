@@ -27,7 +27,19 @@
 #include <QFile>
 #include <QTextStream>
 #include <QCoreApplication>
+#include <QDebug>
+#include <QTranslator>
 #include "languageutils.h"
+
+/** Returns singledon instance pointer.
+  * \sa LanguageUtils()
+  */
+LanguageUtils * LanguageUtils::instance() {
+    static LanguageUtils *object = 0;
+    if (!object && QCoreApplication::instance())
+        object = new LanguageUtils();
+    return object;
+}
 
 /** Default constructor.\n
   * Reads informations about languages and loads into languageInfoMap language
@@ -35,11 +47,15 @@
   * \sa LanguageInfo readLanguages()
   */
 LanguageUtils::LanguageUtils() {
+    qtTranslator = new QTranslator;
+    appTranslator = new QTranslator;
     this->readLanguages();
 }
 
 /** Deallocates memory. */
 LanguageUtils::~LanguageUtils() {
+    delete qtTranslator;
+    delete appTranslator;
     delete languageInfoMap;
 }
 
@@ -82,7 +98,23 @@ void LanguageUtils::readLanguages() {
     }
 }
 
-/** Returns LanguageInfo about typed \a language name. */
-const LanguageInfo LanguageUtils::getLanguageInfo(const QString & language) const {
-    return languageInfoMap->value(language);
+/** Returns LanguageInfo about typed \a qmFile name. */
+const LanguageInfo LanguageUtils::languageInfo(const QString &qmFile) const {
+    return languageInfoMap->value(qmFile);
+}
+
+/** Returns name of file corresponding \a lang language symbol, i.e. en for english.
+  * \sa languageInfoMap
+  */
+QString LanguageUtils::fileName(const QString &lang) const {
+    QStringList qmFiles = fileNames();
+    QStringList translations = qmFiles.filter(lang);
+    if (translations.isEmpty())
+        translations = qmFiles.filter(lang.section('_',0,0));
+    if (translations.isEmpty()) {
+        qDebug() << QString("Translation file for %1 language symbol not found.\n"
+                            "Loading english translation.").arg(lang);
+        return "sir_en.qm";
+    }
+    return translations[0];
 }

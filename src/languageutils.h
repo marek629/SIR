@@ -29,6 +29,8 @@
 #include <QString>
 #include <QMap>
 
+class QTranslator;
+
 //! Struct containing user visible information about language.
 struct LanguageInfo {
     QString niceName; /**< Language name. */
@@ -38,10 +40,19 @@ struct LanguageInfo {
 //! Multi languages support tool class.
 class LanguageUtils {
 public:
+    static LanguageUtils *instance();
+    const LanguageInfo languageInfo(const QString &qmFile) const;
+    QString fileName(const QString &lang) const;
+    /** Returns list of compiled translation file names (*.qm).
+      * \sa languageInfoMap
+      */
+    QStringList fileNames() const { return languageInfoMap->keys(); }
+    QTranslator *qtTranslator;
+    QTranslator *appTranslator;
+
+private:
     LanguageUtils();
     ~LanguageUtils();
-    const LanguageInfo getLanguageInfo(const QString & language) const;
-private:
     void readLanguages();
     /** Language information map. Key is compiled translation file name. */
     QMap<QString, LanguageInfo> *languageInfoMap;

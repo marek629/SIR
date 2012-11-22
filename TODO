@@ -1,7 +1,10 @@
 *** nearest release ***
+  ! effects
+    * add frame
+    * add text or picture to image
+  ! substitution color for transparency (background color)
 
 *** next release ***
-  ! substitution color for transparency
   ! Sessions: save and restore files list in/from text file
 
 *** wishlist ***
@@ -13,4 +16,3 @@
   ! Make simple effects
     * color (sepia, b&w, etc.) and gradient filtres
     * watermark
-    * add frame

@@ -95,7 +95,7 @@ protected:
 bool PreviewDialog::isntTiffImage() {
     QString ext = imagePath.split('.').last().toLower();
     bool tiffMetadataDisabled(!(ext == "tif" || ext == "tiff"));
-    if (Settings::instance().metadata.enabled && tiffMetadataDisabled) {
+    if (Settings::instance()->metadata.enabled && tiffMetadataDisabled) {
         metadata = new MetadataUtils::Metadata();
         return true;
     }

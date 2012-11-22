@@ -57,21 +57,21 @@ MetadataGroupBox::~MetadataGroupBox() {
   * \sa Settings saveSettings()
   */
 void MetadataGroupBox::loadSettings() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     // general metadata part
-    metadataCheckBox->setChecked(           s.metadata.enabled);
+    metadataCheckBox->setChecked(           s->metadata.enabled);
     if (!metadataCheckBox->isChecked()) {
         saveMetadataCheckBox->setEnabled(false);
         thumbUpdateCheckBox->setEnabled(false);
         thumbRotateCheckBox->setEnabled(false);
     }
     else
-        saveMetadataCheckBox->setChecked(   s.metadata.saveMetadata);
+        saveMetadataCheckBox->setChecked(   s->metadata.saveMetadata);
     if (saveMetadataCheckBox->isChecked()) {
-        thumbUpdateCheckBox->setChecked(    s.metadata.updateThumbnail);
+        thumbUpdateCheckBox->setChecked(    s->metadata.updateThumbnail);
         if (thumbUpdateCheckBox->isChecked())
-            thumbRotateCheckBox->setChecked(s.metadata.rotateThumbnail);
-        rotateRadioButton->setChecked(      s.metadata.realRotate);
+            thumbRotateCheckBox->setChecked(s->metadata.rotateThumbnail);
+        rotateRadioButton->setChecked(      s->metadata.realRotate);
     }
     else {
         thumbUpdateCheckBox->setEnabled(false);
@@ -83,27 +83,31 @@ void MetadataGroupBox::loadSettings() {
     // Exif part
     bool exifOverwrite;
     HistoryMap exifDefaultMap;
-    exifOverwrite =                         s.exif.artistOverwrite;
+    CommonOptions *common = CommonOptions::instance();
+    exifOverwrite =                         s->exif.artistOverwrite;
     exifArtistCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.insert(tr("Camera owner: ; Photographer: "),false);
-    exifArtistComboBox->importHistory(      s.exif.artistMap,
-                                            s.exif.artistList, common.maxHistoryCount());
+    exifArtistComboBox->importHistory(      s->exif.artistMap,
+                                            s->exif.artistList,
+                                            common->maxHistoryCount());
     exifArtistComboBox->setEnabled(exifOverwrite);
-    exifOverwrite =                         s.exif.copyrightOverwrite;
+    exifOverwrite =                         s->exif.copyrightOverwrite;
     exifCopyrightCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.clear();
     exifDefaultMap.insert(tr("Copyright owner"),false);
-    exifCopyrightComboBox->importHistory(   s.exif.copyrightMap,
-                                            s.exif.copyrightList, common.maxHistoryCount());
+    exifCopyrightComboBox->importHistory(   s->exif.copyrightMap,
+                                            s->exif.copyrightList,
+                                            common->maxHistoryCount());
     exifCopyrightComboBox->setEnabled(exifOverwrite);
 
-    exifOverwrite =                         s.exif.userCommentOverwrite;
+    exifOverwrite =                         s->exif.userCommentOverwrite;
     exifUserCommentCheckBox->setChecked(exifOverwrite);
     exifDefaultMap.clear();
     exifDefaultMap.insert(
                 tr("This picture was edited with Simple Image Resizer"),false);
-    exifUserCommentComboBox->importHistory( s.exif.userCommentMap,
-                                            s.exif.userCommentList, common.maxHistoryCount());
+    exifUserCommentComboBox->importHistory( s->exif.userCommentMap,
+                                            s->exif.userCommentList,
+                                            common->maxHistoryCount());
     exifUserCommentComboBox->setEnabled(exifOverwrite);
 }
 
@@ -111,28 +115,32 @@ void MetadataGroupBox::loadSettings() {
   * \sa Settings loadSettings()
   */
 void MetadataGroupBox::saveSettings() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     // general part
-    s.metadata.enabled          = metadataCheckBox->isChecked();
-    s.metadata.saveMetadata     = saveMetadataCheckBox->isChecked();
-    s.metadata.realRotate       = rotateRadioButton->isChecked();
-    s.metadata.updateThumbnail  = thumbUpdateCheckBox->isChecked();
-    s.metadata.rotateThumbnail  = thumbRotateCheckBox->isChecked();
+    s->metadata.enabled          = metadataCheckBox->isChecked();
+    s->metadata.saveMetadata     = saveMetadataCheckBox->isChecked();
+    s->metadata.realRotate       = rotateRadioButton->isChecked();
+    s->metadata.updateThumbnail  = thumbUpdateCheckBox->isChecked();
+    s->metadata.rotateThumbnail  = thumbRotateCheckBox->isChecked();
     // Exif part
     HistoryMap  historyMap;
     HistoryList historyList;
-    s.exif.artistOverwrite      = exifArtistCheckBox->isChecked();
-    exifArtistComboBox->exportHistory(&historyMap,&historyList,common.maxHistoryCount());
-    s.exif.artistMap            = historyMap;
-    s.exif.artistList           = historyList;
-    s.exif.copyrightOverwrite   = exifCopyrightCheckBox->isChecked();
-    exifCopyrightComboBox->exportHistory(&historyMap,&historyList,common.maxHistoryCount());
-    s.exif.copyrightMap         = historyMap;
-    s.exif.copyrightList        = historyList;
-    s.exif.userCommentOverwrite = exifUserCommentCheckBox->isChecked();
-    exifUserCommentComboBox->exportHistory(&historyMap,&historyList,common.maxHistoryCount());
-    s.exif.userCommentMap       = historyMap;
-    s.exif.userCommentList      = historyList;
+    CommonOptions *common = CommonOptions::instance();
+    s->exif.artistOverwrite      = exifArtistCheckBox->isChecked();
+    exifArtistComboBox->exportHistory(&historyMap, &historyList,
+                                      common->maxHistoryCount());
+    s->exif.artistMap            = historyMap;
+    s->exif.artistList           = historyList;
+    s->exif.copyrightOverwrite   = exifCopyrightCheckBox->isChecked();
+    exifCopyrightComboBox->exportHistory(&historyMap, &historyList,
+                                         common->maxHistoryCount());
+    s->exif.copyrightMap         = historyMap;
+    s->exif.copyrightList        = historyList;
+    s->exif.userCommentOverwrite = exifUserCommentCheckBox->isChecked();
+    exifUserCommentComboBox->exportHistory(&historyMap, &historyList,
+                                           common->maxHistoryCount());
+    s->exif.userCommentMap       = historyMap;
+    s->exif.userCommentList      = historyList;
 }
 
 /** Enable or disable metadata check boxes depending on \a checked value. */

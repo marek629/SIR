@@ -32,6 +32,7 @@ set( sir_HDRS
         src/expressiontree.h
         src/optionsenums.h
         src/metadata/string.h
+        src/commandlineassistant.h
     )
 
 # Source files
@@ -62,6 +63,7 @@ set( sir_SRCS
         src/widgets/options/selectiongroupbox.cpp
         src/widgets/options/rawgroupbox.cpp
         src/metadata/string.cpp
+        src/commandlineassistant.cpp
     )
 
 # User interface files

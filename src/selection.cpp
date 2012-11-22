@@ -208,10 +208,10 @@ int Selection::importFiles() {
 }
 
 void Selection::loadSymbols() {
-    Settings &s = Settings::instance();
-    fileSizeSymbols <<  s.selection.fileSizeSymbol;
-    imageSizeSymbols << s.selection.imageWidthSymbol
-                     << s.selection.imageHeightSymbol;
+    Settings *s = Settings::instance();
+    fileSizeSymbols <<  s->selection.fileSizeSymbol;
+    imageSizeSymbols << s->selection.imageWidthSymbol
+                     << s->selection.imageHeightSymbol;
 }
 
 /** Sets up this objects regular expression lists setupListRegExp() method.
@@ -376,7 +376,7 @@ bool Selection::testFile(const QFileInfo &info) {
 #ifdef SIR_METADATA_SUPPORT
     MetadataUtils::Metadata *metadata = 0;
     bool setupStructs;
-    if (Settings::instance().metadata.enabled) {
+    if (Settings::instance()->metadata.enabled) {
         setupStructs = (params.checkMetadata || params.checkExif || params.checkIPTC);
         metadata = new MetadataUtils::Metadata();
     }

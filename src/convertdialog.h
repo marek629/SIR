@@ -26,7 +26,6 @@
 #include "convertthread.h"
 #include "settings.h"
 
-class QTranslator;
 class NetworkUtils;
 
 //! Main window class provides images convertion dialog.
@@ -38,7 +37,7 @@ class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     friend class TreeWidget;
 
 public:
-    ConvertDialog(QWidget *parent = 0, QString args = 0);
+    ConvertDialog(QWidget *parent = 0, const QStringList &args = QStringList());
     ~ConvertDialog();
     void retranslateStrings();
     QString fileSizeString(qint64 size);
@@ -47,15 +46,12 @@ private:
     // fields
     SharedInformation *sharedInfo;
     QList<ConvertThread*> convertThreads;
-    QString args;
-    QStringList argsList;
+    QStringList args;
     QImage *image;
     QString targetFile;
     QString fileFilters;
     QStringList rawFormats;
     quint8 numThreads;
-    QTranslator *qtTranslator;
-    QTranslator *appTranslator;
     int convertedImages;
     int numImages;
     QList<QTreeWidgetItem *> itemsToConvert;
@@ -118,19 +114,19 @@ private slots:
   * of normal size mode (before maximizing).
   */
 void ConvertDialog::writeWindowProperties() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     if (this->isMaximized()) {
-        s.mainWindow.maximized      = true;
-        s.mainWindow.possition      = windowPossition;
-        s.mainWindow.size           = windowSize;
+        s->mainWindow.maximized      = true;
+        s->mainWindow.possition      = windowPossition;
+        s->mainWindow.size           = windowSize;
     }
     else {
-        s.mainWindow.maximized      = false;
-        s.mainWindow.possition      = this->pos();
-        s.mainWindow.size           = this->size();
+        s->mainWindow.maximized      = false;
+        s->mainWindow.possition      = this->pos();
+        s->mainWindow.size           = this->size();
     }
-    s.mainWindow.horizontalSplitter = horizontalSplitter->saveState();
-    s.mainWindow.verticalSplitter   = verticalSplitter->saveState();
+    s->mainWindow.horizontalSplitter = horizontalSplitter->saveState();
+    s->mainWindow.verticalSplitter   = verticalSplitter->saveState();
 }
 
 /** Resets user ansers about overwrite file, enlarge image and abort convertion

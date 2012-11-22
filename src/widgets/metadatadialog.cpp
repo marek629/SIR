@@ -115,11 +115,11 @@ void MetadataDialog::setupInputWidgets() {
     exifFlashModeComboBox->addItem(Exif::flashString(0x4d));
     exifFlashModeComboBox->addItem(Exif::flashString(0x47));
     // load settings
-    Settings &s = Settings::instance();
-    QString dateFormat  = s.settings.dateDisplayFormat;
-    QString timeFormat  = s.settings.timeDisplayFormat;
+    Settings *s = Settings::instance();
+    QString dateFormat  = s->settings.dateDisplayFormat;
+    QString timeFormat  = s->settings.timeDisplayFormat;
     // max history count for HistoryComboBox's import functions
-    int maxHistoryCount = s.settings.maxHistoryCount;
+    int maxHistoryCount = s->settings.maxHistoryCount;
     // display format of date/time editors
     exifOriginalDateEdit->setDisplayFormat(dateFormat);
     exifOriginalTimeEdit->setDisplayFormat(timeFormat);
@@ -131,26 +131,26 @@ void MetadataDialog::setupInputWidgets() {
     iptcDigitizedTimeEdit->setDisplayFormat(timeFormat);
     // Exif tab
     // Camera toolbox
-    exifManufacturerComboBox->importHistory(s.exif.cameraManufacturerMap,
-                                            s.exif.cameraManufacturerList,
+    exifManufacturerComboBox->importHistory(s->exif.cameraManufacturerMap,
+                                            s->exif.cameraManufacturerList,
                                             maxHistoryCount);
     exifManufacturerComboBox->setCurrentIndex(-1);
-    exifModelComboBox->importHistory(       s.exif.cameraModelMap,
-                                            s.exif.cameraModelList, maxHistoryCount);
+    exifModelComboBox->importHistory(       s->exif.cameraModelMap,
+                                            s->exif.cameraModelList, maxHistoryCount);
     exifModelComboBox->setCurrentIndex(-1);
     // Author toolbox
-    exifArtistComboBox->importHistory(      s.exif.artistMap,
-                                            s.exif.artistList, maxHistoryCount);
+    exifArtistComboBox->importHistory(      s->exif.artistMap,
+                                            s->exif.artistList, maxHistoryCount);
     exifArtistComboBox->setCurrentIndex(-1);
-    exifCopyrightComboBox->importHistory(   s.exif.copyrightMap,
-                                            s.exif.copyrightList, maxHistoryCount);
+    exifCopyrightComboBox->importHistory(   s->exif.copyrightMap,
+                                            s->exif.copyrightList, maxHistoryCount);
     exifCopyrightComboBox->setCurrentIndex(-1);
-    exifUserCommentComboBox->importHistory( s.exif.userCommentMap,
-                                            s.exif.userCommentList, maxHistoryCount);
+    exifUserCommentComboBox->importHistory( s->exif.userCommentMap,
+                                            s->exif.userCommentList, maxHistoryCount);
     exifUserCommentComboBox->setCurrentIndex(-1);
     // IPTC tab
-    iptcEditStatusComboBox->importHistory(  s.iptc.editStatusMap,
-                                            s.iptc.editStatusList, maxHistoryCount);
+    iptcEditStatusComboBox->importHistory(  s->iptc.editStatusMap,
+                                            s->iptc.editStatusList, maxHistoryCount);
     iptcEditStatusComboBox->setCurrentIndex(-1);
 }
 
@@ -298,31 +298,31 @@ void MetadataDialog::createConnections() {
 void MetadataDialog::saveHistory() {
     HistoryMap  map;
     HistoryList list;
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     // general settings
-    int maxHistoryCount = s.settings.maxHistoryCount;
+    int maxHistoryCount = s->settings.maxHistoryCount;
     // Exif tab
     // Camera toolbox
     exifManufacturerComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.exif.cameraManufacturerMap    = map;
-    s.exif.cameraManufacturerList   = list;
+    s->exif.cameraManufacturerMap    = map;
+    s->exif.cameraManufacturerList   = list;
     exifModelComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.exif.cameraModelMap           = map;
-    s.exif.cameraModelList          = list;
+    s->exif.cameraModelMap           = map;
+    s->exif.cameraModelList          = list;
     // Artist toolbox
     exifArtistComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.exif.artistMap                = map;
-    s.exif.artistList               = list;
+    s->exif.artistMap                = map;
+    s->exif.artistList               = list;
     exifCopyrightComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.exif.copyrightMap             = map;
-    s.exif.copyrightList            = list;
+    s->exif.copyrightMap             = map;
+    s->exif.copyrightList            = list;
     exifUserCommentComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.exif.userCommentMap           = map;
-    s.exif.userCommentList          = list;
+    s->exif.userCommentMap           = map;
+    s->exif.userCommentList          = list;
     // IPTC tab
     iptcEditStatusComboBox->exportHistory(&map, &list, maxHistoryCount);
-    s.iptc.editStatusMap    = map;
-    s.iptc.editStatusList   = list;
+    s->iptc.editStatusMap    = map;
+    s->iptc.editStatusList   = list;
 }
 
 void MetadataDialog::previousImage() {

@@ -28,8 +28,8 @@
 //! Common options data for classes inherited from AbstractOptions class.
 class CommonOptions {
 public:
-    // constructor
-    CommonOptions();
+    // singleton instance
+    static CommonOptions *instance();
     // access methods
     QString targetDirPath() const { return targetDirPath_; }
     void setTargetDirPath(const QString &path)
@@ -38,6 +38,8 @@ public:
     void setMaxHistoryCount(int v) { maxHistoryCount_ = v; }
 
 private:
+    // constructor
+    CommonOptions();
     // fields
     QString targetDirPath_;
     int maxHistoryCount_;
@@ -53,8 +55,6 @@ protected:
     // pure virtual functions
     virtual void loadSettings() = 0;
     virtual void saveSettings() = 0;
-    // fields
-    static CommonOptions common;
 };
 
 //! Abstract base class for all derived classes from QGroupBox and AbstractOptions.

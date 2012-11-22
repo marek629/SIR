@@ -19,22 +19,28 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-
 #include <QtCore/QLocale>
 #include <QtCore/QTextCodec>
 #include "main.h"
+#include "commandlineassistant.h"
 
 int main(int argc, char *argv[]) {
-//    Q_INIT_RESOURCE(application);
+    Q_INIT_RESOURCE(application);
     QApplication app(argc, argv);
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     QTextCodec* codec = QTextCodec::codecForLocale ();
-    QString args = "";
 
-    /*Parse the arguments from the command line*/
+    // Parse the arguments from the command line
+    QStringList args;
     for(int i = 1; i < argc; i++)
-        args = args + codec->toUnicode(argv[i]) + "**" ;
+        args += codec->toUnicode(argv[i]);
+    args.removeDuplicates();
+
+    CommandLineAssistant cmd;
+    int cmdParseResult = cmd.parse(args);
+    if (cmdParseResult < 1)
+        return cmdParseResult;
 
     ConvertDialog w(0,args);
     w.show();

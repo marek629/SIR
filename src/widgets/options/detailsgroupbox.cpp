@@ -51,16 +51,16 @@ DetailsGroupBox::DetailsGroupBox(QWidget *parent) : AbstractOptionsGroupBox(pare
   * \sa Settings saveSettings()
   */
 void DetailsGroupBox::loadSettings() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     int hex;
     // exif
-    hex = s.details.exifImage;
+    hex = s->details.exifImage;
     exifVersionCheckBox->setChecked(hex & DetailsOptions::ExifVersion);
     exifSoftCheckBox->setChecked(hex & DetailsOptions::ProcessingSoftware);
     exifOrientationCheckBox->setChecked(hex & DetailsOptions::Orientation);
     exifGeneratedTimeCheckBox->setChecked(hex & DetailsOptions::GeneratedDateAndTime);
     exifDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedDateAndTime);
-    hex = s.details.exifPhoto;
+    hex = s->details.exifPhoto;
     exifFocalLengthCheckBox->setChecked(hex & DetailsOptions::FocalLenght);
     exifApertureCheckBox->setChecked(hex & DetailsOptions::Aperture);
     exifIsoCheckBox->setChecked(hex & DetailsOptions::IsoSpeed);
@@ -70,15 +70,15 @@ void DetailsGroupBox::loadSettings() {
     exifExpProgramCheckBox->setChecked(hex & DetailsOptions::ExposureProgram);
     exifMeteringCheckBox->setChecked(hex & DetailsOptions::LightMeteringMode);
     exifFlashCheckBox->setChecked(hex & DetailsOptions::FlashMode);
-    hex = s.details.exifCamera;
+    hex = s->details.exifCamera;
     exifManufacturerCheckBox->setChecked(hex & DetailsOptions::Manufacturer);
     exifModelCheckBox->setChecked(hex & DetailsOptions::Model);
-    hex = s.details.exifAuthor;
+    hex = s->details.exifAuthor;
     exifArtistCheckBox_D->setChecked(hex & DetailsOptions::Artist);
     exifCopyrightCheckBox_D->setChecked(hex & DetailsOptions::Copyright);
     exifUserCommentCheckBox_D->setChecked(hex & DetailsOptions::UserComment);
     // iptc
-    hex = s.details.iptc;
+    hex = s->details.iptc;
     iptcVersionCheckBox->setChecked(hex & DetailsOptions::ModelVersion);
     iptcBylineCheckBox->setChecked(hex & DetailsOptions::Byline);
     iptcCopyrightCheckBox->setChecked(hex & DetailsOptions::CopyrightIptc);
@@ -98,7 +98,7 @@ void DetailsGroupBox::loadSettings() {
   * \sa Settings loadSettings()
   */
 void DetailsGroupBox::saveSettings() {
-    Settings &s = Settings::instance();
+    Settings *s = Settings::instance();
     // Exif image
     int hex = 0;
     if (exifVersionCheckBox->isChecked())
@@ -111,7 +111,7 @@ void DetailsGroupBox::saveSettings() {
         hex |= DetailsOptions::GeneratedDateAndTime;
     if (exifDigitizedTimeCheckBox->isChecked())
         hex |= DetailsOptions::DigitizedDateAndTime;
-    s.details.exifImage     = hex;
+    s->details.exifImage     = hex;
     // Exif photo
     hex = 0;
     if (exifFocalLengthCheckBox->isChecked())
@@ -132,14 +132,14 @@ void DetailsGroupBox::saveSettings() {
         hex |= DetailsOptions::LightMeteringMode;
     if (exifFlashCheckBox->isChecked())
         hex |= DetailsOptions::FlashMode;
-    s.details.exifPhoto     = hex;
+    s->details.exifPhoto     = hex;
     // Exif camera
     hex = 0;
     if (exifManufacturerCheckBox->isChecked())
         hex |= DetailsOptions::Manufacturer;
     if (exifModelCheckBox->isChecked())
         hex |= DetailsOptions::Model;
-    s.details.exifCamera    = hex;
+    s->details.exifCamera    = hex;
     // Exif author
     hex = 0;
     if (exifArtistCheckBox_D->isChecked())
@@ -148,7 +148,7 @@ void DetailsGroupBox::saveSettings() {
         hex |= DetailsOptions::Copyright;
     if (exifUserCommentCheckBox_D->isChecked())
         hex |= DetailsOptions::UserComment;
-    s.details.exifAuthor    = hex;
+    s->details.exifAuthor    = hex;
     // IPTC
     hex = 0;
     if (iptcVersionCheckBox->isChecked())
@@ -177,7 +177,7 @@ void DetailsGroupBox::saveSettings() {
         hex |= DetailsOptions::DigitizedDate;
     if (iptcDigitizedTimeCheckBox->isChecked())
         hex |= DetailsOptions::DigitizedTime;
-    s.details.iptc          = hex;
+    s->details.iptc          = hex;
 }
 
 /** Counts how much check boxes are checked and enables or disables

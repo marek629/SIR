@@ -132,14 +132,14 @@ QPixmap *RawUtils::loadRawPixmap(QString imagePath) {
   * \sa readDcrawPath readDcrawOptions
   */
 bool RawUtils::isRawEnabled() {
-    return Settings::instance().raw.enabled;
+    return Settings::instance()->raw.enabled;
 }
 
 /** Reads from settings and returns path string to dcraw executable file.
   * \sa readDcrawOptions isRawEnabled
   */
 QString RawUtils::readDcrawPath() {
-    return Settings::instance().raw.dcrawPath;
+    return Settings::instance()->raw.dcrawPath;
 }
 
 /** Reads from settings and returns dcraw options string splited by
@@ -147,7 +147,7 @@ QString RawUtils::readDcrawPath() {
   * \sa readDcrawPath isRawEnabled
   */
 QStringList RawUtils::readDcrawOptions() {
-    return Settings::instance().raw.dcrawOptions.split(" ", QString::SkipEmptyParts);
+    return Settings::instance()->raw.dcrawOptions.split(" ", QString::SkipEmptyParts);
 }
 
 /** Creates list of supported image file extensions into \b rawFormats. */
