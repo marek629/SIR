@@ -45,13 +45,13 @@ int CommandLineAssistant::parse(const QStringList &args) {
         lang = args[args.indexOf(shortArgs.filter("l")[0])+1];
     LanguageUtils *languages = LanguageUtils::instance();
     QString qmFile = languages->fileName(lang);
-    languages->appTranslator->load(qmFile);
+    languages->appTranslator->load(qmFile, QCoreApplication::applicationDirPath()+QString("../share/sir/translations"));
     languages->qtTranslator->load("qt_"+qmFile.split('_').at(1).split('.').first(),
                                  QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    qApp->installTranslator(languages->qtTranslator);
+    qApp->installTranslator(languages->appTranslator);
     // print help
     if (!shortArgs.filter("h").isEmpty() || !longArgs.filter("help").isEmpty()) {
-        qApp->installTranslator(languages->qtTranslator);
-        qApp->installTranslator(languages->appTranslator);
         MetadataUtils::String help =
             tr("Usage: sir [options] [files]\n"
                "Typed files will load to files list in main window.\n"

@@ -30,6 +30,7 @@
 #include <QDebug>
 #include <QTranslator>
 #include "languageutils.h"
+#include "settings.h"
 
 /** Returns singledon instance pointer.
   * \sa LanguageUtils()
@@ -103,10 +104,14 @@ const LanguageInfo LanguageUtils::languageInfo(const QString &qmFile) const {
     return languageInfoMap->value(qmFile);
 }
 
-/** Returns name of file corresponding \a lang language symbol, i.e. en for english.
+/** Returns name of file corresponding \a lang language symbol, i.e. en for
+  * english.\n
+  * If \a lang is null string returns translation file name from Settings.
   * \sa languageInfoMap
   */
 QString LanguageUtils::fileName(const QString &lang) const {
+    if (lang.isNull())
+        return Settings::instance()->settings.languageFileName;
     QStringList qmFiles = fileNames();
     QStringList translations = qmFiles.filter(lang);
     if (translations.isEmpty())
