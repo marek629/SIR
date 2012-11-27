@@ -64,6 +64,7 @@ set( sir_SRCS
         src/widgets/options/rawgroupbox.cpp
         src/metadata/string.cpp
         src/commandlineassistant.cpp
+        src/widgets/colorframe.cpp
     )
 
 # User interface files
@@ -144,6 +145,7 @@ set( sir_MOCS
         src/widgets/options/selectiongroupbox.h
         src/widgets/options/rawgroupbox.h
         src/widgets/options/abstractoptions.h
+        src/widgets/colorframe.h
     )
 
 set( sir_LINKING_LIBS

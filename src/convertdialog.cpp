@@ -486,6 +486,10 @@ void ConvertDialog::convert() {
     sharedInfo->setDestSuffix(destSuffixEdit->text());
     sharedInfo->setDestFolder(destFolder);
     sharedInfo->setOverwriteAll(false);
+    if (backgroundColorCheckBox->isChecked())
+        sharedInfo->backgroundColor = backgroundColorFrame->color();
+    else
+        sharedInfo->backgroundColor = QColor();
 
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {

@@ -14,7 +14,7 @@
    <string>SIR - Simple Image Resizer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../application.qrc">
+   <iconset>
     <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -283,12 +283,6 @@
          </item>
          <item>
           <widget class="QTabWidget" name="tabWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
            <property name="tabPosition">
             <enum>QTabWidget::North</enum>
            </property>
@@ -534,6 +528,13 @@
              <string>Options</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="5">
+              <widget class="QCheckBox" name="backgroundColorCheckBox">
+               <property name="text">
+                <string>Background Color</string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="0" colspan="2">
               <widget class="QCheckBox" name="rotateCheckBox">
                <property name="text">
@@ -546,36 +547,6 @@
                <property name="text">
                 <string>Quality:</string>
                </property>
-              </widget>
-             </item>
-             <item row="1" column="5">
-              <widget class="QComboBox" name="flipComboBox">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <item>
-                <property name="text">
-                 <string>No flip</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Flip vertically</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Flip horizontally</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Flip vertically and horizontally</string>
-                </property>
-               </item>
               </widget>
              </item>
              <item row="1" column="4">
@@ -661,7 +632,17 @@
                </property>
               </spacer>
              </item>
-             <item row="1" column="6">
+             <item row="0" column="6">
+              <widget class="ColorFrame" name="backgroundColorFrame">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="7">
               <spacer name="horizontalSpacer_9">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -673,6 +654,36 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="1" column="5" colspan="2">
+              <widget class="QComboBox" name="flipComboBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <item>
+                <property name="text">
+                 <string>No flip</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Flip vertically</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Flip horizontally</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Flip vertically and horizontally</string>
+                </property>
+               </item>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -752,7 +763,7 @@
          <string>&amp;Quit</string>
         </property>
         <property name="icon">
-         <iconset theme="application-exit" resource="../application.qrc">
+         <iconset theme="application-exit">
           <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
         </property>
        </widget>
@@ -805,7 +816,7 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="application-exit" resource="../application.qrc">
+    <iconset theme="application-exit">
      <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
    </property>
    <property name="text">
@@ -948,12 +959,16 @@
    <extends>QTextEdit</extends>
    <header>widgets/detailsbrowser.h</header>
   </customwidget>
+  <customwidget>
+   <class>ColorFrame</class>
+   <extends>QFrame</extends>
+   <header>widgets/colorframe.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>destFileEdit</tabstop>
  </tabstops>
- <resources>
-  <include location="../application.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

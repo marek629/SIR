@@ -71,12 +71,15 @@ signals:
     void question(const QString& targetFilePath, Question whatToDo);
     void getNextImage(int tid);
 
+protected:
+    void run();
+
 private:
     // fields
-    static SharedInformation *shared;
-    bool work;
-    QStringList imageData;
-    int tid;
+    static SharedInformation *shared; /**< The theads shared information. */
+    bool work; /**< True means this thread still working. */
+    QStringList imageData; /**< List of strings: file name, extension and path. */
+    int tid; /** The thread ID. */
     bool hasWidth;
     bool hasHeight;
     int width;
@@ -90,7 +93,6 @@ private:
 #endif // SIR_METADATA_SUPPORT
     QString targetFilePath;
     // methods
-    void run();
     void rotateImage(QImage *image);
 #ifdef SIR_METADATA_SUPPORT
     void updateThumbnail(const QImage *image);
@@ -100,6 +102,7 @@ private:
     bool isLinearFileSizeFormat(double *destSize);
     char askEnlarge(const QImage &image, const QString &imagePath);
     char askOverwrite(QFile *tempFile);
+    void fillImage(QImage *img);
 };
 
-#endif
+#endif // CONVERTTHREAD_H

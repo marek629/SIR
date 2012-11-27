@@ -121,10 +121,7 @@ void ConvertThread::run() {
                 continue;
             }
             image = new QImage(width, height, QImage::Format_ARGB32);
-            if (shared->format == "gif" || shared->format == "png")
-                image->fill(Qt::transparent);
-            else // in other formats tranparency isn't supported
-                image->fill(Qt::white);
+            fillImage(image);
             QPainter painter(image);
             svgImage.renderer()->render(&painter);
         }
@@ -340,7 +337,12 @@ void ConvertThread::rotateImage(QImage *image) {
         }
 #endif // SIR_METADATA_SUPPORT
         transform.rotate(angle);
-        *image = image->transformed(transform, Qt::SmoothTransformation);
+        QImage trasformedImage = image->transformed(transform, Qt::SmoothTransformation);
+        delete image;
+        image = new QImage(trasformedImage.size(), QImage::Format_ARGB32);
+        fillImage(image);
+        QPainter painter(image);
+        painter.drawImage(0, 0, trasformedImage);
 #ifdef SIR_METADATA_SUPPORT
     }
 #endif // SIR_METADATA_SUPPORT
@@ -369,7 +371,10 @@ void ConvertThread::updateThumbnail(const QImage *image) {
             *thumbnail = tmpImg;
         }
         else {
-            thumbnail->fill(Qt::black);
+            if (shared->backgroundColor.isValid())
+                thumbnail->fill(shared->backgroundColor);
+            else
+                thumbnail->fill(Qt::black);
             QPoint begin ( (w-tmpImg.width())/2, (h-tmpImg.height())/2 );
             for (int i=0, y=begin.y(); i<tmpImg.height(); i++, y++) {
                 for (int j=0, x=begin.x(); j<tmpImg.width(); j++, x++)
@@ -520,10 +525,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
                 QImage tempImage(width, height, QImage::Format_ARGB32);
-                if (shared->format == "gif" || shared->format == "png")
-                    tempImage.fill(Qt::transparent);
-                else // in other formats tranparency isn't supported
-                    tempImage.fill(Qt::white);
+                fillImage(&tempImage);
                 painter.begin(&tempImage);
                 renderer->render(&painter);
                 painter.end();
@@ -665,4 +667,17 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
         }
     }
     return 0;
+}
+
+/** Fills image with custom background color if is valid or transparent
+  * (if target file format supports transparency); otherwise with white.
+  * \sa SharedInformation::backgroundColor SharedInformation::format
+  */
+void ConvertThread::fillImage(QImage *img) {
+    if (shared->backgroundColor.isValid())
+        img->fill(shared->backgroundColor);
+    else if (shared->format == "gif" || shared->format == "png")
+        img->fill(Qt::transparent);
+    else // in other formats tranparency isn't supported
+        img->fill(Qt::white);
 }

@@ -2,12 +2,12 @@
   ! effects
     * add frame
     * add text or picture to image
-  ! substitution color for transparency (background color)
   ! Sessions: save and restore files list in/from text file
 
 *** next release ***
   ! SVG: remove single text node and group of text node containing specifed string
   ! support for animated graphics files (QMovie?)
+  ! defines.h refactorization: change defines to enumerations
 
 *** wishlist ***
   ! SelectionDialog:

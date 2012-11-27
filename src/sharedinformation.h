@@ -25,6 +25,7 @@
 #include <QMutex>
 #include <QString>
 #include <QDir>
+#include <QColor>
 
 //! ConvertThread threads shared information.
 class SharedInformation {
@@ -65,7 +66,8 @@ private:
     bool hasHeight; /**< Height given indicator. */
     bool maintainAspect; /**< Keep/Ignore aspect ratio indicator. */
     quint32 sizeBytes; /**< Size of target image in bytes. */
-    char sizeUnit; /**< Size unit code based on size unit combo box index into ConvertDialog. */
+    /** Size unit code based on size unit combo box index into ConvertDialog. */
+    char sizeUnit;
     // destinated image file parameters
     QDir destFolder; /**< Destination directory. */
     QString prefix; /**< Target file prefix. */
@@ -76,28 +78,37 @@ private:
     bool rotate; /**< Rotation indicator. */
     double angle; /**< Rotation angle. */
     int flip; /**< MetadataUtils::Flip code. */
+    // destinated effects
+    /** Custom background color of image.
+      * If custom background color is disabled it's invalid QColor object.
+      */
+    QColor backgroundColor;
 #ifdef SIR_METADATA_SUPPORT
     // metadata settings
     bool metadataEnabled; /**< Indicates that metadata support enabled. */
     bool saveMetadata; /**< Saving metadata into target image indicator. */
-    bool realRotate; /**< Real rotation indicator - not save into \em Exif.Image.Orientation field. */
+    /** Real rotation indicator - not save into \em Exif.Image.Orientation field. */
+    bool realRotate;
     bool updateThumbnail; /**< Update thumbnail of target image indicator. */
     bool rotateThumbnail; /**< Rotate thumbnail of target image indicator. */
 #endif // SIR_METADATA_SUPPORT
     // thread synchronization data
     // mutexes
-    QMutex mutex; /**< Mutual exclusion object using for worker threads synchronization. */
+    /** Mutual exclusion object using for worker threads synchronization. */
+    QMutex mutex;
     // user conversation data
     // cancel
     bool abort; /**< Abort indicator. */
     // overwrite
     bool overwriteAll; /**< Overwrite all conflicting files indicator. */
     bool noOverwriteAll; /**< No overwrite all conflicting files indicator. */
-    int overwriteResult; /**< Message box containing question about overwriting file result code. */
+    /** Message box containing question about overwriting file result code. */
+    int overwriteResult;
     // enlarge
     bool enlargeAll; /**< Enlarge all conflicting files indicator. */
     bool noEnlargeAll; /**< No enlarge all conflicting files indicator. */
-    int enlargeResult; /**< Message box containing question about enlarging image result code. */
+    /** Message box containing question about enlarging image result code. */
+    int enlargeResult;
 };
 
 #endif // SHAREDINFORMATION_H

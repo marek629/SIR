@@ -47,8 +47,8 @@ public:
       * \sa languageInfoMap
       */
     QStringList fileNames() const { return languageInfoMap->keys(); }
-    QTranslator *qtTranslator;
-    QTranslator *appTranslator;
+    QTranslator *qtTranslator; /**< Translator of standard Qt objects. */
+    QTranslator *appTranslator; /**< Translator of SIR objects. */
 
 private:
     LanguageUtils();
