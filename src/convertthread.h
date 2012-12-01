@@ -103,6 +103,7 @@ private:
     char askEnlarge(const QImage &image, const QString &imagePath);
     char askOverwrite(QFile *tempFile);
     void fillImage(QImage *img);
+    bool loadSvgImage(QImage *image);
 };
 
 #endif // CONVERTTHREAD_H

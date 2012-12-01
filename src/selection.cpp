@@ -27,6 +27,7 @@
 #include "defines.h"
 #include "expressiontree.h"
 #include "widgets/selectiondialog.h"
+#include "regexputils.h"
 
 // static variables
 
@@ -53,6 +54,10 @@ QStringList Selection::comparisonOperators = QStringList() << "=" << "<" << ">";
   */
 QStringList Selection::allOperators = QStringList() <<
         Selection::logicalOperators << Selection::comparisonOperators;
+
+// Namespace setup
+
+using namespace RegExpUtils;
 
 // ________________________________ Selection ________________________________
 
@@ -261,14 +266,6 @@ void Selection::setupListRegExp(const MetadataUtils::String &strExp,
     }
 }
 
-/** Clears \a list and deallocates regular expression objects safe.
-  * \param list Pointer to list of pointers to regular expression objects.
-  */
-void Selection::clearPointerList(QList<QRegExp *> *list) {
-    while (!list->isEmpty())
-        delete list->takeLast();
-}
-
 /** Loads information about files from \a dir directory to \a list.
   * \param dir Full path of directory.
   * \param list List contain file info objects.
@@ -298,43 +295,12 @@ int Selection::loadFileInfo(const QString &dir, QFileInfoList *list, bool recurs
 }
 
 /** This is overloaded function.\n
-  * Returns true if one member of \a rxList list is \a string string compatible.
-  * \param string Testing string.
-  * \param rxList Pointer to list of pointers to regular expression objects.
-  */
-bool Selection::isCompatible(const QString &string, const QList<QRegExp*> &rxList) {
-    bool result = false;
-    foreach (QRegExp *rx, rxList) {
-        result = string.contains(*rx);
-        if (result)
-            break;
-    }
-    return result;
-}
-
-/** This is overloaded function.\n
-  * Returns true if one member of \a rxList list is one member of \a list
-  * list of strings compatible.
-  * \param string Testing list of strings.
-  * \param rxList Pointer to list of pointers to regular expression objects.
-  */
-bool Selection::isCompatible(const QStringList &list, const QList<QRegExp*> &rxList) {
-    bool result = false;
-    foreach (QString str, list) {
-        result = isCompatible(str, rxList);
-        if (result)
-            break;
-    }
-    return result;
-}
-
-/** This is overloaded function.\n
   * Returns true if \a date and \a time object values are between value of first
   * and second item (including extreme values) of \a dtArray; otherwise returns false.
   * \note \a dtArray must be 2-item (or more) array; otherwise it will send SIGSEGV
   * (segmentation fault signal) to operating system.
   */
-bool Selection::isCompatible(const QDate &date, const QTime &time, QDateTime *dtArray) {
+bool Selection::isInTime(const QDate &date, const QTime &time, QDateTime *dtArray) {
     return ( (dtArray[0].date() <= date && date <= dtArray[1].date()) &&
              (dtArray[0].time() <= time && time <= dtArray[1].time()) );
 }
@@ -345,7 +311,7 @@ bool Selection::isCompatible(const QDate &date, const QTime &time, QDateTime *dt
   * \note \a dtArray must be 2-item (or more) array; otherwise it will send SIGSEGV
   * (segmentation fault signal) to operating system.
   */
-bool Selection::isCompatible(const QDateTime &dateTime, QDateTime *dtArray) {
+bool Selection::isInTime(const QDateTime &dateTime, QDateTime *dtArray) {
     return (dtArray[0] <= dateTime && dateTime <= dtArray[1]);
 }
 
@@ -402,14 +368,14 @@ bool Selection::testFile(const QFileInfo &info) {
         MetadataUtils::IptcStruct *iptcStruct = metadata->iptcStruct();
         // check any metadata
         if (params.checkMetadata) {
-            if (!isCompatible(QDateTime::fromString(exifStruct->originalDate, Qt::ISODate),
+            if (!isInTime(QDateTime::fromString(exifStruct->originalDate, Qt::ISODate),
                               params.createdDateTime) &&
-                    !isCompatible(iptcStruct->dateCreated, iptcStruct->timeCreated,
+                    !isInTime(iptcStruct->dateCreated, iptcStruct->timeCreated,
                                   params.createdDateTime))
                 return false;
-            if (!isCompatible(QDateTime::fromString(exifStruct->digitizedDate, Qt::ISODate),
+            if (!isInTime(QDateTime::fromString(exifStruct->digitizedDate, Qt::ISODate),
                               params.digitizedDateTime) &&
-                    !isCompatible(iptcStruct->digitizationDate, iptcStruct->digitizationTime,
+                    !isInTime(iptcStruct->digitizationDate, iptcStruct->digitizationTime,
                                   params.digitizedDateTime))
                 return false;
             QStringList strList;
@@ -423,9 +389,11 @@ bool Selection::testFile(const QFileInfo &info) {
         }
         // check Exif metadata
         if (params.checkExif) {
-            if (!isCompatible(exifStruct->processingSoftware, exifProcessingSoftwareListRx))
+            if (!isCompatible(exifStruct->processingSoftware,
+                                           exifProcessingSoftwareListRx))
                 return false;
-            if (!isCompatible(exifStruct->cameraManufacturer, exifCameraManufacturerListRx))
+            if (!isCompatible(exifStruct->cameraManufacturer,
+                                           exifCameraManufacturerListRx))
                 return false;
             if (!isCompatible(exifStruct->cameraModel, exifCameraModelListRx))
                 return false;

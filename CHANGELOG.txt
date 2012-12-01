@@ -1,6 +1,7 @@
 * Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.6
     - added command line arguments --help and --lang support
     - added background color in convertion options
+    - added SVG convertion tab: remove single text node and group of text node containing specifed string
 
 * Wed Nov 14 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.5.1
     - relative path bug-fix

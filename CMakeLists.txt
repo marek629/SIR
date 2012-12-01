@@ -10,7 +10,7 @@ cmake_minimum_required( VERSION 2.8.3 )
 # SIR_CMAKE preprocessor define added for QtCreator code parsing and highlighting
 add_definitions( -Wall -DSIR_CMAKE )
 
-find_package( Qt4 REQUIRED QtCore QtGui QtNetwork QtSvg )
+find_package( Qt4 REQUIRED QtCore QtGui QtNetwork QtSvg QtXml )
 include( ${QT_USE_FILE} )
 
 include_directories(
@@ -24,59 +24,63 @@ endif()
 
 # Headers
 set( sir_HDRS
-        src/main.h
-        src/defines.h
-        src/languageutils.h
-        src/sharedinformation.h
-        src/rawutils.h
-        src/expressiontree.h
-        src/optionsenums.h
-        src/metadata/string.h
         src/commandlineassistant.h
+        src/defines.h
+        src/expressiontree.h
+        src/languageutils.h
+        src/main.h
+        src/optionsenums.h
+        src/rawutils.h
+        src/regexputils.h
+        src/sharedinformation.h
+        src/svgmodifier.h
+        src/metadata/string.h
     )
 
 # Source files
 set( sir_SRCS
-        src/main.cpp
+        src/commandlineassistant.cpp
         src/convertdialog.cpp
-        src/widgets/previewdialog.cpp
+        src/convertthread.cpp
+        src/expressiontree.cpp
+        src/languageutils.cpp
+        src/main.cpp
+        src/networkutils.cpp
+        src/rawutils.cpp
+        src/regexputils.cpp
+        src/selection.cpp
+        src/settings.cpp
+        src/sharedinformation.cpp
+        src/svgmodifier.cpp
+        src/metadata/string.cpp
+        src/widgets/aboutdialog.cpp
+        src/widgets/colorframe.cpp
+        src/widgets/detailsbrowser.cpp
+        src/widgets/historycombobox.cpp
+        src/widgets/messagebox.cpp
         src/widgets/optionsdialog.cpp
+        src/widgets/previewdialog.cpp
+        src/widgets/selectiondialog.cpp
+        src/widgets/timecombobox.cpp
         src/widgets/treewidget.cpp
         src/widgets/treewidgetheader.cpp
-        src/convertthread.cpp
-        src/widgets/aboutdialog.cpp
-        src/languageutils.cpp
-        src/sharedinformation.cpp
-        src/rawutils.cpp
-        src/networkutils.cpp
-        src/widgets/messagebox.cpp
-        src/widgets/historycombobox.cpp
-        src/widgets/timecombobox.cpp
-        src/selection.cpp
-        src/expressiontree.cpp
-        src/settings.cpp
-        src/widgets/detailsbrowser.cpp
-        src/widgets/selectiondialog.cpp
         src/widgets/options/abstractoptions.cpp
-        src/widgets/options/generalgroupbox.cpp
         src/widgets/options/filelistgroupbox.cpp
-        src/widgets/options/selectiongroupbox.cpp
+        src/widgets/options/generalgroupbox.cpp
         src/widgets/options/rawgroupbox.cpp
-        src/metadata/string.cpp
-        src/commandlineassistant.cpp
-        src/widgets/colorframe.cpp
+        src/widgets/options/selectiongroupbox.cpp
     )
 
 # User interface files
 set( sir_UIS
-        dialogs/convertdialog.ui
         dialogs/about.ui
+        dialogs/convertdialog.ui
         dialogs/previewdialog.ui
-        dialogs/selection/dirwidget.ui
-        dialogs/options/generalgroupbox.ui
         dialogs/options/filelistgroupbox.ui
-        dialogs/options/selectiongroupbox.ui
+        dialogs/options/generalgroupbox.ui
         dialogs/options/rawgroupbox.ui
+        dialogs/options/selectiongroupbox.ui
+        dialogs/selection/dirwidget.ui
     )
 
 set( sir_RSCS
@@ -126,31 +130,31 @@ set( sir_IMGS
 # Meta-object code files
 set( sir_MOCS
         src/convertdialog.h
-        src/widgets/previewdialog.h
-        src/widgets/optionsdialog.h
-        src/widgets/treewidget.h
-        src/widgets/treewidgetheader.h
         src/convertthread.h
-        src/widgets/aboutdialog.h
         src/networkutils.h
-        src/widgets/messagebox.h
-        src/widgets/historycombobox.h
-        src/widgets/timecombobox.h
         src/selection.h
         src/settings.h
-        src/widgets/detailsbrowser.h
-        src/widgets/selectiondialog.h
-        src/widgets/options/generalgroupbox.h
-        src/widgets/options/filelistgroupbox.h
-        src/widgets/options/selectiongroupbox.h
-        src/widgets/options/rawgroupbox.h
-        src/widgets/options/abstractoptions.h
+        src/widgets/aboutdialog.h
         src/widgets/colorframe.h
+        src/widgets/detailsbrowser.h
+        src/widgets/historycombobox.h
+        src/widgets/messagebox.h
+        src/widgets/optionsdialog.h
+        src/widgets/previewdialog.h
+        src/widgets/selectiondialog.h
+        src/widgets/timecombobox.h
+        src/widgets/treewidget.h
+        src/widgets/treewidgetheader.h
+        src/widgets/options/abstractoptions.h
+        src/widgets/options/filelistgroupbox.h
+        src/widgets/options/generalgroupbox.h
+        src/widgets/options/rawgroupbox.h
+        src/widgets/options/selectiongroupbox.h
     )
 
 set( sir_LINKING_LIBS
-        ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY}
-        ${QT_QTNETWORK_LIBRARY} ${QT_QTSVG_LIBRARY}
+        ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY}
+        ${QT_QTSVG_LIBRARY} ${QT_QTXML_LIBRARY}
     )
 
 option( metadata "Metadata support using exiv2 library." ON)
@@ -162,33 +166,33 @@ if( metadata )
         add_definitions( -DSIR_METADATA_SUPPORT )
         set( sir_MOCS ${sir_MOCS}
                 src/widgets/metadatadialog.h
-                src/widgets/selection/anymetadatagroupbox.h
                 src/widgets/options/detailsgroupbox.h
                 src/widgets/options/metadatagroupbox.h
+                src/widgets/selection/anymetadatagroupbox.h
             )
         set( sir_HDRS ${sir_HDRS}
                 src/metadatautils.h
-                src/metadata/exif.h
                 src/metadata/error.h
+                src/metadata/exif.h
                 src/metadata/iptc.h
             )
         set( sir_SRCS ${sir_SRCS}
                 src/metadatautils.cpp
                 src/metadata/exif.cpp
-                src/widgets/metadatadialog.cpp
                 src/metadata/error.cpp
                 src/metadata/iptc.cpp
+                src/widgets/metadatadialog.cpp
+                src/widgets/selection/anymetadatagroupbox.cpp
                 src/widgets/options/detailsgroupbox.cpp
                 src/widgets/options/metadatagroupbox.cpp
-                src/widgets/selection/anymetadatagroupbox.cpp
             )
         set( sir_UIS ${sir_UIS}
                 dialogs/metadatadialog.ui
+                dialogs/options/detailsgroupbox.ui
+                dialogs/options/metadatagroupbox.ui
                 dialogs/selection/anymetadatagroupbox.ui
                 dialogs/selection/exifgroupbox.ui
                 dialogs/selection/iptcgroupbox.ui
-                dialogs/options/metadatagroupbox.ui
-                dialogs/options/detailsgroupbox.ui
             )
         set( sir_LINKING_LIBS ${sir_LINKING_LIBS} ${EXIV2_LIBRARY} )
     else( EXISTS ${EXIV2_LIBRARY} )

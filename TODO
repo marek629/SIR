@@ -5,9 +5,11 @@
   ! Sessions: save and restore files list in/from text file
 
 *** next release ***
-  ! SVG: remove single text node and group of text node containing specifed string
   ! support for animated graphics files (QMovie?)
   ! defines.h refactorization: change defines to enumerations
+  ! Make simple effects
+    * color (sepia, b&w, etc.) and gradient filtres
+    * watermark
 
 *** wishlist ***
   ! SelectionDialog:
@@ -16,6 +18,3 @@
   ! Conditional converting (ie. convert if image width > 1000 px)
     * scripts with exiv2 support
   ! Make recursive screen images with (auto detect of sceeen frame) feature - joke :)
-  ! Make simple effects
-    * color (sepia, b&w, etc.) and gradient filtres
-    * watermark

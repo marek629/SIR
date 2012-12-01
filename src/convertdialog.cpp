@@ -486,10 +486,21 @@ void ConvertDialog::convert() {
     sharedInfo->setDestSuffix(destSuffixEdit->text());
     sharedInfo->setDestFolder(destFolder);
     sharedInfo->setOverwriteAll(false);
+    // backgroud color
     if (backgroundColorCheckBox->isChecked())
         sharedInfo->backgroundColor = backgroundColorFrame->color();
     else
         sharedInfo->backgroundColor = QColor();
+    // svg
+    if (svgRemoveTextCheckBox->isChecked())
+        sharedInfo->svgRemoveText = svgRemoveTextLineEdit->text();
+    else
+        sharedInfo->svgRemoveText = QString();
+    sharedInfo->svgRemoveEmptyGroup = svgRemoveGroupsCheckBox->isChecked();
+    sharedInfo->svgSave = svgSaveCheckBox->isChecked();
+    sharedInfo->svgModifiersEnabled = (sharedInfo->svgSave
+                                       || sharedInfo->svgRemoveEmptyGroup
+                                       || !sharedInfo->svgRemoveText.isNull());
 
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
@@ -502,6 +513,9 @@ void ConvertDialog::convert() {
     }
 }
 
+/** Shows selection dialog.
+  * \sa Selection::selectItems() Selection::selectFiles()
+  */
 void ConvertDialog::showSelectionDialog() {
     Selection selection(this);
     QAction *action = static_cast<QAction*> (sender());

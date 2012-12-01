@@ -557,11 +557,8 @@ QString TreeWidget::imageSizeString(const MetadataUtils::String &imagePath) {
                 imageSize = img.size();
         }
     }
-    else { // render from SVG file
-        QGraphicsSvgItem svg(imagePath);
-        QSvgRenderer *renderer = svg.renderer();
-        imageSize = renderer->defaultSize();
-    }
+    else // render from SVG file
+        imageSize = QSvgRenderer(imagePath).defaultSize();
     // creating result string
     QString result;
     if (imageSize.isValid())

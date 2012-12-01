@@ -109,12 +109,9 @@ private:
     void setupRegExps();
     void setupListRegExp(const MetadataUtils::String &strExp, QList<QRegExp*> *listRx);
     int loadFileInfo(const QString &dir, QFileInfoList *list, bool recursive);
-    bool isCompatible(const QString &string, const QList<QRegExp*> &rxList);
-    bool isCompatible(const QStringList &list, const QList<QRegExp*> &rxList);
-    bool isCompatible(const QDate &date, const QTime &time, QDateTime *dtArray);
-    bool isCompatible(const QDateTime &dateTime, QDateTime *dtArray);
+    bool isInTime(const QDate &date, const QTime &time, QDateTime *dtArray);
+    bool isInTime(const QDateTime &dateTime, QDateTime *dtArray);
     bool testFile(const QFileInfo &info);
-    void clearPointerList(QList<QRegExp*> *list);
     void setupExpressionTrees();
     void loadSymbols();
 };

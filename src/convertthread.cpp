@@ -21,7 +21,6 @@
 
 #include <QImage>
 #include <QDir>
-#include <QtSvg/QGraphicsSvgItem>
 #include <QtSvg/QSvgRenderer>
 #include <QDebug>
 #include <cmath>
@@ -31,6 +30,7 @@
 #include "rawutils.h"
 #include "widgets/messagebox.h"
 #include "settings.h"
+#include "svgmodifier.h"
 
 // setup static fields
 SharedInformation * ConvertThread::shared = new SharedInformation();
@@ -106,6 +106,7 @@ void ConvertThread::run() {
 
         QImage *image = 0;
 
+        // load image data
         if(rawEnabled) {
             image = new QImage();
             if(RawUtils::isRaw(imagePath))
@@ -114,16 +115,10 @@ void ConvertThread::run() {
                 image->load(imagePath);
         }
         else if (svgSource) {
-            QGraphicsSvgItem svgImage(imagePath);
-            sizeComputed = computeSize(svgImage.renderer(), imagePath);
-            if (sizeComputed == 1) {
+            if (!loadSvgImage(image)) {
                 getNextOrStop();
                 continue;
             }
-            image = new QImage(width, height, QImage::Format_ARGB32);
-            fillImage(image);
-            QPainter painter(image);
-            svgImage.renderer()->render(&painter);
         }
         else {
             image = new QImage();
@@ -680,4 +675,74 @@ void ConvertThread::fillImage(QImage *img) {
         img->fill(Qt::transparent);
     else // in other formats tranparency isn't supported
         img->fill(Qt::white);
+}
+
+/** Loads and modifies SVG file if needed. Renders SVG data to \a image object. */
+bool ConvertThread::loadSvgImage(QImage *image) {
+    QSvgRenderer renderer;
+    if (shared->svgModifiersEnabled) {
+        SvgModifier modifier(imagePath);
+        // modify SVG file
+        if (!shared->svgRemoveText.isNull())
+            modifier.removeText(shared->svgRemoveText);
+        if (shared->svgRemoveEmptyGroup)
+            modifier.removeEmptyGroups();
+        // save SVG file
+        if (shared->svgSave) {
+            QString svgTargetFileName =
+                    targetFilePath.left(targetFilePath.lastIndexOf('.')+1) + "svg";
+            QFile file(svgTargetFileName);
+            // ask overwrite
+            if (file.exists()) {
+                shared->mutex.lock();
+                emit question(svgTargetFileName, Overwrite);
+                shared->mutex.unlock();
+            }
+            if (shared->overwriteResult == QMessageBox::Yes ||
+                    shared->overwriteResult == QMessageBox::YesToAll) {
+                if (!file.open(QIODevice::WriteOnly)) {
+                    emit imageStatus(imgData, tr("Failed to save new SVG file"),
+                                     FAILED);
+                    return false;
+                }
+                file.write(modifier.content());
+            }
+        }
+        // and load QByteArray buffer to renderer
+        if (!renderer.load(modifier.content())) {
+            emit imageStatus(imgData, tr("Failed to open changed SVG file"),
+                             FAILED);
+            return false;
+        }
+    }
+    else if (!renderer.load(imagePath)) {
+        emit imageStatus(imgData, tr("Failed to open SVG file"), FAILED);
+        return false;
+    }
+    sizeComputed = computeSize(&renderer, imagePath);
+    if (sizeComputed == 1)
+        return false;
+    // keep aspect ratio
+    if (shared->maintainAspect) {
+        qreal w = width;
+        qreal h = height;
+        qreal targetRatio = w / h;
+        QSizeF svgSize = renderer.defaultSize();
+        qreal currentRatio = svgSize.width() / svgSize.height();
+        if (currentRatio != targetRatio) {
+            qreal diffRatio;
+            if (currentRatio > targetRatio)
+                diffRatio = w / svgSize.width();
+            else
+                diffRatio = h / svgSize.height();
+            width = diffRatio * svgSize.width();
+            height = diffRatio * svgSize.height();
+        }
+    }
+    // create image
+    image = new QImage(width, height, QImage::Format_ARGB32);
+    fillImage(image);
+    QPainter painter(image);
+    renderer.render(&painter);
+    return true;
 }

@@ -83,6 +83,14 @@ private:
       * If custom background color is disabled it's invalid QColor object.
       */
     QColor backgroundColor;
+    // SVG modifiers
+    bool svgModifiersEnabled; /**< Set it true if you want modify SVG file. */
+    /** Text value of SVG \e text nodes to delete. Plain text and regular
+      * expression are supported.
+      */
+    QString svgRemoveText;
+    bool svgRemoveEmptyGroup; /**< Enables removing all empty SVG \e g nodes. */
+    bool svgSave; /**< Enables saving changed SVG file in SVG format also. */
 #ifdef SIR_METADATA_SUPPORT
     // metadata settings
     bool metadataEnabled; /**< Indicates that metadata support enabled. */
