@@ -28,6 +28,7 @@
 #include "expressiontree.h"
 #include "widgets/selectiondialog.h"
 #include "regexputils.h"
+#include "convertshareddata.h"
 
 // static variables
 
@@ -276,7 +277,7 @@ void Selection::setupListRegExp(const MetadataUtils::String &strExp,
 int Selection::loadFileInfo(const QString &dir, QFileInfoList *list, bool recursive) {
     int result = 0;
     qDebug() << "Watching dir:" << dir;
-    QDir sourceDir(dir, convertDialog->fileFilters);
+    QDir sourceDir(dir, convertDialog->csd->fileFilters);
     sourceDir.setFilter(QDir::Files | QDir::NoSymLinks | QDir::Readable);
     QFileInfoList fileInfoList = sourceDir.entryInfoList();
     list->append(fileInfoList);

@@ -38,6 +38,7 @@
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/metadatadialog.h"
 #endif // SIR_METADATA_SUPPORT
+#include "convertshareddata.h"
 
 /** Default constructor. */
 TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
@@ -91,7 +92,7 @@ void TreeWidget::initList(const QStringList &argList) {
         if (!fileName.isEmpty() && info.exists()) {
             //Directory
             if (info.isDir()) {
-                QDir sourceFolder(fileName, convertDialog->fileFilters);
+                QDir sourceFolder(fileName, convertDialog->csd->fileFilters);
                 sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
 
                 QList<QFileInfo> list = sourceFolder.entryInfoList();
@@ -110,7 +111,7 @@ void TreeWidget::initList(const QStringList &argList) {
 
                 int comp = QString::compare("",QFileInfo(fileName).suffix());
 
-                if((convertDialog->fileFilters.contains(QFileInfo(fileName).suffix()))
+                if((convertDialog->csd->fileFilters.contains(QFileInfo(fileName).suffix()))
                     && (comp !=0)) {
 
                     item = new QTreeWidgetItem(itemList(info));
@@ -153,7 +154,7 @@ QSize TreeWidget::imageSize(QTreeWidgetItem *item) {
   * \sa addDir() loadFiles(const QStringList&)
   */
 void TreeWidget::addFile() {
-    QString aux = tr("Images") + "(" + convertDialog->fileFilters + ")";
+    QString aux = tr("Images") + "(" + convertDialog->csd->fileFilters + ")";
 
     QStringList files = QFileDialog::getOpenFileNames(
                             this,
@@ -189,7 +190,7 @@ void TreeWidget::addDir() {
     if (dirPath.isEmpty())
         return;
     Settings::instance()->settings.lastDir = dirPath;
-    QDir sourceFolder(dirPath, convertDialog->fileFilters);
+    QDir sourceFolder(dirPath, convertDialog->csd->fileFilters);
     sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
     QList<QFileInfo> list = sourceFolder.entryInfoList();
     loadFiles(list);

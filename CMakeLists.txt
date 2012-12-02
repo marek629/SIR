@@ -25,6 +25,7 @@ endif()
 # Headers
 set( sir_HDRS
         src/commandlineassistant.h
+        src/convertshareddata.h
         src/defines.h
         src/expressiontree.h
         src/languageutils.h
@@ -41,6 +42,7 @@ set( sir_HDRS
 set( sir_SRCS
         src/commandlineassistant.cpp
         src/convertdialog.cpp
+        src/convertshareddata.cpp
         src/convertthread.cpp
         src/expressiontree.cpp
         src/languageutils.cpp
@@ -64,6 +66,9 @@ set( sir_SRCS
         src/widgets/timecombobox.cpp
         src/widgets/treewidget.cpp
         src/widgets/treewidgetheader.cpp
+        src/widgets/convert/optionsscrollarea.cpp
+        src/widgets/convert/sizescrollarea.cpp
+        src/widgets/convert/svgscrollarea.cpp
         src/widgets/options/abstractoptions.cpp
         src/widgets/options/filelistgroupbox.cpp
         src/widgets/options/generalgroupbox.cpp
@@ -76,6 +81,9 @@ set( sir_UIS
         dialogs/about.ui
         dialogs/convertdialog.ui
         dialogs/previewdialog.ui
+        dialogs/convert/optionsscrollarea.ui
+        dialogs/convert/sizescrollarea.ui
+        dialogs/convert/svgscrollarea.ui
         dialogs/options/filelistgroupbox.ui
         dialogs/options/generalgroupbox.ui
         dialogs/options/rawgroupbox.ui
@@ -145,6 +153,9 @@ set( sir_MOCS
         src/widgets/timecombobox.h
         src/widgets/treewidget.h
         src/widgets/treewidgetheader.h
+        src/widgets/convert/optionsscrollarea.h
+        src/widgets/convert/sizescrollarea.h
+        src/widgets/convert/svgscrollarea.h
         src/widgets/options/abstractoptions.h
         src/widgets/options/filelistgroupbox.h
         src/widgets/options/generalgroupbox.h

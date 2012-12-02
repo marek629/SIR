@@ -43,6 +43,7 @@
 #include "metadatautils.h"
 #include "selection.h"
 #include "languageutils.h"
+#include "convertshareddata.h"
 
 /** Default constuctor.
   *
@@ -54,6 +55,7 @@
   * \sa init()
   */
 ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args) : QMainWindow(parent) {
+    csd = ConvertSharedData::instance();
     setupUi(this);
     this->args = args;
     net = NULL;
@@ -110,17 +112,6 @@ void ConvertDialog::createConnections() {
     connect(convertButton, SIGNAL(clicked()), this, SLOT(convertAll()));
     connect(convertSelectedButton, SIGNAL(clicked()), SLOT(convertSelected()));
     connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
-
-    // size tab
-    connect(rotateCheckBox,SIGNAL(stateChanged (int)), SLOT(verifyRotate(int)));
-    connect(sizeUnitComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(setSizeUnit(int)));
-    if (maintainCheckBox->isChecked() && sizeUnitComboBox->currentIndex()==1) // %
-        connectSizeLinesEdit();
-
-    // quality spin box & slider
-    connect(qualitySpinBox, SIGNAL(valueChanged(int)), qualitySlider, SLOT(setValue(int)));
-    connect(qualitySlider, SIGNAL(valueChanged(int)), qualitySpinBox, SLOT(setValue(int)));
 }
 
 /** Check updates on SIR website.
@@ -286,13 +277,13 @@ void ConvertDialog::init() {
         if (!list.contains(str))
             list.append(str);
     }
-    fileFilters = "*.";
-    fileFilters.append(list.join(" *.").toLower());
-    fileFilters.append(" *.jpg");
-    fileFilters.append(" *.JPG");
-    fileFilters.append(" *.JPEG");
-    fileFilters.append(" *.Jpg");
-    fileFilters.append(" *.Jpeg");
+    csd->fileFilters = "*.";
+    csd->fileFilters.append(list.join(" *.").toLower());
+    csd->fileFilters.append(" *.jpg");
+    csd->fileFilters.append(" *.JPG");
+    csd->fileFilters.append(" *.JPEG");
+    csd->fileFilters.append(" *.Jpg");
+    csd->fileFilters.append(" *.Jpeg");
 
     RawUtils::createRawFilesList(rawFormats);
     loadSettings();
@@ -416,12 +407,14 @@ void ConvertDialog::convert() {
 
     QDir destFolder(destFileEdit->text());
 
-    if (widthDoubleSpinBox->value() != widthDoubleSpinBox->minimum()) {
-        w = widthDoubleSpinBox->value();
+    if (sizeScrollArea->widthDoubleSpinBox->value()
+            != sizeScrollArea->widthDoubleSpinBox->minimum()) {
+        w = sizeScrollArea->widthDoubleSpinBox->value();
         hasWidth = true;
     }
-    if (heightDoubleSpinBox->value() != heightDoubleSpinBox->minimum()) {
-        h = heightDoubleSpinBox->value();
+    if (sizeScrollArea->heightDoubleSpinBox->value()
+            != sizeScrollArea->heightDoubleSpinBox->minimum()) {
+        h = sizeScrollArea->heightDoubleSpinBox->value();
         hasHeight = true;
     }
 
@@ -466,38 +459,40 @@ void ConvertDialog::convert() {
 
     enableConvertButtons(false);
 
-    if (sizeUnitComboBox->currentIndex() == 2) {
+    if (sizeScrollArea->sizeUnitComboBox->currentIndex() == 2) {
         int multiplier = 1024;
-        if (fileSizeComboBox->currentIndex() == 1) // MiB
+        if (sizeScrollArea->fileSizeComboBox->currentIndex() == 1) // MiB
             multiplier *= 1024;
-        sharedInfo->setDesiredSize( fileSizeSpinBox->value() * multiplier );
+        sharedInfo->setDesiredSize( sizeScrollArea->fileSizeSpinBox->value()
+                                    * multiplier );
     }
     else
-        sharedInfo->setDesiredSize( w, h, (sizeUnitComboBox->currentIndex() == 1),
-                                       hasWidth, hasHeight,
-                                       maintainCheckBox->isChecked() );
+        sharedInfo->setDesiredSize( w, h,
+                                    (sizeScrollArea->sizeUnitComboBox->currentIndex() == 1),
+                                    hasWidth, hasHeight,
+                                    sizeScrollArea->maintainCheckBox->isChecked() );
     QString desiredFormat = targetFormatComboBox->currentText().toLower();
     sharedInfo->setDesiredFormat( desiredFormat );
-    sharedInfo->setDesiredFlip(flipComboBox->currentIndex());
-    sharedInfo->setDesiredRotation( rotateCheckBox->isChecked(),
-                                           rotateLineEdit->text().toDouble() );
-    sharedInfo->setQuality(qualitySpinBox->value());
+    sharedInfo->setDesiredFlip(optionsScrollArea->flipComboBox->currentIndex());
+    sharedInfo->setDesiredRotation( optionsScrollArea->rotateCheckBox->isChecked(),
+                                    optionsScrollArea->rotateLineEdit->text().toDouble() );
+    sharedInfo->setQuality(optionsScrollArea->qualitySpinBox->value());
     sharedInfo->setDestPrefix(destPrefixEdit->text());
     sharedInfo->setDestSuffix(destSuffixEdit->text());
     sharedInfo->setDestFolder(destFolder);
     sharedInfo->setOverwriteAll(false);
     // backgroud color
-    if (backgroundColorCheckBox->isChecked())
-        sharedInfo->backgroundColor = backgroundColorFrame->color();
+    if (optionsScrollArea->backgroundColorCheckBox->isChecked())
+        sharedInfo->backgroundColor = optionsScrollArea->backgroundColorFrame->color();
     else
         sharedInfo->backgroundColor = QColor();
     // svg
-    if (svgRemoveTextCheckBox->isChecked())
-        sharedInfo->svgRemoveText = svgRemoveTextLineEdit->text();
+    if (svgScrollArea->removeTextCheckBox->isChecked())
+        sharedInfo->svgRemoveText = svgScrollArea->removeTextLineEdit->text();
     else
         sharedInfo->svgRemoveText = QString();
-    sharedInfo->svgRemoveEmptyGroup = svgRemoveGroupsCheckBox->isChecked();
-    sharedInfo->svgSave = svgSaveCheckBox->isChecked();
+    sharedInfo->svgRemoveEmptyGroup = svgScrollArea->removeGroupsCheckBox->isChecked();
+    sharedInfo->svgSave = svgScrollArea->saveCheckBox->isChecked();
     sharedInfo->svgModifiersEnabled = (sharedInfo->svgSave
                                        || sharedInfo->svgRemoveEmptyGroup
                                        || !sharedInfo->svgRemoveText.isNull());
@@ -523,21 +518,6 @@ void ConvertDialog::showSelectionDialog() {
         qDebug() << "Selected items:" << selection.selectItems();
     else if (actionImport_files)
         qDebug() << "Imported files:" << selection.importFiles();
-}
-
-/** Rotate checkbox slot.
-  * Disables/enables rotation angle line edit.
-  * \param status Status of the checkbox.
-  */
-void ConvertDialog::verifyRotate(int status) {
-
-    if (status == Qt::Checked ) {
-        rotateLineEdit->setEnabled(TRUE);
-    }
-    else {
-        rotateLineEdit->setEnabled(FALSE);
-    }
-
 }
 
 /** Shows window containing information about SIR. */
@@ -577,8 +557,8 @@ void ConvertDialog::loadSettings() {
     destPrefixEdit->setText(                    s->settings.targetPrefix);
     destSuffixEdit->setText(                    s->settings.targetSuffix);
     int quality =                               s->settings.quality;
-    qualitySpinBox->setValue(quality);
-    qualitySlider->setValue(quality);
+    optionsScrollArea->qualitySpinBox->setValue(quality);
+    optionsScrollArea->qualitySlider->setValue(quality);
     numThreads =                                s->settings.cores;
     if (numThreads == 0)
         numThreads = GeneralGroupBox::detectCoresCount();
@@ -593,45 +573,45 @@ void ConvertDialog::loadSettings() {
     languages->appTranslator->load(selectedTranslationFile);
     retranslateStrings();
     alreadySent =                               s->settings.alreadySent;
-    dateFormat =                                s->settings.dateDisplayFormat;
-    timeFormat =                                s->settings.timeDisplayFormat;
-    dateTimeFormat = dateFormat + ' ' + timeFormat;
+    csd->dateFormat =                                s->settings.dateDisplayFormat;
+    csd->timeFormat =                                s->settings.timeDisplayFormat;
+    csd->dateTimeFormat = csd->dateFormat + ' ' + csd->timeFormat;
     // size
     int sizeUnitIndex =                 s->size.sizeUnit;
-    setSizeUnit(sizeUnitIndex);
-    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
-    fileSizeSpinBox->setValue(          s->size.fileSizeValue);
-    fileSizeComboBox->setCurrentIndex(  s->size.fileSizeUnit);
-    maintainCheckBox->setChecked(       s->size.keepAspectRatio);
-    if (sizeUnitComboBox->currentIndex() == 1) {
-        sizeWidth =                     s->size.widthPx;
-        sizeHeight =                    s->size.heightPx;
-        widthDoubleSpinBox->setValue(sizeWidth);
-        widthDoubleSpinBox->setValue(   s->size.widthPercent);
-        heightDoubleSpinBox->setValue(sizeHeight);
-        heightDoubleSpinBox->setValue(  s->size.heightPercent);
+    sizeScrollArea->setSizeUnit(sizeUnitIndex);
+    sizeScrollArea->sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
+    sizeScrollArea->fileSizeSpinBox->setValue(          s->size.fileSizeValue);
+    sizeScrollArea->fileSizeComboBox->setCurrentIndex(  s->size.fileSizeUnit);
+    sizeScrollArea->maintainCheckBox->setChecked(       s->size.keepAspectRatio);
+    if (sizeScrollArea->sizeUnitComboBox->currentIndex() == 1) {
+        csd->sizeWidth =                     s->size.widthPx;
+        csd->sizeHeight =                    s->size.heightPx;
+        sizeScrollArea->widthDoubleSpinBox->setValue(csd->sizeWidth);
+        sizeScrollArea->widthDoubleSpinBox->setValue(   s->size.widthPercent);
+        sizeScrollArea->heightDoubleSpinBox->setValue(csd->sizeHeight);
+        sizeScrollArea->heightDoubleSpinBox->setValue(  s->size.heightPercent);
     }
-    else if (sizeUnitComboBox->currentIndex() == 0) {
-        sizeWidth =                     s->size.widthPercent;
-        sizeHeight =                    s->size.heightPercent;
-        widthDoubleSpinBox->setValue(sizeWidth);
-        widthDoubleSpinBox->setValue(   s->size.widthPx);
-        heightDoubleSpinBox->setValue(sizeHeight);
-        heightDoubleSpinBox->setValue(  s->size.heightPx);
+    else if (sizeScrollArea->sizeUnitComboBox->currentIndex() == 0) {
+        csd->sizeWidth =                     s->size.widthPercent;
+        csd->sizeHeight =                    s->size.heightPercent;
+        sizeScrollArea->widthDoubleSpinBox->setValue(csd->sizeWidth);
+        sizeScrollArea->widthDoubleSpinBox->setValue(   s->size.widthPx);
+        sizeScrollArea->heightDoubleSpinBox->setValue(csd->sizeHeight);
+        sizeScrollArea->heightDoubleSpinBox->setValue(  s->size.heightPx);
     }
     // raw
     rawEnabled = s->raw.enabled;
     if(rawEnabled) {
         foreach(QString ext, rawFormats) {
-            if(!fileFilters.contains(ext)) {
-                fileFilters.append(ext);
+            if(!csd->fileFilters.contains(ext)) {
+                csd->fileFilters.append(ext);
             }
         }
     }
     else {
         foreach(QString ext, rawFormats) {
-            if(fileFilters.contains(ext) && ext != " *.tif") {
-                fileFilters.remove(ext);
+            if(csd->fileFilters.contains(ext) && ext != " *.tif") {
+                csd->fileFilters.remove(ext);
             }
         }
     }
@@ -774,13 +754,13 @@ void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
 
 /** Retranslates GUI. */
 void ConvertDialog::retranslateStrings() {
-    int sizeUnitIndex = sizeUnitComboBox->currentIndex();
-    int fileSizeIndex = fileSizeComboBox->currentIndex();
+    int sizeUnitIndex = sizeScrollArea->sizeUnitComboBox->currentIndex();
+    int fileSizeIndex = sizeScrollArea->fileSizeComboBox->currentIndex();
     retranslateUi(this);
     filesTreeWidget->retranslateStrings();
     // restoring nulled indexes
-    sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
-    fileSizeComboBox->setCurrentIndex(fileSizeIndex);
+    sizeScrollArea->sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
+    sizeScrollArea->fileSizeComboBox->setCurrentIndex(fileSizeIndex);
 }
 
 /** Returns file size string with \e KiB or \e MiB suffix (depending
@@ -789,9 +769,9 @@ void ConvertDialog::retranslateStrings() {
   */
 QString ConvertDialog::fileSizeString(qint64 size) {
     double fileSize_M_B = size
-            / pow(1024., this->fileSizeComboBox->currentIndex()+1.);
+            / pow(1024., sizeScrollArea->fileSizeComboBox->currentIndex()+1.);
     QString fileSizeString = QString::number(fileSize_M_B, 'f', 2)
-            + ' ' + this->fileSizeComboBox->currentText();
+            + ' ' + sizeScrollArea->fileSizeComboBox->currentText();
     return fileSizeString;
 }
 
@@ -833,77 +813,4 @@ void ConvertDialog::setCanceled() {
         if (item->text(StatusColumn) != converted)
             item->setText(StatusColumn, status);
     }
-}
-
-/** Shows size values corresponding index of size unit combo box. */
-void ConvertDialog::setSizeUnit(int index) {
-    if (index < 0)
-        return;
-    static int lastIndex = index;
-    static int lastIndexPxPercent = index+1;
-    static bool keepAspectRatio = false;
-    if (index == 2) { // bytes
-        geometryWidget->hide();
-        fileSizeWidget->show();
-        keepAspectRatio = maintainCheckBox->isChecked();
-        maintainCheckBox->setChecked(true);
-        maintainCheckBox->setEnabled(false);
-    }
-    else { // px or %
-        fileSizeWidget->hide();
-        geometryWidget->show();
-        disconnectSizeLinesEdit();
-        if (lastIndexPxPercent != index) {
-            float tmp = sizeWidth;
-            sizeWidth = widthDoubleSpinBox->value();
-            widthDoubleSpinBox->setValue(tmp);
-            tmp = sizeHeight;
-            sizeHeight = heightDoubleSpinBox->value();
-            heightDoubleSpinBox->setValue(tmp);
-            lastIndexPxPercent = index;
-            QString suffix;
-            int decimals;
-            double max;
-            if (index == 0) { // px
-                suffix = " px";
-                decimals = 0;
-                max = 100000.;
-            }
-            else { // %
-                suffix = " %";
-                decimals = 2;
-                max = 10000.;
-            }
-            widthDoubleSpinBox->setSuffix(suffix);
-            widthDoubleSpinBox->setDecimals(decimals);
-            widthDoubleSpinBox->setMaximum(max);
-            heightDoubleSpinBox->setSuffix(suffix);
-            heightDoubleSpinBox->setDecimals(decimals);
-            heightDoubleSpinBox->setMaximum(max);
-        }
-        if (lastIndex == 2) {
-            maintainCheckBox->setEnabled(true);
-            maintainCheckBox->setChecked(keepAspectRatio);
-        }
-        if (maintainCheckBox->isChecked() && index == 1) { // %
-            heightDoubleSpinBox->setValue(widthDoubleSpinBox->value());
-            connectSizeLinesEdit();
-        }
-    }
-    lastIndex = index;
-}
-
-/** If desired size unit is percent and it keeps aspect ratio this function will
-  * be change width or heigth percent value following the user change in
-  * adjacent spin box. Otherwise do nothing.
-  */
-void ConvertDialog::sizeChanged(double value) {
-    if (sizeUnitComboBox->currentIndex() != 1 && !maintainCheckBox->isChecked())
-        return;
-    // size unit is % and maintainCheckBox is checked
-    QDoubleSpinBox *spinBox = static_cast<QDoubleSpinBox*>(sender());
-    if (spinBox == widthDoubleSpinBox)
-        heightDoubleSpinBox->setValue(value);
-    else if (spinBox == heightDoubleSpinBox)
-        widthDoubleSpinBox->setValue(value);
 }

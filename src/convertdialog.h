@@ -27,6 +27,7 @@
 #include "settings.h"
 
 class NetworkUtils;
+class ConvertSharedData;
 
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
@@ -47,9 +48,7 @@ private:
     SharedInformation *sharedInfo;
     QList<ConvertThread*> convertThreads;
     QStringList args;
-    QImage *image;
     QString targetFile;
-    QString fileFilters;
     QStringList rawFormats;
     quint8 numThreads;
     int convertedImages;
@@ -61,16 +60,10 @@ private:
     NetworkUtils *net;
     QPoint windowPossition;
     QSize windowSize;
-    float sizeWidth;
-    float sizeHeight;
-    QString dateFormat;
-    QString timeFormat;
-    QString dateTimeFormat;
+    ConvertSharedData *csd;
     // methods
     void init();
     void createConnections();
-    inline void connectSizeLinesEdit();
-    inline void disconnectSizeLinesEdit();
     void createRawFilesList();
     inline void writeWindowProperties();
     inline void resetAnswers();
@@ -85,7 +78,6 @@ public slots:
     void convertAll();
     void convertSelected();
     void enableConvertButtons(bool enable = true);
-    void verifyRotate(int status);
     void about();
     void setOptions();
     void loadSettings();
@@ -102,10 +94,6 @@ public slots:
     void sendInstall();
     void showSendInstallResult(QString *result, bool error);
     void showSelectionDialog();
-
-private slots:
-    void setSizeUnit(int index);
-    void sizeChanged(double value);
 };
 
 /** Saves window maximized status, possition on screen and size and last
@@ -141,25 +129,6 @@ void ConvertDialog::resetAnswers() {
     sharedInfo->enlargeResult = 1;
     sharedInfo->enlargeAll = false;
     sharedInfo->noEnlargeAll = false;
-}
-
-/** Connects width and height lines edit's textChanged() signal to sizeChanged()
-  * slot.
-  * \sa disconnectSizeLinesEdit()
-  */
-void ConvertDialog::connectSizeLinesEdit() {
-    connect(widthDoubleSpinBox, SIGNAL(valueChanged(double)),
-            this, SLOT(sizeChanged(double)));
-    connect(heightDoubleSpinBox, SIGNAL(valueChanged(double)),
-            this, SLOT(sizeChanged(double)));
-}
-
-/** Disconnects sizeChanged() slot.
-  * \sa connectSizeLinesEdit()
-  */
-void ConvertDialog::disconnectSizeLinesEdit() {
-    widthDoubleSpinBox->disconnect(this,SLOT(sizeChanged(double)));
-    heightDoubleSpinBox->disconnect(this, SLOT(sizeChanged(double)));
 }
 
 /** Removes all files created by SIR from temporary directory. */

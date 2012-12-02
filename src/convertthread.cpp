@@ -70,7 +70,7 @@ void ConvertThread::run() {
     bool rawEnabled = RawUtils::isRawEnabled();
 
     while(work) {
-        QStringList imgData = this->imageData; // imageData change protection by convertImage()
+        pd.imgData = this->imageData; // imageData change protection by convertImage()
         sizeComputed = 0;
         width = shared->width;
         height = shared->height;
@@ -81,15 +81,15 @@ void ConvertThread::run() {
         angle = shared->angle;
 
         if (shared->abort) {
-            emit imageStatus(imgData, tr("Cancelled"), CANCELLED);
+            emit imageStatus(pd.imgData, tr("Cancelled"), CANCELLED);
             getNextOrStop();
             continue;
         }
 
-        emit imageStatus(imgData, tr("Converting"), CONVERTING);
+        emit imageStatus(pd.imgData, tr("Converting"), CONVERTING);
 
-        QString imageName = imgData.at(0);
-        QString originalFormat = imgData.at(1);
+        QString imageName = pd.imgData.at(0);
+        QString originalFormat = pd.imgData.at(1);
 
         targetFilePath = shared->destFolder.absolutePath() + QDir::separator();
         if (!shared->prefix.isEmpty())
@@ -99,8 +99,8 @@ void ConvertThread::run() {
             targetFilePath += "_" + shared->suffix;
         targetFilePath += "." + shared->format;
 
-        QString imagePath = imgData.at(2) + QDir::separator() +
-                            imgData.at(0) + "." + originalFormat;
+        pd.imagePath = pd.imgData.at(2) + QDir::separator() + pd.imgData.at(0)
+                     + "." + originalFormat;
         originalFormat = originalFormat.toLower();
         bool svgSource(originalFormat == "svg" || originalFormat == "svgz");
 
@@ -109,25 +109,26 @@ void ConvertThread::run() {
         // load image data
         if(rawEnabled) {
             image = new QImage();
-            if(RawUtils::isRaw(imagePath))
-                image = RawUtils::loadRawImage(imagePath);
+            if(RawUtils::isRaw(pd.imagePath))
+                image = RawUtils::loadRawImage(pd.imagePath);
             else
-                image->load(imagePath);
+                image->load(pd.imagePath);
         }
         else if (svgSource) {
-            if (!loadSvgImage(image)) {
+            image = loadSvgImage();
+            if (!image) {
                 getNextOrStop();
                 continue;
             }
         }
         else {
             image = new QImage();
-            image->load(imagePath);
+            image->load(pd.imagePath);
         }
 
         if(image->isNull()) {
             //For some reason we where not able to open the image file
-            emit imageStatus(imgData, tr("Failed to open original image"),
+            emit imageStatus(pd.imgData, tr("Failed to open original image"),
                               FAILED);
             delete image;
             //Ask for the next image and go to the beginning of the loop
@@ -138,7 +139,7 @@ void ConvertThread::run() {
         // read metadata
         saveMetadata = false;
         if (!svgSource && shared->metadataEnabled) {
-            saveMetadata = metadata.read(imagePath,true);
+            saveMetadata = metadata.read(pd.imagePath,true);
             int beta = MetadataUtils::Exif::rotationAngle(
                         metadata.exifStruct()->orientation);
             if (!saveMetadata)
@@ -158,7 +159,7 @@ void ConvertThread::run() {
 #endif // SIR_METADATA_SUPPORT
         // compute dest size in px
         if (sizeComputed == 0) { // false if converting from SVG file
-                sizeComputed = computeSize(image,imagePath);
+                sizeComputed = computeSize(image,pd.imagePath);
             if (sizeComputed == 1) { // image saved
                 delete image;
                 getNextOrStop();
@@ -166,7 +167,7 @@ void ConvertThread::run() {
             }
         }
         // ask enlarge
-        if (sizeComputed == -3 || askEnlarge(*image,imagePath) < 0) {
+        if (sizeComputed == -3 || askEnlarge(*image,pd.imagePath) < 0) {
             delete image;
             getNextOrStop();
             continue;
@@ -208,30 +209,30 @@ void ConvertThread::run() {
                     if (saveMetadata && !metadata.write(targetFilePath, destImg))
                         printError();
 #endif // SIR_METADATA_SUPPORT
-                    emit imageStatus(imgData, tr("Converted"), CONVERTED);
+                    emit imageStatus(pd.imgData, tr("Converted"), CONVERTED);
                 }
                 else
-                    emit imageStatus(imgData, tr("Failed to convert"), FAILED);
+                    emit imageStatus(pd.imgData, tr("Failed to convert"), FAILED);
             }
             else if (shared->overwriteResult == QMessageBox::Cancel)
-                emit imageStatus(imgData, tr("Cancelled"), CANCELLED);
+                emit imageStatus(pd.imgData, tr("Cancelled"), CANCELLED);
             else
-                emit imageStatus(imgData, tr("Skipped"), SKIPPED);
+                emit imageStatus(pd.imgData, tr("Skipped"), SKIPPED);
         }
         else if (shared->noOverwriteAll)
-            emit imageStatus(imgData, tr("Skipped"), SKIPPED);
+            emit imageStatus(pd.imgData, tr("Skipped"), SKIPPED);
         else if (shared->abort)
-            emit imageStatus(imgData, tr("Cancelled"), CANCELLED);
+            emit imageStatus(pd.imgData, tr("Cancelled"), CANCELLED);
         else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFilePath, 0, shared->quality)) {
 #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata && !metadata.write(targetFilePath, destImg))
                     printError();
 #endif // SIR_METADATA_SUPPORT
-                emit imageStatus(imgData, tr("Converted"), CONVERTED);
+                emit imageStatus(pd.imgData, tr("Converted"), CONVERTED);
             }
             else
-                emit imageStatus(imgData, tr("Failed to convert"), FAILED);
+                emit imageStatus(pd.imgData, tr("Failed to convert"), FAILED);
         }
         delete image;
         getNextOrStop();
@@ -677,11 +678,13 @@ void ConvertThread::fillImage(QImage *img) {
         img->fill(Qt::white);
 }
 
-/** Loads and modifies SVG file if needed. Renders SVG data to \a image object. */
-bool ConvertThread::loadSvgImage(QImage *image) {
+/** Loads and modifies SVG file if needed. Renders SVG data to \a image object.
+  * \return Pointer to rendered image if succeed. Otherwise null pointer.
+  */
+QImage * ConvertThread::loadSvgImage() {
     QSvgRenderer renderer;
     if (shared->svgModifiersEnabled) {
-        SvgModifier modifier(imagePath);
+        SvgModifier modifier(pd.imagePath);
         // modify SVG file
         if (!shared->svgRemoveText.isNull())
             modifier.removeText(shared->svgRemoveText);
@@ -701,27 +704,27 @@ bool ConvertThread::loadSvgImage(QImage *image) {
             if (shared->overwriteResult == QMessageBox::Yes ||
                     shared->overwriteResult == QMessageBox::YesToAll) {
                 if (!file.open(QIODevice::WriteOnly)) {
-                    emit imageStatus(imgData, tr("Failed to save new SVG file"),
+                    emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
                                      FAILED);
-                    return false;
+                    return 0;
                 }
                 file.write(modifier.content());
             }
         }
         // and load QByteArray buffer to renderer
         if (!renderer.load(modifier.content())) {
-            emit imageStatus(imgData, tr("Failed to open changed SVG file"),
+            emit imageStatus(pd.imgData, tr("Failed to open changed SVG file"),
                              FAILED);
-            return false;
+            return 0;
         }
     }
-    else if (!renderer.load(imagePath)) {
-        emit imageStatus(imgData, tr("Failed to open SVG file"), FAILED);
-        return false;
+    else if (!renderer.load(pd.imagePath)) {
+        emit imageStatus(pd.imgData, tr("Failed to open SVG file"), FAILED);
+        return 0;
     }
-    sizeComputed = computeSize(&renderer, imagePath);
+    sizeComputed = computeSize(&renderer, pd.imagePath);
     if (sizeComputed == 1)
-        return false;
+        return 0;
     // keep aspect ratio
     if (shared->maintainAspect) {
         qreal w = width;
@@ -740,9 +743,9 @@ bool ConvertThread::loadSvgImage(QImage *image) {
         }
     }
     // create image
-    image = new QImage(width, height, QImage::Format_ARGB32);
-    fillImage(image);
-    QPainter painter(image);
+    QImage *img = new QImage(width, height, QImage::Format_ARGB32);
+    fillImage(img);
+    QPainter painter(img);
     renderer.render(&painter);
-    return true;
+    return img;
 }

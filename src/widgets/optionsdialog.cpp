@@ -222,8 +222,10 @@ void OptionsDialog::setupUi() {
 
     // copying items of combo boxes from parent ConvertDialog window
     ConvertDialog* mainWindow = (ConvertDialog*)parent();
-    generalGroupBox->sizeUnitComboBox->setModel(mainWindow->sizeUnitComboBox->model());
-    generalGroupBox->fileSizeComboBox->setModel(mainWindow->fileSizeComboBox->model());
+    generalGroupBox->sizeUnitComboBox->setModel(
+                mainWindow->sizeScrollArea->sizeUnitComboBox->model());
+    generalGroupBox->fileSizeComboBox->setModel(
+                mainWindow->sizeScrollArea->fileSizeComboBox->model());
 
     verticalLayout->addItem(horizontalLayout);
 

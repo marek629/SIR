@@ -87,6 +87,10 @@ private:
     char sizeComputed;
     bool rotate;
     double angle;
+    struct ThreadPrivateData {
+        QString imagePath;
+        QStringList imgData;
+    } pd;
 #ifdef SIR_METADATA_SUPPORT
     bool saveMetadata;
     MetadataUtils::Metadata metadata;
@@ -103,7 +107,7 @@ private:
     char askEnlarge(const QImage &image, const QString &imagePath);
     char askOverwrite(QFile *tempFile);
     void fillImage(QImage *img);
-    bool loadSvgImage(QImage *image);
+    QImage *loadSvgImage();
 };
 
 #endif // CONVERTTHREAD_H

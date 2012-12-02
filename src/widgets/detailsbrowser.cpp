@@ -26,6 +26,7 @@
 #include "detailsbrowser.h"
 #include "convertdialog.h"
 #include "optionsenums.h"
+#include "convertshareddata.h"
 
 // this file specifed variables
 // HTML constants
@@ -227,13 +228,13 @@ void DetailsBrowser::addMetadataToContent() {
                     MetadataUtils::String::fromDateTimeString(
                         exifStruct->originalDate,
                         MetadataUtils::Exif::dateTimeFormat,
-                        convertDialog->dateTimeFormat) + htmlBr;
+                        convertDialog->csd->dateTimeFormat) + htmlBr;
         if (exifImage & DetailsOptions::DigitizedDateAndTime)
             htmlContent += tr("Digitized Date and Time") + ": " +
                     MetadataUtils::String::fromDateTimeString(
                         exifStruct->digitizedDate,
                         MetadataUtils::Exif::dateTimeFormat,
-                        convertDialog->dateTimeFormat) + htmlBr;
+                        convertDialog->csd->dateTimeFormat) + htmlBr;
         // exif photo
         if (exifPhoto & DetailsOptions::FocalLenght)
             htmlContent += tr("Focal lenght") + ": " +
@@ -289,17 +290,17 @@ void DetailsBrowser::addMetadataToContent() {
                     iptcStruct->modelVersion + htmlBr;
         if (iptcPrint & DetailsOptions::DateCreated)
             htmlContent += tr("Created date") + ": " +
-                    iptcStruct->dateCreated.toString(convertDialog->dateFormat) + htmlBr;
+                    iptcStruct->dateCreated.toString(convertDialog->csd->dateFormat) + htmlBr;
         if (iptcPrint & DetailsOptions::TimeCreated)
             htmlContent += tr("Created time") + ": " +
-                    iptcStruct->timeCreated.toString(convertDialog->timeFormat) + htmlBr;
+                    iptcStruct->timeCreated.toString(convertDialog->csd->timeFormat) + htmlBr;
         if (iptcPrint & DetailsOptions::DigitizedDate)
             htmlContent += tr("Digitized date") + ": " +
-                    iptcStruct->digitizationDate.toString(convertDialog->dateFormat)
+                    iptcStruct->digitizationDate.toString(convertDialog->csd->dateFormat)
                     + htmlBr;
         if (iptcPrint & DetailsOptions::DigitizedTime)
             htmlContent += tr("Digitized time") + ": " +
-                    iptcStruct->digitizationTime.toString(convertDialog->timeFormat)
+                    iptcStruct->digitizationTime.toString(convertDialog->csd->timeFormat)
                     + htmlBr;
         if (iptcPrint & DetailsOptions::Byline)
             htmlContent += tr("Author") + ": " + iptcStruct->byline + htmlBr;
