@@ -486,11 +486,13 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
   */
 char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath) {
     QSize defaultSize = renderer->defaultSize();
-    if (shared->sizeUnit == 0) ; // px
+    if (shared->sizeUnit == 0) // px
     // compute size when it wasn't typed in pixels
+        return 1;
     else if (shared->sizeUnit == 1) { // %
         width *= defaultSize.width() / 100.;
         height *= defaultSize.height() / 100.;
+        return 1;
     }
     else if (shared->sizeUnit == 2) { // bytes
         width = defaultSize.width();
@@ -555,7 +557,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
             if (answer < 0)
                 return answer;
         }
-        return 1;
+        return 2;
     }
     return 0;
 }
@@ -706,7 +708,7 @@ QImage * ConvertThread::loadSvgImage() {
                 if (!file.open(QIODevice::WriteOnly)) {
                     emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
                                      FAILED);
-                    return 0;
+                    return NULL;
                 }
                 file.write(modifier.content());
             }
@@ -715,16 +717,16 @@ QImage * ConvertThread::loadSvgImage() {
         if (!renderer.load(modifier.content())) {
             emit imageStatus(pd.imgData, tr("Failed to open changed SVG file"),
                              FAILED);
-            return 0;
+            return NULL;
         }
     }
     else if (!renderer.load(pd.imagePath)) {
         emit imageStatus(pd.imgData, tr("Failed to open SVG file"), FAILED);
-        return 0;
+        return NULL;
     }
     sizeComputed = computeSize(&renderer, pd.imagePath);
-    if (sizeComputed == 1)
-        return 0;
+    if (sizeComputed == 2)
+        return NULL;
     // keep aspect ratio
     if (shared->maintainAspect) {
         qreal w = width;
@@ -747,5 +749,9 @@ QImage * ConvertThread::loadSvgImage() {
     fillImage(img);
     QPainter painter(img);
     renderer.render(&painter);
+    // don't scale rendered image
+    hasWidth = false;
+    hasHeight = false;
+    // finaly return the image pointer
     return img;
 }
