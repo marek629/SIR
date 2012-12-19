@@ -83,6 +83,14 @@ private:
       * If custom background color is disabled it's invalid QColor object.
       */
     QColor backgroundColor;
+    // add frame
+    int frameWidth;
+    QColor frameColor;
+    bool frameAddAround;
+    int borderInsideWidth;
+    QColor borderInsideColor;
+    int borderOutsideWidth;
+    QColor borderOutsideColor;
     // SVG modifiers
     bool svgModifiersEnabled; /**< Set it true if you want modify SVG file. */
     /** Text value of SVG \e text nodes to delete. Plain text and regular

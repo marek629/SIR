@@ -40,8 +40,8 @@ public:
     // methods
     Metadata();
     ~Metadata();
-    bool read(const String& path, bool setupStructs = false);
-    bool read(const QString& path, bool setupStructs = false);
+    bool read(const String& path, bool setupStructs = false, bool fromSvg = false);
+    bool read(const QString& path, bool setupStructs = false, bool fromSvg = false);
     bool write(const String& path, const QImage& image = QImage());
     bool write(const QString& path, const QImage& image = QImage());
     void close();

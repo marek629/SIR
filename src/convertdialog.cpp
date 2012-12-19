@@ -486,6 +486,37 @@ void ConvertDialog::convert() {
         sharedInfo->backgroundColor = optionsScrollArea->backgroundColorFrame->color();
     else
         sharedInfo->backgroundColor = QColor();
+    // add frame
+    if (effectsScrollArea->frameGroupBox->isChecked()) {
+        sharedInfo->frameAddAround = effectsScrollArea->frameAroundRadioButton->isChecked();
+        sharedInfo->frameWidth = effectsScrollArea->frameWidthSpinBox->value();
+        sharedInfo->frameColor = effectsScrollArea->frameColorFrame->color();
+        if (effectsScrollArea->borderOutsideGroupBox->isChecked()) {
+            sharedInfo->borderOutsideWidth = effectsScrollArea->borderOutsideSpinBox->value();
+            sharedInfo->borderOutsideColor = effectsScrollArea->borderOutsideColorFrame->color();
+        }
+        else {
+            sharedInfo->borderOutsideWidth = -1;
+            sharedInfo->borderOutsideColor = QColor();
+        }
+        if (effectsScrollArea->borderInsideGroupBox->isChecked()) {
+            sharedInfo->borderInsideWidth = effectsScrollArea->borderInsideSpinBox->value();
+            sharedInfo->borderInsideColor = effectsScrollArea->borderInsideColorFrame->color();
+        }
+        else {
+            sharedInfo->borderInsideWidth = -1;
+            sharedInfo->borderInsideColor = QColor();
+        }
+    }
+    else {
+        sharedInfo->frameAddAround = false;
+        sharedInfo->frameWidth = -1;
+        sharedInfo->frameColor = QColor();
+        sharedInfo->borderOutsideWidth = -1;
+        sharedInfo->borderOutsideColor = QColor();
+        sharedInfo->borderInsideWidth = -1;
+        sharedInfo->borderInsideColor = QColor();
+    }
     // svg
     if (svgScrollArea->removeTextCheckBox->isChecked())
         sharedInfo->svgRemoveText = svgScrollArea->removeTextLineEdit->text();

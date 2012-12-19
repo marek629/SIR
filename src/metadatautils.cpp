@@ -43,17 +43,25 @@ Metadata::~Metadata() {
     close();
 }
 
-/** Reads metadata from \b path file path and optionaly setup ExifStruct if
-  * \b setupStructs is true, and returns read success value.\n
-  * If exception catched this error data will be appended to errorList list.
+/** Reads metadata from file.
+  * \param path         file path
+  * \param setupStructs setup ExifStruct if it's true
+  * \param fromSvg      create new image object, don't read metadata from file
+  * \return Read success value.\n
+  *         If exception catched this error data will be appended to errorList
+  *         list and returns false.
   * \sa lastError()
   */
-bool Metadata::read(const String& path, bool setupStructs) {
+bool Metadata::read(const String& path, bool setupStructs, bool fromSvg) {
     close();
     std::string filePath = path.toNativeStdString();
     try {
-        image = Exiv2::ImageFactory::open(filePath);
-        image->readMetadata();
+        if (fromSvg)
+            image = Exiv2::ImageFactory::create(1);
+        else {
+            image = Exiv2::ImageFactory::open(filePath);
+            image->readMetadata();
+        }
         // load Exif data
         exifData = image->exifData();
         exif.setVersion(exifData["Exif.Photo.ExifVersion"]);
@@ -93,8 +101,8 @@ bool Metadata::read(const String& path, bool setupStructs) {
 }
 
 /** This is overloaded function. */
-bool Metadata::read(const QString &path, bool setupStructs) {
-    return read((const String&)path,setupStructs);
+bool Metadata::read(const QString &path, bool setupStructs, bool fromSvg) {
+    return read((const String&)path, setupStructs, fromSvg);
 }
 
 /** Writes metadata about file corresponding with \a path file path and
@@ -107,8 +115,8 @@ bool Metadata::read(const QString &path, bool setupStructs) {
   */
 bool Metadata::write(const String& path, const QImage& qImage) {
     close();
+    std::string filePath = path.toNativeStdString();
     try {
-        std::string filePath = path.toNativeStdString();
         image = Exiv2::ImageFactory::open(filePath);
         image->readMetadata();
         image->clearMetadata();

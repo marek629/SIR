@@ -138,8 +138,8 @@ void ConvertThread::run() {
 #ifdef SIR_METADATA_SUPPORT
         // read metadata
         saveMetadata = false;
-        if (!svgSource && shared->metadataEnabled) {
-            saveMetadata = metadata.read(pd.imagePath,true);
+        if (shared->metadataEnabled) {
+            saveMetadata = metadata.read(pd.imagePath, true, svgSource);
             int beta = MetadataUtils::Exif::rotationAngle(
                         metadata.exifStruct()->orientation);
             if (!saveMetadata)
@@ -172,11 +172,6 @@ void ConvertThread::run() {
             getNextOrStop();
             continue;
         }
-        // rotate image and update thumbnail
-        rotateImage(image);
-#ifdef SIR_METADATA_SUPPORT
-        updateThumbnail(image);
-#endif // SIR_METADATA_SUPPORT
         // create null destination image object
         QImage destImg;
         // scale image
@@ -194,6 +189,15 @@ void ConvertThread::run() {
             destImg = image->scaledToHeight(height, Qt::SmoothTransformation);
         else if (!hasWidth && !hasHeight)
             destImg = *image;
+        // add frame
+        if (shared->frameWidth > 0 && shared->frameColor.isValid())
+            destImg = addFrame(destImg);
+        // rotate image and update thumbnail
+        destImg = rotateImage(destImg);
+        qDebug() << destImg.size();
+#ifdef SIR_METADATA_SUPPORT
+        updateThumbnail(destImg);
+#endif // SIR_METADATA_SUPPORT
         // ask overwrite
         if ( QFile::exists( targetFilePath ) &&
              !(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
@@ -260,11 +264,16 @@ void ConvertThread::printError() {
 }
 #endif // SIR_METADATA_SUPPORT
 
-/** Rotates \a image */
-void ConvertThread::rotateImage(QImage *image) {
+/** Rotates \a image object and returns new QImage object.
+  * \return Rotated image if just rotated, without metadata manipulation.
+  *         Otherwise returns a copy of \a image object.
+  */
+QImage ConvertThread::rotateImage(const QImage &image) {
     int alpha = (int)angle;
 #ifdef SIR_METADATA_SUPPORT
     bool saveExifOrientation = !shared->realRotate;
+    qDebug() << saveExifOrientation << shared->format
+             << MetadataUtils::Metadata::isWriteSupportedFormat(shared->format);
 #endif // SIR_METADATA_SUPPORT
     // rotate image
     if (rotate && angle != 0.0) {
@@ -315,6 +324,9 @@ void ConvertThread::rotateImage(QImage *image) {
             int tmp = width;
             width = height;
             height = tmp;
+            bool temp = hasWidth;
+            hasWidth = hasHeight;
+            hasHeight = temp;
         }
         // image tranformation matrix
         QTransform transform;
@@ -333,15 +345,11 @@ void ConvertThread::rotateImage(QImage *image) {
         }
 #endif // SIR_METADATA_SUPPORT
         transform.rotate(angle);
-        QImage trasformedImage = image->transformed(transform, Qt::SmoothTransformation);
-        delete image;
-        image = new QImage(trasformedImage.size(), QImage::Format_ARGB32);
-        fillImage(image);
-        QPainter painter(image);
-        painter.drawImage(0, 0, trasformedImage);
+        return image.transformed(transform, Qt::SmoothTransformation);
 #ifdef SIR_METADATA_SUPPORT
     }
 #endif // SIR_METADATA_SUPPORT
+    return image;
 }
 
 #ifdef SIR_METADATA_SUPPORT
@@ -351,13 +359,13 @@ void ConvertThread::rotateImage(QImage *image) {
   * function.\n
   * This function is available if SIR_METADATA_SUPPORT is defined only.
   */
-void ConvertThread::updateThumbnail(const QImage *image) {
+void ConvertThread::updateThumbnail(const QImage &image) {
     // update thumbnail
     if (saveMetadata && shared->updateThumbnail) {
         MetadataUtils::ExifStruct *exifStruct = metadata.exifStruct();
         int w = exifStruct->thumbnailWidth.split(' ').first().toInt();
         int h = exifStruct->thumbnailHeight.split(' ').first().toInt();
-        QImage tmpImg = image->scaled(w,h, Qt::KeepAspectRatio,
+        QImage tmpImg = image.scaled(w,h, Qt::KeepAspectRatio,
                                       Qt::SmoothTransformation);
         bool specialRotate = (rotate && (int)angle%90 != 0);
         QImage *thumbnail = &exifStruct->thumbnailImage;
@@ -439,9 +447,9 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 height = size.height() / fileSizeRatio;
                 tempImage = image->scaled(width, height, Qt::IgnoreAspectRatio,
                                              Qt::SmoothTransformation);
-                rotateImage(&tempImage);
+                tempImage = rotateImage(tempImage);
 #ifdef SIR_METADATA_SUPPORT
-                updateThumbnail(&tempImage);
+                updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
                 if (tempImage.save(&tempFile, 0, shared->quality)) {
 #ifdef SIR_METADATA_SUPPORT
@@ -527,9 +535,9 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                 painter.begin(&tempImage);
                 renderer->render(&painter);
                 painter.end();
-                rotateImage(&tempImage);
+                tempImage = rotateImage(tempImage);
 #ifdef SIR_METADATA_SUPPORT
-                updateThumbnail(&tempImage);
+                updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
                 if (tempImage.save(&tempFile, 0, shared->quality)) {
 #ifdef SIR_METADATA_SUPPORT
@@ -754,4 +762,42 @@ QImage * ConvertThread::loadSvgImage() {
     hasHeight = false;
     // finaly return the image pointer
     return img;
+}
+
+/** Adds frame to \a img image and returns new QImage obcject. */
+QImage ConvertThread::addFrame(const QImage &img) {
+    QImage result;
+    int w2 = 2 * shared->frameWidth; // double frame width
+    if (shared->frameAddAround) {
+        QSize size = img.size();
+        size += QSize(w2, w2);
+        result = QImage(size, img.format());
+    }
+    else
+        result = img;
+    QPainter painter(&result);
+    QPen pen(Qt::SolidLine);
+    if (shared->borderInsideWidth + shared->borderOutsideWidth < shared->frameWidth) {
+        pen.setWidth(w2);
+        pen.setColor(shared->frameColor);
+        painter.setPen(pen);
+        painter.drawRect(result.rect());
+    }
+    if (shared->borderOutsideWidth > 0) {
+        pen.setWidth(2*shared->borderOutsideWidth);
+        pen.setColor(shared->borderOutsideColor);
+        painter.setPen(pen);
+        painter.drawRect(result.rect());
+    }
+    if (shared->borderInsideWidth > 0) {
+        pen.setWidth(shared->borderInsideWidth);
+        pen.setColor(shared->borderInsideColor);
+        painter.setPen(pen);
+        int ih = shared->frameWidth - shared->borderInsideWidth * 0.5; // half of inside border
+        int sub = w2 - ih + 1;
+        painter.drawRect(ih, ih, result.width()-sub, result.height()-sub);
+    }
+    if (shared->frameAddAround)
+        painter.drawImage(shared->frameWidth, shared->frameWidth, img);
+    return result;
 }

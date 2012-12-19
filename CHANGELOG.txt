@@ -2,6 +2,8 @@
     - added command line arguments --help and --lang support
     - added background color in convertion options
     - added SVG convertion tab: remove single text node and group of text node containing specifed string
+    - added adding frame effect and effect tab
+    - create empty metadata when converting from SVG file
 
 * Wed Nov 14 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.5.1
     - relative path bug-fix

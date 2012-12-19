@@ -66,6 +66,7 @@ set( sir_SRCS
         src/widgets/timecombobox.cpp
         src/widgets/treewidget.cpp
         src/widgets/treewidgetheader.cpp
+        src/widgets/convert/effectsscrollarea.cpp
         src/widgets/convert/optionsscrollarea.cpp
         src/widgets/convert/sizescrollarea.cpp
         src/widgets/convert/svgscrollarea.cpp
@@ -81,6 +82,7 @@ set( sir_UIS
         dialogs/about.ui
         dialogs/convertdialog.ui
         dialogs/previewdialog.ui
+        dialogs/convert/effectsscrollarea.ui
         dialogs/convert/optionsscrollarea.ui
         dialogs/convert/sizescrollarea.ui
         dialogs/convert/svgscrollarea.ui
@@ -153,6 +155,7 @@ set( sir_MOCS
         src/widgets/timecombobox.h
         src/widgets/treewidget.h
         src/widgets/treewidgetheader.h
+        src/widgets/convert/effectsscrollarea.h
         src/widgets/convert/optionsscrollarea.h
         src/widgets/convert/sizescrollarea.h
         src/widgets/convert/svgscrollarea.h

@@ -14,7 +14,7 @@
    <string>SIR - Simple Image Resizer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../application.qrc">
+   <iconset>
     <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -287,7 +287,7 @@
             <enum>QTabWidget::North</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <widget class="SizeScrollArea" name="sizeScrollArea">
             <property name="widgetResizable">
@@ -303,6 +303,14 @@
             </property>
             <attribute name="title">
              <string>Options</string>
+            </attribute>
+           </widget>
+           <widget class="EffectsScrollArea" name="effectsScrollArea">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <attribute name="title">
+             <string>Effects</string>
             </attribute>
            </widget>
            <widget class="SvgScrollArea" name="svgScrollArea">
@@ -603,12 +611,16 @@
    <header>widgets/convert/svgscrollarea.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>EffectsScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>widgets/convert/effectsscrollarea.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>destFileEdit</tabstop>
  </tabstops>
- <resources>
-  <include location="../application.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

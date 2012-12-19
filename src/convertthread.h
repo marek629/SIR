@@ -97,9 +97,9 @@ private:
 #endif // SIR_METADATA_SUPPORT
     QString targetFilePath;
     // methods
-    void rotateImage(QImage *image);
+    QImage rotateImage(const QImage &image);
 #ifdef SIR_METADATA_SUPPORT
-    void updateThumbnail(const QImage *image);
+    void updateThumbnail(const QImage &image);
 #endif // SIR_METADATA_SUPPORT
     char computeSize(const QImage *image, const QString &imagePath);
     char computeSize(QSvgRenderer *renderer, const QString &imagePath);
@@ -108,6 +108,7 @@ private:
     char askOverwrite(QFile *tempFile);
     void fillImage(QImage *img);
     QImage *loadSvgImage();
+    QImage addFrame(const QImage &img);
 };
 
 #endif // CONVERTTHREAD_H
