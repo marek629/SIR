@@ -19,20 +19,33 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef ANYMETADATAGROUPBOX_H
-#define ANYMETADATAGROUPBOX_H
+#ifndef EFFECTPAINTER_H
+#define EFFECTPAINTER_H
 
-#include "ui_anymetadatagroupbox.h"
+#include "sharedinformation.h"
 
-//! \em "Any metadata" group box class used in SelectionDialog dialog.
-class AnyMetadataGroupBox : public QGroupBox, public Ui::AnyMetadataGroupBox {
-    Q_OBJECT
-
+class ConvertEffects {
 public:
-    AnyMetadataGroupBox(QWidget *parent = 0);
+    ConvertEffects(SharedInformation *shared = 0);
+    ConvertEffects(QImage *image, SharedInformation *shared = 0);
+    ~ConvertEffects();
+    void setSharedInfo(SharedInformation *shared);
+    SharedInformation *sharedInfo() const;
+    void setImage(QImage *image);
+    QImage *image() const;
+    QImage framedImage();
+    void addText();
+    void addImage();
 
-private slots:
-    void enableDateTimeEdits(int state);
+private:
+    // fields
+    QImage *img; /**< Image for drawing effects. */
+    SharedInformation *shared; /**< Convert shared information. */
+    // methods
+    void rotate(QPainter *painter, const QPoint &originPoint, int angle);
+    QPoint getTransformOriginPoint(const QPoint &position, const PosUnitPair &units);
+    QRect getEffectBoundingRect(const QRect &rect, const QPoint &pos,
+                                PosModifier modifier);
 };
 
-#endif // ANYMETADATAGROUPBOX_H
+#endif // EFFECTPAINTER_H

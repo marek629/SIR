@@ -1,6 +1,6 @@
 /* This file is part of SIR, an open-source cross-platform Image tool
  * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
- * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ * 2011-2013  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,45 @@
 #include <QString>
 #include <QDir>
 #include <QColor>
+#include <QFont>
+#include <QPair>
+#include <QImage>
+
+/** Position modificators enumerator for \em "Add Text" and \em "Add Image"
+  * effects. It's correlated position combo boxes in EffectsScrollArea.
+  * \sa PosUnit
+  */
+enum PosModifier {
+    TopLeftCorner,
+    MiddleTopEdge,
+    TopRightCorner,
+    Center,
+    MiddleRightEdge,
+    BottomRightCorner,
+    MiddleBottomEdge,
+    BottomLeftCorner,
+    MiddleLeftEdge,
+    UndefinedPosModifier = -1
+};
+
+/** Position unit enumerator for \em "Add Text" and \em "Add Image" effects.
+  * It's correlated position combo boxes in EffectsScrollArea.
+  * \sa PosUnitPair PosModifier
+  */
+enum PosUnit {
+    Pixel,
+    Percent,
+    UndefinedUnit = -1
+};
+
+/** Pair of two PosUnit: first item is X coordinate, second is Y coordinate. */
+typedef QPair <PosUnit, PosUnit> PosUnitPair;
 
 //! ConvertThread threads shared information.
 class SharedInformation {
     friend class ConvertThread;
     friend class ConvertDialog;
+    friend class ConvertEffects;
 
 public:
     // constructor
@@ -91,6 +125,22 @@ private:
     QColor borderInsideColor;
     int borderOutsideWidth;
     QColor borderOutsideColor;
+    // add text
+    QString textString;
+    QFont textFont;
+    QColor textColor;
+    PosModifier textPosModifier;
+    QPoint textPos;
+    PosUnitPair textUnitPair;
+    bool textFrame;
+    int textRotation;
+    // add image
+    QImage image;
+    PosModifier imagePosModifier;
+    QPoint imagePos;
+    PosUnitPair imageUnitPair;
+    double imageOpacity;
+    int imageRotation;
     // SVG modifiers
     bool svgModifiersEnabled; /**< Set it true if you want modify SVG file. */
     /** Text value of SVG \e text nodes to delete. Plain text and regular

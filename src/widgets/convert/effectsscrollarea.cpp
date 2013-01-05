@@ -1,6 +1,6 @@
 /* This file is part of SIR, an open-source cross-platform Image tool
  * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
- * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ * 2011-2013  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,41 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
+#include <QFileDialog>
+#include <QImageReader>
 #include "effectsscrollarea.h"
 
 /** Creates the EffectsScrollArea object. Sets up GUI. */
 EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
+    connect(imagePathPushButton, SIGNAL(clicked()), this, SLOT(browseImage()));
+    QAbstractItemModel *posUnitModel = textXComboBox->model();
+    textYComboBox->setModel(posUnitModel);
+    textColorFrame->setColor(Qt::black);
+    imagePositionComboBox->setModel(textPositionComboBox->model());
+    imageXComboBox->setModel(posUnitModel);
+    imageYComboBox->setModel(posUnitModel);
+    imageXSpinBox->setRange(textXSpinBox->minimum(), textXSpinBox->maximum());
+    imageYSpinBox->setRange(textYSpinBox->minimum(), textYSpinBox->maximum());
+    imageRotationSpinBox->setRange(textRotationSpinBox->minimum(),
+                                   textRotationSpinBox->maximum());
+}
+
+/** Browses image file to open and sets the new path to image path line edit. */
+void EffectsScrollArea::browseImage() {
+    QString path = imagePathLineEdit->text();
+    QFileInfo oldImageFileInfo(path);
+    if (oldImageFileInfo.exists())
+        path = oldImageFileInfo.absoluteDir().absolutePath();
+    else
+        path = QDir::homePath();
+    QString formats;
+    foreach (QByteArray format, QImageReader::supportedImageFormats())
+        formats += "*." + format + ' ';
+    formats.resize(formats.size()-1);
+
+    path = QFileDialog::getOpenFileName(this, tr("Choose Image File"), path,
+                                        tr("Images")+" ("+formats+")");
+    if (!path.isEmpty())
+        imagePathLineEdit->setText(path);
 }

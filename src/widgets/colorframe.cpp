@@ -1,6 +1,6 @@
 /* This file is part of SIR, an open-source cross-platform Image tool
  * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
- * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ * 2011-2013  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,14 @@ ColorFrame::ColorFrame(QWidget *parent) : QFrame(parent) {
 
 /** Returns current color. */
 const QColor & ColorFrame::color() const {
-    return palette().color(QPalette::Background);
+    return palette().color(QPalette::Window);
+}
+
+/** Sets background color to \a color. */
+void ColorFrame::setColor(const QColor &color) {
+    QPalette palette(this->palette());
+    palette.setColor(QPalette::Window, color);
+    setPalette(palette);
 }
 
 /** Means end of left button mouse click. If click finished on this object shows
@@ -43,10 +50,7 @@ void ColorFrame::mouseReleaseEvent(QMouseEvent *e) {
         QColor color = QColorDialog::getColor(this->color(), this,
                                               tr("Choose Background Color"),
                                               QColorDialog::ShowAlphaChannel);
-        if (color.isValid()) {
-            QPalette newPalette(this->palette());
-            newPalette.setColor(QPalette::Background, color);
-            setPalette(newPalette);
-        }
+        if (color.isValid())
+            setColor(color);
     }
 }

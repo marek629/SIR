@@ -1,6 +1,6 @@
 /* This file is part of SIR, an open-source cross-platform Image tool
  * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
- * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ * 2011-2013  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -516,6 +516,72 @@ void ConvertDialog::convert() {
         sharedInfo->borderOutsideColor = QColor();
         sharedInfo->borderInsideWidth = -1;
         sharedInfo->borderInsideColor = QColor();
+    }
+    // add text
+    if (effectsScrollArea->textGroupBox->isChecked() &&
+            !effectsScrollArea->textLineEdit->text().isEmpty()) {
+        sharedInfo->textString = effectsScrollArea->textLineEdit->text();
+        sharedInfo->textFont = effectsScrollArea->textFontComboBox->currentFont();
+        if (effectsScrollArea->textFontSizeComboBox->currentIndex() == 0) // pt
+            sharedInfo->textFont.setPointSize(effectsScrollArea->textFontSizeSpinBox->value());
+        else
+            sharedInfo->textFont.setPixelSize(effectsScrollArea->textFontSizeSpinBox->value());
+        sharedInfo->textFont.setBold(effectsScrollArea->textBoldPushButton->isChecked());
+        sharedInfo->textFont.setItalic(effectsScrollArea->textItalicPushButton->isChecked());
+        sharedInfo->textFont.setUnderline(effectsScrollArea->textUnderlinePushButton->isChecked());
+        sharedInfo->textFont.setStrikeOut(effectsScrollArea->textStrikeOutPushButton->isChecked());
+        sharedInfo->textColor = effectsScrollArea->textColorFrame->color();
+        sharedInfo->textPosModifier = static_cast<PosModifier>(
+                    effectsScrollArea->textPositionComboBox->currentIndex() );
+        sharedInfo->textPos = QPoint( effectsScrollArea->textXSpinBox->value(),
+                                      effectsScrollArea->textYSpinBox->value() );
+        sharedInfo->textUnitPair.first = static_cast<PosUnit>(
+                    effectsScrollArea->textXComboBox->currentIndex() );
+        sharedInfo->textUnitPair.second = static_cast<PosUnit>(
+                    effectsScrollArea->textYComboBox->currentIndex() );
+        sharedInfo->textFrame = effectsScrollArea->textFrameCheckBox->isChecked();
+        sharedInfo->textRotation = effectsScrollArea->textRotationSpinBox->value();
+    }
+    else {
+        sharedInfo->textString = QString();
+        sharedInfo->textFont = QFont();
+        sharedInfo->textColor = QColor();
+        sharedInfo->textPosModifier = UndefinedPosModifier;
+        sharedInfo->textPos = QPoint();
+        sharedInfo->textUnitPair = PosUnitPair(UndefinedUnit, UndefinedUnit);
+        sharedInfo->textFrame = false;
+        sharedInfo->textRotation = 0;
+    }
+    // add image
+    if (effectsScrollArea->imageGroupBox->isChecked()) {
+        sharedInfo->image = QImage(effectsScrollArea->imagePathLineEdit->text());
+        if (sharedInfo->image.isNull()) {
+            QMessageBox::StandardButton answer =
+                    QMessageBox::warning(this, tr("Load image failed"),
+                                         tr("Load image to add failed.\n"
+                                            "Do you want continue anyway?"),
+                                         QMessageBox::Ignore | QMessageBox::Abort,
+                                         QMessageBox::Abort);
+            if (answer != QMessageBox::Ignore)
+                return;
+        }
+        sharedInfo->imagePosModifier = static_cast<PosModifier>(
+                    effectsScrollArea->imagePositionComboBox->currentIndex() );
+        sharedInfo->imagePos = QPoint( effectsScrollArea->imageXSpinBox->value(),
+                                       effectsScrollArea->imageYSpinBox->value() );
+        sharedInfo->imageUnitPair.first = static_cast<PosUnit>(
+                    effectsScrollArea->imageXComboBox->currentIndex() );
+        sharedInfo->imageUnitPair.second = static_cast<PosUnit>(
+                    effectsScrollArea->imageYComboBox->currentIndex() );
+        sharedInfo->imageOpacity = effectsScrollArea->imageOpacitySpinBox->value();
+        sharedInfo->imageRotation = effectsScrollArea->imageRotationSpinBox->value();
+    }
+    else {
+        sharedInfo->image = QImage();
+        sharedInfo->imagePosModifier = UndefinedPosModifier;
+        sharedInfo->imagePos = QPoint();
+        sharedInfo->imageUnitPair = PosUnitPair(UndefinedUnit, UndefinedUnit);
+        sharedInfo->imageRotation = 0;
     }
     // svg
     if (svgScrollArea->removeTextCheckBox->isChecked())

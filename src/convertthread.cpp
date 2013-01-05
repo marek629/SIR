@@ -1,6 +1,6 @@
 /* This file is part of SIR, an open-source cross-platform Image tool
  * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
- * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ * 2011-2013  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #include "widgets/messagebox.h"
 #include "settings.h"
 #include "svgmodifier.h"
+#include "converteffects.h"
 
 // setup static fields
 SharedInformation * ConvertThread::shared = new SharedInformation();
@@ -189,12 +190,18 @@ void ConvertThread::run() {
             destImg = image->scaledToHeight(height, Qt::SmoothTransformation);
         else if (!hasWidth && !hasHeight)
             destImg = *image;
-        // add frame
-        if (shared->frameWidth > 0 && shared->frameColor.isValid())
-            destImg = addFrame(destImg);
+        // paint effects
+        ConvertEffects effectPainter(&destImg, shared);
+        if (shared->frameWidth > 0 && shared->frameColor.isValid()) {
+            destImg = effectPainter.framedImage();
+            effectPainter.setImage(&destImg);
+        }
+        if (!shared->image.isNull())
+            effectPainter.addImage();
+        if (!shared->textString.isEmpty())
+            effectPainter.addText();
         // rotate image and update thumbnail
         destImg = rotateImage(destImg);
-        qDebug() << destImg.size();
 #ifdef SIR_METADATA_SUPPORT
         updateThumbnail(destImg);
 #endif // SIR_METADATA_SUPPORT
@@ -272,8 +279,6 @@ QImage ConvertThread::rotateImage(const QImage &image) {
     int alpha = (int)angle;
 #ifdef SIR_METADATA_SUPPORT
     bool saveExifOrientation = !shared->realRotate;
-    qDebug() << saveExifOrientation << shared->format
-             << MetadataUtils::Metadata::isWriteSupportedFormat(shared->format);
 #endif // SIR_METADATA_SUPPORT
     // rotate image
     if (rotate && angle != 0.0) {
@@ -762,42 +767,4 @@ QImage * ConvertThread::loadSvgImage() {
     hasHeight = false;
     // finaly return the image pointer
     return img;
-}
-
-/** Adds frame to \a img image and returns new QImage obcject. */
-QImage ConvertThread::addFrame(const QImage &img) {
-    QImage result;
-    int w2 = 2 * shared->frameWidth; // double frame width
-    if (shared->frameAddAround) {
-        QSize size = img.size();
-        size += QSize(w2, w2);
-        result = QImage(size, img.format());
-    }
-    else
-        result = img;
-    QPainter painter(&result);
-    QPen pen(Qt::SolidLine);
-    if (shared->borderInsideWidth + shared->borderOutsideWidth < shared->frameWidth) {
-        pen.setWidth(w2);
-        pen.setColor(shared->frameColor);
-        painter.setPen(pen);
-        painter.drawRect(result.rect());
-    }
-    if (shared->borderOutsideWidth > 0) {
-        pen.setWidth(2*shared->borderOutsideWidth);
-        pen.setColor(shared->borderOutsideColor);
-        painter.setPen(pen);
-        painter.drawRect(result.rect());
-    }
-    if (shared->borderInsideWidth > 0) {
-        pen.setWidth(shared->borderInsideWidth);
-        pen.setColor(shared->borderInsideColor);
-        painter.setPen(pen);
-        int ih = shared->frameWidth - shared->borderInsideWidth * 0.5; // half of inside border
-        int sub = w2 - ih + 1;
-        painter.drawRect(ih, ih, result.width()-sub, result.height()-sub);
-    }
-    if (shared->frameAddAround)
-        painter.drawImage(shared->frameWidth, shared->frameWidth, img);
-    return result;
 }

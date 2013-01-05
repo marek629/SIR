@@ -25,6 +25,7 @@ endif()
 # Headers
 set( sir_HDRS
         src/commandlineassistant.h
+        src/converteffects.h
         src/convertshareddata.h
         src/defines.h
         src/expressiontree.h
@@ -42,6 +43,7 @@ set( sir_HDRS
 set( sir_SRCS
         src/commandlineassistant.cpp
         src/convertdialog.cpp
+        src/converteffects.cpp
         src/convertshareddata.cpp
         src/convertthread.cpp
         src/expressiontree.cpp
