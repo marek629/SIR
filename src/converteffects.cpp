@@ -51,12 +51,12 @@ SharedInformation * ConvertEffects::sharedInfo() const {
     return this->shared;
 }
 
-/** Sets pointer to image object. */
+/** Sets pointer to #img image object. */
 void ConvertEffects::setImage(QImage *image) {
     img = image;
 }
 
-/** Returns pointer to image object. */
+/** Returns pointer to #img image object. */
 QImage * ConvertEffects::image() const {
     return img;
 }
@@ -101,7 +101,7 @@ QImage ConvertEffects::framedImage() {
     return result;
 }
 
-/** Draws text on img image.
+/** Draws text on #img image.
   * \sa addImage() image() setImage()
   */
 void ConvertEffects::addText() {
@@ -131,7 +131,7 @@ void ConvertEffects::addText() {
     }
 }
 
-/** Draws image on img image.
+/** Draws image on #img image.
   * \sa addText() image() setImage()
   */
 void ConvertEffects::addImage() {

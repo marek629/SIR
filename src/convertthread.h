@@ -48,7 +48,7 @@ enum Question {
 
 /** \brief Image convertion thread class.
   *
-  * Threads converting images work in main loop implemented in run method.
+  * Threads converting images work in main loop implemented in run() method.
   * \sa run()
   */
 class ConvertThread : public QThread {
@@ -79,13 +79,28 @@ private:
     static SharedInformation *shared; /**< The theads shared information. */
     bool work; /**< True means this thread still working. */
     QStringList imageData; /**< List of strings: file name, extension and path. */
-    int tid; /** The thread ID. */
+    int tid; /**< The thread ID. */
+    /** If it's true the converting image will be scaled to #width value. */
     bool hasWidth;
+    /** If it's true the converting image will be scaled to #height value. */
     bool hasHeight;
+    /** Desired width of the converting image.
+      * \sa #hasWidth
+      */
     int width;
+    /** Desired height of the converting image.
+      * \sa #hasHeight
+      */
     int height;
+    /** Describes size compute state.
+      * \sa computeSize()
+      */
     char sizeComputed;
+    /** If it's true the converting image will be rotated by #angle value. */
     bool rotate;
+    /** Desired rotation angle of the converting image in degree.
+      * \sa #rotate
+      */
     double angle;
     struct ThreadPrivateData {
         QString imagePath;

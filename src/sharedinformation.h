@@ -118,28 +118,86 @@ private:
       */
     QColor backgroundColor;
     // add frame
+    /** Frame width for \em "Add Frame" effect.
+      * \sa #frameColor
+      */
     int frameWidth;
+    /** Frame color for \em "Add Frame" effect.
+      * \sa #frameWidth
+      */
     QColor frameColor;
+    /** A flag for \em "Add Frame" effect.
+      *
+      * True means the frame will be added around the converting image and it
+      * will be extended in coclusion.
+      *
+      * False means the frame will be painted on the current converting image.
+      */
     bool frameAddAround;
+    /** Width of border painded on inside edge of the \em "Add Frame" effects frame.
+      * \sa #borderInsideColor
+      */
     int borderInsideWidth;
+    /** Color of border painded on inside edge of the \em "Add Frame" effects frame.
+      * \sa #borderInsideWidth
+      */
     QColor borderInsideColor;
+    /** Width of border painded on outside edge of the \em "Add Frame" effects frame.
+      * \sa #borderOutsideColor
+      */
     int borderOutsideWidth;
+    /** Color of border painded on outside edge of the \em "Add Frame" effects frame.
+      * \sa #borderOutsideWidth
+      */
     QColor borderOutsideColor;
     // add text
+    /** Text for \em "Add Text" effect.
+      * \sa #textFont #textColor
+      */
     QString textString;
+    /** Font for \em "Add Text" effect.
+      * \sa #textString #textColor
+      */
     QFont textFont;
+    /** Font color for \em "Add Text" effect.
+      * \sa #textString #textFont
+      */
     QColor textColor;
+    /** Text position modificator for \em "Add Text" effect.
+      * \sa #textPos
+      */
     PosModifier textPosModifier;
+    /** Text position for \em "Add Text" effect.
+      * \sa #textPosModifier #textUnitPair
+      */
     QPoint textPos;
+    /** \link #textPos Text position \endlink units for \em "Add Text" effect.
+      * \sa #textPos
+      */
     PosUnitPair textUnitPair;
+    /** Drawing text flag for \em "Add Text" effect.
+      *
+      * True means a rectangle will be drawn around the text.
+      */
     bool textFrame;
+    /** Text rotation angle in degree for \em "Add Text" effect. */
     int textRotation;
     // add image
-    QImage image;
+    QImage image; /**< Image for \em "Add Image" effect. */
+    /** Image position modificator for \em "Add Image" effect.
+      * \sa #imagePos
+      */
     PosModifier imagePosModifier;
+    /** Image position for \em "Add Image" effect.
+      * \sa #imagePosModifier #imageUnitPair
+      */
     QPoint imagePos;
+    /** \link #imagePos Text position \endlink units for \em "Add Image" effect.
+      * \sa #imagePos
+      */
     PosUnitPair imageUnitPair;
-    double imageOpacity;
+    double imageOpacity; /**< Image opacity for \em "Add Image" effect. */
+    /** Image rotation angle in degree for \em "Add Image" effect. */
     int imageRotation;
     // SVG modifiers
     bool svgModifiersEnabled; /**< Set it true if you want modify SVG file. */

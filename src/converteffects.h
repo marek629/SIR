@@ -24,6 +24,17 @@
 
 #include "sharedinformation.h"
 
+/** \brief Convertion effects class.
+  *
+  * Effects are made on #img QImage object using data from #shared SharedInformation
+  * object.
+  *
+  * This class supports 3 effects: \link #framedImage() \em "Add Frame" \endlink,
+  * \link #addText() \em "Add Text" \endlink and
+  * \link #addImage() \em "Add Image" \endlink
+  *
+  * \sa framedImage() addText() addImage()
+  */
 class ConvertEffects {
 public:
     ConvertEffects(SharedInformation *shared = 0);
@@ -39,8 +50,14 @@ public:
 
 private:
     // fields
-    QImage *img; /**< Image for drawing effects. */
-    SharedInformation *shared; /**< Convert shared information. */
+    /** Image for drawing effects.
+      * \sa image() setImage()
+      */
+    QImage *img;
+    /** Convert shared information.
+      * \sa sharedInfo() setSharedInfo()
+      */
+    SharedInformation *shared;
     // methods
     void rotate(QPainter *painter, const QPoint &originPoint, int angle);
     QPoint getTransformOriginPoint(const QPoint &position, const PosUnitPair &units);

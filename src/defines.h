@@ -23,7 +23,7 @@
 #define SIR_METADATA_SUPPORT
 #endif // SIR_CMAKE
 
-#define VERSION "2.5.1"
+#define VERSION "2.6"
 #define NOTCONVERTED 1
 #define CONVERTED 2
 #define SKIPPED 3
