@@ -146,6 +146,30 @@ QSize TreeWidget::imageSize(QTreeWidgetItem *item) {
     return result;
 }
 
+/** Adds directory button and action slot.
+  * Load all supported image files from choosed directory (non-recursive)
+  * into tree widget and set state to \em "Not converted yet".\n
+  * This function remember last opened directory in the same session.
+  * Default directory is home directory.
+  * \sa addFile()
+  */
+void TreeWidget::addDir() {
+    QString dirPath = QFileDialog::getExistingDirectory(
+                       this,
+                       tr("Choose a directory"),
+                       Settings::instance()->settings.lastDir,
+                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    dirPath = QDir::convertSeparators(dirPath);
+    if (dirPath.isEmpty())
+        return;
+    Settings::instance()->settings.lastDir = dirPath;
+    QDir sourceFolder(dirPath, convertDialog->csd->fileFilters);
+    sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
+    QList<QFileInfo> list = sourceFolder.entryInfoList();
+    loadFiles(list);
+}
+
 /** Add file button and action slot.
   * Load selected image files into tree widget and set state to
   * \em "Not converted yet".\n
@@ -172,32 +196,24 @@ void TreeWidget::addFile() {
     }
 }
 
-/** Adds directory button and action slot.
-  * Load all supported image files from choosed directory (non-recursive)
-  * into tree widget and set state to \em "Not converted yet".\n
-  * This function remember last opened directory in the same session.
-  * Default directory is home directory.
-  * \sa addFile()
+/** Loads file into tree widget.
+  * \param file Full file path.
   */
-void TreeWidget::addDir() {
-    QString dirPath = QFileDialog::getExistingDirectory(
-                       this,
-                       tr("Choose a directory"),
-                       Settings::instance()->settings.lastDir,
-                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+void TreeWidget::loadFile(const QString &file) {
+    QFileInfo info(file);
+    statusList->insert(info.absoluteFilePath(), NOTCONVERTED);
 
-    dirPath = QDir::convertSeparators(dirPath);
-    if (dirPath.isEmpty())
-        return;
-    Settings::instance()->settings.lastDir = dirPath;
-    QDir sourceFolder(dirPath, convertDialog->csd->fileFilters);
-    sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-    QList<QFileInfo> list = sourceFolder.entryInfoList();
-    loadFiles(list);
+    QTreeWidgetItem *item = new QTreeWidgetItem(itemList(info));
+    this->addTopLevelItem(item);
+
+    if (info.exists()) {
+        convertDialog->enableConvertButtons();
+        resizeColumnsToContents();
+    }
 }
 
 /** Loads files into tree widget.
-  * \param files Full paths list.
+  * \param files Full file paths list.
   */
 void TreeWidget::loadFiles(const QStringList &files) {
     QStringList::const_iterator it = files.begin();

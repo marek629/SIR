@@ -44,6 +44,7 @@
 #include "selection.h"
 #include "languageutils.h"
 #include "convertshareddata.h"
+#include "session.h"
 
 /** Default constuctor.
   *
@@ -51,7 +52,7 @@
   * and convertion preferences.
   * \param parent Pointer to parent object.
   * \param args String containing aplication argv tables records
-  *     separated by ** (double star-sign).
+  *        separated by ** (double star-sign).
   * \sa init()
   */
 ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args) : QMainWindow(parent) {
@@ -99,6 +100,8 @@ void ConvertDialog::createConnections() {
     connect(actionAbout_Sir, SIGNAL(triggered()), this, SLOT(about()));
     connect(actionOptions, SIGNAL(triggered()), this, SLOT(setOptions()));
     connect(actionCheckforUpdates, SIGNAL(triggered()), SLOT(checkUpdates()));
+    connect(actionRestore, SIGNAL(triggered()), SLOT(restoreSession()));
+    connect(actionSave, SIGNAL(triggered()), SLOT(saveSession()));
     connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
 
     // tree view events
@@ -308,9 +311,11 @@ void ConvertDialog::init() {
     horizontalSplitter->setStretchFactor(0,1000);
 
     convertProgressBar->setValue(0);
+    converting = false;
+
     createConnections();
 
-    converting = false;
+    session = new Session(this);
 }
 
 /** Browse destination directory button slot.
@@ -615,6 +620,20 @@ void ConvertDialog::showSelectionDialog() {
         qDebug() << "Selected items:" << selection.selectItems();
     else if (actionImport_files)
         qDebug() << "Imported files:" << selection.importFiles();
+}
+
+void ConvertDialog::restoreSession() {
+    QString path = QFileDialog::getOpenFileName(this, tr("Choose session file"),
+                                                QDir::homePath(),
+                                                tr("XML Files") + " (*.xml)");
+    session->restore(path);
+}
+
+void ConvertDialog::saveSession() {
+    QString path = QFileDialog::getSaveFileName(this, tr("Choose session file"),
+                                                QDir::homePath(),
+                                                tr("XML Files") + " (*.xml)");
+    session->save(path);
 }
 
 /** Shows window containing information about SIR. */

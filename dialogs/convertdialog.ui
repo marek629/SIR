@@ -14,7 +14,7 @@
    <string>SIR - Simple Image Resizer</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../application.qrc">
     <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -287,7 +287,7 @@
             <enum>QTabWidget::North</enum>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="SizeScrollArea" name="sizeScrollArea">
             <property name="widgetResizable">
@@ -440,9 +440,18 @@
     <property name="title">
      <string>Edit</string>
     </property>
+    <widget class="QMenu" name="menuSession">
+     <property name="title">
+      <string>Session</string>
+     </property>
+     <addaction name="actionRestore"/>
+     <addaction name="actionSave"/>
+    </widget>
     <addaction name="actionOptions"/>
     <addaction name="separator"/>
     <addaction name="actionCheckforUpdates"/>
+    <addaction name="separator"/>
+    <addaction name="menuSession"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -581,6 +590,16 @@
     <string>Alt+I</string>
    </property>
   </action>
+  <action name="actionRestore">
+   <property name="text">
+    <string>Restore...</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -621,6 +640,8 @@
  <tabstops>
   <tabstop>destFileEdit</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../application.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -28,6 +28,7 @@
 
 class NetworkUtils;
 class ConvertSharedData;
+class Session;
 
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
@@ -36,6 +37,7 @@ class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     friend class SelectionDialog;
     friend class DetailsBrowser;
     friend class TreeWidget;
+    friend class Session;
 
 public:
     ConvertDialog(QWidget *parent = 0, const QStringList &args = QStringList());
@@ -61,6 +63,7 @@ private:
     QPoint windowPossition;
     QSize windowSize;
     ConvertSharedData *csd;
+    Session *session;
     // methods
     void init();
     void createConnections();
@@ -94,6 +97,8 @@ public slots:
     void sendInstall();
     void showSendInstallResult(QString *result, bool error);
     void showSelectionDialog();
+    void restoreSession();
+    void saveSession();
 };
 
 /** Saves window maximized status, possition on screen and size and last

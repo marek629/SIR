@@ -52,6 +52,7 @@ public:
     Exiv2::Rational toRational() const;
     Exiv2::Rational toRationalPower() const;
 #endif // SIR_METADATA_SUPPORT
+    bool toBool() const;
     String & operator =(const char *str);
     String & operator =(const QString &other);
     String & operator =(const std::string &str);

@@ -34,8 +34,10 @@ set( sir_HDRS
         src/optionsenums.h
         src/rawutils.h
         src/regexputils.h
+        src/session.h
         src/sharedinformation.h
         src/svgmodifier.h
+        src/xmlstreamwriter.h
         src/metadata/string.h
     )
 
@@ -53,9 +55,11 @@ set( sir_SRCS
         src/rawutils.cpp
         src/regexputils.cpp
         src/selection.cpp
+        src/session.cpp
         src/settings.cpp
         src/sharedinformation.cpp
         src/svgmodifier.cpp
+        src/xmlstreamwriter.cpp
         src/metadata/string.cpp
         src/widgets/aboutdialog.cpp
         src/widgets/colorframe.cpp

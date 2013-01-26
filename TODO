@@ -1,6 +1,8 @@
 *** nearest release ***
   ! Sessions: save and restore files list in/from text file
   ! move iconsets from UI to C++ code for uic<4.8 compatibility
+  ! create empty metadata:
+    * set non-empty fields Exif.Photo.DateTimeOriginal and Exif.Photo.DateTimeDigitized
 
 *** next release ***
   ! support for animated graphics files (QMovie?)

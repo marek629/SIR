@@ -127,6 +127,19 @@ Exiv2::Rational String::toRationalPower() const {
 }
 #endif // SIR_METADATA_SUPPORT
 
+/** Converts this string to boolean value.
+  * \return True if the string is \e yes, \e y, \e true, \e t or integer value
+  *         of the string isn't 0. Otherwise false.
+  */
+bool String::toBool() const {
+    static QStringList list;
+    if (list.isEmpty())
+        list << "yes" << "y" << "true" << "t";
+    if (list.contains(*this, Qt::CaseInsensitive) || this->toInt() != 0)
+        return true;
+    return false;
+}
+
 /** Returns string converted from \a s. */
 String String::fromStdString(const std::string &s) {
     return String( QString::fromStdString(s) );

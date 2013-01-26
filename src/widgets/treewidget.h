@@ -93,6 +93,7 @@ private:
 public slots:
     void addDir();
     void addFile();
+    void loadFile(const QString &file);
     void loadFiles(const QStringList &files);
     void loadFiles(const QList<QFileInfo> &files);
     void removeAll();
