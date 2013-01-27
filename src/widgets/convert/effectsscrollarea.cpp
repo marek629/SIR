@@ -26,15 +26,29 @@
 /** Creates the EffectsScrollArea object. Sets up GUI. */
 EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
+
     connect(imagePathPushButton, SIGNAL(clicked()), this, SLOT(browseImage()));
+    connect(textXComboBox, SIGNAL(currentIndexChanged(QString)),
+            textXSpinBox, SLOT(posUnitChanged(QString)) );
+    connect(textYComboBox, SIGNAL(currentIndexChanged(QString)),
+            textYSpinBox, SLOT(posUnitChanged(QString)) );
+    connect(imageXComboBox, SIGNAL(currentIndexChanged(QString)),
+            imageXSpinBox, SLOT(posUnitChanged(QString)) );
+    connect(imageYComboBox, SIGNAL(currentIndexChanged(QString)),
+            imageYSpinBox, SLOT(posUnitChanged(QString)) );
+
     QAbstractItemModel *posUnitModel = textXComboBox->model();
     textYComboBox->setModel(posUnitModel);
     textColorFrame->setColor(Qt::black);
     imagePositionComboBox->setModel(textPositionComboBox->model());
     imageXComboBox->setModel(posUnitModel);
     imageYComboBox->setModel(posUnitModel);
-    imageXSpinBox->setRange(textXSpinBox->minimum(), textXSpinBox->maximum());
-    imageYSpinBox->setRange(textYSpinBox->minimum(), textYSpinBox->maximum());
+
+    const QPair<int, int> posRange(-20000, 20000);
+    textXSpinBox->setRange(posRange.first, posRange.second);
+    textYSpinBox->setRange(posRange.first, posRange.second);
+    imageXSpinBox->setRange(posRange.first, posRange.second);
+    imageYSpinBox->setRange(posRange.first, posRange.second);
     imageRotationSpinBox->setRange(textRotationSpinBox->minimum(),
                                    textRotationSpinBox->maximum());
 }

@@ -67,6 +67,7 @@ set( sir_SRCS
         src/widgets/historycombobox.cpp
         src/widgets/messagebox.cpp
         src/widgets/optionsdialog.cpp
+        src/widgets/posspinbox.cpp
         src/widgets/previewdialog.cpp
         src/widgets/selectiondialog.cpp
         src/widgets/timecombobox.cpp
@@ -156,6 +157,7 @@ set( sir_MOCS
         src/widgets/historycombobox.h
         src/widgets/messagebox.h
         src/widgets/optionsdialog.h
+        src/widgets/posspinbox.h
         src/widgets/previewdialog.h
         src/widgets/selectiondialog.h
         src/widgets/timecombobox.h
