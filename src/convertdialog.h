@@ -67,6 +67,7 @@ private:
     // methods
     void init();
     void createConnections();
+    void setIcons();
     void createRawFilesList();
     inline void writeWindowProperties();
     inline void resetAnswers();

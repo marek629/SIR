@@ -354,11 +354,6 @@
            <property name="toolTip">
             <string>Bold</string>
            </property>
-           <property name="icon">
-            <iconset theme="format-text-bold">
-             <normaloff/>
-            </iconset>
-           </property>
            <property name="checkable">
             <bool>true</bool>
            </property>
@@ -374,11 +369,6 @@
            </property>
            <property name="toolTip">
             <string>Italic</string>
-           </property>
-           <property name="icon">
-            <iconset theme="format-text-italic">
-             <normaloff/>
-            </iconset>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -396,11 +386,6 @@
            <property name="toolTip">
             <string>Underline</string>
            </property>
-           <property name="icon">
-            <iconset theme="format-text-underline">
-             <normaloff/>
-            </iconset>
-           </property>
            <property name="checkable">
             <bool>true</bool>
            </property>
@@ -416,11 +401,6 @@
            </property>
            <property name="toolTip">
             <string>Strike out</string>
-           </property>
-           <property name="icon">
-            <iconset theme="format-text-strikethrough">
-             <normaloff/>
-            </iconset>
            </property>
            <property name="checkable">
             <bool>true</bool>

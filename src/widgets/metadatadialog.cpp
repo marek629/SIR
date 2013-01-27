@@ -50,6 +50,14 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     readFile();
     setupValues();
     createConnections();
+
+    // set icons
+    previousButton->setIcon(QIcon::fromTheme("go-previous",
+                                             QIcon(":/images/previous.png")) );
+    nextButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/images/next.png")));
+    deleteButton->setIcon(QIcon::fromTheme("edit-delete"));
+    saveButton->setIcon(QIcon::fromTheme("document-save"));
+    cancelButton->setIcon(QIcon::fromTheme("cancel"));
 }
 
 /** Destructor.

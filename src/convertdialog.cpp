@@ -117,6 +117,28 @@ void ConvertDialog::createConnections() {
     connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
 }
 
+/** Sets icons from system theme. */
+void ConvertDialog::setIcons() {
+    const QIcon appExit = QIcon::fromTheme("application-exit",
+                                           QIcon(":/images/exit.png") );
+    const QIcon helpAbout = QIcon::fromTheme("help-about");
+    const QIcon listAdd = QIcon::fromTheme("list-add");
+
+    convertButton->setIcon(QIcon::fromTheme("system-run"));
+    quitButton->setIcon(appExit);
+    actionExit->setIcon(appExit);
+    actionOptions->setIcon(QIcon::fromTheme("preferences-desktop"));
+    actionAbout_Sir->setIcon(helpAbout);
+    actionAbout_Qt->setIcon(helpAbout);
+    actionAdd_File->setIcon(listAdd);
+    actionAdd_Dir->setIcon(listAdd);
+    actionCheckforUpdates->setIcon(QIcon::fromTheme("system-software-update"));
+    actionSendInstall->setIcon(QIcon::fromTheme("network-transmit"));
+    actionRemoveAll->setIcon(QIcon::fromTheme("edit-clear"));
+    actionSelect->setIcon(QIcon::fromTheme("edit-select-all"));
+    actionImport_files->setIcon(QIcon::fromTheme("edit-find"));
+}
+
 /** Check updates on SIR website.
   * \sa showUpdateResult()
   */
@@ -314,6 +336,7 @@ void ConvertDialog::init() {
     converting = false;
 
     createConnections();
+    setIcons();
 
     session = new Session(this);
 }

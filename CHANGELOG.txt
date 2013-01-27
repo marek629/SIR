@@ -5,6 +5,7 @@
     - added adding frame, text and picture effect and effect tab
     - added sessions storage in XML files
     - create empty metadata when converting from SVG file
+    - iconsets moved from UI to C++ code for uic<4.8 compatibility
 
 * Wed Nov 14 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.5.1
     - relative path bug-fix

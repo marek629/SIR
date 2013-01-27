@@ -63,10 +63,6 @@
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset theme="go-previous" resource="../application.qrc">
-            <normaloff>:/images/previous.png</normaloff>:/images/previous.png</iconset>
-          </property>
           <property name="iconSize">
            <size>
             <width>22</width>
@@ -94,10 +90,6 @@
           </property>
           <property name="text">
            <string/>
-          </property>
-          <property name="icon">
-           <iconset theme="go-next" resource="../application.qrc">
-            <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -143,10 +135,6 @@
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset theme="object-rotate-left" resource="../application.qrc">
-            <normaloff>:/images/rotate_ccw.png</normaloff>:/images/rotate_ccw.png</iconset>
-          </property>
           <property name="iconSize">
            <size>
             <width>22</width>
@@ -174,10 +162,6 @@
           </property>
           <property name="text">
            <string/>
-          </property>
-          <property name="icon">
-           <iconset theme="object-rotate-right" resource="../application.qrc">
-            <normaloff>:/images/rotate_cw.png</normaloff>:/images/rotate_cw.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -220,10 +204,6 @@
             <height>22</height>
            </size>
           </property>
-          <property name="icon">
-           <iconset theme="object-flip-horizontal" resource="../application.qrc">
-            <normaloff>:/images/flip_horizontal.png</normaloff>:/images/flip_horizontal.png</iconset>
-          </property>
           <property name="iconSize">
            <size>
             <width>22</width>
@@ -248,10 +228,6 @@
             <width>22</width>
             <height>22</height>
            </size>
-          </property>
-          <property name="icon">
-           <iconset theme="object-flip-vertical" resource="../application.qrc">
-            <normaloff>:/images/flip_vertical.png</normaloff>:/images/flip_vertical.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -339,10 +315,6 @@
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset theme="view-fullscreen" resource="../application.qrc">
-            <normaloff>:/images/window_fullscreen.png</normaloff>:/images/window_fullscreen.png</iconset>
-          </property>
           <property name="iconSize">
            <size>
             <width>22</width>
@@ -387,10 +359,6 @@
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset theme="document-save" resource="../application.qrc">
-            <normaloff>:/images/filesave.png</normaloff>:/images/filesave.png</iconset>
-          </property>
           <property name="iconSize">
            <size>
             <width>22</width>
@@ -418,10 +386,6 @@
           </property>
           <property name="text">
            <string/>
-          </property>
-          <property name="icon">
-           <iconset theme="document-save-as" resource="../application.qrc">
-            <normaloff>:/images/filesaveas.png</normaloff>:/images/filesaveas.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -467,10 +431,6 @@
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset theme="document-print" resource="../application.qrc">
-            <normaloff>:/images/print.png</normaloff>:/images/print.png</iconset>
-          </property>
           <property name="iconSize">
            <size>
             <width>22</width>
@@ -514,10 +474,6 @@
           </property>
           <property name="text">
            <string>Quit</string>
-          </property>
-          <property name="icon">
-           <iconset theme="application-exit" resource="../application.qrc">
-            <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
           </property>
           <property name="iconSize">
            <size>

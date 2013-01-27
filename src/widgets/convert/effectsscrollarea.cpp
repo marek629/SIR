@@ -27,6 +27,7 @@
 EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
 
+    // create connections
     connect(imagePathPushButton, SIGNAL(clicked()), this, SLOT(browseImage()));
     connect(textXComboBox, SIGNAL(currentIndexChanged(QString)),
             textXSpinBox, SLOT(posUnitChanged(QString)) );
@@ -37,6 +38,7 @@ EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     connect(imageYComboBox, SIGNAL(currentIndexChanged(QString)),
             imageYSpinBox, SLOT(posUnitChanged(QString)) );
 
+    // set combo box models
     QAbstractItemModel *posUnitModel = textXComboBox->model();
     textYComboBox->setModel(posUnitModel);
     textColorFrame->setColor(Qt::black);
@@ -44,6 +46,7 @@ EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     imageXComboBox->setModel(posUnitModel);
     imageYComboBox->setModel(posUnitModel);
 
+    // set range
     const QPair<int, int> posRange(-20000, 20000);
     textXSpinBox->setRange(posRange.first, posRange.second);
     textYSpinBox->setRange(posRange.first, posRange.second);
@@ -51,6 +54,12 @@ EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     imageYSpinBox->setRange(posRange.first, posRange.second);
     imageRotationSpinBox->setRange(textRotationSpinBox->minimum(),
                                    textRotationSpinBox->maximum());
+
+    // set icons
+    textBoldPushButton->setIcon(QIcon::fromTheme("format-text-bold"));
+    textItalicPushButton->setIcon(QIcon::fromTheme("format-text-italic"));
+    textUnderlinePushButton->setIcon(QIcon::fromTheme("format-text-underline"));
+    textStrikeOutPushButton->setIcon(QIcon::fromTheme("format-text-strikethrough"));
 }
 
 /** Browses image file to open and sets the new path to image path line edit. */
