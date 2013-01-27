@@ -128,7 +128,7 @@ void Session::save(const QString &fileName) {
     // add text
     writer.writeStartElement("addtext");
     writer.writeAttribute("enabled", effectsArea->textGroupBox->isChecked());
-    // TODO: add opacity for add text effect
+    writer.writeAttribute("opacity", effectsArea->textOpacitySpinBox->value());
     writer.writeStartElement("text");
     writer.writeAttribute("frame", effectsArea->textFrameCheckBox->isChecked());
     writer.writeCharacters(effectsArea->textLineEdit->text());
@@ -323,7 +323,8 @@ void Session::restore(const QString &fileName) {
         if (!el.isNull()) {
             str = el.attribute("enabled", falseString);
             effectsArea->textGroupBox->setChecked(str.toBool());
-            // TODO: add opacity for add text effect
+            effectsArea->textOpacitySpinBox->setValue(
+                        el.attribute("opacity").toDouble() );
             e = el.firstChildElement("text");
             if (!e.isNull()) {
                 str = e.attribute("frame", falseString);

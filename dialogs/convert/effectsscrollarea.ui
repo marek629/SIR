@@ -19,10 +19,10 @@
   <widget class="QWidget" name="scrollAreaWidgetContents">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>-44</x>
      <y>0</y>
      <width>698</width>
-     <height>517</height>
+     <height>521</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
@@ -335,7 +335,7 @@
        <item row="0" column="1" colspan="7">
         <widget class="QLineEdit" name="textLineEdit"/>
        </item>
-       <item row="4" column="6" colspan="2">
+       <item row="5" column="6" colspan="2">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QPushButton" name="textBoldPushButton">
@@ -422,6 +422,26 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="4" column="6">
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>Opacity:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="7">
+        <widget class="QDoubleSpinBox" name="textOpacitySpinBox">
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

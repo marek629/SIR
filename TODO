@@ -1,15 +1,15 @@
 *** nearest release ***
-  ! Sessions: save and restore files list in/from text file
   ! move iconsets from UI to C++ code for uic<4.8 compatibility
   ! create empty metadata:
     * set non-empty fields Exif.Photo.DateTimeOriginal and Exif.Photo.DateTimeDigitized
+  ! sessions:
+    * restore session from command line
 
 *** next release ***
   ! support for animated graphics files (QMovie?)
   ! defines.h refactorization: change defines to enumerations
   ! Make simple effects
     * color (sepia, b&w, etc.) and gradient filtres
-    * watermark
     * histogram operations
 
 *** wishlist ***
