@@ -19,8 +19,8 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include "converteffects.h"
 #include <QPainter>
+#include "converteffects.h"
 
 /** Creates ConvertEffects object.
   * \sa setSharedInfo()
@@ -109,8 +109,10 @@ void ConvertEffects::addText() {
         qDebug("EffectPainter::addText(): image is not set!");
         return;
     }
+
     // reference point setup
     QPoint point = getTransformOriginPoint(shared->textPos, shared->textUnitPair);
+
     // text bounding rect setup
     QFontMetrics fontMetrics(shared->textFont, img);
     QRect rect = fontMetrics.boundingRect(shared->textString);
@@ -118,11 +120,15 @@ void ConvertEffects::addText() {
     const int dy = 1;
     rect.adjust(-dx, -dy, dx, dy);
     rect = getEffectBoundingRect(rect, point, shared->textPosModifier);
+
     QPainter painter(img);
     painter.setPen(shared->textColor);
     painter.setFont(shared->textFont);
+    painter.setOpacity(shared->textOpacity);
+
     // rotate painter around center point of image
     this->rotate(&painter, point, shared->textRotation);
+
     // draw text
     painter.drawText(rect, Qt::AlignCenter, shared->textString);
     if (shared->textFrame) {
@@ -139,13 +145,18 @@ void ConvertEffects::addImage() {
         qDebug("EffectPainter::addImage(): image is not set!");
         return;
     }
+
     QPoint point = getTransformOriginPoint(shared->imagePos, shared->imageUnitPair);
+
     QRect rect = getEffectBoundingRect(shared->image.rect(), point,
                                        shared->imagePosModifier);
+
     QPainter painter(img);
     painter.setOpacity(shared->imageOpacity);
     painter.resetTransform();
+
     this->rotate(&painter, point, shared->imageRotation);
+
     painter.drawImage(rect, shared->image);
 }
 

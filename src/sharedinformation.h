@@ -166,6 +166,7 @@ private:
     /** Text position modificator for \em "Add Text" effect.
       * \sa #textPos
       */
+    double textOpacity; /**< Text opacity for \em "Add Text" effect. */
     PosModifier textPosModifier;
     /** Text position for \em "Add Text" effect.
       * \sa #textPosModifier #textUnitPair

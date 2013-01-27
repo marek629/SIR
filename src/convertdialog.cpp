@@ -559,6 +559,7 @@ void ConvertDialog::convert() {
         sharedInfo->textFont.setUnderline(effectsScrollArea->textUnderlinePushButton->isChecked());
         sharedInfo->textFont.setStrikeOut(effectsScrollArea->textStrikeOutPushButton->isChecked());
         sharedInfo->textColor = effectsScrollArea->textColorFrame->color();
+        sharedInfo->textOpacity = effectsScrollArea->textOpacitySpinBox->value();
         sharedInfo->textPosModifier = static_cast<PosModifier>(
                     effectsScrollArea->textPositionComboBox->currentIndex() );
         sharedInfo->textPos = QPoint( effectsScrollArea->textXSpinBox->value(),
