@@ -1,6 +1,4 @@
 *** nearest release ***
-  ! create empty metadata:
-    * set non-empty fields Exif.Photo.DateTimeOriginal and Exif.Photo.DateTimeDigitized
   ! sessions:
     * restore session from command line
 

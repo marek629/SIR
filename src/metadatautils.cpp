@@ -185,6 +185,15 @@ bool Metadata::setData(const QImage& qImage) {
         if (Exif::isUserCommentOverwrite())
             exifData["Exif.Photo.UserComment"] =
                     Exif::stringUserComment().toNativeStdString();
+        std::string currentDateTimeString =
+                String::currentDateTimeString(Exif::dateTimeFormat).toNativeStdString();
+        exifData["Exif.Image.DateTime"] = currentDateTimeString;
+        if (exifData["Exif.Image.DateTimeOriginal"].toString().empty())
+            exifData["Exif.Image.DateTimeOriginal"] = currentDateTimeString;
+        if (exifData["Exif.Photo.DateTimeOriginal"].toString().empty())
+            exifData["Exif.Photo.DateTimeOriginal"] = currentDateTimeString;
+        if (exifData["Exif.Photo.DateTimeDigitized"].toString().empty())
+            exifData["Exif.Photo.DateTimeDigitized"] = currentDateTimeString;
         image->setExifData(exifData);
         result = true;
     }

@@ -147,10 +147,18 @@ String String::fromStdString(const std::string &s) {
 
 /** Returns date and time string in \a formatOut format converted from
   * \a dateTimeStr date and time string in \a formatIn format.
+  * \sa currentDateTimeString()
   */
 String String::fromDateTimeString(const String &dateTimeStr,
                                   const QString &formatIn, const QString &formatOut) {
     return QDateTime::fromString(dateTimeStr, formatIn).toString(formatOut);
+}
+
+/** Returns date and time string in \a format format.
+  * \sa fromDateTimeString()
+  */
+String String::currentDateTimeString(const QString &format) {
+    return QDateTime::currentDateTime().toString(format);
 }
 
 /** Returns translated \em "no data" string. */

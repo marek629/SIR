@@ -61,6 +61,7 @@ public:
     static String fromStdString(const std::string &s);
     static String fromDateTimeString(const String &dateTimeStr,
                                      const QString &formatIn, const QString &formatOut);
+    static String currentDateTimeString(const QString &format);
 };
 }
 
