@@ -722,7 +722,6 @@ void ConvertDialog::loadSettings() {
     sizeScrollArea->sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
     sizeScrollArea->fileSizeSpinBox->setValue(          s->size.fileSizeValue);
     sizeScrollArea->fileSizeComboBox->setCurrentIndex(  s->size.fileSizeUnit);
-    sizeScrollArea->maintainCheckBox->setChecked(       s->size.keepAspectRatio);
     if (sizeScrollArea->sizeUnitComboBox->currentIndex() == 1) {
         csd->sizeWidth =                     s->size.widthPx;
         csd->sizeHeight =                    s->size.heightPx;
@@ -739,6 +738,7 @@ void ConvertDialog::loadSettings() {
         sizeScrollArea->heightDoubleSpinBox->setValue(csd->sizeHeight);
         sizeScrollArea->heightDoubleSpinBox->setValue(  s->size.heightPx);
     }
+    sizeScrollArea->maintainCheckBox->setChecked(       s->size.keepAspectRatio);
     // raw
     rawEnabled = s->raw.enabled;
     if(rawEnabled) {

@@ -25,11 +25,23 @@
 /** Creates the SizeScrollArea object. Sets up GUI and creates connections. */
 SizeScrollArea::SizeScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
+
     // create connections
     connect(sizeUnitComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(setSizeUnit(int)));
-    if (maintainCheckBox->isChecked() && sizeUnitComboBox->currentIndex()==1) // %
-        connectSizeLinesEdit();
+    connect(maintainCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(maintainCheckBoxChecked(bool)));
+
+    if (maintainCheckBox->isChecked()) {
+        switch (sizeUnitComboBox->currentIndex()) {
+        case 0: // px
+        case 1: // %
+            connectSizeLinesEdit();
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 /** Shows size values corresponding index of size unit combo box. */
@@ -83,25 +95,70 @@ void SizeScrollArea::setSizeUnit(int index) {
             maintainCheckBox->setEnabled(true);
             maintainCheckBox->setChecked(keepAspectRatio);
         }
-        if (maintainCheckBox->isChecked() && index == 1) { // %
-            heightDoubleSpinBox->setValue(widthDoubleSpinBox->value());
-            connectSizeLinesEdit();
+        if (maintainCheckBox->isChecked()) {
+            switch (index) {
+            case 1: // %
+                heightDoubleSpinBox->setValue(widthDoubleSpinBox->value());
+            case 0: // px
+                connectSizeLinesEdit();
+                break;
+            default:
+                break;
+            }
         }
     }
     lastIndex = index;
 }
 
-/** If desired size unit is percent and it keeps aspect ratio this function will
-  * be change width or heigth percent value following the user change in
-  * adjacent spin box. Otherwise does nothing.
+/** If it keeps aspect ratio, this function will be change width or heigth value
+  * following the user change in adjacent spin box. Otherwise does nothing.
+  * \sa maintainCheckBoxChecked()
   */
 void SizeScrollArea::sizeChanged(double value) {
-    if (sizeUnitComboBox->currentIndex() != 1 && !maintainCheckBox->isChecked())
+    if (!maintainCheckBox->isChecked())
         return;
-    // size unit is % and maintainCheckBox is checked
+
     QDoubleSpinBox *spinBox = static_cast<QDoubleSpinBox*>(sender());
+
+    disconnectSizeLinesEdit();
+
+    switch (sizeUnitComboBox->currentIndex()) {
+    case 0: // px
+        if (spinBox == widthDoubleSpinBox)
+            value /= aspectRatio;
+        else
+            value *= aspectRatio;
+        break;
+    case 1: // %
+        break;
+    default:
+        return;
+    }
+
     if (spinBox == widthDoubleSpinBox)
         heightDoubleSpinBox->setValue(value);
     else if (spinBox == heightDoubleSpinBox)
         widthDoubleSpinBox->setValue(value);
+
+    connectSizeLinesEdit();
+}
+
+/** If \a keepAspect is true and pixels are current size unit, this function
+  * will compute current aspectRatio rational. Otherwise does nothing.
+  * \sa sizeChanged()
+  */
+void SizeScrollArea::maintainCheckBoxChecked(bool keepAspect) {
+    if (keepAspect && sizeUnitComboBox->currentIndex() == 0) {
+        switch (sizeUnitComboBox->currentIndex()) {
+        case 0: // px
+            aspectRatio = widthDoubleSpinBox->value() / heightDoubleSpinBox->value();
+        case 1: // %
+            connectSizeLinesEdit();
+            break;
+        default:
+            break;
+        }
+    }
+    else
+        disconnectSizeLinesEdit();
 }

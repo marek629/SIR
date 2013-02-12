@@ -32,6 +32,9 @@ public:
     explicit SizeScrollArea(QWidget *parent = 0);
 
 private:
+    // fields
+    double aspectRatio;
+    // methods
     inline void connectSizeLinesEdit();
     inline void disconnectSizeLinesEdit();
 
@@ -40,6 +43,7 @@ public slots:
 
 private slots:
     void sizeChanged(double value);
+    void maintainCheckBoxChecked(bool keepAspect);
 };
 
 /** Connects width and height lines edit's textChanged() signal to sizeChanged()
