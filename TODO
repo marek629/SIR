@@ -1,6 +1,4 @@
 *** nearest release ***
-  ! sessions:
-    * restore session from command line
 
 *** next release ***
   ! support for animated graphics files (QMovie?)

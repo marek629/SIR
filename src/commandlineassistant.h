@@ -28,8 +28,9 @@
 /** \brief Command line arguments parser class.
   *
   * Supported arguments:
-  *     * --help or -h      print help message and quit
-  *     * --lang or -l LANG set application language to LANG witch is language symbol
+  *     * --help or -h                  print help message and quit
+  *     * --lang or -l LANG             set application language to LANG witch is language symbol
+  *     * --session or -s session.xml   restore session from XML session file
   *
   * The same language symbols are used to naming SIR translation files.
   *
@@ -50,6 +51,11 @@ class CommandLineAssistant {
 public:
     CommandLineAssistant();
     int parse(const QStringList &args = QStringList());
+    /** Returns XML session file to read by Session object. */
+    QString sessionFile() const { return sessionFile_; }
+
+private:
+    QString sessionFile_;
 };
 
 #endif // COMMANDLINEASSISTANT_H

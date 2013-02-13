@@ -39,17 +39,27 @@ int CommandLineAssistant::parse(const QStringList &args) {
     QStringList longArgs = args.filter(QRegExp("^(-){2}(help|lang)$"));
     QStringList shortArgs = args.filter(QRegExp("^(-){1}(h|l)+$"));
     QString lang;
+    int result = 1;
+
     if (longArgs.contains("--lang"))
         lang = args[args.indexOf("--lang")+1];
     else if (!shortArgs.filter("l").isEmpty())
         lang = args[args.indexOf(shortArgs.filter("l")[0])+1];
+    if (longArgs.contains("--session"))
+        sessionFile_ = args[args.indexOf("--session")+1];
+    else if (!shortArgs.filter("s").isEmpty())
+        sessionFile_ = args[args.indexOf(shortArgs.filter("s")[0])+1];
+
     LanguageUtils *languages = LanguageUtils::instance();
     QString qmFile = languages->fileName(lang);
-    languages->appTranslator->load(qmFile, QCoreApplication::applicationDirPath()+QString("../share/sir/translations"));
+    languages->appTranslator->load(qmFile,
+                                   QCoreApplication::applicationDirPath()
+                                   +QString("../share/sir/translations") );
     languages->qtTranslator->load("qt_"+qmFile.split('_').at(1).split('.').first(),
-                                 QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+                                  QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     qApp->installTranslator(languages->qtTranslator);
     qApp->installTranslator(languages->appTranslator);
+
     // print help
     if (!shortArgs.filter("h").isEmpty() || !longArgs.filter("help").isEmpty()) {
         MetadataUtils::String help =
@@ -57,8 +67,9 @@ int CommandLineAssistant::parse(const QStringList &args) {
                "Typed files will load to files list in main window.\n"
                "\n"
                "Supported arguments:\n"
-               " --help or -h      print help message and quit\n"
-               " --lang or -l LANG set application language to LANG witch is language symbol\n"
+               " --help or -h       print help message and quit\n"
+               " --lang or -l LANG  set application language to LANG witch is language symbol\n"
+               " --session or -s session.xml   restore session from XML session file\n"
                "\n"
                "Example:\n"
                "$ sir -hl pl\n"
@@ -69,12 +80,18 @@ int CommandLineAssistant::parse(const QStringList &args) {
         std::cout << help.toNativeStdString() << std::endl;
         return 0;
     }
-    // set language
-    else if (!shortArgs.filter("l").isEmpty() || !longArgs.filter("lang").isEmpty()) {
-        Settings *s = Settings::instance();
-        s->settings.languageFileName = qmFile;
-        s->settings.languageNiceName = languages->languageInfo(qmFile).niceName;
-        return 2;
+    else {
+        // set language
+        if (!lang.isEmpty()) {
+            Settings *s = Settings::instance();
+            s->settings.languageFileName = qmFile;
+            s->settings.languageNiceName = languages->languageInfo(qmFile).niceName;
+            result = 2;
+        }
+        // restore session
+        if (!sessionFile_.isEmpty())
+            result += 1;
     }
-    return 1;
+
+    return result;
 }

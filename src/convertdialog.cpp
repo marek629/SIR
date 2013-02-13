@@ -45,23 +45,30 @@
 #include "languageutils.h"
 #include "convertshareddata.h"
 #include "session.h"
+#include "commandlineassistant.h"
 
 /** Default constuctor.
   *
   * Sets up window with saved settings like window state, position
   * and convertion preferences.
-  * \param parent Pointer to parent object.
-  * \param args String containing aplication argv tables records
-  *        separated by ** (double star-sign).
+  * \param parent       Pointer to parent object.
+  * \param args         String containing aplication argv tables records
+  *                     separated by ** (double star-sign).
+  * \param cmdAssistant Command line assistant object.
   * \sa init()
   */
-ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args) : QMainWindow(parent) {
+ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
+                             const CommandLineAssistant &cmdAssistant)
+    : QMainWindow(parent) {
     csd = ConvertSharedData::instance();
     setupUi(this);
     this->args = args;
     net = NULL;
     sharedInfo = ConvertThread::sharedInfo();
     init();
+    session = new Session(this);
+    if (!cmdAssistant.sessionFile().isEmpty())
+        session->restore(cmdAssistant.sessionFile());
 }
 
 /** Destructor.\n
@@ -337,8 +344,6 @@ void ConvertDialog::init() {
 
     createConnections();
     setIcons();
-
-    session = new Session(this);
 }
 
 /** Browse destination directory button slot.

@@ -29,6 +29,7 @@
 class NetworkUtils;
 class ConvertSharedData;
 class Session;
+class CommandLineAssistant;
 
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
@@ -40,7 +41,8 @@ class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     friend class Session;
 
 public:
-    ConvertDialog(QWidget *parent = 0, const QStringList &args = QStringList());
+    ConvertDialog(QWidget *parent, const QStringList &args,
+                  const CommandLineAssistant &cmdAssistant);
     ~ConvertDialog();
     void retranslateStrings();
     QString fileSizeString(qint64 size);
