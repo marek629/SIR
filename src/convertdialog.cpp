@@ -901,8 +901,16 @@ void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
 void ConvertDialog::retranslateStrings() {
     int sizeUnitIndex = sizeScrollArea->sizeUnitComboBox->currentIndex();
     int fileSizeIndex = sizeScrollArea->fileSizeComboBox->currentIndex();
+
     retranslateUi(this);
+
+    // retranslate children widgets
     filesTreeWidget->retranslateStrings();
+    sizeScrollArea->retranslateUi(sizeScrollArea);
+    optionsScrollArea->retranslateUi(optionsScrollArea);
+    effectsScrollArea->retranslateUi(effectsScrollArea);
+    svgScrollArea->retranslateUi(svgScrollArea);
+
     // restoring nulled indexes
     sizeScrollArea->sizeUnitComboBox->setCurrentIndex(sizeUnitIndex);
     sizeScrollArea->fileSizeComboBox->setCurrentIndex(fileSizeIndex);

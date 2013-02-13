@@ -48,7 +48,7 @@ void ColorFrame::setColor(const QColor &color) {
 void ColorFrame::mouseReleaseEvent(QMouseEvent *e) {
     if (e->button() == Qt::LeftButton && qApp->widgetAt(e->globalPos()) == this) {
         QColor color = QColorDialog::getColor(this->color(), this,
-                                              tr("Choose Background Color"),
+                                              tr("Choose Color"),
                                               QColorDialog::ShowAlphaChannel);
         if (color.isValid())
             setColor(color);

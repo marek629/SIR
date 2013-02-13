@@ -7,6 +7,7 @@
     - create empty metadata when converting from SVG file
     - set current date time in Exif if needed
     - iconsets moved from UI to C++ code for uic<4.8 compatibility
+    - Polish translation updated
 
 * Wed Nov 14 2012 - Marek Jędryka <jedryka89@gmail.com> - v2.5.1
     - relative path bug-fix
