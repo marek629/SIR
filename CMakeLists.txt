@@ -7,7 +7,7 @@
 project( sir )
 cmake_minimum_required( VERSION 2.8.3 )
 
-# SIR_CMAKE preprocessor define added for QtCreator code parsing and highlighting
+# SIR_CMAKE preprocessor define added for code parsing and highlighting QtCreator editor
 add_definitions( -Wall -DSIR_CMAKE )
 
 find_package( Qt4 REQUIRED QtCore QtGui QtNetwork QtSvg QtXml )

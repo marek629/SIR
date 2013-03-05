@@ -5,6 +5,7 @@
 #include "xmlstreamwriter.h"
 #include "defines.h"
 #include "metadata/string.h"
+#include "convertshareddata.h"
 
 const QString falseString = "no";
 
@@ -78,14 +79,32 @@ void Session::save(const QString &fileName) {
 
     writer.writeStartElement("size");
     writer.writeAttribute("keepaspect", sizeArea->maintainCheckBox->isChecked());
-    writer.writeAttribute("width",  sizeArea->widthDoubleSpinBox->value());
-    writer.writeAttribute("height", sizeArea->heightDoubleSpinBox->value());
     str = sizeArea->sizeUnitComboBox->currentText().split('(')[1].split(')')[0];
     writer.writeAttribute("unit", str);
-    writer.writeStartElement("filesize");
+    if (sizeArea->sizeUnitComboBox->currentIndex() == 0) {
+        writer.writeStartElement("pixels");
+        writer.writeAttribute("width",  sizeArea->widthDoubleSpinBox->value());
+        writer.writeAttribute("height", sizeArea->heightDoubleSpinBox->value());
+        writer.writeEndElement(); // pixels
+        writer.writeStartElement("percent");
+        writer.writeAttribute("width",  ConvertSharedData::instance()->sizeWidth);
+        writer.writeAttribute("height", ConvertSharedData::instance()->sizeHeight);
+        writer.writeEndElement(); // percent
+    }
+    else {
+        writer.writeStartElement("percent");
+        writer.writeAttribute("width",  sizeArea->widthDoubleSpinBox->value());
+        writer.writeAttribute("height", sizeArea->heightDoubleSpinBox->value());
+        writer.writeEndElement(); // percent
+        writer.writeStartElement("pixels");
+        writer.writeAttribute("width",  ConvertSharedData::instance()->sizeWidth);
+        writer.writeAttribute("height", ConvertSharedData::instance()->sizeHeight);
+        writer.writeEndElement(); // pixels
+    }
+    writer.writeStartElement("bytes");
     writer.writeCharacters(QString::number(sizeArea->fileSizeSpinBox->value())
                            + ' ' + sizeArea->fileSizeComboBox->currentText() );
-    writer.writeEndElement(); // filesize
+    writer.writeEndElement(); // bytes
     writer.writeEndElement(); // size
 
     writer.writeStartElement("options");
@@ -222,6 +241,7 @@ void Session::restore(const QString &fileName) {
     QDomElement elem, el, e; // working DOM element variables
     MetadataUtils::String str;
     QStringList list;
+    int x;
 
     elem = session.firstChildElement("files");
     el = elem.firstChildElement("file");
@@ -251,10 +271,17 @@ void Session::restore(const QString &fileName) {
     if (!elem.isNull()) {
         str = elem.attribute("keepaspect", falseString);
         sizeArea->maintainCheckBox->setChecked(str.toBool());
-        sizeArea->widthDoubleSpinBox->setValue(elem.attribute("width").toDouble());
-        sizeArea->heightDoubleSpinBox->setValue(elem.attribute("height").toDouble());
-        sizeArea->sizeUnitComboBox->setCurrentIndex(
-                    sizeArea->sizeUnitComboBox->findText(elem.attribute("unit")) );
+        sizeArea->sizeUnitComboBox->setCurrentIndex(0);
+        el = elem.firstChildElement("pixels");
+        if (!el.isNull()) {
+            sizeArea->widthDoubleSpinBox->setValue(elem.attribute("width").toDouble());
+            sizeArea->heightDoubleSpinBox->setValue(elem.attribute("height").toDouble());
+        }
+        el = elem.firstChildElement("percent");
+        if (!el.isNull()) {
+            ConvertSharedData::instance()->sizeWidth = el.attribute("width").toDouble();
+            ConvertSharedData::instance()->sizeHeight = el.attribute("height").toDouble();
+        }
         el = elem.firstChildElement("filesize");
         if (!el.isNull()) {
             list = el.text().split(' ');
@@ -262,6 +289,9 @@ void Session::restore(const QString &fileName) {
             sizeArea->fileSizeComboBox->setCurrentIndex(
                         sizeArea->fileSizeComboBox->findText(list[1]) );
         }
+        x = sizeArea->sizeUnitComboBox->findText('(' + elem.attribute("unit") + ')',
+                                                 Qt::MatchContains);
+        sizeArea->sizeUnitComboBox->setCurrentIndex(x);
     }
 
     elem = session.firstChildElement("options");

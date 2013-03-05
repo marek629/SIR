@@ -36,8 +36,8 @@ CommandLineAssistant::CommandLineAssistant() {}
   *         negative value if error occured.
   */
 int CommandLineAssistant::parse(const QStringList &args) {
-    QStringList longArgs = args.filter(QRegExp("^(-){2}(help|lang)$"));
-    QStringList shortArgs = args.filter(QRegExp("^(-){1}(h|l)+$"));
+    QStringList longArgs = args.filter(QRegExp("^(-){2}(help|lang|session)+$"));
+    QStringList shortArgs = args.filter(QRegExp("^(-){1}(h|l|s)+$"));
     QString lang;
     int result = 1;
 
@@ -86,7 +86,7 @@ int CommandLineAssistant::parse(const QStringList &args) {
             Settings *s = Settings::instance();
             s->settings.languageFileName = qmFile;
             s->settings.languageNiceName = languages->languageInfo(qmFile).niceName;
-            result = 2;
+            result += 2;
         }
         // restore session
         if (!sessionFile_.isEmpty())
