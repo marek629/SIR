@@ -686,7 +686,7 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
   */
 void ConvertThread::fillImage(QImage *img) {
     if (shared->backgroundColor.isValid())
-        img->fill(shared->backgroundColor);
+        img->fill(shared->backgroundColor.rgb());
     else if (shared->format == "gif" || shared->format == "png")
         img->fill(Qt::transparent);
     else // in other formats tranparency isn't supported
