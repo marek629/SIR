@@ -1,11 +1,17 @@
 *** nearest release ***
-
-*** next release ***
-  ! support for animated graphics files (QMovie?)
-  ! defines.h refactorization: change defines to enumerations
   ! Make simple effects
     * color (sepia, b&w, etc.) and gradient filtres
     * histogram operations
+    * effect collections, save to files
+    * multiple effects convertion: save few images from just one, for example diffrent color effects
+  ! CMake: auto detect the newest Qt version (4/5) in compile OS and link them
+
+*** next release ***
+  ! load all files selected in file menager (ie. Thunar) in just 1 instance of SIR
+  ! fix left arrow shortcut for previous image in PreviewDialog (rigth arrow works)
+  ! support for animated graphics files (QMovie?)
+  ! defines.h refactorization: change defines to enumerations
+  ! search refactorizationable code
 
 *** wishlist ***
   ! SelectionDialog:

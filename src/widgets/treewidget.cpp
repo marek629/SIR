@@ -206,10 +206,7 @@ void TreeWidget::loadFile(const QString &file) {
     QTreeWidgetItem *item = new QTreeWidgetItem(itemList(info));
     this->addTopLevelItem(item);
 
-    if (info.exists()) {
-        convertDialog->enableConvertButtons();
-        resizeColumnsToContents();
-    }
+    updateTree();
 }
 
 /** Loads files into tree widget.
@@ -230,10 +227,8 @@ void TreeWidget::loadFiles(const QStringList &files) {
         ++it;
         Settings::instance()->settings.lastDir = info.path();
     }
-    if (!files.isEmpty()) {
-        convertDialog->enableConvertButtons();
-        resizeColumnsToContents();
-    }
+
+    updateTree();
 }
 
 /** Loads files into tree widget.
@@ -250,10 +245,8 @@ void TreeWidget::loadFiles(const QList<QFileInfo> &files) {
         this->addTopLevelItem(item);
         statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
     }
-    if (!files.isEmpty()) {
-        convertDialog->enableConvertButtons();
-        resizeColumnsToContents();
-    }
+
+    updateTree();
 }
 
 /** Remove all button and action slot. Removes all items of tree widget.
@@ -266,6 +259,7 @@ void TreeWidget::removeAll() {
     // update convert widgets
     convertDialog->enableConvertButtons(false);
     convertDialog->convertProgressBar->reset();
+    convertDialog->tabWidget->setTabEnabled(3, true);
     statusList->clear();
 }
 
@@ -296,13 +290,16 @@ void TreeWidget::removeSelectedFromList() {
         convertDialog->convertButton->setEnabled(false);
         convertDialog->convertSelectedButton->setEnabled(false);
     }
+    convertDialog->checkSVGTab();
 }
 
 /** Updates tree widget when it was changed. */
 void TreeWidget::updateTree() {
-    if (topLevelItemCount() > 0)
+    if (topLevelItemCount() > 0) {
         convertDialog->enableConvertButtons(true);
-    resizeColumnsToContents();
+        convertDialog->checkSVGTab();
+        resizeColumnsToContents();
+    }
 }
 
 /** Shows context menu.
@@ -518,6 +515,28 @@ QStringList TreeWidget::columnsNames() {
     return result;
 }
 
+/** Returns true if \a str string is contained in \a col column.
+  * Otherwise returns false.
+  */
+bool TreeWidget::isColumnMember(int col, const QString &str) {
+    for (int i=0; i<topLevelItemCount(); i++) {
+        if (topLevelItem(i)->text(col) == str)
+            return true;
+    }
+    return false;
+}
+
+/** Returns true if any member of \a strList list is contained in \a col column.
+  * Otherwise returns false.
+  */
+bool TreeWidget::isColumnMember(int col, const QStringList &strList, Qt::CaseSensitivity cs) {
+    for (int i=0; i<topLevelItemCount(); i++) {
+        if (strList.contains(topLevelItem(i)->text(col), cs))
+            return true;
+    }
+    return false;
+}
+
 /** Creates (dynamic allocated) and returns pointer to new string list.
   * In the list is stored files path to images on tree view.
   * \sa makeImagePath()
@@ -530,7 +549,7 @@ QStringList * TreeWidget::makeList() {
     return list;
 }
 
-/** Returns image file path corresponding to \b item.
+/** Returns image file path corresponding to \a item.
   * \sa makeList()
   */
 QString TreeWidget::makeImagePath(QTreeWidgetItem *item) {

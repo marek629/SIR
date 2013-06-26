@@ -46,6 +46,7 @@ public:
     ~ConvertDialog();
     void retranslateStrings();
     QString fileSizeString(qint64 size);
+    void checkSVGTab();
 
 private:
     // fields

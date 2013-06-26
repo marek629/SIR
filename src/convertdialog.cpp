@@ -928,6 +928,14 @@ QString ConvertDialog::fileSizeString(qint64 size) {
     return fileSizeString;
 }
 
+/** Check SVG tab should disabled. If positive disables the tab. */
+void ConvertDialog::checkSVGTab() {
+    QStringList list;
+    list << "svg" << "svgz";
+    bool enable = filesTreeWidget->isColumnMember(ExtColumn, list, Qt::CaseInsensitive);
+    tabWidget->setTabEnabled(3, enable);
+}
+
 /** Cancels converting if converting runs; otherwise close window. */
 void ConvertDialog::closeOrCancel() {
     if (converting) {

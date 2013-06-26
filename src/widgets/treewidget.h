@@ -63,6 +63,9 @@ public:
     QStringList columnsNames();
     TreeWidgetHeader *header() { return (TreeWidgetHeader*)QTreeWidget::header(); }
     void setHeader(TreeWidgetHeader *header) { QTreeWidget::setHeader(header); }
+    bool isColumnMember(int col, const QString &str);
+    bool isColumnMember(int col, const QStringList &strList,
+                        Qt::CaseSensitivity cs = Qt::CaseSensitive);
 
 protected:
     virtual void keyPressEvent( QKeyEvent *k );
