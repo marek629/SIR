@@ -268,7 +268,7 @@ void SelectionDialog::browseDir() {
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if (dirPath.isEmpty())
         return;
-    dirPath = QDir::convertSeparators(dirPath);
+    dirPath = QDir::toNativeSeparators(dirPath);
     params->path = dirPath;
     Settings::instance()->settings.lastDir = dirPath;
     uiDirWidget->dirLineEdit->setText(dirPath);

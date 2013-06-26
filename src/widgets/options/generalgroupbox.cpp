@@ -172,7 +172,7 @@ void GeneralGroupBox::browseDestination() {
                                                          tr("Choose a directory"),
                                                          initialName,
                                                          QFileDialog::ShowDirsOnly );
-    fileName = QDir::convertSeparators(fileName);
+    fileName = QDir::toNativeSeparators(fileName);
     if (!fileName.isEmpty())
         targetFolderLineEdit->setText(fileName);
 }

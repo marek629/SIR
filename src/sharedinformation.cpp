@@ -104,7 +104,7 @@ void SharedInformation::setDesiredFormat(const QString &format) {
         saveMetadata = false;
         realRotate = true;
         qWarning("Format \"%s\" haven't write metadata support",
-                 format.toAscii().constData());
+                 format.toLatin1().constData());
     }
     else
         saveMetadata = Settings::instance()->metadata.saveMetadata;

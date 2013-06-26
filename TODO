@@ -4,7 +4,6 @@
     * histogram operations
     * effect collections, save to files
     * multiple effects convertion: save few images from just one, for example diffrent color effects
-  ! CMake: auto detect the newest Qt version (4/5) in compile OS and link them
 
 *** next release ***
   ! load all files selected in file menager (ie. Thunar) in just 1 instance of SIR

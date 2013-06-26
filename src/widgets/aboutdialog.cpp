@@ -26,7 +26,7 @@
 #include "aboutdialog.h"
 
 /** Default constructor. */
-AboutDialog::AboutDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, f) {
+AboutDialog::AboutDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {
     setupUi(this);
     setAboutText();
     retranslateUi(this);

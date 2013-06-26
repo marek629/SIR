@@ -34,7 +34,7 @@ class AboutDialog : public QDialog, public Ui::About {
     Q_OBJECT
 
 public:
-    AboutDialog( QWidget * parent = 0, Qt::WFlags f = 0 );
+    AboutDialog( QWidget * parent = 0, Qt::WindowFlags f = 0 );
     void setVersion(QString version);
 
 private:

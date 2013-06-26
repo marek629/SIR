@@ -39,7 +39,7 @@
   * Sets up window, loads settings and creates connections.
   * \sa setupUi() loadSettings() createConnections()
   */
-OptionsDialog::OptionsDialog( QWidget * parent, Qt::WFlags f) : QDialog(parent, f) {
+OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {
     setupUi();
     loadSettings();
     createConnections();

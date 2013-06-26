@@ -30,15 +30,16 @@
 #include <QUrl>
 #include <QFileDialog>
 #include <QSvgRenderer>
+#include <QMimeData>
 #include "treewidget.h"
 #include "convertdialog.h"
+#include "convertshareddata.h"
 #include "defines.h"
 #include "optionsenums.h"
 #include "widgets/previewdialog.h"
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/metadatadialog.h"
 #endif // SIR_METADATA_SUPPORT
-#include "convertshareddata.h"
 
 /** Default constructor. */
 TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
@@ -86,7 +87,7 @@ void TreeWidget::initList(const QStringList &argList) {
 
     for ( ; it2 != argList.end(); ++it2 ) {
         fileName = *it2;
-        fileName = QDir::convertSeparators(fileName);
+        fileName = QDir::toNativeSeparators(fileName);
         QFileInfo info(fileName);
 
         if (!fileName.isEmpty() && info.exists()) {
@@ -160,7 +161,7 @@ void TreeWidget::addDir() {
                        Settings::instance()->settings.lastDir,
                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    dirPath = QDir::convertSeparators(dirPath);
+    dirPath = QDir::toNativeSeparators(dirPath);
     if (dirPath.isEmpty())
         return;
     Settings::instance()->settings.lastDir = dirPath;
@@ -218,7 +219,7 @@ void TreeWidget::loadFiles(const QStringList &files) {
     QString fileName;
 
     while ( it != files.end() ) {
-        fileName = QDir::convertSeparators(*it);
+        fileName = QDir::toNativeSeparators(*it);
         QFileInfo info(fileName);
         statusList->insert(info.absoluteFilePath(), NOTCONVERTED);
 

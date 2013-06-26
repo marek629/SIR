@@ -329,7 +329,7 @@ void Settings::migrateFrom_2_1() {
         fileContent.replace("[MainWindow]","[Settings]");
         configFile.resize(fileContent.size());
         if (configFile.seek(0))
-            configFile.write(fileContent.toAscii());
+            configFile.write(fileContent.toUtf8());
         else {
             qWarning("Failed to settings migration from SIR 2.1 - seek file error");
             configFile.close();

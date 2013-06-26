@@ -5,22 +5,44 @@
 # make install
 
 project( sir )
-cmake_minimum_required( VERSION 2.8.3 )
 
 # SIR_CMAKE preprocessor define added for code parsing and highlighting QtCreator editor
 add_definitions( -Wall -DSIR_CMAKE )
 
-find_package( Qt4 REQUIRED QtCore QtGui QtNetwork QtSvg QtXml )
-include( ${QT_USE_FILE} )
-
 include_directories(
         ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-        ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTNETWORK_INCLUDE_DIR} ${QT_QTSVG_INCLUDE_DIR}
         src/
     )
-if(WIN32)
-        include_directories ( ${include_directories} windows/include )
-endif()
+
+option( qt5 "Qt 5 support" ON)
+
+if( qt5 )
+        message( STATUS "Building using Qt 5" )
+        message ( STATUS "To force build with Qt 4 type -Dqt5=OFF in cmake command." )
+        cmake_minimum_required( VERSION 2.8.8 )
+        find_package( Qt5Core REQUIRED )
+        find_package( Qt5Widgets REQUIRED )
+        find_package( Qt5Network REQUIRED )
+        find_package( Qt5Svg REQUIRED )
+        find_package( Qt5Xml REQUIRED )
+        find_package( Qt5PrintSupport REQUIRED )
+        find_package( Qt5LinguistTools REQUIRED )
+else( qt5 )
+        message( STATUS "Building using Qt 4" )
+        cmake_minimum_required( VERSION 2.8.3 )
+        find_package( Qt4 REQUIRED QtCore QtGui QtNetwork QtSvg QtXml )
+        include( ${QT_USE_FILE} )
+        include_directories( ${include_directories}
+                ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
+                ${QT_QTNETWORK_INCLUDE_DIR} ${QT_QTSVG_INCLUDE_DIR}
+            )
+endif( qt5 )
+
+if( WIN32 )
+        include_directories ( ${include_directories}
+                windows/include
+            )
+endif( WIN32 )
 
 # Headers
 set( sir_HDRS
@@ -103,7 +125,11 @@ set( sir_UIS
 set( sir_RSCS
         application.qrc
     )
-QT4_ADD_RESOURCES(RSCS ${sir_RSCS})
+if( qt5 )
+        QT5_ADD_RESOURCES(RSCS ${sir_RSCS})
+else( qt5 )
+        QT4_ADD_RESOURCES(RSCS ${sir_RSCS})
+endif( qt5 )
 
 # Translations
 set( sir_TRANSLATIONS
@@ -122,7 +148,11 @@ set( sir_TRANSLATIONS
         translations/sir_sk.ts
         translations/sir_sr.ts
     )
-QT4_ADD_TRANSLATION( QMS ${sir_TRANSLATIONS} )
+if( qt5 )
+        QT5_ADD_TRANSLATION( QMS ${sir_TRANSLATIONS} )
+else( qt5 )
+        QT4_ADD_TRANSLATION( QMS ${sir_TRANSLATIONS} )
+endif( qt5 )
 
 # Images
 set( sir_IMGS
@@ -174,10 +204,13 @@ set( sir_MOCS
         src/widgets/options/selectiongroupbox.h
     )
 
-set( sir_LINKING_LIBS
-        ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY}
-        ${QT_QTSVG_LIBRARY} ${QT_QTXML_LIBRARY}
-    )
+if( NOT qt5 )
+        set( sir_LINKING_LIBS
+                ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY}
+                ${QT_QTSVG_LIBRARY} ${QT_QTXML_LIBRARY}
+            )
+endif( NOT qt5 )
+
 
 option( metadata "Metadata support using exiv2 library." ON)
 if( metadata )
@@ -222,11 +255,19 @@ if( metadata )
     endif( EXISTS ${EXIV2_LIBRARY} )
 endif( metadata )
 
-QT4_WRAP_UI( UIS ${sir_UIS} )
-QT4_WRAP_CPP( MOCS ${sir_MOCS} )
+if( qt5 )
+        QT5_WRAP_UI( UIS ${sir_UIS} )
+        QT5_WRAP_CPP( MOCS ${sir_MOCS} )
+else( qt5 )
+        QT4_WRAP_UI( UIS ${sir_UIS} )
+        QT4_WRAP_CPP( MOCS ${sir_MOCS} )
+endif( qt5 )
 
 add_executable( sir ${sir_SRCS} ${UIS} ${MOCS} ${QMS} ${RSCS} )
 target_link_libraries( sir ${sir_LINKING_LIBS} )
+if( qt5 )
+        QT5_USE_MODULES( sir Core Widgets Network Svg Xml PrintSupport )
+endif( qt5 )
 
 # installation
 # bin

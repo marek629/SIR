@@ -10,14 +10,12 @@
 /Makefile
 /CMakeCache.txt
 /CMakeFiles/*
-/*.qm
-/*.cxx
-/*/*.cxx
-/*/*/*.cxx
-/*/*/*/*.cxx
+*.qm
+*.cxx
 /ui_*.h
 /application.qrc.depends
 /cmake_install.cmake
 /install_manifest.txt
 /sir
 /sir.cbp
+moc_*.cpp

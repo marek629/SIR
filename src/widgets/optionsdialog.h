@@ -46,7 +46,7 @@ class OptionsDialog : public QDialog {
     Q_OBJECT
 
 public:
-    OptionsDialog( QWidget * parent = 0, Qt::WFlags f = 0);
+    OptionsDialog( QWidget * parent = 0, Qt::WindowFlags f = 0);
     ~OptionsDialog();
 
 private:

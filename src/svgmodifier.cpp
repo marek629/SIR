@@ -59,7 +59,7 @@ void SvgModifier::removeText(const QString &text) {
            << new QRegExp(text, Qt::CaseSensitive, QRegExp::WildcardUnix)
            << new QRegExp(text, Qt::CaseSensitive, QRegExp::RegExp2);
     QDomNodeList nodeList = document.elementsByTagName("text");
-    for (uint i=0; i<nodeList.length(); ) {
+    for (int i=0; i<nodeList.length(); ) {
         QDomNode node = nodeList.at(i);
         if (isCompatible(node.toElement().text(), rxList))
             node.parentNode().removeChild(node);
@@ -76,7 +76,7 @@ void SvgModifier::removeText(const QString &text) {
   */
 void SvgModifier::removeEmptyGroups() {
     QDomNodeList nodeList = document.elementsByTagName("g");
-    for (uint i=0; i<nodeList.length(); ) {
+    for (int i=0; i<nodeList.length(); ) {
         QDomNode node = nodeList.at(i);
         if (!node.hasChildNodes())
             node.parentNode().removeChild(node);

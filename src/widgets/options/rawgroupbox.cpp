@@ -41,7 +41,7 @@ void RawGroupBox::browseDcraw() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Select dcraw executable"),
                                                     CommonOptions::instance()->targetDirPath() );
-    fileName = QDir::convertSeparators(fileName);
+    fileName = QDir::toNativeSeparators(fileName);
     dcrawLineEdit->setText(fileName);
 }
 

@@ -365,7 +365,7 @@ void ConvertDialog::browseDestination() {
                            initialName,
                            QFileDialog::ShowDirsOnly );
 
-    fileName = QDir::convertSeparators(fileName);
+    fileName = QDir::toNativeSeparators(fileName);
 
     if (!fileName.isEmpty()) {
         destFileEdit->setText(fileName);

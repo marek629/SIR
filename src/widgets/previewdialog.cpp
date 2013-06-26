@@ -56,7 +56,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->currentImage = currentImage;
     this->images = images;
     this->imagePath = images->at(currentImage);
-    this->fileExt = imagePath.split('.').last().toLower().toAscii();
+    this->fileExt = imagePath.split('.').last().toLower().toLatin1();
     this->setFocusPolicy(Qt::StrongFocus);
     this->setFocus();
     this->setModal(true);
@@ -330,7 +330,7 @@ void  PreviewDialog::nextImage( ) {
 
     view->resetMatrix();
     imagePath = images->at(++currentImage);
-    fileExt = imagePath.split('.').last().toLower().toAscii();
+    fileExt = imagePath.split('.').last().toLower().toLatin1();
     scene->removeItem(imageItem);
     delete imageItem;
     delete image;
@@ -363,7 +363,7 @@ void  PreviewDialog::previousImage( ) {
     if(previousButton->hasFocus()) {
         view->resetMatrix();
         imagePath = images->at(--currentImage);
-        fileExt = imagePath.split('.').last().toLower().toAscii();
+        fileExt = imagePath.split('.').last().toLower().toLatin1();
         scene->removeItem(imageItem);
         delete imageItem;
         delete image;
@@ -466,7 +466,7 @@ bool PreviewDialog::saveAs() {
     if (fileName.isEmpty()) // when QFileDialog::getSaveFileName cancelled
         return false;
     if ( !QImageWriter::supportedImageFormats().contains(
-                    fileName.split('.').last().toLower().toAscii() ) ) {
+                    fileName.split('.').last().toLower().toLatin1() ) ) {
         QDialog *dialog = new QDialog(this, Qt::Dialog);
         dialog->setWindowTitle(tr("Unsupported file format"));
         QVBoxLayout *layout = new QVBoxLayout(dialog);
@@ -584,7 +584,7 @@ bool PreviewDialog::saveFile(const QString &fileName) {
     imageH = h;
 
     QPixmap destImg(1,1);
-    QString ext = fileName.split('.').last().toLower().toAscii();
+    QString ext = fileName.split('.').last().toLower().toLatin1();
     if (ext == "png" || ext == "gif")
         destImg.fill(Qt::transparent);
     else
@@ -628,7 +628,7 @@ void PreviewDialog::reloadImage(QString imageName) {
     rotation = 0;
     flip = MetadataUtils::None;
     imagePath = imageName;
-    fileExt = imagePath.split('.').last().toLower().toAscii();
+    fileExt = imagePath.split('.').last().toLower().toLatin1();
 #ifdef SIR_METADATA_SUPPORT
     metadataEnabled = isntTiffImage();
 #endif // SIR_METADATA_SUPPORT
