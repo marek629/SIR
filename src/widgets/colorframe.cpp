@@ -20,7 +20,6 @@
  */
 
 #include <QMouseEvent>
-#include <QColorDialog>
 #include <QApplication>
 #include "colorframe.h"
 
@@ -39,6 +38,15 @@ void ColorFrame::setColor(const QColor &color) {
     QPalette palette(this->palette());
     palette.setColor(QPalette::Window, color);
     setPalette(palette);
+    dialogFlags = QColorDialog::ShowAlphaChannel;
+}
+
+QColorDialog::ColorDialogOptions ColorFrame::colorDialogOptions() const {
+    return dialogFlags;
+}
+
+void ColorFrame::setColorDialogOptions(QColorDialog::ColorDialogOptions options) {
+    dialogFlags = options;
 }
 
 /** Means end of left button mouse click. If click finished on this object shows
@@ -49,7 +57,7 @@ void ColorFrame::mouseReleaseEvent(QMouseEvent *e) {
     if (e->button() == Qt::LeftButton && qApp->widgetAt(e->globalPos()) == this) {
         QColor color = QColorDialog::getColor(this->color(), this,
                                               tr("Choose Color"),
-                                              QColorDialog::ShowAlphaChannel);
+                                              dialogFlags);
         if (color.isValid())
             setColor(color);
     }

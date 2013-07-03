@@ -1,6 +1,7 @@
 *** nearest release ***
   ! Make simple effects
     * color (sepia, b&w, etc.) and gradient filtres
+      + contex menu for gradient frame brush provides format (size ratio) of the frame choise
     * histogram operations
     * effect collections, save to files
     * multiple effects convertion: save few images from just one, for example diffrent color effects

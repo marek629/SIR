@@ -28,7 +28,9 @@ int main(int argc, char *argv[]) {
     Q_INIT_RESOURCE(application);
     QApplication app(argc, argv);
 
-//    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#if QT_VERSION < 0x050000
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#endif
     QTextCodec* codec = QTextCodec::codecForLocale ();
 
     // Parse the arguments from the command line

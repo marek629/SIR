@@ -1,7 +1,9 @@
 * Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.7
-    - disabling SVG tab if no SVG file loaded on file tree view and the view is not empty
+    - added filter effect
+    - added disabling SVG tab if no SVG file loaded on file tree view and the view is not empty
     - CMake: build using choosed Qt version (4/5)
     - code update for Qt 5 compatibility
+    - bugfix: painting effect when desired size typed in Bytes now
 
 * Sun Apr 28 2013 - Marek Jędryka <jedryka89@gmail.com> - v2.6
     - added command line arguments --help, --session and --lang support

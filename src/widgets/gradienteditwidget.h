@@ -19,32 +19,36 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef COLORFRAME_H
-#define COLORFRAME_H
+#ifndef GRADIENTEDITWIDGET_H
+#define GRADIENTEDITWIDGET_H
 
-#include <QFrame>
-#include <QColorDialog>
+#include "ui_gradienteditwidget.h"
 
-/** \brief The empty frame class providing easy access to color customization.
-  *
-  * This class provides color dialog (on left click), current color presentation
-  * on the frame and color read access method color().
-  */
-class ColorFrame : public QFrame {
+class GradientEditWidget : public QWidget, private Ui::GradientEditWidget
+{
     Q_OBJECT
 
 public:
-    explicit ColorFrame(QWidget *parent = 0);
-    const QColor &color() const;
-    void setColor(const QColor &color);
-    QColorDialog::ColorDialogOptions colorDialogOptions() const;
-    void setColorDialogOptions(QColorDialog::ColorDialogOptions options);
+    explicit GradientEditWidget(QWidget *parent = 0);
+    QGradientStops gradientStops() const;
 
-protected:
-    void mouseReleaseEvent(QMouseEvent *);
+public slots:
+    void hide();
+    void show();
+
+private slots:
+    void treeItemSelected(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void editItem(QTreeWidgetItem *item, int column);
+    void addItem();
+    void deleteItem();
+    void nextItem();
+    void previousItem();
+
+signals:
+    void gradientChanged();
 
 private:
-    QColorDialog::ColorDialogOptions dialogFlags;
+    inline QString numberString(double v);
 };
 
-#endif // COLORFRAME_H
+#endif // GRADIENTEDITWIDGET_H

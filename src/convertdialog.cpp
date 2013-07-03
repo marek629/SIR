@@ -519,6 +519,33 @@ void ConvertDialog::convert() {
         sharedInfo->backgroundColor = optionsScrollArea->backgroundColorFrame->color();
     else
         sharedInfo->backgroundColor = QColor();
+    // filter
+    if (effectsScrollArea->filterGroupBox->isChecked()) {
+        if (effectsScrollArea->filterColorRadioButton->isChecked()) {
+            sharedInfo->filterBrush = QBrush();
+            switch (effectsScrollArea->filterTypeComboBox->currentIndex()) {
+            case 0:
+                sharedInfo->filterType = BlackAndWhite;
+                break;
+            case 1:
+                sharedInfo->filterType = Sepia;
+                break;
+            case 2:
+            default:
+                sharedInfo->filterType = CustomColor;
+                sharedInfo->filterBrush = QBrush(effectsScrollArea->filterBrushFrame->color());
+                break;
+            }
+        }
+        else {
+            sharedInfo->filterType = Gradient;
+            sharedInfo->filterBrush = effectsScrollArea->filterBrushFrame->brush();
+        }
+    }
+    else {
+        sharedInfo->filterType = NoFilter;
+        sharedInfo->filterBrush = QBrush();
+    }
     // add frame
     if (effectsScrollArea->frameGroupBox->isChecked()) {
         sharedInfo->frameAddAround = effectsScrollArea->frameAroundRadioButton->isChecked();

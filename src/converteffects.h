@@ -44,6 +44,7 @@ public:
     SharedInformation *sharedInfo() const;
     void setImage(QImage *image);
     QImage *image() const;
+    void filtrate();
     QImage framedImage();
     void addText();
     void addImage();
@@ -63,6 +64,8 @@ private:
     QPoint getTransformOriginPoint(const QPoint &position, const PosUnitPair &units);
     QRect getEffectBoundingRect(const QRect &rect, const QPoint &pos,
                                 PosModifier modifier);
+    void combine(const QColor &color);
+    void combine(const QGradient *gradient);
 };
 
 #endif // EFFECTPAINTER_H

@@ -84,8 +84,10 @@ set( sir_SRCS
         src/xmlstreamwriter.cpp
         src/metadata/string.cpp
         src/widgets/aboutdialog.cpp
+        src/widgets/brushframe.cpp
         src/widgets/colorframe.cpp
         src/widgets/detailsbrowser.cpp
+        src/widgets/gradienteditwidget.cpp
         src/widgets/historycombobox.cpp
         src/widgets/messagebox.cpp
         src/widgets/optionsdialog.cpp
@@ -110,6 +112,7 @@ set( sir_SRCS
 set( sir_UIS
         dialogs/about.ui
         dialogs/convertdialog.ui
+        dialogs/gradienteditwidget.ui
         dialogs/previewdialog.ui
         dialogs/convert/effectsscrollarea.ui
         dialogs/convert/optionsscrollarea.ui
@@ -182,8 +185,10 @@ set( sir_MOCS
         src/selection.h
         src/settings.h
         src/widgets/aboutdialog.h
+        src/widgets/brushframe.h
         src/widgets/colorframe.h
         src/widgets/detailsbrowser.h
+        src/widgets/gradienteditwidget.h
         src/widgets/historycombobox.h
         src/widgets/messagebox.h
         src/widgets/optionsdialog.h

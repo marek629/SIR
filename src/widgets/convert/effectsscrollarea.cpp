@@ -21,6 +21,7 @@
 
 #include <QFileDialog>
 #include <QImageReader>
+#include <QStringListModel>
 #include "effectsscrollarea.h"
 
 /** Creates the EffectsScrollArea object. Sets up GUI. */
@@ -28,6 +29,12 @@ EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
 
     // create connections
+    connect(filterColorRadioButton, SIGNAL(toggled(bool)),
+            this, SLOT(filterToogled(bool)) );
+    connect(filterTypeComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(filterTypeChanged(int)) );
+    connect(filterGradientWidget, SIGNAL(gradientChanged()),
+            filterBrushFrame, SLOT(changeGradient()) );
     connect(imagePathPushButton, SIGNAL(clicked()), this, SLOT(browseImage()));
     connect(textXComboBox, SIGNAL(currentIndexChanged(QString)),
             textXSpinBox, SLOT(posUnitChanged(QString)) );
@@ -38,10 +45,16 @@ EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     connect(imageYComboBox, SIGNAL(currentIndexChanged(QString)),
             imageYSpinBox, SLOT(posUnitChanged(QString)) );
 
+    filterBrushFrame->setColorDialogOptions(0);
+    filterBrushFrame->setGradientType(QGradient::LinearGradient);
+    filterBrushFrame->setGradientStops(filterGradientWidget->gradientStops());
+    textColorFrame->setColor(Qt::black);
+
     // set combo box models
+    setupFilterModels();
+    filterToogled(filterColorRadioButton->isChecked());
     QAbstractItemModel *posUnitModel = textXComboBox->model();
     textYComboBox->setModel(posUnitModel);
-    textColorFrame->setColor(Qt::black);
     imagePositionComboBox->setModel(textPositionComboBox->model());
     imageXComboBox->setModel(posUnitModel);
     imageYComboBox->setModel(posUnitModel);
@@ -60,6 +73,92 @@ EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     textItalicPushButton->setIcon(QIcon::fromTheme("format-text-italic"));
     textUnderlinePushButton->setIcon(QIcon::fromTheme("format-text-underline"));
     textStrikeOutPushButton->setIcon(QIcon::fromTheme("format-text-strikethrough"));
+}
+
+/** Deletes dynamicaly allocated fields. */
+EffectsScrollArea::~EffectsScrollArea() {
+    delete filterColorModel;
+    delete filterGradientModel;
+}
+
+/** Sets up filters combo box models. */
+void EffectsScrollArea::setupFilterModels() {
+    QStringList stringList;
+    stringList << tr("Black & white") << tr("Sepia") << tr("Custom");
+    filterColorModel = new QStringListModel(stringList, this);
+    filterColorModelIndex = 0;
+    stringList.clear();
+    stringList << tr("Linear") << tr("Radial") << tr("Conical");
+    filterGradientModel = new QStringListModel(stringList, this);
+    filterGradientModelIndex = 0;
+}
+
+/** Shows widgets for color filter if \a colorToogled is true. Otherwise shows
+  * widgets for gradient filter.
+  */
+void EffectsScrollArea::filterToogled(bool colorToogled) {
+    if (colorToogled) {
+        filterTypeLabel->setText(tr("Color"));
+        filterGradientModelIndex = filterTypeComboBox->currentIndex();
+        if (filterGradientModelIndex < 0)
+            filterGradientModelIndex = 0;
+        filterTypeComboBox->setModel(filterColorModel);
+        filterTypeComboBox->setCurrentIndex(filterColorModelIndex);
+        filterGradientWidget->hide();
+        filterBrushFrame->setBrushEditable(false);
+        filterBrush = filterBrushFrame->brush();
+        filterBrushFrame->setColor(filterColor);
+    }
+    else {
+        filterTypeLabel->setText(tr("Gradient"));
+        filterColorModelIndex = filterTypeComboBox->currentIndex();
+        if (filterColorModelIndex < 0)
+            filterColorModelIndex = 0;
+        filterTypeComboBox->setModel(filterGradientModel);
+        filterTypeComboBox->setCurrentIndex(filterGradientModelIndex);
+        filterGradientWidget->show();
+        filterBrushFrame->setBrushEditable(true);
+        filterColor = filterBrushFrame->color();
+        filterBrushFrame->setBrush(filterBrush);
+    }
+}
+
+void EffectsScrollArea::filterTypeChanged(int type) {
+    if (filterColorRadioButton->isChecked()) {
+        // show color filters widgets
+        switch (type) {
+        case 0:
+        case 1:
+            filterBrushFrame->hide();
+            break;
+        case 2:
+        default:
+            filterBrushFrame->show();
+            break;
+        }
+    }
+    else {
+        // show gradient filters widgets
+        filterBrushFrame->show();
+
+        switch (type) {
+        case 0: {
+            filterBrushFrame->setGradientType(QGradient::LinearGradient);
+            break;
+        }
+        case 1: {
+            filterBrushFrame->setGradientType(QGradient::RadialGradient);
+            break;
+        }
+        case 2: {
+            filterBrushFrame->setGradientType(QGradient::ConicalGradient);
+            break;
+        }
+        default:
+            qDebug("EffectsScrollArea::filterTypeChanged(): unsupported type %d", type);
+            return;
+        }
+    }
 }
 
 /** Browses image file to open and sets the new path to image path line edit. */

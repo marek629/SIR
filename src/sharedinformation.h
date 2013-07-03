@@ -29,6 +29,7 @@
 #include <QFont>
 #include <QPair>
 #include <QImage>
+#include <QBrush>
 
 /** Position modificators enumerator for \em "Add Text" and \em "Add Image"
   * effects. It's correlated position combo boxes in EffectsScrollArea.
@@ -55,6 +56,14 @@ enum PosUnit {
     Pixel,
     Percent,
     UndefinedUnit = -1
+};
+
+enum Filter {
+    NoFilter,
+    BlackAndWhite,
+    Sepia,
+    CustomColor,
+    Gradient
 };
 
 /** Pair of two PosUnit: first item is X coordinate, second is Y coordinate. */
@@ -117,6 +126,9 @@ private:
       * If custom background color is disabled it's invalid QColor object.
       */
     QColor backgroundColor;
+    // filter
+    int filterType;
+    QBrush filterBrush;
     // add frame
     /** Frame width for \em "Add Frame" effect.
       * \sa #frameColor

@@ -29,8 +29,22 @@ class EffectsScrollArea : public QScrollArea, public Ui::EffectsScrollArea {
 
 public:
     explicit EffectsScrollArea(QWidget *parent = 0);
+    ~EffectsScrollArea();
+
+private:
+    // fields
+    QAbstractItemModel *filterColorModel;
+    QAbstractItemModel *filterGradientModel;
+    int filterColorModelIndex;
+    int filterGradientModelIndex;
+    QColor filterColor;
+    QBrush filterBrush;
+    // methods
+    void setupFilterModels();
 
 private slots:
+    void filterToogled(bool colorToogled);
+    void filterTypeChanged(int type);
     void browseImage();
 };
 

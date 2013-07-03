@@ -191,15 +191,7 @@ void ConvertThread::run() {
         else if (!hasWidth && !hasHeight)
             destImg = *image;
         // paint effects
-        ConvertEffects effectPainter(&destImg, shared);
-        if (shared->frameWidth > 0 && shared->frameColor.isValid()) {
-            destImg = effectPainter.framedImage();
-            effectPainter.setImage(&destImg);
-        }
-        if (!shared->image.isNull())
-            effectPainter.addImage();
-        if (!shared->textString.isEmpty())
-            effectPainter.addText();
+        destImg = paintEffects(&destImg);
         // rotate image and update thumbnail
         destImg = rotateImage(destImg);
 #ifdef SIR_METADATA_SUPPORT
@@ -452,6 +444,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 height = size.height() / fileSizeRatio;
                 tempImage = image->scaled(width, height, Qt::IgnoreAspectRatio,
                                              Qt::SmoothTransformation);
+                tempImage = paintEffects(&tempImage);
                 tempImage = rotateImage(tempImage);
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
@@ -540,6 +533,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                 painter.begin(&tempImage);
                 renderer->render(&painter);
                 painter.end();
+                tempImage = paintEffects(&tempImage);
                 tempImage = rotateImage(tempImage);
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
@@ -767,4 +761,20 @@ QImage * ConvertThread::loadSvgImage() {
     hasHeight = false;
     // finaly return the image pointer
     return img;
+}
+
+QImage ConvertThread::paintEffects(QImage *image) {
+    QImage destImg(*image);
+    ConvertEffects effectPainter(&destImg, shared);
+    if (shared->filterType != NoFilter)
+        effectPainter.filtrate();
+    if (shared->frameWidth > 0 && shared->frameColor.isValid()) {
+        destImg = effectPainter.framedImage();
+        effectPainter.setImage(&destImg);
+    }
+    if (!shared->image.isNull())
+        effectPainter.addImage();
+    if (!shared->textString.isEmpty())
+        effectPainter.addText();
+    return destImg;
 }

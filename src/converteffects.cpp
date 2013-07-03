@@ -61,6 +61,36 @@ QImage * ConvertEffects::image() const {
     return img;
 }
 
+void ConvertEffects::filtrate() {
+    if (!img) {
+        qDebug("EffectPainter::filtate(): image is not set!");
+        return;
+    }
+
+    switch (shared->filterType) {
+    case BlackAndWhite:
+        for (int y=0; y<img->height(); y++) {
+            for (int x=0; x<img->width(); x++) {
+                int gray = qGray(img->pixel(x,y));
+                img->setPixel(x, y, qRgb(gray, gray, gray));
+            }
+        }
+        break;
+    case Sepia:
+        combine(QColor(112, 66, 20));
+        break;
+    case CustomColor:
+        combine(shared->filterBrush.color());
+        break;
+    case Gradient:
+        combine(shared->filterBrush.gradient());
+        break;
+    default:
+        qDebug("EffectPainter::filtate(): unexpected filter type occured");
+        break;
+    }
+}
+
 /** Adds frame to new image and returns this. */
 QImage ConvertEffects::framedImage() {
     QImage result;
@@ -230,4 +260,28 @@ QRect ConvertEffects::getEffectBoundingRect(const QRect &rect, const QPoint &pos
         break;
     }
     return result;
+}
+
+void ConvertEffects::combine(const QColor &color) {
+    const int cr = color.red();
+    const int cg = color.green();
+    const int cb = color.blue();
+    int max = cr;
+    if (max < cg)
+        max = cg;
+    if (max < cb)
+        max = cb;
+    for (int y=0; y<img->height(); y++) {
+        for (int x=0; x<img->width(); x++) {
+            QRgb rgb = img->pixel(x,y);
+            int r = cr * qRed(rgb) / max;
+            int g = cg * qGreen(rgb) / max;
+            int b = cb * qBlue(rgb) / max;
+            img->setPixel(x, y, qRgb(r, g, b));
+        }
+    }
+}
+
+void ConvertEffects::combine(const QGradient *gradient) {
+
 }

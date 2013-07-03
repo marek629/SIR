@@ -123,6 +123,7 @@ private:
     char askOverwrite(QFile *tempFile);
     void fillImage(QImage *img);
     QImage *loadSvgImage();
+    QImage paintEffects(QImage *image);
 };
 
 #endif // CONVERTTHREAD_H
