@@ -37,7 +37,7 @@ TreeWidgetHeader::TreeWidgetHeader(QWidget *parent)
     setDefaultAlignment(Qt::AlignLeft);
     createActions();
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(showMenu(QPoint)));
+            this, SLOT(showContextMenu(QPoint)));
 }
 
 /** Updates settings variables.
@@ -111,7 +111,7 @@ void TreeWidgetHeader::createActions() {
 }
 
 /** Shows menu where the user can choose witch columns should be visible. */
-void TreeWidgetHeader::showMenu(const QPoint &point) {
+void TreeWidgetHeader::showContextMenu(const QPoint &point) {
     Q_UNUSED(point)
     QMenu contextMenu(this);
     contextMenu.addActions(actions);

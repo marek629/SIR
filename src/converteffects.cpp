@@ -62,10 +62,7 @@ QImage * ConvertEffects::image() const {
 }
 
 void ConvertEffects::filtrate() {
-    if (!img) {
-        qDebug("EffectPainter::filtate(): image is not set!");
-        return;
-    }
+    Q_ASSERT(img != NULL);
 
     switch (shared->filterType) {
     case BlackAndWhite:
@@ -83,10 +80,10 @@ void ConvertEffects::filtrate() {
         combine(shared->filterBrush.color());
         break;
     case Gradient:
-        combine(shared->filterBrush.gradient());
+        combine(shared->filterBrush);
         break;
     default:
-        qDebug("EffectPainter::filtate(): unexpected filter type occured");
+        qDebug("ConvertEffects::filtate(): unexpected filter type occured");
         break;
     }
 }
@@ -135,10 +132,7 @@ QImage ConvertEffects::framedImage() {
   * \sa addImage() image() setImage()
   */
 void ConvertEffects::addText() {
-    if (!img) {
-        qDebug("EffectPainter::addText(): image is not set!");
-        return;
-    }
+    Q_ASSERT(img != NULL);
 
     // reference point setup
     QPoint point = getTransformOriginPoint(shared->textPos, shared->textUnitPair);
@@ -171,10 +165,7 @@ void ConvertEffects::addText() {
   * \sa addText() image() setImage()
   */
 void ConvertEffects::addImage() {
-    if (!img) {
-        qDebug("EffectPainter::addImage(): image is not set!");
-        return;
-    }
+    Q_ASSERT(img != NULL);
 
     QPoint point = getTransformOriginPoint(shared->imagePos, shared->imageUnitPair);
 
@@ -282,6 +273,9 @@ void ConvertEffects::combine(const QColor &color) {
     }
 }
 
-void ConvertEffects::combine(const QGradient *gradient) {
-
+void ConvertEffects::combine(const QBrush &brush) {
+    QPainter painter(img);
+    painter.setBrush(brush);
+    painter.setOpacity(0.5);
+    painter.fillRect(img->rect(), brush);
 }

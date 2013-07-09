@@ -124,8 +124,10 @@ void BrushFrame::setGradientType(QGradient::Type type) {
         break;
     }
 
-    if (gradient)
+    if (gradient) {
         setGradientStops(stops);
+        gradient->setCoordinateMode(QGradient::ObjectBoundingMode);
+    }
 }
 
 void BrushFrame::setGradientStops(const QGradientStops &stops) {
@@ -150,6 +152,9 @@ void BrushFrame::mousePressEvent(QMouseEvent *e) {
     if (e->button() == Qt::LeftButton) {
         mouseLeftButtonPressed = true;
         originPoint = e->pos();
+        originPointF = originPoint;
+        originPointF.setX(originPointF.x()/width());
+        originPointF.setY(originPointF.y()/height());
     }
 }
 
@@ -161,25 +166,28 @@ void BrushFrame::mouseMoveEvent(QMouseEvent *e) {
         return;
 
     endPoint = e->pos();
+    endPointF = endPoint;
+    endPointF.setX(endPointF.x()/width());
+    endPointF.setY(endPointF.y()/height());
 
     switch (gradient->type()) {
     case QGradient::LinearGradient: {
         QLinearGradient *lg = static_cast<QLinearGradient*>(gradient);
-        lg->setStart(originPoint);
-        lg->setFinalStop(endPoint);
+        lg->setStart(originPointF);
+        lg->setFinalStop(endPointF);
         break;
     }
     case QGradient::RadialGradient: {
         QRadialGradient *rg = static_cast<QRadialGradient*>(gradient);
-        rg->setCenter(originPoint);
-        rg->setFocalPoint(endPoint);
-        rg->setRadius(qMin(width(), height()));
+        rg->setCenter(originPointF);
+        rg->setFocalPoint(endPointF);
+        rg->setRadius(0.8);
         break;
     }
     case QGradient::ConicalGradient: {
         QConicalGradient *cg = static_cast<QConicalGradient*>(gradient);
-        QLineF line(originPoint, endPoint);
-        cg->setCenter(originPoint);
+        QLineF line(originPointF, endPointF);
+        cg->setCenter(originPointF);
         cg->setAngle(line.angle());
         break;
     }

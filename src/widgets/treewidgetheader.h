@@ -44,7 +44,7 @@ private:
     void createActions();
 
 private slots:
-    void showMenu(const QPoint &point);
+    void showContextMenu(const QPoint &point);
     void columnTriggered(bool visible);
 };
 

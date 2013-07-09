@@ -66,8 +66,10 @@ private:
     bool mouseLeftButtonPressed;
     /** Start point for gradient customization. */
     QPoint originPoint;
+    QPointF originPointF;
     /** End point for gradient customization. */
     QPoint endPoint;
+    QPointF endPointF;
     QGradient *gradient;
 };
 

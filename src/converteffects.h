@@ -65,7 +65,7 @@ private:
     QRect getEffectBoundingRect(const QRect &rect, const QPoint &pos,
                                 PosModifier modifier);
     void combine(const QColor &color);
-    void combine(const QGradient *gradient);
+    void combine(const QBrush &brush);
 };
 
 #endif // EFFECTPAINTER_H
