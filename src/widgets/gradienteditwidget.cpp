@@ -38,6 +38,7 @@ GradientEditWidget::GradientEditWidget(QWidget *parent) : QWidget(parent) {
     moveDownPushButton->setEnabled(false);
 
     // setup tree widget
+    treeWidget->setSelectionMode(QAbstractItemView::NoSelection);
     QStringList list;
     list << numberString(0.) << "";
     QTreeWidgetItem *item = new QTreeWidgetItem(list);
@@ -105,6 +106,10 @@ void GradientEditWidget::treeItemSelected(QTreeWidgetItem *current,
             moveDownPushButton->setEnabled(true);
         }
     }
+
+    QModelIndex index = treeWidget->currentIndex();
+    index = index.sibling(index.row(), 0);
+    treeWidget->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 }
 
 void GradientEditWidget::editItem(QTreeWidgetItem *item, int column) {
