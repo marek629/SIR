@@ -1,8 +1,5 @@
 *** nearest release ***
   ! Make simple effects
-    * color (sepia, b&w, etc.) and gradient filtres
-      + color text for selected items color visibility
-      + arrow buttons should move items - not selection
     * histogram operations
     * effect collections, save to files
     * multiple effects convertion: save few images from just one, for example diffrent color effects

@@ -56,8 +56,8 @@ GradientEditWidget::GradientEditWidget(QWidget *parent) : QWidget(parent) {
             this, SLOT(editItem(QTreeWidgetItem*,int)) );
     connect(addPushButton, SIGNAL(clicked()), this, SLOT(addItem()));
     connect(deletePushButton, SIGNAL(clicked()), this, SLOT(deleteItem()));
-    connect(moveUpPushButton, SIGNAL(clicked()), this, SLOT(previousItem()));
-    connect(moveDownPushButton, SIGNAL(clicked()), this, SLOT(nextItem()));
+    connect(moveUpPushButton, SIGNAL(clicked()), this, SLOT(moveUpItem()));
+    connect(moveDownPushButton, SIGNAL(clicked()), this, SLOT(moveDownItem()));
 }
 
 QGradientStops GradientEditWidget::gradientStops() const {
@@ -154,20 +154,41 @@ void GradientEditWidget::deleteItem() {
         deletePushButton->setEnabled(false);
 }
 
-void GradientEditWidget::nextItem() {
-    int index = treeWidget->indexOfTopLevelItem(treeWidget->currentItem()) + 1;
-    treeWidget->setCurrentItem(treeWidget->topLevelItem(index));
-    if (index == treeWidget->topLevelItemCount()-1)
+void GradientEditWidget::moveDownItem() {
+    const int column = 0;
+    QTreeWidgetItem *item = treeWidget->currentItem();
+    const int index = treeWidget->indexOfTopLevelItem(item) + 1;
+    QTreeWidgetItem *nextItem = treeWidget->topLevelItem(index);
+    const QString nextStop = nextItem->text(column);
+    nextItem->setText(column, item->text(column));
+    item->setText(column, nextStop);
+
+    treeWidget->sortItems(column, Qt::AscendingOrder);
+
+    if (index == treeWidget->topLevelItemCount()-1) {
         moveDownPushButton->setEnabled(false);
+        addPushButton->setEnabled(false);
+    }
     moveUpPushButton->setEnabled(true);
+    emit gradientChanged();
 }
 
-void GradientEditWidget::previousItem() {
-    int index = treeWidget->indexOfTopLevelItem(treeWidget->currentItem()) - 1;
-    treeWidget->setCurrentItem(treeWidget->topLevelItem(index));
+void GradientEditWidget::moveUpItem() {
+    const int column = 0;
+    QTreeWidgetItem *item = treeWidget->currentItem();
+    const int index = treeWidget->indexOfTopLevelItem(item) - 1;
+    QTreeWidgetItem *previousItem = treeWidget->topLevelItem(index);
+    const QString nextStop = previousItem->text(column);
+    previousItem->setText(column, item->text(column));
+    item->setText(column, nextStop);
+
+    treeWidget->sortItems(column, Qt::AscendingOrder);
+
     if (index == 0)
         moveUpPushButton->setEnabled(false);
     moveDownPushButton->setEnabled(true);
+    addPushButton->setEnabled(true);
+    emit gradientChanged();
 }
 
 QString GradientEditWidget::numberString(double v) {

@@ -125,8 +125,8 @@ void BrushFrame::setGradientType(QGradient::Type type) {
     }
 
     if (gradient) {
-        setGradientStops(stops);
         gradient->setCoordinateMode(QGradient::ObjectBoundingMode);
+        setGradientStops(stops);
     }
 }
 

@@ -5,8 +5,7 @@
 /.obj/*
 /.project
 /.svn/*
-/sir.pro.user*
-/*.user
+*.user*
 /Makefile
 /CMakeCache.txt
 /CMakeFiles/*

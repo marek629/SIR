@@ -41,8 +41,8 @@ private slots:
     void editItem(QTreeWidgetItem *item, int column);
     void addItem();
     void deleteItem();
-    void nextItem();
-    void previousItem();
+    void moveDownItem();
+    void moveUpItem();
 
 signals:
     void gradientChanged();
