@@ -37,6 +37,7 @@
 #include "widgets/optionsdialog.h"
 #include "widgets/options/generalgroupbox.h"
 #include "defines.h"
+#include "version.h"
 #include "rawutils.h"
 #include "networkutils.h"
 #include "widgets/messagebox.h"
@@ -695,7 +696,7 @@ void ConvertDialog::saveSession() {
 /** Shows window containing information about SIR. */
 void ConvertDialog::about() {
     AboutDialog *about = new AboutDialog();
-    about->setVersion(tr("Version") + " " + VERSION);
+    about->setVersion(tr("Version") + " " + Version().version());
     about->exec();
     delete about;
 }

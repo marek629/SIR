@@ -20,7 +20,7 @@
  */
 
 #include "networkutils.h"
-#include "defines.h"
+#include "version.h"
 #include <QNetworkAccessManager>
 #include <QUrl>
 #include <QNetworkRequest>
@@ -45,7 +45,8 @@ void NetworkUtils::checkUpdates() {
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)),
                      this, SLOT(showResults(QNetworkReply*)));
 
-    QUrl url("http://sir.projet-libre.org/check_updates.php?version="+QString(VERSION));
+    QUrl url("http://sir.projet-libre.org/check_updates.php?version=" +
+             Version().version() );
     reply = nam->get(QNetworkRequest(url));
 
 }

@@ -59,6 +59,7 @@ set( sir_HDRS
         src/session.h
         src/sharedinformation.h
         src/svgmodifier.h
+        src/version.h
         src/xmlstreamwriter.h
         src/metadata/string.h
     )
@@ -81,6 +82,7 @@ set( sir_SRCS
         src/settings.cpp
         src/sharedinformation.cpp
         src/svgmodifier.cpp
+        src/version.cpp
         src/xmlstreamwriter.cpp
         src/metadata/string.cpp
         src/widgets/aboutdialog.cpp

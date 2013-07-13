@@ -22,7 +22,7 @@
 #ifdef SIR_METADATA_SUPPORT
 
 #include "metadatautils.h"
-#include "defines.h"
+#include "version.h"
 #include <QStringList>
 #include <QDir>
 #include <cmath>
@@ -163,7 +163,7 @@ bool Metadata::setData(const QImage& qImage) {
     bool result = false;
     if (!exifData.empty()) {
         if (!exif.isVersionKnown()) {
-            Exiv2::byte version[4] = { 48, 50, 50, 48 };
+            Exiv2::byte version[4] = { 48, 50, 50, 48 }; // ASCII codes of '0220'
             Exiv2::DataValue value(version,4);
             exifData["Exif.Photo.ExifVersion"] = value;
         }

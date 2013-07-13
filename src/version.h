@@ -19,40 +19,43 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef SESSION_H
-#define SESSION_H
+#ifndef VERSION_H
+#define VERSION_H
 
-#include <QDomElement>
-#include <QColor>
-#include <QCoreApplication>
+#include <QString>
+#include <QVector>
 
-class ConvertDialog;
-class SizeScrollArea;
-class OptionsScrollArea;
-class EffectsScrollArea;
-class SvgScrollArea;
+#define VERSION "2.7-dev"
 
-//! Session files reader and writer class.
-class Session {
-    Q_DECLARE_TR_FUNCTIONS(Session)
-
+class Version {
 public:
-    explicit Session(ConvertDialog *parent = 0);
-    void save(const QString &fileName);
-    void restore(const QString &fileName);
+    Version();
+    QString version() const;
+    bool isAtLeast(const QString &ver);
 
 private:
     // fields
-    /** Parent convert dialog.
-      * \sa sizeArea optionsArea effectsArea svgArea
+    /** Version string in format "M.m.p[-s]"
+      *
+      *     M - major version number
+      *     m - minor version number
+      *     p - patch version number
+      *     s - development status; optional, after minus sign
+      *
+      * Supported development status strings are:
+      * - dev
+      * - alpha
+      * - beta
+      *
+      * \sa version()
       */
-    ConvertDialog *convertDialog;
-    SizeScrollArea *sizeArea; /**< Size scroll area in convertDialog. */
-    OptionsScrollArea *optionsArea; /**< Options scroll area in convertDialog. */
-    EffectsScrollArea *effectsArea; /**< Effects scroll area in convertDialog. */
-    SvgScrollArea *svgArea; /**< SVG scroll area in convertDialog. */
+    const QString versionString;
+    /** Stores values of versionString.
+      * \sa vector()
+      */
+    const QVector<int> versionVector;
     // methods
-    QColor readColor(const QDomElement &parentElement);
+    QVector<int> vector(const QString &ver);
 };
 
-#endif // SESSION_H
+#endif // VERSION_H
