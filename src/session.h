@@ -23,17 +23,18 @@
 #define SESSION_H
 
 #include <QDomElement>
-#include <QColor>
 #include <QCoreApplication>
+#include "xmlhelper.h"
 
 class ConvertDialog;
 class SizeScrollArea;
 class OptionsScrollArea;
 class EffectsScrollArea;
 class SvgScrollArea;
+class EffectsCollector;
 
 //! Session files reader and writer class.
-class Session {
+class Session : public XmlHelper {
     Q_DECLARE_TR_FUNCTIONS(Session)
 
 public:
@@ -42,17 +43,11 @@ public:
     void restore(const QString &fileName);
 
 private:
-    // fields
-    /** Parent convert dialog.
-      * \sa sizeArea optionsArea effectsArea svgArea
-      */
-    ConvertDialog *convertDialog;
     SizeScrollArea *sizeArea; /**< Size scroll area in convertDialog. */
     OptionsScrollArea *optionsArea; /**< Options scroll area in convertDialog. */
     EffectsScrollArea *effectsArea; /**< Effects scroll area in convertDialog. */
     SvgScrollArea *svgArea; /**< SVG scroll area in convertDialog. */
-    // methods
-    QColor readColor(const QDomElement &parentElement);
+    EffectsCollector *collector;
 };
 
 #endif // SESSION_H

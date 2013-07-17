@@ -50,6 +50,7 @@ set( sir_HDRS
         src/converteffects.h
         src/convertshareddata.h
         src/defines.h
+        src/effectscollector.h
         src/expressiontree.h
         src/languageutils.h
         src/main.h
@@ -60,6 +61,7 @@ set( sir_HDRS
         src/sharedinformation.h
         src/svgmodifier.h
         src/version.h
+        src/xmlhelper.h
         src/xmlstreamwriter.h
         src/metadata/string.h
     )
@@ -71,6 +73,7 @@ set( sir_SRCS
         src/converteffects.cpp
         src/convertshareddata.cpp
         src/convertthread.cpp
+        src/effectscollector.cpp
         src/expressiontree.cpp
         src/languageutils.cpp
         src/main.cpp
@@ -83,6 +86,7 @@ set( sir_SRCS
         src/sharedinformation.cpp
         src/svgmodifier.cpp
         src/version.cpp
+        src/xmlhelper.cpp
         src/xmlstreamwriter.cpp
         src/metadata/string.cpp
         src/widgets/aboutdialog.cpp

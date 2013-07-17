@@ -19,44 +19,27 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef VERSION_H
-#define VERSION_H
+#ifndef EFFECTSCOLLECTOR_H
+#define EFFECTSCOLLECTOR_H
 
-#include <QString>
-#include <QVector>
+#include "xmlhelper.h"
 
-#define VERSION "2.7-dev"
+class EffectsScrollArea;
+class XmlStreamWriter;
 
-//! SIR version information class.
-class Version {
+class EffectsCollector : public XmlHelper {
+    Q_DECLARE_TR_FUNCTIONS(EffectsCollector);
+
 public:
-    Version();
-    QString version() const;
-    bool isAtLeast(const QString &ver);
+    EffectsCollector(ConvertDialog *parent = 0);
+    // TODO: przetestowanie read() i write() oraz użycie save() i restore()
+    void save(const QString &fileName);
+    void restore(const QString &fileName);
+    bool read(const QDomElement &element);
+    void write(XmlStreamWriter *writer);
 
 private:
-    // fields
-    /** Version string in format "M.m.p[-s]"
-      *
-      *     M - major version number
-      *     m - minor version number
-      *     p - patch version number
-      *     s - development status; optional, after minus sign
-      *
-      * Supported development status strings are:
-      * - dev
-      * - alpha
-      * - beta
-      *
-      * \sa version()
-      */
-    const QString versionString;
-    /** Stores values of versionString.
-      * \sa vector()
-      */
-    const QVector<int> versionVector;
-    // methods
-    QVector<int> vector(const QString &ver);
+    EffectsScrollArea *effectsArea;
 };
 
-#endif // VERSION_H
+#endif // EFFECTSCOLLECTOR_H

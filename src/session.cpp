@@ -27,13 +27,12 @@
 #include "version.h"
 #include "metadata/string.h"
 #include "convertshareddata.h"
-
-const QString falseString = "no";
+#include "effectscollector.h"
 
 /** Creates the Session object.
   * \param parent Parent convert dialog.
   */
-Session::Session(ConvertDialog *parent) {
+Session::Session(ConvertDialog *parent) : XmlHelper() {
     convertDialog = parent;
     if (convertDialog) {
         sizeArea = convertDialog->sizeScrollArea;
@@ -47,6 +46,7 @@ Session::Session(ConvertDialog *parent) {
         effectsArea = 0;
         svgArea = 0;
     }
+    collector = new EffectsCollector(convertDialog);
 }
 
 /** Writes session to XML file in \a fileName path. */
@@ -146,75 +146,7 @@ void Session::save(const QString &fileName) {
     writer.writeEndElement(); // flip
     writer.writeEndElement(); // options
 
-    writer.writeStartElement("effects");
-    // add frame
-    writer.writeStartElement("addframe");
-    writer.writeAttribute("enabled", effectsArea->frameGroupBox->isChecked());
-    writer.writeStartElement("frame");
-    writer.writeAttribute("around", effectsArea->frameAroundRadioButton->isChecked());
-    writer.writeAttribute("width", effectsArea->frameWidthSpinBox->value());
-    writer.writeColorElement(effectsArea->frameColorFrame->color());
-    writer.writeEndElement(); // frame
-    writer.writeStartElement("insideborder");
-    writer.writeAttribute("enabled", effectsArea->borderInsideGroupBox->isChecked());
-    writer.writeAttribute("width", effectsArea->borderInsideSpinBox->value());
-    writer.writeColorElement(effectsArea->borderInsideColorFrame->color());
-    writer.writeEndElement(); // insideborder
-    writer.writeStartElement("outsideborder");
-    writer.writeAttribute("enabled", effectsArea->borderOutsideGroupBox->isChecked());
-    writer.writeAttribute("width", effectsArea->borderOutsideSpinBox->value());
-    writer.writeColorElement(effectsArea->borderOutsideColorFrame->color());
-    writer.writeEndElement(); // outsideborder
-    writer.writeEndElement(); // addframe
-    // add text
-    writer.writeStartElement("addtext");
-    writer.writeAttribute("enabled", effectsArea->textGroupBox->isChecked());
-    writer.writeAttribute("opacity", effectsArea->textOpacitySpinBox->value());
-    writer.writeStartElement("text");
-    writer.writeAttribute("frame", effectsArea->textFrameCheckBox->isChecked());
-    writer.writeCharacters(effectsArea->textLineEdit->text());
-    writer.writeEndElement(); // text
-    writer.writeStartElement("font");
-    writer.writeAttribute("family",
-                          effectsArea->textFontComboBox->currentFont().family() );
-    writer.writeAttribute("size",
-                          QString::number(effectsArea->textFontSizeSpinBox->value())
-                          + ' '
-                          + effectsArea->textFontSizeComboBox->currentText() );
-    writer.writeAttribute("bold", effectsArea->textBoldPushButton->isChecked());
-    writer.writeAttribute("italic", effectsArea->textItalicPushButton->isChecked());
-    writer.writeAttribute("underline",
-                          effectsArea->textUnderlinePushButton->isChecked() );
-    writer.writeAttribute("strikeout",
-                          effectsArea->textStrikeOutPushButton->isChecked() );
-    writer.writeColorElement(effectsArea->textColorFrame->color());
-    writer.writeEndElement(); // font
-    writer.writeStartElement("pos");
-    writer.writeAttribute("x", QString::number(effectsArea->textXSpinBox->value())
-                               + ' ' + effectsArea->textXComboBox->currentText() );
-    writer.writeAttribute("y", QString::number(effectsArea->textYSpinBox->value())
-                               + ' ' + effectsArea->textYComboBox->currentText() );
-    writer.writeAttribute("mod", effectsArea->textPositionComboBox->currentIndex());
-    writer.writeAttribute("rotation", effectsArea->textRotationSpinBox->value());
-    writer.writeEndElement(); // pos
-    writer.writeEndElement(); // addtext
-    // add image
-    writer.writeStartElement("addimage");
-    writer.writeAttribute("enabled", effectsArea->imageGroupBox->isChecked());
-    writer.writeAttribute("opacity", effectsArea->imageOpacitySpinBox->value());
-    writer.writeStartElement("image");
-    writer.writeCharacters(effectsArea->imagePathLineEdit->text());
-    writer.writeEndElement(); // image
-    writer.writeStartElement("pos");
-    writer.writeAttribute("x", QString::number(effectsArea->imageXSpinBox->value())
-                               + ' ' + effectsArea->imageXComboBox->currentText() );
-    writer.writeAttribute("y", QString::number(effectsArea->imageYSpinBox->value())
-                               + ' ' + effectsArea->imageYComboBox->currentText() );
-    writer.writeAttribute("mod", effectsArea->imagePositionComboBox->currentIndex());
-    writer.writeAttribute("rotation", effectsArea->imageRotationSpinBox->value());
-    writer.writeEndElement(); // pos
-    writer.writeEndElement(); // addimage
-    writer.writeEndElement(); // effects
+    collector->write(&writer);
 
     writer.writeStartElement("svg");
     writer.writeAttribute("save", svgArea->saveCheckBox->isChecked());
@@ -341,110 +273,7 @@ void Session::restore(const QString &fileName) {
     }
 
     elem = session.firstChildElement("effects");
-    if (!elem.isNull()) {
-        el = elem.firstChildElement("addframe");
-        if (!el.isNull()) {
-            str = el.attribute("enabled", falseString);
-            effectsArea->frameGroupBox->setChecked(str.toBool());
-            e = el.firstChildElement("frame");
-            if (!e.isNull()) {
-                str = e.attribute("around", falseString);
-                if (str.toBool())
-                    effectsArea->frameAroundRadioButton->setChecked(true);
-                else
-                    effectsArea->frameOverlayRadioButton->setChecked(true);
-                effectsArea->frameWidthSpinBox->setValue(e.attribute("width").toInt());
-                effectsArea->frameColorFrame->setColor(readColor(e));
-            }
-            e = el.firstChildElement("insideborder");
-            if (!e.isNull()) {
-                str = e.attribute("enabled", falseString);
-                effectsArea->borderInsideGroupBox->setChecked(str.toBool());
-                effectsArea->borderInsideSpinBox->setValue(
-                            e.attribute("width").toInt() );
-                effectsArea->borderInsideColorFrame->setColor(readColor(e));
-            }
-            e = el.firstChildElement("outsideborder");
-            if (!e.isNull()) {
-                str = e.attribute("enabled", falseString);
-                effectsArea->borderOutsideGroupBox->setChecked(str.toBool());
-                effectsArea->borderOutsideSpinBox->setValue(
-                            e.attribute("width").toInt() );
-                effectsArea->borderOutsideColorFrame->setColor(readColor(e));
-            }
-        }
-        el = elem.firstChildElement("addtext");
-        if (!el.isNull()) {
-            str = el.attribute("enabled", falseString);
-            effectsArea->textGroupBox->setChecked(str.toBool());
-            effectsArea->textOpacitySpinBox->setValue(
-                        el.attribute("opacity").toDouble() );
-            e = el.firstChildElement("text");
-            if (!e.isNull()) {
-                str = e.attribute("frame", falseString);
-                effectsArea->textFrameCheckBox->setChecked(str.toBool());
-                effectsArea->textLineEdit->setText(e.text());
-            }
-            e = el.firstChildElement("font");
-            if (!e.isNull()) {
-                effectsArea->textFontComboBox->setCurrentFont(
-                            QFont(e.attribute("family")) );
-                list = e.attribute("size").split(' ');
-                effectsArea->textFontSizeSpinBox->setValue(list[0].toInt());
-                effectsArea->textFontSizeComboBox->setCurrentIndex(
-                            effectsArea->textFontSizeComboBox->findText(list[1]) );
-                str = e.attribute("bold", falseString);
-                effectsArea->textBoldPushButton->setChecked(str.toBool());
-                str = e.attribute("italic", falseString);
-                effectsArea->textItalicPushButton->setChecked(str.toBool());
-                str = e.attribute("underline", falseString);
-                effectsArea->textUnderlinePushButton->setChecked(str.toBool());
-                str = e.attribute("strikeout", falseString);
-                effectsArea->textStrikeOutPushButton->setChecked(str.toBool());
-                effectsArea->textColorFrame->setColor(readColor(e));
-            }
-            e = el.firstChildElement("pos");
-            if (!e.isNull()) {
-                list = e.attribute("x").split(' ');
-                effectsArea->textXSpinBox->setValue(list[0].toInt());
-                effectsArea->textXComboBox->setCurrentIndex(
-                            effectsArea->textXComboBox->findText(list[1]) );
-                list = e.attribute("y").split(' ');
-                effectsArea->textYSpinBox->setValue(list[0].toInt());
-                effectsArea->textYComboBox->setCurrentIndex(
-                            effectsArea->textYComboBox->findText(list[1]) );
-                effectsArea->textPositionComboBox->setCurrentIndex(
-                            e.attribute("mod").toInt() );
-                effectsArea->textRotationSpinBox->setValue(
-                            e.attribute("rotation").toInt() );
-            }
-        }
-        el = elem.firstChildElement("addimage");
-        if (!el.isNull()) {
-            str = el.attribute("enabled", falseString);
-            effectsArea->imageGroupBox->setChecked(str.toBool());
-            effectsArea->imageOpacitySpinBox->setValue(
-                        el.attribute("opacity").toDouble() );
-            e = el.firstChildElement("image");
-            if (!e.isNull())
-                effectsArea->imagePathLineEdit->setText(e.text());
-            e = el.firstChildElement("pos");
-            if (!e.isNull()) {
-                list = e.attribute("x").split(' ');
-                effectsArea->imageXSpinBox->setValue(list[0].toInt());
-                effectsArea->imageXComboBox->setCurrentIndex(
-                            effectsArea->imageXComboBox->findText(list[1]) );
-                list = e.attribute("y").split(' ');
-                effectsArea->imageYSpinBox->setValue(list[0].toInt());
-                effectsArea->imageYComboBox->setCurrentIndex(
-                            effectsArea->imageYComboBox->findText(list[1]) );
-                effectsArea->imagePositionComboBox->setCurrentIndex(
-                            e.attribute("mod").toInt() );
-                effectsArea->imageRotationSpinBox->setValue(
-                            e.attribute("rotation").toInt() );
-            }
-        }
-    }
+    collector->read(elem);
 
     elem = session.firstChildElement("svg");
     if (!elem.isNull()) {
@@ -462,19 +291,4 @@ void Session::restore(const QString &fileName) {
             }
         }
     }
-}
-
-/** Reads color data from \e color child node of \a parentElement node.
-  * \return Read color object.
-  */
-QColor Session::readColor(const QDomElement &parentElement) {
-    QColor result;
-    QDomElement e = parentElement.firstChildElement("color");
-    if (e.isNull())
-        return result;
-    result.setRed(  e.attribute("r").toInt());
-    result.setGreen(e.attribute("g").toInt());
-    result.setBlue( e.attribute("b").toInt());
-    result.setAlpha(e.attribute("a").toInt());
-    return result;
 }

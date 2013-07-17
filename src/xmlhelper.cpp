@@ -19,44 +19,24 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef VERSION_H
-#define VERSION_H
+#include <QDomElement>
+#include "xmlhelper.h"
 
-#include <QString>
-#include <QVector>
+const QString XmlHelper::falseString = "no";
 
-#define VERSION "2.7-dev"
+XmlHelper::XmlHelper(ConvertDialog *parent) {}
 
-//! SIR version information class.
-class Version {
-public:
-    Version();
-    QString version() const;
-    bool isAtLeast(const QString &ver);
-
-private:
-    // fields
-    /** Version string in format "M.m.p[-s]"
-      *
-      *     M - major version number
-      *     m - minor version number
-      *     p - patch version number
-      *     s - development status; optional, after minus sign
-      *
-      * Supported development status strings are:
-      * - dev
-      * - alpha
-      * - beta
-      *
-      * \sa version()
-      */
-    const QString versionString;
-    /** Stores values of versionString.
-      * \sa vector()
-      */
-    const QVector<int> versionVector;
-    // methods
-    QVector<int> vector(const QString &ver);
-};
-
-#endif // VERSION_H
+/** Reads color data from \e color child node of \a parentElement node.
+  * \return Read color object.
+  */
+QColor XmlHelper::readColor(const QDomElement &parentElement) {
+    QColor result;
+    QDomElement e = parentElement.firstChildElement("color");
+    if (e.isNull())
+        return result;
+    result.setRed(  e.attribute("r").toInt());
+    result.setGreen(e.attribute("g").toInt());
+    result.setBlue( e.attribute("b").toInt());
+    result.setAlpha(e.attribute("a").toInt());
+    return result;
+}

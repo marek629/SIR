@@ -19,44 +19,30 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef VERSION_H
-#define VERSION_H
+#ifndef XMLHELPER_H
+#define XMLHELPER_H
 
+#include <QColor>
 #include <QString>
-#include <QVector>
 
-#define VERSION "2.7-dev"
+class QDomElement;
+class ConvertDialog;
 
-//! SIR version information class.
-class Version {
+class XmlHelper {
 public:
-    Version();
-    QString version() const;
-    bool isAtLeast(const QString &ver);
+    XmlHelper(ConvertDialog *parent = 0);
+    virtual void save(const QString &fileName) = 0;
+    virtual void restore(const QString &fileName) = 0;
+
+protected:
+    // fields
+    static const QString falseString;
+    /** Parent convert dialog. */
+    ConvertDialog *convertDialog;
+    // methods
+    QColor readColor(const QDomElement &parentElement);
 
 private:
-    // fields
-    /** Version string in format "M.m.p[-s]"
-      *
-      *     M - major version number
-      *     m - minor version number
-      *     p - patch version number
-      *     s - development status; optional, after minus sign
-      *
-      * Supported development status strings are:
-      * - dev
-      * - alpha
-      * - beta
-      *
-      * \sa version()
-      */
-    const QString versionString;
-    /** Stores values of versionString.
-      * \sa vector()
-      */
-    const QVector<int> versionVector;
-    // methods
-    QVector<int> vector(const QString &ver);
 };
 
-#endif // VERSION_H
+#endif // XMLHELPER_H
