@@ -1,3 +1,4 @@
+#include <QPointF>
 #include "xmlstreamwriter.h"
 
 /** Creates the XmlStreamWriter object. */
@@ -47,6 +48,13 @@ void XmlStreamWriter::writeAttribute(const QString &qualifiedName, int value) {
   */
 void XmlStreamWriter::writeAttribute(const QString &qualifiedName, double value) {
     QXmlStreamWriter::writeAttribute(qualifiedName, QString::number(value));
+}
+
+void XmlStreamWriter::writePointElement(const QString &qualifiedName, const QPointF &value) {
+    writeStartElement(qualifiedName);
+    writeAttribute("x", value.x());
+    writeAttribute("y", value.y());
+    writeEndElement();
 }
 
 /** Writes current node child node called \e color and sets attributes

@@ -24,6 +24,22 @@
 
 #include "colorframe.h"
 
+struct LinearGradientParams {
+    QPointF start;
+    QPointF finalStop;
+};
+
+struct RadialGradientParams {
+    QPointF center;
+    QPointF focalPoint;
+    qreal radius;
+};
+
+struct ConicalGradientParams {
+    qreal angle;
+    QPointF center;
+};
+
 /** \brief The empty frame class providing easy way to direction customization
   * of gradient.
   *
@@ -47,6 +63,9 @@ public:
     void setBrush(const QBrush &brush);
     void setGradientType(QGradient::Type type);
     void setGradientStops(const QGradientStops &stops);
+    LinearGradientParams linearGradientParams() const;
+    RadialGradientParams radialGradientParams() const;
+    ConicalGradientParams conicalGradientParams() const;
 
 public slots:
     void changeGradient();
@@ -58,6 +77,7 @@ protected:
     void paintEvent(QPaintEvent *);
 
 private:
+    // fields
     /** Allows gradient customization.
       * \sa isBrushEditable() setBrushEditable()
       */
@@ -71,22 +91,11 @@ private:
     QPoint endPoint;
     QPointF endPointF;
     QGradient *gradient;
-};
-
-struct LinearGradientParams {
-    QPointF start;
-    QPointF finalStop;
-};
-
-struct RadialGradientParams {
-    QPointF center;
-    QPointF focalPoint;
-    qreal radius;
-};
-
-struct ConicalGradientParams {
-    qreal angle;
-    QPointF center;
+    LinearGradientParams linearGradientParams_;
+    RadialGradientParams radialGradientParams_;
+    ConicalGradientParams conicalGradientParams_;
+    // methods
+    void updateGradientParams();
 };
 
 #endif // BRUSHFRAME_H

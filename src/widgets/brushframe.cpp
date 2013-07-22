@@ -62,60 +62,32 @@ void BrushFrame::setBrush(const QBrush &brush) {
 }
 
 void BrushFrame::setGradientType(QGradient::Type type) {
-    static LinearGradientParams lastLinearGradientParams;
-    static RadialGradientParams lastRadialGradientParams;
-    static ConicalGradientParams lastConicalGradientParams;
-
     QGradientStops stops;
-    if (gradient) {
+    if (gradient)
         stops = gradient->stops();
-        switch (gradient->type()) {
-        case QGradient::LinearGradient: {
-            QLinearGradient *lg = static_cast<QLinearGradient*>(gradient);
-            lastLinearGradientParams.start = lg->start();
-            lastLinearGradientParams.finalStop = lg->finalStop();
-            break;
-        }
-        case QGradient::RadialGradient: {
-            QRadialGradient *rg = static_cast<QRadialGradient*>(gradient);
-            lastRadialGradientParams.center = rg->center();
-            lastRadialGradientParams.focalPoint = rg->focalPoint();
-            lastRadialGradientParams.radius = rg->radius();
-            break;
-        }
-        case QGradient::ConicalGradient: {
-            QConicalGradient *cg = static_cast<QConicalGradient*>(gradient);
-            lastConicalGradientParams.angle = cg->angle();
-            lastConicalGradientParams.center = cg->center();
-            break;
-        }
-        default:
-            break;
-        }
-    }
 
     delete gradient;
 
     switch (type) {
     case QGradient::LinearGradient: {
         QLinearGradient *lg = new QLinearGradient();
-        lg->setStart(lastLinearGradientParams.start);
-        lg->setFinalStop(lastLinearGradientParams.finalStop);
+        lg->setStart(linearGradientParams_.start);
+        lg->setFinalStop(linearGradientParams_.finalStop);
         gradient = lg;
         break;
     }
     case QGradient::RadialGradient: {
         QRadialGradient *rg = new QRadialGradient();
-        rg->setCenter(lastRadialGradientParams.center);
-        rg->setRadius(lastRadialGradientParams.radius);
-        rg->setFocalPoint(lastRadialGradientParams.focalPoint);
+        rg->setCenter(radialGradientParams_.center);
+        rg->setRadius(radialGradientParams_.radius);
+        rg->setFocalPoint(radialGradientParams_.focalPoint);
         gradient = rg;
         break;
     }
     case QGradient::ConicalGradient: {
         QConicalGradient *cg = new QConicalGradient();
-        cg->setCenter(lastConicalGradientParams.center);
-        cg->setAngle(lastConicalGradientParams.angle);
+        cg->setCenter(conicalGradientParams_.center);
+        cg->setAngle(conicalGradientParams_.angle);
         gradient = cg;
         break;
     }
@@ -135,6 +107,18 @@ void BrushFrame::setGradientStops(const QGradientStops &stops) {
     gradient->setStops(stops);
     setBrush(QBrush(*gradient));
     update();
+}
+
+LinearGradientParams BrushFrame::linearGradientParams() const {
+    return linearGradientParams_;
+}
+
+RadialGradientParams BrushFrame::radialGradientParams() const {
+    return radialGradientParams_;
+}
+
+ConicalGradientParams BrushFrame::conicalGradientParams() const {
+    return conicalGradientParams_;
 }
 
 void BrushFrame::changeGradient() {
@@ -209,6 +193,7 @@ void BrushFrame::mouseReleaseEvent(QMouseEvent *e) {
     }
     if (e->button() == Qt::LeftButton) {
         mouseLeftButtonPressed = false;
+        updateGradientParams();
         update();
     }
 }
@@ -231,4 +216,33 @@ void BrushFrame::paintEvent(QPaintEvent *e) {
     painter.drawLine(originPoint.x()-d, originPoint.y(), originPoint.x()+d, originPoint.y());
     // draw radius vector
     painter.drawLine(originPoint, endPoint);
+}
+
+void BrushFrame::updateGradientParams() {
+    if (!gradient)
+        return;
+
+    switch (gradient->type()) {
+    case QGradient::LinearGradient: {
+        QLinearGradient *lg = static_cast<QLinearGradient*>(gradient);
+        linearGradientParams_.start = lg->start();
+        linearGradientParams_.finalStop = lg->finalStop();
+        break;
+    }
+    case QGradient::RadialGradient: {
+        QRadialGradient *rg = static_cast<QRadialGradient*>(gradient);
+        radialGradientParams_.center = rg->center();
+        radialGradientParams_.focalPoint = rg->focalPoint();
+        radialGradientParams_.radius = rg->radius();
+        break;
+    }
+    case QGradient::ConicalGradient: {
+        QConicalGradient *cg = static_cast<QConicalGradient*>(gradient);
+        conicalGradientParams_.angle = cg->angle();
+        conicalGradientParams_.center = cg->center();
+        break;
+    }
+    default:
+        break;
+    }
 }

@@ -23,17 +23,21 @@
 #include <QFile>
 #include <QMessageBox>
 #include "convertdialog.h"
-//#include "widgets/convert/effectsscrollarea.h"
 #include "metadata/string.h"
 #include "xmlstreamwriter.h"
 #include "version.h"
 #include "effectscollector.h"
 
-EffectsCollector::EffectsCollector(ConvertDialog *parent) : XmlHelper() {
-    convertDialog = parent;
+/** Creates the EffectsCollector object.
+  * \param parent Parent convert dialog.
+  */
+EffectsCollector::EffectsCollector(ConvertDialog *parent) : XmlHelper(parent) {
     effectsArea = convertDialog->effectsScrollArea;
 }
 
+/** Writes collection of effects to XML file in \a fileName path.
+  * \sa restore()
+  */
 void EffectsCollector::save(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -59,6 +63,9 @@ void EffectsCollector::save(const QString &fileName) {
     writer.writeEndDocument();
 }
 
+/** Reads collection of effects from XML file in \a fileName path.
+  * \sa save()
+  */
 void EffectsCollector::restore(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -90,6 +97,10 @@ void EffectsCollector::restore(const QString &fileName) {
     read(sir.firstChildElement("effects"));
 }
 
+/** Reads collection of effects from DOM \a element.
+  * \return True if read succeed, otherwise false.
+  * \sa write()
+  */
 bool EffectsCollector::read(const QDomElement &element) {
     bool result = false;
     if (element.isNull())
@@ -210,8 +221,50 @@ bool EffectsCollector::read(const QDomElement &element) {
     return result;
 }
 
+/** Writes collection of effects to XML buffer used by \a writer.
+  * \sa read()
+  */
 void EffectsCollector::write(XmlStreamWriter *writer) {
     writer->writeStartElement("effects");
+
+    // filter
+    writer->writeStartElement("filter");
+    writer->writeAttribute("enabled", effectsArea->filterGroupBox->isChecked());
+    writer->writeStartElement("colorfilter");
+    writer->writeAttribute("enabled", effectsArea->filterColorRadioButton->isChecked());
+    writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
+    writer->writeColorElement(effectsArea->filterBrushFrame->color());
+    writer->writeEndElement(); // colorfilter
+    writer->writeStartElement("gradientfilter");
+    writer->writeAttribute("enabled", !effectsArea->filterColorRadioButton->isChecked());
+    writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
+    LinearGradientParams lgp = effectsArea->filterBrushFrame->linearGradientParams();
+    writer->writeStartElement("gradient");
+    writer->writeAttribute("type", "linear");
+    writer->writePointElement("start", lgp.start);
+    writer->writePointElement("finalstop", lgp.finalStop);
+    writer->writeEndElement(); // gradient
+    RadialGradientParams rgp = effectsArea->filterBrushFrame->radialGradientParams();
+    writer->writeStartElement("gradient");
+    writer->writeAttribute("type", "radial");
+    writer->writeAttribute("radius", rgp.radius);
+    writer->writePointElement("center", rgp.center);
+    writer->writePointElement("focalpoint", rgp.focalPoint);
+    writer->writeEndElement(); // gradient
+    ConicalGradientParams cgp = effectsArea->filterBrushFrame->conicalGradientParams();
+    writer->writeStartElement("gradient");
+    writer->writeAttribute("type", "conical");
+    writer->writeAttribute("angle", cgp.angle);
+    writer->writePointElement("center", cgp.center);
+    writer->writeEndElement(); // gradient
+    foreach (QGradientStop stop, effectsArea->filterGradientWidget->gradientStops()) {
+        writer->writeStartElement("stop");
+        writer->writeAttribute("value", stop.first);
+        writer->writeColorElement(stop.second);
+        writer->writeEndElement(); // stop
+    }
+    writer->writeEndElement(); // gradientfilter
+    writer->writeEndElement(); // filter
 
     // add frame
     writer->writeStartElement("addframe");

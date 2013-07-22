@@ -24,7 +24,10 @@
 
 const QString XmlHelper::falseString = "no";
 
-XmlHelper::XmlHelper(ConvertDialog *parent) {}
+/** Sets convertDialog pointer to \a parent. */
+XmlHelper::XmlHelper(ConvertDialog *parent) {
+    convertDialog = parent;
+}
 
 /** Reads color data from \e color child node of \a parentElement node.
   * \return Read color object.

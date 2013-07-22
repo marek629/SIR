@@ -28,6 +28,9 @@
 class QDomElement;
 class ConvertDialog;
 
+/** \brief Abstract class helping read/write operations on XML files.
+  * \sa XmlStreamWriter
+  */
 class XmlHelper {
 public:
     XmlHelper(ConvertDialog *parent = 0);
@@ -36,13 +39,10 @@ public:
 
 protected:
     // fields
-    static const QString falseString;
-    /** Parent convert dialog. */
-    ConvertDialog *convertDialog;
+    static const QString falseString; /**< False string defined as \e no. */
+    ConvertDialog *convertDialog; /**< Parent convert dialog. */
     // methods
     QColor readColor(const QDomElement &parentElement);
-
-private:
 };
 
 #endif // XMLHELPER_H

@@ -24,8 +24,7 @@
 
 #include "ui_gradienteditwidget.h"
 
-class GradientEditWidget : public QWidget, private Ui::GradientEditWidget
-{
+class GradientEditWidget : public QWidget, private Ui::GradientEditWidget {
     Q_OBJECT
 
 public:

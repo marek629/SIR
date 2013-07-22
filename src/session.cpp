@@ -32,8 +32,7 @@
 /** Creates the Session object.
   * \param parent Parent convert dialog.
   */
-Session::Session(ConvertDialog *parent) : XmlHelper() {
-    convertDialog = parent;
+Session::Session(ConvertDialog *parent) : XmlHelper(parent) {
     if (convertDialog) {
         sizeArea = convertDialog->sizeScrollArea;
         optionsArea = convertDialog->optionsScrollArea;
@@ -49,7 +48,9 @@ Session::Session(ConvertDialog *parent) : XmlHelper() {
     collector = new EffectsCollector(convertDialog);
 }
 
-/** Writes session to XML file in \a fileName path. */
+/** Writes session to XML file in \a fileName path.
+  * \sa restore()
+  */
 void Session::save(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -164,7 +165,9 @@ void Session::save(const QString &fileName) {
     writer.writeEndDocument();
 }
 
-/** Restores session from XML file in \a fileName path. */
+/** Restores session from XML file in \a fileName path.
+  * \sa save()
+  */
 void Session::restore(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {

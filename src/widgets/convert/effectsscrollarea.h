@@ -25,6 +25,7 @@
 #include "ui_effectsscrollarea.h"
 
 class EffectsScrollArea : public QScrollArea, public Ui::EffectsScrollArea {
+    friend class EffectsCollector;
     Q_OBJECT
 
 public:

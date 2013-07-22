@@ -32,7 +32,9 @@ class EffectsCollector : public XmlHelper {
 
 public:
     EffectsCollector(ConvertDialog *parent = 0);
-    // TODO: przetestowanie read() i write() oraz użycie save() i restore()
+    // TODO: testing read() and write() and use save() and restore() methods
+    // TODO: add read code for "filter" effect
+    // TODO: split read() and write() functions to minor methods
     void save(const QString &fileName);
     void restore(const QString &fileName);
     bool read(const QDomElement &element);
