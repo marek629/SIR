@@ -43,3 +43,10 @@ QColor XmlHelper::readColor(const QDomElement &parentElement) {
     result.setAlpha(e.attribute("a").toInt());
     return result;
 }
+
+QPointF XmlHelper::readPointF(const QDomElement &pointElement) {
+    QPointF result;
+    result.setX(pointElement.attribute("x").toDouble());
+    result.setY(pointElement.attribute("y").toDouble());
+    return result;
+}

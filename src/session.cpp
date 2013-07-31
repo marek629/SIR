@@ -204,7 +204,7 @@ void Session::restore(const QString &fileName) {
 
     elem = session.firstChildElement("files");
     el = elem.firstChildElement("file");
-    while (el.isNull()) {
+    while (!el.isNull()) {
         convertDialog->filesTreeWidget->loadFile(el.text());
         el = el.nextSiblingElement("file");
     }

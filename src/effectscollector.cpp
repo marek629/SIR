@@ -110,6 +110,58 @@ bool EffectsCollector::read(const QDomElement &element) {
     QStringList list;
     QDomElement el, e;
 
+    el = element.firstChildElement("filter");
+    if (!el.isNull()) {
+        result = true;
+        str = el.attribute("enabled", falseString);
+        effectsArea->filterGroupBox->setChecked(str.toBool());
+        e = el.firstChildElement("colorfilter");
+        if (!e.isNull()) {
+            str = e.attribute("enabled", falseString);
+            effectsArea->filterColorRadioButton->setChecked(str.toBool());
+            effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
+            effectsArea->filterBrushFrame->setColor(readColor(e));
+        }
+        e = el.firstChildElement("gradientfilter");
+        if (!e.isNull()) {
+            str = e.attribute("enabled", falseString);
+            effectsArea->filterGradientRadioButton->setChecked(str.toBool());
+            effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
+            QDomElement elem;
+            elem = e.firstChildElement("gradient");
+            while (!elem.isNull()) {
+                str = elem.attribute("type");
+                if (str == "linear") {
+                    LinearGradientParams &lgp = effectsArea->filterBrushFrame->linearGradientParams_;
+                    lgp.start = readPointF(elem.firstChildElement("start"));
+                    lgp.finalStop = readPointF(elem.firstChildElement("finalstop"));
+                }
+                else if (str == "radial") {
+                    RadialGradientParams &rgp = effectsArea->filterBrushFrame->radialGradientParams_;
+                    rgp.radius = elem.attribute("radius").toDouble();
+                    rgp.center = readPointF(elem.firstChildElement("center"));
+                    rgp.focalPoint = readPointF(elem.firstChildElement("focalpoint"));
+                }
+                else if (str == "conical") {
+                    ConicalGradientParams &cgp = effectsArea->filterBrushFrame->conicalGradientParams_;
+                    cgp.angle = elem.attribute("angle").toDouble();
+                    cgp.center = readPointF(elem.firstChildElement("center"));
+                }
+                elem = elem.nextSiblingElement("gradient");
+            }
+            QGradientStops stops;
+            elem = e.firstChildElement("stop");
+            while (!elem.isNull()) {
+                QGradientStop stop;
+                stop.first = elem.attribute("value").toDouble();
+                stop.second = readColor(elem);
+                stops += stop;
+                elem = elem.nextSiblingElement("stop");
+            }
+            effectsArea->filterGradientWidget->setGradientStops(stops);
+        }
+    }
+
     el = element.firstChildElement("addframe");
     if (!el.isNull()) {
         result = true;
@@ -236,7 +288,7 @@ void EffectsCollector::write(XmlStreamWriter *writer) {
     writer->writeColorElement(effectsArea->filterBrushFrame->color());
     writer->writeEndElement(); // colorfilter
     writer->writeStartElement("gradientfilter");
-    writer->writeAttribute("enabled", !effectsArea->filterColorRadioButton->isChecked());
+    writer->writeAttribute("enabled", effectsArea->filterGradientRadioButton->isChecked());
     writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
     LinearGradientParams lgp = effectsArea->filterBrushFrame->linearGradientParams();
     writer->writeStartElement("gradient");

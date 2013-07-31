@@ -70,6 +70,18 @@ QGradientStops GradientEditWidget::gradientStops() const {
     return result;
 }
 
+void GradientEditWidget::setGradientStops(const QGradientStops &stops) {
+    treeWidget->clear();
+    foreach (QGradientStop stop, stops) {
+        QStringList list;
+        list << QString::number(stop.first, 'f', 2) << "";
+        QTreeWidgetItem *item = new QTreeWidgetItem(list);
+        item->setBackgroundColor(1, stop.second);
+        treeWidget->addTopLevelItem(item);
+    }
+    emit gradientChanged();
+}
+
 void GradientEditWidget::hide() {
     treeWidget->hide();
     addPushButton->hide();

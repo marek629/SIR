@@ -53,6 +53,7 @@ struct ConicalGradientParams {
   * \sa setBrushEditable()
   */
 class BrushFrame : public ColorFrame {
+    friend class EffectsCollector;
     Q_OBJECT
 
 public:

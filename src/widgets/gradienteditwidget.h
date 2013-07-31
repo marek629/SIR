@@ -30,6 +30,7 @@ class GradientEditWidget : public QWidget, private Ui::GradientEditWidget {
 public:
     explicit GradientEditWidget(QWidget *parent = 0);
     QGradientStops gradientStops() const;
+    void setGradientStops(const QGradientStops &stops);
 
 public slots:
     void hide();

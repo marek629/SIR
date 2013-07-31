@@ -24,6 +24,7 @@
 
 #include <QColor>
 #include <QString>
+#include <QPointF>
 
 class QDomElement;
 class ConvertDialog;
@@ -43,6 +44,7 @@ protected:
     ConvertDialog *convertDialog; /**< Parent convert dialog. */
     // methods
     QColor readColor(const QDomElement &parentElement);
+    QPointF readPointF(const QDomElement &pointElement);
 };
 
 #endif // XMLHELPER_H
