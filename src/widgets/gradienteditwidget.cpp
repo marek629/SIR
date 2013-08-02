@@ -23,6 +23,10 @@
 #include <QColorDialog>
 #include "gradienteditwidget.h"
 
+/** Creates the GradientEditWidget object.
+  *
+  * Sets up the user interface, ie. buttons and tree widget and creates connections.
+  */
 GradientEditWidget::GradientEditWidget(QWidget *parent) : QWidget(parent) {
     setupUi(this);
 
@@ -60,6 +64,9 @@ GradientEditWidget::GradientEditWidget(QWidget *parent) : QWidget(parent) {
     connect(moveDownPushButton, SIGNAL(clicked()), this, SLOT(moveDownItem()));
 }
 
+/** Returns list of GradientStops corresponding content of tree widget.
+  * \sa setGradientStops()
+  */
 QGradientStops GradientEditWidget::gradientStops() const {
     QGradientStops result(treeWidget->topLevelItemCount());
     for (int i=0; i<result.size(); i++) {
@@ -70,6 +77,9 @@ QGradientStops GradientEditWidget::gradientStops() const {
     return result;
 }
 
+/** Sets content of tree widget corresponding \a stops list.
+  * * \sa gradientStops()
+  */
 void GradientEditWidget::setGradientStops(const QGradientStops &stops) {
     treeWidget->clear();
     foreach (QGradientStop stop, stops) {
@@ -82,6 +92,9 @@ void GradientEditWidget::setGradientStops(const QGradientStops &stops) {
     emit gradientChanged();
 }
 
+/** Hides tree widget and related push buttons.
+  * \sa show()
+  */
 void GradientEditWidget::hide() {
     treeWidget->hide();
     addPushButton->hide();
@@ -90,6 +103,9 @@ void GradientEditWidget::hide() {
     moveDownPushButton->hide();
 }
 
+/** Shows tree widget and related push buttons.
+  * \sa hide()
+  */
 void GradientEditWidget::show() {
     treeWidget->show();
     addPushButton->show();
@@ -98,6 +114,9 @@ void GradientEditWidget::show() {
     moveDownPushButton->show();
 }
 
+/** Reduces current selecion to first column of \a current item and modifies
+  * push buttons related to tree widget.
+  */
 void GradientEditWidget::treeItemSelected(QTreeWidgetItem *current,
                                           QTreeWidgetItem *previous) {
     Q_UNUSED(previous)
@@ -124,6 +143,9 @@ void GradientEditWidget::treeItemSelected(QTreeWidgetItem *current,
     treeWidget->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 }
 
+/** Gets from the user by dialog new value for specified \a item and \a column
+  * of tree widget.
+  */
 void GradientEditWidget::editItem(QTreeWidgetItem *item, int column) {
     if (column == 0) {
         double oldValue = item->text(column).toDouble();
@@ -145,6 +167,10 @@ void GradientEditWidget::editItem(QTreeWidgetItem *item, int column) {
     }
 }
 
+/** Adds new item to tree widget after current item of them. Sets up values of
+  * the new item and updates user interface.
+  * \sa deleteItem() editItem()
+  */
 void GradientEditWidget::addItem() {
     int index = treeWidget->indexOfTopLevelItem(treeWidget->currentItem());
     double currentValue = treeWidget->topLevelItem(index)->text(0).toDouble();
@@ -159,6 +185,9 @@ void GradientEditWidget::addItem() {
     deletePushButton->setEnabled(true);
 }
 
+/** Removes the current item of tree widget and updates user interface.
+  * \sa addItem()
+  */
 void GradientEditWidget::deleteItem() {
     int index = treeWidget->indexOfTopLevelItem(treeWidget->currentItem());
     treeWidget->takeTopLevelItem(index);
@@ -166,6 +195,9 @@ void GradientEditWidget::deleteItem() {
         deletePushButton->setEnabled(false);
 }
 
+/** Moves down the current item of tree widget and updates user interface.
+  * \sa moveUpItem()
+  */
 void GradientEditWidget::moveDownItem() {
     const int column = 0;
     QTreeWidgetItem *item = treeWidget->currentItem();
@@ -185,6 +217,9 @@ void GradientEditWidget::moveDownItem() {
     emit gradientChanged();
 }
 
+/** Moves up the current item of tree widget and updates user interface.
+  * \sa moveDownItem()
+  */
 void GradientEditWidget::moveUpItem() {
     const int column = 0;
     QTreeWidgetItem *item = treeWidget->currentItem();
@@ -203,6 +238,7 @@ void GradientEditWidget::moveUpItem() {
     emit gradientChanged();
 }
 
+/** Returns string coresponding \a v double value needed by tree widget. */
 QString GradientEditWidget::numberString(double v) {
     return QString::number(v, 'f', 2);
 }

@@ -61,6 +61,7 @@ void BrushFrame::setBrush(const QBrush &brush) {
     setPalette(palette);
 }
 
+/** Sets type of brush gradient to \a type value. */
 void BrushFrame::setGradientType(QGradient::Type type) {
     QGradientStops stops;
     if (gradient)
@@ -102,6 +103,7 @@ void BrushFrame::setGradientType(QGradient::Type type) {
     }
 }
 
+/** Sets stops of brush gradient to \a stops content. */
 void BrushFrame::setGradientStops(const QGradientStops &stops) {
     Q_ASSERT(gradient);
     gradient->setStops(stops);
@@ -109,18 +111,32 @@ void BrushFrame::setGradientStops(const QGradientStops &stops) {
     update();
 }
 
+/** Returns parameters of linear gradient.
+  * \sa radialGradientParams() conicalGradientParams()
+  */
 LinearGradientParams BrushFrame::linearGradientParams() const {
     return linearGradientParams_;
 }
 
+/** Returns parameters of radial gradient.
+  * \sa linearGradientParams() conicalGradientParams()
+  */
 RadialGradientParams BrushFrame::radialGradientParams() const {
     return radialGradientParams_;
 }
 
+/** Returns parameters of conical gradient.
+  * \sa linearGradientParams() radialGradientParams()
+  */
 ConicalGradientParams BrushFrame::conicalGradientParams() const {
     return conicalGradientParams_;
 }
 
+/** Changes stops of current brush gradient.
+  *
+  * \note This function works as slot for signal received from
+  *       GradientEditWidget only.
+  */
 void BrushFrame::changeGradient() {
     Q_ASSERT(sender());
     if (!gradient)
@@ -218,6 +234,7 @@ void BrushFrame::paintEvent(QPaintEvent *e) {
     painter.drawLine(originPoint, endPoint);
 }
 
+/** Updates internal cache parameters of current brush gradient. */
 void BrushFrame::updateGradientParams() {
     if (!gradient)
         return;

@@ -679,6 +679,9 @@ void ConvertDialog::showSelectionDialog() {
         qDebug() << "Imported files:" << selection.importFiles();
 }
 
+/** Gets session file path from the user and restores session from the file.
+  * \sa saveSession() Session
+  */
 void ConvertDialog::restoreSession() {
     QString path = QFileDialog::getOpenFileName(this, tr("Choose session file"),
                                                 QDir::homePath(),
@@ -686,6 +689,9 @@ void ConvertDialog::restoreSession() {
     session->restore(path);
 }
 
+/** Gets session file path from the user and saves session to the file.
+  * \sa restoreSession() Session
+  */
 void ConvertDialog::saveSession() {
     QString path = QFileDialog::getSaveFileName(this, tr("Choose session file"),
                                                 QDir::homePath(),
