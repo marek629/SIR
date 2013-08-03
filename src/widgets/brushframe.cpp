@@ -149,6 +149,9 @@ void BrushFrame::changeGradient() {
   * \sa mouseMoveEvent() mouseReleaseEvent()
   */
 void BrushFrame::mousePressEvent(QMouseEvent *e) {
+    if (!brushEditable)
+        return;
+
     if (e->button() == Qt::LeftButton) {
         mouseLeftButtonPressed = true;
         originPoint = e->pos();
@@ -162,7 +165,7 @@ void BrushFrame::mousePressEvent(QMouseEvent *e) {
   * \sa paintEvent() mousePressEvent() mouseReleaseEvent()
   */
 void BrushFrame::mouseMoveEvent(QMouseEvent *e) {
-    if (!mouseLeftButtonPressed || !gradient)
+    if (!brushEditable || !mouseLeftButtonPressed || !gradient)
         return;
 
     endPoint = e->pos();
@@ -207,6 +210,7 @@ void BrushFrame::mouseReleaseEvent(QMouseEvent *e) {
         ColorFrame::mouseReleaseEvent(e);
         return;
     }
+
     if (e->button() == Qt::LeftButton) {
         mouseLeftButtonPressed = false;
         updateGradientParams();
