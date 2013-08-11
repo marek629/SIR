@@ -33,14 +33,22 @@ class EffectsCollector : public XmlHelper {
 public:
     EffectsCollector(ConvertDialog *parent = 0);
     // TODO: testing read() and write() and use save() and restore() methods
-    // TODO: split read() and write() functions to minor methods
+    // TODO: split write() function to minor methods
     void save(const QString &fileName);
     void restore(const QString &fileName);
     bool read(const QDomElement &element);
     void write(XmlStreamWriter *writer);
 
 private:
+    // fields
     EffectsScrollArea *effectsArea;
+    // methods
+    void readGradients(const QDomElement &parentElement);
+    void readGradientStops(const QDomElement &parentElement);
+    bool readFilterEffect(const QDomElement &parentElement);
+    bool readAddFrameEffect(const QDomElement &parentElement);
+    bool readAddTextEffect(const QDomElement &parentElement);
+    bool readAddImageEffect(const QDomElement &parentElement);
 };
 
 #endif // EFFECTSCOLLECTOR_H

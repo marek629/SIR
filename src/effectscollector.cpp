@@ -106,172 +106,10 @@ bool EffectsCollector::read(const QDomElement &element) {
     if (element.isNull())
         return result;
 
-    MetadataUtils::String str;
-    QStringList list;
-    QDomElement el, e;
-    QRadioButton *radioButton = effectsArea->filterColorRadioButton;
-
-    el = element.firstChildElement("filter");
-    if (!el.isNull()) {
-        result = true;
-        str = el.attribute("enabled", falseString);
-        effectsArea->filterGroupBox->setChecked(str.toBool());
-        e = el.firstChildElement("colorfilter");
-        if (!e.isNull()) {
-            effectsArea->filterColorRadioButton->setChecked(true);
-            effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
-            effectsArea->filterBrushFrame->setColor(readColor(e));
-        }
-        e = el.firstChildElement("gradientfilter");
-        if (!e.isNull()) {
-            str = e.attribute("enabled", falseString);
-            if (str.toBool())
-                radioButton = effectsArea->filterGradientRadioButton;
-            effectsArea->filterGradientRadioButton->setChecked(true);
-            effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
-            QDomElement elem;
-            elem = e.firstChildElement("gradient");
-            while (!elem.isNull()) {
-                str = elem.attribute("type");
-                if (str == "linear") {
-                    LinearGradientParams &lgp = effectsArea->filterBrushFrame->linearGradientParams_;
-                    lgp.start = readPointF(elem.firstChildElement("start"));
-                    lgp.finalStop = readPointF(elem.firstChildElement("finalstop"));
-                }
-                else if (str == "radial") {
-                    RadialGradientParams &rgp = effectsArea->filterBrushFrame->radialGradientParams_;
-                    rgp.radius = elem.attribute("radius").toDouble();
-                    rgp.center = readPointF(elem.firstChildElement("center"));
-                    rgp.focalPoint = readPointF(elem.firstChildElement("focalpoint"));
-                }
-                else if (str == "conical") {
-                    ConicalGradientParams &cgp = effectsArea->filterBrushFrame->conicalGradientParams_;
-                    cgp.angle = elem.attribute("angle").toDouble();
-                    cgp.center = readPointF(elem.firstChildElement("center"));
-                }
-                elem = elem.nextSiblingElement("gradient");
-            }
-            QGradientStops stops;
-            elem = e.firstChildElement("stop");
-            while (!elem.isNull()) {
-                QGradientStop stop;
-                stop.first = elem.attribute("value").toDouble();
-                stop.second = readColor(elem);
-                stops += stop;
-                elem = elem.nextSiblingElement("stop");
-            }
-            effectsArea->filterGradientWidget->setGradientStops(stops);
-        }
-    }
-    radioButton->setChecked(true);
-
-    el = element.firstChildElement("addframe");
-    if (!el.isNull()) {
-        result = true;
-        str = el.attribute("enabled", falseString);
-        effectsArea->frameGroupBox->setChecked(str.toBool());
-        e = el.firstChildElement("frame");
-        if (!e.isNull()) {
-            str = e.attribute("around", falseString);
-            if (str.toBool())
-                effectsArea->frameAroundRadioButton->setChecked(true);
-            else
-                effectsArea->frameOverlayRadioButton->setChecked(true);
-            effectsArea->frameWidthSpinBox->setValue(e.attribute("width").toInt());
-            effectsArea->frameColorFrame->setColor(readColor(e));
-        }
-        e = el.firstChildElement("insideborder");
-        if (!e.isNull()) {
-            str = e.attribute("enabled", falseString);
-            effectsArea->borderInsideGroupBox->setChecked(str.toBool());
-            effectsArea->borderInsideSpinBox->setValue(
-                        e.attribute("width").toInt() );
-            effectsArea->borderInsideColorFrame->setColor(readColor(e));
-        }
-        e = el.firstChildElement("outsideborder");
-        if (!e.isNull()) {
-            str = e.attribute("enabled", falseString);
-            effectsArea->borderOutsideGroupBox->setChecked(str.toBool());
-            effectsArea->borderOutsideSpinBox->setValue(
-                        e.attribute("width").toInt() );
-            effectsArea->borderOutsideColorFrame->setColor(readColor(e));
-        }
-    }
-
-    el = element.firstChildElement("addtext");
-    if (!el.isNull()) {
-        result = true;
-        str = el.attribute("enabled", falseString);
-        effectsArea->textGroupBox->setChecked(str.toBool());
-        effectsArea->textOpacitySpinBox->setValue(
-                    el.attribute("opacity").toDouble() );
-        e = el.firstChildElement("text");
-        if (!e.isNull()) {
-            str = e.attribute("frame", falseString);
-            effectsArea->textFrameCheckBox->setChecked(str.toBool());
-            effectsArea->textLineEdit->setText(e.text());
-        }
-        e = el.firstChildElement("font");
-        if (!e.isNull()) {
-            effectsArea->textFontComboBox->setCurrentFont(
-                        QFont(e.attribute("family")) );
-            list = e.attribute("size").split(' ');
-            effectsArea->textFontSizeSpinBox->setValue(list[0].toInt());
-            effectsArea->textFontSizeComboBox->setCurrentIndex(
-                        effectsArea->textFontSizeComboBox->findText(list[1]) );
-            str = e.attribute("bold", falseString);
-            effectsArea->textBoldPushButton->setChecked(str.toBool());
-            str = e.attribute("italic", falseString);
-            effectsArea->textItalicPushButton->setChecked(str.toBool());
-            str = e.attribute("underline", falseString);
-            effectsArea->textUnderlinePushButton->setChecked(str.toBool());
-            str = e.attribute("strikeout", falseString);
-            effectsArea->textStrikeOutPushButton->setChecked(str.toBool());
-            effectsArea->textColorFrame->setColor(readColor(e));
-        }
-        e = el.firstChildElement("pos");
-        if (!e.isNull()) {
-            list = e.attribute("x").split(' ');
-            effectsArea->textXSpinBox->setValue(list[0].toInt());
-            effectsArea->textXComboBox->setCurrentIndex(
-                        effectsArea->textXComboBox->findText(list[1]) );
-            list = e.attribute("y").split(' ');
-            effectsArea->textYSpinBox->setValue(list[0].toInt());
-            effectsArea->textYComboBox->setCurrentIndex(
-                        effectsArea->textYComboBox->findText(list[1]) );
-        }
-        effectsArea->textPositionComboBox->setCurrentIndex(
-                    e.attribute("mod").toInt() );
-        effectsArea->textRotationSpinBox->setValue(
-                    e.attribute("rotation").toInt() );
-    }
-
-    el = element.firstChildElement("addimage");
-    if (!el.isNull()) {
-        result = true;
-        str = el.attribute("enabled", falseString);
-        effectsArea->imageGroupBox->setChecked(str.toBool());
-        effectsArea->imageOpacitySpinBox->setValue(
-                    el.attribute("opacity").toDouble() );
-        e = el.firstChildElement("image");
-        if (!e.isNull())
-            effectsArea->imagePathLineEdit->setText(e.text());
-        e = el.firstChildElement("pos");
-        if (!e.isNull()) {
-            list = e.attribute("x").split(' ');
-            effectsArea->imageXSpinBox->setValue(list[0].toInt());
-            effectsArea->imageXComboBox->setCurrentIndex(
-                        effectsArea->imageXComboBox->findText(list[1]) );
-            list = e.attribute("y").split(' ');
-            effectsArea->imageYSpinBox->setValue(list[0].toInt());
-            effectsArea->imageYComboBox->setCurrentIndex(
-                        effectsArea->imageYComboBox->findText(list[1]) );
-            effectsArea->imagePositionComboBox->setCurrentIndex(
-                        e.attribute("mod").toInt() );
-            effectsArea->imageRotationSpinBox->setValue(
-                        e.attribute("rotation").toInt() );
-        }
-    }
+    result = readFilterEffect(element);
+    result = readAddFrameEffect(element);
+    result = readAddTextEffect(element);
+    result = readAddImageEffect(element);
 
     return result;
 }
@@ -392,4 +230,247 @@ void EffectsCollector::write(XmlStreamWriter *writer) {
     writer->writeEndElement(); // addimage
 
     writer->writeEndElement(); // effects
+}
+
+/** Reads gradient parameters from \a parentElement and sets the parameters in
+  * filter brush frame.
+  * \sa readGradientStops()
+  */
+void EffectsCollector::readGradients(const QDomElement &parentElement) {
+    QDomElement elem = parentElement.firstChildElement("gradient");
+    while (!elem.isNull()) {
+        QString str = elem.attribute("type");
+        if (str == "linear") {
+            LinearGradientParams &lgp = effectsArea->filterBrushFrame->linearGradientParams_;
+            lgp.start = readPointF(elem.firstChildElement("start"));
+            lgp.finalStop = readPointF(elem.firstChildElement("finalstop"));
+        }
+        else if (str == "radial") {
+            RadialGradientParams &rgp = effectsArea->filterBrushFrame->radialGradientParams_;
+            rgp.radius = elem.attribute("radius").toDouble();
+            rgp.center = readPointF(elem.firstChildElement("center"));
+            rgp.focalPoint = readPointF(elem.firstChildElement("focalpoint"));
+        }
+        else if (str == "conical") {
+            ConicalGradientParams &cgp = effectsArea->filterBrushFrame->conicalGradientParams_;
+            cgp.angle = elem.attribute("angle").toDouble();
+            cgp.center = readPointF(elem.firstChildElement("center"));
+        }
+        elem = elem.nextSiblingElement("gradient");
+    }
+}
+
+/** Reads gradient stops from \a parentElement and sets the stops list in
+  * filter gradient widget.
+  * \sa readGradients()
+  */
+void EffectsCollector::readGradientStops(const QDomElement &parentElement) {
+    QGradientStops stops;
+    QDomElement elem = parentElement.firstChildElement("stop");
+    while (!elem.isNull()) {
+        QGradientStop stop;
+        stop.first = elem.attribute("value").toDouble();
+        stop.second = readColor(elem);
+        stops += stop;
+        elem = elem.nextSiblingElement("stop");
+    }
+    effectsArea->filterGradientWidget->setGradientStops(stops);
+}
+
+/** Reads \e Filter effect from \a parentElement.
+  * \return true if read succeed; otherwise false
+  * \sa readAddFrameEffect() readAddTextEffect() readAddImageEffect()
+  */
+bool EffectsCollector::readFilterEffect(const QDomElement &parentElement) {
+    bool result = false;
+
+    MetadataUtils::String str;
+    QDomElement el, e;
+    QRadioButton *radioButton = effectsArea->filterColorRadioButton;
+
+    el = parentElement.firstChildElement("filter");
+    if (el.isNull())
+        return result;
+
+    result = true;
+    str = el.attribute("enabled", falseString);
+    effectsArea->filterGroupBox->setChecked(str.toBool());
+
+    e = el.firstChildElement("colorfilter");
+    if (!e.isNull()) {
+        effectsArea->filterColorRadioButton->setChecked(true);
+        effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
+        effectsArea->filterBrushFrame->setColor(readColor(e));
+    }
+
+    e = el.firstChildElement("gradientfilter");
+    if (!e.isNull()) {
+        str = e.attribute("enabled", falseString);
+        if (str.toBool())
+            radioButton = effectsArea->filterGradientRadioButton;
+        effectsArea->filterGradientRadioButton->setChecked(true);
+        effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
+        readGradients(e);
+        readGradientStops(e);
+    }
+
+    radioButton->setChecked(true);
+
+    return result;
+}
+
+/** Reads \em "Add Frame" effect from \a parentElement.
+  * \return true if read succeed; otherwise false
+  * \sa readFilterEffect() readAddTextEffect() readAddImageEffect()
+  */
+bool EffectsCollector::readAddFrameEffect(const QDomElement &parentElement) {
+    bool result = false;
+
+    MetadataUtils::String str;
+    QDomElement el, e;
+
+    el = parentElement.firstChildElement("addframe");
+    if (el.isNull())
+        return result;
+
+    result = true;
+    str = el.attribute("enabled", falseString);
+    effectsArea->frameGroupBox->setChecked(str.toBool());
+
+    e = el.firstChildElement("frame");
+    if (!e.isNull()) {
+        str = e.attribute("around", falseString);
+        if (str.toBool())
+            effectsArea->frameAroundRadioButton->setChecked(true);
+        else
+            effectsArea->frameOverlayRadioButton->setChecked(true);
+        effectsArea->frameWidthSpinBox->setValue(e.attribute("width").toInt());
+        effectsArea->frameColorFrame->setColor(readColor(e));
+    }
+
+    e = el.firstChildElement("insideborder");
+    if (!e.isNull()) {
+        str = e.attribute("enabled", falseString);
+        effectsArea->borderInsideGroupBox->setChecked(str.toBool());
+        effectsArea->borderInsideSpinBox->setValue(
+                    e.attribute("width").toInt() );
+        effectsArea->borderInsideColorFrame->setColor(readColor(e));
+    }
+
+    e = el.firstChildElement("outsideborder");
+    if (!e.isNull()) {
+        str = e.attribute("enabled", falseString);
+        effectsArea->borderOutsideGroupBox->setChecked(str.toBool());
+        effectsArea->borderOutsideSpinBox->setValue(
+                    e.attribute("width").toInt() );
+        effectsArea->borderOutsideColorFrame->setColor(readColor(e));
+    }
+
+    return result;
+}
+
+/** Reads \em "Add Text" effect from \a parentElement.
+  * \return true if read succeed; otherwise false
+  * \sa readFilterEffect() readAddFrameEffect() readAddImageEffect()
+  */
+bool EffectsCollector::readAddTextEffect(const QDomElement &parentElement) {
+    bool result = false;
+
+    MetadataUtils::String str;
+    QStringList list;
+    QDomElement el, e;
+
+    el = parentElement.firstChildElement("addtext");
+    if (el.isNull())
+        return result;
+
+    result = true;
+    str = el.attribute("enabled", falseString);
+    effectsArea->textGroupBox->setChecked(str.toBool());
+    effectsArea->textOpacitySpinBox->setValue(el.attribute("opacity").toDouble());
+
+    e = el.firstChildElement("text");
+    if (!e.isNull()) {
+        str = e.attribute("frame", falseString);
+        effectsArea->textFrameCheckBox->setChecked(str.toBool());
+        effectsArea->textLineEdit->setText(e.text());
+    }
+
+    e = el.firstChildElement("font");
+    if (!e.isNull()) {
+        effectsArea->textFontComboBox->setCurrentFont(
+                    QFont(e.attribute("family")) );
+        list = e.attribute("size").split(' ');
+        effectsArea->textFontSizeSpinBox->setValue(list[0].toInt());
+        effectsArea->textFontSizeComboBox->setCurrentIndex(
+                    effectsArea->textFontSizeComboBox->findText(list[1]) );
+        str = e.attribute("bold", falseString);
+        effectsArea->textBoldPushButton->setChecked(str.toBool());
+        str = e.attribute("italic", falseString);
+        effectsArea->textItalicPushButton->setChecked(str.toBool());
+        str = e.attribute("underline", falseString);
+        effectsArea->textUnderlinePushButton->setChecked(str.toBool());
+        str = e.attribute("strikeout", falseString);
+        effectsArea->textStrikeOutPushButton->setChecked(str.toBool());
+        effectsArea->textColorFrame->setColor(readColor(e));
+    }
+
+    e = el.firstChildElement("pos");
+    if (!e.isNull()) {
+        list = e.attribute("x").split(' ');
+        effectsArea->textXSpinBox->setValue(list[0].toInt());
+        effectsArea->textXComboBox->setCurrentIndex(
+                    effectsArea->textXComboBox->findText(list[1]) );
+        list = e.attribute("y").split(' ');
+        effectsArea->textYSpinBox->setValue(list[0].toInt());
+        effectsArea->textYComboBox->setCurrentIndex(
+                    effectsArea->textYComboBox->findText(list[1]) );
+    }
+    effectsArea->textPositionComboBox->setCurrentIndex(e.attribute("mod").toInt());
+    effectsArea->textRotationSpinBox->setValue(e.attribute("rotation").toInt());
+
+    return result;
+}
+
+/** Reads \em "Add Image" effect from \a parentElement.
+  * \return true if read succeed; otherwise false
+  * \sa readFilterEffect() readAddFrameEffect() readAddTextEffect()
+  */
+bool EffectsCollector::readAddImageEffect(const QDomElement &parentElement) {
+    bool result = false;
+
+    MetadataUtils::String str;
+    QStringList list;
+    QDomElement el, e;
+
+    el = parentElement.firstChildElement("addimage");
+    if (el.isNull())
+        return result;
+
+    result = true;
+    str = el.attribute("enabled", falseString);
+    effectsArea->imageGroupBox->setChecked(str.toBool());
+    effectsArea->imageOpacitySpinBox->setValue(el.attribute("opacity").toDouble());
+
+    e = el.firstChildElement("image");
+    if (!e.isNull())
+        effectsArea->imagePathLineEdit->setText(e.text());
+
+    e = el.firstChildElement("pos");
+    if (!e.isNull()) {
+        list = e.attribute("x").split(' ');
+        effectsArea->imageXSpinBox->setValue(list[0].toInt());
+        effectsArea->imageXComboBox->setCurrentIndex(
+                    effectsArea->imageXComboBox->findText(list[1]) );
+        list = e.attribute("y").split(' ');
+        effectsArea->imageYSpinBox->setValue(list[0].toInt());
+        effectsArea->imageYComboBox->setCurrentIndex(
+                    effectsArea->imageYComboBox->findText(list[1]) );
+        effectsArea->imagePositionComboBox->setCurrentIndex(
+                    e.attribute("mod").toInt() );
+        effectsArea->imageRotationSpinBox->setValue(
+                    e.attribute("rotation").toInt() );
+    }
+
+    return result;
 }
