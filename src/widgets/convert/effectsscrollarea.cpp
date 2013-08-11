@@ -48,6 +48,7 @@ EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     filterBrushFrame->setColorDialogOptions(0);
     filterBrushFrame->setGradientType(QGradient::LinearGradient);
     filterBrushFrame->setGradientStops(filterGradientWidget->gradientStops());
+    filterTypeComboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     textColorFrame->setColor(Qt::black);
 
     // set combo box models
@@ -98,27 +99,27 @@ void EffectsScrollArea::setupFilterModels() {
   */
 void EffectsScrollArea::filterToogled(bool colorToogled) {
     if (colorToogled) {
-        filterTypeLabel->setText(tr("Color"));
+        filterBrush = filterBrushFrame->brush();
         filterGradientModelIndex = filterTypeComboBox->currentIndex();
+        filterTypeLabel->setText(tr("Color"));
         if (filterGradientModelIndex < 0)
             filterGradientModelIndex = 0;
         filterTypeComboBox->setModel(filterColorModel);
         filterTypeComboBox->setCurrentIndex(filterColorModelIndex);
         filterGradientWidget->hide();
         filterBrushFrame->setBrushEditable(false);
-        filterBrush = filterBrushFrame->brush();
         filterBrushFrame->setColor(filterColor);
     }
     else {
-        filterTypeLabel->setText(tr("Gradient"));
+        filterColor = filterBrushFrame->color();
         filterColorModelIndex = filterTypeComboBox->currentIndex();
+        filterTypeLabel->setText(tr("Gradient"));
         if (filterColorModelIndex < 0)
             filterColorModelIndex = 0;
         filterTypeComboBox->setModel(filterGradientModel);
         filterTypeComboBox->setCurrentIndex(filterGradientModelIndex);
         filterGradientWidget->show();
         filterBrushFrame->setBrushEditable(true);
-        filterColor = filterBrushFrame->color();
         filterBrushFrame->setBrush(filterBrush);
     }
 }

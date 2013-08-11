@@ -35,8 +35,8 @@ class ColorFrame : public QFrame {
 
 public:
     explicit ColorFrame(QWidget *parent = 0);
-    const QColor &color() const;
-    void setColor(const QColor &color);
+    virtual const QColor &color() const;
+    virtual void setColor(const QColor &color);
     QColorDialog::ColorDialogOptions colorDialogOptions() const;
     void setColorDialogOptions(QColorDialog::ColorDialogOptions options);
 

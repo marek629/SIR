@@ -20,3 +20,4 @@
   ! Conditional converting (ie. convert if image width > 1000 px)
     * scripts with exiv2 support
     * graphical flow diagram editor for scripts substitution
+  ! Add color filters - colormaps (dog's view, jet); see also: http://www.mathworks.com/help/matlab/ref/colormap.html

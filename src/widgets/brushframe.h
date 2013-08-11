@@ -60,7 +60,9 @@ public:
     explicit BrushFrame(QWidget * parent = 0);
     bool isBrushEditable() const;
     void setBrushEditable(bool editable);
-    const QBrush &brush();
+    const QColor &color() const;
+    void setColor(const QColor &color);
+    const QBrush &brush() const;
     void setBrush(const QBrush &brush);
     void setGradientType(QGradient::Type type);
     void setGradientStops(const QGradientStops &stops);
