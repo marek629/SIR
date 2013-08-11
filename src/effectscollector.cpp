@@ -120,114 +120,10 @@ bool EffectsCollector::read(const QDomElement &element) {
 void EffectsCollector::write(XmlStreamWriter *writer) {
     writer->writeStartElement("effects");
 
-    // filter
-    writer->writeStartElement("filter");
-    writer->writeAttribute("enabled", effectsArea->filterGroupBox->isChecked());
-    writer->writeStartElement("colorfilter");
-    writer->writeAttribute("enabled", effectsArea->filterColorRadioButton->isChecked());
-    writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
-    writer->writeColorElement(effectsArea->filterBrushFrame->color());
-    writer->writeEndElement(); // colorfilter
-    writer->writeStartElement("gradientfilter");
-    writer->writeAttribute("enabled", effectsArea->filterGradientRadioButton->isChecked());
-    writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
-    LinearGradientParams lgp = effectsArea->filterBrushFrame->linearGradientParams();
-    writer->writeStartElement("gradient");
-    writer->writeAttribute("type", "linear");
-    writer->writePointElement("start", lgp.start);
-    writer->writePointElement("finalstop", lgp.finalStop);
-    writer->writeEndElement(); // gradient
-    RadialGradientParams rgp = effectsArea->filterBrushFrame->radialGradientParams();
-    writer->writeStartElement("gradient");
-    writer->writeAttribute("type", "radial");
-    writer->writeAttribute("radius", rgp.radius);
-    writer->writePointElement("center", rgp.center);
-    writer->writePointElement("focalpoint", rgp.focalPoint);
-    writer->writeEndElement(); // gradient
-    ConicalGradientParams cgp = effectsArea->filterBrushFrame->conicalGradientParams();
-    writer->writeStartElement("gradient");
-    writer->writeAttribute("type", "conical");
-    writer->writeAttribute("angle", cgp.angle);
-    writer->writePointElement("center", cgp.center);
-    writer->writeEndElement(); // gradient
-    foreach (QGradientStop stop, effectsArea->filterGradientWidget->gradientStops()) {
-        writer->writeStartElement("stop");
-        writer->writeAttribute("value", stop.first);
-        writer->writeColorElement(stop.second);
-        writer->writeEndElement(); // stop
-    }
-    writer->writeEndElement(); // gradientfilter
-    writer->writeEndElement(); // filter
-
-    // add frame
-    writer->writeStartElement("addframe");
-    writer->writeAttribute("enabled", effectsArea->frameGroupBox->isChecked());
-    writer->writeStartElement("frame");
-    writer->writeAttribute("around", effectsArea->frameAroundRadioButton->isChecked());
-    writer->writeAttribute("width", effectsArea->frameWidthSpinBox->value());
-    writer->writeColorElement(effectsArea->frameColorFrame->color());
-    writer->writeEndElement(); // frame
-    writer->writeStartElement("insideborder");
-    writer->writeAttribute("enabled", effectsArea->borderInsideGroupBox->isChecked());
-    writer->writeAttribute("width", effectsArea->borderInsideSpinBox->value());
-    writer->writeColorElement(effectsArea->borderInsideColorFrame->color());
-    writer->writeEndElement(); // insideborder
-    writer->writeStartElement("outsideborder");
-    writer->writeAttribute("enabled", effectsArea->borderOutsideGroupBox->isChecked());
-    writer->writeAttribute("width", effectsArea->borderOutsideSpinBox->value());
-    writer->writeColorElement(effectsArea->borderOutsideColorFrame->color());
-    writer->writeEndElement(); // outsideborder
-    writer->writeEndElement(); // addframe
-
-    // add text
-    writer->writeStartElement("addtext");
-    writer->writeAttribute("enabled", effectsArea->textGroupBox->isChecked());
-    writer->writeAttribute("opacity", effectsArea->textOpacitySpinBox->value());
-    writer->writeStartElement("text");
-    writer->writeAttribute("frame", effectsArea->textFrameCheckBox->isChecked());
-    writer->writeCharacters(effectsArea->textLineEdit->text());
-    writer->writeEndElement(); // text
-    writer->writeStartElement("font");
-    writer->writeAttribute("family",
-                          effectsArea->textFontComboBox->currentFont().family() );
-    writer->writeAttribute("size",
-                          QString::number(effectsArea->textFontSizeSpinBox->value())
-                          + ' '
-                          + effectsArea->textFontSizeComboBox->currentText() );
-    writer->writeAttribute("bold", effectsArea->textBoldPushButton->isChecked());
-    writer->writeAttribute("italic", effectsArea->textItalicPushButton->isChecked());
-    writer->writeAttribute("underline",
-                          effectsArea->textUnderlinePushButton->isChecked() );
-    writer->writeAttribute("strikeout",
-                          effectsArea->textStrikeOutPushButton->isChecked() );
-    writer->writeColorElement(effectsArea->textColorFrame->color());
-    writer->writeEndElement(); // font
-    writer->writeStartElement("pos");
-    writer->writeAttribute("x", QString::number(effectsArea->textXSpinBox->value())
-                               + ' ' + effectsArea->textXComboBox->currentText() );
-    writer->writeAttribute("y", QString::number(effectsArea->textYSpinBox->value())
-                               + ' ' + effectsArea->textYComboBox->currentText() );
-    writer->writeAttribute("mod", effectsArea->textPositionComboBox->currentIndex());
-    writer->writeAttribute("rotation", effectsArea->textRotationSpinBox->value());
-    writer->writeEndElement(); // pos
-    writer->writeEndElement(); // addtext
-
-    // add image
-    writer->writeStartElement("addimage");
-    writer->writeAttribute("enabled", effectsArea->imageGroupBox->isChecked());
-    writer->writeAttribute("opacity", effectsArea->imageOpacitySpinBox->value());
-    writer->writeStartElement("image");
-    writer->writeCharacters(effectsArea->imagePathLineEdit->text());
-    writer->writeEndElement(); // image
-    writer->writeStartElement("pos");
-    writer->writeAttribute("x", QString::number(effectsArea->imageXSpinBox->value())
-                               + ' ' + effectsArea->imageXComboBox->currentText() );
-    writer->writeAttribute("y", QString::number(effectsArea->imageYSpinBox->value())
-                               + ' ' + effectsArea->imageYComboBox->currentText() );
-    writer->writeAttribute("mod", effectsArea->imagePositionComboBox->currentIndex());
-    writer->writeAttribute("rotation", effectsArea->imageRotationSpinBox->value());
-    writer->writeEndElement(); // pos
-    writer->writeEndElement(); // addimage
+    writeFilterEffect(writer);
+    writeAddFrameEffect(writer);
+    writeAddTextEffect(writer);
+    writeAddImageEffect(writer);
 
     writer->writeEndElement(); // effects
 }
@@ -473,4 +369,117 @@ bool EffectsCollector::readAddImageEffect(const QDomElement &parentElement) {
     }
 
     return result;
+}
+
+void EffectsCollector::writeFilterEffect(XmlStreamWriter *writer) {
+    writer->writeStartElement("filter");
+    writer->writeAttribute("enabled", effectsArea->filterGroupBox->isChecked());
+    writer->writeStartElement("colorfilter");
+    writer->writeAttribute("enabled", effectsArea->filterColorRadioButton->isChecked());
+    writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
+    writer->writeColorElement(effectsArea->filterBrushFrame->color());
+    writer->writeEndElement(); // colorfilter
+    writer->writeStartElement("gradientfilter");
+    writer->writeAttribute("enabled", effectsArea->filterGradientRadioButton->isChecked());
+    writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
+    LinearGradientParams lgp = effectsArea->filterBrushFrame->linearGradientParams();
+    writer->writeStartElement("gradient");
+    writer->writeAttribute("type", "linear");
+    writer->writePointElement("start", lgp.start);
+    writer->writePointElement("finalstop", lgp.finalStop);
+    writer->writeEndElement(); // gradient
+    RadialGradientParams rgp = effectsArea->filterBrushFrame->radialGradientParams();
+    writer->writeStartElement("gradient");
+    writer->writeAttribute("type", "radial");
+    writer->writeAttribute("radius", rgp.radius);
+    writer->writePointElement("center", rgp.center);
+    writer->writePointElement("focalpoint", rgp.focalPoint);
+    writer->writeEndElement(); // gradient
+    ConicalGradientParams cgp = effectsArea->filterBrushFrame->conicalGradientParams();
+    writer->writeStartElement("gradient");
+    writer->writeAttribute("type", "conical");
+    writer->writeAttribute("angle", cgp.angle);
+    writer->writePointElement("center", cgp.center);
+    writer->writeEndElement(); // gradient
+    foreach (QGradientStop stop, effectsArea->filterGradientWidget->gradientStops()) {
+        writer->writeStartElement("stop");
+        writer->writeAttribute("value", stop.first);
+        writer->writeColorElement(stop.second);
+        writer->writeEndElement(); // stop
+    }
+    writer->writeEndElement(); // gradientfilter
+    writer->writeEndElement(); // filter
+}
+
+void EffectsCollector::writeAddFrameEffect(XmlStreamWriter *writer) {
+    writer->writeStartElement("addframe");
+    writer->writeAttribute("enabled", effectsArea->frameGroupBox->isChecked());
+    writer->writeStartElement("frame");
+    writer->writeAttribute("around", effectsArea->frameAroundRadioButton->isChecked());
+    writer->writeAttribute("width", effectsArea->frameWidthSpinBox->value());
+    writer->writeColorElement(effectsArea->frameColorFrame->color());
+    writer->writeEndElement(); // frame
+    writer->writeStartElement("insideborder");
+    writer->writeAttribute("enabled", effectsArea->borderInsideGroupBox->isChecked());
+    writer->writeAttribute("width", effectsArea->borderInsideSpinBox->value());
+    writer->writeColorElement(effectsArea->borderInsideColorFrame->color());
+    writer->writeEndElement(); // insideborder
+    writer->writeStartElement("outsideborder");
+    writer->writeAttribute("enabled", effectsArea->borderOutsideGroupBox->isChecked());
+    writer->writeAttribute("width", effectsArea->borderOutsideSpinBox->value());
+    writer->writeColorElement(effectsArea->borderOutsideColorFrame->color());
+    writer->writeEndElement(); // outsideborder
+    writer->writeEndElement(); // addframe
+}
+
+void EffectsCollector::writeAddTextEffect(XmlStreamWriter *writer) {
+    writer->writeStartElement("addtext");
+    writer->writeAttribute("enabled", effectsArea->textGroupBox->isChecked());
+    writer->writeAttribute("opacity", effectsArea->textOpacitySpinBox->value());
+    writer->writeStartElement("text");
+    writer->writeAttribute("frame", effectsArea->textFrameCheckBox->isChecked());
+    writer->writeCharacters(effectsArea->textLineEdit->text());
+    writer->writeEndElement(); // text
+    writer->writeStartElement("font");
+    writer->writeAttribute("family",
+                          effectsArea->textFontComboBox->currentFont().family() );
+    writer->writeAttribute("size",
+                          QString::number(effectsArea->textFontSizeSpinBox->value())
+                          + ' '
+                          + effectsArea->textFontSizeComboBox->currentText() );
+    writer->writeAttribute("bold", effectsArea->textBoldPushButton->isChecked());
+    writer->writeAttribute("italic", effectsArea->textItalicPushButton->isChecked());
+    writer->writeAttribute("underline",
+                          effectsArea->textUnderlinePushButton->isChecked() );
+    writer->writeAttribute("strikeout",
+                          effectsArea->textStrikeOutPushButton->isChecked() );
+    writer->writeColorElement(effectsArea->textColorFrame->color());
+    writer->writeEndElement(); // font
+    writer->writeStartElement("pos");
+    writer->writeAttribute("x", QString::number(effectsArea->textXSpinBox->value())
+                               + ' ' + effectsArea->textXComboBox->currentText() );
+    writer->writeAttribute("y", QString::number(effectsArea->textYSpinBox->value())
+                               + ' ' + effectsArea->textYComboBox->currentText() );
+    writer->writeAttribute("mod", effectsArea->textPositionComboBox->currentIndex());
+    writer->writeAttribute("rotation", effectsArea->textRotationSpinBox->value());
+    writer->writeEndElement(); // pos
+    writer->writeEndElement(); // addtext
+}
+
+void EffectsCollector::writeAddImageEffect(XmlStreamWriter *writer) {
+    writer->writeStartElement("addimage");
+    writer->writeAttribute("enabled", effectsArea->imageGroupBox->isChecked());
+    writer->writeAttribute("opacity", effectsArea->imageOpacitySpinBox->value());
+    writer->writeStartElement("image");
+    writer->writeCharacters(effectsArea->imagePathLineEdit->text());
+    writer->writeEndElement(); // image
+    writer->writeStartElement("pos");
+    writer->writeAttribute("x", QString::number(effectsArea->imageXSpinBox->value())
+                               + ' ' + effectsArea->imageXComboBox->currentText() );
+    writer->writeAttribute("y", QString::number(effectsArea->imageYSpinBox->value())
+                               + ' ' + effectsArea->imageYComboBox->currentText() );
+    writer->writeAttribute("mod", effectsArea->imagePositionComboBox->currentIndex());
+    writer->writeAttribute("rotation", effectsArea->imageRotationSpinBox->value());
+    writer->writeEndElement(); // pos
+    writer->writeEndElement(); // addimage
 }
