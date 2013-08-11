@@ -109,6 +109,7 @@ bool EffectsCollector::read(const QDomElement &element) {
     MetadataUtils::String str;
     QStringList list;
     QDomElement el, e;
+    QRadioButton *radioButton = effectsArea->filterColorRadioButton;
 
     el = element.firstChildElement("filter");
     if (!el.isNull()) {
@@ -117,15 +118,16 @@ bool EffectsCollector::read(const QDomElement &element) {
         effectsArea->filterGroupBox->setChecked(str.toBool());
         e = el.firstChildElement("colorfilter");
         if (!e.isNull()) {
-            str = e.attribute("enabled", falseString);
-            effectsArea->filterColorRadioButton->setChecked(str.toBool());
+            effectsArea->filterColorRadioButton->setChecked(true);
             effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
             effectsArea->filterBrushFrame->setColor(readColor(e));
         }
         e = el.firstChildElement("gradientfilter");
         if (!e.isNull()) {
             str = e.attribute("enabled", falseString);
-            effectsArea->filterGradientRadioButton->setChecked(str.toBool());
+            if (str.toBool())
+                radioButton = effectsArea->filterGradientRadioButton;
+            effectsArea->filterGradientRadioButton->setChecked(true);
             effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
             QDomElement elem;
             elem = e.firstChildElement("gradient");
@@ -161,6 +163,7 @@ bool EffectsCollector::read(const QDomElement &element) {
             effectsArea->filterGradientWidget->setGradientStops(stops);
         }
     }
+    radioButton->setChecked(true);
 
     el = element.firstChildElement("addframe");
     if (!el.isNull()) {
