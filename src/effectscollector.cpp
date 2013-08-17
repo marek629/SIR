@@ -373,21 +373,31 @@ bool EffectsCollector::readAddImageEffect(const QDomElement &parentElement) {
 
 void EffectsCollector::writeFilterEffect(XmlStreamWriter *writer) {
     writer->writeStartElement("filter");
+
     writer->writeAttribute("enabled", effectsArea->filterGroupBox->isChecked());
     writer->writeStartElement("colorfilter");
     writer->writeAttribute("enabled", effectsArea->filterColorRadioButton->isChecked());
-    writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
-    writer->writeColorElement(effectsArea->filterBrushFrame->color());
+    if (effectsArea->filterColorRadioButton->isChecked()) {
+        writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
+        writer->writeColorElement(effectsArea->filterBrushFrame->color());
+    }
+    else {
+        writer->writeAttribute("index", effectsArea->filterColorModelIndex);
+        writer->writeColorElement(effectsArea->filterColor);
+    }
     writer->writeEndElement(); // colorfilter
+
     writer->writeStartElement("gradientfilter");
     writer->writeAttribute("enabled", effectsArea->filterGradientRadioButton->isChecked());
     writer->writeAttribute("index", effectsArea->filterTypeComboBox->currentIndex());
+
     LinearGradientParams lgp = effectsArea->filterBrushFrame->linearGradientParams();
     writer->writeStartElement("gradient");
     writer->writeAttribute("type", "linear");
     writer->writePointElement("start", lgp.start);
     writer->writePointElement("finalstop", lgp.finalStop);
     writer->writeEndElement(); // gradient
+
     RadialGradientParams rgp = effectsArea->filterBrushFrame->radialGradientParams();
     writer->writeStartElement("gradient");
     writer->writeAttribute("type", "radial");
@@ -395,19 +405,23 @@ void EffectsCollector::writeFilterEffect(XmlStreamWriter *writer) {
     writer->writePointElement("center", rgp.center);
     writer->writePointElement("focalpoint", rgp.focalPoint);
     writer->writeEndElement(); // gradient
+
     ConicalGradientParams cgp = effectsArea->filterBrushFrame->conicalGradientParams();
     writer->writeStartElement("gradient");
     writer->writeAttribute("type", "conical");
     writer->writeAttribute("angle", cgp.angle);
     writer->writePointElement("center", cgp.center);
     writer->writeEndElement(); // gradient
+
     foreach (QGradientStop stop, effectsArea->filterGradientWidget->gradientStops()) {
         writer->writeStartElement("stop");
         writer->writeAttribute("value", stop.first);
         writer->writeColorElement(stop.second);
         writer->writeEndElement(); // stop
     }
+
     writer->writeEndElement(); // gradientfilter
+
     writer->writeEndElement(); // filter
 }
 
