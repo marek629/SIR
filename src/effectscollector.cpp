@@ -205,9 +205,14 @@ bool EffectsCollector::readFilterEffect(const QDomElement &parentElement) {
         if (str.toBool())
             radioButton = effectsArea->filterGradientRadioButton;
         effectsArea->filterGradientRadioButton->setChecked(true);
-        effectsArea->filterTypeComboBox->setCurrentIndex(e.attribute("index").toInt());
         readGradients(e);
         readGradientStops(e);
+        int idx = e.attribute("index").toInt();
+        if (idx > 0)
+            effectsArea->filterTypeComboBox->setCurrentIndex(0);
+        else
+            effectsArea->filterTypeComboBox->setCurrentIndex(1);
+        effectsArea->filterTypeComboBox->setCurrentIndex(idx);
     }
 
     radioButton->setChecked(true);

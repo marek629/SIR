@@ -33,7 +33,6 @@ class EffectsCollector : public XmlHelper {
 public:
     EffectsCollector(ConvertDialog *parent = 0);
     // TODO: testing read() and write() and use save() and restore() methods
-    // TODO: improve color/gradient restoring (when gradient is active)
     void save(const QString &fileName);
     void restore(const QString &fileName);
     bool read(const QDomElement &element);
