@@ -373,7 +373,7 @@ void ConvertThread::updateThumbnail(const QImage &image) {
         }
         else {
             if (shared->backgroundColor.isValid())
-                thumbnail->fill(shared->backgroundColor);
+                thumbnail->fill(shared->backgroundColor.rgb());
             else
                 thumbnail->fill(Qt::black);
             QPoint begin ( (w-tmpImg.width())/2, (h-tmpImg.height())/2 );
