@@ -27,12 +27,12 @@
 class EffectsScrollArea;
 class XmlStreamWriter;
 
+//! Class collecting effects data in XML file.
 class EffectsCollector : public XmlHelper {
     Q_DECLARE_TR_FUNCTIONS(EffectsCollector);
 
 public:
     EffectsCollector(ConvertDialog *parent = 0);
-    // TODO: testing read() and write() and use save() and restore() methods
     void save(const QString &fileName);
     void restore(const QString &fileName);
     bool read(const QDomElement &element);

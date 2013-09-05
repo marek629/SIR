@@ -40,7 +40,16 @@
        </widget>
        <widget class="QWidget" name="verticalWidget" native="true">
         <layout class="QVBoxLayout" name="convertionVerticalLayout">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
@@ -185,7 +194,16 @@
          </item>
          <item>
           <layout class="QGridLayout">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <property name="spacing">
@@ -435,14 +453,22 @@
      <property name="title">
       <string>Session</string>
      </property>
-     <addaction name="actionRestore"/>
-     <addaction name="actionSave"/>
+     <addaction name="actionRestoreSession"/>
+     <addaction name="actionSaveSession"/>
+    </widget>
+    <widget class="QMenu" name="menuEffects">
+     <property name="title">
+      <string>Effects</string>
+     </property>
+     <addaction name="actionRestoreEffects"/>
+     <addaction name="actionSaveEffects"/>
     </widget>
     <addaction name="actionOptions"/>
     <addaction name="separator"/>
     <addaction name="actionCheckforUpdates"/>
     <addaction name="separator"/>
     <addaction name="menuSession"/>
+    <addaction name="menuEffects"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -527,12 +553,22 @@
     <string>Alt+I</string>
    </property>
   </action>
-  <action name="actionRestore">
+  <action name="actionRestoreSession">
    <property name="text">
     <string>Restore...</string>
    </property>
   </action>
-  <action name="actionSave">
+  <action name="actionSaveSession">
+   <property name="text">
+    <string>Save...</string>
+   </property>
+  </action>
+  <action name="actionRestoreEffects">
+   <property name="text">
+    <string>Restore...</string>
+   </property>
+  </action>
+  <action name="actionSaveEffects">
    <property name="text">
     <string>Save...</string>
    </property>

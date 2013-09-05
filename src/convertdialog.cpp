@@ -47,6 +47,7 @@
 #include "convertshareddata.h"
 #include "session.h"
 #include "commandlineassistant.h"
+#include "effectscollector.h"
 
 /** Default constuctor.
   *
@@ -70,6 +71,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
     session = new Session(this);
     if (!cmdAssistant.sessionFile().isEmpty())
         session->restore(cmdAssistant.sessionFile());
+    effectsCollector = new EffectsCollector(this);
 }
 
 /** Destructor.\n
@@ -82,6 +84,8 @@ ConvertDialog::~ConvertDialog() {
     if(net)
         delete net;
     clearTempDir();
+    delete session;
+    delete effectsCollector;
 }
 
 /** Connects UI signals to corresponding slots. */
@@ -108,8 +112,10 @@ void ConvertDialog::createConnections() {
     connect(actionAbout_Sir, SIGNAL(triggered()), this, SLOT(about()));
     connect(actionOptions, SIGNAL(triggered()), this, SLOT(setOptions()));
     connect(actionCheckforUpdates, SIGNAL(triggered()), SLOT(checkUpdates()));
-    connect(actionRestore, SIGNAL(triggered()), SLOT(restoreSession()));
-    connect(actionSave, SIGNAL(triggered()), SLOT(saveSession()));
+    connect(actionRestoreSession, SIGNAL(triggered()), SLOT(restoreSession()));
+    connect(actionSaveSession, SIGNAL(triggered()), SLOT(saveSession()));
+    connect(actionRestoreEffects, SIGNAL(triggered()), SLOT(restoreEffects()));
+    connect(actionSaveEffects, SIGNAL(triggered()), SLOT(saveEffects()));
     connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
 
     // tree view events
@@ -697,6 +703,26 @@ void ConvertDialog::saveSession() {
                                                 QDir::homePath(),
                                                 tr("XML Files") + " (*.xml)");
     session->save(path);
+}
+
+/** Gets effects file path from the user and restores effects from the file.
+  * \sa saveEffects() EffectsCollector
+  */
+void ConvertDialog::restoreEffects() {
+    QString path = QFileDialog::getOpenFileName(this, tr("Choose effects file"),
+                                                QDir::homePath(),
+                                                tr("XML Files") + " (*.xml)");
+    effectsCollector->restore(path);
+}
+
+/** Gets effects file path from the user and saves effects to the file.
+  * \sa restoreEffects() EffectsCollector
+  */
+void ConvertDialog::saveEffects() {
+    QString path = QFileDialog::getSaveFileName(this, tr("Choose effects file"),
+                                                QDir::homePath(),
+                                                tr("XML Files") + " (*.xml)");
+    effectsCollector->save(path);
 }
 
 /** Shows window containing information about SIR. */

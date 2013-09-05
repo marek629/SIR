@@ -30,6 +30,7 @@ class NetworkUtils;
 class ConvertSharedData;
 class Session;
 class CommandLineAssistant;
+class EffectsCollector;
 
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
@@ -67,6 +68,7 @@ private:
     QSize windowSize;
     ConvertSharedData *csd;
     Session *session;
+    EffectsCollector *effectsCollector;
     // methods
     void init();
     void createConnections();
@@ -103,6 +105,8 @@ public slots:
     void showSelectionDialog();
     void restoreSession();
     void saveSession();
+    void restoreEffects();
+    void saveEffects();
 };
 
 /** Saves window maximized status, possition on screen and size and last
