@@ -72,6 +72,8 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
     if (!cmdAssistant.sessionFile().isEmpty())
         session->restore(cmdAssistant.sessionFile());
     effectsCollector = new EffectsCollector(this);
+    effectsDir = QDir::home();
+    sessionDir = QDir::home();
 }
 
 /** Destructor.\n
@@ -690,8 +692,13 @@ void ConvertDialog::showSelectionDialog() {
   */
 void ConvertDialog::restoreSession() {
     QString path = QFileDialog::getOpenFileName(this, tr("Choose session file"),
-                                                QDir::homePath(),
+                                                sessionDir.path(),
                                                 tr("XML Files") + " (*.xml)");
+    if (path.isEmpty())
+        return;
+
+    QFileInfo info(path);
+    sessionDir = info.absoluteDir();
     session->restore(path);
 }
 
@@ -700,8 +707,13 @@ void ConvertDialog::restoreSession() {
   */
 void ConvertDialog::saveSession() {
     QString path = QFileDialog::getSaveFileName(this, tr("Choose session file"),
-                                                QDir::homePath(),
+                                                sessionDir.path(),
                                                 tr("XML Files") + " (*.xml)");
+    if (path.isEmpty())
+        return;
+
+    QFileInfo info(path);
+    sessionDir = info.absoluteDir();
     session->save(path);
 }
 
@@ -710,8 +722,13 @@ void ConvertDialog::saveSession() {
   */
 void ConvertDialog::restoreEffects() {
     QString path = QFileDialog::getOpenFileName(this, tr("Choose effects file"),
-                                                QDir::homePath(),
+                                                effectsDir.path(),
                                                 tr("XML Files") + " (*.xml)");
+    if (path.isEmpty())
+        return;
+
+    QFileInfo info(path);
+    effectsDir = info.absoluteDir();
     effectsCollector->restore(path);
 }
 
@@ -720,8 +737,13 @@ void ConvertDialog::restoreEffects() {
   */
 void ConvertDialog::saveEffects() {
     QString path = QFileDialog::getSaveFileName(this, tr("Choose effects file"),
-                                                QDir::homePath(),
+                                                effectsDir.path(),
                                                 tr("XML Files") + " (*.xml)");
+    if (path.isEmpty())
+        return;
+
+    QFileInfo info(path);
+    effectsDir = info.absoluteDir();
     effectsCollector->save(path);
 }
 

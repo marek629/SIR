@@ -69,6 +69,8 @@ private:
     ConvertSharedData *csd;
     Session *session;
     EffectsCollector *effectsCollector;
+    QDir effectsDir;
+    QDir sessionDir;
     // methods
     void init();
     void createConnections();

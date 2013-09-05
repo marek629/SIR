@@ -1,8 +1,8 @@
 *** nearest release ***
-  ! store (runtime) current session and effect collection file path
+  ! store (session file) current session and effect collection file path
+  ! fix restore (save?) desired size of image from session file
   ! Make simple effects
     * histogram operations
-    * effect collections, save to files
     * multiple effects convertion: save few images from just one, for example diffrent color effects
   ! compare painting color filter effect performance (multiply per pixel vs. QPainter.fill(QColor))
 
