@@ -233,8 +233,8 @@ void Session::restore(const QString &fileName) {
         sizeArea->sizeUnitComboBox->setCurrentIndex(0);
         el = elem.firstChildElement("pixels");
         if (!el.isNull()) {
-            sizeArea->widthDoubleSpinBox->setValue(elem.attribute("width").toDouble());
-            sizeArea->heightDoubleSpinBox->setValue(elem.attribute("height").toDouble());
+            sizeArea->widthDoubleSpinBox->setValue(el.attribute("width").toDouble());
+            sizeArea->heightDoubleSpinBox->setValue(el.attribute("height").toDouble());
         }
         el = elem.firstChildElement("percent");
         if (!el.isNull()) {
