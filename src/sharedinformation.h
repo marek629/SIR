@@ -126,6 +126,7 @@ private:
       * If custom background color is disabled it's invalid QColor object.
       */
     QColor backgroundColor;
+    quint8 histogramOperation; // 0 (none), 1 (stretch), 2 (equalize)
     // filter
     int filterType;
     QBrush filterBrush;

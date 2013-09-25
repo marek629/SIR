@@ -528,6 +528,15 @@ void ConvertDialog::convert() {
         sharedInfo->backgroundColor = optionsScrollArea->backgroundColorFrame->color();
     else
         sharedInfo->backgroundColor = QColor();
+    // histogram
+    if (effectsScrollArea->histogramGroupBox->isChecked()) {
+        if (effectsScrollArea->stretchHistogramRadioButton->isChecked())
+            sharedInfo->histogramOperation = 1;
+        else
+            sharedInfo->histogramOperation = 2;
+    }
+    else
+        sharedInfo->histogramOperation = 0;
     // filter
     if (effectsScrollArea->filterGroupBox->isChecked()) {
         if (effectsScrollArea->filterColorRadioButton->isChecked()) {

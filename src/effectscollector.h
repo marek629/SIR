@@ -44,10 +44,12 @@ private:
     // methods
     void readGradients(const QDomElement &parentElement);
     void readGradientStops(const QDomElement &parentElement);
+    bool readHistogramEffect(const QDomElement &parentElement);
     bool readFilterEffect(const QDomElement &parentElement);
     bool readAddFrameEffect(const QDomElement &parentElement);
     bool readAddTextEffect(const QDomElement &parentElement);
     bool readAddImageEffect(const QDomElement &parentElement);
+    void writeHistogramEffect(XmlStreamWriter *writer);
     void writeFilterEffect(XmlStreamWriter *writer);
     void writeAddFrameEffect(XmlStreamWriter *writer);
     void writeAddTextEffect(XmlStreamWriter *writer);

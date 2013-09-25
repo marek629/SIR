@@ -57,6 +57,7 @@ set( sir_HDRS
         src/optionsenums.h
         src/rawutils.h
         src/regexputils.h
+        src/rgb.h
         src/session.h
         src/sharedinformation.h
         src/svgmodifier.h
@@ -80,6 +81,7 @@ set( sir_SRCS
         src/networkutils.cpp
         src/rawutils.cpp
         src/regexputils.cpp
+        src/rgb.cpp
         src/selection.cpp
         src/session.cpp
         src/settings.cpp

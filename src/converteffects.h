@@ -19,21 +19,23 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef EFFECTPAINTER_H
-#define EFFECTPAINTER_H
+#ifndef CONVERTEFFECTS_H
+#define CONVERTEFFECTS_H
 
 #include "sharedinformation.h"
+#include "rgb.h"
 
 /** \brief Convertion effects class.
   *
   * Effects are made on #img QImage object using data from #shared SharedInformation
   * object.
   *
-  * This class supports 3 effects: \link #framedImage() \em "Add Frame" \endlink,
-  * \link #addText() \em "Add Text" \endlink and
-  * \link #addImage() \em "Add Image" \endlink
-  *
-  * \sa framedImage() addText() addImage()
+  * This class supports 5 effects:
+  * \li \link #modifyHistogram() \em "Histogram" \endlink
+  * \li \link #filtrate() \em "Filter" \endlink
+  * \li \link #framedImage() \em "Add Frame" \endlink
+  * \li \link #addText() \em "Add Text" \endlink
+  * \li \link #addImage() \em "Add Image" \endlink
   */
 class ConvertEffects {
 public:
@@ -44,6 +46,7 @@ public:
     SharedInformation *sharedInfo() const;
     void setImage(QImage *image);
     QImage *image() const;
+    void modifyHistogram();
     void filtrate();
     QImage framedImage();
     void addText();
@@ -66,6 +69,13 @@ private:
                                 PosModifier modifier);
     void combine(const QColor &color);
     void combine(const QBrush &brush);
+    QPair<QColor, QColor> colorRange();
+    void stretchHistogram();
+    void equalizeHistogram();
+    QVector<RgbF> distribution();
+    QVector<Rgb> histogram();
+    Rgb sumRgb(const QVector<Rgb> &h, int n);
+    QVector<Rgb> lookUpTable();
 };
 
-#endif // EFFECTPAINTER_H
+#endif // CONVERTEFFECTS_H

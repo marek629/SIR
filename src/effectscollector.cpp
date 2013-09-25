@@ -106,6 +106,7 @@ bool EffectsCollector::read(const QDomElement &element) {
     if (element.isNull())
         return result;
 
+    result = readHistogramEffect(element);
     result = readFilterEffect(element);
     result = readAddFrameEffect(element);
     result = readAddTextEffect(element);
@@ -120,6 +121,7 @@ bool EffectsCollector::read(const QDomElement &element) {
 void EffectsCollector::write(XmlStreamWriter *writer) {
     writer->writeStartElement("effects");
 
+    writeHistogramEffect(writer);
     writeFilterEffect(writer);
     writeAddFrameEffect(writer);
     writeAddTextEffect(writer);
@@ -173,9 +175,34 @@ void EffectsCollector::readGradientStops(const QDomElement &parentElement) {
     effectsArea->filterGradientWidget->setGradientStops(stops);
 }
 
+/** Reads \e Histogram effect from \a parentElement.
+  * \return true if read succeed; otherwise false
+  * \sa readFilterEffect() readAddFrameEffect() readAddTextEffect()
+  *     readAddImageEffect()
+  */
+bool EffectsCollector::readHistogramEffect(const QDomElement &parentElement) {
+    bool result = false;
+
+    MetadataUtils::String str;
+    QDomElement el = parentElement.firstChildElement("histogram");
+    if (el.isNull())
+        return result;
+
+    result = true;
+    str = el.attribute("enabled", falseString);
+    effectsArea->histogramGroupBox->setChecked(str.toBool());
+    if (el.attribute("operation") == "equalize")
+        effectsArea->equalizeHistogramRadioButton->setChecked(true);
+    else
+        effectsArea->stretchHistogramRadioButton->setChecked(true);
+
+    return result;
+}
+
 /** Reads \e Filter effect from \a parentElement.
   * \return true if read succeed; otherwise false
-  * \sa readAddFrameEffect() readAddTextEffect() readAddImageEffect()
+  * \sa readHistogramEffect() readAddFrameEffect() readAddTextEffect()
+  *     readAddImageEffect()
   */
 bool EffectsCollector::readFilterEffect(const QDomElement &parentElement) {
     bool result = false;
@@ -222,7 +249,8 @@ bool EffectsCollector::readFilterEffect(const QDomElement &parentElement) {
 
 /** Reads \em "Add Frame" effect from \a parentElement.
   * \return true if read succeed; otherwise false
-  * \sa readFilterEffect() readAddTextEffect() readAddImageEffect()
+  * \sa readHistogramEffect() readFilterEffect() readAddTextEffect()
+  *     readAddImageEffect()
   */
 bool EffectsCollector::readAddFrameEffect(const QDomElement &parentElement) {
     bool result = false;
@@ -272,7 +300,8 @@ bool EffectsCollector::readAddFrameEffect(const QDomElement &parentElement) {
 
 /** Reads \em "Add Text" effect from \a parentElement.
   * \return true if read succeed; otherwise false
-  * \sa readFilterEffect() readAddFrameEffect() readAddImageEffect()
+  * \sa readHistogramEffect() readFilterEffect() readAddFrameEffect()
+  *     readAddImageEffect()
   */
 bool EffectsCollector::readAddTextEffect(const QDomElement &parentElement) {
     bool result = false;
@@ -335,7 +364,8 @@ bool EffectsCollector::readAddTextEffect(const QDomElement &parentElement) {
 
 /** Reads \em "Add Image" effect from \a parentElement.
   * \return true if read succeed; otherwise false
-  * \sa readFilterEffect() readAddFrameEffect() readAddTextEffect()
+  * \sa readHistogramEffect() readFilterEffect() readAddFrameEffect()
+  *     readAddTextEffect()
   */
 bool EffectsCollector::readAddImageEffect(const QDomElement &parentElement) {
     bool result = false;
@@ -374,6 +404,16 @@ bool EffectsCollector::readAddImageEffect(const QDomElement &parentElement) {
     }
 
     return result;
+}
+
+void EffectsCollector::writeHistogramEffect(XmlStreamWriter *writer) {
+    writer->writeStartElement("histogram");
+    writer->writeAttribute("enabled", effectsArea->histogramGroupBox->isChecked());
+    if (effectsArea->stretchHistogramRadioButton->isChecked())
+        writer->writeAttribute("operation", "stretch");
+    else
+        writer->writeAttribute("operation", "equalize");
+    writer->writeEndElement(); // histogram
 }
 
 void EffectsCollector::writeFilterEffect(XmlStreamWriter *writer) {

@@ -61,8 +61,64 @@ QImage * ConvertEffects::image() const {
     return img;
 }
 
+void ConvertEffects::modifyHistogram() {
+    switch (shared->histogramOperation) {
+    case 1:
+        stretchHistogram();
+        break;
+    case 2:
+        equalizeHistogram();
+        break;
+    default:
+        break;
+    }
+}
+
+void ConvertEffects::stretchHistogram() {
+    Q_ASSERT(img != NULL);
+    Q_ASSERT(!img->isNull());
+
+    const QPair<QColor, QColor> &range = colorRange();
+    const qreal rMul = 255. / (range.second.red() - range.first.red());
+    const qreal gMul = 255. / (range.second.green() - range.first.green());
+    const qreal bMul = 255. / (range.second.blue() - range.first.blue());
+
+    for (int x=0; x<img->width(); x++) {
+        for (int y=0; y<img->height(); y++) {
+            QRgb rgb = img->pixel(x,y);
+            QColor c(rgb);
+            c.setRed(rMul * (qRed(rgb) - range.first.red()) );
+            c.setGreen(gMul * (qGreen(rgb) - range.first.green()) );
+            c.setBlue(bMul * (qBlue(rgb) - range.first.blue()) );
+            img->setPixel(x, y, c.rgb());
+        }
+    }
+}
+
+void ConvertEffects::equalizeHistogram() {
+    Q_ASSERT(img != NULL);
+    Q_ASSERT(!img->isNull());
+
+    const QVector<Rgb> &LUT = lookUpTable();
+    int i;
+
+    for (int x=0; x<img->width(); x++) {
+        for (int y=0; y<img->height(); y++) {
+            QColor c(img->pixel(x,y));
+            i = c.red();
+            c.setRed(LUT[i].red);
+            i = c.green();
+            c.setGreen(LUT[i].green);
+            i = c.blue();
+            c.setBlue(LUT[i].blue);
+            img->setPixel(x, y, c.rgb());
+        }
+    }
+}
+
 void ConvertEffects::filtrate() {
     Q_ASSERT(img != NULL);
+    Q_ASSERT(!img->isNull());
 
     switch (shared->filterType) {
     case BlackAndWhite:
@@ -90,6 +146,9 @@ void ConvertEffects::filtrate() {
 
 /** Adds frame to new image and returns this. */
 QImage ConvertEffects::framedImage() {
+    Q_ASSERT(img != NULL);
+    Q_ASSERT(!img->isNull());
+
     QImage result;
     if (!img || img->isNull())
         return result;
@@ -133,6 +192,7 @@ QImage ConvertEffects::framedImage() {
   */
 void ConvertEffects::addText() {
     Q_ASSERT(img != NULL);
+    Q_ASSERT(!img->isNull());
 
     // reference point setup
     QPoint point = getTransformOriginPoint(shared->textPos, shared->textUnitPair);
@@ -166,6 +226,7 @@ void ConvertEffects::addText() {
   */
 void ConvertEffects::addImage() {
     Q_ASSERT(img != NULL);
+    Q_ASSERT(!img->isNull());
 
     QPoint point = getTransformOriginPoint(shared->imagePos, shared->imageUnitPair);
 
@@ -278,4 +339,110 @@ void ConvertEffects::combine(const QBrush &brush) {
     painter.setBrush(brush);
     painter.setOpacity(0.5);
     painter.fillRect(img->rect(), brush);
+}
+
+QPair<QColor, QColor> ConvertEffects::colorRange() {
+    QPair<QColor, QColor> range(Qt::white, Qt::black);
+
+    for (int x=0; x<img->width(); x++) {
+        for (int y=0; y<img->height(); y++) {
+            QRgb rgb = img->pixel(x,y);
+            int v = qRed(rgb);
+            if (v < range.first.red())
+                range.first.setRed(v);
+            else if (v > range.second.red())
+                range.second.setRed(v);
+            v = qGreen(rgb);
+            if (v < range.first.green())
+                range.first.setGreen(v);
+            else if (v > range.second.green())
+                range.second.setGreen(v);
+            v = qBlue(rgb);
+            if (v < range.first.blue())
+                range.first.setBlue(v);
+            else if (v > range.second.blue())
+                range.second.setBlue(v);
+        }
+    }
+
+    return range;
+}
+
+/** Create vector of image distribution function.
+  * \return Distribution vector object.
+  * \sa histogram() sumRgb()
+  */
+QVector<RgbF> ConvertEffects::distribution() {
+    QVector<RgbF> D(256);
+    const QVector<Rgb> &h = histogram();
+    const int lp = img->width() * img->height();
+
+    for (int n=0; n<D.size(); n++)
+        D[n] = sumRgb(h, n) / lp;
+
+    return D;
+}
+
+/** Counts pixel values.
+  *
+  * \p Data order
+  * Index of vector is brightness and field of Rgb object is count pixel value
+  * within a color channel.\n
+  * For example h[2].red = 50 means red value 2 exist in image 50 times.
+  *
+  * \return Vector of count values.
+  */
+QVector<Rgb> ConvertEffects::histogram() {
+    QVector<Rgb> h(256);
+
+    for (int x=0; x<img->width(); x++) {
+        for (int y=0; y<img->height(); y++) {
+            QRgb rgb = img->pixel(x,y);
+            int n = qRed(rgb);
+            h[n].red++;
+            n = qGreen(rgb);
+            h[n].green++;
+            n = qBlue(rgb);
+            h[n].blue++;
+        }
+    }
+
+    return h;
+}
+
+/** Sums first \a n values of \a h histogram.
+  * \return Rgb object.
+  */
+Rgb ConvertEffects::sumRgb(const QVector<Rgb> &h, int n) {
+    Rgb rgb;
+
+    for (int u=0; u<n; u++)
+        rgb += h[u];
+
+    return rgb;
+}
+
+/** Create look up table (LUT) for histogram equalization.
+  * \return Look up table vector object.
+  * \sa distribution()
+  */
+QVector<Rgb> ConvertEffects::lookUpTable() {
+    const int k = 256;
+    QVector<Rgb> LUT(k);
+    QVector<RgbF> D = distribution();
+    RgbF D0 = D[0];
+
+    // setting component colors of D0
+    for (int n=1; D0.red == 0. && n<D.size(); n++)
+        D0.red = D[n].red;
+    for (int n=1; D0.green == 0. && n<D.size(); n++)
+        D0.green = D[n].green;
+    for (int n=1; D0.blue == 0. && n<D.size(); n++)
+        D0.blue = D[n].blue;
+
+    RgbF mul = (k - 1) / (1 - D0);
+    for (int i=0; i<LUT.size(); i++)
+        LUT[i] = (D[i] - D0) * mul;
+
+    return LUT;
 }
