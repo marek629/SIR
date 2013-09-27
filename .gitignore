@@ -18,3 +18,5 @@
 /sir
 /sir.cbp
 moc_*.cpp
+*.moc
+/sir_*_test

@@ -19,46 +19,33 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef VERSION_H
-#define VERSION_H
+#ifndef VERSIONTEST_H
+#define VERSIONTEST_H
 
-#include <QString>
-#include <QVector>
+#include <QtTest/QTest>
+#include "version.h"
 
-#define VERSION "2.7-dev"
+#undef VERSION
+#define VERSION "2.3"
 
-//! SIR version information class.
-class Version {
-    friend class VersionTest;
+class VersionTest : public QObject {
+    Q_OBJECT
 
 public:
-    Version(const char * v = VERSION);
-    QString version() const;
-    bool isAtLeast(const QString &ver);
+    VersionTest();
 
 private:
-    // fields
-    /** Version string in format "M.m.p[-s]"
-      *
-      *     M - major version number
-      *     m - minor version number
-      *     p - patch version number
-      *     s - development status; optional, after minus sign
-      *
-      * Supported development status strings are:
-      * - dev
-      * - alpha
-      * - beta
-      *
-      * \sa version()
-      */
-    const QString versionString;
-    /** Stores values of versionString.
-      * \sa vector()
-      */
-    const QVector<int> versionVector;
-    // methods
-    QVector<int> vector(const QString &ver);
+    Version ver;
+
+private slots:
+    void initTestCase();
+    void version();
+    void vector_data();
+    void vector();
+    void isAtLeast_data();
+    void isAtLeast();
 };
 
-#endif // VERSION_H
+Q_DECLARE_METATYPE( QVector<int> )
+
+#endif // VERSIONTEST_H

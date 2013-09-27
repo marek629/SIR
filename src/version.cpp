@@ -23,7 +23,8 @@
 #include "version.h"
 
 /** Creates the Version object. */
-Version::Version() : versionString(VERSION), versionVector(vector(versionString)) {}
+Version::Version(const char *v)
+    : versionString(v), versionVector(vector(versionString)) {}
 
 /** Returns value of versionString. */
 QString Version::version() const {
@@ -36,24 +37,26 @@ QString Version::version() const {
   */
 bool Version::isAtLeast(const QString &ver) {
     QVector<int> vec = vector(ver);
-    const int minSize = qMin(versionVector.size(), vec.size());
-    const int maxSize = qMax(versionVector.size(), vec.size());
-    int i;
-    for (i=0; i<minSize; i++) {
-        if (versionVector[i] < vec[i])
+    QVector<int> versionVectorCopy(versionVector);
+    const int maxSize = qMax(versionVectorCopy.size(), vec.size());
+
+    vec.reserve(maxSize);
+    versionVectorCopy.reserve(maxSize);
+
+    int difSize = maxSize - versionVectorCopy.size();
+    for (int i=0; i<difSize; i++)
+        versionVectorCopy << 0;
+    difSize = maxSize - vec.size();
+    for (int i=0; i<difSize; i++)
+        vec << 0;
+
+    for (int i=0; i<maxSize; i++) {
+        if (versionVectorCopy[i] > vec[i])
             return false;
-        if (versionVector[i] > vec[i])
+        if (versionVectorCopy[i] < vec[i])
             return true;
     }
-    const QVector<int> *vectorNoNull;
-    if (versionVector.size() < vec.size())
-        vectorNoNull = &vec;
-    else
-        vectorNoNull = &versionVector;
-    for (; i<maxSize; i++) {
-        if (vectorNoNull->at(i) < 0)
-            return false;
-    }
+
     return true;
 }
 
@@ -63,7 +66,7 @@ bool Version::isAtLeast(const QString &ver) {
 QVector<int> Version::vector(const QString &ver) {
     QStringList versionList = ver.split('-');
     QStringList list = versionList.first().split('.');
-    QVector<int> vec(list.length()+versionList.length()-1);
+    QVector<int> vec(list.length() + versionList.length() - 1);
     for (int i=0; i<list.size(); i++)
         vec[i] = list[i].toInt();
     if (versionList.length() > 1) {

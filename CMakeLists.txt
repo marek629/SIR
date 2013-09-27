@@ -116,6 +116,16 @@ set( sir_SRCS
         src/widgets/options/selectiongroupbox.cpp
     )
 
+set( sir_UT_HDRS
+        src/version.h
+        src/ut/versiontest.h
+    )
+
+set( sir_UT_SRCS
+        src/version.cpp
+        src/ut/versiontest.cpp
+    )
+
 # User interface files
 set( sir_UIS
         dialogs/about.ui
@@ -222,6 +232,9 @@ if( NOT qt5 )
                 ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY}
                 ${QT_QTSVG_LIBRARY} ${QT_QTXML_LIBRARY}
             )
+        set( sir_UT_LINKING_LIBS
+                ${sir_LINKING_LIBS} ${QT_QTTEST_LIBRARY}
+            )
 endif( NOT qt5 )
 
 
@@ -271,16 +284,23 @@ endif( metadata )
 if( qt5 )
         QT5_WRAP_UI( UIS ${sir_UIS} )
         QT5_WRAP_CPP( MOCS ${sir_MOCS} )
+        QT5_WRAP_CPP( UT_MOCS ${sir_UT_HDRS} )
 else( qt5 )
         QT4_WRAP_UI( UIS ${sir_UIS} )
         QT4_WRAP_CPP( MOCS ${sir_MOCS} )
+        QT4_AUTOMOC( UT_MOCS ${sir_UT_SRCS} )
 endif( qt5 )
 
 add_executable( sir ${sir_SRCS} ${UIS} ${MOCS} ${QMS} ${RSCS} )
+add_executable( sir_version_test ${sir_UT_SRCS} ${UT_MOCS} )
+
 target_link_libraries( sir ${sir_LINKING_LIBS} )
+target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
 if( qt5 )
         QT5_USE_MODULES( sir Core Widgets Network Svg Xml PrintSupport )
+        QT5_USE_MODULES( sir_version_test Core Test )
 endif( qt5 )
+#add_test( NAME sir_version_test COMMAND sir_version_test )
 
 # installation
 # bin
