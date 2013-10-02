@@ -34,7 +34,7 @@ class QNetworkReply;
   * information about SIR instalation.
   */
 class NetworkUtils : public QObject {
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit NetworkUtils();
     ~NetworkUtils();

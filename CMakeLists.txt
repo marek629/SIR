@@ -44,52 +44,77 @@ if( WIN32 )
             )
 endif( WIN32 )
 
+function( check_q_object_headers )
+    foreach( HEADER ${ARGN} )
+#        message( STATUS "header: " ${HEADER} )
+        file( STRINGS ${HEADER} HEADER_CONTENT )
+        foreach( LINE ${HEADER_CONTENT} )
+            string( COMPARE EQUAL ${LINE} "    Q_OBJECT" LINE_PASSED )
+            if( ${LINE_PASSED} )
+#                message( STATUS "YES" )
+                set( MOCS ${MOCS} ${HEADER} )
+                break( )
+            endif( ${LINE_PASSED} )
+        endforeach( LINE )
+        if( NOT ${LINE_PASSED} )
+            set( HDRS ${HDRS} ${HEADER} )
+        endif( NOT ${LINE_PASSED} )
+    endforeach( HEADER )
+#    message( STATUS "hdrs: " ${HDRS} )
+#    message( STATUS "mocs: " ${MOCS} )
+    set( NO_Q_OBJECT_HEADERS ${HDRS} PARENT_SCOPE )
+    set( Q_OBJECT_HEADERS ${MOCS} PARENT_SCOPE )
+endfunction( check_q_object_headers )
+
+function( check_metadata_files )
+    foreach( FILE ${ARGN} )
+#        message( STATUS "file: " ${FILE} )
+        file( STRINGS ${FILE} FILE_CONTENT )
+        foreach( LINE ${FILE_CONTENT} )
+            string( COMPARE EQUAL ${LINE} "namespace MetadataUtils {" LINE_PASSED )
+            if( ${LINE_PASSED} )
+#                message( STATUS "YES" )
+                set( MDTS ${MDTS} ${FILE} )
+                break( )
+            endif( ${LINE_PASSED} )
+        endforeach( LINE )
+        if( NOT ${LINE_PASSED} )
+            set( GNRS ${GNRS} ${FILE} )
+        endif( NOT ${LINE_PASSED} )
+    endforeach( FILE )
+#    message( STATUS "generals: " ${GNRS} )
+#    message( STATUS "metadatas: " ${MDTS} )
+    set( GENERAL_FILES ${GNRS} PARENT_SCOPE )
+    set( METADATA_FILES ${MDTS} PARENT_SCOPE )
+endfunction( check_metadata_files )
+
+
+file( GLOB HEADERS RELATIVE ${CMAKE_CURRENT_LIST_DIR} src/*.h )
+check_q_object_headers( ${HEADERS} )
+#message( STATUS "no Q_OBJECT headers: " ${NO_Q_OBJECT_HEADERS} )
+#message( STATUS "Q_OBJECT headers: " ${Q_OBJECT_HEADERS} )
+
+check_metadata_files( ${NO_Q_OBJECT_HEADERS} )
+#message( STATUS "general files: " ${GENERAL_FILES} )
+#message( STATUS "metadata files: " ${METADATA_FILES} )
+
+set( CORE_HEADERS ${GENERAL_FILES} )
+set( METADATA_HEADERS ${METADATA_FILES} )
+
+check_metadata_files( ${Q_OBJECT_HEADERS} )
+set( CORE_MOCS ${GENERAL_FILES} )
+set( METADATA_MOCS ${METADATA_FILES} )
+
+
 # Headers
-set( sir_HDRS
-        src/commandlineassistant.h
-        src/converteffects.h
-        src/convertshareddata.h
-        src/defines.h
-        src/effectscollector.h
-        src/expressiontree.h
-        src/languageutils.h
-        src/main.h
-        src/optionsenums.h
-        src/rawutils.h
-        src/regexputils.h
-        src/rgb.h
-        src/session.h
-        src/sharedinformation.h
-        src/svgmodifier.h
-        src/version.h
-        src/xmlhelper.h
-        src/xmlstreamwriter.h
+set( sir_HDRS ${CORE_HEADERS}
         src/metadata/string.h
     )
 
+file( GLOB SOURCES RELATIVE ${CMAKE_CURRENT_LIST_DIR} src/*.cpp )
+
 # Source files
-set( sir_SRCS
-        src/commandlineassistant.cpp
-        src/convertdialog.cpp
-        src/converteffects.cpp
-        src/convertshareddata.cpp
-        src/convertthread.cpp
-        src/effectscollector.cpp
-        src/expressiontree.cpp
-        src/languageutils.cpp
-        src/main.cpp
-        src/networkutils.cpp
-        src/rawutils.cpp
-        src/regexputils.cpp
-        src/rgb.cpp
-        src/selection.cpp
-        src/session.cpp
-        src/settings.cpp
-        src/sharedinformation.cpp
-        src/svgmodifier.cpp
-        src/version.cpp
-        src/xmlhelper.cpp
-        src/xmlstreamwriter.cpp
+set( sir_SRCS ${SOURCES}
         src/metadata/string.cpp
         src/widgets/aboutdialog.cpp
         src/widgets/brushframe.cpp
@@ -196,12 +221,7 @@ set( sir_IMGS
     )
 
 # Meta-object code files
-set( sir_MOCS
-        src/convertdialog.h
-        src/convertthread.h
-        src/networkutils.h
-        src/selection.h
-        src/settings.h
+set( sir_MOCS ${CORE_MOCS}
         src/widgets/aboutdialog.h
         src/widgets/brushframe.h
         src/widgets/colorframe.h
@@ -246,13 +266,14 @@ if( metadata )
         message( STATUS "exiv2 found" )
         add_definitions( -DSIR_METADATA_SUPPORT )
         set( sir_MOCS ${sir_MOCS}
+                ${METADATA_MOCS}
                 src/widgets/metadatadialog.h
                 src/widgets/options/detailsgroupbox.h
                 src/widgets/options/metadatagroupbox.h
                 src/widgets/selection/anymetadatagroupbox.h
             )
         set( sir_HDRS ${sir_HDRS}
-                src/metadatautils.h
+                ${METADATA_HEADERS}
                 src/metadata/error.h
                 src/metadata/exif.h
                 src/metadata/iptc.h
