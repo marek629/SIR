@@ -23,10 +23,11 @@
 #include <QMessageBox>
 #include <exiv2/exif.hpp>
 #include "metadatadialog.h"
-#include "metadatautils.h"
-#include "settings.h"
+#include "../metadatautils.h"
+#include "../settings.h"
 
 using namespace MetadataUtils;
+using namespace sir;
 
  /** Default constructor.\n
    * Sets up window and reads metadata from file within \a currentImage index

@@ -28,7 +28,7 @@
 
 #include <QCoreApplication>
 #include <QImage>
-#include "string.h"
+#include "../sir_string.h"
 
 #ifdef SIR_METADATA_SUPPORT
 //! The namespace of exiv2 library API.
@@ -62,73 +62,73 @@ public:
     Exif();
     bool isVersionKnown();
     void setVersion(const Exiv2::Metadatum &datum);
-    const String &getVersion();
-    const String &getVersion(const Exiv2::Metadatum &datum);
+    const sir::String &getVersion();
+    const sir::String &getVersion(const Exiv2::Metadatum &datum);
     static QString flashString(short);
     static short flashShort(const QString&);
     static void setArtistOverwrite(bool);
     static bool isArtistOverwrite();
-    static void setArtistString(const String&);
-    static String stringArtist();
+    static void setArtistString(const sir::String&);
+    static sir::String stringArtist();
     static void setCopyrightOverwrite(bool);
     static bool isCopyrightOverwrite();
-    static void setCopyrightString(const String&);
-    static String stringCopyright();
+    static void setCopyrightString(const sir::String&);
+    static sir::String stringCopyright();
     static void setUserCommentOverwrite(bool);
     static bool isUserCommentOverwrite();
-    static void setUserCommentString(const String&);
-    static String stringUserComment();
+    static void setUserCommentString(const sir::String&);
+    static sir::String stringUserComment();
     static char getOrientation(short rotation, int flipValue = None);
     static short rotationAngle(char orientation);
     static short rotationAngle(char orientation, int *flip);
     static Flip flipValue(char orientation);
-    static String orientationString(char orientation);
-    static String expProgramString(uchar programId);
-    static String meteringModeString(short modeId);
+    static sir::String orientationString(char orientation);
+    static sir::String expProgramString(uchar programId);
+    static sir::String meteringModeString(short modeId);
     static const QString dateTimeFormat;
 
 private:
     bool versionKnown;
-    String version;
+    sir::String version;
     static bool artistOverwrite;
-    static String artistString;
+    static sir::String artistString;
     static bool copyrightOverwrite;
-    static String copyrightString;
+    static sir::String copyrightString;
     static bool userCommentOverwrite;
-    static String userCommentString;
+    static sir::String userCommentString;
 };
 
 //! Stores \a Exif metadata user readable.
 struct ExifStruct {
     // Image section
-    String version; /**< Contains information about version of Exiv library. */
-    String processingSoftware;  /**< Contains information about processing software. */
-    String imageWidth; /**< Contains image width with " px" suffix. */
-    String imageHeight;  /**< Contains image height with " px" suffix. */
+    sir::String version; /**< Contains information about version of Exiv library. */
+    sir::String processingSoftware;  /**< Contains information about processing software. */
+    sir::String imageWidth; /**< Contains image width with " px" suffix. */
+    sir::String imageHeight;  /**< Contains image height with " px" suffix. */
     char orientation; /**< Information about orientation of image. */
-    String originalDate; /**< Creation date and time. */
-    String digitizedDate; /**< Digitalization date and time. */
+    sir::String originalDate; /**< Creation date and time. */
+    sir::String digitizedDate; /**< Digitalization date and time. */
     // Thumbnail section
     QImage thumbnailImage; /**< Contains photo thumbnail. */
-    String thumbnailWidth; /**< Contains thumbnail width with " px" suffix. */
-    String thumbnailHeight;  /**< Contains thumbnail height with " px" suffix. */
+    sir::String thumbnailWidth; /**< Contains thumbnail width with " px" suffix. */
+    sir::String thumbnailHeight;  /**< Contains thumbnail height with " px" suffix. */
     // Photo section
     float focalLength; /**< Contains Focal Length value in milimeters. */
     float aperture; /**< Contains Aperture value. */
     int isoSpeed; /**< Contains ISO Speed value. */
-    String shutterSpeed; /**< Contains Shutter Speed. */
-    String expTime;  /**< Contains Exposure time. */
+    sir::String shutterSpeed; /**< Contains Shutter Speed. */
+    sir::String expTime;  /**< Contains Exposure time. */
     float expBias;  /**< Contains Exposure bias value in EV. */
     char expProgram; /**< Contains information about Exposure program. */
     short meteringMode; /**< Contains information about Light metering mode. */
     short flashMode; /**< Contains information about flash mode. \sa Flash */
     // Camera section
-    String cameraManufacturer;  /**< Contains information about Light metering mode. */
-    String cameraModel; /**< Contains information about Camera's model. */
+    sir::String cameraManufacturer;  /**< Contains information about Light metering mode. */
+    sir::String cameraModel; /**< Contains information about Camera's model. */
     // Author section
-    String artist; /**< Contains information about autor. */
-    String copyright; /**< Contains copyright information. */
-    String userComment; /**< Contains user comment. */
+    sir::String artist; /**< Contains information about autor. */
+    sir::String copyright; /**< Contains copyright information. */
+    sir::String userComment; /**< Contains user comment. */
 
     // Methods
     void reset();

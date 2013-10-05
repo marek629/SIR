@@ -23,10 +23,12 @@
 #include <QFile>
 #include <QMessageBox>
 #include "convertdialog.h"
-#include "metadata/string.h"
+#include "sir_string.h"
 #include "xmlstreamwriter.h"
 #include "version.h"
 #include "effectscollector.h"
+
+using namespace sir;
 
 /** Creates the EffectsCollector object.
   * \param parent Parent convert dialog.
@@ -183,7 +185,7 @@ void EffectsCollector::readGradientStops(const QDomElement &parentElement) {
 bool EffectsCollector::readHistogramEffect(const QDomElement &parentElement) {
     bool result = false;
 
-    MetadataUtils::String str;
+    String str;
     QDomElement el = parentElement.firstChildElement("histogram");
     if (el.isNull())
         return result;
@@ -207,7 +209,7 @@ bool EffectsCollector::readHistogramEffect(const QDomElement &parentElement) {
 bool EffectsCollector::readFilterEffect(const QDomElement &parentElement) {
     bool result = false;
 
-    MetadataUtils::String str;
+    String str;
     QDomElement el, e;
     QRadioButton *radioButton = effectsArea->filterColorRadioButton;
 
@@ -255,7 +257,7 @@ bool EffectsCollector::readFilterEffect(const QDomElement &parentElement) {
 bool EffectsCollector::readAddFrameEffect(const QDomElement &parentElement) {
     bool result = false;
 
-    MetadataUtils::String str;
+    String str;
     QDomElement el, e;
 
     el = parentElement.firstChildElement("addframe");
@@ -306,7 +308,7 @@ bool EffectsCollector::readAddFrameEffect(const QDomElement &parentElement) {
 bool EffectsCollector::readAddTextEffect(const QDomElement &parentElement) {
     bool result = false;
 
-    MetadataUtils::String str;
+    String str;
     QStringList list;
     QDomElement el, e;
 
@@ -370,7 +372,7 @@ bool EffectsCollector::readAddTextEffect(const QDomElement &parentElement) {
 bool EffectsCollector::readAddImageEffect(const QDomElement &parentElement) {
     bool result = false;
 
-    MetadataUtils::String str;
+    String str;
     QStringList list;
     QDomElement el, e;
 

@@ -105,17 +105,20 @@ check_metadata_files( ${Q_OBJECT_HEADERS} )
 set( CORE_MOCS ${GENERAL_FILES} )
 set( METADATA_MOCS ${METADATA_FILES} )
 
+#message( STATUS "metadata headers: " ${METADATA_HEADERS} )
+#message( STATUS "metadata mocs: " ${METADATA_MOCS} )
+#message( STATUS "core headers: " ${CORE_HEADERS} )
+#message( STATUS "core mocs: " ${CORE_MOCS} )
 
 # Headers
-set( sir_HDRS ${CORE_HEADERS}
-        src/metadata/string.h
-    )
+set( sir_HDRS ${CORE_HEADERS} )
 
 file( GLOB SOURCES RELATIVE ${CMAKE_CURRENT_LIST_DIR} src/*.cpp )
 
+message( STATUS "sources: " ${SOURCES} )
+
 # Source files
 set( sir_SRCS ${SOURCES}
-        src/metadata/string.cpp
         src/widgets/aboutdialog.cpp
         src/widgets/brushframe.cpp
         src/widgets/colorframe.cpp
@@ -279,7 +282,7 @@ if( metadata )
                 src/metadata/iptc.h
             )
         set( sir_SRCS ${sir_SRCS}
-                src/metadatautils.cpp
+#                src/metadatautils.cpp
                 src/metadata/exif.cpp
                 src/metadata/error.cpp
                 src/metadata/iptc.cpp

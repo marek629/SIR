@@ -22,6 +22,7 @@
 #include "iptc.h"
 
 using namespace MetadataUtils;
+using namespace sir;
 
 short Iptc::modelVersion = -1;
 

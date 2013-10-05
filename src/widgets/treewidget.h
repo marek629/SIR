@@ -24,6 +24,7 @@
 
 #include <QTreeWidget>
 #include "treewidgetheader.h"
+#include "../sir_string.h"
 
 class QKeyEvent;
 class QDropEvent;
@@ -33,9 +34,6 @@ class QFileInfo;
 class ConvertDialog;
 class MetadataDialog;
 class PreviewDialog;
-namespace MetadataUtils {
-class String;
-}
 
 /** \brief TreeWidget widgets column indexes enumerator.
   * \sa TreeWidget::columnsNames()
@@ -90,7 +88,7 @@ private:
     QStringList itemList(const QFileInfo &info);
     QStringList *makeList();
     QString makeImagePath(QTreeWidgetItem *item);
-    QString imageSizeString(const MetadataUtils::String &imagePath);
+    QString imageSizeString(const sir::String &imagePath);
     void createActions();
 
 public slots:

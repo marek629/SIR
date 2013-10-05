@@ -26,7 +26,7 @@
 #ifndef LANGUAGEUTILS_H
 #define LANGUAGEUTILS_H
 
-#include <QString>
+#include <QStringList>
 #include <QMap>
 
 class QTranslator;

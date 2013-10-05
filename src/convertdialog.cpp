@@ -49,6 +49,8 @@
 #include "commandlineassistant.h"
 #include "effectscollector.h"
 
+using namespace sir;
+
 /** Default constuctor.
   *
   * Sets up window with saved settings like window state, position
@@ -867,20 +869,20 @@ void ConvertDialog::loadSettings() {
         sharedInfo->setRealRotate(true);
     // exif
     bool exifOverwrite;
-    exifOverwrite =                         s->exif.artistOverwrite;
+    exifOverwrite =                             s->exif.artistOverwrite;
     Exif::setArtistOverwrite(exifOverwrite);
     if (exifOverwrite)
-        Exif::setArtistString(String(       s->exif.artistMap.keys().first()));
+        Exif::setArtistString(sir::String(      s->exif.artistMap.keys().first()));
 
-    exifOverwrite =                         s->exif.copyrightOverwrite;
+    exifOverwrite =                             s->exif.copyrightOverwrite;
     Exif::setCopyrightOverwrite(exifOverwrite);
     if (exifOverwrite)
-        Exif::setCopyrightString(String(    s->exif.copyrightMap.keys().first()));
+        Exif::setCopyrightString(sir::String(   s->exif.copyrightMap.keys().first()));
 
-    exifOverwrite =                         s->exif.userCommentOverwrite;
+    exifOverwrite =                             s->exif.userCommentOverwrite;
     Exif::setUserCommentOverwrite(exifOverwrite);
     if (exifOverwrite)
-        Exif::setUserCommentString(String(  s->exif.userCommentMap.keys().first()));
+        Exif::setUserCommentString(sir::String( s->exif.userCommentMap.keys().first()));
 #endif // SIR_METADATA_SUPPORT
 }
 

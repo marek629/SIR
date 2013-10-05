@@ -59,6 +59,7 @@ QStringList Selection::allOperators = QStringList() <<
 // Namespace setup
 
 using namespace RegExpUtils;
+using namespace sir;
 
 // ________________________________ Selection ________________________________
 
@@ -249,7 +250,7 @@ void Selection::setupRegExps() {
   * \param listRx Pointer to list of pointers to regular expression objects.
   * \sa clearPointerList()
   */
-void Selection::setupListRegExp(const MetadataUtils::String &strExp,
+void Selection::setupListRegExp(const String &strExp,
                                 QList<QRegExp*> *listRx) {
     clearPointerList(listRx);
     if (strExp.isEmpty()) {

@@ -25,9 +25,11 @@
 #include "convertdialog.h"
 #include "xmlstreamwriter.h"
 #include "version.h"
-#include "metadata/string.h"
+#include "sir_string.h"
 #include "convertshareddata.h"
 #include "effectscollector.h"
+
+using namespace sir;
 
 /** Creates the Session object.
   * \param parent Parent convert dialog.
@@ -198,7 +200,7 @@ void Session::restore(const QString &fileName) {
     }
 
     QDomElement elem, el, e; // working DOM element variables
-    MetadataUtils::String str;
+    String str;
     QStringList list;
     int x;
 

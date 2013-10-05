@@ -24,7 +24,7 @@
 
 #include <QDate>
 #include <QTime>
-#include "string.h"
+#include "../sir_string.h"
 
 namespace MetadataUtils {
     /** \brief IPTC metadata storage and manipulation class.
@@ -53,19 +53,19 @@ namespace MetadataUtils {
 
     //! Stores \a IPTC metadata user readable.
     struct IptcStruct {
-        String modelVersion;
+        sir::String modelVersion;
         QDate dateCreated;
         QTime timeCreated;
         QDate digitizationDate;
         QTime digitizationTime;
-        String byline;
-        String copyright;
-        String objectName;
-        String keywords;
-        String caption;
-        String countryName;
-        String city;
-        String editStatus;
+        sir::String byline;
+        sir::String copyright;
+        sir::String objectName;
+        sir::String keywords;
+        sir::String caption;
+        sir::String countryName;
+        sir::String city;
+        sir::String editStatus;
 
         // Methods
         void reset();

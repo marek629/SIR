@@ -19,12 +19,12 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#include "string.h"
-#include <QStringList>
+#include "sir_string.h"
 #include <cmath>
+#include <QStringList>
 #include <QDateTime>
 
-using namespace MetadataUtils;
+using namespace sir;
 
 /** Default constructor.\n
   * Constructs empty string.

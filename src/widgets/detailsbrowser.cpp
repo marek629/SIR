@@ -24,9 +24,11 @@
 #include <QGraphicsSvgItem>
 #include <QPainter>
 #include "detailsbrowser.h"
-#include "convertdialog.h"
-#include "optionsenums.h"
-#include "convertshareddata.h"
+#include "../convertdialog.h"
+#include "../optionsenums.h"
+#include "../convertshareddata.h"
+
+using namespace sir;
 
 // this file specifed variables
 // HTML constants
@@ -95,7 +97,7 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     iptcStruct = 0;
 #endif // SIR_METADATA_SUPPORT
     QString ext = item->text(ExtColumn);
-    MetadataUtils::String imagePath = item->text(PathColumn) + QDir::separator()
+    String imagePath = item->text(PathColumn) + QDir::separator()
             + item->text(NameColumn) + '.' + ext;
     QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
             + QString::number(index);
@@ -209,7 +211,7 @@ void DetailsBrowser::loadSettings() {
   * \sa DetailsOptions addItem()
   */
 void DetailsBrowser::addMetadataToContent() {
-    if (exifStruct->version != MetadataUtils::String::noData()) {
+    if (exifStruct->version != String::noData()) {
         if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
             htmlContent += htmlBr;
         // exif image
@@ -225,13 +227,13 @@ void DetailsBrowser::addMetadataToContent() {
                         exifStruct->orientation) + htmlBr;
         if (exifImage & DetailsOptions::GeneratedDateAndTime)
             htmlContent += tr("Generated Date and Time") + ": " +
-                    MetadataUtils::String::fromDateTimeString(
+                    String::fromDateTimeString(
                         exifStruct->originalDate,
                         MetadataUtils::Exif::dateTimeFormat,
                         convertDialog->csd->dateTimeFormat) + htmlBr;
         if (exifImage & DetailsOptions::DigitizedDateAndTime)
             htmlContent += tr("Digitized Date and Time") + ": " +
-                    MetadataUtils::String::fromDateTimeString(
+                    String::fromDateTimeString(
                         exifStruct->digitizedDate,
                         MetadataUtils::Exif::dateTimeFormat,
                         convertDialog->csd->dateTimeFormat) + htmlBr;

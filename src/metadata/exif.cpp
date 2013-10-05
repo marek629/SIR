@@ -25,6 +25,7 @@
 #include <exiv2/metadatum.hpp>
 
 using namespace MetadataUtils;
+using namespace sir;
 
 // static variables initialization
 bool    Exif::artistOverwrite = false;

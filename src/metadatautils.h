@@ -23,8 +23,8 @@
 #define METADATA_H
 
 #include <QImage>
+#include "sir_string.h"
 #include "metadata/exif.h"
-#include "metadata/string.h"
 #ifdef SIR_METADATA_SUPPORT
 #include <exiv2/exiv2.hpp>
 #include "metadata/iptc.h"
@@ -40,9 +40,9 @@ public:
     // methods
     Metadata();
     ~Metadata();
-    bool read(const String& path, bool setupStructs = false, bool fromSvg = false);
+    bool read(const sir::String& path, bool setupStructs = false, bool fromSvg = false);
     bool read(const QString& path, bool setupStructs = false, bool fromSvg = false);
-    bool write(const String& path, const QImage& image = QImage());
+    bool write(const sir::String& path, const QImage& image = QImage());
     bool write(const QString& path, const QImage& image = QImage());
     void close();
     void clearMetadata();
@@ -51,8 +51,8 @@ public:
     void setIptcData();
     void setIptcStruct();
     void setFieldValue(char *field, const std::string &key);
-    void setFieldValue(String *field, const std::string &key, const char *unit);
-    void setFieldString(String *field, const std::string &key1, const std::string &key2);
+    void setFieldValue(sir::String *field, const std::string &key, const char *unit);
+    void setFieldString(sir::String *field, const std::string &key1, const std::string &key2);
     void setExifDatum(const std::string &key, int value);
     void setExifDatum(const std::string &key1, const std::string &key2, int value);
     void setExifDatum(const std::string &key1, const std::string &key2,
@@ -103,7 +103,7 @@ private:
 bool isNullValue(char v);
 bool isNullValue(int v);
 bool isNullValue(float v);
-bool isNullValue(const String &v);
+bool isNullValue(const sir::String &v);
 bool isNullValue(const QImage &v);
 }
 #endif // SIR_METADATA_SUPPORT

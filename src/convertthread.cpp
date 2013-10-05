@@ -33,6 +33,8 @@
 #include "svgmodifier.h"
 #include "converteffects.h"
 
+using namespace sir;
+
 // setup static fields
 SharedInformation * ConvertThread::shared = new SharedInformation();
 
@@ -458,8 +460,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 else {
                     qWarning("tid %d: Save temporary image file "
                              "into %s failed", tid,
-                             MetadataUtils::String(targetFilePath).
-                                toNativeStdString().data());
+                             String(targetFilePath).toNativeStdString().data() );
                     emit imageStatus(imageData, tr("Failed to compute image size"),
                                      FAILED);
                     return -4;
@@ -547,7 +548,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                 else {
                     qWarning("tid %d: Save temporary image file "
                              "into %s failed", tid,
-                             MetadataUtils::String(targetFilePath).
+                             String(targetFilePath).
                                 toNativeStdString().data());
                     emit imageStatus(imageData, tr("Failed to compute image size"),
                                      FAILED);

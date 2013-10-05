@@ -39,28 +39,28 @@ struct SelectionParams {
     QString path;
     bool browseSubdirs;
     // file
-    MetadataUtils::String fileName;
-    MetadataUtils::String fileSizeExp; // file size expression
-    MetadataUtils::String imageSizeExp;
+    sir::String fileName;
+    sir::String fileSizeExp; // file size expression
+    sir::String imageSizeExp;
     // any metadata
     bool checkMetadata;
     QDateTime createdDateTime[2];
     QDateTime digitizedDateTime[2];
-    MetadataUtils::String author;
-    MetadataUtils::String copyright;
+    sir::String author;
+    sir::String copyright;
     // Exif
     bool checkExif;
-    MetadataUtils::String processingSoftware;
-    MetadataUtils::String cameraManufacturer;
-    MetadataUtils::String cameraModel;
+    sir::String processingSoftware;
+    sir::String cameraManufacturer;
+    sir::String cameraModel;
     // IPTC
     bool checkIPTC;
-    MetadataUtils::String objectName;
-    MetadataUtils::String keywords;
-    MetadataUtils::String description;
-    MetadataUtils::String countryName;
-    MetadataUtils::String city;
-    MetadataUtils::String editStatus;
+    sir::String objectName;
+    sir::String keywords;
+    sir::String description;
+    sir::String countryName;
+    sir::String city;
+    sir::String editStatus;
 };
 
 //! Files conditionaly selection class.
@@ -107,7 +107,7 @@ private:
     QVector<qint64> *imageSizeVector;
     // methods
     void setupRegExps();
-    void setupListRegExp(const MetadataUtils::String &strExp, QList<QRegExp*> *listRx);
+    void setupListRegExp(const sir::String &strExp, QList<QRegExp*> *listRx);
     int loadFileInfo(const QString &dir, QFileInfoList *list, bool recursive);
     bool isInTime(const QDate &date, const QTime &time, QDateTime *dtArray);
     bool isInTime(const QDateTime &dateTime, QDateTime *dtArray);

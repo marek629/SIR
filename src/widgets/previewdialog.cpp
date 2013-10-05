@@ -36,11 +36,13 @@
 #include <QtSvg/QSvgRenderer>
 #include <QDialogButtonBox>
 #include "previewdialog.h"
-#include "rawutils.h"
-#include "metadatautils.h"
+#include "../rawutils.h"
+#include "../metadatautils.h"
 
 #define H 115
 #define W 50
+
+using namespace sir;
 
 /** Default constructor.
   * \param parent Parent widget.
@@ -739,7 +741,7 @@ void PreviewDialog::loadPixmap() {
 #ifdef SIR_METADATA_SUPPORT
     else if (metadataReadError) {
         MetadataUtils::Error *e = metadata->lastError();
-        MetadataUtils::String str(e->message() +
+        String str(e->message() +
                                   tr("\nError code: %1\nError message: %2").
                                      arg(e->code()).arg(e->what()) );
         qWarning() << tr("Metadata error!");

@@ -25,7 +25,9 @@
 #include "commandlineassistant.h"
 #include "languageutils.h"
 #include "settings.h"
-#include "metadata/string.h"
+#include "sir_string.h"
+
+using namespace sir;
 
 /** Creates CommandLineAssistant object. */
 CommandLineAssistant::CommandLineAssistant() {}
@@ -62,7 +64,7 @@ int CommandLineAssistant::parse(const QStringList &args) {
 
     // print help
     if (!shortArgs.filter("h").isEmpty() || !longArgs.filter("help").isEmpty()) {
-        MetadataUtils::String help =
+        String help =
             tr("Usage: sir [options] [files]\n"
                "Typed files will load to files list in main window.\n"
                "\n"

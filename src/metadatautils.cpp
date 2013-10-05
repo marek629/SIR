@@ -21,13 +21,14 @@
 
 #ifdef SIR_METADATA_SUPPORT
 
-#include "metadatautils.h"
-#include "version.h"
 #include <QStringList>
 #include <QDir>
 #include <cmath>
+#include "metadatautils.h"
+#include "version.h"
 
 using namespace MetadataUtils;
+using namespace sir;
 
 // setup static variables
 QStringList Metadata::saveMetadataFormats =

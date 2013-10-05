@@ -1,7 +1,6 @@
-/*
- * This file is part of SIR, an open-source cross-platform Image tool
- * 2007-2010  Rafael Sachetto
- * 2011-2012  Marek Jędryka
+/* This file is part of SIR, an open-source cross-platform Image tool
+ * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
+ * 2011-2013  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
- *                 Marek Jędryka   <jedryka89@gmail.com>
  * Program URL: http://sir.projet-libre.org/
- *
  */
 
-#ifndef STRING_H
-#define STRING_H
+#ifndef _SIR_STRING_H
+#define _SIR_STRING_H
 
 #ifndef SIR_CMAKE
 #define SIR_METADATA_SUPPORT
@@ -35,8 +31,7 @@
 #include <exiv2/types.hpp>
 #endif // SIR_METADATA_SUPPORT
 
-namespace MetadataUtils
-{
+namespace sir {
 //! Class provides additional methods for QString.
 class String : public QString {
     Q_DECLARE_TR_FUNCTIONS(MetadataUtils::String)
@@ -65,4 +60,4 @@ public:
 };
 }
 
-#endif // STRING_H
+#endif // _SIR_STRING_H

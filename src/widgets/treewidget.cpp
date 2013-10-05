@@ -32,14 +32,16 @@
 #include <QSvgRenderer>
 #include <QMimeData>
 #include "treewidget.h"
-#include "convertdialog.h"
-#include "convertshareddata.h"
-#include "defines.h"
-#include "optionsenums.h"
-#include "widgets/previewdialog.h"
+#include "../convertdialog.h"
+#include "../convertshareddata.h"
+#include "../defines.h"
+#include "../optionsenums.h"
+#include "previewdialog.h"
 #ifdef SIR_METADATA_SUPPORT
-#include "widgets/metadatadialog.h"
+#include "metadatadialog.h"
 #endif // SIR_METADATA_SUPPORT
+
+using namespace sir;
 
 /** Default constructor. */
 TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
@@ -566,7 +568,7 @@ QString TreeWidget::makeImagePath(QTreeWidgetItem *item) {
   * returns empty string.
   * \sa imageSize() DetailsBrowser::addItem()
   */
-QString TreeWidget::imageSizeString(const MetadataUtils::String &imagePath) {
+QString TreeWidget::imageSizeString(const String &imagePath) {
     // image size reading code is came from DetailsBrowser::addItem() function
     QSize imageSize;
 #ifdef SIR_METADATA_SUPPORT
