@@ -22,45 +22,15 @@
 #ifndef ABSTRACTOPTIONS_H
 #define ABSTRACTOPTIONS_H
 
-#include <QDir>
-#include <QGroupBox>
-
-//! Common options data for classes inherited from AbstractOptions class.
-class CommonOptions {
-public:
-    // singleton instance
-    static CommonOptions *instance();
-    // access methods
-    QString targetDirPath() const { return targetDirPath_; }
-    void setTargetDirPath(const QString &path)
-    { targetDirPath_ = (path.isEmpty()) ? QDir::homePath() : path; }
-    int maxHistoryCount() const { return maxHistoryCount_; }
-    void setMaxHistoryCount(int v) { maxHistoryCount_ = v; }
-
-private:
-    // constructor
-    CommonOptions();
-    // fields
-    QString targetDirPath_;
-    int maxHistoryCount_;
-};
+class QWidget;
 
 //! Abstract base class for all derived classes from OptionsDialog.
 class AbstractOptions {
 public:
-    AbstractOptions(QWidget *parent = 0) { Q_UNUSED(parent) }
-    virtual ~AbstractOptions() {}
+    AbstractOptions(QWidget *parent = 0);
+    virtual ~AbstractOptions();
 
 protected:
-    // pure virtual functions
-    virtual void loadSettings() = 0;
-    virtual void saveSettings() = 0;
-};
-
-//! Abstract base class for all derived classes from QGroupBox and AbstractOptions.
-class AbstractOptionsGroupBox : public QGroupBox, public AbstractOptions {
-public:
-    AbstractOptionsGroupBox(QWidget *parent = 0) : QGroupBox(parent) {}
     // pure virtual functions
     virtual void loadSettings() = 0;
     virtual void saveSettings() = 0;

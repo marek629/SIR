@@ -22,8 +22,8 @@
 #ifndef RAWGROUPBOX_H
 #define RAWGROUPBOX_H
 
-#include <ui_rawgroupbox.h>
-#include <widgets/options/abstractoptions.h>
+#include "ui_rawgroupbox.h"
+#include "abstractoptionsgroupbox.h"
 
 //! Raw group box class used in OptionsDialog dialog.
 class RawGroupBox : public AbstractOptionsGroupBox, public Ui::RawGroupBox {

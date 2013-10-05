@@ -21,6 +21,7 @@
 
 #include "metadatagroupbox.h"
 #include "settings.h"
+#include "commonoptions.h"
 
 /** Default constructor.\n
   * Sets UI and creates connections.

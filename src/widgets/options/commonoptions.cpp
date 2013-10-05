@@ -19,30 +19,36 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef METADATAGROUPBOX_H
-#define METADATAGROUPBOX_H
+#include "commonoptions.h"
+#include "settings.h"
 
-#include "ui_metadatagroupbox.h"
-#include "abstractoptionsgroupbox.h"
+/** Default constructor.\n
+  * Sets default value of fields of common options object.
+  */
+CommonOptions::CommonOptions() {
+    targetDirPath_ = QDir::homePath();
+    maxHistoryCount_ = Settings::instance()->settings.maxHistoryCount;
+}
 
-//! Metadata group box class used in OptionsDialog dialog.
-class MetadataGroupBox : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
-    Q_OBJECT
+CommonOptions * CommonOptions::instance() {
+    static CommonOptions *object = 0;
+    if (!object && Settings::instance())
+        object = new CommonOptions();
+    return object;
+}
 
-public:
-    explicit MetadataGroupBox(QWidget *parent = 0);
-    ~MetadataGroupBox();
-    void loadSettings();
-    void saveSettings();
+QString CommonOptions::targetDirPath() const {
+    return targetDirPath_;
+}
 
-private slots:
-    void enableMetadata(bool checked);
-    void saveMetadata(bool save);
-    void updateThumbnail(bool update);
+void CommonOptions::setTargetDirPath(const QString &path) {
+    targetDirPath_ = (path.isEmpty()) ? QDir::homePath() : path;
+}
 
-private:
-    // fields
-    QRegExpValidator* validator;
-};
+int CommonOptions::maxHistoryCount() const {
+    return maxHistoryCount_;
+}
 
-#endif // METADATAGROUPBOX_H
+void CommonOptions::setMaxHistoryCount(int v) {
+    maxHistoryCount_ = v;
+}

@@ -28,6 +28,7 @@
 #include "generalgroupbox.h"
 #include "settings.h"
 #include "languageutils.h"
+#include "commonoptions.h"
 
 quint8 GeneralGroupBox::maxCoresCount = 50;
 

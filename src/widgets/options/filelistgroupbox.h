@@ -23,7 +23,7 @@
 #define FILELISTGROUPBOX_H
 
 #include "ui_filelistgroupbox.h"
-#include "widgets/options/abstractoptions.h"
+#include "abstractoptionsgroupbox.h"
 
 //! File list group box class used in OptionsDialog dialog.
 class FileListGroupBox : public AbstractOptionsGroupBox, private Ui::FileListGroupBox {

@@ -19,20 +19,11 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
+#include <QtGlobal>
 #include "abstractoptions.h"
-#include "settings.h"
 
-/** Default constructor.\n
-  * Sets default value of fields of common options object.
-  */
-CommonOptions::CommonOptions() {
-    targetDirPath_ = QDir::homePath();
-    maxHistoryCount_ = Settings::instance()->settings.maxHistoryCount;
+AbstractOptions::AbstractOptions(QWidget *parent) {
+    Q_UNUSED(parent);
 }
 
-CommonOptions * CommonOptions::instance() {
-    static CommonOptions *object = 0;
-    if (!object && Settings::instance())
-        object = new CommonOptions();
-    return object;
-}
+AbstractOptions::~AbstractOptions() {}

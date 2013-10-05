@@ -23,7 +23,7 @@
 #define SELECTIONGROUPBOX_H
 
 #include "ui_selectiongroupbox.h"
-#include "widgets/options/abstractoptions.h"
+#include "abstractoptionsgroupbox.h"
 
 //! Selection group box class used in OptionsDialog dialog.
 class SelectionGroupBox : public AbstractOptionsGroupBox, public Ui::SelectionGroupBox {

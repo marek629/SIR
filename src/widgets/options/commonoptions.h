@@ -19,30 +19,28 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef METADATAGROUPBOX_H
-#define METADATAGROUPBOX_H
+#ifndef COMMONOPTIONS_H
+#define COMMONOPTIONS_H
 
-#include "ui_metadatagroupbox.h"
-#include "abstractoptionsgroupbox.h"
+#include <QDir>
 
-//! Metadata group box class used in OptionsDialog dialog.
-class MetadataGroupBox : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
-    Q_OBJECT
-
+//! Common options data for classes inherited from AbstractOptions class.
+class CommonOptions {
 public:
-    explicit MetadataGroupBox(QWidget *parent = 0);
-    ~MetadataGroupBox();
-    void loadSettings();
-    void saveSettings();
-
-private slots:
-    void enableMetadata(bool checked);
-    void saveMetadata(bool save);
-    void updateThumbnail(bool update);
+    // singleton instance
+    static CommonOptions *instance();
+    // access methods
+    QString targetDirPath() const;
+    void setTargetDirPath(const QString &path);
+    int maxHistoryCount() const;
+    void setMaxHistoryCount(int v);
 
 private:
+    // constructor
+    CommonOptions();
     // fields
-    QRegExpValidator* validator;
+    QString targetDirPath_;
+    int maxHistoryCount_;
 };
 
-#endif // METADATAGROUPBOX_H
+#endif // COMMONOPTIONS_H

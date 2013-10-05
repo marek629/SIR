@@ -19,30 +19,19 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef METADATAGROUPBOX_H
-#define METADATAGROUPBOX_H
+#ifndef ABSTRACTOPTIONSGROUPBOX_H
+#define ABSTRACTOPTIONSGROUPBOX_H
 
-#include "ui_metadatagroupbox.h"
-#include "abstractoptionsgroupbox.h"
+#include <QGroupBox>
+#include "abstractoptions.h"
 
-//! Metadata group box class used in OptionsDialog dialog.
-class MetadataGroupBox : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
-    Q_OBJECT
-
+//! Abstract base class for all derived classes from QGroupBox and AbstractOptions.
+class AbstractOptionsGroupBox : public QGroupBox, public AbstractOptions {
 public:
-    explicit MetadataGroupBox(QWidget *parent = 0);
-    ~MetadataGroupBox();
-    void loadSettings();
-    void saveSettings();
-
-private slots:
-    void enableMetadata(bool checked);
-    void saveMetadata(bool save);
-    void updateThumbnail(bool update);
-
-private:
-    // fields
-    QRegExpValidator* validator;
+    AbstractOptionsGroupBox(QWidget *parent = 0);
+    // pure virtual functions
+    virtual void loadSettings() = 0;
+    virtual void saveSettings() = 0;
 };
 
-#endif // METADATAGROUPBOX_H
+#endif // ABSTRACTOPTIONSGROUPBOX_H

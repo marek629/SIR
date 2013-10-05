@@ -23,7 +23,7 @@
 #define DETAILSGROUPBOX_H
 
 #include "ui_detailsgroupbox.h"
-#include "widgets/options/abstractoptions.h"
+#include "abstractoptionsgroupbox.h"
 
 //! Details group box class used in OptionsDialog dialog.
 class DetailsGroupBox : public AbstractOptionsGroupBox, public Ui::DetailsGroupBox  {

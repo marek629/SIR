@@ -111,7 +111,11 @@ set( METADATA_MOCS ${METADATA_FILES} )
 #message( STATUS "core mocs: " ${CORE_MOCS} )
 
 # Headers
-set( sir_HDRS ${CORE_HEADERS} )
+set( sir_HDRS ${CORE_HEADERS}
+        src/widgets/options/abstractoptions.h
+        src/widgets/options/abstractoptionsgroupbox.h
+        src/widgets/options/commonoptions.h
+    )
 
 file( GLOB SOURCES RELATIVE ${CMAKE_CURRENT_LIST_DIR} src/*.cpp )
 
@@ -138,6 +142,8 @@ set( sir_SRCS ${SOURCES}
         src/widgets/convert/sizescrollarea.cpp
         src/widgets/convert/svgscrollarea.cpp
         src/widgets/options/abstractoptions.cpp
+        src/widgets/options/abstractoptionsgroupbox.cpp
+        src/widgets/options/commonoptions.cpp
         src/widgets/options/filelistgroupbox.cpp
         src/widgets/options/generalgroupbox.cpp
         src/widgets/options/rawgroupbox.cpp
@@ -243,7 +249,6 @@ set( sir_MOCS ${CORE_MOCS}
         src/widgets/convert/optionsscrollarea.h
         src/widgets/convert/sizescrollarea.h
         src/widgets/convert/svgscrollarea.h
-        src/widgets/options/abstractoptions.h
         src/widgets/options/filelistgroupbox.h
         src/widgets/options/generalgroupbox.h
         src/widgets/options/rawgroupbox.h

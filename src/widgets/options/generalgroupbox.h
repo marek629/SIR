@@ -23,7 +23,7 @@
 #define GENERALGROUPBOX_H
 
 #include "ui_generalgroupbox.h"
-#include "widgets/options/abstractoptions.h"
+#include "abstractoptionsgroupbox.h"
 
 class LanguageUtils;
 
