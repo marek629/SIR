@@ -31,7 +31,7 @@
 #ifdef SIR_METADATA_SUPPORT
 #include "metadatautils.h"
 #else
-#include "metadata/string.h"
+#include "sir_string.h"
 #endif // SIR_METADATA_SUPPORT
 #include "sharedinformation.h"
 

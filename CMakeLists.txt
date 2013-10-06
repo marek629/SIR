@@ -66,52 +66,14 @@ function( check_q_object_headers )
     set( Q_OBJECT_HEADERS ${MOCS} PARENT_SCOPE )
 endfunction( check_q_object_headers )
 
-function( check_metadata_files )
-    foreach( FILE ${ARGN} )
-#        message( STATUS "file: " ${FILE} )
-        file( STRINGS ${FILE} FILE_CONTENT )
-        foreach( LINE ${FILE_CONTENT} )
-            string( COMPARE EQUAL ${LINE} "namespace MetadataUtils {" LINE_PASSED )
-            if( ${LINE_PASSED} )
-#                message( STATUS "YES" )
-                set( MDTS ${MDTS} ${FILE} )
-                break( )
-            endif( ${LINE_PASSED} )
-        endforeach( LINE )
-        if( NOT ${LINE_PASSED} )
-            set( GNRS ${GNRS} ${FILE} )
-        endif( NOT ${LINE_PASSED} )
-    endforeach( FILE )
-#    message( STATUS "generals: " ${GNRS} )
-#    message( STATUS "metadatas: " ${MDTS} )
-    set( GENERAL_FILES ${GNRS} PARENT_SCOPE )
-    set( METADATA_FILES ${MDTS} PARENT_SCOPE )
-endfunction( check_metadata_files )
-
 
 file( GLOB HEADERS RELATIVE ${CMAKE_CURRENT_LIST_DIR} src/*.h )
 check_q_object_headers( ${HEADERS} )
 #message( STATUS "no Q_OBJECT headers: " ${NO_Q_OBJECT_HEADERS} )
 #message( STATUS "Q_OBJECT headers: " ${Q_OBJECT_HEADERS} )
 
-check_metadata_files( ${NO_Q_OBJECT_HEADERS} )
-#message( STATUS "general files: " ${GENERAL_FILES} )
-#message( STATUS "metadata files: " ${METADATA_FILES} )
-
-set( CORE_HEADERS ${GENERAL_FILES} )
-set( METADATA_HEADERS ${METADATA_FILES} )
-
-check_metadata_files( ${Q_OBJECT_HEADERS} )
-set( CORE_MOCS ${GENERAL_FILES} )
-set( METADATA_MOCS ${METADATA_FILES} )
-
-#message( STATUS "metadata headers: " ${METADATA_HEADERS} )
-#message( STATUS "metadata mocs: " ${METADATA_MOCS} )
-#message( STATUS "core headers: " ${CORE_HEADERS} )
-#message( STATUS "core mocs: " ${CORE_MOCS} )
-
 # Headers
-set( sir_HDRS ${CORE_HEADERS}
+set( sir_HDRS ${NO_Q_OBJECT_HEADERS}
         src/widgets/options/abstractoptions.h
         src/widgets/options/abstractoptionsgroupbox.h
         src/widgets/options/commonoptions.h
@@ -230,7 +192,7 @@ set( sir_IMGS
     )
 
 # Meta-object code files
-set( sir_MOCS ${CORE_MOCS}
+set( sir_MOCS ${Q_OBJECT_HEADERS}
         src/widgets/aboutdialog.h
         src/widgets/brushframe.h
         src/widgets/colorframe.h
@@ -282,12 +244,13 @@ if( metadata )
             )
         set( sir_HDRS ${sir_HDRS}
                 ${METADATA_HEADERS}
+                src/metadata/metadata.h
                 src/metadata/error.h
                 src/metadata/exif.h
                 src/metadata/iptc.h
             )
         set( sir_SRCS ${sir_SRCS}
-#                src/metadatautils.cpp
+                src/metadata/metadata.cpp
                 src/metadata/exif.cpp
                 src/metadata/error.cpp
                 src/metadata/iptc.cpp
