@@ -24,9 +24,7 @@
 
 #include <QGraphicsSvgItem>
 #include "ui_previewdialog.h"
-#ifdef SIR_METADATA_SUPPORT
 #include "metadatautils.h"
-#endif // SIR_METADATA_SUPPORT
 #include "settings.h"
 
 //! Preview image window.

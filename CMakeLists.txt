@@ -113,13 +113,21 @@ set( sir_SRCS ${SOURCES}
     )
 
 set( sir_UT_HDRS
-        src/version.h
-        src/ut/versiontest.h
+        src/sir_string.h
+        src/metadatautils.h
+        src/ut/metadatautilstest.h
+#        src/version.h
+#        src/ut/versiontest.h
     )
 
+#TODO: Oddzielne zestawy plików do budowy dla każdego testu jednostkowego.
+
 set( sir_UT_SRCS
-        src/version.cpp
-        src/ut/versiontest.cpp
+        src/sir_string.cpp
+        src/metadatautils.cpp
+        src/ut/metadatautilstest.cpp
+#        src/version.cpp
+#        src/ut/versiontest.cpp
     )
 
 # User interface files
@@ -284,12 +292,16 @@ else( qt5 )
 endif( qt5 )
 
 add_executable( sir ${sir_SRCS} ${UIS} ${MOCS} ${QMS} ${RSCS} )
-add_executable( sir_version_test ${sir_UT_SRCS} ${UT_MOCS} )
+add_executable( sir_metadatautils_test ${sir_UT_SRCS} ${UT_MOCS} )
+#add_executable( sir_version_test ${sir_UT_SRCS} ${UT_MOCS} )
 
 target_link_libraries( sir ${sir_LINKING_LIBS} )
-target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
+target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
+#target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
+
 if( qt5 )
         QT5_USE_MODULES( sir Core Widgets Network Svg Xml PrintSupport )
+        QT5_USE_MODULES( sir_metadatautils_test Core Test )
         QT5_USE_MODULES( sir_version_test Core Test )
 endif( qt5 )
 #add_test( NAME sir_version_test COMMAND sir_version_test )

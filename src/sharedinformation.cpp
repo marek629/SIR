@@ -25,9 +25,7 @@
 
 #include "sharedinformation.h"
 #include "settings.h"
-#ifdef SIR_METADATA_SUPPORT
 #include "metadatautils.h"
-#endif // SIR_METADATA_SUPPORT
 
 /** Default constructor.\n
   * Sets default field values.

@@ -28,11 +28,7 @@
 
 #include <QThread>
 #include <QMutex>
-#ifdef SIR_METADATA_SUPPORT
 #include "metadatautils.h"
-#else
-#include "sir_string.h"
-#endif // SIR_METADATA_SUPPORT
 #include "sharedinformation.h"
 
 class QSvgRenderer;

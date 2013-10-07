@@ -19,45 +19,35 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
+#ifndef METADATAUTILSTEST_H
+#define METADATAUTILSTEST_H
+
 #ifdef SIR_METADATA_SUPPORT
 
-#include "metadatautils.h"
+#include <QtTest/QTest>
+#include "../metadatautils.h"
 
-using namespace sir;
+class MetadataUtilsTest : public QObject {
+    Q_OBJECT
 
-/** This is overloaded function.\n
-  * Returns true if \a v value equals null character, otherwise returns false.
-  */
-bool MetadataUtils::isNullValue(char v) {
-    return (v == '\0');
-}
+public:
+    MetadataUtilsTest();
 
-/** This is overloaded function.\n
-  * Returns true if \a v value equals 0, otherwise returns false.
-  */
-bool MetadataUtils::isNullValue(int v) {
-    return (v == 0);
-}
+private slots:
+    void isNullValue_char_data();
+    void isNullValue_char();
+    void isNullValue_int_data();
+    void isNullValue_int();
+    void isNullValue_float_data();
+    void isNullValue_float();
+    void isNullValue_sir_String_data();
+    void isNullValue_sir_String();
+    void isNullValue_QImage_data();
+    void isNullValue_QImage();
+};
 
-/** This is overloaded function.\n
-  * Returns true if \a v value equals 0.0f, otherwise returns false.
-  */
-bool MetadataUtils::isNullValue(float v) {
-    return (v == 0.f);
-}
-
-/** This is overloaded function.\n
-  * Returns true if \a v string is null string object, otherwise returns false.
-  */
-bool MetadataUtils::isNullValue(const String &v) {
-    return v.isNull();
-}
-
-/** This is overloaded function.\n
-  * Returns true if \a v image is null image object, otherwise returns false.
-  */
-bool MetadataUtils::isNullValue(const QImage &v) {
-    return v.isNull();
-}
+Q_DECLARE_METATYPE( sir::String )
 
 #endif // SIR_METADATA_SUPPORT
+
+#endif // METADATAUTILSTEST_H
