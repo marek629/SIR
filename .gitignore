@@ -17,6 +17,7 @@
 /install_manifest.txt
 /sir
 /sir.cbp
-moc_*.cpp
+moc_*.c*
 *.moc
 /sir_*_test
+*.moc_parameters

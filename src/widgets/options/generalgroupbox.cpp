@@ -146,6 +146,8 @@ void GeneralGroupBox::saveSettings() {
     s->settings.languageNiceName     = languagesComboBox->currentText();
     s->settings.languageFileName     = fileToNiceName->value(
                                             languagesComboBox->currentText() );
+    if (s->settings.languageFileName.isEmpty())
+        s->settings.languageFileName = "sir_en.qm";
     s->settings.dateDisplayFormat    = dateDisplayFormatLineEdit->text();
     s->settings.timeDisplayFormat    = timeDisplayFormatLineEdit->text();
     if (coresCheckBox->isChecked())
