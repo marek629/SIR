@@ -114,8 +114,8 @@ set( sir_SRCS ${SOURCES}
 
 set( sir_UT_HDRS
         src/sir_string.h
-        src/metadatautils.h
-        src/ut/metadatautilstest.h
+        src/metadata/metadatautils.h
+        src/metadata/ut/metadatautilstest.h
 #        src/version.h
 #        src/ut/versiontest.h
     )
@@ -124,8 +124,8 @@ set( sir_UT_HDRS
 
 set( sir_UT_SRCS
         src/sir_string.cpp
-        src/metadatautils.cpp
-        src/ut/metadatautilstest.cpp
+        src/metadata/metadatautils.cpp
+        src/metadata/ut/metadatautilstest.cpp
 #        src/version.cpp
 #        src/ut/versiontest.cpp
     )
@@ -253,12 +253,14 @@ if( metadata )
         set( sir_HDRS ${sir_HDRS}
                 ${METADATA_HEADERS}
                 src/metadata/metadata.h
+                src/metadata/metadatautils.h
                 src/metadata/error.h
                 src/metadata/exif.h
                 src/metadata/iptc.h
             )
         set( sir_SRCS ${sir_SRCS}
                 src/metadata/metadata.cpp
+                src/metadata/metadatautils.cpp
                 src/metadata/exif.cpp
                 src/metadata/error.cpp
                 src/metadata/iptc.cpp

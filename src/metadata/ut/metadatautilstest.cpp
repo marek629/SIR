@@ -35,7 +35,6 @@ void MetadataUtilsTest::isNullValue_char_data() {
     QTest::newRow("end of string character") << '\0' << true;
     QTest::newRow("zero character") << '0' << false;
     QTest::newRow("an character") << 'a' << false;
-//    QTest::newRow("an empty character") << '' << false;
 }
 
 void MetadataUtilsTest::isNullValue_char() {

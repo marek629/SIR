@@ -24,7 +24,7 @@
 
 #include <QGraphicsSvgItem>
 #include "ui_previewdialog.h"
-#include "metadatautils.h"
+#include "metadata/metadatautils.h"
 #include "settings.h"
 
 //! Preview image window.

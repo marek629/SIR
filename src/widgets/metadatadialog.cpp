@@ -23,7 +23,7 @@
 #include <QMessageBox>
 #include <exiv2/exif.hpp>
 #include "metadatadialog.h"
-#include "../metadatautils.h"
+#include "../metadata/metadatautils.h"
 #include "../settings.h"
 
 using namespace MetadataUtils;
