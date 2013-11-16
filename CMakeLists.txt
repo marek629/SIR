@@ -36,6 +36,13 @@ else( qt5 )
                 ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
                 ${QT_QTNETWORK_INCLUDE_DIR} ${QT_QTSVG_INCLUDE_DIR}
             )
+        set( sir_LINKING_LIBS
+                ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY}
+                ${QT_QTSVG_LIBRARY} ${QT_QTXML_LIBRARY}
+            )
+        set( sir_UT_LINKING_LIBS
+                ${sir_LINKING_LIBS} ${QT_QTTEST_LIBRARY}
+            )
 endif( qt5 )
 
 if( WIN32 )
@@ -72,6 +79,7 @@ check_q_object_headers( ${HEADERS} )
 #message( STATUS "no Q_OBJECT headers: " ${NO_Q_OBJECT_HEADERS} )
 #message( STATUS "Q_OBJECT headers: " ${Q_OBJECT_HEADERS} )
 
+# ################################  SIR  exec  #################################
 # Headers
 set( sir_HDRS ${NO_Q_OBJECT_HEADERS}
         src/widgets/options/abstractoptions.h
@@ -110,24 +118,6 @@ set( sir_SRCS ${SOURCES}
         src/widgets/options/generalgroupbox.cpp
         src/widgets/options/rawgroupbox.cpp
         src/widgets/options/selectiongroupbox.cpp
-    )
-
-set( sir_UT_HDRS
-        src/sir_string.h
-        src/metadata/metadatautils.h
-        src/metadata/ut/metadatautilstest.h
-#        src/version.h
-#        src/ut/versiontest.h
-    )
-
-#TODO: Oddzielne zestawy plików do budowy dla każdego testu jednostkowego.
-
-set( sir_UT_SRCS
-        src/sir_string.cpp
-        src/metadata/metadatautils.cpp
-        src/metadata/ut/metadatautilstest.cpp
-#        src/version.cpp
-#        src/ut/versiontest.cpp
     )
 
 # User interface files
@@ -225,17 +215,6 @@ set( sir_MOCS ${Q_OBJECT_HEADERS}
         src/widgets/options/selectiongroupbox.h
     )
 
-if( NOT qt5 )
-        set( sir_LINKING_LIBS
-                ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY}
-                ${QT_QTSVG_LIBRARY} ${QT_QTXML_LIBRARY}
-            )
-        set( sir_UT_LINKING_LIBS
-                ${sir_LINKING_LIBS} ${QT_QTTEST_LIBRARY}
-            )
-endif( NOT qt5 )
-
-
 option( metadata "Metadata support using exiv2 library." ON)
 if( metadata )
     set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake )
@@ -286,29 +265,68 @@ endif( metadata )
 if( qt5 )
         QT5_WRAP_UI( UIS ${sir_UIS} )
         QT5_WRAP_CPP( MOCS ${sir_MOCS} )
-        QT5_WRAP_CPP( UT_MOCS ${sir_UT_HDRS} )
 else( qt5 )
         QT4_WRAP_UI( UIS ${sir_UIS} )
         QT4_WRAP_CPP( MOCS ${sir_MOCS} )
-        QT4_AUTOMOC( UT_MOCS ${sir_UT_SRCS} )
 endif( qt5 )
 
 add_executable( sir ${sir_SRCS} ${UIS} ${MOCS} ${QMS} ${RSCS} )
-add_executable( sir_metadatautils_test ${sir_UT_SRCS} ${UT_MOCS} )
-#add_executable( sir_version_test ${sir_UT_SRCS} ${UT_MOCS} )
-
 target_link_libraries( sir ${sir_LINKING_LIBS} )
-target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
-#target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
-
 if( qt5 )
         QT5_USE_MODULES( sir Core Widgets Network Svg Xml PrintSupport )
+endif( qt5 )
+
+
+# ############################  MetadataUtils  UT  #############################
+set( sir_UT_metadatautils_HDRS
+        src/sir_string.h
+        src/metadata/metadatautils.h
+        src/metadata/ut/metadatautilstest.h
+    )
+
+set( sir_UT_metadatautils_SRCS
+        src/sir_string.cpp
+        src/metadata/metadatautils.cpp
+        src/metadata/ut/metadatautilstest.cpp
+    )
+
+if( qt5 )
+        QT5_WRAP_CPP( UT_MOCS ${sir_UT_metadatautils_HDRS} )
+else( qt5 )
+        QT4_AUTOMOC( UT_MOCS ${sir_UT_metadatautils_SRCS} )
+endif( qt5 )
+
+
+# ###############################  Version  UT  ################################
+add_executable( sir_metadatautils_test ${sir_UT_metadatautils_SRCS} ${UT_MOCS} )
+target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
+if( qt5 )
         QT5_USE_MODULES( sir_metadatautils_test Core Test )
+endif( qt5 )
+
+set( sir_UT_version_HDRS
+        src/version.h
+        src/ut/versiontest.h
+    )
+
+set( sir_UT_version_SRCS
+        src/version.cpp
+        src/ut/versiontest.cpp
+    )
+
+if( qt5 )
+        QT5_WRAP_CPP( UT_MOCS ${sir_UT_version_HDRS} )
+else( qt5 )
+        QT4_AUTOMOC( UT_MOCS ${sir_UT_version_SRCS} )
+endif( qt5 )
+
+add_executable( sir_version_test ${sir_UT_version_SRCS} ${UT_MOCS} )
+target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
+if( qt5 )
         QT5_USE_MODULES( sir_version_test Core Test )
 endif( qt5 )
-#add_test( NAME sir_version_test COMMAND sir_version_test )
 
-# installation
+# ###############################  Installation  ###############################
 # bin
 install( TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin )
 # translations

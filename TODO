@@ -7,7 +7,6 @@
   ! fix crash while loading image modified by SIR
   ! remove compilation warnings
   ! CMakeList refactorization:
-    * group files by executable
     * change if(qt5) to funcion
 
 *** next release ***
