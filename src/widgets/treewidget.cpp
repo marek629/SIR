@@ -125,11 +125,7 @@ void TreeWidget::initList(const QStringList &argList) {
         }
     }
 
-    if (topLevelItemCount() > 0) {
-        convertDialog->convertButton->setEnabled(true);
-        convertDialog->convertSelectedButton->setEnabled(true);
-    }
-    resizeColumnsToContents();
+    updateTree();
 }
 
 /** Returns image size in pixels of \a item. If an error occurred returns a null
