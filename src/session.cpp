@@ -204,6 +204,7 @@ void Session::restore(const QString &fileName) {
     QStringList list;
     int x;
 
+    convertDialog->filesTreeWidget->clear();
     elem = session.firstChildElement("files");
     el = elem.firstChildElement("file");
     while (!el.isNull()) {

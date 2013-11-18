@@ -1,13 +1,9 @@
 *** nearest release ***
   ! store (session file) current session and effect collection file path
-  ! Make simple effects
-    * multiple effects convertion: save few images from just one, for example diffrent color effects
   ! compare painting color filter effect performance (multiply per pixel vs. QPainter.fill(QColor))
-  ! clear file list before session restoring
   ! fix crash while loading image modified by SIR
   ! remove compilation warnings
-  ! CMakeList refactorization:
-    * change if(qt5) to funcion
+  ! check dcraw call
 
 *** next release ***
   ! load all files selected in file menager (ie. Thunar) in just 1 instance of SIR
@@ -15,6 +11,8 @@
   ! support for animated graphics files (QMovie?)
   ! defines.h refactorization: change defines to enumerations
   ! search refactorizationable code
+  ! multiple effects convertion: save few images from just one, for example diffrent color effects
+  ! CMakeList refactorization: change if(qt5) to function/macro
 
 *** 3.0 roadmap ***
   ! dynamically add effects to effect list (empty initially)
