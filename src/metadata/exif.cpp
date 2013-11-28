@@ -22,6 +22,7 @@
 #ifdef SIR_METADATA_SUPPORT
 
 #include "exif.h"
+#include <exiv2/exif.hpp>
 #include <exiv2/metadatum.hpp>
 
 using namespace MetadataUtils;
@@ -347,10 +348,10 @@ String Exif::expProgramString(uchar programId) {
     }
 }
 
-/** Returs translated string coresponding \b modeId code.
+/** Returs translated string coresponding \a modeId code.
   * \param orientation Orientation code in range 0 to 6. If it isn't in range
   *        this function will return \em "Other" text.
-  * \sa orientationString expProgramString
+  * \sa orientationString() expProgramString()
   */
 String Exif::meteringModeString(short modeId) {
     switch (modeId) {
@@ -365,11 +366,61 @@ String Exif::meteringModeString(short modeId) {
     }
 }
 
+/** Returs floating point value coresponding \a datum value converted to
+  * Exiv2::Rational value. If \a datum is invalid rational value returns -1.
+  * \param datum Exif datum to convert to real value.
+  * \sa rational()
+  */
+float Exif::floatRational(Exiv2::Exifdatum &datum) {
+    float result = -1.f;
+    if (datum.typeId() == Exiv2::signedRational
+            || datum.typeId() == Exiv2::unsignedRational) {
+        Exiv2::Rational rational = datum.toRational();
+        result = (float)rational.first / rational.second;
+    }
+    return result;
+}
+
+/** Returs rational value coresponding \a datum value. If \a datum is invalid
+  * rational value returns -1/1.
+  * \param datum Exif datum to convert to rational value.
+  * \sa floatRational()
+  */
+Exiv2::Rational Exif::rational(Exiv2::Exifdatum &datum) {
+    Exiv2::Rational result = Exiv2::Rational(-1, 1);
+    if (datum.typeId() == Exiv2::signedRational
+            || datum.typeId() == Exiv2::unsignedRational)
+        result = datum.toRational();
+    return result;
+}
+
+/** Returs integer value coresponding \a datum value. If \a datum is invalid
+  * integer value returns -1.
+  * \param datum Exif datum to convert to integer value.
+  * \sa floatRational()
+  */
+long Exif::getLong(Exiv2::Exifdatum &datum) {
+    long result = -1;
+    switch (datum.typeId()) {
+    case Exiv2::signedByte:
+    case Exiv2::signedShort:
+    case Exiv2::signedLong:
+    case Exiv2::unsignedByte:
+    case Exiv2::unsignedShort:
+    case Exiv2::unsignedLong:
+        result = datum.toLong();
+        break;
+    default:
+        break;
+    }
+    return result;
+}
+
 /** Returns rotation angle in degrees basing on orientation code.
   * \param orientation Orientation code in range 1 to 8.
-  * \return -360 if \b orientation value is unexpected\n
+  * \return -360 if \a orientation value is unexpected\n
   *         otherwise returing value is -90, 0, 90 or 180
-  * \sa flipValue getOrientation
+  * \sa flipValue() getOrientation()
   */
 short Exif::rotationAngle(char orientation) {
     short result = 0;

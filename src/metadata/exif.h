@@ -33,6 +33,7 @@
 #ifdef SIR_METADATA_SUPPORT
 //! The namespace of exiv2 library API.
 namespace Exiv2 {
+    class Exifdatum;
     class Metadatum;
 }
 #endif // SIR_METADATA_SUPPORT
@@ -85,6 +86,9 @@ public:
     static sir::String orientationString(char orientation);
     static sir::String expProgramString(uchar programId);
     static sir::String meteringModeString(short modeId);
+    static float floatRational(Exiv2::Exifdatum &datum);
+    static Exiv2::Rational rational(Exiv2::Exifdatum &datum);
+    static long getLong(Exiv2::Exifdatum &datum);
     static const QString dateTimeFormat;
 
 private:

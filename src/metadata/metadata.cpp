@@ -384,46 +384,34 @@ void Metadata::setExifStruct() {
     }
 
     // Photo section
-    Exiv2::Rational rational = exifData["Exif.Photo.FocalLength"].toRational();
-    exifStruct_.focalLength = (float)rational.first / rational.second;
-
-    rational = exifData["Exif.Photo.FNumber"].toRational();
-    if (rational.first == -1 && rational.second == 1)
-        rational = exifData["Exif.Photo.ApertureValue"].toRational();
-    exifStruct_.aperture = (float)rational.first / rational.second;
+    exifStruct_.focalLength = Exif::floatRational(exifData["Exif.Photo.FocalLength"]);
+    exifStruct_.aperture = Exif::floatRational(exifData["Exif.Photo.FNumber"]);
+    if (exifStruct_.aperture == -1)
+        exifStruct_.aperture = Exif::floatRational(exifData["Exif.Photo.ApertureValue"]);
     exifStruct_.expTime = timeString("Exif.Image.ExposureTime","Exif.Photo.ExposureTime");
-
-    rational = exifData["Exif.Photo.ShutterSpeedValue"].toRational();
-    bool isEmpty (rational.first == -1 && rational.second == 1);
-    if (isEmpty) {
-        rational = exifData["Exif.Image.ShutterSpeedValue"].toRational();
-        isEmpty = (rational.first == -1 && rational.second == 1);
-        if (isEmpty)
-            exifStruct_.shutterSpeed = String::noData();
-    }
-    if (!isEmpty)
-        exifStruct_.shutterSpeed = timeString(rational);
-    exifStruct_.isoSpeed = exifData["Exif.Photo.ISOSpeedRatings"].toLong();
+    exifStruct_.shutterSpeed = timeString("Exif.Photo.ShutterSpeedValue",
+                                          "Exif.Image.ShutterSpeedValue");
+    if (exifStruct_.shutterSpeed.isEmpty() || exifStruct_.shutterSpeed == "1/-1 s")
+        exifStruct_.shutterSpeed = String::noData();
+    exifStruct_.isoSpeed = Exif::getLong(exifData["Exif.Photo.ISOSpeedRatings"]);
     if ( exifStruct_.isoSpeed == -1 )
-        exifStruct_.isoSpeed = exifData["Exif.Image.ISOSpeedRatings"].toLong();
-    rational = exifData["Exif.Photo.ExposureBiasValue"].toRational();
-    if (rational.first == -1 && rational.second == 1)
+        exifStruct_.isoSpeed = Exif::getLong(exifData["Exif.Image.ISOSpeedRatings"]);
+    exifStruct_.expBias = Exif::floatRational(exifData["Exif.Photo.ExposureBiasValue"]);
+    if (exifStruct_.expBias == -1.f)
         exifStruct_.expBias = -101.f;
-    else
-        exifStruct_.expBias = (float)rational.first / rational.second;
-    exifStruct_.expProgram = exifData["Exif.Photo.ExposureProgram"].toLong();
+    exifStruct_.expProgram = Exif::getLong(exifData["Exif.Photo.ExposureProgram"]);
     if ( exifStruct_.expProgram == -1 ) //when value is unknown
         exifStruct_.expProgram = 0; //index of first item of combobox in MetadataDialog
-    exifStruct_.meteringMode = exifData["Exif.Photo.MeteringMode"].toLong();
+    exifStruct_.meteringMode = Exif::getLong(exifData["Exif.Photo.MeteringMode"]);
     if ( exifStruct_.meteringMode == -1 )
-        exifStruct_.meteringMode = exifData["Exif.Image.MeteringMode"].toLong();
+        exifStruct_.meteringMode = Exif::getLong(exifData["Exif.Image.MeteringMode"]);
     if ( exifStruct_.meteringMode == -1 )  //when value is unknown
         exifStruct_.meteringMode = 0; //index of first item of combobox in MetadataDialog
     if ( exifStruct_.meteringMode == 255 ) //when value equal 'other'
         exifStruct_.meteringMode = 7;
-    exifStruct_.flashMode = exifData["Exif.Photo.Flash"].toLong();
+    exifStruct_.flashMode = Exif::getLong(exifData["Exif.Photo.Flash"]);
     if ( exifStruct_.flashMode == -1 )
-        exifStruct_.flashMode = exifData["Exif.Image.Flash"].toLong();
+        exifStruct_.flashMode = Exif::getLong(exifData["Exif.Image.Flash"]);
 
     // Camera section
     exifStruct_.cameraManufacturer = String::fromStdString(
@@ -572,9 +560,9 @@ void Metadata::removeEmptyFields() {
   * returned string based on \a key1.
   */
 QString Metadata::timeString(const std::string &key1, const std::string &key2) {
+    Q_ASSERT(!key1.empty());
+
     QString result;
-    if (key1.empty())
-        return result;
     Exiv2::Exifdatum& tag = exifData[key1];
     Exiv2::Rational rational;
     if (tag.size() > 0)
@@ -649,7 +637,7 @@ QString Metadata::timeString(Exiv2::Rational *rational, const std::string &key) 
                  (rational->first == 1  && rational->second == -1));
     if (isEmpty) {
         if (!key.empty()) {
-            *rational = exifData[key].toRational();
+            *rational = Exif::rational(exifData[key]);
             isEmpty = false;
         }
         else

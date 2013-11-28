@@ -1,7 +1,6 @@
 *** nearest release ***
   ! store (session file) current session and effect collection file path
   ! compare painting color filter effect performance (multiply per pixel vs. QPainter.fill(QColor))
-  ! fix crash while loading image modified by SIR
   ! remove compilation warnings
   ! check dcraw call
 

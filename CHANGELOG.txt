@@ -5,6 +5,7 @@
     - added effects storage in XML files
     - added histogram stretching and equalization effects
     - added clearing file list before session restoring
+    - improved loading files contains incomplete/broken metadata
     - CMake: build using choosed Qt version (4/5)
     - code update for Qt 5 compatibility
     - bugfix: painting effect when desired size typed in Bytes now
