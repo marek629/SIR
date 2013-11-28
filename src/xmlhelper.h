@@ -35,6 +35,7 @@ class ConvertDialog;
 class XmlHelper {
 public:
     XmlHelper(ConvertDialog *parent = 0);
+    virtual ~XmlHelper();
     virtual void save(const QString &fileName) = 0;
     virtual void restore(const QString &fileName) = 0;
 

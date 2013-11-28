@@ -39,6 +39,7 @@ class Session : public XmlHelper {
 
 public:
     explicit Session(ConvertDialog *parent = 0);
+    ~Session();
     void save(const QString &fileName);
     void restore(const QString &fileName);
 

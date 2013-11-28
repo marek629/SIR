@@ -37,6 +37,8 @@ EffectsCollector::EffectsCollector(ConvertDialog *parent) : XmlHelper(parent) {
     effectsArea = convertDialog->effectsScrollArea;
 }
 
+EffectsCollector::~EffectsCollector() {}
+
 /** Writes collection of effects to XML file in \a fileName path.
   * \sa restore()
   */

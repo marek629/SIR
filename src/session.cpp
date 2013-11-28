@@ -50,6 +50,8 @@ Session::Session(ConvertDialog *parent) : XmlHelper(parent) {
     collector = new EffectsCollector(convertDialog);
 }
 
+Session::~Session() {}
+
 /** Writes session to XML file in \a fileName path.
   * \sa restore()
   */

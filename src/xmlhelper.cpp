@@ -29,6 +29,8 @@ XmlHelper::XmlHelper(ConvertDialog *parent) {
     convertDialog = parent;
 }
 
+XmlHelper::~XmlHelper() {}
+
 /** Reads color data from \e color child node of \a parentElement node.
   * \return Read color object.
   */

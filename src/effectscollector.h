@@ -33,6 +33,7 @@ class EffectsCollector : public XmlHelper {
 
 public:
     EffectsCollector(ConvertDialog *parent = 0);
+    ~EffectsCollector();
     void save(const QString &fileName);
     void restore(const QString &fileName);
     bool read(const QDomElement &element);
