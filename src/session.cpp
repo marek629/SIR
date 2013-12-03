@@ -174,6 +174,11 @@ void Session::save(const QString &fileName) {
   */
 void Session::restore(const QString &fileName) {
     QFile file(fileName);
+
+    QFileInfo info = QFileInfo(file);
+    convertDialog->sessionDir = info.absoluteDir();
+    convertDialog->effectsDir = info.absoluteDir();
+
     if (!file.open(QIODevice::ReadOnly)) {
         QMessageBox::warning(convertDialog, tr("Session read error"),
                              tr("Session restoring from %1 file failed.\n"

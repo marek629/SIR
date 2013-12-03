@@ -69,13 +69,13 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
     this->args = args;
     net = NULL;
     sharedInfo = ConvertThread::sharedInfo();
+    effectsDir = QDir::home();
+    sessionDir = QDir::home();
     init();
     session = new Session(this);
     if (!cmdAssistant.sessionFile().isEmpty())
         session->restore(cmdAssistant.sessionFile());
     effectsCollector = new EffectsCollector(this);
-    effectsDir = QDir::home();
-    sessionDir = QDir::home();
 }
 
 /** Destructor.\n

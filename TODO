@@ -1,7 +1,8 @@
 *** nearest release ***
-  ! store (session file) current session and effect collection file path
   ! compare painting color filter effect performance (multiply per pixel vs. QPainter.fill(QColor))
   ! check dcraw call
+  ! remove qDebug() calls
+  ! update Polish translation
 
 *** next release ***
   ! load all files selected in file menager (ie. Thunar) in just 1 instance of SIR
