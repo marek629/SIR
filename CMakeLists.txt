@@ -14,6 +14,9 @@ include_directories(
         src/
     )
 
+set(CMAKE_AUTOMOC ON)
+
+
 option( qt5 "Qt 5 support" ON)
 
 if( qt5 )
@@ -257,6 +260,7 @@ if( metadata )
                 dialogs/selection/iptcgroupbox.ui
             )
         set( sir_LINKING_LIBS ${sir_LINKING_LIBS} ${EXIV2_LIBRARY} )
+        set( sir_UT_LINKING_LIBS ${sir_UT_LINKING_LIBS} ${EXIV2_LIBRARY} )
     else( EXISTS ${EXIV2_LIBRARY} )
         message ( FATAL_ERROR "eviv2 library not found! Disable metadata support calling -Dmetadata=OFF in cmake command." )
     endif( EXISTS ${EXIV2_LIBRARY} )
@@ -296,14 +300,58 @@ else( qt5 )
         QT4_AUTOMOC( UT_MOCS ${sir_UT_metadatautils_SRCS} )
 endif( qt5 )
 
-
-# ###############################  Version  UT  ################################
 add_executable( sir_metadatautils_test ${sir_UT_metadatautils_SRCS} ${UT_MOCS} )
 target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
 if( qt5 )
         QT5_USE_MODULES( sir_metadatautils_test Core Test )
 endif( qt5 )
 
+
+# ###########################  ConvertEffects  UT  #############################
+set( sir_UT_converteffects_HDRS
+        src/converteffects.h
+        src/languageutils.h
+        src/rgb.h
+        src/settings.h
+        src/sir_string.h
+        src/sharedinformation.h
+        src/metadata/iptc.h
+        src/metadata/error.h
+        src/metadata/exif.h
+        src/metadata/metadata.h
+        src/metadata/metadatautils.h
+        src/ut/converteffectstest.h
+    )
+
+set( sir_UT_converteffects_SRCS
+        src/converteffects.cpp
+        src/languageutils.cpp
+        src/rgb.cpp
+        src/settings.cpp
+        src/sir_string.cpp
+        src/sharedinformation.cpp
+        src/metadata/iptc.cpp
+        src/metadata/error.cpp
+        src/metadata/exif.cpp
+        src/metadata/metadata.cpp
+        src/metadata/metadatautils.cpp
+        src/ut/converteffectstest.cpp
+    )
+
+if( qt5 )
+        QT5_WRAP_CPP( UT_MOCS ${sir_UT_converteffects_HDRS} )
+else( qt5 )
+        QT4_AUTOMOC( UT_MOCS ${sir_UT_converteffects_SRCS} )
+endif( qt5 )
+
+add_executable( sir_converteffects_test ${sir_UT_converteffects_SRCS} ${UT_MOCS} )
+target_link_libraries( sir_converteffects_test ${sir_UT_LINKING_LIBS} )
+if( qt5 )
+        QT5_USE_MODULES( sir_converteffects_test Core Test )
+endif( qt5 )
+
+
+# ###############################  Version  UT  ################################
 set( sir_UT_version_HDRS
         src/version.h
         src/ut/versiontest.h
@@ -325,6 +373,7 @@ target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
 if( qt5 )
         QT5_USE_MODULES( sir_version_test Core Test )
 endif( qt5 )
+
 
 # ###############################  Installation  ###############################
 # bin

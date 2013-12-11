@@ -318,6 +318,7 @@ void ConvertEffects::combine(const QColor &color) {
     const int cr = color.red();
     const int cg = color.green();
     const int cb = color.blue();
+    // TODO: replace by qMax()
     int max = cr;
     if (max < cg)
         max = cg;
@@ -334,8 +335,16 @@ void ConvertEffects::combine(const QColor &color) {
     }
 }
 
+// for test only
+void ConvertEffects::combinePainter(const QColor &color) {
+    QPainter painter(img);
+    painter.setOpacity(0.5);
+    painter.fillRect(img->rect(), color);
+}
+
 void ConvertEffects::combine(const QBrush &brush) {
     QPainter painter(img);
+    // TODO: setBrush needed?
     painter.setBrush(brush);
     painter.setOpacity(0.5);
     painter.fillRect(img->rect(), brush);

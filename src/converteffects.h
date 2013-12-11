@@ -38,6 +38,8 @@
   * \li \link #addImage() \em "Add Image" \endlink
   */
 class ConvertEffects {
+    friend class ConvertEffectsTest;
+
 public:
     ConvertEffects(SharedInformation *shared = 0);
     ConvertEffects(QImage *image, SharedInformation *shared = 0);
@@ -68,6 +70,7 @@ private:
     QRect getEffectBoundingRect(const QRect &rect, const QPoint &pos,
                                 PosModifier modifier);
     void combine(const QColor &color);
+    void combinePainter(const QColor &color);
     void combine(const QBrush &brush);
     QPair<QColor, QColor> colorRange();
     void stretchHistogram();
