@@ -771,7 +771,7 @@ QImage ConvertThread::paintEffects(QImage *image) {
     QImage destImg(*image);
     ConvertEffects effectPainter(&destImg, shared);
     if (shared->histogramOperation > 0)
-
+        effectPainter.modifyHistogram();
     if (shared->filterType != NoFilter)
         effectPainter.filtrate();
     if (shared->frameWidth > 0 && shared->frameColor.isValid()) {

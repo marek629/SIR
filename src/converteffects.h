@@ -69,8 +69,8 @@ private:
     QPoint getTransformOriginPoint(const QPoint &position, const PosUnitPair &units);
     QRect getEffectBoundingRect(const QRect &rect, const QPoint &pos,
                                 PosModifier modifier);
+    void combineLoop(const QColor &color);
     void combine(const QColor &color);
-    void combinePainter(const QColor &color);
     void combine(const QBrush &brush);
     QPair<QColor, QColor> colorRange();
     void stretchHistogram();

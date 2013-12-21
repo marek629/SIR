@@ -1,5 +1,4 @@
 *** nearest release ***
-  ! compare painting color filter effect performance (multiply per pixel vs. QPainter.fill(QColor))
   ! remove qDebug() calls
   ! update Polish translation
 

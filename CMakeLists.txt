@@ -277,8 +277,10 @@ if( qt5 )
         QT5_USE_MODULES( sir Core Widgets Network Svg Xml PrintSupport )
 endif( qt5 )
 
+
 # enable moc generation for tests
 set(CMAKE_AUTOMOC ON)
+add_definitions( -DSIR_TESTS )
 
 # ############################  MetadataUtils  UT  #############################
 set( sir_UT_metadatautils_HDRS

@@ -314,16 +314,14 @@ QRect ConvertEffects::getEffectBoundingRect(const QRect &rect, const QPoint &pos
     return result;
 }
 
-void ConvertEffects::combine(const QColor &color) {
+#ifdef SIR_TESTS
+// for benchmark test only
+void ConvertEffects::combineLoop(const QColor &color) {
     const int cr = color.red();
     const int cg = color.green();
     const int cb = color.blue();
-    // TODO: replace by qMax()
-    int max = cr;
-    if (max < cg)
-        max = cg;
-    if (max < cb)
-        max = cb;
+    int max = qMax(cr, cg);
+    max = qMax(max, cb);
     for (int y=0; y<img->height(); y++) {
         for (int x=0; x<img->width(); x++) {
             QRgb rgb = img->pixel(x,y);
@@ -334,9 +332,9 @@ void ConvertEffects::combine(const QColor &color) {
         }
     }
 }
+#endif // SIR_TESTS
 
-// for test only
-void ConvertEffects::combinePainter(const QColor &color) {
+void ConvertEffects::combine(const QColor &color) {
     QPainter painter(img);
     painter.setOpacity(0.5);
     painter.fillRect(img->rect(), color);
@@ -344,8 +342,6 @@ void ConvertEffects::combinePainter(const QColor &color) {
 
 void ConvertEffects::combine(const QBrush &brush) {
     QPainter painter(img);
-    // TODO: setBrush needed?
-    painter.setBrush(brush);
     painter.setOpacity(0.5);
     painter.fillRect(img->rect(), brush);
 }

@@ -43,24 +43,24 @@ void ConvertEffectsTest::initTestCase() {
     QCOMPARE(img.format(), testImg.format());
 }
 
+void ConvertEffectsTest::combine_color_loop() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QColor color(Qt::green);
+
+    QBENCHMARK_ONCE {
+        effects.combineLoop(color);
+    }
+}
+
 void ConvertEffectsTest::combine_color_painter() {
     QImage img(testImg);
     effects.setImage(&img);
 
     QColor color(Qt::green);
 
-    QBENCHMARK {
-        effects.combinePainter(color);
-    }
-}
-
-void ConvertEffectsTest::combine_color() {
-    QImage img(testImg);
-    effects.setImage(&img);
-
-    QColor color(Qt::green);
-
-    QBENCHMARK {
+    QBENCHMARK_ONCE {
         effects.combine(color);
     }
 }
@@ -74,7 +74,7 @@ void ConvertEffectsTest::combine_brush() {
     gradient.setColorAt(1.0, QColor(Qt::yellow));
     QBrush brush(gradient);
 
-    QBENCHMARK {
+    QBENCHMARK_ONCE {
         effects.combine(brush);
     }
 }
