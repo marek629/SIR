@@ -14,9 +14,6 @@ include_directories(
         src/
     )
 
-set(CMAKE_AUTOMOC ON)
-
-
 option( qt5 "Qt 5 support" ON)
 
 if( qt5 )
@@ -280,6 +277,8 @@ if( qt5 )
         QT5_USE_MODULES( sir Core Widgets Network Svg Xml PrintSupport )
 endif( qt5 )
 
+# enable moc generation for tests
+set(CMAKE_AUTOMOC ON)
 
 # ############################  MetadataUtils  UT  #############################
 set( sir_UT_metadatautils_HDRS

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>315</width>
+    <width>318</width>
     <height>117</height>
    </rect>
   </property>
@@ -14,9 +14,6 @@
    <string>Raw Options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="2" column="1" colspan="2">
-    <widget class="QLineEdit" name="dcrawLineEdit"/>
-   </item>
    <item row="0" column="0" colspan="3">
     <widget class="QCheckBox" name="rawCheckBox">
      <property name="text">
@@ -46,6 +43,9 @@
     </widget>
    </item>
    <item row="1" column="1">
+    <widget class="QLineEdit" name="dcrawLineEdit"/>
+   </item>
+   <item row="2" column="1" colspan="2">
     <widget class="QLineEdit" name="dcrawOptions"/>
    </item>
   </layout>

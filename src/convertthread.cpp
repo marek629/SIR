@@ -257,7 +257,7 @@ void ConvertThread::getNextOrStop() {
   */
 void ConvertThread::printError() {
     MetadataUtils::Error *error = metadata.lastError();
-    qWarning() << "tid:" << tid << '\n'
+    qWarning() << "Metadata error within thread" << tid << '\n'
                << "    " << error->message() << '\n'
                << "    " << tr("Error code:") << error->code() << '\n'
                << "    " << error->what();

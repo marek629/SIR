@@ -1,6 +1,5 @@
 *** nearest release ***
   ! compare painting color filter effect performance (multiply per pixel vs. QPainter.fill(QColor))
-  ! check dcraw call
   ! remove qDebug() calls
   ! update Polish translation
 
@@ -24,6 +23,10 @@
   ! SelectionDialog:
     * add in exifGroupBox: FocalLegth, Aperture, ExpBias, IsoSpeed, ExpTime, ShutterSpeed
   ! Geotagging
+  ! Create ZIP archive containg converted images
+  ! Add PDF files support
+    * creating multipage PDF document from selected images
+    * rotate multipage PDF document
   ! Conditional converting (ie. convert if image width > 1000 px)
     * scripts with exiv2 support
     * graphical flow diagram editor for scripts substitution
