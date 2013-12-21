@@ -153,43 +153,8 @@ QStringList RawUtils::readDcrawOptions() {
 /** Creates list of supported image file extensions into \b rawFormats. */
 void RawUtils::createRawFilesList(QStringList &rawFormats) {
     rawFormats.clear();
-    rawFormats.append(" *.3fr");
-    rawFormats.append(" *.arw");
-    rawFormats.append(" *.arw");
-    rawFormats.append(" *.bay");
-    rawFormats.append(" *.cap");
-    rawFormats.append(" *.cr2");
-    rawFormats.append(" *.crw");
-    rawFormats.append(" *.dcr");
-    rawFormats.append(" *.dcs");
-    rawFormats.append(" *.drf");
-    rawFormats.append(" *.eip");
-    rawFormats.append(" *.erf");
-    rawFormats.append(" *.fff");
-    rawFormats.append(" *.iiq");
-    rawFormats.append(" *.k25");
-    rawFormats.append(" *.kdc");
-    rawFormats.append(" *.mef");
-    rawFormats.append(" *.mos");
-    rawFormats.append(" *.mrw");
-    rawFormats.append(" *.nef");
-    rawFormats.append(" *.nrw");
-    rawFormats.append(" *.orf");
-    rawFormats.append(" *.pef");
-    rawFormats.append(" *.ptx");
-    rawFormats.append(" *.pxn");
-    rawFormats.append(" *.r3d");
-    rawFormats.append(" *.raf");
-    rawFormats.append(" *.raw");
-    rawFormats.append(" *.rw2");
-    rawFormats.append(" *.rwl");
-    rawFormats.append(" *.rwz");
-    rawFormats.append(" *.sr2");
-    rawFormats.append(" *.srf");
-    rawFormats.append(" *.tif");
-    rawFormats.append(" *.x3f");
     rawFormats.append(" *.3FR");
-    rawFormats.append(" *.ARW");
+    rawFormats.append(" *.ARI");
     rawFormats.append(" *.ARW");
     rawFormats.append(" *.BAY");
     rawFormats.append(" *.CAP");
@@ -197,6 +162,7 @@ void RawUtils::createRawFilesList(QStringList &rawFormats) {
     rawFormats.append(" *.CRW");
     rawFormats.append(" *.DCR");
     rawFormats.append(" *.DCS");
+    rawFormats.append(" *.DNG");
     rawFormats.append(" *.DRF");
     rawFormats.append(" *.EIP");
     rawFormats.append(" *.ERF");
@@ -221,6 +187,6 @@ void RawUtils::createRawFilesList(QStringList &rawFormats) {
     rawFormats.append(" *.RWZ");
     rawFormats.append(" *.SR2");
     rawFormats.append(" *.SRF");
-    rawFormats.append(" *.TIF");
+    rawFormats.append(" *.SRW");
     rawFormats.append(" *.X3F");
 }

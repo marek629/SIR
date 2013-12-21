@@ -321,12 +321,7 @@ void ConvertDialog::init() {
             list.append(str);
     }
     csd->fileFilters = "*.";
-    csd->fileFilters.append(list.join(" *.").toLower());
-    csd->fileFilters.append(" *.jpg");
-    csd->fileFilters.append(" *.JPG");
-    csd->fileFilters.append(" *.JPEG");
-    csd->fileFilters.append(" *.Jpg");
-    csd->fileFilters.append(" *.Jpeg");
+    csd->fileFilters.append(list.join(" *.").toUpper());
 
     RawUtils::createRawFilesList(rawFormats);
     loadSettings();
@@ -848,9 +843,7 @@ void ConvertDialog::loadSettings() {
     }
     else {
         foreach(QString ext, rawFormats) {
-            if(csd->fileFilters.contains(ext) && ext != " *.tif") {
-                csd->fileFilters.remove(ext);
-            }
+            csd->fileFilters.remove(ext);
         }
     }
 #ifdef SIR_METADATA_SUPPORT
