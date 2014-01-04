@@ -24,8 +24,6 @@
 #include "brushframe.h"
 #include "gradienteditwidget.h"
 
-#include <QDebug>
-
 /** Creates BrushFrame object. */
 BrushFrame::BrushFrame(QWidget *parent) : ColorFrame(parent) {
     brushEditable = true;
@@ -53,11 +51,6 @@ const QColor &BrushFrame::color() const {
 
 void BrushFrame::setColor(const QColor &color) {
     setBrush(QBrush(color));
-    qDebug() << "BrushFrame::setColor():" << color;
-    if (color.isValid()) {
-        qDebug() << "setColor - color:" << this->color();
-        qDebug() << "setColor - brush:" << brush().color();
-    }
 }
 
 /** Returns current brush.

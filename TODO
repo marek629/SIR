@@ -1,5 +1,5 @@
 *** nearest release ***
-  ! remove qDebug() calls
+  ! CMakeFile refactoring
   ! update Polish translation
 
 *** next release ***
