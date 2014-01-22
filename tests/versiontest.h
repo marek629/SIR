@@ -23,7 +23,7 @@
 #define VERSIONTEST_H
 
 #include <QtTest/QTest>
-#include "../version.h"
+#include "version.h"
 
 #undef VERSION
 #define VERSION "2.3"

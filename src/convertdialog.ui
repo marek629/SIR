@@ -14,7 +14,7 @@
    <string>SIR - Simple Image Resizer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../application.qrc">
+   <iconset resource="../sir.qrc">
     <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -421,7 +421,7 @@
      <x>0</x>
      <y>0</y>
      <width>843</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -614,7 +614,7 @@
   <tabstop>destFileEdit</tabstop>
  </tabstops>
  <resources>
-  <include location="../application.qrc"/>
+  <include location="../sir.qrc"/>
  </resources>
  <connections/>
 </ui>

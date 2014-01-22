@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../images/sir-32x32.png</file>
+        <file>../images/sir-64x64.png</file>
+    </qresource>
+</RCC>

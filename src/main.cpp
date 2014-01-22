@@ -25,7 +25,6 @@
 #include "commandlineassistant.h"
 
 int main(int argc, char *argv[]) {
-    Q_INIT_RESOURCE(application);
     QApplication app(argc, argv);
 
 #if QT_VERSION < 0x050000

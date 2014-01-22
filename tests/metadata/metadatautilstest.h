@@ -19,31 +19,35 @@
  * Program URL: http://sir.projet-libre.org/
  */
 
-#ifndef CONVERTEFFECTSTEST_H
-#define CONVERTEFFECTSTEST_H
+#ifndef METADATAUTILSTEST_H
+#define METADATAUTILSTEST_H
+
+#ifdef SIR_METADATA_SUPPORT
 
 #include <QtTest/QTest>
-#include "../converteffects.h"
+#include "metadata/metadatautils.h"
 
-#undef VERSION
-#define VERSION "2.3"
-
-class ConvertEffectsTest : public QObject {
+class MetadataUtilsTest : public QObject {
     Q_OBJECT
 
 public:
-    ConvertEffectsTest();
-
-private:
-    QImage testImg;
-    SharedInformation info;
-    ConvertEffects effects;
+    MetadataUtilsTest();
 
 private slots:
-    void initTestCase();
-    void combine_color_loop();
-    void combine_color_painter();
-    void combine_brush();
+    void isNullValue_char_data();
+    void isNullValue_char();
+    void isNullValue_int_data();
+    void isNullValue_int();
+    void isNullValue_float_data();
+    void isNullValue_float();
+    void isNullValue_sir_String_data();
+    void isNullValue_sir_String();
+    void isNullValue_QImage_data();
+    void isNullValue_QImage();
 };
 
-#endif // CONVERTEFFECTSTEST_H
+Q_DECLARE_METATYPE( sir::String )
+
+#endif // SIR_METADATA_SUPPORT
+
+#endif // METADATAUTILSTEST_H
