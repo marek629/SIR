@@ -19,7 +19,6 @@ string( TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE )
 if( ${CMAKE_BUILD_TYPE} STREQUAL "debug" )
     set( SIR_UNDER_TESTS TRUE )
     add_definitions( -DSIR_TESTS )
-    enable_testing( )
     message( STATUS "SIR is under tests!" )
 else( )
     set( SIR_UNDER_TESTS FALSE )
@@ -69,6 +68,9 @@ if( qt5 )
                 ${Qt5Xml_DEFINITIONS}
                 ${Qt5PrintSupport_DEFINITIONS}
             )
+        if( SIR_UNDER_TESTS )
+            add_definitions( ${Qt5Test_DEFINITIONS} )
+        endif( )
         set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
         macro( qt_add_resources )
@@ -171,6 +173,7 @@ add_subdirectory( src )
 
 if( SIR_UNDER_TESTS )
     set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tests )
+    enable_testing( )
     add_subdirectory( tests )
 endif()
 

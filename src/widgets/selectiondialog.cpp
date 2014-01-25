@@ -24,7 +24,7 @@
 #include <QScrollArea>
 #include <QDialogButtonBox>
 #include "selectiondialog.h"
-#include "../convertdialog.h"
+#include "convertdialog.h"
 #ifndef SIR_METADATA_SUPPORT
 #include "widgets/historycombobox.h"
 #endif // SIR_METADATA_SUPPORT

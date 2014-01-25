@@ -3,7 +3,6 @@
 # Source files
 set( sir_SRCS
         commandlineassistant.cpp
-        convertdialog.cpp
         converteffects.cpp
         convertshareddata.cpp
         convertthread.cpp
@@ -25,6 +24,7 @@ set( sir_SRCS
         xmlhelper.cpp
         xmlstreamwriter.cpp
         widgets/aboutdialog.cpp
+        widgets/convertdialog.cpp
         widgets/brushframe.cpp
         widgets/colorframe.cpp
         widgets/detailsbrowser.cpp
@@ -106,8 +106,6 @@ if( metadata )
             widgets/selection/iptcgroupbox.ui
         )
 endif( metadata )
-
-#qt_wrap_cpp( MOCS ${sir_MOCS} )
 
 qt_add_resources( RSCS sir.qrc )
 set_source_files_properties( ${RSCS} PROPERTIES GENERATED ON )

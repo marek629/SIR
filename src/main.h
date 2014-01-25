@@ -25,7 +25,7 @@
 #include <QApplication>
 #include <QString>
 #include <QLocale>
-#include "convertdialog.h"
+#include "widgets/convertdialog.h"
 
 #endif // _MAIN_H_
 

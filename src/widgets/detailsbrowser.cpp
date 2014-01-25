@@ -24,7 +24,7 @@
 #include <QGraphicsSvgItem>
 #include <QPainter>
 #include "detailsbrowser.h"
-#include "../convertdialog.h"
+#include "convertdialog.h"
 #include "../optionsenums.h"
 #include "../convertshareddata.h"
 

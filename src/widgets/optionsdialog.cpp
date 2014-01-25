@@ -24,7 +24,7 @@
 #include <QScrollArea>
 #include <QMessageBox>
 #include "optionsdialog.h"
-#include "convertdialog.h"
+#include "widgets/convertdialog.h"
 #include "widgets/options/generalgroupbox.h"
 #include "widgets/options/filelistgroupbox.h"
 #ifdef SIR_METADATA_SUPPORT

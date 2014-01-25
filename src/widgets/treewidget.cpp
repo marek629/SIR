@@ -32,7 +32,7 @@
 #include <QSvgRenderer>
 #include <QMimeData>
 #include "treewidget.h"
-#include "../convertdialog.h"
+#include "convertdialog.h"
 #include "../convertshareddata.h"
 #include "../defines.h"
 #include "../optionsenums.h"
