@@ -93,38 +93,30 @@ void OptionsDialog::saveSettings() {
     Settings::instance()->writeSettings();
 }
 
-/** \e Ok button clicked slot.\n
-  * Checks values in user input widgets and saves settings if checking was
-  * successful.
-  * \sa saveSettings()
+/** Creates and sets up list widget.
+  * \return Poiter to created list widget.
+  * \sa insertItem()
   */
-void OptionsDialog::okButtonClicked() {
-    if (!fileListGroupBox->isColumnChecked()) {
-        QMessageBox::warning(this, tr("Select a column"),
-                             tr("Select at least 1 column to show in file list."));
-        if (!fileListGroupBox->isVisible())
-            listWidget->setCurrentRow(Options::FileList);
-        return;
-    }
-    saveSettings();
+QListWidget *OptionsDialog::createListWidget()
+{
+    QListWidget *listWidget = new QListWidget(this);
+
+    insertItems(listWidget);
+
+    listWidget->setObjectName(QString::fromUtf8("listWidget"));
+    listWidget->setMaximumWidth(120);
+    listWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    listWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    listWidget->setFlow(QListView::LeftToRight);
+    listWidget->setGridSize(QSize(110, 60));
+    listWidget->setViewMode(QListView::IconMode);
+
+    return listWidget;
 }
 
-/** Setups user interface of options dialog. */
-void OptionsDialog::setupUi() {
-    if (this->objectName().isEmpty())
-        this->setObjectName(QString::fromUtf8("OptionsDialog"));
-    this->setWindowTitle(tr("Sir - Configure Options"));
-    this->setWindowModality(Qt::WindowModal);
-    this->resize(680,550);
-    verticalLayout = new QVBoxLayout(this);
-    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    horizontalLayout = new QHBoxLayout();
-    horizontalLayout->setObjectName("horizontalLayout");
-    horizontalLayout->setSpacing(8);
-
-    // list widget setup
-    listWidget = new QListWidget(this);
-
+/** Creates intems into \a listWidget. */
+void OptionsDialog::insertItems(QListWidget *listWidget)
+{
     QString imagesDirPath = QCoreApplication::applicationDirPath() +
                             "/../share/sir/images/";
 
@@ -166,14 +158,39 @@ void OptionsDialog::setupUi() {
     listWidgetItem = new QListWidgetItem(listWidget);
     listWidgetItem->setIcon(icon);
     listWidgetItem->setText(tr("Raw"));
+}
 
-    listWidget->setObjectName(QString::fromUtf8("listWidget"));
-    listWidget->setMaximumWidth(120);
-    listWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    listWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    listWidget->setFlow(QListView::LeftToRight);
-    listWidget->setGridSize(QSize(110, 60));
-    listWidget->setViewMode(QListView::IconMode);
+/** \e Ok button clicked slot.\n
+  * Checks values in user input widgets and saves settings if checking was
+  * successful.
+  * \sa saveSettings()
+  */
+void OptionsDialog::okButtonClicked() {
+    if (!fileListGroupBox->isColumnChecked()) {
+        QMessageBox::warning(this, tr("Select a column"),
+                             tr("Select at least 1 column to show in file list."));
+        if (!fileListGroupBox->isVisible())
+            listWidget->setCurrentRow(Options::FileList);
+        return;
+    }
+    saveSettings();
+}
+
+/** Setups user interface of options dialog. */
+void OptionsDialog::setupUi() {
+    if (this->objectName().isEmpty())
+        this->setObjectName(QString::fromUtf8("OptionsDialog"));
+    this->setWindowTitle(tr("Sir - Configure Options"));
+    this->setWindowModality(Qt::WindowModal);
+    this->resize(680,550);
+    verticalLayout = new QVBoxLayout(this);
+    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName("horizontalLayout");
+    horizontalLayout->setSpacing(8);
+
+    listWidget = createListWidget();
+
     horizontalLayout->addWidget(listWidget);
     scrollArea = new QScrollArea(this);
     scrollArea->setObjectName(QString::fromUtf8("scrollArea"));

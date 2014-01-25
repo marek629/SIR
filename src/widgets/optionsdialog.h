@@ -81,6 +81,8 @@ private:
     void setupUi();
     void loadSettings();
     void saveSettings();
+    QListWidget *createListWidget();
+    void insertItems(QListWidget *listWidget);
 
 private slots:
     void okButtonClicked();
