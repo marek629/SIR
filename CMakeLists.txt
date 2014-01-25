@@ -126,6 +126,7 @@ if( metadata )
     set( CMAKE_MODULE_PATH ${sir_SOURCE_DIR}/cmake )
     find_package( Exiv2 )
     if( EXISTS ${EXIV2_LIBRARY} )
+        message(  STATUS "exiv2 library found" )
         add_definitions( -DSIR_METADATA_SUPPORT )
         set( sir_LINKING_LIBS
                 ${sir_LINKING_LIBS}
@@ -148,8 +149,10 @@ endif( WIN32 )
 
 # Images
 set( sir_IMGS
+        # stars
         images/favorite.png
         images/unfavorite.png
+        # flags
         images/czech.png
         images/dutch.png
         images/english.png
@@ -164,6 +167,24 @@ set( sir_IMGS
         images/serbian.png
         images/slovak.png
         images/spanish.png
+        # options
+        images/options_general.png
+        images/options_list.png
+        images/options_raw.png
+        images/options_selection.png
+        # preview
+        images/exit.png
+        images/filesave.png
+        images/filesaveas.png
+        images/flip_horizontal.png
+        images/flip_vertical.png
+        images/next.png
+        images/previous.png
+        images/print.png
+        images/rotate_ccw.png
+        images/rotate_cw.png
+        images/window_fullscreen.png
+        images/zoom.png
     )
 
 set( CMAKE_AUTOMOC ON )
@@ -178,18 +199,14 @@ if( SIR_UNDER_TESTS )
 endif()
 
 
-# ###############################  Installation  ###############################
-## bin
-#install( TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin )
-## translations
-#install( FILES ${QMS} translations/translation_info.csv DESTINATION share/sir/translations )
-## icon and desktop file
-#if( WIN32 )
-#    install( FILES images/sir.ico DESTINATION share/pixmaps )
-#else( UNIX )
-#    install( FILES images/sir.png DESTINATION share/pixmaps )
-#    install( FILES sir.desktop DESTINATION share/applications )
-#endif( )
-## images
-#install( FILES ${sir_IMGS} DESTINATION share/sir/images )
+ ###############################  Installation  ###############################
+# icon and desktop file
+if( WIN32 )
+    install( FILES images/sir.ico DESTINATION share/pixmaps )
+else( UNIX )
+    install( FILES images/sir.png DESTINATION share/pixmaps )
+    install( FILES sir.desktop DESTINATION share/applications )
+endif( )
+# images
+install( FILES ${sir_IMGS} DESTINATION share/sir/images )
 

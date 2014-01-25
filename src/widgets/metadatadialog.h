@@ -52,6 +52,7 @@ private:
     void createConnections();
     void saveHistory();
     void setupInputWidgets();
+    void setIcons();
     // fields
     MetadataUtils::Metadata *metadata;
     MetadataUtils::ExifStruct *exifStruct;

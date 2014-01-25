@@ -124,41 +124,45 @@ void OptionsDialog::setupUi() {
 
     // list widget setup
     listWidget = new QListWidget(this);
+
+    QString imagesDirPath = QCoreApplication::applicationDirPath() +
+                            "/../share/sir/images/";
+
     // General
     QIcon icon = QIcon::fromTheme("preferences-system",
-                                  QIcon(":/images/options_general.png"));
+                                  QIcon(imagesDirPath + "options_general.png"));
     QListWidgetItem *listWidgetItem = new QListWidgetItem(listWidget);
     listWidgetItem->setIcon(icon);
     listWidgetItem->setText(tr("General"));
     // File list
     icon = QIcon::fromTheme("preferences-desktop",
-                            QIcon(":/images/options_list.png"));
+                            QIcon(imagesDirPath + "options_list.png"));
     listWidgetItem = new QListWidgetItem(listWidget);
     listWidgetItem->setIcon(icon);
     listWidgetItem->setText(tr("File list"));
 #ifdef SIR_METADATA_SUPPORT
     // Metadata
     icon = QIcon::fromTheme("document-properties",
-                            QIcon(":/images/options_metadata.png"));
+                            QIcon(imagesDirPath + "options_metadata.png"));
     listWidgetItem = new QListWidgetItem(listWidget);
     listWidgetItem->setIcon(icon);
     listWidgetItem->setText(tr("Metadata"));
     // File details
     icon = QIcon::fromTheme("x-office-document",
-                            QIcon(":/images/options_details.png"));
+                            QIcon(imagesDirPath + "options_details.png"));
     listWidgetItem = new QListWidgetItem(listWidget);
     listWidgetItem->setIcon(icon);
     listWidgetItem->setText(tr("File details"));
 #endif // SIR_METADATA_SUPPORT
     // Selection
     icon = QIcon::fromTheme("edit-find",
-                            QIcon(":/images/options_selection.png"));
+                            QIcon(imagesDirPath + "options_selection.png"));
     listWidgetItem = new QListWidgetItem(listWidget);
     listWidgetItem->setIcon(icon);
     listWidgetItem->setText(tr("Selection"));
     // Raw
     icon = QIcon::fromTheme("emblem-photos",
-                            QIcon(":/images/options_raw.png"));
+                            QIcon(imagesDirPath + "options_raw.png"));
     listWidgetItem = new QListWidgetItem(listWidget);
     listWidgetItem->setIcon(icon);
     listWidgetItem->setText(tr("Raw"));

@@ -51,14 +51,7 @@ MetadataDialog::MetadataDialog(QWidget *parent, QStringList *images,
     readFile();
     setupValues();
     createConnections();
-
-    // set icons
-    previousButton->setIcon(QIcon::fromTheme("go-previous",
-                                             QIcon(":/images/previous.png")) );
-    nextButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/images/next.png")));
-    deleteButton->setIcon(QIcon::fromTheme("edit-delete"));
-    saveButton->setIcon(QIcon::fromTheme("document-save"));
-    cancelButton->setIcon(QIcon::fromTheme("cancel"));
+    setIcons();
 }
 
 /** Destructor.
@@ -161,6 +154,26 @@ void MetadataDialog::setupInputWidgets() {
     iptcEditStatusComboBox->importHistory(  s->iptc.editStatusMap,
                                             s->iptc.editStatusList, maxHistoryCount);
     iptcEditStatusComboBox->setCurrentIndex(-1);
+}
+
+/** Sets icons for buttons. */
+void MetadataDialog::setIcons() {
+    QString imagesDirPath = QCoreApplication::applicationDirPath() +
+                            "/../share/sir/images/";
+    QIcon icon = QIcon::fromTheme("go-previous", QIcon(imagesDirPath + "previous.png"));
+    previousButton->setIcon(icon);
+
+    icon = QIcon::fromTheme("go-next", QIcon(imagesDirPath + "next.png"));
+    nextButton->setIcon(icon);
+
+    icon = QIcon::fromTheme("edit-delete");
+    deleteButton->setIcon(icon);
+
+    icon = QIcon::fromTheme("document-save");
+    saveButton->setIcon(icon);
+
+    icon = QIcon::fromTheme("cancel");
+    cancelButton->setIcon(icon);
 }
 
 /** Read current image file and shows information about issues if exist.\n

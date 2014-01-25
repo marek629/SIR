@@ -105,6 +105,10 @@ if( metadata )
             widgets/selection/exifgroupbox.ui
             widgets/selection/iptcgroupbox.ui
         )
+    set( sir_IMGS ${sir_IMGS}
+            images/options_details.png
+            images/options_metadata.png
+        )
 endif( metadata )
 
 qt_add_resources( RSCS sir.qrc )
@@ -137,3 +141,8 @@ if( SIR_UNDER_TESTS )
     add_library( sir_library SHARED ${sir_SRCS} ${UIS} ${MOCS} ${QMS} ${RSCS} )
     target_link_libraries( sir_library ${sir_LINKING_LIBS} )
 endif( )
+
+# bin
+install( TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin )
+# translations
+install( FILES ${QMS} translations/translation_info.csv DESTINATION share/sir/translations )

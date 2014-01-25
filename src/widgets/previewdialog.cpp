@@ -134,31 +134,44 @@ void PreviewDialog::createConnections() {
 
 /** Sets up \em Actions toolbar. */
 void PreviewDialog::initBar() {
+    QString imagesDirPath = QCoreApplication::applicationDirPath() +
+                            "/../share/sir/images/";
+
     previousButton->setDefault(false);
     previousButton->setToolTip(tr("Back to previous image"));
     previousButton->setShortcut(Qt::Key_Left);
-    previousButton->setIcon(QIcon::fromTheme("go-previous",
-                                             QIcon(":/images/previous.png")) );
+    QIcon icon = QIcon::fromTheme("go-previous",
+                                  QIcon(imagesDirPath + "previous.png"));
+    previousButton->setIcon(icon);
 
     nextButton->setToolTip(tr("Go to next image"));
     nextButton->setShortcut(Qt::Key_Right);
-    nextButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/images/next.png")));
+    icon = QIcon::fromTheme("go-next",
+                            QIcon(imagesDirPath + "next.png"));
+    nextButton->setIcon(icon);
 
     rotateCcwButton->setToolTip(tr("Rotate counter clockwise"));
-    rotateCcwButton->setIcon(QIcon::fromTheme("object-rotate-left",
-                                              QIcon(":/images/rotate_ccw.png")) );
+    icon = QIcon::fromTheme("object-rotate-left",
+                            QIcon(imagesDirPath + "rotate_ccw.png"));
+    rotateCcwButton->setIcon(icon);
 
     rotateCwButton->setToolTip(tr("Rotate clockwise"));
-    rotateCwButton->setIcon(QIcon::fromTheme("object-rotate-right",
-                                             QIcon(":/images/rotate_cw.png")) );
+    icon = QIcon::fromTheme("object-rotate-right",
+                            QIcon(imagesDirPath + "rotate_cw.png"));
+    rotateCwButton->setIcon(icon);
 
-    flipHButton->setIcon(QIcon::fromTheme("object-flip-horizontal",
-                                          QIcon(":/images/flip_horizontal.png")) );
+    icon = QIcon::fromTheme("object-flip-horizontal",
+                            QIcon(imagesDirPath + "flip_horizontal.png"));
+    flipHButton->setIcon(icon);
 
-    flipVButton->setIcon(QIcon::fromTheme("object-flip-vertical",
-                                          QIcon(":/images/flip_vertical.png")) );
+    icon = QIcon::fromTheme("object-flip-vertical",
+                            QIcon(imagesDirPath + "flip_vertical.png"));
+    flipVButton->setIcon(icon);
 
     comboLabel->setFixedSize(22,22);
+    icon = QIcon::fromTheme("zoom-original",
+                            QIcon(imagesDirPath + "zoom.png"));
+    comboLabel->setPixmap(icon.pixmap(comboLabel->size()));
 
     for (int i=100; i>=10; i-=10)
         zoomComboBox->addItem(QString::number(i) + "%");
@@ -168,27 +181,32 @@ void PreviewDialog::initBar() {
 
     fullScreenButton->setToolTip(tr("Fullscreen"));
     fullScreenButton->setShortcut(Qt::Key_F11);
-    fullScreenButton->setIcon(QIcon::fromTheme("view-fullscreen",
-                                               QIcon(":/images/window_fullscreen.png")) );
+    icon = QIcon::fromTheme("view-fullscreen",
+                            QIcon(imagesDirPath + "window_fullscreen.png"));
+    fullScreenButton->setIcon(icon);
 
     saveImageButton->setToolTip(tr("Save image"));
     saveImageButton->setShortcut(Qt::CTRL + Qt::Key_S);
-    saveImageButton->setIcon(QIcon::fromTheme("document-save",
-                                              QIcon(":/images/filesave.png")) );
+    icon = QIcon::fromTheme("document-save",
+                            QIcon(imagesDirPath + "filesave.png"));
+    saveImageButton->setIcon(icon);
 
     saveAsButton->setToolTip(tr("Save image as..."));
     saveAsButton->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
-    saveAsButton->setIcon(QIcon::fromTheme("document-save-as",
-                                           QIcon(":/images/filesaveas.png")) );
+    icon = QIcon::fromTheme("document-save-as",
+                            QIcon(imagesDirPath + "filesaveas.png"));
+    saveAsButton->setIcon(icon);
 
     printButton->setToolTip(tr("Print current image..."));
     printButton->setShortcut(Qt::CTRL + Qt::Key_P);
-    printButton->setIcon(QIcon::fromTheme("document-print",
-                                          QIcon(":/images/print.png")) );
+    icon = QIcon::fromTheme("document-print",
+                            QIcon(imagesDirPath + "print.png"));
+    printButton->setIcon(icon);
 
     quitButton->setToolTip(tr("Quit preview"));
-    quitButton->setIcon(QIcon::fromTheme("application-exit",
-                                         QIcon(":/images/exit.png")) );
+    icon = QIcon::fromTheme("application-exit",
+                            QIcon(imagesDirPath + "exit.png"));
+    quitButton->setIcon(icon);
 }
 
 /** Zoom combo box slot.
