@@ -43,6 +43,7 @@ private slots:
     void initTestCase();
     void combine_color_loop();
     void combine_color_painter();
+    void combine_color_compare();
     void combine_brush();
 };
 

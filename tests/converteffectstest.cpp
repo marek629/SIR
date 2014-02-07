@@ -65,6 +65,29 @@ void ConvertEffectsTest::combine_color_painter() {
     }
 }
 
+void ConvertEffectsTest::combine_color_compare() {
+    QElapsedTimer timer;
+    QImage img;
+    QColor color(Qt::green);
+
+    img = testImg;
+    effects.setImage(&img);
+
+    timer.start();
+    effects.combine(color);
+    qint64 msPainter = timer.elapsed();
+
+
+    img = testImg;
+    effects.setImage(&img);
+
+    timer.start();
+    effects.combineLoop(color);
+    qint64 msLoop = timer.elapsed();
+
+    QVERIFY(msPainter < msLoop);
+}
+
 void ConvertEffectsTest::combine_brush() {
     QImage img(testImg);
     effects.setImage(&img);

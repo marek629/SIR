@@ -139,6 +139,8 @@ if( metadata )
     else( EXISTS ${EXIV2_LIBRARY} )
         message ( FATAL_ERROR "eviv2 library not found! Disable metadata support calling -Dmetadata=OFF in cmake command." )
     endif( EXISTS ${EXIV2_LIBRARY} )
+else( metadata )
+    message(  STATUS "Building SIR without metadata support." )
 endif( metadata )
 
 
