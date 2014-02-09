@@ -11,6 +11,7 @@
     - code update for Qt 5 compatibility
     - bugfix: painting effect when desired size typed in Bytes now
     - String class moved from MetadataUtils namespace to sir namespace
+    - Polish translation updated
 
 * Sun Apr 28 2013 - Marek Jędryka <jedryka89@gmail.com> - v2.6
     - added command line arguments --help, --session and --lang support

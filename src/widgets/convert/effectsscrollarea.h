@@ -25,8 +25,8 @@
 #include "ui_effectsscrollarea.h"
 
 class EffectsScrollArea : public QScrollArea, public Ui::EffectsScrollArea {
-    friend class EffectsCollector;
     Q_OBJECT
+    friend class EffectsCollector;
 
 public:
     explicit EffectsScrollArea(QWidget *parent = 0);

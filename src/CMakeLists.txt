@@ -142,6 +142,13 @@ if( SIR_UNDER_TESTS )
     target_link_libraries( sir_library ${sir_LINKING_LIBS} )
 endif( )
 
+# 'make lupdate' command
+add_custom_target( lupdate
+        COMMAND lupdate -I ./ metadata/ widgets/ widgets/convert ${sir_SRCS} ${sir_HDRS} ${sir_UIS} -ts ${sir_TRANSLATIONS}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+
+# Install files
 # bin
 install( TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin )
 # translations
