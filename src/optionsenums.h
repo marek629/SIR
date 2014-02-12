@@ -1,6 +1,6 @@
 /* This file is part of SIR, an open-source cross-platform Image tool
  * 2007-2010  Rafael Sachetto <rsachetto@gmail.com>
- * 2011-2012  Marek Jędryka   <jedryka89@gmail.com>
+ * 2011-2014  Marek Jędryka   <jedryka89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
