@@ -15,8 +15,11 @@ include_directories(
         src/
     )
 
+if( NOT CMAKE_BUILD_TYPE )
+    set( CMAKE_BUILD_TYPE "release" CACHE STRING "" FORCE )
+endif( )
 string( TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE )
-if( ${CMAKE_BUILD_TYPE} STREQUAL "debug" )
+if( CMAKE_BUILD_TYPE MATCHES "^debug$" )
     set( SIR_UNDER_TESTS TRUE )
     add_definitions( -DSIR_TESTS )
     message( STATUS "SIR is under tests!" )
@@ -136,6 +139,11 @@ if( metadata )
                 ${sir_UT_LINKING_LIBS}
                 ${EXIV2_LIBRARY}
             )
+        set( sir_IMGS
+                # options
+                images/options_details.png
+                images/options_metadata.png
+            )
     else( EXISTS ${EXIV2_LIBRARY} )
         message ( FATAL_ERROR "eviv2 library not found! Disable metadata support calling -Dmetadata=OFF in cmake command." )
     endif( EXISTS ${EXIV2_LIBRARY} )
@@ -145,12 +153,14 @@ endif( metadata )
 
 
 if( WIN32 )
-        include_directories( windows/include )
-        set( GUI_TYPE WIN32 )
+    include_directories( windows/include )
+    set( GUI_TYPE WIN32 )
+    cmake_policy( SET CMP0020 NEW )
 endif( WIN32 )
 
 # Images
 set( sir_IMGS
+        ${sir_IMGS}
         # stars
         images/favorite.png
         images/unfavorite.png

@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{A3BCDC21-EE6A-4DDF-8A08-E5B692C5B5F1}
 AppName=Sir
-AppVerName=Sir 2.3
+AppVerName=Sir 2.7
 AppPublisher=Sir Software
 AppPublisherURL=http://sir.projet-libre.org/
 AppSupportURL=http://sir.projet-libre.org/
@@ -15,34 +15,29 @@ AppUpdatesURL=http://sir.projet-libre.org/
 DefaultDirName={pf}\Sir
 DefaultGroupName=Sir
 AllowNoIcons=yes
-LicenseFile=I:\sir\LICENSE
-OutputDir=I:\sir\installer
+LicenseFile=C:\Users\Marek\Downloads\Programowanie\SIR-master\LICENSE
+OutputDir=C:\Users\Marek\Downloads\Programowanie\SIR-master\installer
 OutputBaseFilename=setup
-SetupIconFile=I:\sir\images\sir.ico
+SetupIconFile=C:\Users\Marek\Downloads\Programowanie\SIR-master\images\sir.ico
 Compression=lzma
-SolidCompression=yes
+;SolidCompression=yes
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "basque"; MessagesFile: "compiler:Languages\Basque.isl"
-Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
-Name: "catalan"; MessagesFile: "compiler:Languages\Catalan.isl"
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
-Name: "danish"; MessagesFile: "compiler:Languages\Danish.isl"
 Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
-Name: "finnish"; MessagesFile: "compiler:Languages\Finnish.isl"
+Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
-Name: "hebrew"; MessagesFile: "compiler:Languages\Hebrew.isl"
+Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "hungarian"; MessagesFile: "compiler:Languages\Hungarian.isl"
-Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
-Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
-Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
 Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
+Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "romanian"; MessagesFile: "compiler:Languages\Unofficial\Romanian.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
-Name: "slovak"; MessagesFile: "compiler:Languages\Slovak.isl"
-Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
+Name: "serbianlatin"; MessagesFile: "compiler:Languages\SerbianLatin.isl"
+Name: "serbiancyrillic"; MessagesFile: "compiler:Languages\SerbianCyrillic.isl"
+Name: "slovak"; MessagesFile: "compiler:Languages\Unofficial\Slovak.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Tasks]
@@ -50,31 +45,86 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "I:\sir-build-desktop\release\sir.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\QtSDK\mingw\bin\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\QtSDK\mingw\bin\mingwm10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "I:\sir\windows\include\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "I:\sir\windows\include\libgcc_s_sjlj-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "I:\sir\windows\include\libexiv2-10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "I:\sir\windows\include\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "I:\sir\windows\include\QtCore4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "I:\sir\windows\include\QtGui4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "I:\sir\windows\include\QtNetwork4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qgif4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qico4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qjpeg4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qmng4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qsvg4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "D:\QtSDK\Desktop\Qt\4.7.4\mingw\plugins\imageformats\qtiff4.dll"; DestDir: "{app}\plugins\imageformats\"; Flags: ignoreversion
-Source: "I:\sir\windows\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
+; Executable
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\bin\sir.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
+; SIR Icon
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\pixmaps\sir.ico"; DestDir: "{app}\share\pixmaps"; Flags: ignoreversion
+; Flags
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\czech.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\dutch.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\english.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\french.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\german.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\greek.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\hungarian.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\polish.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\portuguese.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\romanian.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\russian.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\serbian.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\slovak.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\spanish.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+; GUI icons
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\exit.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\filesave.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\filesaveas.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\flip_horizontal.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\flip_vertical.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\next.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\previous.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\print.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\rotate_ccw.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\rotate_cw.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\window_fullscreen.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\zoom.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+; Options icons
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\options_general.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\options_list.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\options_raw.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\images\options_selection.png"; DestDir: "{app}\share\sir\images"; Flags: ignoreversion
+; Translations
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_cz.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_de.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_en.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_es.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_fr.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_gr.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_hu_HU.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_nl.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_pl.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_pt_BR.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_ro_RO.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_ru_RU.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_sk.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\sir_sr.qm"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+Source: "C:\Users\Marek\Downloads\Programowanie\usr\share\sir\translations\translation_info.csv"; DestDir: "{app}\share\sir\translations"; Flags: ignoreversion
+; Libraries
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\icudt51.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\icuin51.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\icuuc51.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\libgcc_s_dw2-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+;Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\mingwm10.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\libstdc++-6.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\libwinpthread-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+;Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\libgcc_s_sjlj-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+;Source: "I:\sir\windows\include\libexiv2-10.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "I:\sir\windows\include\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Core.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Gui.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Network.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5PrintSupport.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Svg.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Widgets.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Xml.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
+;Source: "I:\sir\windows\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Sir"; Filename: "{app}\sir.exe"
+Name: "{group}\Sir"; Filename: "{app}\bin\sir.exe"
 Name: "{group}\{cm:UninstallProgram,Sir}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\Sir"; Filename: "{app}\sir.exe"; Tasks: desktopicon
+Name: "{commondesktop}\Sir"; Filename: "{app}\share\pixmaps\sir.ico"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Sir"; Filename: "{app}\sir.exe"; Tasks: quicklaunchicon
 
 [Run]
-Filename: "{app}\sir.exe"; Description: "{cm:LaunchProgram,Sir}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\bin\sir.exe"; Description: "{cm:LaunchProgram,Sir}"; Flags: nowait postinstall skipifsilent
 

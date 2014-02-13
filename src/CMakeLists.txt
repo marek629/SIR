@@ -105,10 +105,6 @@ if( metadata )
             widgets/selection/exifgroupbox.ui
             widgets/selection/iptcgroupbox.ui
         )
-    set( sir_IMGS ${sir_IMGS}
-            images/options_details.png
-            images/options_metadata.png
-        )
 endif( metadata )
 
 qt_add_resources( RSCS sir.qrc )
