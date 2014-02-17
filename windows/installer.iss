@@ -112,23 +112,23 @@ Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5PrintSupport.dll"; DestDir:
 Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Svg.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Widgets.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\Qt5Xml.dll"; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qgif.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qico.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qjpeg.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-;Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qmng.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qsvg.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qtga.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qtiff.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-;Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\imageformats\qwbmp.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\platforms\qminimal.dll"; DestDir: "{app}\bin\plugins\platforms"; Flags: ignoreversion
-Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\bin\plugins\platforms\qwindows.dll"; DestDir: "{app}\bin\plugins\platforms"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qgif.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qico.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qjpeg.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+;Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qmng.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qsvg.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qtga.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qtiff.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+;Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\imageformats\qwbmp.dll"; DestDir: "{app}\bin\plugins\imageformats"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\platforms\qminimal.dll"; DestDir: "{app}\bin\plugins\platforms"; Flags: ignoreversion
+Source: "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32\plugins\platforms\qwindows.dll"; DestDir: "{app}\bin\plugins\platforms"; Flags: ignoreversion
 Source: "C:\Users\Marek\Downloads\Programowanie\SIR-master\windows\qt.conf"; DestDir: "{app}\bin"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Sir"; Filename: "{app}\bin\sir.exe"
+Name: "{group}\Sir"; Filename: "{app}\bin\sir.exe"; IconFilename: "{app}\share\pixmaps\sir.ico"
 Name: "{group}\{cm:UninstallProgram,Sir}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\Sir"; Filename: "{app}\share\pixmaps\sir.ico"; Tasks: desktopicon
+Name: "{commondesktop}\Sir"; Filename: "{app}\bin\sir.exe"; IconFilename: "{app}\share\pixmaps\sir.ico"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Sir"; Filename: "{app}\sir.exe"; Tasks: quicklaunchicon
 
 [Run]
