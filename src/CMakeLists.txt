@@ -67,8 +67,6 @@ set( sir_UIS
         widgets/options/selectiongroupbox.ui
         widgets/selection/dirwidget.ui
     )
-qt_wrap_ui( UIS ${sir_UIS} )
-set_source_files_properties( ${UIS} PROPERTIES GENERATED ON )
 
 if( metadata )
     set( sir_MOCS ${sir_MOCS}
@@ -107,6 +105,8 @@ if( metadata )
         )
 endif( metadata )
 
+qt_wrap_ui( UIS ${sir_UIS} )
+set_source_files_properties( ${UIS} PROPERTIES GENERATED ON )
 qt_add_resources( RSCS sir.qrc )
 set_source_files_properties( ${RSCS} PROPERTIES GENERATED ON )
 

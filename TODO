@@ -10,6 +10,7 @@
   ! CammelCase file naming
   ! README refactoring to markup readable by GitHub
   ! improve view in FileDetails for photos made by HTC Desire S
+  ! restore check updates option
 
 *** 3.0 roadmap ***
   ! dynamically add effects to effect list (empty initially)
