@@ -30,6 +30,7 @@ class SizeScrollArea : public QScrollArea, public Ui::SizeScrollArea {
 
 public:
     explicit SizeScrollArea(QWidget *parent = 0);
+    void retranslateStrings();
 
 private:
     // fields

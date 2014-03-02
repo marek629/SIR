@@ -44,6 +44,10 @@ SizeScrollArea::SizeScrollArea(QWidget *parent) : QScrollArea(parent) {
     }
 }
 
+void SizeScrollArea::retranslateStrings() {
+    retranslateUi(this);
+}
+
 /** Shows size values corresponding index of size unit combo box. */
 void SizeScrollArea::setSizeUnit(int index) {
     if (index < 0)

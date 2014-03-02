@@ -30,6 +30,7 @@ class SvgScrollArea : public QScrollArea, public Ui::SvgScrollArea {
 
 public:
     explicit SvgScrollArea(QWidget *parent = 0);
+    void retranslateStrings();
 };
 
 #endif // SVGSCROLLAREA_H

@@ -31,6 +31,10 @@ OptionsScrollArea::OptionsScrollArea(QWidget *parent) : QScrollArea(parent) {
     connect(qualitySlider, SIGNAL(valueChanged(int)), qualitySpinBox, SLOT(setValue(int)));
 }
 
+void OptionsScrollArea::retranslateStrings() {
+    retranslateUi(this);
+}
+
 /** Rotate checkbox slot.
   *
   * Disables/enables rotation angle line edit.

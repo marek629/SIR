@@ -989,10 +989,10 @@ void ConvertDialog::retranslateStrings() {
 
     // retranslate children widgets
     filesTreeWidget->retranslateStrings();
-    sizeScrollArea->retranslateUi(sizeScrollArea);
-    optionsScrollArea->retranslateUi(optionsScrollArea);
+    sizeScrollArea->retranslateStrings();
+    optionsScrollArea->retranslateStrings();
     effectsScrollArea->retranslateStrings();
-    svgScrollArea->retranslateUi(svgScrollArea);
+    svgScrollArea->retranslateStrings();
 }
 
 /** Returns file size string with \e KiB or \e MiB suffix (depending

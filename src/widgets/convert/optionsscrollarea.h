@@ -30,6 +30,7 @@ class OptionsScrollArea : public QScrollArea, public Ui::OptionsScrollArea {
 
 public:
     explicit OptionsScrollArea(QWidget *parent = 0);
+    void retranslateStrings();
 
 private slots:
     void verifyRotate(int status);

@@ -25,3 +25,7 @@
 SvgScrollArea::SvgScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
 }
+
+void SvgScrollArea::retranslateStrings() {
+    retranslateUi(this);
+}
