@@ -31,6 +31,9 @@ class EffectsScrollArea : public QScrollArea, public Ui::EffectsScrollArea {
 public:
     explicit EffectsScrollArea(QWidget *parent = 0);
     ~EffectsScrollArea();
+    void retranslateStrings();
+    QStringList colorFilterStringList();
+    QStringList gradientFilterStringList();
 
 private:
     // fields

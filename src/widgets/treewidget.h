@@ -64,6 +64,7 @@ public:
     bool isColumnMember(int col, const QString &str);
     bool isColumnMember(int col, const QStringList &strList,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    void retranslateStrings();
 
 protected:
     virtual void keyPressEvent( QKeyEvent *k );
@@ -107,7 +108,6 @@ public slots:
 #ifdef SIR_METADATA_SUPPORT
     void showMetadata();
 #endif // SIR_METADATA_SUPPORT
-    void retranslateStrings();
     inline void resizeColumnsToContents();
 
 signals:

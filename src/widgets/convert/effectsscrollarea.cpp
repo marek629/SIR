@@ -24,6 +24,8 @@
 #include <QStringListModel>
 #include "effectsscrollarea.h"
 
+#include <QDebug>
+
 /** Creates the EffectsScrollArea object. Sets up GUI. */
 EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
@@ -82,15 +84,38 @@ EffectsScrollArea::~EffectsScrollArea() {
     delete filterGradientModel;
 }
 
-/** Sets up filters combo box models. */
-void EffectsScrollArea::setupFilterModels() {
+void EffectsScrollArea::retranslateStrings() {
+    retranslateUi(this);
+
+    QStringListModel *model = 0;
+    model = static_cast<QStringListModel*>(filterColorModel);
+    model->setStringList(colorFilterStringList());
+    model = static_cast<QStringListModel*>(filterGradientModel);
+    model->setStringList(gradientFilterStringList());
+
+    if (filterColorRadioButton->isChecked())
+        filterTypeComboBox->setCurrentIndex(filterColorModelIndex);
+    else
+        filterTypeComboBox->setCurrentIndex(filterGradientModelIndex);
+}
+
+QStringList EffectsScrollArea::colorFilterStringList() {
     QStringList stringList;
     stringList << tr("Black & white") << tr("Sepia") << tr("Custom");
-    filterColorModel = new QStringListModel(stringList, this);
-    filterColorModelIndex = 0;
-    stringList.clear();
+    return stringList;
+}
+
+QStringList EffectsScrollArea::gradientFilterStringList() {
+    QStringList stringList;
     stringList << tr("Linear") << tr("Radial") << tr("Conical");
-    filterGradientModel = new QStringListModel(stringList, this);
+    return stringList;
+}
+
+/** Sets up filters combo box models. */
+void EffectsScrollArea::setupFilterModels() {
+    filterColorModel = new QStringListModel(colorFilterStringList(), this);
+    filterColorModelIndex = 0;
+    filterGradientModel = new QStringListModel(gradientFilterStringList(), this);
     filterGradientModelIndex = 0;
 }
 
