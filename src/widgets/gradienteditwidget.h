@@ -32,6 +32,7 @@ public:
     explicit GradientEditWidget(QWidget *parent = 0);
     QGradientStops gradientStops() const;
     void setGradientStops(const QGradientStops &stops);
+    void retranslateStrings();
 
 public slots:
     void hide();

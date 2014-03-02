@@ -86,6 +86,7 @@ EffectsScrollArea::~EffectsScrollArea() {
 
 void EffectsScrollArea::retranslateStrings() {
     retranslateUi(this);
+    filterGradientWidget->retranslateStrings();
 
     QStringListModel *model = 0;
     model = static_cast<QStringListModel*>(filterColorModel);

@@ -92,6 +92,10 @@ void GradientEditWidget::setGradientStops(const QGradientStops &stops) {
     emit gradientChanged();
 }
 
+void GradientEditWidget::retranslateStrings() {
+    retranslateUi(this);
+}
+
 /** Hides tree widget and related push buttons.
   * \sa show()
   */
