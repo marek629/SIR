@@ -24,8 +24,6 @@
 #include <QStringListModel>
 #include "effectsscrollarea.h"
 
-#include <QDebug>
-
 /** Creates the EffectsScrollArea object. Sets up GUI. */
 EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);

@@ -27,6 +27,10 @@
 #include <QLocale>
 #include "widgets/convertdialog.h"
 
+#if QT_VERSION >= 0x050000
+bool findIconTheme();
+#endif // QT_VERSION
+
 #endif // _MAIN_H_
 
 /** \mainpage
@@ -60,7 +64,7 @@
   *   * XMP
   *
   * Dependences:
-  *   * [Qt 4](http://qt-project.org/)
+  *   * [Qt 4.6+](http://qt-project.org/)
   *
   * Optional dependences:
   *   * [libexiv2](http://exiv2.org/)

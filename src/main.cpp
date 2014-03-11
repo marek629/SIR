@@ -21,6 +21,8 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QTextCodec>
+#include <QDebug>
+
 #include "main.h"
 #include "commandlineassistant.h"
 
@@ -29,7 +31,10 @@ int main(int argc, char *argv[]) {
 
 #if QT_VERSION < 0x050000
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
+#else
+    findIconTheme();
+#endif // QT_VERSION
+
     QTextCodec* codec = QTextCodec::codecForLocale ();
 
     // Parse the arguments from the command line
@@ -48,3 +53,26 @@ int main(int argc, char *argv[]) {
     app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
     return app.exec();
 }
+
+#if QT_VERSION >= 0x050000
+bool findIconTheme() {
+    QString themeTestIconName = "list-add";
+    QStringList themes;
+    themes << "Tango" << "oxygen" << "gnome";
+
+    bool themeFound = false;
+    foreach (QString themeName, themes) {
+        QIcon::setThemeName(themeName);
+        themeFound = QIcon::hasThemeIcon(themeTestIconName);
+        if (themeFound)
+            break;
+    }
+
+    if (themeFound)
+        qDebug() << "Icon theme found:" << QIcon::themeName();
+    else
+        qWarning() << "No icon theme found. Tried:" << themes;
+
+    return themeFound;
+}
+#endif // QT_VERSION
