@@ -51,6 +51,10 @@ signals:
 
 private:
     inline QString numberString(double v);
+    void createConnections();
+    void setupTreeWidget(QTreeWidget *tree);
+    void disableButtons();
+    void setButtonIcons();
 };
 
 #endif // GRADIENTEDITWIDGET_H

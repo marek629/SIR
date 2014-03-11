@@ -30,38 +30,10 @@
 GradientEditWidget::GradientEditWidget(QWidget *parent) : QWidget(parent) {
     setupUi(this);
 
-    // set buttons icons
-    addPushButton->setIcon(QIcon::fromTheme("list-add"));
-    deletePushButton->setIcon(QIcon::fromTheme("list-remove"));
-    moveUpPushButton->setIcon(QIcon::fromTheme("go-up"));
-    moveDownPushButton->setIcon(QIcon::fromTheme("go-down"));
-    // disable buttons
-    addPushButton->setEnabled(false);
-    deletePushButton->setEnabled(false);
-    moveUpPushButton->setEnabled(false);
-    moveDownPushButton->setEnabled(false);
-
-    // setup tree widget
-    treeWidget->setSelectionMode(QAbstractItemView::NoSelection);
-    QStringList list;
-    list << numberString(0.) << "";
-    QTreeWidgetItem *item = new QTreeWidgetItem(list);
-    item->setBackgroundColor(1, Qt::red);
-    treeWidget->addTopLevelItem(item);
-    list[0] = numberString(1.);
-    item = new QTreeWidgetItem(list);
-    item->setBackgroundColor(1, Qt::yellow);
-    treeWidget->addTopLevelItem(item);
-
-    // create connections
-    connect(treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
-            this, SLOT(treeItemSelected(QTreeWidgetItem*,QTreeWidgetItem*)) );
-    connect(treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-            this, SLOT(editItem(QTreeWidgetItem*,int)) );
-    connect(addPushButton, SIGNAL(clicked()), this, SLOT(addItem()));
-    connect(deletePushButton, SIGNAL(clicked()), this, SLOT(deleteItem()));
-    connect(moveUpPushButton, SIGNAL(clicked()), this, SLOT(moveUpItem()));
-    connect(moveDownPushButton, SIGNAL(clicked()), this, SLOT(moveDownItem()));
+    setButtonIcons();
+    disableButtons();
+    setupTreeWidget(treeWidget);
+    createConnections();
 }
 
 /** Returns list of GradientStops corresponding content of tree widget.
@@ -245,4 +217,42 @@ void GradientEditWidget::moveUpItem() {
 /** Returns string coresponding \a v double value needed by tree widget. */
 QString GradientEditWidget::numberString(double v) {
     return QString::number(v, 'f', 2);
+}
+
+void GradientEditWidget::createConnections() {
+    connect(treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+            this, SLOT(treeItemSelected(QTreeWidgetItem*,QTreeWidgetItem*)) );
+    connect(treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+            this, SLOT(editItem(QTreeWidgetItem*,int)) );
+    connect(addPushButton, SIGNAL(clicked()), this, SLOT(addItem()));
+    connect(deletePushButton, SIGNAL(clicked()), this, SLOT(deleteItem()));
+    connect(moveUpPushButton, SIGNAL(clicked()), this, SLOT(moveUpItem()));
+    connect(moveDownPushButton, SIGNAL(clicked()), this, SLOT(moveDownItem()));
+}
+
+void GradientEditWidget::setupTreeWidget(QTreeWidget *tree) {
+    tree->setSelectionMode(QAbstractItemView::NoSelection);
+    QStringList list;
+    list << numberString(0.) << "";
+    QTreeWidgetItem *item = new QTreeWidgetItem(list);
+    item->setBackgroundColor(1, Qt::red);
+    tree->addTopLevelItem(item);
+    list[0] = numberString(1.);
+    item = new QTreeWidgetItem(list);
+    item->setBackgroundColor(1, Qt::yellow);
+    tree->addTopLevelItem(item);
+}
+
+void GradientEditWidget::disableButtons() {
+    addPushButton->setEnabled(false);
+    deletePushButton->setEnabled(false);
+    moveUpPushButton->setEnabled(false);
+    moveDownPushButton->setEnabled(false);
+}
+
+void GradientEditWidget::setButtonIcons() {
+    addPushButton->setIcon(QIcon::fromTheme("list-add"));
+    deletePushButton->setIcon(QIcon::fromTheme("list-remove"));
+    moveUpPushButton->setIcon(QIcon::fromTheme("go-up"));
+    moveDownPushButton->setIcon(QIcon::fromTheme("go-down"));
 }
