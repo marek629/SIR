@@ -99,6 +99,9 @@ private:
     ConicalGradientParams conicalGradientParams_;
     // methods
     void updateGradientParams();
+    void setupLinearGradient(LinearGradientParams *params);
+    void setupRadialGradient(RadialGradientParams *params);
+    void setupConicalGradient(ConicalGradientParams *params);
 };
 
 #endif // BRUSHFRAME_H

@@ -27,8 +27,12 @@
 /** Creates BrushFrame object. */
 BrushFrame::BrushFrame(QWidget *parent) : ColorFrame(parent) {
     brushEditable = true;
-    mouseLeftButtonPressed = false;
+    mouseLeftButtonPressed = false; // TODO: remove this
     gradient = 0;
+
+    setupLinearGradient(&linearGradientParams_);
+    setupRadialGradient(&radialGradientParams_);
+    setupConicalGradient(&conicalGradientParams_);
 }
 
 /** Returns true if gradient edition is allowed, otherwise false.
@@ -274,4 +278,22 @@ void BrushFrame::updateGradientParams() {
     default:
         break;
     }
+}
+
+void BrushFrame::setupLinearGradient(LinearGradientParams *params) {
+    params->finalStop.setX(1.0);
+}
+
+void BrushFrame::setupRadialGradient(RadialGradientParams *params) {
+    params->center.setX(0.5);
+    params->center.setY(0.5);
+    params->focalPoint.setX(0.5);
+    params->focalPoint.setY(0.5);
+    params->radius = 0.5;
+}
+
+void BrushFrame::setupConicalGradient(ConicalGradientParams *params) {
+    params->angle = 0.;
+    params->center.setX(0.5);
+    params->center.setY(0.5);
 }
