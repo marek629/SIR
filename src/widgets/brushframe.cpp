@@ -27,7 +27,7 @@
 /** Creates BrushFrame object. */
 BrushFrame::BrushFrame(QWidget *parent) : ColorFrame(parent) {
     brushEditable = true;
-    mouseLeftButtonPressed = false; // TODO: remove this
+    mouseLeftButtonPressed = false;
     gradient = 0;
 
     setupLinearGradient(&linearGradientParams_);

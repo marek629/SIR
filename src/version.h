@@ -25,7 +25,7 @@
 #include <QString>
 #include <QVector>
 
-#define VERSION "2.7"
+#define VERSION "2.7.1"
 
 //! SIR version information class.
 class Version {

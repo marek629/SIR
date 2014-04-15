@@ -1,4 +1,6 @@
 *** nearest release ***
+  ! fix position in "Add Text" effect
+  ! fix crash when language is not sellected in options dialog
 
 *** next release ***
   ! load all files selected in file menager (ie. Thunar) in just 1 instance of SIR
@@ -31,3 +33,4 @@
     * scripts with exiv2 support
     * graphical flow diagram editor for scripts substitution
   ! Add color filters - colormaps (dog's view, jet); see also: http://www.mathworks.com/help/matlab/ref/colormap.html
+  ! More JPEG compression options
