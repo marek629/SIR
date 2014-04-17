@@ -262,9 +262,9 @@ QPoint ConvertEffects::getTransformOriginPoint(const QPoint &position,
         result.setX(0.01 * result.x() * img->width());
     if (units.second == Percent)
         result.setY(0.01 * result.y() * img->height());
-    if (shared->textPos.x() < 0)
+    if (position.x() < 0)
         result.setX(result.x() + img->width());
-    if (shared->textPos.y() < 0)
+    if (position.y() < 0)
         result.setY(result.y() + img->height());
     return result;
 }

@@ -45,6 +45,9 @@ private slots:
     void combine_color_painter();
     void combine_color_compare();
     void combine_brush();
+    void getTransformOriginPoint_pixels_zero();
+    void getTransformOriginPoint_pixels_positive();
+    void getTransformOriginPoint_pixels_negative();
 };
 
 #endif // CONVERTEFFECTSTEST_H

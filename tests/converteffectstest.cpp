@@ -102,5 +102,41 @@ void ConvertEffectsTest::combine_brush() {
     }
 }
 
+void ConvertEffectsTest::getTransformOriginPoint_pixels_zero() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QPoint testPoint(0, 0);
+    PosUnitPair unitPair(Pixel, Pixel);
+    QPoint expected(testPoint);
+    QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::getTransformOriginPoint_pixels_positive() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QPoint testPoint(img.width(), img.height());
+    PosUnitPair unitPair(Pixel, Pixel);
+    QPoint expected(testPoint);
+    QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::getTransformOriginPoint_pixels_negative() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QPoint testPoint(-10, -20);
+    PosUnitPair unitPair(Pixel, Pixel);
+    QPoint expected;
+    expected.setX(testPoint.x() + img.width());
+    expected.setY(testPoint.y() + img.height());
+
+    QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
 QTEST_MAIN(ConvertEffectsTest)
 #include "converteffectstest.moc"
