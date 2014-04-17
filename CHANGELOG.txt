@@ -1,4 +1,4 @@
-* Unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.7.1
+* Thu Apr 17 2014 - Marek Jędryka <jedryka89@gmail.com> - v2.7.1
     - fixed translating of Gradient Effect widgets
     - fixed initialization of Gradient Effect
     - patched finding icon theme in Qt5 (Tango, oxygen and gnome themes are supported)
