@@ -138,5 +138,55 @@ void ConvertEffectsTest::getTransformOriginPoint_pixels_negative() {
     QCOMPARE(result, expected);
 }
 
+void ConvertEffectsTest::getTransformOriginPoint_pixels_negative_y() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QPoint testPoint(100, -20);
+    PosUnitPair unitPair(Pixel, Pixel);
+    QPoint expected;
+    expected.setX(testPoint.x());
+    expected.setY(testPoint.y() + img.height());
+
+    QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::getTransformOriginPoint_percent_zero() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QPoint testPoint(0, 0);
+    PosUnitPair unitPair(Percent, Percent);
+    QPoint expected(testPoint);
+    QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::getTransformOriginPoint_percent_positive() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QPoint testPoint(100, 50);
+    PosUnitPair unitPair(Percent, Percent);
+    QPoint expected(img.width(), img.height()/2);
+    QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::getTransformOriginPoint_percent_negative() {
+    QImage img(testImg);
+    effects.setImage(&img);
+
+    QPoint testPoint(-10, -20);
+    PosUnitPair unitPair(Percent, Percent);
+    QPoint expected;
+    expected.setX(-img.width()/10 + img.width());
+    expected.setY(-img.height()/5 + img.height());
+
+    QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
 QTEST_MAIN(ConvertEffectsTest)
 #include "converteffectstest.moc"

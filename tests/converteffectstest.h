@@ -25,9 +25,6 @@
 #include <QtTest/QTest>
 #include "converteffects.h"
 
-#undef VERSION
-#define VERSION "2.3"
-
 class ConvertEffectsTest : public QObject {
     Q_OBJECT
 
@@ -48,6 +45,10 @@ private slots:
     void getTransformOriginPoint_pixels_zero();
     void getTransformOriginPoint_pixels_positive();
     void getTransformOriginPoint_pixels_negative();
+    void getTransformOriginPoint_pixels_negative_y();
+    void getTransformOriginPoint_percent_zero();
+    void getTransformOriginPoint_percent_positive();
+    void getTransformOriginPoint_percent_negative();
 };
 
 #endif // CONVERTEFFECTSTEST_H
