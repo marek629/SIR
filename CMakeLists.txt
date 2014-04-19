@@ -22,6 +22,17 @@ string( TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE )
 if( CMAKE_BUILD_TYPE MATCHES "^debug$" )
     set( SIR_UNDER_TESTS TRUE )
     add_definitions( -DSIR_TESTS )
+
+    # 'make coverage' command
+    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage" )
+    set( CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage" )
+    set( sir_LINKING_LIBS gcov )
+    add_custom_target( coverage
+        COMMAND lcov --capture --rc lcov_branch_coverage=1 --directory ./ --output-file coverage.info
+        COMMAND genhtml coverage.info --rc lcov_branch_coverage=1 --output-directory coverage
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    )
+
     message( STATUS "SIR is under tests!" )
 else( )
     set( SIR_UNDER_TESTS FALSE )
@@ -52,6 +63,7 @@ if( qt5 )
                 ${Qt5PrintSupport_INCLUDE_DIRS}
             )
         set( sir_LINKING_LIBS
+                ${sir_LINKING_LIBS}
                 ${Qt5Core_LIBRARIES}
                 ${Qt5Widgets_LIBRARIES}
                 ${Qt5Network_LIBRARIES}
@@ -74,7 +86,7 @@ if( qt5 )
         if( SIR_UNDER_TESTS )
             add_definitions( ${Qt5Test_DEFINITIONS} )
         endif( )
-        set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
         macro( qt_add_resources )
             QT5_ADD_RESOURCES( ${ARGN} )
@@ -100,6 +112,7 @@ else( qt5 )
                 ${QT_QTSVG_INCLUDE_DIR}
             )
         set( sir_LINKING_LIBS
+                ${sir_LINKING_LIBS}
                 ${QT_QTCORE_LIBRARY}
                 ${QT_QTGUI_LIBRARY}
                 ${QT_QTNETWORK_LIBRARY}
