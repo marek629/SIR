@@ -33,11 +33,13 @@ public:
 
 private:
     QImage testImg;
+    QImage initialImage;
     SharedInformation info;
     ConvertEffects effects;
 
 private slots:
     void initTestCase();
+    void cleanupTestCase();
     void combine_color_loop();
     void combine_color_painter();
     void combine_color_compare();
@@ -49,6 +51,7 @@ private slots:
     void getTransformOriginPoint_percent_zero();
     void getTransformOriginPoint_percent_positive();
     void getTransformOriginPoint_percent_negative();
+    void addText_center();
 };
 
 #endif // CONVERTEFFECTSTEST_H

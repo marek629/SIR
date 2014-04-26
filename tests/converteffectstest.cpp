@@ -22,6 +22,7 @@
 #include "converteffectstest.h"
 #include <cstdlib>
 #include <ctime>
+#include <QPainter>
 
 ConvertEffectsTest::ConvertEffectsTest() : testImg(300, 500, QImage::Format_ARGB32) {
     srand(time(NULL));
@@ -34,6 +35,7 @@ ConvertEffectsTest::ConvertEffectsTest() : testImg(300, 500, QImage::Format_ARGB
             testImg.setPixel(x, y, qRgb(r, g, b));
         }
     }
+    initialImage = testImg.copy();
     effects = ConvertEffects(&info);
 }
 
@@ -41,6 +43,10 @@ void ConvertEffectsTest::initTestCase() {
     QImage img(testImg);
     QCOMPARE(img.size(), testImg.size());
     QCOMPARE(img.format(), testImg.format());
+}
+
+void ConvertEffectsTest::cleanupTestCase() {
+    QCOMPARE(testImg, initialImage);
 }
 
 void ConvertEffectsTest::combine_color_loop() {
@@ -185,6 +191,43 @@ void ConvertEffectsTest::getTransformOriginPoint_percent_negative() {
     expected.setY(-img.height()/5 + img.height());
 
     QPoint result = effects.getTransformOriginPoint(testPoint, unitPair);
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::addText_center() {
+    QImage result(testImg);
+    effects.setImage(&result);
+
+    info.textPos = QPoint(0, 0);
+    info.textUnitPair.first = Pixel;
+    info.textUnitPair.second = Pixel;
+    info.textFont.setFamily("DejaVu Sans");
+    info.textFont.setPointSize(20);
+    info.textString = "test string";
+    info.textPosModifier = Center;
+    info.textColor = Qt::green;
+    info.textOpacity = 0.5;
+    info.textRotation = 0;
+    info.textFrame = false;
+
+    effects.addText();
+
+    QImage expected(testImg);
+    QPoint centerPoint(expected.width()/2, expected.height()/2);
+    QFontMetrics fontMetrics(info.textFont, &expected);
+    QRect rect = fontMetrics.boundingRect(info.textString);
+    const int dx = 5;
+    const int dy = 1;
+    rect.adjust(-dx, -dy, dx, dy);
+    rect.moveCenter(centerPoint);
+    QPainter p(&expected);
+    p.setPen(info.textColor);
+    p.setFont(info.textFont);
+    p.setOpacity(info.textOpacity);
+    p.drawText(rect, Qt::AlignCenter, info.textString);
+
+    result.save(QDir::tempPath() + "/sir_test_addText_center_result.bmp");
+    expected.save(QDir::tempPath() + "/sir_test_addText_center_expected.bmp");
     QCOMPARE(result, expected);
 }
 

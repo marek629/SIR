@@ -74,6 +74,7 @@ class SharedInformation {
     friend class ConvertThread;
     friend class ConvertDialog;
     friend class ConvertEffects;
+    friend class ConvertEffectsTest;
 
 public:
     // constructor
