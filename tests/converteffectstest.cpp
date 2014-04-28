@@ -198,9 +198,9 @@ void ConvertEffectsTest::addText_center() {
     QImage result(testImg);
     effects.setImage(&result);
 
-    info.textPos = QPoint(0, 0);
-    info.textUnitPair.first = Pixel;
-    info.textUnitPair.second = Pixel;
+    info.textPos = QPoint(50, 50);
+    info.textUnitPair.first = Percent;
+    info.textUnitPair.second = Percent;
     info.textFont.setFamily("DejaVu Sans");
     info.textFont.setPointSize(20);
     info.textString = "test string";
@@ -228,6 +228,81 @@ void ConvertEffectsTest::addText_center() {
 
     result.save(QDir::tempPath() + "/sir_test_addText_center_result.bmp");
     expected.save(QDir::tempPath() + "/sir_test_addText_center_expected.bmp");
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::addText_topLeftCorner() {
+    QImage result(testImg);
+    effects.setImage(&result);
+
+    info.textPos = QPoint(0, 0);
+    info.textUnitPair.first = Pixel;
+    info.textUnitPair.second = Pixel;
+    info.textFont.setFamily("DejaVu Sans");
+    info.textFont.setPointSize(20);
+    info.textString = "test string";
+    info.textPosModifier = TopLeftCorner;
+    info.textColor = Qt::green;
+    info.textOpacity = 0.5;
+    info.textRotation = 0;
+    info.textFrame = false;
+
+    effects.addText();
+
+    QImage expected(testImg);
+    QPoint topLeftPoint(0, 0);
+    QFontMetrics fontMetrics(info.textFont, &expected);
+    QRect rect = fontMetrics.boundingRect(info.textString);
+    const int dx = 5;
+    const int dy = 1;
+    rect.adjust(-dx, -dy, dx, dy);
+    rect.moveTopLeft(topLeftPoint);
+    QPainter p(&expected);
+    p.setPen(info.textColor);
+    p.setFont(info.textFont);
+    p.setOpacity(info.textOpacity);
+    p.drawText(rect, Qt::AlignCenter, info.textString);
+
+    result.save(QDir::tempPath() + "/sir_test_addText_topLeftCorner_result.bmp");
+    expected.save(QDir::tempPath() + "/sir_test_addText_topLeftCorner_expected.bmp");
+    QCOMPARE(result, expected);
+}
+
+void ConvertEffectsTest::addText_middleBottomEdge() {
+    QImage result(testImg);
+    effects.setImage(&result);
+
+    info.textPos = QPoint(50, 100);
+    info.textUnitPair.first = Percent;
+    info.textUnitPair.second = Percent;
+    info.textFont.setFamily("DejaVu Sans");
+    info.textFont.setPointSize(20);
+    info.textString = "test string";
+    info.textPosModifier = MiddleBottomEdge;
+    info.textColor = Qt::green;
+    info.textOpacity = 0.5;
+    info.textRotation = 0;
+    info.textFrame = false;
+
+    effects.addText();
+
+    QImage expected(testImg);
+    QPoint middleBottomPoint(expected.width()/2, expected.height());
+    QFontMetrics fontMetrics(info.textFont, &expected);
+    QRect rect = fontMetrics.boundingRect(info.textString);
+    const int dx = 5;
+    const int dy = 1;
+    rect.adjust(-dx, -dy, dx, dy);
+    rect.moveCenter(middleBottomPoint);
+    rect.moveBottom(middleBottomPoint.y());
+    QPainter p(&expected);
+    p.setPen(info.textColor);
+    p.setFont(info.textFont);
+    p.setOpacity(info.textOpacity);
+    p.drawText(rect, Qt::AlignCenter, info.textString);
+
+    result.save(QDir::tempPath() + "/sir_test_addText_middleBottomEdge_result.bmp");
+    expected.save(QDir::tempPath() + "/sir_test_addText_middleBottomEdge_expected.bmp");
     QCOMPARE(result, expected);
 }
 

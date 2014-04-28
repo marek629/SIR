@@ -52,6 +52,8 @@ private slots:
     void getTransformOriginPoint_percent_positive();
     void getTransformOriginPoint_percent_negative();
     void addText_center();
+    void addText_topLeftCorner();
+    void addText_middleBottomEdge();
 };
 
 #endif // CONVERTEFFECTSTEST_H
