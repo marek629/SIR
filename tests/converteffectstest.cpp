@@ -27,14 +27,17 @@
 ConvertEffectsTest::ConvertEffectsTest() : testImg(300, 500, QImage::Format_ARGB32) {
     srand(time(NULL));
     const int maxValue = 256;
+    const int divFactor = 4;
+    const int white = (divFactor-1) * 255;
     for (int y=0; y<testImg.height(); y++) {
         for (int x=0; x<testImg.width(); x++) {
-            int r = rand() % maxValue;
-            int g = rand() % maxValue;
-            int b = rand() % maxValue;
+            int r = (rand() % maxValue + white) / divFactor;
+            int g = (rand() % maxValue + white) / divFactor;
+            int b = (rand() % maxValue + white) / divFactor;
             testImg.setPixel(x, y, qRgb(r, g, b));
         }
     }
+
     initialImage = testImg.copy();
     effects = ConvertEffects(&info);
 }
