@@ -1009,39 +1009,39 @@ Niewłaściwy format pliku.</translation>
     </message>
     <message>
         <source>Top left corner</source>
-        <translation>Lewy górny róg</translation>
+        <translation>lewego górnego rogu</translation>
     </message>
     <message>
         <source>Middle of top edge</source>
-        <translation>Środek górnej krawędzi</translation>
+        <translation>środka górnej krawędzi</translation>
     </message>
     <message>
         <source>Top right corner</source>
-        <translation>Prawy górny róg</translation>
+        <translation>prawego górnego rogu</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation>Środek</translation>
+        <translation>środka</translation>
     </message>
     <message>
         <source>Middle of right edge</source>
-        <translation>Środek prawej krawędzi</translation>
+        <translation>środka prawej krawędzi</translation>
     </message>
     <message>
         <source>Bottom right corner</source>
-        <translation>Prawy dolny róg</translation>
+        <translation>prawego dolnego rogu</translation>
     </message>
     <message>
         <source>Middle of bottom edge</source>
-        <translation>Środek dolnej krawędzi</translation>
+        <translation>środka dolnej krawędzi</translation>
     </message>
     <message>
         <source>Bottom left corner</source>
-        <translation>Lewy dolny róg</translation>
+        <translation>lewego dolnego rogu</translation>
     </message>
     <message>
         <source>Middle of left edge</source>
-        <translation>Środek lewej krawędzi</translation>
+        <translation>środka lewej krawędzi</translation>
     </message>
     <message>
         <source>Font Size:</source>
