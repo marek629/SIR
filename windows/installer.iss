@@ -4,7 +4,7 @@
 #define SIR_DIR             "D:\Marek\sir"
 #define SIR_BUILD_DIR       "D:\Marek\sir-build"
 #define SIR_USR_DIR         "D:\Marek\sir-build\usr"
-#define QT_MINGW_DIR        "C:\Qt\Qt5.2.1\5.2.1\mingw48_32"
+#define QT_MINGW_DIR        "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -12,7 +12,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{A3BCDC21-EE6A-4DDF-8A08-E5B692C5B5F1}
 AppName=Sir
-AppVerName=Sir 2.7
+AppVerName=Sir 2.7.1
 AppPublisher=Sir Software
 AppPublisherURL=http://sir.projet-libre.org/
 AppSupportURL=http://sir.projet-libre.org/
