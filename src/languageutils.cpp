@@ -97,7 +97,17 @@ void LanguageUtils::readLanguages() {
 
 /** Returns LanguageInfo about typed \a qmFile name. */
 const LanguageInfo LanguageUtils::languageInfo(const QString &qmFile) const {
-    return languageInfoMap->value(qmFile);
+    LanguageInfo info = languageInfoMap->value(qmFile);
+
+    if (info.niceName.isEmpty()) {
+        QStringList list = qmFile.split('_');
+        if (list.length() == 3) {
+            QString fileName = list[0] + '_' + list[1] + ".qm";
+            info = languageInfoMap->value(fileName);
+        }
+    }
+
+    return info;
 }
 
 /** Returns name of file corresponding \a lang language symbol, i.e. en for

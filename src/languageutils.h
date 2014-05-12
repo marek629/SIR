@@ -35,6 +35,8 @@ struct LanguageInfo {
 
 //! Multi languages support tool class.
 class LanguageUtils {
+    friend class LanguageUtilsTest;
+
 public:
     static LanguageUtils *instance();
     const LanguageInfo languageInfo(const QString &qmFile) const;

@@ -18,6 +18,13 @@ target_link_libraries( sir_converteffects_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME ConvertEffectsTest COMMAND sir_converteffects_test )
 
 set( sir_UT_version_SRCS
+        languageutilstest.cpp
+    )
+add_executable( sir_languageutils_test ${sir_UT_version_SRCS} )
+target_link_libraries( sir_languageutils_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME LanguageUtilsTest COMMAND sir_languageutils_test )
+
+set( sir_UT_version_SRCS
         versiontest.cpp
     )
 add_executable( sir_version_test ${sir_UT_version_SRCS} )
