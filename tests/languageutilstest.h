@@ -36,6 +36,7 @@ private:
     LanguageUtils *utils;
 
 private slots:
+    void initTestCase();
     void languageInfo_validKey();
     void languageInfo_invalidKey();
     void languageInfo_tooDatailedKey();

@@ -25,6 +25,12 @@ LanguageUtilsTest::LanguageUtilsTest() {
     utils = LanguageUtils::instance();
 }
 
+void LanguageUtilsTest::initTestCase() {
+    QVERIFY2(utils->fileNames().count() == 0,
+             "Clean test environment is needed. "
+             "Please move '../share' directory to another path.");
+}
+
 void LanguageUtilsTest::languageInfo_validKey() {
     QString qmFileName = "sir_pl.qm";
     LanguageInfo info;
