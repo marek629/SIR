@@ -48,6 +48,7 @@ TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
     // setup fields
     convertDialog = (ConvertDialog*)(parent->window());
     statusList = new QMap<QString,int>();
+    setupFilters();
     // setup header
     setHeader(new TreeWidgetHeader(this));
     setHeaderLabels(columnsNames());
@@ -430,55 +431,7 @@ void TreeWidget::dragMoveEvent(QDragMoveEvent *event) {
   * \sa dragEnterEvent() dragMoveEvent()
   */
 void TreeWidget::dropEvent(QDropEvent *event) {
-
-    QString fileName;
-    QTreeWidgetItem *item;
-    bool change = false;
-
-    // image file filters
-    static QString fileFilters;
-    if (fileFilters.isEmpty()) {
-        QStringList list;
-        foreach(QByteArray format, QImageReader::supportedImageFormats())
-            list.append(QString(format));
-        fileFilters += "*.";
-        fileFilters += list.join(" *.").toLower() + " *.jpg"+ " *.JPG";
-        fileFilters += " *.JPEG *.Jpg *.Jpeg";
-    }
-
-    foreach (QUrl url, event->mimeData()->urls()) {
-        fileName = url.path();
-        QFileInfo info(fileName);
-
-        if (!fileName.isEmpty() && info.exists()) {
-            //Directory
-            if (info.isDir()) {
-                QDir sourceFolder(fileName,fileFilters);
-                sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
-
-                QList<QFileInfo> list = sourceFolder.entryInfoList();
-                QListIterator<QFileInfo> it(list);
-
-                while ( it.hasNext() ) {
-                    item = new QTreeWidgetItem(itemList(it.next()));
-                    addTopLevelItem(item);
-                    change = true;
-                }
-            }
-            //File
-            else {
-                int comp = QString::compare("",QFileInfo(fileName).suffix());
-
-                if((fileFilters.contains(QFileInfo(fileName).suffix()))
-                    && (comp !=0)) {
-
-                    item = new QTreeWidgetItem(itemList(info));
-                    addTopLevelItem(item);
-                    change = true;
-                }
-            }
-        }
-    }
+    bool change = bringUrls(event->mimeData()->urls());
 
     event->acceptProposedAction();
 
@@ -623,4 +576,58 @@ void TreeWidget::createActions() {
     metadataAction->setStatusTip(tr("Show metadata of selected image"));
     connect(metadataAction, SIGNAL(triggered()), this, SLOT(showMetadata()));
 #endif // SIR_METADATA_SUPPORT
+}
+
+/** Accepts drop event for list of urls. */
+bool TreeWidget::bringUrls(const QList<QUrl> &urls) {
+    bool change = false;
+
+    foreach (QUrl url, urls) {
+        if (!url.isLocalFile()) {
+            qDebug("URL %s is not local file.", url.toString().toLatin1().constData());
+            continue;
+        }
+
+        QString fileName = url.toLocalFile();
+        QFileInfo info(fileName);
+
+        if (!fileName.isEmpty() && info.exists()) {
+            //Directory
+            if (info.isDir()) {
+                QDir sourceFolder(fileName, fileFilters);
+                sourceFolder.setFilter( QDir::Files | QDir::NoSymLinks);
+
+                QList<QFileInfo> list = sourceFolder.entryInfoList();
+                QListIterator<QFileInfo> it(list);
+
+                while ( it.hasNext() ) {
+                    QTreeWidgetItem *item = new QTreeWidgetItem(itemList(it.next()));
+                    addTopLevelItem(item);
+                    change = true;
+                }
+            }
+            //File
+            else {
+//                int comp = QString::compare("", );
+
+                if (fileFilters.contains(info.suffix()) && (info.suffix() != "")) {
+                    QTreeWidgetItem *item = new QTreeWidgetItem(itemList(info));
+                    addTopLevelItem(item);
+                    change = true;
+                }
+            }
+        }
+    }
+
+    return change;
+}
+
+/** Sets up fileFilters. */
+void TreeWidget::setupFilters() {
+    QStringList list;
+    foreach(QByteArray format, QImageReader::supportedImageFormats())
+        list.append(QString(format));
+    fileFilters += "*.";
+    fileFilters += list.join(" *.").toLower() + " *.jpg"+ " *.JPG";
+    fileFilters += " *.JPEG *.Jpg *.Jpeg";
 }

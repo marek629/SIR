@@ -85,12 +85,15 @@ private:
     QAction *metadataAction;
 #endif // SIR_METADATA_SUPPORT
     QTreeWidgetItem *treeMenuItem;
+    QString fileFilters;
     // methods
     QStringList itemList(const QFileInfo &info);
     QStringList *makeList();
     QString makeImagePath(QTreeWidgetItem *item);
     QString imageSizeString(const sir::String &imagePath);
     void createActions();
+    bool bringUrls(const QList<QUrl> &urls);
+    void setupFilters();
 
 public slots:
     void addDir();
