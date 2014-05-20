@@ -15,6 +15,12 @@ include_directories(
         src/
     )
 
+# 'make ico' command
+add_custom_target( ico
+        COMMAND convert sir-16x16.png sir-32x32.png sir.png sir-64x64.png sir-128x128.png -colors 256 sir.ico
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/images
+    )
+
 if( NOT CMAKE_BUILD_TYPE )
     set( CMAKE_BUILD_TYPE "release" CACHE STRING "" FORCE )
 endif( )
