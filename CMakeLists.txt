@@ -17,7 +17,7 @@ include_directories(
 
 # 'make ico' command
 add_custom_target( ico
-        COMMAND convert sir-16x16.png sir-32x32.png sir.png sir-64x64.png sir-128x128.png -colors 256 sir.ico
+        COMMAND convert sir-128x128.png sir-64x64.png sir.png sir-32x32.png sir-16x16.png sir.ico
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/images
     )
 

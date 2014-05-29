@@ -6,24 +6,27 @@
 #define SIR_USR_DIR         "D:\Marek\sir-build\usr"
 #define QT_MINGW_DIR        "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32"
 
+#define VERSION             "2.7.2"
+
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{A3BCDC21-EE6A-4DDF-8A08-E5B692C5B5F1}
 AppName=Sir
-AppVerName=Sir 2.7.1
+AppVerName=Sir {#VERSION}
 AppPublisher=Sir Software
-AppPublisherURL=http://sir.projet-libre.org/
-AppSupportURL=http://sir.projet-libre.org/
-AppUpdatesURL=http://sir.projet-libre.org/
+AppPublisherURL=http://www.web.sir.ugu.pl/
+AppSupportURL=http://www.web.sir.ugu.pl/
+AppUpdatesURL=http://www.web.sir.ugu.pl/
 DefaultDirName={pf}\Sir
 DefaultGroupName=Sir
 AllowNoIcons=yes
 LicenseFile={#SIR_DIR}\LICENSE
 OutputDir={#SIR_BUILD_DIR}\installer
-OutputBaseFilename=setup
+OutputBaseFilename=sir_installer_{#VERSION}
 SetupIconFile={#SIR_DIR}\images\sir.ico
+UninstallDisplayIcon={app}\share\pixmaps\sir.ico
 Compression=lzma
 ;SolidCompression=yes
 
