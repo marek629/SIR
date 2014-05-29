@@ -1,7 +1,9 @@
 * unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.7.2
     - Polish translation improved
+    - Spanish translation updated (thanks Garbage Collector)
     - fixed language autosetting
-    - fixed Drag & Drop under Windows
+    - Windows: fixed Drag & Drop
+    - Windows: improved icon
 
 * Thu Apr 17 2014 - Marek Jędryka <jedryka89@gmail.com> - v2.7.1
     - fixed translating of Gradient Effect widgets

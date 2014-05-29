@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_ES">
+<TS version="2.0" language="es_ES">
 <context>
     <name>About</name>
     <message>
@@ -40,113 +40,113 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="49"/>
         <source>Status</source>
-        <translation type="unfinished">Estado</translation>
+        <translation>Estado</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="49"/>
         <location filename="../widgets/aboutdialog.cpp" line="51"/>
         <source>Developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Desarrollador</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="49"/>
         <source>E-mail</source>
-        <translation type="unfinished"></translation>
+        <translation>Correo electrónico</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="50"/>
         <source>Main developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Desarrollador principal</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="52"/>
         <source>Code contributor</source>
-        <translation type="unfinished"></translation>
+        <translation>Colaborador</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="54"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="54"/>
         <source>Translators</source>
-        <translation type="unfinished"></translation>
+        <translation>Traductores</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="55"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Alemán</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="56"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugués</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="57"/>
         <source>Slovak</source>
-        <translation type="unfinished"></translation>
+        <translation>Eslovaco</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="58"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Castellano</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="59"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruso</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="60"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Húngaro</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="61"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polaco</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="62"/>
         <source>Dutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Holandés</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="63"/>
         <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumano</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="64"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Francés</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="65"/>
         <source>Greek</source>
-        <translation type="unfinished"></translation>
+        <translation>Griego</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="66"/>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Checho</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="67"/>
         <source>Serbian</source>
-        <translation type="unfinished"></translation>
+        <translation>Serbio</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="69"/>
         <source>To enable dcraw visit: </source>
-        <translation type="unfinished"></translation>
+        <translation>Para activar dcraw visite:</translation>
     </message>
     <message>
         <location filename="../widgets/aboutdialog.cpp" line="71"/>
         <source>or do a sudo apt-get install dcraw on Debian based systems.</source>
-        <translation type="unfinished"></translation>
+        <translation>o bien ejecute sudo apt-get install dcraw en sistemas basados en Debian.</translation>
     </message>
 </context>
 <context>
@@ -378,15 +378,15 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Not converted yet</source>
-        <translation type="vanished">No convertido</translation>
+        <translation>No convertido</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="vanished">Imágenes</translation>
+        <translation>Imágenes</translation>
     </message>
     <message>
         <source>Select one or more files to open</source>
-        <translation type="vanished">Seleccione uno o más archivos a abrir</translation>
+        <translation>Seleccione uno o más archivos a abrir</translation>
     </message>
     <message>
         <location filename="../widgets/convertdialog.cpp" line="430"/>
@@ -395,7 +395,7 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Convert Selected</source>
-        <translation type="vanished">Convertir seleccionadas</translation>
+        <translation>Convertir seleccionadas</translation>
     </message>
     <message>
         <source>Convert the selected images</source>
@@ -403,7 +403,7 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Remove Selected</source>
-        <translation type="vanished">Eliminar seleccionadas</translation>
+        <translation>Eliminar seleccionadas</translation>
     </message>
     <message>
         <source>Remove the selected images</source>
@@ -466,7 +466,7 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="vanished">Altura:</translation>
+        <translation>Altura:</translation>
     </message>
     <message>
         <location filename="../widgets/convertdialog.ui" line="260"/>
@@ -480,7 +480,7 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="vanished">Anchura:</translation>
+        <translation>Anchura:</translation>
     </message>
     <message>
         <location filename="../widgets/convertdialog.ui" line="88"/>
@@ -500,19 +500,19 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Rotation Angle:</source>
-        <translation type="vanished">Ángulo de rotación:</translation>
+        <translation>Ángulo de rotación:</translation>
     </message>
     <message>
         <source>&amp;Maintain Aspect Ratio</source>
-        <translation type="vanished">&amp;Mantener proporciones</translation>
+        <translation>&amp;Mantener proporciones</translation>
     </message>
     <message>
         <source>Alt+M</source>
-        <translation type="vanished">Alt+M</translation>
+        <translation>Alt+M</translation>
     </message>
     <message>
         <source>Quality:</source>
-        <translation type="vanished">Calidad:</translation>
+        <translation>Calidad:</translation>
     </message>
     <message>
         <location filename="../widgets/convertdialog.ui" line="400"/>
@@ -681,19 +681,19 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Name</source>
-        <translation type="vanished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Ext</source>
-        <translation type="vanished">Extensión</translation>
+        <translation>Extensión</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="vanished">Ruta</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="vanished">Estado</translation>
+        <translation>Estado</translation>
     </message>
     <message>
         <location filename="../widgets/convertdialog.cpp" line="1057"/>
@@ -702,11 +702,11 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <source>Skipped</source>
-        <translation type="vanished">Esquivada</translation>
+        <translation>Esquivada</translation>
     </message>
     <message>
         <source>Failed to convert</source>
-        <translation type="vanished">No se pudo convertir</translation>
+        <translation>No se pudo convertir</translation>
     </message>
 </context>
 <context>
@@ -2742,51 +2742,51 @@ Error message: %2</source>
     </message>
     <message>
         <source>Default Target Folder:</source>
-        <translation type="vanished">Carpeta destino predeterminada:</translation>
+        <translation>Carpeta destino predeterminada:</translation>
     </message>
     <message>
         <source>Default Target Format:</source>
-        <translation type="vanished">Formato destino predeterminado:</translation>
+        <translation>Formato destino predeterminado:</translation>
     </message>
     <message>
         <source>Default Width:</source>
-        <translation type="vanished">Anchura predeterminada:</translation>
+        <translation>Anchura predeterminada:</translation>
     </message>
     <message>
         <source>Default Target Prefix:</source>
-        <translation type="vanished">Prefijo destino predeterminado:</translation>
+        <translation>Prefijo destino predeterminado:</translation>
     </message>
     <message>
         <source>Default Quality:</source>
-        <translation type="vanished">Calidad predeterminada:</translation>
+        <translation>Calidad predeterminada:</translation>
     </message>
     <message>
         <source>Default Language:</source>
-        <translation type="vanished">Lenguaje predeterminada:</translation>
+        <translation>Lenguaje predeterminada:</translation>
     </message>
     <message>
         <source>Number of Cores:</source>
-        <translation type="vanished">Número de procesadores:</translation>
+        <translation>Número de procesadores:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="vanished">Examinar</translation>
+        <translation>Examinar</translation>
     </message>
     <message>
         <source>Default Height:</source>
-        <translation type="vanished">Altura predeterminada:</translation>
+        <translation>Altura predeterminada:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="vanished">Aceptar</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation type="vanished">Elija un directorio</translation>
+        <translation>Elija un directorio</translation>
     </message>
 </context>
 <context>
@@ -3398,23 +3398,23 @@ Invalid file format.</source>
     <name>myQTreeWidget</name>
     <message>
         <source>Name</source>
-        <translation type="vanished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Ext</source>
-        <translation type="vanished">Extensión</translation>
+        <translation>Extensión</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="vanished">Ruta</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="vanished">Estado</translation>
+        <translation>Estado</translation>
     </message>
     <message>
         <source>Not converted yet</source>
-        <translation type="vanished">No convertido</translation>
+        <translation>No convertido</translation>
     </message>
 </context>
 </TS>
