@@ -1,5 +1,6 @@
 *** nearest release ***
-  ! Spanish translation
+  ! Change all occurrences of old SIR webpage URL
+  ! Fix button icons for Windows build
 
 *** next release ***
   ! load all files selected in file menager (ie. Thunar) in just 1 instance of SIR
@@ -9,7 +10,6 @@
   ! defines.h refactorization: change defines to enumerations
   ! search refactorizationable code
   ! CammelCase file naming
-  ! README refactoring to markup readable by GitHub
   ! remove src/translations/googlecode_upload.py file
   ! improve view in FileDetails for photos made by HTC Desire S
   ! restore check updates option
