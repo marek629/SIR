@@ -42,18 +42,23 @@ Read LICENSE file for details.
     * XMP
 
 
+
 ## Dependences
 
-    * [Qt 4/5](http://qt-project.org/)
+* [Qt 4/5](http://qt-project.org/)
+
 
 ### Optional dependences
 
-    * [libexiv2](http://exiv2.org/)
-    * [dcraw](http://www.cybercom.net/~dcoffin/dcraw/)
+* [libexiv2](http://exiv2.org/)
+* [dcraw](http://www.cybercom.net/~dcoffin/dcraw/)
 
 
 ### Build dependences
-    * [CMake 2.8.3+](http://www.cmake.org/)
+
+* [CMake 2.8.3+](http://www.cmake.org/)
+
 
 ### Documentation build dependences
+
 SIR documentation was created using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).
