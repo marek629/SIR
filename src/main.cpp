@@ -56,6 +56,13 @@ int main(int argc, char *argv[]) {
 
 #if QT_VERSION >= 0x050000
 bool findIconTheme() {
+#ifdef Q_OS_WIN32
+    QDir pixmapsDir(QCoreApplication::applicationDirPath() + "/../share/pixmaps");
+    QStringList searchPaths;
+    searchPaths << pixmapsDir.absolutePath();
+    QIcon::setThemeSearchPaths(searchPaths);
+#endif // Q_OS_WIN32
+
     QString themeTestIconName = "list-add";
     QStringList themes;
     themes << "Tango" << "oxygen" << "gnome";
