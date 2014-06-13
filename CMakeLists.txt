@@ -20,6 +20,11 @@ add_custom_target( ico
         COMMAND convert sir-128x128.png sir-64x64.png sir.png sir-32x32.png sir-16x16.png sir.ico
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/images
     )
+# 'make archive' command
+add_custom_target( archive
+        COMMAND git archive --format=tar.gz --prefix=sir/ -o ${CMAKE_BINARY_DIR}/sir-src.tar.gz HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
 
 if( NOT CMAKE_BUILD_TYPE )
     set( CMAKE_BUILD_TYPE "release" CACHE STRING "" FORCE )
