@@ -57,6 +57,10 @@ int main(int argc, char *argv[]) {
 #if QT_VERSION >= 0x050000
 bool findIconTheme() {
 #ifdef Q_OS_WIN32
+    /* For Windows build get Tango icon theme from
+     * https://googledrive.com/host/0B9Il9AGwsKEvLVpDVmIwbHVoYlE/Tango.zip
+     * and extract this into /share/pixmaps app directory.
+     */
     QDir pixmapsDir(QCoreApplication::applicationDirPath() + "/../share/pixmaps");
     QStringList searchPaths;
     searchPaths << pixmapsDir.absolutePath();

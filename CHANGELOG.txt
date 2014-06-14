@@ -1,3 +1,6 @@
+* unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.7.3
+    - Windows: fixed button icons
+
 * Sat May 31 2014 - Marek Jędryka <jedryka89@gmail.com> - v2.7.2
     - Polish translation improved
     - Spanish translation updated (thanks Garbage Collector)
