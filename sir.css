@@ -1,0 +1,16 @@
+body {
+    text-align: center;
+}
+
+#content {
+    text-align: left;
+}
+
+ul.nav li {
+    text-align: left;
+}
+
+entry-date {
+    background-color: red;
+    color: red;
+}

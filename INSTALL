@@ -1,0 +1,16 @@
+==================
+
+-If you want to get up and running quickly and easily-
+
+~/> cd sir
+
+sir/> cmake ../sir -DCMAKE_INSTALL_PREFIX=./usr
+-or if you don't want metadata support (enabled by default)
+sir/> cmake ../sir -DCMAKE_INSTALL_PREFIX=./usr -Dmetadata=OFF
+-if you have installed Qt5 next to Qt4 you need add -DQT_QMAKE_EXECUTABLE=qmake-qt4 argument to cmake command
+sir/> cmake ../sir -DCMAKE_INSTALL_PREFIX=./usr -Dmetadata=OFF -DQT_QMAKE_EXECUTABLE=qmake-qt4
+
+sir/> make -j<number_of_cores+1> (ie. -j5 for quad core processor)
+sir/> make install
+
+==================
