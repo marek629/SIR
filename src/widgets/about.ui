@@ -14,7 +14,7 @@
    <string>Sir - Simple Image Resizer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../application.qrc">
+   <iconset resource="../sir.qrc">
     <normaloff>:/images/sir-32x32.png</normaloff>:/images/sir-32x32.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -28,7 +28,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../application.qrc">:/images/sir-64x64.png</pixmap>
+          <pixmap resource="../sir.qrc">:/images/sir-64x64.png</pixmap>
          </property>
         </widget>
        </item>
@@ -74,7 +74,16 @@
        <property name="spacing">
         <number>6</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -104,7 +113,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../application.qrc"/>
+  <include location="../sir.qrc"/>
  </resources>
  <connections>
   <connection>

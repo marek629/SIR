@@ -19,7 +19,7 @@
  *
  * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
  *                 Marek Jędryka   <jedryka89@gmail.com>
- * Program URL: http://sir.projet-libre.org/
+ * Program URL: http://marek629.github.io/sir/
  *
  */
 
@@ -69,7 +69,7 @@ void AboutDialog::setAboutText() {
             + "<p>" + tr("To enable dcraw visit: ")
             + htmlLink("http://www.cybercom.net/~dcoffin/dcraw/") + "<br />"
             + tr("or do a sudo apt-get install dcraw on Debian based systems.") + "</p>"
-            + htmlLink("http://web.sir.ugu.pl/");
+            + htmlLink("http://marek629.github.io/sir/");
     textBrowser->setHtml(htmlStart + htmlContent + htmlStop);
 }
 

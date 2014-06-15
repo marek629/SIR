@@ -19,7 +19,7 @@
  *
  * Contact e-mail: Rafael Sachetto <rsachetto@gmail.com>
  *                 Marek Jędryka   <jedryka89@gmail.com>
- * Program URL: http://sir.projet-libre.org/
+ * Program URL: http://marek629.github.io/sir/
  *
  */
 

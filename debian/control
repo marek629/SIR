@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Rafael Sachetto <rsachetto@gmail.com>
 Build-Depends: debhelper (>= 5), libqt4-dev (>=4)
 Standards-Version: 3.7.3
-Homepage: http://sir.projet-libre.org/
+Homepage: http://marek629.github.io/sir/
 
 Package: sir
 Architecture: any
