@@ -25,6 +25,7 @@
 #include <QUrl>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QTextDocument>
 
 /** Default constructor. */
 NetworkUtils::NetworkUtils() : QObject() {}
@@ -45,7 +46,7 @@ void NetworkUtils::checkUpdates() {
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)),
                      this, SLOT(showResults(QNetworkReply*)));
 
-    QUrl url("http://sir.projet-libre.org/check_updates.php?version=" +
+    QUrl url("http://www.web.sir.ugu.pl/check_updates.php?version=" +
              Version().version() );
     reply = nam->get(QNetworkRequest(url));
 
@@ -63,7 +64,7 @@ void NetworkUtils::sendInstalltoSite() {
                      this, SLOT(showResults(QNetworkReply*)));
 
     QNetworkRequest request;
-    request.setUrl(QUrl("http://sir.projet-libre.org/add_unique_install.php"));
+    request.setUrl(QUrl("http://www.web.sir.ugu.pl/add_unique_install.php"));
     request.setRawHeader("User-Agent", "SIR");
 
     reply = nam->get(request);
@@ -75,24 +76,21 @@ void NetworkUtils::sendInstalltoSite() {
   */
 void NetworkUtils::showResults(QNetworkReply* reply) {
 
-    QString *response = new QString("");
+    QString *response = NULL;
     bool error;
 
-    // no error received?
     if (reply->error() == QNetworkReply::NoError) {
-        // read data from QNetworkReply here
-
         QByteArray bytes = reply->readAll();
-        response = new QString(bytes);
-        error = false;
+        QString html(bytes);
+        QTextDocument document(html, this);
 
+        response = new QString(document.toPlainText());
+        error = false;
     }
-    // Some http error received
-    else
-    {
+    else {
+        response = new QString("");
         error = true;
     }
 
     emit checkDone(response, error);
-
 }

@@ -245,13 +245,11 @@ void ConvertDialog::showUpdateResult(QString *result, bool error) {
                                 "Check your internet connection and " \
                                 "try again later!"));
     }
-
-    else if(*result == "no_new_version" ) {
+    else if (result->contains("no_new_version")) {
         QMessageBox::information(this, tr("SIR Updates"),
                                  tr("You have the lastest version of SIR!"));
     }
-    else if(*result == "new_version" ) {
-
+    else if (result->contains("new_version")) {
         QMessageBox msgBox(QMessageBox::Information,
                            tr("SIR Updates"),
                            tr("There is a new version of SIR available for "\
@@ -268,7 +266,7 @@ void ConvertDialog::showUpdateResult(QString *result, bool error) {
 
         if (msgBox.clickedButton() == connectButton) {
             // Open sir website in the default browser
-            QUrl sirUrl("http://sir.projet-libre.org/static.php?page=download");
+            QUrl sirUrl("http://marek629.github.io/SIR/#download");
             QDesktopServices::openUrl(sirUrl);
         }
         else if(msgBox.clickedButton() == abortButton) {
