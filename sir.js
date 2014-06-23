@@ -7,6 +7,7 @@ var showBlog = function() {
     $.each(blogList, function(i, entry) {
         $.ajax({
             type: 'GET',
+            async: false,
             url: entry.file,
             dataType: 'text',
             success: function (content) {
