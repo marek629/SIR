@@ -49,6 +49,7 @@ enum Question {
   */
 class ConvertThread : public QThread {
     Q_OBJECT
+    Q_ENUMS(Question)
     friend class ConvertDialog;
 
 public:
