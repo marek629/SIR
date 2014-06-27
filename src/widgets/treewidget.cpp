@@ -583,10 +583,12 @@ bool TreeWidget::bringUrls(const QList<QUrl> &urls) {
     bool change = false;
 
     foreach (QUrl url, urls) {
+#if QT_VERSION >= 0x040800
         if (!url.isLocalFile()) {
             qDebug("URL %s is not local file.", url.toString().toLatin1().constData());
             continue;
         }
+#endif // QT_VERSION
 
         QString fileName = url.toLocalFile();
         QFileInfo info(fileName);
@@ -608,8 +610,6 @@ bool TreeWidget::bringUrls(const QList<QUrl> &urls) {
             }
             //File
             else {
-//                int comp = QString::compare("", );
-
                 if (fileFilters.contains(info.suffix()) && (info.suffix() != "")) {
                     QTreeWidgetItem *item = new QTreeWidgetItem(itemList(info));
                     addTopLevelItem(item);

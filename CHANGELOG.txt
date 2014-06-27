@@ -1,6 +1,7 @@
 * unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.7.3
     - Changed all occurrences of old SIR webpage URL
     - Windows: fixed button icons
+    - Disabled drag & drop URL checking for Qt 4.7 support
 
 * Sat May 31 2014 - Marek Jędryka <jedryka89@gmail.com> - v2.7.2
     - Polish translation improved
