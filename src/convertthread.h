@@ -41,6 +41,10 @@ enum Question {
     Overwrite,
     Enlarge
 };
+#if QT_VERSION < 0x050000
+Q_DECLARE_METATYPE(Question)
+qRegisterMetaType<Question>("Question");
+#endif
 
 /** \brief Image convertion thread class.
   *
@@ -49,7 +53,6 @@ enum Question {
   */
 class ConvertThread : public QThread {
     Q_OBJECT
-    Q_ENUMS(Question)
     friend class ConvertDialog;
 
 public:

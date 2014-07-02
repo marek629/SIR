@@ -35,7 +35,6 @@ class EffectsCollector;
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     Q_OBJECT
-    Q_ENUMS(Question)
     friend class Selection;
     friend class SelectionDialog;
     friend class DetailsBrowser;

@@ -4,7 +4,7 @@
 #define SIR_DIR             "D:\Marek\sir"
 #define SIR_BUILD_DIR       "D:\Marek\sir-build"
 #define SIR_USR_DIR         "D:\Marek\sir-build\usr"
-#define QT_MINGW_DIR        "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32"
+#define QT_MINGW_DIR        "C:\Qt\Qt5.2.1\5.2.1\mingw48_32"
 
 #define VERSION             "2.7.2"
 
@@ -24,7 +24,7 @@ DefaultGroupName=Sir
 AllowNoIcons=yes
 LicenseFile={#SIR_DIR}\LICENSE
 OutputDir={#SIR_BUILD_DIR}\installer
-OutputBaseFilename=sir_installer_{#VERSION}
+OutputBaseFilename=sir_{#VERSION}_installer
 SetupIconFile={#SIR_DIR}\images\sir.ico
 UninstallDisplayIcon={app}\share\pixmaps\sir.ico
 Compression=lzma
