@@ -286,8 +286,8 @@ void ConvertDialog::setupThreads(int numThreads) {
         convertThreads.append(new ConvertThread(this, i));
         // connecting
         connect(convertThreads[i],
-                SIGNAL(question(const QString &, Question)),
-                SLOT(query(const QString &, Question)),
+                SIGNAL(question(const QString &, ConvertThread::Question)),
+                SLOT(query(const QString &, ConvertThread::Question)),
                 Qt::BlockingQueuedConnection);
         connect(convertThreads[i],
                 SIGNAL(imageStatus(const QStringList &, const QString &, int)),
@@ -929,9 +929,9 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
   * \param tid Worker thread ID.
   * \param whatToDo Action on target file. Support for \em overwrite and \em enlarge only.
   */
-void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
+void ConvertDialog::query(const QString& targetFile, ConvertThread::Question whatToDo) {
     switch (whatToDo) {
-    case Enlarge:
+    case ConvertThread::Enlarge:
         if (sharedInfo->noEnlargeAll)
             sharedInfo->enlargeResult = QMessageBox::NoToAll;
         else if (sharedInfo->abort)
@@ -954,7 +954,7 @@ void ConvertDialog::query(const QString& targetFile, Question whatToDo) {
         else
             sharedInfo->enlargeResult = QMessageBox::YesToAll;
         break;
-    case Overwrite:
+    case ConvertThread::Overwrite:
         if (sharedInfo->noOverwriteAll)
             sharedInfo->overwriteResult = QMessageBox::NoToAll;
         else if(sharedInfo->abort)

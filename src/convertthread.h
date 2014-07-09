@@ -36,16 +36,6 @@ class QSvgRenderer;
 class QImage;
 #endif // SIR_METADATA_SUPPORT
 
-//! Enumerator for ConvertThread::question() signal.
-enum Question {
-    Overwrite,
-    Enlarge
-};
-#if QT_VERSION < 0x050000
-Q_DECLARE_METATYPE(Question)
-qRegisterMetaType<Question>("Question");
-#endif
-
 /** \brief Image convertion thread class.
   *
   * Threads converting images work in main loop implemented in run() method.
@@ -53,6 +43,7 @@ qRegisterMetaType<Question>("Question");
   */
 class ConvertThread : public QThread {
     Q_OBJECT
+    Q_ENUMS(ConvertThread::Question)
     friend class ConvertDialog;
 
 public:
@@ -66,9 +57,15 @@ public:
 #endif // SIR_METADATA_SUPPORT
     static SharedInformation *sharedInfo();
 
+    //! Enumerator for ConvertThread::question() signal.
+    enum Question {
+        Overwrite,
+        Enlarge
+    };
+
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
-    void question(const QString& targetFilePath, Question whatToDo);
+    void question(const QString& targetFilePath, ConvertThread::Question whatToDo);
     void getNextImage(int tid);
 
 protected:

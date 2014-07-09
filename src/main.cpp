@@ -54,9 +54,9 @@ int main(int argc, char *argv[]) {
     return app.exec();
 }
 
-#if QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050000 || defined(Q_OS_OS2)
 bool findIconTheme() {
-#ifdef Q_OS_WIN32
+#ifdef defined(Q_OS_WIN32) || defined(Q_OS_OS2)
     /* For Windows build get Tango icon theme from
      * https://googledrive.com/host/0B9Il9AGwsKEvLVpDVmIwbHVoYlE/Tango.zip
      * and extract this into /share/pixmaps app directory.
