@@ -31,7 +31,8 @@ int main(int argc, char *argv[]) {
 
 #if QT_VERSION < 0x050000
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#else
+#endif // QT_VERSION
+#if QT_VERSION >= 0x050000 || defined(Q_OS_OS2)
     findIconTheme();
 #endif // QT_VERSION
 
@@ -81,8 +82,13 @@ bool findIconTheme() {
 
     if (themeFound)
         qDebug() << "Icon theme found:" << QIcon::themeName();
-    else
+    else {
         qWarning() << "No icon theme found. Tried:" << themes;
+        qDebug() << "Please save any icon theme to" << searchPaths.first()
+                 << "directory if you wish see icons in SIR.";
+        qDebug() << "SIR needs *.theme file in specifed directory and 16x16 and"
+                 << "32x32 subdirectories containing icons.";
+    }
 
     return themeFound;
 }
