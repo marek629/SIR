@@ -33,6 +33,23 @@ Rgb::Rgb(const Rgb &other) {
     blue = other.blue;
 }
 
+void Rgb::normalize() {
+    if (red < 0)
+        red = 0;
+    else if (red > 255)
+        red = 255;
+
+    if (green < 0)
+        green = 0;
+    else if (green > 255)
+        green = 255;
+
+    if (blue < 0)
+        blue = 0;
+    else if (blue > 255)
+        blue = 255;
+}
+
 Rgb &Rgb::operator =(const RgbF &other) {
     red = int(other.red + 0.5);
     green = int(other.green + 0.5);
@@ -109,6 +126,23 @@ RgbF::RgbF(const Rgb &other) {
     red = other.red;
     green = other.green;
     blue = other.blue;
+}
+
+void RgbF::normalize() {
+    if (red < 0.)
+        red = 0.;
+    else if (red > 255.)
+        red = 255.;
+
+    if (green < 0.)
+        green = 0.;
+    else if (green > 255.)
+        green = 255.;
+
+    if (blue < 0.)
+        blue = 0.;
+    else if (blue > 255.)
+        blue = 255.;
 }
 
 RgbF RgbF::operator -(const RgbF &other) {

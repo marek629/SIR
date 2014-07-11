@@ -446,8 +446,10 @@ QVector<Rgb> ConvertEffects::lookUpTable() {
         D0.blue = D[n].blue;
 
     RgbF mul = (k - 1) / (1 - D0);
-    for (int i=0; i<LUT.size(); i++)
+    for (int i=0; i<LUT.size(); i++) {
         LUT[i] = (D[i] - D0) * mul;
+        LUT[i].normalize();
+    }
 
     return LUT;
 }

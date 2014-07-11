@@ -11,6 +11,7 @@
   ! remove src/translations/googlecode_upload.py file
   ! improve view in FileDetails for photos made by HTC Desire S
   ! restore check updates option
+  ! add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
 
 *** 3.0 roadmap ***
   ! dynamically add effects to effect list (empty initially)

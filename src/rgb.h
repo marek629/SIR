@@ -37,6 +37,7 @@ class Rgb {
 public:
     Rgb();
     Rgb(const Rgb &other);
+    void normalize();
     Rgb & operator =(const RgbF &other);
     Rgb operator +(const Rgb &other);
     Rgb & operator +=(const Rgb &other);
@@ -59,6 +60,7 @@ public:
     RgbF();
     RgbF(const RgbF &other);
     RgbF(const Rgb &other);
+    void normalize();
     RgbF operator -(const RgbF &other);
     RgbF operator *(const RgbF &other);
     qreal red;
