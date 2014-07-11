@@ -33,21 +33,21 @@ Rgb::Rgb(const Rgb &other) {
     blue = other.blue;
 }
 
-void Rgb::normalize() {
-    if (red < 0)
-        red = 0;
-    else if (red > 255)
-        red = 255;
+void Rgb::normalize(int min, int max) {
+    if (red < min)
+        red = min;
+    else if (red > max)
+        red = max;
 
-    if (green < 0)
-        green = 0;
-    else if (green > 255)
-        green = 255;
+    if (green < min)
+        green = min;
+    else if (green > max)
+        green = max;
 
-    if (blue < 0)
-        blue = 0;
-    else if (blue > 255)
-        blue = 255;
+    if (blue < min)
+        blue = min;
+    else if (blue > max)
+        blue = max;
 }
 
 Rgb &Rgb::operator =(const RgbF &other) {
@@ -128,21 +128,21 @@ RgbF::RgbF(const Rgb &other) {
     blue = other.blue;
 }
 
-void RgbF::normalize() {
-    if (red < 0.)
-        red = 0.;
-    else if (red > 255.)
-        red = 255.;
+void RgbF::normalize(qreal min, qreal max) {
+    if (red < min)
+        red = min;
+    else if (red > max)
+        red = max;
 
-    if (green < 0.)
-        green = 0.;
-    else if (green > 255.)
-        green = 255.;
+    if (green < min)
+        green = min;
+    else if (green > max)
+        green = max;
 
-    if (blue < 0.)
-        blue = 0.;
-    else if (blue > 255.)
-        blue = 255.;
+    if (blue < min)
+        blue = min;
+    else if (blue > max)
+        blue = max;
 }
 
 RgbF RgbF::operator -(const RgbF &other) {
