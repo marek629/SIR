@@ -1,6 +1,6 @@
 var compareBlogEntry = function(a, b) {
     return b.date.valueOf() - a.date.valueOf();
-}
+};
 
 var showBlog = function() {
     $('#content').empty();
@@ -16,7 +16,7 @@ var showBlog = function() {
             }
         });
     });
-}
+};
 
 var showPage = function(fileName) {
     $.ajax({
@@ -27,7 +27,7 @@ var showPage = function(fileName) {
             $('#content').html(content);
         }
     });
-}
+};
 
 var selectPage = function(hash) {
     switch (hash) {
@@ -44,6 +44,7 @@ var selectPage = function(hash) {
             showPage('contact.html');
             break;
         default:
+            hash = '#home';
             showBlog();
             break;
     }
@@ -51,7 +52,7 @@ var selectPage = function(hash) {
     var button = $('#menu-box a[href=' + hash + ']').parent();
     button.siblings().removeClass('active');
     button.addClass('active');
-}
+};
 
 $('#menu-box a').click( function(event) {
     var button = $(this).parent();
