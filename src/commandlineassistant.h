@@ -24,6 +24,7 @@
 
 #include <QStringList>
 #include <QCoreApplication>
+#include <QSharedMemory>
 
 /** \brief Command line arguments parser class.
   *
@@ -56,6 +57,7 @@ public:
 
 private:
     QString sessionFile_;
+    QSharedMemory memory;
 };
 
 #endif // COMMANDLINEASSISTANT_H
