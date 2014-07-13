@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 
 #if QT_VERSION >= 0x050000 || defined(Q_OS_OS2)
 bool findIconTheme() {
-#ifdef defined(Q_OS_WIN32) || defined(Q_OS_OS2)
+#if defined(Q_OS_WIN32) || defined(Q_OS_OS2)
     /* For Windows build get Tango icon theme from
      * https://googledrive.com/host/0B9Il9AGwsKEvLVpDVmIwbHVoYlE/Tango.zip
      * and extract this into /share/pixmaps app directory.
@@ -84,7 +84,8 @@ bool findIconTheme() {
         qDebug() << "Icon theme found:" << QIcon::themeName();
     else {
         qWarning() << "No icon theme found. Tried:" << themes;
-        qDebug() << "Please save any icon theme to" << searchPaths.first()
+        qDebug() << "Please save any icon theme to one of"
+                 << QIcon::themeSearchPaths()
                  << "directory if you wish see icons in SIR.";
         qDebug() << "SIR needs *.theme file in specifed directory and 16x16 and"
                  << "32x32 subdirectories containing icons.";
