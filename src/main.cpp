@@ -26,6 +26,11 @@
 #include "main.h"
 #include "commandlineassistant.h"
 
+
+#if QT_VERSION >= 0x050000 || defined(Q_OS_OS2)
+bool findIconTheme();
+#endif // QT_VERSION or Q_OS_OS2
+
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
