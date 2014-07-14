@@ -62,19 +62,26 @@ using namespace sir;
   * \sa init()
   */
 ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
-                             const CommandLineAssistant &cmdAssistant)
+                             CommandLineAssistant *cmdAssistant)
     : QMainWindow(parent) {
     csd = ConvertSharedData::instance();
+
     setupUi(this);
+
     this->args = args;
     net = NULL;
     sharedInfo = ConvertThread::sharedInfo();
     effectsDir = QDir::home();
     sessionDir = QDir::home();
+
     init();
+
     session = new Session(this);
-    if (!cmdAssistant.sessionFile().isEmpty())
-        session->restore(cmdAssistant.sessionFile());
+
+    cmdAssistant->setTreeWidget(filesTreeWidget);
+    if (!cmdAssistant->sessionFile().isEmpty())
+        session->restore(cmdAssistant->sessionFile());
+
     effectsCollector = new EffectsCollector(this);
 }
 

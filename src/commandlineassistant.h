@@ -26,6 +26,8 @@
 #include <QCoreApplication>
 #include <QSharedMemory>
 
+class TreeWidget;
+
 /** \brief Command line arguments parser class.
   *
   * Supported arguments:
@@ -46,18 +48,25 @@
   * $ sir --help --lang pl
   * both print help message in Polish language and quit.
   */
-class CommandLineAssistant {
-    Q_DECLARE_TR_FUNCTIONS(CommandLineAssistant)
+class CommandLineAssistant : public QObject {
+    Q_OBJECT
+//    Q_DECLARE_TR_FUNCTIONS(CommandLineAssistant)
 
 public:
-    CommandLineAssistant();
+    CommandLineAssistant(QObject *parent = 0);
     int parse(const QStringList &args = QStringList());
     /** Returns XML session file to read by Session object. */
     QString sessionFile() const { return sessionFile_; }
+    QByteArray getOutSharedMemory();
+    void setTreeWidget(TreeWidget *widget);
+
+protected:
+    virtual void timerEvent(QTimerEvent *event);
 
 private:
     QString sessionFile_;
     QSharedMemory memory;
+    TreeWidget *treeWidget;
 };
 
 #endif // COMMANDLINEASSISTANT_H
