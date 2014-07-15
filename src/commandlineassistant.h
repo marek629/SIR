@@ -50,7 +50,6 @@ class TreeWidget;
   */
 class CommandLineAssistant : public QObject {
     Q_OBJECT
-//    Q_DECLARE_TR_FUNCTIONS(CommandLineAssistant)
 
 public:
     CommandLineAssistant(QObject *parent = 0);

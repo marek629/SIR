@@ -29,9 +29,6 @@
 #include "sir_string.h"
 #include "widgets/treewidget.h"
 
-#include <QMessageBox>
-#include <QDebug>
-
 #define SHARED_MEMORY_SIZE 200000
 
 using namespace sir;
@@ -48,15 +45,11 @@ CommandLineAssistant::CommandLineAssistant(QObject *parent) : QObject(parent) {
   */
 int CommandLineAssistant::parse(const QStringList &args) {
     QString argString;
-    foreach (QString arg, args) {
+    foreach (QString arg, args)
         argString += arg + '\n';
-    }
-    qDebug() << argString;
 
     QString uniqueID("Open as SIR from file manager");
     memory.setKey(uniqueID);
-    qDebug() << memory.size() << memory.key() << memory.nativeKey();
-    qDebug() << memory.error() << memory.errorString();
     if (memory.attach(QSharedMemory::ReadWrite)) {
         // first instance of SIR is already running
         QByteArray bytes;
@@ -67,24 +60,19 @@ int CommandLineAssistant::parse(const QStringList &args) {
             bytes.append(';');
         }
         bytes.append('\0');
+
         memory.lock();
         char *to = (char*)memory.data();
         const char *from = bytes.data();
-        qDebug() << "bytes size:" << bytes.size();
         memcpy(to, from, qMin(memory.size(), bytes.size()));
         memory.unlock();
-        qDebug(to);
-        QMessageBox::warning(0, "Shared Memory", QString(to));
 
         return -200;
     }
-    qDebug() << memory.error() << memory.errorString();
     if (!memory.create(SHARED_MEMORY_SIZE, QSharedMemory::ReadWrite)) {
         qDebug("Can not create single instance of SIR!");
         return -201;
     }
-    qDebug() << memory.error() << memory.errorString();
-    qDebug() << memory.size() << memory.key() << memory.nativeKey();
 
     QStringList longArgs = args.filter(QRegExp("^(-){2}(help|lang|session)+$"));
     QStringList shortArgs = args.filter(QRegExp("^(-){1}(h|l|s)+$"));
