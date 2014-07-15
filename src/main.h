@@ -71,4 +71,16 @@ bool findIconTheme();
   *   * [dcraw](http://www.cybercom.net/~dcoffin/dcraw/)
   *
   * SIR documentation was created using Doxygen.
+  *
+  * \section tips Tips for Developers
+  *
+  * \subsection good_practices Good coding practices
+  *
+  * Use friend class declaration for test and production classes friendship.
+  *
+  * \subsection bad_practices Bad coding practices
+  *
+  * Don't use friend class declaration for both production classes friendship.
+  * Do public class interface instead.\n
+  * It's needed to remove consecutively existing production classes fiendships.
   */
