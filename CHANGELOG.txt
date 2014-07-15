@@ -1,3 +1,6 @@
+* unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.8
+    - Changed SIR to single instance application
+
 * unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.7.3
     - Changed all occurrences of old SIR webpage URL
     - Windows: fixed button icons
