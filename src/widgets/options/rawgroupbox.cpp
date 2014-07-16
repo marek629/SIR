@@ -21,6 +21,7 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDebug>
 #include "rawgroupbox.h"
 #include "settings.h"
 #include "commonoptions.h"
@@ -127,6 +128,9 @@ bool RawGroupBox::checkDcrawPath(QString fileName) {
                         tr("The chosen file is not executable. "
                            "RAW support will not be enabled!" )
                 );
+                QString permissionsHex = QString::number(dcraw.permissions(), 16);
+                permissionsHex.prepend("0x");
+                qDebug() << dcraw.fileName() << "permissions:" << permissionsHex;
                 return false;
 
             }
