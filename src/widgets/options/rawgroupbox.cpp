@@ -102,7 +102,7 @@ void RawGroupBox::saveSettings() {
   * (file exists and is executalbe). Otherwise returns false.\n
   * This function shows user warning dialog before returns false.
   */
-bool RawGroupBox::checkDcrawPath(QString fileName) {
+bool RawGroupBox::checkDcrawPath(const QString &fileName) {
     if (!fileName.isEmpty()) {
         QFile dcraw(fileName);
         //Check if the file exists

@@ -19,31 +19,40 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWGROUPBOX_H
-#define RAWGROUPBOX_H
+#include "rawgroupboxtest.h"
 
-#include "ui_rawgroupbox.h"
-#include "abstractoptionsgroupbox.h"
+RawGroupBoxTest::RawGroupBoxTest() {}
 
-//! Raw group box class used in OptionsDialog dialog.
-class RawGroupBox : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
-    Q_OBJECT
-    friend class RawGroupBoxTest;
+void RawGroupBoxTest::initTestCase()
+{
 
-public:
-    explicit RawGroupBox(QWidget *parent = 0);
-    void loadSettings();
-    void saveSettings();
+}
 
-signals:
-    void ok(); /**< Indicates write settings success. */
+void RawGroupBoxTest::cleanupTestCase()
+{
 
-private slots:
-    void browseDcraw();
-    void setRawStatus(int state);
+}
 
-private:
-    bool checkDcrawPath(const QString &fileName);
-};
+void RawGroupBoxTest::checkDcrawPath_emptyString() {
+    QString input("");
 
-#endif // RAWGROUPBOX_H
+    bool expected = false;
+    bool result = groupBox.checkDcrawPath(input);
+
+    QCOMPARE(result, expected);
+}
+
+void RawGroupBoxTest::checkDcrawPath_fileNotExists()
+{
+
+}
+
+void RawGroupBoxTest::checkDcrawPath_fileNotExecutable()
+{
+
+}
+
+void RawGroupBoxTest::checkDcrawPath_fileExecutable()
+{
+
+}
