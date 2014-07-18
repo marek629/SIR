@@ -23,15 +23,9 @@
 
 RawGroupBoxTest::RawGroupBoxTest() {}
 
-void RawGroupBoxTest::initTestCase()
-{
+void RawGroupBoxTest::initTestCase() {}
 
-}
-
-void RawGroupBoxTest::cleanupTestCase()
-{
-
-}
+void RawGroupBoxTest::cleanupTestCase() {}
 
 void RawGroupBoxTest::checkDcrawPath_emptyString() {
     QString input("");
@@ -42,17 +36,17 @@ void RawGroupBoxTest::checkDcrawPath_emptyString() {
     QCOMPARE(result, expected);
 }
 
-void RawGroupBoxTest::checkDcrawPath_fileNotExists()
-{
+void RawGroupBoxTest::checkDcrawPath_fileNotExists() {
 
 }
 
-void RawGroupBoxTest::checkDcrawPath_fileNotExecutable()
-{
+void RawGroupBoxTest::checkDcrawPath_fileNotExecutable() {
 
 }
 
-void RawGroupBoxTest::checkDcrawPath_fileExecutable()
-{
+void RawGroupBoxTest::checkDcrawPath_fileExecutable() {
 
 }
+
+QTEST_MAIN(RawGroupBoxTest)
+#include "rawgroupboxtest.moc"
