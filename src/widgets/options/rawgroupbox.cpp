@@ -104,41 +104,28 @@ void RawGroupBox::saveSettings() {
   * This function shows user warning dialog before returns false.
   */
 bool RawGroupBox::checkDcrawPath(const QString &fileName) {
-    if (!fileName.isEmpty()) {
+    if (fileName.isEmpty()) {
+        MessageBox::warning(this, "SIR",
+            tr("No dcraw executable chosen. RAW support will not be enabled!"));
+        return false;
+    }
+    else {
         QFile dcraw(fileName);
-        //Check if the file exists
-        if(!dcraw.exists()) {
-            MessageBox::warning(
-                        this, "SIR",
-                        tr("dcraw executable not found. "
-                           "RAW support will not be enabled!")
-                        );
-            return false;
-        }
-        else {
-            //is executable??
-            if(dcraw.permissions().testFlag(QFile::ExeOwner)) {
-                //the file is executable
+        if (dcraw.exists()) {
+            if (dcraw.permissions().testFlag(QFile::ExeOwner)) {
                 return true;
             }
             else {
-                //Not executable
-                MessageBox::warning(
-                        this, "SIR",
-                        tr("The chosen file is not executable. "
-                           "RAW support will not be enabled!" )
-                );
+                MessageBox::warning(this, "SIR",
+                    tr("The chosen file is not executable. "
+                       "RAW support will not be enabled!"));
                 return false;
-
             }
         }
-    }
-    else {
-        MessageBox::warning(
-                        this, "SIR",
-                        tr("No dcraw executable chosen. "
-                           "RAW support will not be enabled!" )
-                        );
-        return false;
+        else {
+            MessageBox::warning(this, "SIR",
+                tr("dcraw executable not found. RAW support will not be enabled!"));
+            return false;
+        }
     }
 }
