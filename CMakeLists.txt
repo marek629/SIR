@@ -50,8 +50,9 @@ else( )
     message( STATUS "SIR is building in release mode." )
 endif( )
 
-option( qt5 "Qt 5 support" ON)
-option( metadata "Metadata support using exiv2 library." ON)
+option( qt5 "Qt 5 support." ON )
+option( metadata "Metadata support using exiv2 library." ON )
+option( testingDcrawExe "Testing dcraw executable file permissions." ON )
 
 if( qt5 )
         message( STATUS "Building using Qt 5" )
@@ -174,6 +175,10 @@ if( metadata )
 else( metadata )
     message(  STATUS "Building SIR without metadata support." )
 endif( metadata )
+
+if( testingDcrawExe )
+    add_definitions( -DTESTING_DCRAW_EXE_PERMISSIONS )
+endif( testingDcrawExe )
 
 
 if( WIN32 )

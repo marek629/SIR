@@ -116,6 +116,7 @@ bool RawGroupBox::checkDcrawPath(QString fileName) {
             return false;
         }
         else {
+#ifdef TESTING_DCRAW_EXE_PERMISSIONS
             //is executable??
             if(dcraw.permissions().testFlag(QFile::ExeOwner)) {
                 //the file is executable
@@ -134,6 +135,9 @@ bool RawGroupBox::checkDcrawPath(QString fileName) {
                 return false;
 
             }
+#else // not TESTING_DCRAW_EXE_PERMISSIONS
+            return true;
+#endif // TESTING_DCRAW_EXE_PERMISSIONS
         }
     }
     else {
