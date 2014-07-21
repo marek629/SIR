@@ -20,10 +20,11 @@
  */
 
 #include <QFileDialog>
-#include <QMessageBox>
+
 #include "rawgroupbox.h"
 #include "settings.h"
 #include "commonoptions.h"
+#include "widgets/messagebox.h"
 
 /** Default constructor.\n
   * Sets UI and creates connections.
@@ -107,7 +108,7 @@ bool RawGroupBox::checkDcrawPath(const QString &fileName) {
         QFile dcraw(fileName);
         //Check if the file exists
         if(!dcraw.exists()) {
-            QMessageBox::warning(
+            MessageBox::warning(
                         this, "SIR",
                         tr("dcraw executable not found. "
                            "RAW support will not be enabled!")
@@ -122,7 +123,7 @@ bool RawGroupBox::checkDcrawPath(const QString &fileName) {
             }
             else {
                 //Not executable
-                QMessageBox::warning(
+                MessageBox::warning(
                         this, "SIR",
                         tr("The chosen file is not executable. "
                            "RAW support will not be enabled!" )
@@ -133,7 +134,7 @@ bool RawGroupBox::checkDcrawPath(const QString &fileName) {
         }
     }
     else {
-        QMessageBox::warning(
+        MessageBox::warning(
                         this, "SIR",
                         tr("No dcraw executable chosen. "
                            "RAW support will not be enabled!" )

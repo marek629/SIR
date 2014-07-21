@@ -17,17 +17,18 @@ add_executable( sir_converteffects_test ${sir_UT_converteffects_SRCS} )
 target_link_libraries( sir_converteffects_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertEffects_UT" COMMAND sir_converteffects_test )
 
-set( sir_UT_version_SRCS
+set( sir_UT_languageutils_SRCS
         languageutilstest.cpp
     )
-add_executable( sir_languageutils_test ${sir_UT_version_SRCS} )
+add_executable( sir_languageutils_test ${sir_UT_languageutils_SRCS} )
 target_link_libraries( sir_languageutils_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "LanguageUtils_UT" COMMAND sir_languageutils_test )
 
+include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_UT_rawgroupbox_SRCS
         rawgroupboxtest.cpp
     )
-add_executable( sir_rawgroupbox_test ${sir_UT_version_SRCS} )
+add_executable( sir_rawgroupbox_test ${sir_UT_rawgroupbox_SRCS} )
 target_link_libraries( sir_rawgroupbox_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "RawGroupBox_UT" COMMAND sir_rawgroupbox_test )
 

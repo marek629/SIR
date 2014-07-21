@@ -20,8 +20,11 @@
  */
 
 #include "rawgroupboxtest.h"
+#include "widgets/messagebox.h"
 
-RawGroupBoxTest::RawGroupBoxTest() {}
+RawGroupBoxTest::RawGroupBoxTest() {
+    MessageBox::enableTesting(true);
+}
 
 void RawGroupBoxTest::initTestCase() {}
 
