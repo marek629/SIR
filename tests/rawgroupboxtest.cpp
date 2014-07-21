@@ -19,6 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
+#include <QDir>
+
 #include "rawgroupboxtest.h"
 #include "widgets/messagebox.h"
 
@@ -40,15 +42,52 @@ void RawGroupBoxTest::checkDcrawPath_emptyString() {
 }
 
 void RawGroupBoxTest::checkDcrawPath_fileNotExists() {
+    QString input("/test_dcraw.bin");
+    input.prepend(QDir::tempPath());
 
+    QFile file(input);
+    QVERIFY(!file.exists());
+
+    bool expected = false;
+    bool result = groupBox.checkDcrawPath(input);
+
+    QCOMPARE(result, expected);
 }
 
 void RawGroupBoxTest::checkDcrawPath_fileNotExecutable() {
+    QString input("/test_dcraw.bin");
+    input.prepend(QDir::tempPath());
 
+    QFile file(input);
+    QVERIFY(!file.exists());
+    file.open(QFile::ReadWrite);
+    file.setPermissions(QFile::ReadOwner | QFile::WriteOwner);
+    QVERIFY(file.exists());
+
+    bool expected = false;
+    bool result = groupBox.checkDcrawPath(input);
+
+    QCOMPARE(result, expected);
+
+    QVERIFY(file.remove());
 }
 
 void RawGroupBoxTest::checkDcrawPath_fileExecutable() {
+    QString input("/test_dcraw.bin");
+    input.prepend(QDir::tempPath());
 
+    QFile file(input);
+    QVERIFY(!file.exists());
+    file.open(QFile::ReadWrite);
+    file.setPermissions(QFile::ExeOwner);
+    QVERIFY(file.exists());
+
+    bool expected = true;
+    bool result = groupBox.checkDcrawPath(input);
+
+    QCOMPARE(result, expected);
+
+    QVERIFY(file.remove());
 }
 
 QTEST_MAIN(RawGroupBoxTest)
