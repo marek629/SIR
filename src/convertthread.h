@@ -43,7 +43,6 @@ class QImage;
   */
 class ConvertThread : public QThread {
     Q_OBJECT
-    Q_ENUMS(ConvertThread::Question)
     friend class ConvertDialog;
 
 public:
@@ -65,7 +64,7 @@ public:
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
-    void question(const QString& targetFilePath, ConvertThread::Question whatToDo);
+    void question(const QString& targetFilePath, int questionCode);
     void getNextImage(int tid);
 
 protected:

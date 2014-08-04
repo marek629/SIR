@@ -286,8 +286,8 @@ void ConvertDialog::setupThreads(int numThreads) {
         convertThreads.append(new ConvertThread(this, i));
         // connecting
         connect(convertThreads[i],
-                SIGNAL(question(const QString &, ConvertThread::Question)),
-                SLOT(query(const QString &, ConvertThread::Question)),
+                SIGNAL(question(const QString &, int)),
+                SLOT(query(const QString &, int)),
                 Qt::BlockingQueuedConnection);
         connect(convertThreads[i],
                 SIGNAL(imageStatus(const QStringList &, const QString &, int)),
@@ -927,9 +927,10 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
 /** Ask for users agreement of typed action on file.
   * \param targetFile Asking file path.
   * \param tid Worker thread ID.
-  * \param whatToDo Action on target file. Support for \em overwrite and \em enlarge only.
+  * \param questionCode Action on target file. Support for \em overwrite and \em enlarge only.
   */
-void ConvertDialog::query(const QString& targetFile, ConvertThread::Question whatToDo) {
+void ConvertDialog::query(const QString& targetFile, int questionCode) {
+    ConvertThread::Question whatToDo = static_cast<ConvertThread::Question>(questionCode);
     switch (whatToDo) {
     case ConvertThread::Enlarge:
         if (sharedInfo->noEnlargeAll)

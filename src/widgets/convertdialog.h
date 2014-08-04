@@ -35,7 +35,6 @@ class EffectsCollector;
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     Q_OBJECT
-    Q_ENUMS(ConvertThread::Question)
     friend class Selection;
     friend class SelectionDialog;
     friend class DetailsBrowser;
@@ -94,7 +93,7 @@ public slots:
     void setOptions();
     void loadSettings();
     void setImageStatus(const QStringList& imageData, const QString& status, int statusNum);
-    void query(const QString& targetFile, ConvertThread::Question whatToDo);
+    void query(const QString& targetFile, int questionCode);
     void giveNextImage(int tid);
     void setupThreads(int numThreads);
     void closeOrCancel();

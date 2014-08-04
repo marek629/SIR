@@ -444,24 +444,22 @@ void PreviewDialog::fullScreen() {
 
 /** Save button slot. Ask and overwrite if accepted current file. */
 bool PreviewDialog::save() {
-
     bool ret;
 
-    switch ( QMessageBox::question(
-            this,
-            tr("Overwrite File? -- SIR"),
-            tr("A file called %1 already exists."
-               "Do you want to overwrite it?").arg( imagePath),
-            tr("&Yes"), tr("&No"), 0) ) {
-
-            case 0:
-                ret = saveFile(imagePath);
-                if(ret) {
-                    reloadImage(imagePath);
-                }
+    switch (QMessageBox::question(
+                this,
+                tr("Overwrite File? -- SIR"),
+                tr("A file called %1 already exists."
+                    "Do you want to overwrite it?").arg( imagePath),
+                tr("&Yes"), tr("&No"), 0)) {
+        case 0:
+            ret = saveFile(imagePath);
+            if (ret) {
+                reloadImage(imagePath);
+            }
             return ret;
-            case 1:
-                return false;
+        case 1:
+            return false;
     }
 
     return false;
