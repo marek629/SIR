@@ -23,7 +23,7 @@
 #define RAWGROUPBOXTEST_H
 
 #include <QtTest/QTest>
-#include "widgets/options/rawgroupbox.h"
+#include "widgets/options/rawgroupboxcontroller.h"
 #include "widgets/options/rawgroupboxview.h"
 
 class RawGroupBoxTest : public QObject {

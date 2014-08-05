@@ -32,7 +32,7 @@
 #include "widgets/options/metadatagroupbox.h"
 #endif // SIR_METADATA_SUPPORT
 #include "widgets/options/selectiongroupbox.h"
-#include "widgets/options/rawgroupbox.h"
+#include "widgets/options/rawgroupboxcontroller.h"
 #include "widgets/options/rawgroupboxview.h"
 #include "optionsenums.h"
 
@@ -205,6 +205,7 @@ void OptionsDialog::setupUi() {
     verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
 
     // create group boxes
+    Settings *model = Settings::instance();
     generalGroupBox = new GeneralGroupBox(scrollAreaWidgetContents);
     fileListGroupBox = new FileListGroupBox(scrollAreaWidgetContents);
 #ifdef SIR_METADATA_SUPPORT
@@ -213,7 +214,7 @@ void OptionsDialog::setupUi() {
 #endif // SIR_METADATA_SUPPORT
     selectionGroupBox = new SelectionGroupBox(scrollAreaWidgetContents);
     rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
-    rawGroupBoxController = new RawGroupBoxController(rawGroupBox);
+    rawGroupBoxController = new RawGroupBoxController(model, rawGroupBox);
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     // setup group boxes pointer array

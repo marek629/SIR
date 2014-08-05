@@ -23,12 +23,14 @@
 
 #include "rawgroupboxtest.h"
 #include "widgets/messagebox.h"
+#include "settings.h"
 
 RawGroupBoxTest::RawGroupBoxTest() {
     MessageBox::enableTesting(true);
 
+    Settings *model = Settings::instance();
     view = new RawGroupBoxView();
-    controller = new RawGroupBoxController(view, this);
+    controller = new RawGroupBoxController(model, view, this);
 }
 
 RawGroupBoxTest::~RawGroupBoxTest() {

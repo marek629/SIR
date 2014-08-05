@@ -19,20 +19,22 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWGROUPBOX_H
-#define RAWGROUPBOX_H
+#ifndef RAWGROUPBOXCONTROLLER_H
+#define RAWGROUPBOXCONTROLLER_H
 
 #include "abstractoptionsgroupbox.h"
 
+class Settings;
 class RawGroupBoxView;
 
-//! Raw group box class used in OptionsDialog dialog.
+//! Raw group box controller class used in OptionsDialog dialog.
 class RawGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
     friend class RawGroupBoxTest;
 
 public:
-    explicit RawGroupBoxController(RawGroupBoxView *view, QObject *parent = 0);
+    explicit RawGroupBoxController(Settings *model, RawGroupBoxView *view,
+                                   QObject *parent = 0);
     void loadSettings();
     void saveSettings();
     void browseDcraw();
@@ -42,8 +44,9 @@ signals:
     void ok(); /**< Indicates write settings success. */
 
 private:
-    bool checkDcrawPath(const QString &fileName);
+    Settings *model;
     RawGroupBoxView *view;
+    bool checkDcrawPath(const QString &fileName);
 };
 
-#endif // RAWGROUPBOX_H
+#endif // RAWGROUPBOXCONTROLLER_H

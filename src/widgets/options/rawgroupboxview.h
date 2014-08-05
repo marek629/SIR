@@ -27,6 +27,7 @@
 
 class RawGroupBoxController;
 
+//! Raw group box view class used in OptionsDialog dialog.
 class RawGroupBoxView : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
     Q_OBJECT
 

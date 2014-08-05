@@ -21,7 +21,7 @@
 
 #include <QFileDialog>
 
-#include "rawgroupbox.h"
+#include "rawgroupboxcontroller.h"
 #include "rawgroupboxview.h"
 #include "settings.h"
 #include "commonoptions.h"
@@ -31,8 +31,10 @@
   * Sets UI and creates connections.
   * \sa setupUi()
   */
-RawGroupBoxController::RawGroupBoxController(RawGroupBoxView *view, QObject *parent)
+RawGroupBoxController::RawGroupBoxController(
+        Settings *model, RawGroupBoxView *view, QObject *parent)
     : AbstractOptionsController(parent) {
+    this->model = model;
     this->view = view;
     this->view->setController(this);
 }
@@ -62,40 +64,38 @@ void RawGroupBoxController::setRawStatus(int state) {
   * \sa Settings saveSettings()
   */
 void RawGroupBoxController::loadSettings() {
-    Settings *s = Settings::instance();
-    int state =             s->raw.enabled;
+    int state = model->raw.enabled;
     view->rawCheckBox->setChecked(state);
     setRawStatus(state);
-    view->dcrawLineEdit->setText( s->raw.dcrawPath);
-    view->dcrawOptions->setText(  s->raw.dcrawOptions);
+    view->dcrawLineEdit->setText(model->raw.dcrawPath);
+    view->dcrawOptions->setText(model->raw.dcrawOptions);
 }
 
 /** Saves settings basing member widgets values.
   * \sa Settings loadSettings()
   */
 void RawGroupBoxController::saveSettings() {
-    Settings *s = Settings::instance();
     bool dcrawOk = false;
     bool firstState = view->rawCheckBox->isChecked();
     //check dcraw executable
     if (view->rawCheckBox->isChecked()) {
         if((dcrawOk = checkDcrawPath(view->dcrawLineEdit->text()))) {
-            s->raw.enabled       = true;
-            s->raw.dcrawPath     = view->dcrawLineEdit->text();
-            s->raw.dcrawOptions  = view->dcrawOptions->text();
+            model->raw.enabled = true;
+            model->raw.dcrawPath = view->dcrawLineEdit->text();
+            model->raw.dcrawOptions = view->dcrawOptions->text();
         }
         else {
-            s->raw.enabled       = false;
             view->rawCheckBox->setChecked(false);
-            s->raw.dcrawPath     = view->dcrawLineEdit->text();
-            s->raw.dcrawOptions  = view->dcrawOptions->text();
+            model->raw.enabled = false;
+            model->raw.dcrawPath = view->dcrawLineEdit->text();
+            model->raw.dcrawOptions = view->dcrawOptions->text();
             setRawStatus(false);
         }
     }
     else {
-        s->raw.enabled           = false;
-        s->raw.dcrawPath         = view->dcrawLineEdit->text();
-        s->raw.dcrawOptions      = view->dcrawOptions->text();
+        model->raw.enabled = false;
+        model->raw.dcrawPath = view->dcrawLineEdit->text();
+        model->raw.dcrawOptions = view->dcrawOptions->text();
     }
     if (dcrawOk || !firstState) {
         emit ok();

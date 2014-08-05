@@ -20,7 +20,7 @@
  */
 
 #include "rawgroupboxview.h"
-#include "rawgroupbox.h"
+#include "rawgroupboxcontroller.h"
 
 RawGroupBoxView::RawGroupBoxView(QWidget *parent)
     : AbstractOptionsGroupBox(parent) {
