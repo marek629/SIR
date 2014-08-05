@@ -39,7 +39,8 @@ class DetailsGroupBox;
 class MetadataGroupBox;
 #endif // SIR_METADATA_SUPPORT
 class SelectionGroupBox;
-class RawGroupBox;
+class RawGroupBoxView;
+class RawGroupBoxController;
 
 //! Settings wizard window.
 class OptionsDialog : public QDialog {
@@ -75,7 +76,8 @@ private:
     MetadataGroupBox *metadataGroupBox;
 #endif //SIR_METADATA_SUPPORT
     SelectionGroupBox *selectionGroupBox;
-    RawGroupBox *rawGroupBox;
+    RawGroupBoxView *rawGroupBox;
+    RawGroupBoxController *rawGroupBoxController;
     // methods
     void createConnections();
     void setupUi();

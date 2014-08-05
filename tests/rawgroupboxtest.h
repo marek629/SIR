@@ -24,15 +24,18 @@
 
 #include <QtTest/QTest>
 #include "widgets/options/rawgroupbox.h"
+#include "widgets/options/rawgroupboxview.h"
 
 class RawGroupBoxTest : public QObject {
     Q_OBJECT
 
 public:
     RawGroupBoxTest();
+    ~RawGroupBoxTest();
 
 private:
-    RawGroupBox groupBox;
+    RawGroupBoxController *controller;
+    RawGroupBoxView *view;
 
 private slots:
     void initTestCase();

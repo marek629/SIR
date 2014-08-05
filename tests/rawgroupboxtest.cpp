@@ -26,6 +26,14 @@
 
 RawGroupBoxTest::RawGroupBoxTest() {
     MessageBox::enableTesting(true);
+
+    view = new RawGroupBoxView();
+    controller = new RawGroupBoxController(view, this);
+}
+
+RawGroupBoxTest::~RawGroupBoxTest() {
+    delete view;
+    delete controller;
 }
 
 void RawGroupBoxTest::initTestCase() {}
@@ -36,7 +44,7 @@ void RawGroupBoxTest::checkDcrawPath_emptyString() {
     QString input("");
 
     bool expected = false;
-    bool result = groupBox.checkDcrawPath(input);
+    bool result = controller->checkDcrawPath(input);
 
     QCOMPARE(result, expected);
 }
@@ -49,7 +57,7 @@ void RawGroupBoxTest::checkDcrawPath_fileNotExists() {
     QVERIFY(!file.exists());
 
     bool expected = false;
-    bool result = groupBox.checkDcrawPath(input);
+    bool result = controller->checkDcrawPath(input);
 
     QCOMPARE(result, expected);
 }
@@ -65,7 +73,7 @@ void RawGroupBoxTest::checkDcrawPath_fileNotExecutable() {
     QVERIFY(file.exists());
 
     bool expected = false;
-    bool result = groupBox.checkDcrawPath(input);
+    bool result = controller->checkDcrawPath(input);
 
     QCOMPARE(result, expected);
 
@@ -83,7 +91,7 @@ void RawGroupBoxTest::checkDcrawPath_fileExecutable() {
     QVERIFY(file.exists());
 
     bool expected = true;
-    bool result = groupBox.checkDcrawPath(input);
+    bool result = controller->checkDcrawPath(input);
 
     QCOMPARE(result, expected);
 

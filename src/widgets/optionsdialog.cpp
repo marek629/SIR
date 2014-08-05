@@ -33,6 +33,7 @@
 #endif // SIR_METADATA_SUPPORT
 #include "widgets/options/selectiongroupbox.h"
 #include "widgets/options/rawgroupbox.h"
+#include "widgets/options/rawgroupboxview.h"
 #include "optionsenums.h"
 
 /** Default constructor.\n
@@ -48,6 +49,7 @@ OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(pare
 /** Destructor. */
 OptionsDialog::~OptionsDialog() {
     delete groupBoxes;
+    delete rawGroupBoxController;
 }
 
 /** Connects signals to slots. */
@@ -56,7 +58,8 @@ void OptionsDialog::createConnections() {
     connect(listWidget, SIGNAL(currentRowChanged(int)),
             this, SLOT(categoryChanged(int)));
     // raw
-    connect(rawGroupBox, SIGNAL(ok()), (ConvertDialog*)parent(), SLOT(loadSettings()));
+    connect(rawGroupBoxController, SIGNAL(ok()),
+            (ConvertDialog*)parent(), SLOT(loadSettings()));
     // ok button
     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(okButtonClicked()));
@@ -209,7 +212,8 @@ void OptionsDialog::setupUi() {
     detailsGroupBox = new DetailsGroupBox(scrollAreaWidgetContents);
 #endif // SIR_METADATA_SUPPORT
     selectionGroupBox = new SelectionGroupBox(scrollAreaWidgetContents);
-    rawGroupBox = new RawGroupBox(scrollAreaWidgetContents);
+    rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
+    rawGroupBoxController = new RawGroupBoxController(rawGroupBox);
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     // setup group boxes pointer array

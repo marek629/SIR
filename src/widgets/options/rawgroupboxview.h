@@ -19,33 +19,29 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef ABSTRACTOPTIONSGROUPBOX_H
-#define ABSTRACTOPTIONSGROUPBOX_H
+#ifndef RAWGROUPBOXVIEW_H
+#define RAWGROUPBOXVIEW_H
 
-#include <QGroupBox>
-#include "abstractoptions.h"
+#include "abstractoptionsgroupbox.h"
+#include "ui_rawgroupbox.h"
 
-//! Abstract base class for all derived classes from QGroupBox and AbstractOptions.
-class AbstractOptionsGroupBox : public QGroupBox, public AbstractOptions {
+class RawGroupBoxController;
+
+class RawGroupBoxView : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
+    Q_OBJECT
+
 public:
-    AbstractOptionsGroupBox(QWidget *parent = 0);
-    // pure virtual functions
-    virtual void loadSettings() = 0;
-    virtual void saveSettings() = 0;
+    explicit RawGroupBoxView(QWidget *parent = 0);
+    void loadSettings();
+    void saveSettings();
+    void setController(RawGroupBoxController *controller);
+
+private slots:
+    void browseButtonClicked();
+    void rawEnabledStatusChanged(int state);
+
+private:
+    RawGroupBoxController *controller;
 };
 
-/** \brief Abstract base class for all derived classes from AbstractOptions.
-  *
-  * New abstract class created for controllers.
-  *
-  * Old class is needed yet while refactoring to MVC.
-  */
-class AbstractOptionsController : public QObject, public AbstractOptions {
-public:
-    AbstractOptionsController(QObject *parent = 0);
-    // pure virtual functions
-    virtual void loadSettings() = 0;
-    virtual void saveSettings() = 0;
-};
-
-#endif // ABSTRACTOPTIONSGROUPBOX_H
+#endif // RAWGROUPBOXVIEW_H

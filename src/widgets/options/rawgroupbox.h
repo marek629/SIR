@@ -22,28 +22,28 @@
 #ifndef RAWGROUPBOX_H
 #define RAWGROUPBOX_H
 
-#include "ui_rawgroupbox.h"
 #include "abstractoptionsgroupbox.h"
 
+class RawGroupBoxView;
+
 //! Raw group box class used in OptionsDialog dialog.
-class RawGroupBox : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
+class RawGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
     friend class RawGroupBoxTest;
 
 public:
-    explicit RawGroupBox(QWidget *parent = 0);
+    explicit RawGroupBoxController(RawGroupBoxView *view, QObject *parent = 0);
     void loadSettings();
     void saveSettings();
+    void browseDcraw();
+    void setRawStatus(int state);
 
 signals:
     void ok(); /**< Indicates write settings success. */
 
-private slots:
-    void browseDcraw();
-    void setRawStatus(int state);
-
 private:
     bool checkDcrawPath(const QString &fileName);
+    RawGroupBoxView *view;
 };
 
 #endif // RAWGROUPBOX_H

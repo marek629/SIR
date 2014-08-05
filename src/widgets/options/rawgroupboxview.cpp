@@ -19,33 +19,34 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef ABSTRACTOPTIONSGROUPBOX_H
-#define ABSTRACTOPTIONSGROUPBOX_H
+#include "rawgroupboxview.h"
+#include "rawgroupbox.h"
 
-#include <QGroupBox>
-#include "abstractoptions.h"
+RawGroupBoxView::RawGroupBoxView(QWidget *parent)
+    : AbstractOptionsGroupBox(parent) {
+    setupUi(this);
+    connect(dcrawPushButton, SIGNAL(clicked()),
+            this, SLOT(browseButtonClicked()));
+    connect(rawCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(rawEnabledStatusChanged(int)));
+}
 
-//! Abstract base class for all derived classes from QGroupBox and AbstractOptions.
-class AbstractOptionsGroupBox : public QGroupBox, public AbstractOptions {
-public:
-    AbstractOptionsGroupBox(QWidget *parent = 0);
-    // pure virtual functions
-    virtual void loadSettings() = 0;
-    virtual void saveSettings() = 0;
-};
+void RawGroupBoxView::loadSettings() {
+    controller->loadSettings();
+}
 
-/** \brief Abstract base class for all derived classes from AbstractOptions.
-  *
-  * New abstract class created for controllers.
-  *
-  * Old class is needed yet while refactoring to MVC.
-  */
-class AbstractOptionsController : public QObject, public AbstractOptions {
-public:
-    AbstractOptionsController(QObject *parent = 0);
-    // pure virtual functions
-    virtual void loadSettings() = 0;
-    virtual void saveSettings() = 0;
-};
+void RawGroupBoxView::saveSettings() {
+    controller->saveSettings();
+}
 
-#endif // ABSTRACTOPTIONSGROUPBOX_H
+void RawGroupBoxView::setController(RawGroupBoxController *controller) {
+    this->controller = controller;
+}
+
+void RawGroupBoxView::browseButtonClicked() {
+    controller->browseDcraw();
+}
+
+void RawGroupBoxView::rawEnabledStatusChanged(int state) {
+    controller->setRawStatus(state);
+}
