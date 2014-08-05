@@ -1,7 +1,6 @@
 *** nearest release ***
 
 *** next release ***
-  ! fix left arrow shortcut for previous image in PreviewDialog (rigth arrow works)
   ! add Delete key shortcut for remove selected files from the files TreeWidget
   ! support for animated graphics files (QMovie?)
   ! defines.h refactorization: change defines to enumerations

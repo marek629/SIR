@@ -120,16 +120,16 @@ PreviewDialog::~PreviewDialog() {
 void PreviewDialog::createConnections() {
     connect(quitButton, SIGNAL(clicked()), SLOT(close()));
     connect(zoomComboBox, SIGNAL(activated(QString)), SLOT(zoom(QString)));
-    connect(rotateCwButton, SIGNAL(clicked ()), SLOT(rotatecw()));
-    connect(rotateCcwButton, SIGNAL(clicked ()), SLOT(rotateccw()));
+    connect(rotateCwButton, SIGNAL(clicked()), SLOT(rotatecw()));
+    connect(rotateCcwButton, SIGNAL(clicked()), SLOT(rotateccw()));
     connect(flipHButton, SIGNAL(clicked()), SLOT(flipHorizontal()));
     connect(flipVButton, SIGNAL(clicked()), SLOT(flipVertical()));
-    connect(nextButton, SIGNAL(clicked ()), SLOT(nextImage()));
-    connect(previousButton, SIGNAL(clicked ()), SLOT(previousImage()));
-    connect(fullScreenButton, SIGNAL(clicked ()), SLOT(fullScreen()));
-    connect(saveImageButton, SIGNAL(clicked ()), SLOT(save()));
-    connect(saveAsButton, SIGNAL(clicked ()), SLOT(saveAs()));
-    connect(printButton, SIGNAL(clicked ()), SLOT(print()));
+    connect(nextButton, SIGNAL(clicked()), SLOT(nextImage()));
+    connect(previousButton, SIGNAL(clicked()), SLOT(previousImage()));
+    connect(fullScreenButton, SIGNAL(clicked()), SLOT(fullScreen()));
+    connect(saveImageButton, SIGNAL(clicked()), SLOT(save()));
+    connect(saveAsButton, SIGNAL(clicked()), SLOT(saveAs()));
+    connect(printButton, SIGNAL(clicked()), SLOT(print()));
 }
 
 /** Sets up \em Actions toolbar. */
@@ -346,18 +346,21 @@ void PreviewDialog::flipHorizontal() {
 
 /** Next image button slot. Shows next image. */
 void  PreviewDialog::nextImage( ) {
-
     view->resetMatrix();
+
     imagePath = images->at(++currentImage);
     fileExt = imagePath.split('.').last().toLower().toLatin1();
     scene->removeItem(imageItem);
     delete imageItem;
     delete image;
+
     rotation = 0;
     flip = MetadataUtils::None;
+
 #ifdef SIR_METADATA_SUPPORT
     metadataEnabled = isntTiffImage();
 #endif // SIR_METADATA_SUPPORT
+
     saveImageButton->setEnabled(
                     QImageWriter::supportedImageFormats().contains(fileExt) );
 
@@ -368,7 +371,7 @@ void  PreviewDialog::nextImage( ) {
     imageW = imageItem->boundingRect().width();
     imageH = imageItem->boundingRect().height();
 
-    if(zoomFactor != 1.0) {
+    if (zoomFactor != 1.0) {
         zoom(zoomComboBox->currentText());
     }
 
@@ -378,35 +381,36 @@ void  PreviewDialog::nextImage( ) {
 
 /** Previous image button slot. Shows previous image. */
 void  PreviewDialog::previousImage( ) {
+    view->resetMatrix();
 
-    if(previousButton->hasFocus()) {
-        view->resetMatrix();
-        imagePath = images->at(--currentImage);
-        fileExt = imagePath.split('.').last().toLower().toLatin1();
-        scene->removeItem(imageItem);
-        delete imageItem;
-        delete image;
-        rotation = 0;
-        flip = MetadataUtils::None;
+    imagePath = images->at(--currentImage);
+    fileExt = imagePath.split('.').last().toLower().toLatin1();
+    scene->removeItem(imageItem);
+    delete imageItem;
+    delete image;
+
+    rotation = 0;
+    flip = MetadataUtils::None;
+
 #ifdef SIR_METADATA_SUPPORT
-        metadataEnabled = isntTiffImage();
+    metadataEnabled = isntTiffImage();
 #endif // SIR_METADATA_SUPPORT
-        saveImageButton->setEnabled(
-                        QImageWriter::supportedImageFormats().contains(fileExt) );
 
-        loadPixmap();
+    saveImageButton->setEnabled(
+                    QImageWriter::supportedImageFormats().contains(fileExt) );
 
-        imageItem = addImageIntoScene();
-        view->setSceneRect(imageItem->boundingRect());
-        imageW = imageItem->boundingRect().width();
-        imageH = imageItem->boundingRect().height();
+    loadPixmap();
 
-        if(zoomFactor != 1.0) {
-            zoom(zoomComboBox->currentText());
-        }
-        statusBar->setText(imagePath);;
-        verifyImages();
-    }
+    imageItem = addImageIntoScene();
+    view->setSceneRect(imageItem->boundingRect());
+    imageW = imageItem->boundingRect().width();
+    imageH = imageItem->boundingRect().height();
+
+    if (zoomFactor != 1.0)
+        zoom(zoomComboBox->currentText());
+
+    statusBar->setText(imagePath);;
+    verifyImages();
 }
 
 /** Menages enabled state of next and previous image buttons.\n
