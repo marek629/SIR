@@ -3,7 +3,6 @@
 *** next release ***
   ! add Delete key shortcut for remove selected files from the files TreeWidget
   ! support for animated graphics files (QMovie?)
-  ! defines.h refactorization: change defines to enumerations
   ! search refactorizationable code
   ! CammelCase file naming
   ! remove src/translations/googlecode_upload.py file

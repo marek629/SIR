@@ -34,7 +34,6 @@
 #include "treewidget.h"
 #include "convertdialog.h"
 #include "../convertshareddata.h"
-#include "../defines.h"
 #include "../optionsenums.h"
 #include "previewdialog.h"
 #ifdef SIR_METADATA_SUPPORT
@@ -103,24 +102,23 @@ void TreeWidget::initList(const QStringList &argList) {
                 QListIterator<QFileInfo> it(list);
                 QFileInfo fi;
 
-                while ( it.hasNext() ) {
+                while (it.hasNext()) {
                     fi = it.next();
                     item = new QTreeWidgetItem(itemList(fi));
                     this->addTopLevelItem(item);
-                    statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
+                    statusList->insert(fi.absoluteFilePath(), ConvertThread::NotConverted);
                 }
             }
             //File
             else {
+                int comp = QString::compare("", QFileInfo(fileName).suffix());
 
-                int comp = QString::compare("",QFileInfo(fileName).suffix());
-
-                if((convertDialog->csd->fileFilters.contains(QFileInfo(fileName).suffix()))
+                if ((convertDialog->csd->fileFilters.contains(QFileInfo(fileName).suffix()))
                     && (comp !=0)) {
 
                     item = new QTreeWidgetItem(itemList(info));
                     this->addTopLevelItem(item);
-                    statusList->insert(info.absoluteFilePath(), NOTCONVERTED);
+                    statusList->insert(info.absoluteFilePath(), ConvertThread::NotConverted);
                 }
             }
         }
@@ -201,7 +199,7 @@ void TreeWidget::addFile() {
   */
 void TreeWidget::loadFile(const QString &file) {
     QFileInfo info(file);
-    statusList->insert(info.absoluteFilePath(), NOTCONVERTED);
+    statusList->insert(info.absoluteFilePath(), ConvertThread::NotConverted);
 
     QTreeWidgetItem *item = new QTreeWidgetItem(itemList(info));
     this->addTopLevelItem(item);
@@ -220,7 +218,7 @@ void TreeWidget::loadFiles(const QStringList &files) {
     while ( it != files.end() ) {
         fileName = QDir::toNativeSeparators(*it);
         QFileInfo info(fileName);
-        statusList->insert(info.absoluteFilePath(), NOTCONVERTED);
+        statusList->insert(info.absoluteFilePath(), ConvertThread::NotConverted);
 
         item = new QTreeWidgetItem(itemList(info));
         this->addTopLevelItem(item);
@@ -243,7 +241,7 @@ void TreeWidget::loadFiles(const QList<QFileInfo> &files) {
         fi = it.next();
         item = new QTreeWidgetItem(itemList(fi));
         this->addTopLevelItem(item);
-        statusList->insert(fi.absoluteFilePath(), NOTCONVERTED);
+        statusList->insert(fi.absoluteFilePath(), ConvertThread::NotConverted);
     }
 
     updateTree();
@@ -378,23 +376,23 @@ void TreeWidget::retranslateStrings() {
         fileName = (*it)->text(PathColumn) + QDir::separator()
                 + (*it)->text(NameColumn) + '.' + (*it)->text(1);
         switch (statusList->value(fileName)) {
-            case CONVERTED:
-            (*it)->setText(StatusColumn,tr("Converted"));
+        case ConvertThread::Converted:
+            (*it)->setText(StatusColumn, tr("Converted"));
             break;
-            case SKIPPED:
-            (*it)->setText(StatusColumn,tr("Skipped"));
+        case ConvertThread::Skipped:
+            (*it)->setText(StatusColumn, tr("Skipped"));
             break;
-            case FAILED:
-            (*it)->setText(StatusColumn,tr("Failed to convert"));
+        case ConvertThread::Failed:
+            (*it)->setText(StatusColumn, tr("Failed to convert"));
             break;
-            case NOTCONVERTED:
-            (*it)->setText(StatusColumn,tr("Not converted yet"));
+        case ConvertThread::NotConverted:
+            (*it)->setText(StatusColumn, tr("Not converted yet"));
             break;
-            case CONVERTING:
-            (*it)->setText(StatusColumn,tr("Converting"));
+        case ConvertThread::Converting:
+            (*it)->setText(StatusColumn, tr("Converting"));
             break;
-            case CANCELLED:
-            (*it)->setText(StatusColumn,tr("Cancelled"));
+        case ConvertThread::Cancelled:
+            (*it)->setText(StatusColumn, tr("Cancelled"));
             break;
         }
         ++it;
