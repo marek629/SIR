@@ -49,7 +49,8 @@ set( sir_SRCS
         widgets/options/generalgroupbox.cpp
         widgets/options/rawgroupboxcontroller.cpp
         widgets/options/rawgroupboxview.cpp
-        widgets/options/selectiongroupbox.cpp
+        widgets/options/selectiongroupboxcontroller.cpp
+        widgets/options/selectiongroupboxview.cpp
     )
 
 # User interface files

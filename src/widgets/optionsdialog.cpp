@@ -31,7 +31,8 @@
 #include "widgets/options/detailsgroupbox.h"
 #include "widgets/options/metadatagroupbox.h"
 #endif // SIR_METADATA_SUPPORT
-#include "widgets/options/selectiongroupbox.h"
+#include "widgets/options/selectiongroupboxcontroller.h"
+#include "widgets/options/selectiongroupboxview.h"
 #include "widgets/options/rawgroupboxcontroller.h"
 #include "widgets/options/rawgroupboxview.h"
 #include "optionsenums.h"
@@ -212,7 +213,8 @@ void OptionsDialog::setupUi() {
     metadataGroupBox = new MetadataGroupBox(scrollAreaWidgetContents);
     detailsGroupBox = new DetailsGroupBox(scrollAreaWidgetContents);
 #endif // SIR_METADATA_SUPPORT
-    selectionGroupBox = new SelectionGroupBox(scrollAreaWidgetContents);
+    selectionGroupBox = new SelectionGroupBoxView(scrollAreaWidgetContents);
+    selectionGroupBoxController = new SelectionGroupBoxController(model, selectionGroupBox);
     rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
     rawGroupBoxController = new RawGroupBoxController(model, rawGroupBox);
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
