@@ -87,6 +87,10 @@ private:
     void saveSettings();
     QListWidget *createListWidget();
     void insertItems(QListWidget *listWidget);
+    void createGroupBoxes();
+    void createGroupBoxesArray();
+    void setupGroupBoxesLayout();
+    void setupComboBoxesModels();
 
 private slots:
     void okButtonClicked();
