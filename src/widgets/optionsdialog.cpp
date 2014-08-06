@@ -214,9 +214,11 @@ void OptionsDialog::setupUi() {
     detailsGroupBox = new DetailsGroupBox(scrollAreaWidgetContents);
 #endif // SIR_METADATA_SUPPORT
     selectionGroupBox = new SelectionGroupBoxView(scrollAreaWidgetContents);
-    selectionGroupBoxController = new SelectionGroupBoxController(model, selectionGroupBox);
+    selectionGroupBoxController = new SelectionGroupBoxController(&(model->selection),
+                                                                  selectionGroupBox);
     rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
-    rawGroupBoxController = new RawGroupBoxController(model, rawGroupBox);
+    rawGroupBoxController = new RawGroupBoxController(&(model->raw),
+                                                      rawGroupBox);
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     // setup group boxes pointer array

@@ -28,7 +28,7 @@
 RawGroupBoxTest::RawGroupBoxTest() {
     MessageBox::enableTesting(true);
 
-    Settings *model = Settings::instance();
+    Settings::RawGroup *model = &Settings::instance()->raw;
     view = new RawGroupBoxView();
     controller = new RawGroupBoxController(model, view, this);
 }

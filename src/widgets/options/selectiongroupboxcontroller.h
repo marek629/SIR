@@ -23,8 +23,8 @@
 #define SELECTIONGROUPBOXCONTROLLER_H
 
 #include "abstractoptionsgroupbox.h"
+#include "settings.h"
 
-class Settings;
 class SelectionGroupBoxView;
 
 //! Selection group box controller class used in OptionsDialog dialog.
@@ -32,14 +32,14 @@ class SelectionGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
 
 public:
-    explicit SelectionGroupBoxController(Settings *model,
+    explicit SelectionGroupBoxController(Settings::SelectionGroup *model,
                                          SelectionGroupBoxView *view,
                                          QObject *parent = 0);
     void loadSettings();
     void saveSettings();
 
 private:
-    Settings *model;
+    Settings::SelectionGroup *model;
     SelectionGroupBoxView *view;
 };
 

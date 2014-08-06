@@ -20,11 +20,11 @@
  */
 
 #include "selectiongroupboxcontroller.h"
-#include "settings.h"
 #include "selectiongroupboxview.h"
 
 SelectionGroupBoxController::SelectionGroupBoxController(
-        Settings *model, SelectionGroupBoxView *view, QObject *parent)
+        Settings::SelectionGroup *model, SelectionGroupBoxView *view,
+        QObject *parent)
     : AbstractOptionsController(parent) {
     this->model = model;
     this->view = view;
@@ -32,19 +32,19 @@ SelectionGroupBoxController::SelectionGroupBoxController(
 }
 
 void SelectionGroupBoxController::loadSettings() {
-    view->clearSelectionCheckBox->setChecked(model->selection.clearSelection);
-    view->importSubdirsCheckBox->setChecked(model->selection.subdirs);
-    view->selectImportedCheckBox->setChecked(model->selection.selectImported);
-    view->sFileSizeLineEdit->setText(model->selection.fileSizeSymbol);
-    view->sImgWidthLineEdit->setText(model->selection.imageWidthSymbol);
-    view->sImgHeightLineEdit->setText(model->selection.imageHeightSymbol);
+    view->clearSelectionCheckBox->setChecked(model->clearSelection);
+    view->importSubdirsCheckBox->setChecked(model->subdirs);
+    view->selectImportedCheckBox->setChecked(model->selectImported);
+    view->sFileSizeLineEdit->setText(model->fileSizeSymbol);
+    view->sImgWidthLineEdit->setText(model->imageWidthSymbol);
+    view->sImgHeightLineEdit->setText(model->imageHeightSymbol);
 }
 
 void SelectionGroupBoxController::saveSettings() {
-    model->selection.clearSelection = view->clearSelectionCheckBox->isChecked();
-    model->selection.subdirs = view->importSubdirsCheckBox->isChecked();
-    model->selection.selectImported = view->selectImportedCheckBox->isChecked();
-    model->selection.fileSizeSymbol = view->sFileSizeLineEdit->text();
-    model->selection.imageWidthSymbol = view->sImgWidthLineEdit->text();
-    model->selection.imageHeightSymbol = view->sImgHeightLineEdit->text();
+    model->clearSelection = view->clearSelectionCheckBox->isChecked();
+    model->subdirs = view->importSubdirsCheckBox->isChecked();
+    model->selectImported = view->selectImportedCheckBox->isChecked();
+    model->fileSizeSymbol = view->sFileSizeLineEdit->text();
+    model->imageWidthSymbol = view->sImgWidthLineEdit->text();
+    model->imageHeightSymbol = view->sImgHeightLineEdit->text();
 }

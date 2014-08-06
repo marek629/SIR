@@ -23,8 +23,8 @@
 #define RAWGROUPBOXCONTROLLER_H
 
 #include "abstractoptionsgroupbox.h"
+#include "settings.h"
 
-class Settings;
 class RawGroupBoxView;
 
 //! Raw group box controller class used in OptionsDialog dialog.
@@ -33,7 +33,7 @@ class RawGroupBoxController : public AbstractOptionsController {
     friend class RawGroupBoxTest;
 
 public:
-    explicit RawGroupBoxController(Settings *model, RawGroupBoxView *view,
+    explicit RawGroupBoxController(Settings::RawGroup *model, RawGroupBoxView *view,
                                    QObject *parent = 0);
     void loadSettings();
     void saveSettings();
@@ -44,7 +44,7 @@ signals:
     void ok(); /**< Indicates write settings success. */
 
 private:
-    Settings *model;
+    Settings::RawGroup *model;
     RawGroupBoxView *view;
     bool checkDcrawPath(const QString &fileName);
 };
