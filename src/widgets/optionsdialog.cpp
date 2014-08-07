@@ -23,14 +23,18 @@
 #include <QListWidget>
 #include <QScrollArea>
 #include <QMessageBox>
+
 #include "optionsdialog.h"
 #include "widgets/convertdialog.h"
 #include "widgets/options/generalgroupbox.h"
 #include "widgets/options/filelistgroupbox.h"
+
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/options/detailsgroupbox.h"
-#include "widgets/options/metadatagroupbox.h"
+#include "widgets/options/metadatagroupboxcontroller.h"
+#include "widgets/options/metadatagroupboxview.h"
 #endif // SIR_METADATA_SUPPORT
+
 #include "widgets/options/selectiongroupboxcontroller.h"
 #include "widgets/options/selectiongroupboxview.h"
 #include "widgets/options/rawgroupboxcontroller.h"
@@ -50,6 +54,9 @@ OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(pare
 /** Destructor. */
 OptionsDialog::~OptionsDialog() {
     delete groupBoxes;
+
+    delete metadataGroupBoxController;
+    delete selectionGroupBoxController;
     delete rawGroupBoxController;
 }
 
@@ -72,6 +79,7 @@ void OptionsDialog::createConnections() {
 void OptionsDialog::categoryChanged(int current) {
     if (current == currentListItem)
         return;
+
     groupBoxes[currentListItem]->hide();
     groupBoxes[current]->show();
     currentListItem = current;
@@ -170,16 +178,22 @@ void OptionsDialog::createGroupBoxes() {
     fileListGroupBox = new FileListGroupBox(scrollAreaWidgetContents);
 
 #ifdef SIR_METADATA_SUPPORT
-    metadataGroupBox = new MetadataGroupBox(scrollAreaWidgetContents);
+    metadataGroupBox = new MetadataGroupBoxView(scrollAreaWidgetContents);
+    metadataGroupBoxController = new MetadataGroupBoxController(&(model->metadata),
+                                                                &(model->exif),
+                                                                metadataGroupBox,
+                                                                this);
     detailsGroupBox = new DetailsGroupBox(scrollAreaWidgetContents);
 #endif // SIR_METADATA_SUPPORT
 
     selectionGroupBox = new SelectionGroupBoxView(scrollAreaWidgetContents);
     selectionGroupBoxController = new SelectionGroupBoxController(&(model->selection),
-                                                                  selectionGroupBox);
+                                                                  selectionGroupBox,
+                                                                  this);
     rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
     rawGroupBoxController = new RawGroupBoxController(&(model->raw),
-                                                      rawGroupBox);
+                                                      rawGroupBox,
+                                                      this);
 
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 }

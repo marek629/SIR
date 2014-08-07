@@ -25,24 +25,28 @@
 #include "ui_metadatagroupbox.h"
 #include "abstractoptionsgroupbox.h"
 
-//! Metadata group box class used in OptionsDialog dialog.
-class MetadataGroupBox : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
+class MetadataGroupBoxController;
+
+//! Metadata group box view class used in OptionsDialog dialog.
+class MetadataGroupBoxView
+        : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
     Q_OBJECT
 
 public:
-    explicit MetadataGroupBox(QWidget *parent = 0);
-    ~MetadataGroupBox();
+    explicit MetadataGroupBoxView(QWidget *parent = 0);
+    ~MetadataGroupBoxView();
     void loadSettings();
     void saveSettings();
+    void setController(MetadataGroupBoxController *controller);
 
 private slots:
-    void enableMetadata(bool checked);
-    void saveMetadata(bool save);
-    void updateThumbnail(bool update);
+    void metadataCheckBoxChecked(bool checked);
+    void saveMetadataCheckBoxChecked(bool checked);
+    void thumbUpdateCheckBoxChecked(bool checked);
 
 private:
-    // fields
     QRegExpValidator* validator;
+    MetadataGroupBoxController *controller;
 };
 
 #endif // METADATAGROUPBOX_H

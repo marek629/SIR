@@ -36,12 +36,13 @@ class GeneralGroupBox;
 class FileListGroupBox;
 #ifdef SIR_METADATA_SUPPORT
 class DetailsGroupBox;
-class MetadataGroupBox;
+class MetadataGroupBoxController;
+class MetadataGroupBoxView;
 #endif // SIR_METADATA_SUPPORT
-class SelectionGroupBoxView;
 class SelectionGroupBoxController;
-class RawGroupBoxView;
+class SelectionGroupBoxView;
 class RawGroupBoxController;
+class RawGroupBoxView;
 
 //! Settings wizard window.
 class OptionsDialog : public QDialog {
@@ -55,11 +56,13 @@ private:
     // fields
     AbstractOptionsGroupBox** groupBoxes;
     quint8 currentListItem;
+
 #ifdef SIR_METADATA_SUPPORT
     static const quint8 categoriesCount = 6;
 #else
     static const quint8 categoriesCount = 4;
 #endif // SIR_METADATA_SUPPORT
+
     // basic UI fields
     QVBoxLayout *verticalLayout;
     QListWidget *listWidget;
@@ -72,14 +75,18 @@ private:
     // group boxes
     GeneralGroupBox *generalGroupBox;
     FileListGroupBox *fileListGroupBox;
+
 #ifdef SIR_METADATA_SUPPORT
     DetailsGroupBox *detailsGroupBox;
-    MetadataGroupBox *metadataGroupBox;
+    MetadataGroupBoxView *metadataGroupBox;
+    MetadataGroupBoxController *metadataGroupBoxController;
 #endif //SIR_METADATA_SUPPORT
+
     SelectionGroupBoxView *selectionGroupBox;
     SelectionGroupBoxController *selectionGroupBoxController;
     RawGroupBoxView *rawGroupBox;
     RawGroupBoxController *rawGroupBoxController;
+
     // methods
     void createConnections();
     void setupUi();
@@ -96,4 +103,5 @@ private slots:
     void okButtonClicked();
     void categoryChanged(int current);
 };
-#endif
+
+#endif // OPTIONSDIALOG_H
