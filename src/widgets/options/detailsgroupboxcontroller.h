@@ -19,46 +19,37 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef DETAILSGROUPBOX_H
-#define DETAILSGROUPBOX_H
+#ifndef DETAILSGROUPBOXCONTROLLER_H
+#define DETAILSGROUPBOXCONTROLLER_H
 
-#include "ui_detailsgroupbox.h"
 #include "abstractoptionsgroupbox.h"
+#include "settings.h"
 
-//! Details group box class used in OptionsDialog dialog.
-class DetailsGroupBox : public AbstractOptionsGroupBox, public Ui::DetailsGroupBox  {
+class QCheckBox;
+class DetailsGroupBoxView;
+
+class DetailsGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
 
 public:
-    explicit DetailsGroupBox(QWidget *parent = 0);
+    explicit DetailsGroupBoxController(Settings::DetailsGroup *model,
+                                       DetailsGroupBoxView *view,
+                                       QObject *parent = 0);
     void loadSettings();
     void saveSettings();
+    void checkExifFields(bool checked);
+    void checkIptcFields(bool checked);
+    void setCurrentTab(int tabId);
+    void showAllFields();
+    void hideAllFields();
 
 private:
-    // fields
+    Settings::DetailsGroup *model;
+    DetailsGroupBoxView *view;
     QList<QCheckBox*> exifCheckBoxes;
     int exifSelectedFields;
     QList<QCheckBox*> iptcCheckBoxes;
     int iptcSelectedFields;
-    // methods
-    inline void enableFieldButtons(bool enableShow = true, bool enableHide = true);
-
-private slots:
-    void exifFieldToggled(bool checked);
-    void iptcFieldToggled(bool checked);
-    void showAllFields();
-    void hideAllFields();
-    void tabChanged(int currentTab);
 };
 
-/** Enables or disables \em "Show all" and \em "Hide all" fields push buttons
-  * depending on parameters values.
-  * \param enableShow Enables or disables the \em "Show all" showPushButton push button
-  * \param enableHide Enables or disables the \em "Hide all" hidePushButton push button
-  */
-void DetailsGroupBox::enableFieldButtons(bool enableShow, bool enableHide) {
-    showPushButton->setEnabled(enableShow);
-    hidePushButton->setEnabled(enableHide);
-}
-
-#endif // DETAILSGROUPBOX_H
+#endif // DETAILSGROUPBOXCONTROLLER_H

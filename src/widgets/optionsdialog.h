@@ -35,7 +35,8 @@ class AbstractOptionsGroupBox;
 class GeneralGroupBox;
 class FileListGroupBox;
 #ifdef SIR_METADATA_SUPPORT
-class DetailsGroupBox;
+class DetailsGroupBoxController;
+class DetailsGroupBoxView;
 class MetadataGroupBoxController;
 class MetadataGroupBoxView;
 #endif // SIR_METADATA_SUPPORT
@@ -77,9 +78,10 @@ private:
     FileListGroupBox *fileListGroupBox;
 
 #ifdef SIR_METADATA_SUPPORT
-    DetailsGroupBox *detailsGroupBox;
     MetadataGroupBoxView *metadataGroupBox;
     MetadataGroupBoxController *metadataGroupBoxController;
+    DetailsGroupBoxView *detailsGroupBox;
+    DetailsGroupBoxController *detailsGroupBoxController;
 #endif //SIR_METADATA_SUPPORT
 
     SelectionGroupBoxView *selectionGroupBox;

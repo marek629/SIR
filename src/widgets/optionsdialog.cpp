@@ -30,7 +30,8 @@
 #include "widgets/options/filelistgroupbox.h"
 
 #ifdef SIR_METADATA_SUPPORT
-#include "widgets/options/detailsgroupbox.h"
+#include "widgets/options/detailsgroupboxcontroller.h"
+#include "widgets/options/detailsgroupboxview.h"
 #include "widgets/options/metadatagroupboxcontroller.h"
 #include "widgets/options/metadatagroupboxview.h"
 #endif // SIR_METADATA_SUPPORT
@@ -183,7 +184,10 @@ void OptionsDialog::createGroupBoxes() {
                                                                 &(model->exif),
                                                                 metadataGroupBox,
                                                                 this);
-    detailsGroupBox = new DetailsGroupBox(scrollAreaWidgetContents);
+    detailsGroupBox = new DetailsGroupBoxView(scrollAreaWidgetContents);
+    detailsGroupBoxController = new DetailsGroupBoxController(&(model->details),
+                                                              detailsGroupBox,
+                                                              this);
 #endif // SIR_METADATA_SUPPORT
 
     selectionGroupBox = new SelectionGroupBoxView(scrollAreaWidgetContents);

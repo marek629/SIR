@@ -78,7 +78,8 @@ if( metadata )
             metadata/error.cpp
             metadata/iptc.cpp
             widgets/metadatadialog.cpp
-            widgets/options/detailsgroupbox.cpp
+            widgets/options/detailsgroupboxcontroller.cpp
+            widgets/options/detailsgroupboxview.cpp
             widgets/options/metadatagroupboxcontroller.cpp
             widgets/options/metadatagroupboxview.cpp
             widgets/selection/anymetadatagroupbox.cpp
