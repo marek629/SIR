@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef METADATAGROUPBOX_H
-#define METADATAGROUPBOX_H
+#ifndef METADATAGROUPBOXVIEW_H
+#define METADATAGROUPBOXVIEW_H
 
 #include "ui_metadatagroupbox.h"
 #include "abstractoptionsgroupbox.h"
@@ -49,4 +49,4 @@ private:
     MetadataGroupBoxController *controller;
 };
 
-#endif // METADATAGROUPBOX_H
+#endif // METADATAGROUPBOXVIEW_H

@@ -17,6 +17,7 @@
     * save few images from just one, for example diffrent color effects
     * generate a flow graph for few effects files
     * generate a interactive visualisation of the flow graph
+  ! storing settings in XML file
 
 *** wishlist ***
   ! SelectionDialog:
