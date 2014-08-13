@@ -21,7 +21,6 @@
 
 #include "detailsgroupboxcontroller.h"
 #include "detailsgroupboxview.h"
-#include "optionsenums.h"
 
 DetailsGroupBoxController::DetailsGroupBoxController(
         Settings::DetailsGroup *model, DetailsGroupBoxView *view, QObject *parent)
@@ -136,148 +135,30 @@ void DetailsGroupBoxController::loadExifSettings() {
     int hex;
 
     hex = model->exifImage;
-
-    view->exifVersionCheckBox->setChecked(hex & DetailsOptions::ExifVersion);
-    view->exifSoftCheckBox->setChecked(hex & DetailsOptions::ProcessingSoftware);
-    view->exifOrientationCheckBox->setChecked(hex & DetailsOptions::Orientation);
-    view->exifGeneratedTimeCheckBox->setChecked(hex & DetailsOptions::GeneratedDateAndTime);
-    view->exifDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedDateAndTime);
+    view->checkExifImageCheckBoxes(hex);
 
     hex = model->exifPhoto;
-
-    view->exifFocalLengthCheckBox->setChecked(hex & DetailsOptions::FocalLenght);
-    view->exifApertureCheckBox->setChecked(hex & DetailsOptions::Aperture);
-    view->exifIsoCheckBox->setChecked(hex & DetailsOptions::IsoSpeed);
-    view->exifShutterSpeedCheckBox->setChecked(hex & DetailsOptions::ShutterSpeed);
-    view->exifExpTimeCheckBox->setChecked(hex & DetailsOptions::ExposureTime);
-    view->exifExpBiasCheckBox->setChecked(hex & DetailsOptions::ExposureBias);
-    view->exifExpProgramCheckBox->setChecked(hex & DetailsOptions::ExposureProgram);
-    view->exifMeteringCheckBox->setChecked(hex & DetailsOptions::LightMeteringMode);
-    view->exifFlashCheckBox->setChecked(hex & DetailsOptions::FlashMode);
+    view->checkExifPhotoCheckBoxes(hex);
 
     hex = model->exifCamera;
-
-    view->exifManufacturerCheckBox->setChecked(hex & DetailsOptions::Manufacturer);
-    view->exifModelCheckBox->setChecked(hex & DetailsOptions::Model);
+    view->checkExifCameraCheckBoxes(hex);
 
     hex = model->exifAuthor;
-
-    view->exifArtistCheckBox_D->setChecked(hex & DetailsOptions::Artist);
-    view->exifCopyrightCheckBox_D->setChecked(hex & DetailsOptions::Copyright);
-    view->exifUserCommentCheckBox_D->setChecked(hex & DetailsOptions::UserComment);
+    view->checkExifAuthorCheckBoxes(hex);
 }
 
 void DetailsGroupBoxController::loadIptcSettings() {
     int hex = model->iptc;
-
-    view->iptcVersionCheckBox->setChecked(hex & DetailsOptions::ModelVersion);
-    view->iptcBylineCheckBox->setChecked(hex & DetailsOptions::Byline);
-    view->iptcCopyrightCheckBox->setChecked(hex & DetailsOptions::CopyrightIptc);
-    view->iptcObjectNameCheckBox->setChecked(hex & DetailsOptions::ObjectName);
-    view->iptcKeywordsCheckBox->setChecked(hex & DetailsOptions::Keywords);
-    view->iptcCaptionCheckBox->setChecked(hex & DetailsOptions::Caption);
-    view->iptcCountryNameCheckBox->setChecked(hex & DetailsOptions::CountryName);
-    view->iptcCityCheckBox->setChecked(hex & DetailsOptions::City);
-    view->iptcEditStatusCheckBox->setChecked(hex & DetailsOptions::EditStatus);
-    view->iptcCreatedDateCheckBox->setChecked(hex & DetailsOptions::DateCreated);
-    view->iptcCreatedTimeCheckBox->setChecked(hex & DetailsOptions::TimeCreated);
-    view->iptcDigitizedDateCheckBox->setChecked(hex & DetailsOptions::DigitizedDate);
-    view->iptcDigitizedTimeCheckBox->setChecked(hex & DetailsOptions::DigitizedTime);
+    view->checkIptcCheckBoxes(hex);
 }
 
 void DetailsGroupBoxController::saveExifSettings() {
-    // Exif Image
-    int hex = 0;
-
-    if (view->exifVersionCheckBox->isChecked())
-        hex |= DetailsOptions::ExifVersion;
-    if (view->exifSoftCheckBox->isChecked())
-        hex |= DetailsOptions::ProcessingSoftware;
-    if (view->exifOrientationCheckBox->isChecked())
-        hex |= DetailsOptions::Orientation;
-    if (view->exifGeneratedTimeCheckBox->isChecked())
-        hex |= DetailsOptions::GeneratedDateAndTime;
-    if (view->exifDigitizedTimeCheckBox->isChecked())
-        hex |= DetailsOptions::DigitizedDateAndTime;
-
-    model->exifImage = hex;
-
-    // Exif Photo
-    hex = 0;
-
-    if (view->exifFocalLengthCheckBox->isChecked())
-        hex |= DetailsOptions::FocalLenght;
-    if (view->exifApertureCheckBox->isChecked())
-        hex |= DetailsOptions::Aperture;
-    if (view->exifExpTimeCheckBox->isChecked())
-        hex |= DetailsOptions::ExposureTime;
-    if (view->exifShutterSpeedCheckBox->isChecked())
-        hex |= DetailsOptions::ShutterSpeed;
-    if (view->exifExpBiasCheckBox->isChecked())
-        hex |= DetailsOptions::ExposureBias;
-    if (view->exifIsoCheckBox->isChecked())
-        hex |= DetailsOptions::IsoSpeed;
-    if (view->exifExpProgramCheckBox->isChecked())
-        hex |= DetailsOptions::ExposureProgram;
-    if (view->exifMeteringCheckBox->isChecked())
-        hex |= DetailsOptions::LightMeteringMode;
-    if (view->exifFlashCheckBox->isChecked())
-        hex |= DetailsOptions::FlashMode;
-
-    model->exifPhoto = hex;
-
-    // Exif Camera
-    hex = 0;
-
-    if (view->exifManufacturerCheckBox->isChecked())
-        hex |= DetailsOptions::Manufacturer;
-    if (view->exifModelCheckBox->isChecked())
-        hex |= DetailsOptions::Model;
-
-    model->exifCamera = hex;
-
-    // Exif Author
-    hex = 0;
-
-    if (view->exifArtistCheckBox_D->isChecked())
-        hex |= DetailsOptions::Artist;
-    if (view->exifCopyrightCheckBox_D->isChecked())
-        hex |= DetailsOptions::Copyright;
-    if (view->exifUserCommentCheckBox_D->isChecked())
-        hex |= DetailsOptions::UserComment;
-
-    model->exifAuthor = hex;
+    model->exifImage = view->getExifImageCheckBoxesHash();
+    model->exifPhoto = view->getExifPhotoCheckBoxesHash();
+    model->exifCamera = view->getExifCameraCheckBoxesHash();
+    model->exifAuthor = view->getExifAuthorCheckBoxesHash();
 }
 
 void DetailsGroupBoxController::saveIptcSettings() {
-    int hex = 0;
-
-    if (view->iptcVersionCheckBox->isChecked())
-        hex |= DetailsOptions::ModelVersion;
-    if (view->iptcBylineCheckBox->isChecked())
-        hex |= DetailsOptions::Byline;
-    if (view->iptcCopyrightCheckBox->isChecked())
-        hex |= DetailsOptions::CopyrightIptc;
-    if (view->iptcObjectNameCheckBox->isChecked())
-        hex |= DetailsOptions::ObjectName;
-    if (view->iptcKeywordsCheckBox->isChecked())
-        hex |= DetailsOptions::Keywords;
-    if (view->iptcCaptionCheckBox->isChecked())
-        hex |= DetailsOptions::Caption;
-    if (view->iptcCountryNameCheckBox->isChecked())
-        hex |= DetailsOptions::CountryName;
-    if (view->iptcCityCheckBox->isChecked())
-        hex |= DetailsOptions::City;
-    if (view->iptcEditStatusCheckBox->isChecked())
-        hex |= DetailsOptions::EditStatus;
-    if (view->iptcCreatedDateCheckBox->isChecked())
-        hex |= DetailsOptions::DateCreated;
-    if (view->iptcCreatedTimeCheckBox->isChecked())
-        hex |= DetailsOptions::TimeCreated;
-    if (view->iptcDigitizedDateCheckBox->isChecked())
-        hex |= DetailsOptions::DigitizedDate;
-    if (view->iptcDigitizedTimeCheckBox->isChecked())
-        hex |= DetailsOptions::DigitizedTime;
-
-    model->iptc = hex;
+    model->iptc = view->getIptcCheckBoxesHash();
 }

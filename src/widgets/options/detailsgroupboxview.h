@@ -37,6 +37,16 @@ public:
     void saveSettings();
     void setController(DetailsGroupBoxController* controller);
     void enableFieldButtons(bool enableShow = true, bool enableHide = true);
+    void checkExifImageCheckBoxes(int hash);
+    void checkExifPhotoCheckBoxes(int hash);
+    void checkExifCameraCheckBoxes(int hash);
+    void checkExifAuthorCheckBoxes(int hash);
+    void checkIptcCheckBoxes(int hash);
+    int getExifImageCheckBoxesHash();
+    int getExifPhotoCheckBoxesHash();
+    int getExifCameraCheckBoxesHash();
+    int getExifAuthorCheckBoxesHash();
+    int getIptcCheckBoxesHash();
 
 private:
     DetailsGroupBoxController *controller;
