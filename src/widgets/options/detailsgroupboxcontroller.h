@@ -50,6 +50,11 @@ private:
     int exifSelectedFields;
     QList<QCheckBox*> iptcCheckBoxes;
     int iptcSelectedFields;
+
+    void loadExifSettings();
+    void loadIptcSettings();
+    void saveExifSettings();
+    void saveIptcSettings();
 };
 
 #endif // DETAILSGROUPBOXCONTROLLER_H
