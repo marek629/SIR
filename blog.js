@@ -14,10 +14,23 @@ var blogList = [
     {   'date': new Date(2014, 3, 10),
         'file': 'new_site.html',
         'author': 'marek'
+    },
+    {   'date': new Date(2014, 1, 28),
+        'file': 'release_2.7.html',
+        'author': 'marek'
+    },
+    {   'date': new Date(2013, 3, 28),
+        'file': 'release_2.6.html',
+        'author': 'marek'
+    },
+    {   'date': new Date(2012, 10, 14),
+        'file': 'release_2.5.1.html',
+        'author': 'marek'
+    },
+    {   'date': new Date(2012, 10, 13),
+        'file': 'release_2.5.html',
+        'author': 'marek'
     }
-//     {   'date': new Date(2014, 1, 28),
-//         'file': '_release_2.7.html'
-//     }
 ]
 
 var monthName = [
