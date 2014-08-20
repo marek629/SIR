@@ -10,6 +10,24 @@ add_executable( sir_metadatautils_test ${sir_UT_metadatautils_SRCS} )
 target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "MetadataUtils_UT" COMMAND sir_metadatautils_test )
 
+
+include_directories( ${CMAKE_BINARY_DIR}/src )
+set( sir_UT_generalgroupbox_SRCS
+        widgets/options/generalgroupboxtest.cpp
+    )
+add_executable( sir_generalgroupbox_test ${sir_UT_generalgroupbox_SRCS} )
+target_link_libraries( sir_generalgroupbox_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "GeneralGroupBox_UT" COMMAND sir_generalgroupbox_test )
+
+include_directories( ${CMAKE_BINARY_DIR}/src )
+set( sir_UT_rawgroupbox_SRCS
+        rawgroupboxtest.cpp
+    )
+add_executable( sir_rawgroupbox_test ${sir_UT_rawgroupbox_SRCS} )
+target_link_libraries( sir_rawgroupbox_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "RawGroupBox_UT" COMMAND sir_rawgroupbox_test )
+
+
 set( sir_UT_converteffects_SRCS
         converteffectstest.cpp
     )
@@ -23,14 +41,6 @@ set( sir_UT_languageutils_SRCS
 add_executable( sir_languageutils_test ${sir_UT_languageutils_SRCS} )
 target_link_libraries( sir_languageutils_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "LanguageUtils_UT" COMMAND sir_languageutils_test )
-
-include_directories( ${CMAKE_BINARY_DIR}/src )
-set( sir_UT_rawgroupbox_SRCS
-        rawgroupboxtest.cpp
-    )
-add_executable( sir_rawgroupbox_test ${sir_UT_rawgroupbox_SRCS} )
-target_link_libraries( sir_rawgroupbox_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "RawGroupBox_UT" COMMAND sir_rawgroupbox_test )
 
 set( sir_UT_version_SRCS
         versiontest.cpp
