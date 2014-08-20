@@ -26,12 +26,12 @@
 #include "widgets/options/rawgroupboxcontroller.h"
 #include "widgets/options/rawgroupboxview.h"
 
-class RawGroupBoxTest : public QObject {
+class RawGroupBoxControllerTest : public QObject {
     Q_OBJECT
 
 public:
-    RawGroupBoxTest();
-    ~RawGroupBoxTest();
+    RawGroupBoxControllerTest();
+    ~RawGroupBoxControllerTest();
 
 private:
     RawGroupBoxController *controller;

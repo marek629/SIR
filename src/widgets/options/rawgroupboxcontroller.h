@@ -30,7 +30,7 @@ class RawGroupBoxView;
 //! Raw group box controller class used in OptionsDialog dialog.
 class RawGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
-    friend class RawGroupBoxTest;
+    friend class RawGroupBoxControllerTest;
 
 public:
     explicit RawGroupBoxController(Settings::RawGroup *model, RawGroupBoxView *view,

@@ -20,12 +20,12 @@ target_link_libraries( sir_generalgroupbox_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "GeneralGroupBox_UT" COMMAND sir_generalgroupbox_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
-set( sir_UT_rawgroupbox_SRCS
-        rawgroupboxtest.cpp
+set( sir_UT_rawgroupboxcontroller_SRCS
+        rawgroupboxcontrollertest.cpp
     )
-add_executable( sir_rawgroupbox_test ${sir_UT_rawgroupbox_SRCS} )
-target_link_libraries( sir_rawgroupbox_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "RawGroupBox_UT" COMMAND sir_rawgroupbox_test )
+add_executable( sir_rawgroupboxcontroller_test ${sir_UT_rawgroupboxcontroller_SRCS} )
+target_link_libraries( sir_rawgroupboxcontroller_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "RawGroupBoxController_UT" COMMAND sir_rawgroupboxcontroller_test )
 
 
 set( sir_UT_converteffects_SRCS

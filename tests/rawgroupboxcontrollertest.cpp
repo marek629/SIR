@@ -21,11 +21,11 @@
 
 #include <QDir>
 
-#include "rawgroupboxtest.h"
+#include "rawgroupboxcontrollertest.h"
 #include "widgets/messagebox.h"
 #include "settings.h"
 
-RawGroupBoxTest::RawGroupBoxTest() {
+RawGroupBoxControllerTest::RawGroupBoxControllerTest() {
     MessageBox::enableTesting(true);
 
     Settings::RawGroup *model = &Settings::instance()->raw;
@@ -33,16 +33,16 @@ RawGroupBoxTest::RawGroupBoxTest() {
     controller = new RawGroupBoxController(model, view, this);
 }
 
-RawGroupBoxTest::~RawGroupBoxTest() {
+RawGroupBoxControllerTest::~RawGroupBoxControllerTest() {
     delete view;
     delete controller;
 }
 
-void RawGroupBoxTest::initTestCase() {}
+void RawGroupBoxControllerTest::initTestCase() {}
 
-void RawGroupBoxTest::cleanupTestCase() {}
+void RawGroupBoxControllerTest::cleanupTestCase() {}
 
-void RawGroupBoxTest::checkDcrawPath_emptyString() {
+void RawGroupBoxControllerTest::checkDcrawPath_emptyString() {
     QString input("");
 
     bool expected = false;
@@ -51,7 +51,7 @@ void RawGroupBoxTest::checkDcrawPath_emptyString() {
     QCOMPARE(result, expected);
 }
 
-void RawGroupBoxTest::checkDcrawPath_fileNotExists() {
+void RawGroupBoxControllerTest::checkDcrawPath_fileNotExists() {
     QString input("/test_dcraw.bin");
     input.prepend(QDir::tempPath());
 
@@ -64,7 +64,7 @@ void RawGroupBoxTest::checkDcrawPath_fileNotExists() {
     QCOMPARE(result, expected);
 }
 
-void RawGroupBoxTest::checkDcrawPath_fileNotExecutable() {
+void RawGroupBoxControllerTest::checkDcrawPath_fileNotExecutable() {
     QString input("/test_dcraw.bin");
     input.prepend(QDir::tempPath());
 
@@ -82,7 +82,7 @@ void RawGroupBoxTest::checkDcrawPath_fileNotExecutable() {
     QVERIFY(file.remove());
 }
 
-void RawGroupBoxTest::checkDcrawPath_fileExecutable() {
+void RawGroupBoxControllerTest::checkDcrawPath_fileExecutable() {
     QString input("/test_dcraw.bin");
     input.prepend(QDir::tempPath());
 
@@ -100,5 +100,5 @@ void RawGroupBoxTest::checkDcrawPath_fileExecutable() {
     QVERIFY(file.remove());
 }
 
-QTEST_MAIN(RawGroupBoxTest)
-#include "rawgroupboxtest.moc"
+QTEST_MAIN(RawGroupBoxControllerTest)
+#include "rawgroupboxcontrollertest.moc"
