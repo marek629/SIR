@@ -43,6 +43,12 @@ public:
     void showAllFields();
     void hideAllFields();
 
+    //! Tab metadata widget ID.
+    enum TabId {
+        Exif_tab,
+        IPTC_tab
+    };
+
 private:
     Settings::DetailsGroup *model;
     DetailsGroupBoxView *view;

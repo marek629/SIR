@@ -33,3 +33,4 @@
   ! Add color filters - colormaps (dog's view, jet); see also: http://www.mathworks.com/help/matlab/ref/colormap.html
   ! More JPEG compression options
   ! Run SIR as web service
+  ! Crop images
