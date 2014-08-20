@@ -21,7 +21,7 @@ add_test( NAME "GeneralGroupBox_UT" COMMAND sir_generalgroupbox_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_UT_rawgroupboxcontroller_SRCS
-        rawgroupboxcontrollertest.cpp
+        widgets/options/rawgroupboxcontrollertest.cpp
     )
 add_executable( sir_rawgroupboxcontroller_test ${sir_UT_rawgroupboxcontroller_SRCS} )
 target_link_libraries( sir_rawgroupboxcontroller_test ${sir_UT_LINKING_LIBS} )
