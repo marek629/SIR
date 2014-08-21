@@ -7,98 +7,115 @@
 
         <link rel='stylesheet' href='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
 
-        <link rel='stylesheet' href='sir.css'>
+        <!--<link rel='stylesheet' href='sir.css'>-->
         <link rel='icon' href='sir-32x32.png'>
     </head>
 
     <body>
-        <div class='container'>
-            <div class='page-header'>
-                <h1><img src='sir.png'> SIR <small>Simple Image Resizer</small></h1>
-            </div>
+        <div class="container">
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-lg-7" style="padding-right: 30px;">
 
-            <div class='row'>
-                <div id='content' class='col-md-10'>
-                    <p>
-                        SIR (Simple Image Resizer) is a tool created for batch parallel resizing, rotate and converting images with metadata support.<br>
-                        You can add frame or text and apply color and gradient filters on your images.<br>
-                        You can also manipulate on histogram.<br>
-                        Finally you can do this all activities on many images at the same time using your multiple core CPU!
-                    </p>
-                    <p>
-                        This is free software distributed under GNU GPL v2 license.
-                        Read <a href='https://github.com/marek629/SIR/blob/master/LICENSE'>LICENSE</a> file for details.
-                    </p>
-                    <p>
-                        Read/write supported image formats:
-                        <ul>
-                            <li>BMP  - Windows Bitmap</li>
-                            <li>JPEG - Joint Photographic Experts Group</li>
-                            <li>PNG  - Portable Network Graphics</li>
-                            <li>PPM  - Portable Pixmap</li>
-                            <li>TIFF - Tagged Image File Format</li>
-                            <li>XBM  - X11 Bitmap</li>
-                            <li>XPM  - X11 Pixmap</li>
-                        </ul>
-                        Read only supported image formats:
-                        <ul>
-                            <li>GIF  - Graphic Interchange Format (optional)</li>
-                            <li>MNG  - Multiple-image Network Graphics</li>
-                            <li>PBM  - Portable Bitmap</li>
-                            <li>PGM  - Portable Graymap</li>
-                            <li>SVG  - Scalable Vector Graphics</li>
-                            <li>TGA  - Targa Image Format</li>
-                        </ul>
-                    </p>
-                    <p>
-                        Supported metadata standards using exiv2:
-                        <ul>
-                            <li>Exif (edition supported)</li>
-                            <li>IPTC (edition supported)</li>
-                            <li>XMP</li>
-                        </ul>
-                    </p>
-                    <p>
-                        Dependences:
-                        <ul>
-                            <li><a href='http://qt-project.org/'>Qt 4/5</a></li>
-                        </ul>
-                        Optional dependences:
-                        <ul>
-                            <li><a href='http://exiv2.org/'>libexiv2</a></li>
-                            <li><a href='http://www.cybercom.net/~dcoffin/dcraw/'>dcraw</a></li>
-                        </ul>
-                        Build dependences:
-                        <ul>
-                            <li><a href='http://www.cmake.org/'>CMake 2.8.3+</a></li>
-                        </ul>
-                    </p>
-                    <p>
-                        SIR documentation was created using <a href='http://www.stack.nl/~dimitri/doxygen/'>Doxygen</a>
-                    </p>
+                    <h1><img src="sir.png"> SIR <small>Simple Image Resizer</small></h1>
+
+                    <div class="row jumbotron">
+                        <div class="col-md-12">
+                            <h2>About SIR</h2>
+                            <p>
+                                SIR (Simple Image Resizer) is a tool created for batch parallel resizing, rotate and converting images with metadata support.<br>
+                                You can add frame or text and apply color and gradient filters on your images.<br>
+                                You can also manipulate on histogram.<br>
+                                Finally you can do this all activities on many images at the same time using your multiple core CPU!
+                            </p>
+                            <a class="btn btn-primary" href="about.html" role="button">Read More</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 well">
+                            <ul class="list-inline">
+                                <li class="label label-default">Linux</li>
+                                <li class="label label-success">Windows</li>
+                                <li class="label label-info">OS/2</li>
+                            </ul>
+                            <a class="btn btn-primary" href="download.html" role="button">Download</a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-primary" href="screenshots.html" role="button">Screenshots</a>
+                        </div>
+                    </div>
+
                 </div>
-                <div id='menu-box' class='col-md-2'>
-                    <ul class='nav nav-pills nav-stacked'>
-                        <li><a href='#home'>Home</a></li>
-                        <li><a href='#download'>Download</a></li>
-                        <li><a href='#screenshots'>Screenshots</a></li>
-                        <li class='active'><a href='static/about.html'>About</a></li>
-                        <li><a href='#contact'>Contact</a></li>
-                    </ul>
+                <div class="col-lg-5">
+
+                    <div class="row well">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h2 class="panel-title">SIR 2.7.2 Released!<small class="pull-right">May 31, 2014</small></h2>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>
+                                            Second patch release for SIR 2.7 series was released! The release impact:
+                                        </p>
+                                        <ul>
+                                            <li>Polish translation improved</li>
+                                            <li>Spanish translation updated (thanks Garbage Collector)</li>
+                                            <li>fixed language autosetting</li>
+                                            <li>Windows: fixed Drag & Drop</li>
+                                            <li>Windows: improved icon</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h2 class="panel-title">SIR 2.7.1 for Windows<small class="pull-right">April 24, 2014</small></h2>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>
+                                            SIR Windows installer is out!
+                                            You can <a href='https://googledrive.com/host/0B9Il9AGwsKEvLVpDVmIwbHVoYlE/sir_2.7.1_installer.exe'>get it</a> now.
+                                        </p>
+                                        <p>
+                                            SIR for Windows has been built without metadata support.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a class="btn btn-primary" href="blog.html" role="button">See Blog</a>
+                    </div>
+
+                    <div class="row well">
+                        <p>Need help?</p>
+                        <p>Have you found a bug in SIR?</p>
+                        <p>Allow us to help you!</p>
+                        <a class="btn btn-primary" href="contact.html" role="button">Contact</a><br>
+                        <span class="glyphicon glyphicon-copyright-mark" /> 2014 Marek Jędryka @ <a href="https://www.techmetria.pl">Techmetria</a>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <div id='footer' class='well well-sm'>
+        <!--<div id='footer' class='well well-sm'>
             <span class='glyphicon glyphicon-copyright-mark' /> 2014 Marek Jędryka @ <a href='https://www.techmetria.pl'>Techmetria</a>
-        </div>
+        </div>-->
 
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
         <script src='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
 
         <script src='lib/jquery.pathchange.js'></script>
 
-        <script src='blog.js'></script>
-        <script src='sir.js'></script>
+        <!--<script src='blog.js'></script>
+        <script src='sir.js'></script>-->
     </body>
 </html>
