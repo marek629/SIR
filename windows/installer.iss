@@ -4,9 +4,9 @@
 #define SIR_DIR             "D:\Marek\sir"
 #define SIR_BUILD_DIR       "D:\Marek\sir-build"
 #define SIR_USR_DIR         "D:\Marek\sir-build\usr"
-#define QT_MINGW_DIR        "C:\Qt\Qt5.2.1\5.2.1\mingw48_32"
+#define QT_MINGW_DIR        "C:\Qt\Qt5.2.0-mingw\5.2.0\mingw48_32"
 
-#define VERSION             "2.7.2"
+#define VERSION             "2.7.3"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -16,9 +16,9 @@ AppId={{A3BCDC21-EE6A-4DDF-8A08-E5B692C5B5F1}
 AppName=Sir
 AppVerName=Sir {#VERSION}
 AppPublisher=Sir Software
-AppPublisherURL=http://www.web.sir.ugu.pl/
-AppSupportURL=http://www.web.sir.ugu.pl/
-AppUpdatesURL=http://www.web.sir.ugu.pl/
+AppPublisherURL=http://marek629.github.io/sir/
+AppSupportURL=http://marek629.github.io/sir/
+AppUpdatesURL=http://marek629.github.io/sir/
 DefaultDirName={pf}\Sir
 DefaultGroupName=Sir
 AllowNoIcons=yes
@@ -59,6 +59,7 @@ Source: "{#SIR_USR_DIR}\bin\sir.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "{#SIR_DIR}\windows\qt.conf"; DestDir: "{app}\bin"; Flags: ignoreversion
 ; SIR Icon
 Source: "{#SIR_USR_DIR}\share\pixmaps\sir.ico"; DestDir: "{app}\share\pixmaps"; Flags: ignoreversion
+Source: "{#SIR_USR_DIR}\share\pixmaps\Tango\*"; DestDir: "{app}\share\pixmaps\Tango"; Flags: recursesubdirs ignoreversion
 ; Flags
 Source: "{#SIR_USR_DIR}\share\sir\images\czech.png";      DestDir: "{app}\share\sir\images"; Flags: ignoreversion
 Source: "{#SIR_USR_DIR}\share\sir\images\dutch.png";      DestDir: "{app}\share\sir\images"; Flags: ignoreversion
