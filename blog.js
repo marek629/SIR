@@ -1,4 +1,8 @@
 var blogList = [
+    {   'date': new Date(2014, 7, 24),
+        'file': 'release_2.7.3.html',
+        'author': 'marek'
+    },
     {   'date': new Date(2014, 4, 31),
         'file': 'release_2.7.2.html',
         'author': 'marek'
