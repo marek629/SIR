@@ -47,8 +47,10 @@ set( sir_SRCS
         widgets/options/commonoptions.cpp
         widgets/options/filelistgroupbox.cpp
         widgets/options/generalgroupbox.cpp
-        widgets/options/rawgroupbox.cpp
-        widgets/options/selectiongroupbox.cpp
+        widgets/options/rawgroupboxcontroller.cpp
+        widgets/options/rawgroupboxview.cpp
+        widgets/options/selectiongroupboxcontroller.cpp
+        widgets/options/selectiongroupboxview.cpp
     )
 
 # User interface files
@@ -69,21 +71,6 @@ set( sir_UIS
     )
 
 if( metadata )
-    set( sir_MOCS ${sir_MOCS}
-            ${METADATA_MOCS}
-            widgets/metadatadialog.h
-            widgets/options/detailsgroupbox.h
-            widgets/options/metadatagroupbox.h
-            widgets/selection/anymetadatagroupbox.h
-        )
-    set( sir_HDRS ${sir_HDRS}
-            ${METADATA_HEADERS}
-            metadata/metadata.h
-            metadata/metadatautils.h
-            metadata/error.h
-            metadata/exif.h
-            metadata/iptc.h
-        )
     set( sir_SRCS ${sir_SRCS}
             metadata/metadata.cpp
             metadata/metadatautils.cpp
@@ -91,9 +78,11 @@ if( metadata )
             metadata/error.cpp
             metadata/iptc.cpp
             widgets/metadatadialog.cpp
+            widgets/options/detailsgroupboxcontroller.cpp
+            widgets/options/detailsgroupboxview.cpp
+            widgets/options/metadatagroupboxcontroller.cpp
+            widgets/options/metadatagroupboxview.cpp
             widgets/selection/anymetadatagroupbox.cpp
-            widgets/options/detailsgroupbox.cpp
-            widgets/options/metadatagroupbox.cpp
         )
     set( sir_UIS ${sir_UIS}
             widgets/metadatadialog.ui

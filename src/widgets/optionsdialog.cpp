@@ -23,16 +23,23 @@
 #include <QListWidget>
 #include <QScrollArea>
 #include <QMessageBox>
+
 #include "optionsdialog.h"
 #include "widgets/convertdialog.h"
 #include "widgets/options/generalgroupbox.h"
 #include "widgets/options/filelistgroupbox.h"
+
 #ifdef SIR_METADATA_SUPPORT
-#include "widgets/options/detailsgroupbox.h"
-#include "widgets/options/metadatagroupbox.h"
+#include "widgets/options/detailsgroupboxcontroller.h"
+#include "widgets/options/detailsgroupboxview.h"
+#include "widgets/options/metadatagroupboxcontroller.h"
+#include "widgets/options/metadatagroupboxview.h"
 #endif // SIR_METADATA_SUPPORT
-#include "widgets/options/selectiongroupbox.h"
-#include "widgets/options/rawgroupbox.h"
+
+#include "widgets/options/selectiongroupboxcontroller.h"
+#include "widgets/options/selectiongroupboxview.h"
+#include "widgets/options/rawgroupboxcontroller.h"
+#include "widgets/options/rawgroupboxview.h"
 #include "optionsenums.h"
 
 /** Default constructor.\n
@@ -48,6 +55,10 @@ OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(pare
 /** Destructor. */
 OptionsDialog::~OptionsDialog() {
     delete groupBoxes;
+
+    delete metadataGroupBoxController;
+    delete selectionGroupBoxController;
+    delete rawGroupBoxController;
 }
 
 /** Connects signals to slots. */
@@ -56,7 +67,8 @@ void OptionsDialog::createConnections() {
     connect(listWidget, SIGNAL(currentRowChanged(int)),
             this, SLOT(categoryChanged(int)));
     // raw
-    connect(rawGroupBox, SIGNAL(ok()), (ConvertDialog*)parent(), SLOT(loadSettings()));
+    connect(rawGroupBoxController, SIGNAL(ok()),
+            (ConvertDialog*)parent(), SLOT(loadSettings()));
     // ok button
     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(okButtonClicked()));
@@ -68,6 +80,7 @@ void OptionsDialog::createConnections() {
 void OptionsDialog::categoryChanged(int current) {
     if (current == currentListItem)
         return;
+
     groupBoxes[currentListItem]->hide();
     groupBoxes[current]->show();
     currentListItem = current;
@@ -160,6 +173,75 @@ void OptionsDialog::insertItems(QListWidget *listWidget)
     listWidgetItem->setText(tr("Raw"));
 }
 
+void OptionsDialog::createGroupBoxes() {
+    Settings *model = Settings::instance();
+    generalGroupBox = new GeneralGroupBox(scrollAreaWidgetContents);
+    fileListGroupBox = new FileListGroupBox(scrollAreaWidgetContents);
+
+#ifdef SIR_METADATA_SUPPORT
+    metadataGroupBox = new MetadataGroupBoxView(scrollAreaWidgetContents);
+    metadataGroupBoxController = new MetadataGroupBoxController(&(model->metadata),
+                                                                &(model->exif),
+                                                                metadataGroupBox,
+                                                                this);
+    detailsGroupBox = new DetailsGroupBoxView(scrollAreaWidgetContents);
+    detailsGroupBoxController = new DetailsGroupBoxController(&(model->details),
+                                                              detailsGroupBox,
+                                                              this);
+#endif // SIR_METADATA_SUPPORT
+
+    selectionGroupBox = new SelectionGroupBoxView(scrollAreaWidgetContents);
+    selectionGroupBoxController = new SelectionGroupBoxController(&(model->selection),
+                                                                  selectionGroupBox,
+                                                                  this);
+    rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
+    rawGroupBoxController = new RawGroupBoxController(&(model->raw),
+                                                      rawGroupBox,
+                                                      this);
+
+    verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+}
+
+void OptionsDialog::createGroupBoxesArray() {
+    groupBoxes = new AbstractOptionsGroupBox*[categoriesCount];
+
+    quint8 i = 0;
+
+    groupBoxes[i++] = generalGroupBox;
+    groupBoxes[i++] = fileListGroupBox;
+
+#ifdef SIR_METADATA_SUPPORT
+    groupBoxes[i++] = metadataGroupBox;
+    groupBoxes[i++] = detailsGroupBox;
+#endif // SIR_METADATA_SUPPORT
+
+    groupBoxes[i++] = selectionGroupBox;
+    groupBoxes[i] = rawGroupBox;
+}
+
+void OptionsDialog::setupGroupBoxesLayout() {
+    quint8 i;
+
+    // adding group boxes to layout
+    for (i=0; i<categoriesCount; i++)
+        verticalLayout_2->addWidget(groupBoxes[i]);
+    verticalLayout_2->addItem(verticalSpacer);
+    scrollAreaWidgetContents->setLayout(verticalLayout_2);
+
+    // hiding group boxes
+    for (i=0; i<categoriesCount; i++)
+        groupBoxes[i]->hide();
+}
+
+void OptionsDialog::setupComboBoxesModels() {
+    // copying items of combo boxes from parent ConvertDialog window
+    ConvertDialog* mainWindow = (ConvertDialog*)parent();
+    generalGroupBox->sizeUnitComboBox->setModel(
+                mainWindow->sizeScrollArea->sizeUnitComboBox->model());
+    generalGroupBox->fileSizeComboBox->setModel(
+                mainWindow->sizeScrollArea->fileSizeComboBox->model());
+}
+
 /** \e Ok button clicked slot.\n
   * Checks values in user input widgets and saves settings if checking was
   * successful.
@@ -182,7 +264,7 @@ void OptionsDialog::setupUi() {
         this->setObjectName(QString::fromUtf8("OptionsDialog"));
     this->setWindowTitle(tr("Sir - Configure Options"));
     this->setWindowModality(Qt::WindowModal);
-    this->resize(680,550);
+    this->resize(680, 550);
     verticalLayout = new QVBoxLayout(this);
     verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
     horizontalLayout = new QHBoxLayout();
@@ -201,38 +283,9 @@ void OptionsDialog::setupUi() {
     verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
     verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
 
-    // create group boxes
-    generalGroupBox = new GeneralGroupBox(scrollAreaWidgetContents);
-    fileListGroupBox = new FileListGroupBox(scrollAreaWidgetContents);
-#ifdef SIR_METADATA_SUPPORT
-    metadataGroupBox = new MetadataGroupBox(scrollAreaWidgetContents);
-    detailsGroupBox = new DetailsGroupBox(scrollAreaWidgetContents);
-#endif // SIR_METADATA_SUPPORT
-    selectionGroupBox = new SelectionGroupBox(scrollAreaWidgetContents);
-    rawGroupBox = new RawGroupBox(scrollAreaWidgetContents);
-    verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-    // setup group boxes pointer array
-    groupBoxes = new AbstractOptionsGroupBox*[categoriesCount];
-    quint8 i = 0;
-    groupBoxes[i++] = generalGroupBox;
-    groupBoxes[i++] = fileListGroupBox;
-#ifdef SIR_METADATA_SUPPORT
-    groupBoxes[i++] = metadataGroupBox;
-    groupBoxes[i++] = detailsGroupBox;
-#endif // SIR_METADATA_SUPPORT
-    groupBoxes[i++] = selectionGroupBox;
-    groupBoxes[i] = rawGroupBox;
-
-    // adding group boxes to layout
-    for (i=0; i<categoriesCount; i++)
-        verticalLayout_2->addWidget(groupBoxes[i]);
-    verticalLayout_2->addItem(verticalSpacer);
-    scrollAreaWidgetContents->setLayout(verticalLayout_2);
-
-    // hiding group boxes
-    for (i=0; i<categoriesCount; i++)
-        groupBoxes[i]->hide();
+    createGroupBoxes();
+    createGroupBoxesArray();
+    setupGroupBoxesLayout();
 
     currentListItem = 0;
     listWidget->setCurrentRow(currentListItem);
@@ -241,12 +294,7 @@ void OptionsDialog::setupUi() {
     scrollArea->setWidget(scrollAreaWidgetContents);
     horizontalLayout->addWidget(scrollArea);
 
-    // copying items of combo boxes from parent ConvertDialog window
-    ConvertDialog* mainWindow = (ConvertDialog*)parent();
-    generalGroupBox->sizeUnitComboBox->setModel(
-                mainWindow->sizeScrollArea->sizeUnitComboBox->model());
-    generalGroupBox->fileSizeComboBox->setModel(
-                mainWindow->sizeScrollArea->fileSizeComboBox->model());
+    setupComboBoxesModels();
 
     verticalLayout->addItem(horizontalLayout);
 

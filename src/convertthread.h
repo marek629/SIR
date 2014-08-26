@@ -32,6 +32,11 @@
 #include "sharedinformation.h"
 
 class QSvgRenderer;
+
+#ifndef SIR_CMAKE
+#define SIR_METADATA_SUPPORT
+#endif // SIR_CMAKE
+
 #ifndef SIR_METADATA_SUPPORT
 class QImage;
 #endif // SIR_METADATA_SUPPORT
@@ -60,6 +65,16 @@ public:
     enum Question {
         Overwrite,
         Enlarge
+    };
+    //! Describes status of file convertion.
+    enum Status {
+        NotConverted,
+        Converted,
+        Skipped,
+        Failed,
+        Removed,
+        Converting,
+        Cancelled
     };
 
 signals:

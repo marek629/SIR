@@ -36,7 +36,6 @@
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"
 #include "widgets/options/generalgroupbox.h"
-#include "defines.h"
 #include "version.h"
 #include "rawutils.h"
 #include "networkutils.h"
@@ -62,19 +61,26 @@ using namespace sir;
   * \sa init()
   */
 ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
-                             const CommandLineAssistant &cmdAssistant)
+                             CommandLineAssistant *cmdAssistant)
     : QMainWindow(parent) {
     csd = ConvertSharedData::instance();
+
     setupUi(this);
+
     this->args = args;
     net = NULL;
     sharedInfo = ConvertThread::sharedInfo();
     effectsDir = QDir::home();
     sessionDir = QDir::home();
+
     init();
+
     session = new Session(this);
-    if (!cmdAssistant.sessionFile().isEmpty())
-        session->restore(cmdAssistant.sessionFile());
+
+    cmdAssistant->setTreeWidget(filesTreeWidget);
+    if (!cmdAssistant->sessionFile().isEmpty())
+        session->restore(cmdAssistant->sessionFile());
+
     effectsCollector = new EffectsCollector(this);
 }
 
@@ -896,19 +902,20 @@ void ConvertDialog::changeEvent(QEvent *e) {
 /** Set converting status of image.
   * \param imageData List of strings containing path, image name and file extension.
   * \param status Status message.
-  * \param statusNum Status code defined in src/defines.h.
+  * \param statusNum Status code.
   */
 void ConvertDialog::setImageStatus(const QStringList& imageData,
                                    const QString& status, int statusNum) {
-    if(statusNum != CONVERTING) {
+    if (statusNum != ConvertThread::Converting) {
         //We don't want to update the status bar if the statusValue is
         //CONVERTING
         convertProgressBar->setValue(convertProgressBar->value()+1);
     }
+
     int count = filesTreeWidget->topLevelItemCount();
     QString fileName;
-    for (int i = 0; i < count; i++)
-    {
+
+    for (int i = 0; i < count; i++) {
         QTreeWidgetItem *item = filesTreeWidget->topLevelItem(i);
         if(item->text(NameColumn) == imageData.at(0)
                 && item->text(ExtColumn) == imageData.at(1)
@@ -920,7 +927,7 @@ void ConvertDialog::setImageStatus(const QStringList& imageData,
             break;
         }
     }
-    if(convertProgressBar->value() == convertProgressBar->maximum())
+    if (convertProgressBar->value() == convertProgressBar->maximum())
         updateInterface();
 }
 

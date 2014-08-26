@@ -19,26 +19,30 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef MESSAGEBOX_H
-#define MESSAGEBOX_H
+#ifndef RAWGROUPBOXVIEW_H
+#define RAWGROUPBOXVIEW_H
 
-#include <QMessageBox>
+#include "abstractoptionsgroupbox.h"
+#include "ui_rawgroupbox.h"
 
-/** \brief Wrapper Facade for QMessageBox class.
-  *
-  * Message box providing more buttons than QMessageBox and testing tools.
-  */
-class MessageBox : public QMessageBox {
+class RawGroupBoxController;
+
+//! Raw group box view class used in OptionsDialog dialog.
+class RawGroupBoxView : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
     Q_OBJECT
 
 public:
-    static void enableTesting(bool enabled);
-    static int warning(QWidget *parent, const QString &title, const QString &text);
-    static int question(QWidget *parent, const QString &title, const QString &text);
+    explicit RawGroupBoxView(QWidget *parent = 0);
+    void loadSettings();
+    void saveSettings();
+    void setController(RawGroupBoxController *controller);
+
+private slots:
+    void browseButtonClicked();
+    void rawEnabledStatusChanged(int state);
 
 private:
-    static bool testingEnabled;
-    static int warningStandardButton;
+    RawGroupBoxController *controller;
 };
 
-#endif // MESSAGEBOX_H
+#endif // RAWGROUPBOXVIEW_H

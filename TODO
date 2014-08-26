@@ -1,17 +1,15 @@
 *** nearest release ***
 
 *** next release ***
-  ! load all files selected in file menager (ie. Thunar) in just 1 instance of SIR
-  ! fix left arrow shortcut for previous image in PreviewDialog (rigth arrow works)
   ! add Delete key shortcut for remove selected files from the files TreeWidget
   ! support for animated graphics files (QMovie?)
-  ! defines.h refactorization: change defines to enumerations
   ! search refactorizationable code
   ! CammelCase file naming
   ! remove src/translations/googlecode_upload.py file
   ! improve view in FileDetails for photos made by HTC Desire S
   ! restore check updates option
   ! add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
+  ! change TODO and CHANGELOG files format to Markdown or something else
 
 *** 3.0 roadmap ***
   ! dynamically add effects to effect list (empty initially)
@@ -19,6 +17,7 @@
     * save few images from just one, for example diffrent color effects
     * generate a flow graph for few effects files
     * generate a interactive visualisation of the flow graph
+  ! storing settings in XML file
 
 *** wishlist ***
   ! SelectionDialog:
@@ -34,3 +33,4 @@
   ! Add color filters - colormaps (dog's view, jet); see also: http://www.mathworks.com/help/matlab/ref/colormap.html
   ! More JPEG compression options
   ! Run SIR as web service
+  ! Crop images

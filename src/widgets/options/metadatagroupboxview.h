@@ -19,26 +19,34 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef MESSAGEBOX_H
-#define MESSAGEBOX_H
+#ifndef METADATAGROUPBOXVIEW_H
+#define METADATAGROUPBOXVIEW_H
 
-#include <QMessageBox>
+#include "ui_metadatagroupbox.h"
+#include "abstractoptionsgroupbox.h"
 
-/** \brief Wrapper Facade for QMessageBox class.
-  *
-  * Message box providing more buttons than QMessageBox and testing tools.
-  */
-class MessageBox : public QMessageBox {
+class MetadataGroupBoxController;
+
+//! Metadata group box view class used in OptionsDialog dialog.
+class MetadataGroupBoxView
+        : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
     Q_OBJECT
 
 public:
-    static void enableTesting(bool enabled);
-    static int warning(QWidget *parent, const QString &title, const QString &text);
-    static int question(QWidget *parent, const QString &title, const QString &text);
+    explicit MetadataGroupBoxView(QWidget *parent = 0);
+    ~MetadataGroupBoxView();
+    void loadSettings();
+    void saveSettings();
+    void setController(MetadataGroupBoxController *controller);
+
+private slots:
+    void metadataCheckBoxChecked(bool checked);
+    void saveMetadataCheckBoxChecked(bool checked);
+    void thumbUpdateCheckBoxChecked(bool checked);
 
 private:
-    static bool testingEnabled;
-    static int warningStandardButton;
+    QRegExpValidator* validator;
+    MetadataGroupBoxController *controller;
 };
 
-#endif // MESSAGEBOX_H
+#endif // METADATAGROUPBOXVIEW_H

@@ -19,14 +19,32 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef SIR_CMAKE
-#define SIR_METADATA_SUPPORT
-#endif // SIR_CMAKE
+#ifndef GENERALGROPBOXTEST_H
+#define GENERALGROPBOXTEST_H
 
-#define NOTCONVERTED 1
-#define CONVERTED 2
-#define SKIPPED 3
-#define FAILED 4
-#define REMOVED 5
-#define CONVERTING 6
-#define CANCELLED 7
+#include <QtTest/QTest>
+#include "widgets/options/generalgroupbox.h"
+
+class GeneralGroupBoxTest : public QObject
+{
+    Q_OBJECT
+public:
+    explicit GeneralGroupBoxTest();
+    ~GeneralGroupBoxTest();
+
+private:
+    GeneralGroupBox *groupBox;
+
+    void checkViewSettings();
+    void checkViewSize();
+
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+
+    void loadSettings_cores_0();
+    void loadSettings_cores_not_0();
+    void saveSettings();
+};
+
+#endif // GENERALGROPBOXTEST_H

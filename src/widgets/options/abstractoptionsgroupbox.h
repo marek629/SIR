@@ -34,4 +34,18 @@ public:
     virtual void saveSettings() = 0;
 };
 
+/** \brief Abstract base class for all derived classes from AbstractOptions.
+  *
+  * New abstract class created for controllers.
+  *
+  * Old class is needed yet while refactoring to MVC.
+  */
+class AbstractOptionsController : public QObject, public AbstractOptions {
+public:
+    AbstractOptionsController(QObject *parent = 0);
+    // pure virtual functions
+    virtual void loadSettings() = 0;
+    virtual void saveSettings() = 0;
+};
+
 #endif // ABSTRACTOPTIONSGROUPBOX_H

@@ -26,7 +26,6 @@
 #include <cmath>
 #include <QPainter>
 #include "convertthread.h"
-#include "defines.h"
 #include "rawutils.h"
 #include "widgets/messagebox.h"
 #include "settings.h"
@@ -84,12 +83,12 @@ void ConvertThread::run() {
         angle = shared->angle;
 
         if (shared->abort) {
-            emit imageStatus(pd.imgData, tr("Cancelled"), CANCELLED);
+            emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
             getNextOrStop();
             continue;
         }
 
-        emit imageStatus(pd.imgData, tr("Converting"), CONVERTING);
+        emit imageStatus(pd.imgData, tr("Converting"), Converting);
 
         QString imageName = pd.imgData.at(0);
         QString originalFormat = pd.imgData.at(1);
@@ -132,7 +131,7 @@ void ConvertThread::run() {
         if(image->isNull()) {
             //For some reason we where not able to open the image file
             emit imageStatus(pd.imgData, tr("Failed to open original image"),
-                              FAILED);
+                             Failed);
             delete image;
             //Ask for the next image and go to the beginning of the loop
             getNextOrStop();
@@ -214,30 +213,30 @@ void ConvertThread::run() {
                     if (saveMetadata && !metadata.write(targetFilePath, destImg))
                         printError();
 #endif // SIR_METADATA_SUPPORT
-                    emit imageStatus(pd.imgData, tr("Converted"), CONVERTED);
+                    emit imageStatus(pd.imgData, tr("Converted"), Converted);
                 }
                 else
-                    emit imageStatus(pd.imgData, tr("Failed to convert"), FAILED);
+                    emit imageStatus(pd.imgData, tr("Failed to convert"), Failed);
             }
             else if (shared->overwriteResult == QMessageBox::Cancel)
-                emit imageStatus(pd.imgData, tr("Cancelled"), CANCELLED);
+                emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
             else
-                emit imageStatus(pd.imgData, tr("Skipped"), SKIPPED);
+                emit imageStatus(pd.imgData, tr("Skipped"), Skipped);
         }
         else if (shared->noOverwriteAll)
-            emit imageStatus(pd.imgData, tr("Skipped"), SKIPPED);
+            emit imageStatus(pd.imgData, tr("Skipped"), Skipped);
         else if (shared->abort)
-            emit imageStatus(pd.imgData, tr("Cancelled"), CANCELLED);
+            emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
         else { // when overwriteAll is true or file not exists
             if (destImg.save(targetFilePath, 0, shared->quality)) {
 #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata && !metadata.write(targetFilePath, destImg))
                     printError();
 #endif // SIR_METADATA_SUPPORT
-                emit imageStatus(pd.imgData, tr("Converted"), CONVERTED);
+                emit imageStatus(pd.imgData, tr("Converted"), Converted);
             }
             else
-                emit imageStatus(pd.imgData, tr("Failed to convert"), FAILED);
+                emit imageStatus(pd.imgData, tr("Failed to convert"), Failed);
         }
         delete image;
         getNextOrStop();
@@ -462,7 +461,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                              "into %s failed", tid,
                              String(targetFilePath).toNativeStdString().data() );
                     emit imageStatus(imageData, tr("Failed to compute image size"),
-                                     FAILED);
+                                     Failed);
                     return -4;
                 }
                 tempFile.close();
@@ -551,7 +550,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                              String(targetFilePath).
                                 toNativeStdString().data());
                     emit imageStatus(imageData, tr("Failed to compute image size"),
-                                     FAILED);
+                                     Failed);
                     return -4;
                 }
                 tempFile.close();
@@ -621,9 +620,9 @@ char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
         if (shared->enlargeResult != QMessageBox::Yes &&
                 shared->enlargeResult != QMessageBox::YesToAll) {
             if (shared->enlargeResult == QMessageBox::Cancel)
-                emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+                emit imageStatus(imageData, tr("Cancelled"), Cancelled);
             else
-                emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+                emit imageStatus(imageData, tr("Skipped"), Skipped);
             return -1;
         }
         return 0;
@@ -648,27 +647,27 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
                 shared->overwriteResult == QMessageBox::YesToAll) {
             QFile::remove(targetFilePath);
             if (tempFile->copy(targetFilePath))
-                emit imageStatus(imageData, tr("Converted"), CONVERTED);
+                emit imageStatus(imageData, tr("Converted"), Converted);
             else {
-                emit imageStatus(imageData, tr("Failed to save"), FAILED);
+                emit imageStatus(imageData, tr("Failed to save"), Failed);
                 return -1;
             }
         }
         else if (shared->overwriteResult == QMessageBox::Cancel)
-            emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+            emit imageStatus(imageData, tr("Cancelled"), Cancelled);
         else
-            emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+            emit imageStatus(imageData, tr("Skipped"), Skipped);
     }
     else if (shared->noOverwriteAll)
-        emit imageStatus(imageData, tr("Skipped"), SKIPPED);
+        emit imageStatus(imageData, tr("Skipped"), Skipped);
     else if (shared->abort)
-        emit imageStatus(imageData, tr("Cancelled"), CANCELLED);
+        emit imageStatus(imageData, tr("Cancelled"), Cancelled);
     else { // when overwriteAll is true or file not exists
         QFile::remove(targetFilePath);
         if (tempFile->copy(targetFilePath))
-            emit imageStatus(imageData, tr("Converted"), CONVERTED);
+            emit imageStatus(imageData, tr("Converted"), Converted);
         else {
-            emit imageStatus(imageData, tr("Failed to save"), FAILED);
+            emit imageStatus(imageData, tr("Failed to save"), Failed);
             return -2;
         }
     }
@@ -715,7 +714,7 @@ QImage * ConvertThread::loadSvgImage() {
                     shared->overwriteResult == QMessageBox::YesToAll) {
                 if (!file.open(QIODevice::WriteOnly)) {
                     emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
-                                     FAILED);
+                                     Failed);
                     return NULL;
                 }
                 file.write(modifier.content());
@@ -724,12 +723,12 @@ QImage * ConvertThread::loadSvgImage() {
         // and load QByteArray buffer to renderer
         if (!renderer.load(modifier.content())) {
             emit imageStatus(pd.imgData, tr("Failed to open changed SVG file"),
-                             FAILED);
+                             Failed);
             return NULL;
         }
     }
     else if (!renderer.load(pd.imagePath)) {
-        emit imageStatus(pd.imgData, tr("Failed to open SVG file"), FAILED);
+        emit imageStatus(pd.imgData, tr("Failed to open SVG file"), Failed);
         return NULL;
     }
     sizeComputed = computeSize(&renderer, pd.imagePath);

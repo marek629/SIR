@@ -40,6 +40,7 @@ private:
 private slots:
     void initTestCase();
     void cleanupTestCase();
+
     void combine_color_loop();
     void combine_color_painter();
     void combine_color_compare();

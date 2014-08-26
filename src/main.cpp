@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     if (cmdParseResult < 1)
         return cmdParseResult;
 
-    ConvertDialog w(0, args, cmd);
+    ConvertDialog w(0, args, &cmd);
     w.show();
     app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
     return app.exec();

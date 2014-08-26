@@ -24,7 +24,6 @@
 #include <QElapsedTimer>
 #include "selection.h"
 #include "widgets/convertdialog.h"
-#include "defines.h"
 #include "expressiontree.h"
 #include "widgets/selectiondialog.h"
 #include "regexputils.h"
@@ -198,7 +197,7 @@ int Selection::importFiles() {
         itemList << info.completeBaseName() << info.suffix() << info.path()
                  << tr("Not converted yet");
         convertDialog->filesTreeWidget->statusList->insert(info.absoluteFilePath(),
-                                                           NOTCONVERTED);
+                                                           ConvertThread::NotConverted);
         QTreeWidgetItem *item = new QTreeWidgetItem(itemList);
         convertDialog->filesTreeWidget->addTopLevelItem(item);
         item->setSelected(params.selectImportedFiles);

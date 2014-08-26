@@ -19,26 +19,27 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef MESSAGEBOX_H
-#define MESSAGEBOX_H
+#ifndef SELECTIONGROUPBOXVIEW_H
+#define SELECTIONGROUPBOXVIEW_H
 
-#include <QMessageBox>
+#include "ui_selectiongroupbox.h"
+#include "abstractoptionsgroupbox.h"
 
-/** \brief Wrapper Facade for QMessageBox class.
-  *
-  * Message box providing more buttons than QMessageBox and testing tools.
-  */
-class MessageBox : public QMessageBox {
+class SelectionGroupBoxController;
+
+//! Selection group box view class used in OptionsDialog dialog.
+class SelectionGroupBoxView
+        : public AbstractOptionsGroupBox, public Ui::SelectionGroupBox {
     Q_OBJECT
 
 public:
-    static void enableTesting(bool enabled);
-    static int warning(QWidget *parent, const QString &title, const QString &text);
-    static int question(QWidget *parent, const QString &title, const QString &text);
+    explicit SelectionGroupBoxView(QWidget *parent = 0);
+    void loadSettings();
+    void saveSettings();
+    void setController(SelectionGroupBoxController *controller);
 
 private:
-    static bool testingEnabled;
-    static int warningStandardButton;
+    SelectionGroupBoxController *controller;
 };
 
-#endif // MESSAGEBOX_H
+#endif // SELECTIONGROUPBOXVIEW_H

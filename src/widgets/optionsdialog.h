@@ -35,11 +35,15 @@ class AbstractOptionsGroupBox;
 class GeneralGroupBox;
 class FileListGroupBox;
 #ifdef SIR_METADATA_SUPPORT
-class DetailsGroupBox;
-class MetadataGroupBox;
+class DetailsGroupBoxController;
+class DetailsGroupBoxView;
+class MetadataGroupBoxController;
+class MetadataGroupBoxView;
 #endif // SIR_METADATA_SUPPORT
-class SelectionGroupBox;
-class RawGroupBox;
+class SelectionGroupBoxController;
+class SelectionGroupBoxView;
+class RawGroupBoxController;
+class RawGroupBoxView;
 
 //! Settings wizard window.
 class OptionsDialog : public QDialog {
@@ -53,11 +57,13 @@ private:
     // fields
     AbstractOptionsGroupBox** groupBoxes;
     quint8 currentListItem;
+
 #ifdef SIR_METADATA_SUPPORT
     static const quint8 categoriesCount = 6;
 #else
     static const quint8 categoriesCount = 4;
 #endif // SIR_METADATA_SUPPORT
+
     // basic UI fields
     QVBoxLayout *verticalLayout;
     QListWidget *listWidget;
@@ -70,12 +76,19 @@ private:
     // group boxes
     GeneralGroupBox *generalGroupBox;
     FileListGroupBox *fileListGroupBox;
+
 #ifdef SIR_METADATA_SUPPORT
-    DetailsGroupBox *detailsGroupBox;
-    MetadataGroupBox *metadataGroupBox;
+    MetadataGroupBoxView *metadataGroupBox;
+    MetadataGroupBoxController *metadataGroupBoxController;
+    DetailsGroupBoxView *detailsGroupBox;
+    DetailsGroupBoxController *detailsGroupBoxController;
 #endif //SIR_METADATA_SUPPORT
-    SelectionGroupBox *selectionGroupBox;
-    RawGroupBox *rawGroupBox;
+
+    SelectionGroupBoxView *selectionGroupBox;
+    SelectionGroupBoxController *selectionGroupBoxController;
+    RawGroupBoxView *rawGroupBox;
+    RawGroupBoxController *rawGroupBoxController;
+
     // methods
     void createConnections();
     void setupUi();
@@ -83,9 +96,14 @@ private:
     void saveSettings();
     QListWidget *createListWidget();
     void insertItems(QListWidget *listWidget);
+    void createGroupBoxes();
+    void createGroupBoxesArray();
+    void setupGroupBoxesLayout();
+    void setupComboBoxesModels();
 
 private slots:
     void okButtonClicked();
     void categoryChanged(int current);
 };
-#endif
+
+#endif // OPTIONSDIALOG_H

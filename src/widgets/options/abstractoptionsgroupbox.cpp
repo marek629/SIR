@@ -23,3 +23,6 @@
 
 AbstractOptionsGroupBox::AbstractOptionsGroupBox(QWidget *parent)
     : QGroupBox(parent) {}
+
+AbstractOptionsController::AbstractOptionsController(QObject *parent)
+    : QObject(parent) {}

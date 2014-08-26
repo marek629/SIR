@@ -19,20 +19,22 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef SELECTIONGROUPBOX_H
-#define SELECTIONGROUPBOX_H
+#include "selectiongroupboxview.h"
+#include "selectiongroupboxcontroller.h"
 
-#include "ui_selectiongroupbox.h"
-#include "abstractoptionsgroupbox.h"
+SelectionGroupBoxView::SelectionGroupBoxView(QWidget *parent)
+    : AbstractOptionsGroupBox(parent) {
+    setupUi(this);
+}
 
-//! Selection group box class used in OptionsDialog dialog.
-class SelectionGroupBox : public AbstractOptionsGroupBox, public Ui::SelectionGroupBox {
-    Q_OBJECT
+void SelectionGroupBoxView::loadSettings() {
+    controller->loadSettings();
+}
 
-public:
-    explicit SelectionGroupBox(QWidget *parent = 0);
-    void loadSettings();
-    void saveSettings();
-};
+void SelectionGroupBoxView::saveSettings() {
+    controller->saveSettings();
+}
 
-#endif // SELECTIONGROUPBOX_H
+void SelectionGroupBoxView::setController(SelectionGroupBoxController *controller) {
+    this->controller = controller;
+}

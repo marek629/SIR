@@ -19,26 +19,34 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef MESSAGEBOX_H
-#define MESSAGEBOX_H
+#include "rawgroupboxview.h"
+#include "rawgroupboxcontroller.h"
 
-#include <QMessageBox>
+RawGroupBoxView::RawGroupBoxView(QWidget *parent)
+    : AbstractOptionsGroupBox(parent) {
+    setupUi(this);
+    connect(dcrawPushButton, SIGNAL(clicked()),
+            this, SLOT(browseButtonClicked()));
+    connect(rawCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(rawEnabledStatusChanged(int)));
+}
 
-/** \brief Wrapper Facade for QMessageBox class.
-  *
-  * Message box providing more buttons than QMessageBox and testing tools.
-  */
-class MessageBox : public QMessageBox {
-    Q_OBJECT
+void RawGroupBoxView::loadSettings() {
+    controller->loadSettings();
+}
 
-public:
-    static void enableTesting(bool enabled);
-    static int warning(QWidget *parent, const QString &title, const QString &text);
-    static int question(QWidget *parent, const QString &title, const QString &text);
+void RawGroupBoxView::saveSettings() {
+    controller->saveSettings();
+}
 
-private:
-    static bool testingEnabled;
-    static int warningStandardButton;
-};
+void RawGroupBoxView::setController(RawGroupBoxController *controller) {
+    this->controller = controller;
+}
 
-#endif // MESSAGEBOX_H
+void RawGroupBoxView::browseButtonClicked() {
+    controller->browseDcraw();
+}
+
+void RawGroupBoxView::rawEnabledStatusChanged(int state) {
+    controller->setRawStatus(state);
+}

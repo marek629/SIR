@@ -21,16 +21,22 @@
 
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QFileInfo>
 #include <iostream>
 #include "commandlineassistant.h"
 #include "languageutils.h"
 #include "settings.h"
 #include "sir_string.h"
+#include "widgets/treewidget.h"
+
+#define SHARED_MEMORY_SIZE 200000
 
 using namespace sir;
 
 /** Creates CommandLineAssistant object. */
-CommandLineAssistant::CommandLineAssistant() {}
+CommandLineAssistant::CommandLineAssistant(QObject *parent) : QObject(parent) {
+    treeWidget = NULL;
+}
 
 /** Parses command line arguments and executes the arguments.
   * \param args Application argument list created of main functions \a argv array.
@@ -38,6 +44,36 @@ CommandLineAssistant::CommandLineAssistant() {}
   *         negative value if error occured.
   */
 int CommandLineAssistant::parse(const QStringList &args) {
+    QString argString;
+    foreach (QString arg, args)
+        argString += arg + '\n';
+
+    QString uniqueID("Open as SIR from file manager");
+    memory.setKey(uniqueID);
+    if (memory.attach(QSharedMemory::ReadWrite)) {
+        // first instance of SIR is already running
+        QByteArray bytes;
+        foreach (QString str, args) {
+            if (str.contains(';'))
+                continue;
+            bytes.append(str);
+            bytes.append(';');
+        }
+        bytes.append('\0');
+
+        memory.lock();
+        char *to = (char*)memory.data();
+        const char *from = bytes.data();
+        memcpy(to, from, qMin(memory.size(), bytes.size()));
+        memory.unlock();
+
+        return -200;
+    }
+    if (!memory.create(SHARED_MEMORY_SIZE, QSharedMemory::ReadWrite)) {
+        qDebug("Can not create single instance of SIR!");
+        return -201;
+    }
+
     QStringList longArgs = args.filter(QRegExp("^(-){2}(help|lang|session)+$"));
     QStringList shortArgs = args.filter(QRegExp("^(-){1}(h|l|s)+$"));
     QString lang;
@@ -96,4 +132,42 @@ int CommandLineAssistant::parse(const QStringList &args) {
     }
 
     return result;
+}
+
+/** Gets shared memory data and clears them.
+  * \return Byte array contains shared memory data before clean.
+  */
+QByteArray CommandLineAssistant::getOutSharedMemory() {
+    const char *from = (const char*)memory.data();
+    QByteArray bytes(from);
+    if (bytes.length() > SHARED_MEMORY_SIZE)
+        bytes.resize(SHARED_MEMORY_SIZE);
+
+    memset(memory.data(), 0, SHARED_MEMORY_SIZE);
+
+    return bytes;
+}
+
+void CommandLineAssistant::setTreeWidget(TreeWidget *widget) {
+    treeWidget = widget;
+
+    startTimer(1000);
+}
+
+void CommandLineAssistant::timerEvent(QTimerEvent *event) {
+    Q_UNUSED(event)
+
+    QByteArray memoryBytes = getOutSharedMemory();
+    QString argString(memoryBytes);
+    QStringList args = argString.split(';', QString::SkipEmptyParts);
+
+    QFileInfoList files;
+
+    foreach (QString name, args) {
+        QFileInfo info(name);
+        if (info.isFile())
+            files += info;
+    }
+
+    treeWidget->loadFiles(files);
 }

@@ -1,3 +1,9 @@
+* unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.8
+    - Changed SIR to single instance application
+    - Removed setting empty dcraw path string after browse cancel
+    - Fixed left arrow shortcut for previous image in PreviewDialog
+    - Removed defines.h file
+
 * Sun Aug 24 2014 - Marek Jędryka <jedryka89@gmail.com> - v2.7.3
     - Changed all occurrences of old SIR webpage URL
     - Windows: fixed button icons

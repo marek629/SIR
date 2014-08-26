@@ -19,30 +19,28 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef METADATAGROUPBOX_H
-#define METADATAGROUPBOX_H
+#ifndef SELECTIONGROUPBOXCONTROLLER_H
+#define SELECTIONGROUPBOXCONTROLLER_H
 
-#include "ui_metadatagroupbox.h"
 #include "abstractoptionsgroupbox.h"
+#include "settings.h"
 
-//! Metadata group box class used in OptionsDialog dialog.
-class MetadataGroupBox : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
+class SelectionGroupBoxView;
+
+//! Selection group box controller class used in OptionsDialog dialog.
+class SelectionGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
 
 public:
-    explicit MetadataGroupBox(QWidget *parent = 0);
-    ~MetadataGroupBox();
+    explicit SelectionGroupBoxController(Settings::SelectionGroup *model,
+                                         SelectionGroupBoxView *view,
+                                         QObject *parent = 0);
     void loadSettings();
     void saveSettings();
 
-private slots:
-    void enableMetadata(bool checked);
-    void saveMetadata(bool save);
-    void updateThumbnail(bool update);
-
 private:
-    // fields
-    QRegExpValidator* validator;
+    Settings::SelectionGroup *model;
+    SelectionGroupBoxView *view;
 };
 
-#endif // METADATAGROUPBOX_H
+#endif // SELECTIONGROUPBOXCONTROLLER_H

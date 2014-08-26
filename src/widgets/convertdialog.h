@@ -43,7 +43,7 @@ class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
 
 public:
     ConvertDialog(QWidget *parent, const QStringList &args,
-                  const CommandLineAssistant &cmdAssistant);
+                  CommandLineAssistant *cmdAssistant);
     ~ConvertDialog();
     void retranslateStrings();
     QString fileSizeString(qint64 size);
@@ -71,6 +71,7 @@ private:
     EffectsCollector *effectsCollector;
     QDir effectsDir;
     QDir sessionDir;
+    CommandLineAssistant * cmd;
     // methods
     void init();
     void createConnections();

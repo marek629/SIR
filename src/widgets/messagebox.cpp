@@ -21,6 +21,21 @@
 
 #include "messagebox.h"
 
+bool MessageBox::testingEnabled = false;
+int MessageBox::warningStandardButton = QMessageBox::Ok;
+
+
+void MessageBox::enableTesting(bool enabled) {
+    MessageBox::testingEnabled = enabled;
+}
+
+int MessageBox::warning(QWidget *parent, const QString &title, const QString &text) {
+    if (MessageBox::testingEnabled)
+        return MessageBox::warningStandardButton;
+    else
+        return QMessageBox::warning(parent, title, text);
+}
+
 /** Shows question message containing \a text message and \a title titled window. */
 int MessageBox::question(QWidget *parent, const QString &title, const QString &text) {
     return QMessageBox::question(parent, title, text,
