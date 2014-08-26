@@ -86,10 +86,17 @@ var showBlog = function() {
             yearArray.push(year);
             $('#menu-box').append(
                 '<li>' +
-                    '<a href="#' + year + '">' + year + '</a>' +
+                    '<a href="#' + year + '">' + year +
+                        '<span class="badge pull-right">0</span>' +
+                    '</a>' +
                 '</li>'
             );
         }
+
+        var yearBadge = $('#menu-box li:contains("' + year + '") span.badge');
+        var count = parseInt(yearBadge.text());
+//         count += 1;
+        yearBadge.text(count + 1);
 
         if (year == activeYear)
             getEntryPage(entry);
