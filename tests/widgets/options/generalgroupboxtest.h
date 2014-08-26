@@ -35,8 +35,12 @@ public:
 private:
     GeneralGroupBox *groupBox;
 
-    void checkViewSettings();
-    void checkViewSize();
+    void setViewModelSettingsWidgets();
+
+    void checkSavedModelSettings();
+
+    void checkLoadedModelSettings();
+    void checkLoadedModelSize();
 
 private slots:
     void initTestCase();

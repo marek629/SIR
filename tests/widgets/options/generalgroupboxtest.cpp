@@ -38,7 +38,23 @@ GeneralGroupBoxTest::~GeneralGroupBoxTest() {
     delete groupBox;
 }
 
-void GeneralGroupBoxTest::checkViewSettings() {
+void GeneralGroupBoxTest::setViewModelSettingsWidgets() {
+    groupBox->targetFolderLineEdit->setText(QDir::homePath());
+
+    groupBox->dateDisplayFormatLineEdit->setText("yyyy-MM-dd");
+    groupBox->timeDisplayFormatLineEdit->setText("HH:mm");
+}
+
+void GeneralGroupBoxTest::checkSavedModelSettings() {
+    Settings::SettingsGroup &modelSettings = Settings::instance()->settings;
+
+    QCOMPARE(modelSettings.targetFolder, groupBox->targetFolderLineEdit->text());
+
+    QCOMPARE(modelSettings.dateDisplayFormat, groupBox->dateDisplayFormatLineEdit->text());
+    QCOMPARE(modelSettings.timeDisplayFormat, groupBox->timeDisplayFormatLineEdit->text());
+}
+
+void GeneralGroupBoxTest::checkLoadedModelSettings() {
     Settings::SettingsGroup &modelSettings = Settings::instance()->settings;
 
     QCOMPARE(groupBox->targetFolderLineEdit->text(), modelSettings.targetFolder);
@@ -55,7 +71,7 @@ void GeneralGroupBoxTest::checkViewSettings() {
     QCOMPARE(groupBox->timeDisplayFormatLineEdit->text(), modelSettings.timeDisplayFormat);
 }
 
-void GeneralGroupBoxTest::checkViewSize() {
+void GeneralGroupBoxTest::checkLoadedModelSize() {
     Settings::SizeGroup &modelSize = Settings::instance()->size;
 
     QCOMPARE(groupBox->widthPxSpinBox->value(), modelSize.widthPx);
@@ -104,8 +120,8 @@ void GeneralGroupBoxTest::loadSettings_cores_0() {
 
     groupBox->loadSettings();
 
-    checkViewSettings();
-    checkViewSize();
+    checkLoadedModelSettings();
+    checkLoadedModelSize();
 
     QCOMPARE(groupBox->coresCheckBox->isChecked(), true);
     QCOMPARE(groupBox->coresSpinBox->value(), QThread::idealThreadCount());
@@ -118,19 +134,20 @@ void GeneralGroupBoxTest::loadSettings_cores_not_0() {
 
     groupBox->loadSettings();
 
-    checkViewSettings();
-    checkViewSize();
+    checkLoadedModelSettings();
+    checkLoadedModelSize();
 
     QCOMPARE(groupBox->coresCheckBox->isChecked(), false);
     QCOMPARE(groupBox->coresSpinBox->value(), modelSettings.cores);
 }
 
 void GeneralGroupBoxTest::saveSettings() {
-    Settings::SettingsGroup &modelSettings = Settings::instance()->settings;
+    setViewModelSettingsWidgets();
 
     groupBox->saveSettings();
 
-    QCOMPARE(modelSettings.targetFolder, groupBox->targetFolderLineEdit->text());
+    checkSavedModelSettings();
+
     // TODO: increase code coverage!
 }
 

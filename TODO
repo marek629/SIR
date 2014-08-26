@@ -1,15 +1,15 @@
 *** nearest release ***
-
-*** next release ***
   ! add Delete key shortcut for remove selected files from the files TreeWidget
-  ! support for animated graphics files (QMovie?)
-  ! search refactorizationable code
   ! CammelCase file naming
   ! remove src/translations/googlecode_upload.py file
   ! improve view in FileDetails for photos made by HTC Desire S
-  ! restore check updates option
-  ! add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
   ! change TODO and CHANGELOG files format to Markdown or something else
+
+*** next release ***
+  ! support for animated graphics files (QMovie?)
+  ! restore check updates option
+  ! search refactorizationable code
+  ! add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
 
 *** 3.0 roadmap ***
   ! dynamically add effects to effect list (empty initially)
