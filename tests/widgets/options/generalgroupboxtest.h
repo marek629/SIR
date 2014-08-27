@@ -35,9 +35,14 @@ public:
 private:
     GeneralGroupBox *groupBox;
 
+    void setModelSettings();
+    void setModelSize();
+
     void setViewModelSettingsWidgets();
+    void setViewModelSizeWidgets();
 
     void checkSavedModelSettings();
+    void checkSavedModelSize();
 
     void checkLoadedModelSettings();
     void checkLoadedModelSize();
@@ -48,7 +53,8 @@ private slots:
 
     void loadSettings_cores_0();
     void loadSettings_cores_not_0();
-    void saveSettings();
+    void saveSettings_detect_cores_count();
+    void saveSettings_type_cores_count();
 };
 
 #endif // GENERALGROPBOXTEST_H
