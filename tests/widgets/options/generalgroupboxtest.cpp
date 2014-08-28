@@ -55,6 +55,7 @@ void GeneralGroupBoxTest::setModelSettings() {
     modelSettings.targetPrefix = "test";
     modelSettings.targetSuffix = "ut";
     modelSettings.quality = 50;
+    modelSettings.maxHistoryCount = 50;
     modelSettings.languageNiceName = "Polish";
     modelSettings.timeDisplayFormat = "HH:mm:ss";
     modelSettings.dateDisplayFormat = "dd.MM.yyyy";
@@ -82,6 +83,7 @@ void GeneralGroupBoxTest::setViewModelSettingsWidgets() {
     groupBox->targetSuffixLineEdit->setText("settings");
 
     groupBox->qualitySpinBox->setValue(62);
+    groupBox->historySpinBox->setValue(5);
 
     groupBox->languagesComboBox->setCurrentText("Portuguese");
 
@@ -115,6 +117,7 @@ void GeneralGroupBoxTest::checkSavedModelSettings() {
     QCOMPARE(modelSettings.targetSuffix, groupBox->targetSuffixLineEdit->text());
 
     QCOMPARE(modelSettings.quality, groupBox->qualitySpinBox->value());
+    QCOMPARE(modelSettings.maxHistoryCount, groupBox->historySpinBox->value());
 
     QCOMPARE(modelSettings.languageNiceName, groupBox->languagesComboBox->currentText());
     QCOMPARE(modelSettings.languageFileName, QString("sir_pt.qm"));
@@ -152,6 +155,7 @@ void GeneralGroupBoxTest::checkLoadedModelSettings() {
     QCOMPARE(groupBox->targetSuffixLineEdit->text(), modelSettings.targetSuffix);
 
     QCOMPARE(groupBox->qualitySpinBox->value(), modelSettings.quality);
+    QCOMPARE(groupBox->historySpinBox->value(), modelSettings.maxHistoryCount);
 
     QCOMPARE(groupBox->languagesComboBox->currentText(), modelSettings.languageNiceName);
 
