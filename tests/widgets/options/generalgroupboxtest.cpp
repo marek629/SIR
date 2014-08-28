@@ -27,11 +27,18 @@
 
 GeneralGroupBoxTest::GeneralGroupBoxTest() {
     groupBox = new GeneralGroupBox();
+
     groupBox->fileSizeComboBox->addItem("KiB");
     groupBox->fileSizeComboBox->addItem("MiB");
+
     groupBox->sizeUnitComboBox->addItem("px");
     groupBox->sizeUnitComboBox->addItem("%");
     groupBox->sizeUnitComboBox->addItem("B");
+
+    groupBox->fileToNiceName->insert("English", "sir_en.qm");
+    groupBox->fileToNiceName->insert("Polish", "sir_pl.qm");
+    groupBox->fileToNiceName->insert("Portuguese", "sir_pt.qm");
+    groupBox->languagesComboBox->addItems(groupBox->fileToNiceName->keys());
 }
 
 GeneralGroupBoxTest::~GeneralGroupBoxTest() {
@@ -74,6 +81,8 @@ void GeneralGroupBoxTest::setViewModelSettingsWidgets() {
 
     groupBox->qualitySpinBox->setValue(62);
 
+    groupBox->languagesComboBox->setCurrentText("Portuguese");
+
     groupBox->dateDisplayFormatLineEdit->setText("yyyy-MM-dd");
     groupBox->timeDisplayFormatLineEdit->setText("HH:mm");
 }
@@ -104,6 +113,9 @@ void GeneralGroupBoxTest::checkSavedModelSettings() {
     QCOMPARE(modelSettings.targetSuffix, groupBox->targetSuffixLineEdit->text());
 
     QCOMPARE(modelSettings.quality, groupBox->qualitySpinBox->value());
+
+    QCOMPARE(modelSettings.languageNiceName, groupBox->languagesComboBox->currentText());
+    QCOMPARE(modelSettings.languageFileName, QString("sir_pt.qm"));
 
     QCOMPARE(modelSettings.dateDisplayFormat, groupBox->dateDisplayFormatLineEdit->text());
     QCOMPARE(modelSettings.timeDisplayFormat, groupBox->timeDisplayFormatLineEdit->text());
@@ -138,6 +150,8 @@ void GeneralGroupBoxTest::checkLoadedModelSettings() {
     QCOMPARE(groupBox->targetSuffixLineEdit->text(), modelSettings.targetSuffix);
 
     QCOMPARE(groupBox->qualitySpinBox->value(), modelSettings.quality);
+
+    QCOMPARE(groupBox->languagesComboBox->currentText(), modelSettings.languageNiceName);
 
     QCOMPARE(groupBox->dateDisplayFormatLineEdit->text(), modelSettings.dateDisplayFormat);
     QCOMPARE(groupBox->timeDisplayFormatLineEdit->text(), modelSettings.timeDisplayFormat);

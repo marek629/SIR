@@ -30,6 +30,7 @@ class LanguageUtils;
 //! General group box class used in OptionsDialog dialog.
 class GeneralGroupBox : public AbstractOptionsGroupBox, public Ui::GeneralGroupBox {
     Q_OBJECT
+    friend class GeneralGroupBoxTest;
     friend class OptionsDialog;
 
 public:
