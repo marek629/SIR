@@ -27,6 +27,8 @@
 #include "settings.h"
 #include "languageutils.h"
 
+bool Settings::testingEnabled = false;
+
 /** Returns pointer to the instance of Settings class.
   * \sa Settings(const QString &, const QString &, QObject *)
   */
@@ -316,6 +318,23 @@ void Settings::writeSettings() {
     setValue("dcrawPath",       raw.dcrawPath);
     setValue("dcrawOptions",    raw.dcrawOptions);
     endGroup(); // Raw
+}
+
+QVariant Settings::value(const QString &key, const QVariant &defaultValue) const {
+    if (Settings::testingEnabled)
+        return defaultValue;
+    else
+        return QSettings::value(key, defaultValue);
+}
+
+void Settings::setValue(const QString &key, const QVariant &value) {
+    if (Settings::testingEnabled)
+        return;
+    QSettings::setValue(key, value);
+}
+
+void Settings::enableTesting(bool enabled) {
+    Settings::testingEnabled = enabled;
 }
 
 /** Migrates settings from SIR 2.1 format to format of current version.

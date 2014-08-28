@@ -26,6 +26,8 @@
 #include "settings.h"
 
 GeneralGroupBoxTest::GeneralGroupBoxTest() {
+    Settings::enableTesting(true);
+
     groupBox = new GeneralGroupBox();
 
     groupBox->fileSizeComboBox->addItem("KiB");

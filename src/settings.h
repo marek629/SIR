@@ -50,6 +50,9 @@ public:
     // I/O operations
     void readSettings();
     void writeSettings();
+    QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
+    void setValue(const QString &key, const QVariant &value);
+    static void enableTesting(bool enabled);
     // fields
     struct MainWindowGroup {
         bool    maximized;
@@ -177,6 +180,8 @@ private:
     void migrateFrom_2_2();
     void migrateFrom_2_3();
     void migrateFrom_2_4();
+    // fields
+    static bool testingEnabled;
 };
 
 #endif // SETTINGS_H
