@@ -19,45 +19,42 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef GENERALGROPBOXTEST_H
-#define GENERALGROPBOXTEST_H
+#ifndef GENERALGROUPBOX_H
+#define GENERALGROUPBOX_H
 
-#include <QtTest/QTest>
-#include "widgets/options/generalgroupboxcontroller.h"
-#include "widgets/options/generalgroupboxview.h"
+#include "ui_generalgroupbox.h"
+#include "abstractoptionsgroupbox.h"
 
-class GeneralGroupBoxTest : public QObject {
+class LanguageUtils;
+class GeneralGroupBoxController;
+
+//! General group box class used in OptionsDialog dialog.
+class GeneralGroupBoxView : public AbstractOptionsGroupBox, public Ui::GeneralGroupBoxView {
     Q_OBJECT
+    friend class GeneralGroupBoxTest;
+    friend class OptionsDialog;
 
 public:
-    explicit GeneralGroupBoxTest();
-    ~GeneralGroupBoxTest();
+    explicit GeneralGroupBoxView(QWidget *parent = 0);
+    ~GeneralGroupBoxView();
+
+    void loadSettings();
+    void saveSettings();
+
+    void setController(GeneralGroupBoxController *controller);
+
+    QString languageName(const QString &fileName) const;
+
+public slots:
+    void browseDestination();
+    void coresSpinBoxChecked(bool checked);
 
 private:
     GeneralGroupBoxController *controller;
-    GeneralGroupBoxView *view;
+    LanguageUtils *languages;
+    QMap<QString, QString> *fileToNiceName;
 
-    void setModelSettings();
-    void setModelSize();
-
-    void setViewModelSettingsWidgets();
-    void setViewModelSizeWidgets();
-
-    void checkSavedModelSettings();
-    void checkSavedModelSize();
-
-    void checkLoadedModelSettings();
-    void checkLoadedModelSize();
-
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-
-    void loadSettings_cores_0();
-    void loadSettings_cores_not_0();
-
-    void saveSettings_detect_cores_count();
-    void saveSettings_type_cores_count();
+    void createLanguageMenu();
 };
 
-#endif // GENERALGROPBOXTEST_H
+#endif // GENERALGROUPBOX_H

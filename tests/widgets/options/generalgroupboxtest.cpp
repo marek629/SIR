@@ -27,24 +27,30 @@
 
 GeneralGroupBoxTest::GeneralGroupBoxTest() {
     Settings::enableTesting(true);
+    Settings *model = Settings::instance();
 
-    groupBox = new GeneralGroupBox();
+    view = new GeneralGroupBoxView();
+    controller = new GeneralGroupBoxController(&(model->settings),
+                                               &(model->size),
+                                               view,
+                                               this);
 
-    groupBox->fileSizeComboBox->addItem("KiB");
-    groupBox->fileSizeComboBox->addItem("MiB");
+    view->fileSizeComboBox->addItem("KiB");
+    view->fileSizeComboBox->addItem("MiB");
 
-    groupBox->sizeUnitComboBox->addItem("px");
-    groupBox->sizeUnitComboBox->addItem("%");
-    groupBox->sizeUnitComboBox->addItem("B");
+    view->sizeUnitComboBox->addItem("px");
+    view->sizeUnitComboBox->addItem("%");
+    view->sizeUnitComboBox->addItem("B");
 
-    groupBox->fileToNiceName->insert("English", "sir_en.qm");
-    groupBox->fileToNiceName->insert("Polish", "sir_pl.qm");
-    groupBox->fileToNiceName->insert("Portuguese", "sir_pt.qm");
-    groupBox->languagesComboBox->addItems(groupBox->fileToNiceName->keys());
+    view->fileToNiceName->insert("English", "sir_en.qm");
+    view->fileToNiceName->insert("Polish", "sir_pl.qm");
+    view->fileToNiceName->insert("Portuguese", "sir_pt.qm");
+    view->languagesComboBox->addItems(view->fileToNiceName->keys());
 }
 
 GeneralGroupBoxTest::~GeneralGroupBoxTest() {
-    delete groupBox;
+    delete controller;
+    delete view;
 }
 
 void GeneralGroupBoxTest::setModelSettings() {
@@ -75,114 +81,114 @@ void GeneralGroupBoxTest::setModelSize() {
 }
 
 void GeneralGroupBoxTest::setViewModelSettingsWidgets() {
-    groupBox->targetFolderLineEdit->setText(QDir::homePath());
+    view->targetFolderLineEdit->setText(QDir::homePath());
 
-    groupBox->targetFormatComboBox->setCurrentText("gif");
+    view->targetFormatComboBox->setCurrentText("gif");
 
-    groupBox->targetPrefixLineEdit->setText("save");
-    groupBox->targetSuffixLineEdit->setText("settings");
+    view->targetPrefixLineEdit->setText("save");
+    view->targetSuffixLineEdit->setText("settings");
 
-    groupBox->qualitySpinBox->setValue(62);
-    groupBox->historySpinBox->setValue(5);
+    view->qualitySpinBox->setValue(62);
+    view->historySpinBox->setValue(5);
 
-    groupBox->languagesComboBox->setCurrentText("Portuguese");
+    view->languagesComboBox->setCurrentText("Portuguese");
 
-    groupBox->dateDisplayFormatLineEdit->setText("yyyy-MM-dd");
-    groupBox->timeDisplayFormatLineEdit->setText("HH:mm");
+    view->dateDisplayFormatLineEdit->setText("yyyy-MM-dd");
+    view->timeDisplayFormatLineEdit->setText("HH:mm");
 }
 
 void GeneralGroupBoxTest::setViewModelSizeWidgets() {
-    groupBox->widthPxSpinBox->setValue(500);
-    groupBox->widthPercentDoubleSpinBox->setValue(50.);
+    view->widthPxSpinBox->setValue(500);
+    view->widthPercentDoubleSpinBox->setValue(50.);
 
-    groupBox->heightPxSpinBox->setValue(1000);
-    groupBox->heightPercentDoubleSpinBox->setValue(2.35);
+    view->heightPxSpinBox->setValue(1000);
+    view->heightPercentDoubleSpinBox->setValue(2.35);
 
-    groupBox->fileSizeSpinBox->setValue(50.);
-    groupBox->fileSizeComboBox->setCurrentText("MiB");
+    view->fileSizeSpinBox->setValue(50.);
+    view->fileSizeComboBox->setCurrentText("MiB");
 
-    groupBox->sizeUnitComboBox->setCurrentText("px");
+    view->sizeUnitComboBox->setCurrentText("px");
 
-    groupBox->aspectRatioCheckBox->setChecked(true);
+    view->aspectRatioCheckBox->setChecked(true);
 }
 
 void GeneralGroupBoxTest::checkSavedModelSettings() {
     Settings::SettingsGroup &modelSettings = Settings::instance()->settings;
 
-    QCOMPARE(modelSettings.targetFolder, groupBox->targetFolderLineEdit->text());
+    QCOMPARE(modelSettings.targetFolder, view->targetFolderLineEdit->text());
 
-    QCOMPARE(modelSettings.targetFormat, groupBox->targetFormatComboBox->currentText());
+    QCOMPARE(modelSettings.targetFormat, view->targetFormatComboBox->currentText());
 
-    QCOMPARE(modelSettings.targetPrefix, groupBox->targetPrefixLineEdit->text());
-    QCOMPARE(modelSettings.targetSuffix, groupBox->targetSuffixLineEdit->text());
+    QCOMPARE(modelSettings.targetPrefix, view->targetPrefixLineEdit->text());
+    QCOMPARE(modelSettings.targetSuffix, view->targetSuffixLineEdit->text());
 
-    QCOMPARE(modelSettings.quality, groupBox->qualitySpinBox->value());
-    QCOMPARE(modelSettings.maxHistoryCount, groupBox->historySpinBox->value());
+    QCOMPARE(modelSettings.quality, view->qualitySpinBox->value());
+    QCOMPARE(modelSettings.maxHistoryCount, view->historySpinBox->value());
 
-    QCOMPARE(modelSettings.languageNiceName, groupBox->languagesComboBox->currentText());
+    QCOMPARE(modelSettings.languageNiceName, view->languagesComboBox->currentText());
     QCOMPARE(modelSettings.languageFileName, QString("sir_pt.qm"));
 
-    QCOMPARE(modelSettings.dateDisplayFormat, groupBox->dateDisplayFormatLineEdit->text());
-    QCOMPARE(modelSettings.timeDisplayFormat, groupBox->timeDisplayFormatLineEdit->text());
+    QCOMPARE(modelSettings.dateDisplayFormat, view->dateDisplayFormatLineEdit->text());
+    QCOMPARE(modelSettings.timeDisplayFormat, view->timeDisplayFormatLineEdit->text());
 }
 
 void GeneralGroupBoxTest::checkSavedModelSize() {
     Settings::SizeGroup &modelSize = Settings::instance()->size;
 
-    QCOMPARE(modelSize.widthPx, groupBox->widthPxSpinBox->value());
-    QCOMPARE(modelSize.widthPercent, (float)groupBox->widthPercentDoubleSpinBox->value());
+    QCOMPARE(modelSize.widthPx, view->widthPxSpinBox->value());
+    QCOMPARE(modelSize.widthPercent, (float)view->widthPercentDoubleSpinBox->value());
 
-    QCOMPARE(modelSize.heightPx, groupBox->heightPxSpinBox->value());
-    QCOMPARE(modelSize.heightPercent, (float)groupBox->heightPercentDoubleSpinBox->value());
+    QCOMPARE(modelSize.heightPx, view->heightPxSpinBox->value());
+    QCOMPARE(modelSize.heightPercent, (float)view->heightPercentDoubleSpinBox->value());
 
-    QCOMPARE(modelSize.fileSizeValue, (float)groupBox->fileSizeSpinBox->value());
-    QCOMPARE(modelSize.fileSizeUnit, groupBox->fileSizeComboBox->currentIndex());
+    QCOMPARE(modelSize.fileSizeValue, (float)view->fileSizeSpinBox->value());
+    QCOMPARE(modelSize.fileSizeUnit, view->fileSizeComboBox->currentIndex());
 
-    QCOMPARE(modelSize.sizeUnit, groupBox->sizeUnitComboBox->currentIndex());
+    QCOMPARE(modelSize.sizeUnit, view->sizeUnitComboBox->currentIndex());
 
-    QCOMPARE(modelSize.keepAspectRatio, groupBox->aspectRatioCheckBox->isChecked());
+    QCOMPARE(modelSize.keepAspectRatio, view->aspectRatioCheckBox->isChecked());
 }
 
 void GeneralGroupBoxTest::checkLoadedModelSettings() {
     Settings::SettingsGroup &modelSettings = Settings::instance()->settings;
 
-    QCOMPARE(groupBox->targetFolderLineEdit->text(), modelSettings.targetFolder);
+    QCOMPARE(view->targetFolderLineEdit->text(), modelSettings.targetFolder);
 
-    int index = groupBox->targetFormatComboBox->findText(modelSettings.targetFormat);
-    QCOMPARE(groupBox->targetFormatComboBox->currentIndex(), index);
+    int index = view->targetFormatComboBox->findText(modelSettings.targetFormat);
+    QCOMPARE(view->targetFormatComboBox->currentIndex(), index);
 
-    QCOMPARE(groupBox->targetPrefixLineEdit->text(), modelSettings.targetPrefix);
-    QCOMPARE(groupBox->targetSuffixLineEdit->text(), modelSettings.targetSuffix);
+    QCOMPARE(view->targetPrefixLineEdit->text(), modelSettings.targetPrefix);
+    QCOMPARE(view->targetSuffixLineEdit->text(), modelSettings.targetSuffix);
 
-    QCOMPARE(groupBox->qualitySpinBox->value(), modelSettings.quality);
-    QCOMPARE(groupBox->historySpinBox->value(), modelSettings.maxHistoryCount);
+    QCOMPARE(view->qualitySpinBox->value(), modelSettings.quality);
+    QCOMPARE(view->historySpinBox->value(), modelSettings.maxHistoryCount);
 
-    QCOMPARE(groupBox->languagesComboBox->currentText(), modelSettings.languageNiceName);
+    QCOMPARE(view->languagesComboBox->currentText(), modelSettings.languageNiceName);
 
-    QCOMPARE(groupBox->dateDisplayFormatLineEdit->text(), modelSettings.dateDisplayFormat);
-    QCOMPARE(groupBox->timeDisplayFormatLineEdit->text(), modelSettings.timeDisplayFormat);
+    QCOMPARE(view->dateDisplayFormatLineEdit->text(), modelSettings.dateDisplayFormat);
+    QCOMPARE(view->timeDisplayFormatLineEdit->text(), modelSettings.timeDisplayFormat);
 }
 
 void GeneralGroupBoxTest::checkLoadedModelSize() {
     Settings::SizeGroup &modelSize = Settings::instance()->size;
 
-    QCOMPARE(groupBox->widthPxSpinBox->value(), modelSize.widthPx);
-    QCOMPARE((float)groupBox->widthPercentDoubleSpinBox->value(), modelSize.widthPercent);
+    QCOMPARE(view->widthPxSpinBox->value(), modelSize.widthPx);
+    QCOMPARE((float)view->widthPercentDoubleSpinBox->value(), modelSize.widthPercent);
 
-    QCOMPARE(groupBox->heightPxSpinBox->value(), modelSize.heightPx);
-    QCOMPARE((float)groupBox->heightPercentDoubleSpinBox->value(), modelSize.heightPercent);
+    QCOMPARE(view->heightPxSpinBox->value(), modelSize.heightPx);
+    QCOMPARE((float)view->heightPercentDoubleSpinBox->value(), modelSize.heightPercent);
 
-    QCOMPARE((float)groupBox->fileSizeSpinBox->value(), modelSize.fileSizeValue);
-    QCOMPARE(groupBox->fileSizeComboBox->currentIndex(), modelSize.fileSizeUnit);
+    QCOMPARE((float)view->fileSizeSpinBox->value(), modelSize.fileSizeValue);
+    QCOMPARE(view->fileSizeComboBox->currentIndex(), modelSize.fileSizeUnit);
 
-    QCOMPARE(groupBox->sizeUnitComboBox->currentIndex(), modelSize.sizeUnit);
+    QCOMPARE(view->sizeUnitComboBox->currentIndex(), modelSize.sizeUnit);
 
-    QCOMPARE(groupBox->aspectRatioCheckBox->isChecked(), modelSize.keepAspectRatio);
+    QCOMPARE(view->aspectRatioCheckBox->isChecked(), modelSize.keepAspectRatio);
 }
 
 void GeneralGroupBoxTest::initTestCase() {
-    QCOMPARE(groupBox->fileSizeComboBox->count(), 2);
-    QCOMPARE(groupBox->sizeUnitComboBox->count(), 3);
+    QCOMPARE(view->fileSizeComboBox->count(), 2);
+    QCOMPARE(view->sizeUnitComboBox->count(), 3);
 }
 
 void GeneralGroupBoxTest::cleanupTestCase() {}
@@ -195,13 +201,13 @@ void GeneralGroupBoxTest::loadSettings_cores_0() {
 
     modelSettings.cores = 0;
 
-    groupBox->loadSettings();
+    controller->loadSettings();
 
     checkLoadedModelSettings();
     checkLoadedModelSize();
 
-    QCOMPARE(groupBox->coresCheckBox->isChecked(), true);
-    QCOMPARE(groupBox->coresSpinBox->value(), QThread::idealThreadCount());
+    QCOMPARE(view->coresCheckBox->isChecked(), true);
+    QCOMPARE(view->coresSpinBox->value(), QThread::idealThreadCount());
 }
 
 void GeneralGroupBoxTest::loadSettings_cores_not_0() {
@@ -212,13 +218,13 @@ void GeneralGroupBoxTest::loadSettings_cores_not_0() {
 
     modelSettings.cores = 2;
 
-    groupBox->loadSettings();
+    controller->loadSettings();
 
     checkLoadedModelSettings();
     checkLoadedModelSize();
 
-    QCOMPARE(groupBox->coresCheckBox->isChecked(), false);
-    QCOMPARE(groupBox->coresSpinBox->value(), modelSettings.cores);
+    QCOMPARE(view->coresCheckBox->isChecked(), false);
+    QCOMPARE(view->coresSpinBox->value(), modelSettings.cores);
 }
 
 void GeneralGroupBoxTest::saveSettings_detect_cores_count() {
@@ -227,9 +233,9 @@ void GeneralGroupBoxTest::saveSettings_detect_cores_count() {
     setViewModelSettingsWidgets();
     setViewModelSizeWidgets();
 
-    groupBox->coresCheckBox->setChecked(true);
+    view->coresCheckBox->setChecked(true);
 
-    groupBox->saveSettings();
+    controller->saveSettings();
 
     checkSavedModelSettings();
     checkSavedModelSize();
@@ -243,15 +249,15 @@ void GeneralGroupBoxTest::saveSettings_type_cores_count() {
     setViewModelSettingsWidgets();
     setViewModelSizeWidgets();
 
-    groupBox->coresCheckBox->setChecked(false);
-    groupBox->coresSpinBox->setValue(3);
+    view->coresCheckBox->setChecked(false);
+    view->coresSpinBox->setValue(3);
 
-    groupBox->saveSettings();
+    controller->saveSettings();
 
     checkSavedModelSettings();
     checkSavedModelSize();
 
-    QCOMPARE(modelSettings.cores, groupBox->coresSpinBox->value());
+    QCOMPARE(modelSettings.cores, view->coresSpinBox->value());
 }
 
 QTEST_MAIN(GeneralGroupBoxTest)

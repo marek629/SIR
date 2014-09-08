@@ -26,7 +26,8 @@
 
 #include "optionsdialog.h"
 #include "widgets/convertdialog.h"
-#include "widgets/options/generalgroupbox.h"
+#include "widgets/options/generalgroupboxcontroller.h"
+#include "widgets/options/generalgroupboxview.h"
 #include "widgets/options/filelistgroupbox.h"
 
 #ifdef SIR_METADATA_SUPPORT
@@ -56,6 +57,7 @@ OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(pare
 OptionsDialog::~OptionsDialog() {
     delete groupBoxes;
 
+    delete generalGroupBoxController;
     delete metadataGroupBoxController;
     delete selectionGroupBoxController;
     delete rawGroupBoxController;
@@ -110,8 +112,7 @@ void OptionsDialog::saveSettings() {
   * \return Poiter to created list widget.
   * \sa insertItem()
   */
-QListWidget *OptionsDialog::createListWidget()
-{
+QListWidget *OptionsDialog::createListWidget() {
     QListWidget *listWidget = new QListWidget(this);
 
     insertItems(listWidget);
@@ -128,8 +129,7 @@ QListWidget *OptionsDialog::createListWidget()
 }
 
 /** Creates intems into \a listWidget. */
-void OptionsDialog::insertItems(QListWidget *listWidget)
-{
+void OptionsDialog::insertItems(QListWidget *listWidget) {
     QString imagesDirPath = QCoreApplication::applicationDirPath() +
                             "/../share/sir/images/";
 
@@ -175,7 +175,11 @@ void OptionsDialog::insertItems(QListWidget *listWidget)
 
 void OptionsDialog::createGroupBoxes() {
     Settings *model = Settings::instance();
-    generalGroupBox = new GeneralGroupBox(scrollAreaWidgetContents);
+    generalGroupBox = new GeneralGroupBoxView(scrollAreaWidgetContents);
+    generalGroupBoxController = new GeneralGroupBoxController(&(model->settings),
+                                                              &(model->size),
+                                                              generalGroupBox,
+                                                              this);
     fileListGroupBox = new FileListGroupBox(scrollAreaWidgetContents);
 
 #ifdef SIR_METADATA_SUPPORT

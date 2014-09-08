@@ -19,45 +19,49 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef GENERALGROUPBOX_H
-#define GENERALGROUPBOX_H
+#ifndef GENERALGROUPBOXCONTROLLER_H
+#define GENERALGROUPBOXCONTROLLER_H
 
-#include "ui_generalgroupbox.h"
 #include "abstractoptionsgroupbox.h"
+#include "settings.h"
 
-class LanguageUtils;
+class GeneralGroupBoxView;
 
-//! General group box class used in OptionsDialog dialog.
-class GeneralGroupBox : public AbstractOptionsGroupBox, public Ui::GeneralGroupBox {
+class GeneralGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
-    friend class GeneralGroupBoxTest;
-    friend class OptionsDialog;
 
 public:
-    explicit GeneralGroupBox(QWidget *parent = 0);
-    ~GeneralGroupBox();
-    static quint8 detectCoresCount();
+    explicit GeneralGroupBoxController(Settings::SettingsGroup *settingsModel,
+                                       Settings::SizeGroup *sizeModel,
+                                       GeneralGroupBoxView *view,
+                                       QObject *parent = 0);
     void loadSettings();
     void saveSettings();
 
-private slots:
-    void browseDestination();
-    void respondCoresSpinBox(bool checked);
+    static quint8 detectCoresCount();
+    static quint8 maxCoresCount();
+    quint8 coresCount();
+    void setCoresCount(quint8 cores);
 
 private:
-    // fields
+    Settings::SettingsGroup *modelSettings;
+    Settings::SizeGroup *modelSize;
+    GeneralGroupBoxView *view;
+
     /** Count of threads created for convertion. It's mean count of images
       * converted at the same moment.
       */
-    quint8 coresCount;
+    quint8 coresCount_;
     /** Maximum count of threads created for convertion.
       * \sa coresCount
       */
-    static quint8 maxCoresCount;
-    LanguageUtils * languages;
-    QMap<QString, QString> * fileToNiceName;
-    // methods
-    void createLanguageMenu();
+    static quint8 maxCoresCount_;
+
+    void loadSettingsSettings();
+    void loadSizeSettings();
+
+    void saveSettingsSettings();
+    void saveSizeSettings();
 };
 
-#endif // GENERALGROUPBOX_H
+#endif // GENERALGROUPBOXCONTROLLER_H

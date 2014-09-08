@@ -35,7 +35,7 @@
 #include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"
-#include "widgets/options/generalgroupbox.h"
+#include "widgets/options/generalgroupboxcontroller.h"
 #include "version.h"
 #include "rawutils.h"
 #include "networkutils.h"
@@ -798,7 +798,7 @@ void ConvertDialog::loadSettings() {
     optionsScrollArea->qualitySlider->setValue(quality);
     numThreads =                                s->settings.cores;
     if (numThreads == 0)
-        numThreads = GeneralGroupBox::detectCoresCount();
+        numThreads = GeneralGroupBoxController::detectCoresCount();
     QString selectedTranslationFile =
             QCoreApplication::applicationDirPath() + "/../share/sir/translations/";
     selectedTranslationFile +=                  s->settings.languageFileName;

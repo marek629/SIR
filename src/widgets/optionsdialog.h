@@ -32,7 +32,8 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QSpacerItem;
 class AbstractOptionsGroupBox;
-class GeneralGroupBox;
+class GeneralGroupBoxController;
+class GeneralGroupBoxView;
 class FileListGroupBox;
 #ifdef SIR_METADATA_SUPPORT
 class DetailsGroupBoxController;
@@ -74,7 +75,8 @@ private:
     QHBoxLayout *horizontalLayout;
     QDialogButtonBox *buttonBox;
     // group boxes
-    GeneralGroupBox *generalGroupBox;
+    GeneralGroupBoxView *generalGroupBox;
+    GeneralGroupBoxController *generalGroupBoxController;
     FileListGroupBox *fileListGroupBox;
 
 #ifdef SIR_METADATA_SUPPORT
