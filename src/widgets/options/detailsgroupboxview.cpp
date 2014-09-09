@@ -19,6 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
+#include <typeinfo>
+
 #include "detailsgroupboxview.h"
 #include "detailsgroupboxcontroller.h"
 #include "optionsenums.h"
@@ -42,8 +44,10 @@ void DetailsGroupBoxView::saveSettings() {
     controller->saveSettings();
 }
 
-void DetailsGroupBoxView::setController(DetailsGroupBoxController *controller) {
-    this->controller = controller;
+void DetailsGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(DetailsGroupBoxController));
+
+    this->controller = (DetailsGroupBoxController *)controller;
 }
 
 /** Enables or disables \em "Show all" and \em "Hide all" fields push buttons

@@ -35,7 +35,7 @@ public:
     explicit DetailsGroupBoxView(QWidget *parent = 0);
     void loadSettings();
     void saveSettings();
-    void setController(DetailsGroupBoxController* controller);
+    void setController(AbstractOptionsController *controller);
     void enableFieldButtons(bool enableShow = true, bool enableHide = true);
     void checkExifImageCheckBoxes(int hash);
     void checkExifPhotoCheckBoxes(int hash);

@@ -36,7 +36,8 @@ public:
     explicit SelectionGroupBoxView(QWidget *parent = 0);
     void loadSettings();
     void saveSettings();
-    void setController(SelectionGroupBoxController *controller);
+
+    void setController(AbstractOptionsController *controller);
 
 private:
     SelectionGroupBoxController *controller;

@@ -41,7 +41,7 @@ public:
     void loadSettings();
     void saveSettings();
 
-    void setController(GeneralGroupBoxController *controller);
+    void setController(AbstractOptionsController *controller);
 
     QString languageName(const QString &fileName) const;
 

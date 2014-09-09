@@ -37,7 +37,7 @@ public:
     void loadSettings();
     void saveSettings();
 
-    void setController(FileListGroupBoxController *controller);
+    void setController(AbstractOptionsController *controller);
 
 private:
     FileListGroupBoxController *controller;

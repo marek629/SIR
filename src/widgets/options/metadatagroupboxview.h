@@ -37,7 +37,7 @@ public:
     ~MetadataGroupBoxView();
     void loadSettings();
     void saveSettings();
-    void setController(MetadataGroupBoxController *controller);
+    void setController(AbstractOptionsController *controller);
 
 private slots:
     void metadataCheckBoxChecked(bool checked);

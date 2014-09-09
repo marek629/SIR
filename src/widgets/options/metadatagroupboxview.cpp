@@ -19,6 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
+#include <typeinfo>
+
 #include "metadatagroupboxview.h"
 #include "metadatagroupboxcontroller.h"
 
@@ -57,8 +59,10 @@ void MetadataGroupBoxView::saveSettings() {
     controller->saveSettings();
 }
 
-void MetadataGroupBoxView::setController(MetadataGroupBoxController *controller) {
-    this->controller = controller;
+void MetadataGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(MetadataGroupBoxController));
+
+    this->controller = (MetadataGroupBoxController *)controller;
 }
 
 void MetadataGroupBoxView::metadataCheckBoxChecked(bool checked) {

@@ -19,6 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
+#include <typeinfo>
+
 #include "rawgroupboxview.h"
 #include "rawgroupboxcontroller.h"
 
@@ -39,8 +41,10 @@ void RawGroupBoxView::saveSettings() {
     controller->saveSettings();
 }
 
-void RawGroupBoxView::setController(RawGroupBoxController *controller) {
-    this->controller = controller;
+void RawGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(RawGroupBoxController));
+
+    this->controller = (RawGroupBoxController *)controller;
 }
 
 void RawGroupBoxView::browseButtonClicked() {

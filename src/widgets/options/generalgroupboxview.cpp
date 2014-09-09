@@ -24,6 +24,9 @@
 #include <QCompleter>
 #include <QDirModel>
 #include <QCoreApplication>
+
+#include <typeinfo>
+
 #include "generalgroupboxview.h"
 #include "generalgroupboxcontroller.h"
 #include "languageutils.h"
@@ -81,8 +84,10 @@ void GeneralGroupBoxView::saveSettings() {
     controller->saveSettings();
 }
 
-void GeneralGroupBoxView::setController(GeneralGroupBoxController *controller) {
-    this->controller = controller;
+void GeneralGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(GeneralGroupBoxController));
+
+    this->controller = (GeneralGroupBoxController *)controller;
 }
 
 QString GeneralGroupBoxView::languageName(const QString &fileName) const {

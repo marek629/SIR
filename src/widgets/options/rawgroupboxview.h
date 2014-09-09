@@ -33,9 +33,11 @@ class RawGroupBoxView : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
 
 public:
     explicit RawGroupBoxView(QWidget *parent = 0);
+
     void loadSettings();
     void saveSettings();
-    void setController(RawGroupBoxController *controller);
+
+    void setController(AbstractOptionsController *controller);
 
 private slots:
     void browseButtonClicked();

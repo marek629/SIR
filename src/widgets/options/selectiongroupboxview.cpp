@@ -19,6 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
+#include <typeinfo>
+
 #include "selectiongroupboxview.h"
 #include "selectiongroupboxcontroller.h"
 
@@ -35,6 +37,8 @@ void SelectionGroupBoxView::saveSettings() {
     controller->saveSettings();
 }
 
-void SelectionGroupBoxView::setController(SelectionGroupBoxController *controller) {
-    this->controller = controller;
+void SelectionGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(SelectionGroupBoxController));
+
+    this->controller = (SelectionGroupBoxController *)controller;
 }

@@ -19,6 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
+#include <typeinfo>
+
 #include "filelistgroupboxview.h"
 #include "filelistgroupboxcontroller.h"
 
@@ -39,8 +41,10 @@ void FileListGroupBoxView::saveSettings() {
     controller->saveSettings();
 }
 
-void FileListGroupBoxView::setController(FileListGroupBoxController *controller) {
-    this->controller = controller;
+void FileListGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(FileListGroupBoxController));
+
+    this->controller = (FileListGroupBoxController *)controller;
 }
 
 void FileListGroupBoxView::showPushButtonClicked() {
