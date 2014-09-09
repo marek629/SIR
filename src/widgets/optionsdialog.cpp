@@ -28,7 +28,8 @@
 #include "widgets/convertdialog.h"
 #include "widgets/options/generalgroupboxcontroller.h"
 #include "widgets/options/generalgroupboxview.h"
-#include "widgets/options/filelistgroupbox.h"
+#include "widgets/options/filelistgroupboxcontroller.h"
+#include "widgets/options/filelistgroupboxview.h"
 
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/options/detailsgroupboxcontroller.h"
@@ -57,6 +58,7 @@ OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(pare
 OptionsDialog::~OptionsDialog() {
     delete groupBoxes;
 
+    delete fileListGroupBoxController;
     delete generalGroupBoxController;
     delete metadataGroupBoxController;
     delete selectionGroupBoxController;
@@ -180,7 +182,10 @@ void OptionsDialog::createGroupBoxes() {
                                                               &(model->size),
                                                               generalGroupBox,
                                                               this);
-    fileListGroupBox = new FileListGroupBox(scrollAreaWidgetContents);
+    fileListGroupBox = new FileListGroupBoxView(scrollAreaWidgetContents);
+    fileListGroupBoxController = new FileListGroupBoxController(&(model->treeWidget),
+                                                                fileListGroupBox,
+                                                                this);
 
 #ifdef SIR_METADATA_SUPPORT
     metadataGroupBox = new MetadataGroupBoxView(scrollAreaWidgetContents);
@@ -252,7 +257,7 @@ void OptionsDialog::setupComboBoxesModels() {
   * \sa saveSettings()
   */
 void OptionsDialog::okButtonClicked() {
-    if (!fileListGroupBox->isColumnChecked()) {
+    if (!fileListGroupBoxController->isAnyColumnChecked()) {
         QMessageBox::warning(this, tr("Select a column"),
                              tr("Select at least 1 column to show in file list."));
         if (!fileListGroupBox->isVisible())

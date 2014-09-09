@@ -19,43 +19,43 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef FILELISTGROUPBOX_H
-#define FILELISTGROUPBOX_H
+#ifndef FILELISTGROUPBOXCONTROLLER_H
+#define FILELISTGROUPBOXCONTROLLER_H
 
-#include "ui_filelistgroupbox.h"
+#include <QCheckBox>
+
 #include "abstractoptionsgroupbox.h"
+#include "settings.h"
 
-//! File list group box class used in OptionsDialog dialog.
-class FileListGroupBox : public AbstractOptionsGroupBox, private Ui::FileListGroupBox {
+class FileListGroupBoxView;
+
+//! File list group box controller class used in OptionsDialog dialog.
+class FileListGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
 
 public:
-    explicit FileListGroupBox(QWidget *parent = 0);
+    explicit FileListGroupBoxController(Settings::TreeWidgetGroup *model,
+                                        FileListGroupBoxView *view,
+                                        QObject *parent = 0);
+
     void loadSettings();
     void saveSettings();
-    bool isColumnChecked();
+
+    void enableColumnButtons(bool enableShow = true, bool enableHide = true);
+
+    void checkAllColumns(bool checked);
+
+    bool isAnyColumnChecked() const;
+
+public slots:
+    void updateViewButtons(bool columnToggled);
 
 private:
-    // fields
+    Settings::TreeWidgetGroup *model;
+    FileListGroupBoxView *view;
+
     QList<QCheckBox*> checkBoxList;
     int visibleColumnsCount;
-    // methods
-    inline void enableColumnButtons(bool enableShow = true, bool enableHide = true);
-
-private slots:
-    void columnToggled(bool checked);
-    void showAllColumns();
-    void hideAllColumns();
 };
 
-/** Enables or disables \em "Show all" and \em "Hide all" columns push buttons
-  * depending on parameters values.
-  * \param enableShow Enables or disables the \em "Show all" showPushButton push button
-  * \param enableHide Enables or disables the \em "Hide all" hidePushButton push button
-  */
-void FileListGroupBox::enableColumnButtons(bool enableShow, bool enableHide) {
-    showPushButton->setEnabled(enableShow);
-    hidePushButton->setEnabled(enableHide);
-}
-
-#endif // FILELISTGROUPBOX_H
+#endif // FILELISTGROUPBOXCONTROLLER_H

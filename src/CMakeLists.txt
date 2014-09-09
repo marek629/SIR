@@ -45,7 +45,8 @@ set( sir_SRCS
         widgets/options/abstractoptions.cpp
         widgets/options/abstractoptionsgroupbox.cpp
         widgets/options/commonoptions.cpp
-        widgets/options/filelistgroupbox.cpp
+        widgets/options/filelistgroupboxcontroller.cpp
+        widgets/options/filelistgroupboxview.cpp
         widgets/options/generalgroupboxcontroller.cpp
         widgets/options/generalgroupboxview.cpp
         widgets/options/rawgroupboxcontroller.cpp

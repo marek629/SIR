@@ -34,7 +34,8 @@ class QSpacerItem;
 class AbstractOptionsGroupBox;
 class GeneralGroupBoxController;
 class GeneralGroupBoxView;
-class FileListGroupBox;
+class FileListGroupBoxController;
+class FileListGroupBoxView;
 #ifdef SIR_METADATA_SUPPORT
 class DetailsGroupBoxController;
 class DetailsGroupBoxView;
@@ -77,7 +78,8 @@ private:
     // group boxes
     GeneralGroupBoxView *generalGroupBox;
     GeneralGroupBoxController *generalGroupBoxController;
-    FileListGroupBox *fileListGroupBox;
+    FileListGroupBoxView *fileListGroupBox;
+    FileListGroupBoxController *fileListGroupBoxController;
 
 #ifdef SIR_METADATA_SUPPORT
     MetadataGroupBoxView *metadataGroupBox;
