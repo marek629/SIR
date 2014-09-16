@@ -27,7 +27,8 @@ set( sir_SRCS
         widgets/convertdialog.cpp
         widgets/brushframe.cpp
         widgets/colorframe.cpp
-        widgets/detailsbrowser.cpp
+        widgets/detailsbrowsercontroller.cpp
+        widgets/detailsbrowserview.cpp
         widgets/gradienteditwidget.cpp
         widgets/historycombobox.cpp
         widgets/messagebox.cpp

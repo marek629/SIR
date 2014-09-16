@@ -23,12 +23,12 @@
 #include <QSvgRenderer>
 #include <QGraphicsSvgItem>
 #include <QPainter>
-#include "detailsbrowser.h"
+
+#include "detailsbrowsercontroller.h"
+#include "detailsbrowserview.h"
 #include "convertdialog.h"
 #include "../optionsenums.h"
 #include "../convertshareddata.h"
-
-#include <QDebug>
 
 using namespace sir;
 
@@ -44,43 +44,20 @@ const QString htmlEnd = "</body></html>";
 const QString htmlBr = "<br />";
 const QString htmlHr = "<hr />";
 
-DetailsBrowser::DetailsBrowser(QWidget *parent) : QTextEdit(parent) {
-    setReadOnly(true);
-    convertDialog = (ConvertDialog*)parent->window();
+DetailsBrowserController::DetailsBrowserController(TreeWidget *model,
+                                                   DetailsBrowserView *view,
+                                                   QObject *parent)
+    : QObject(parent) {
+    this->model = model;
+    connect(this->model, SIGNAL(itemSelectionChanged()), this, SLOT(showDetails()));
+
+    this->view = view;
+    this->view->setController(this);
+    this->view->setReadOnly(true);
+
+    convertDialog = (ConvertDialog*)this->view->window();
+
     loadSettings();
-}
-
-/** Shows file details or few files summary.\n
-  * This function is called when selection items changed in tree view list.\n
-  * When horizontal spliters widgets containing this details widget width equal
-  * 0 this function will do nothing.
-  * \sa addItem()
-  */
-void DetailsBrowser::showDetails() {
-    if (convertDialog->horizontalSplitter->widget(1)->width() == 0)
-        return;
-    this->clear();
-    htmlContent.clear();
-    selectedFiles = convertDialog->filesTreeWidget->selectedItems();
-    if (selectedFiles.length() <= 0) {
-        this->setText(tr("Select image to show this one details."));
-        return;
-    }
-
-    if (selectedFiles.length() == 1) {
-        addItem(selectedFiles.first());
-    }
-    else { // many files summary
-        int i = 0;
-        int lastItemIndex = selectedFiles.length() - 1;
-        foreach (QTreeWidgetItem *item, selectedFiles) {
-            addItem(item,i);
-            if (i < lastItemIndex)
-                htmlContent += htmlHr;
-            i++;
-        }
-    }
-    this->setHtml(htmlOrigin + htmlContent + htmlEnd);
 }
 
 /** Adds detailed information (including thumbnail) about \a item.
@@ -88,9 +65,10 @@ void DetailsBrowser::showDetails() {
   * \param index Serial number of thumbnail for \a item.
   * \sa addMetadataToContent()
   */
-void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
+void DetailsBrowserController::addItem(QTreeWidgetItem *item, int index) {
     QSize imageSize;
     bool isSvg = false;
+
 #ifdef SIR_METADATA_SUPPORT
     Settings *s = Settings::instance();
     bool metadataEnabled(s->metadata.enabled);
@@ -98,13 +76,18 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
     exifStruct = 0;
     iptcStruct = 0;
 #endif // SIR_METADATA_SUPPORT
+
     QString ext = item->text(ExtColumn);
+
     String imagePath = item->text(PathColumn) + QDir::separator()
             + item->text(NameColumn) + '.' + ext;
+
     QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
             + QString::number(index);
     QSize thumbSize;
+
     ext = ext.toUpper();
+
     // thumbnail generation
     if (ext != "SVG" && ext != "SVGZ") {
 #ifdef SIR_METADATA_SUPPORT
@@ -141,8 +124,8 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
                 imageSize = img.size();
             thumbPath += ".tif";
             QImage thumbnail;
-            if (img.width() > usableWidth_)
-                thumbnail = img.scaledToWidth(usableWidth_,
+            if (img.width() > view->usableWidth())
+                thumbnail = img.scaledToWidth(view->usableWidth(),
                                               Qt::SmoothTransformation);
             else
                 thumbnail = img;
@@ -159,7 +142,7 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
         QSvgRenderer *renderer = svg.renderer();
         QSize size = renderer->defaultSize();
         imageSize = size;
-        double sizeRatio = (double) usableWidth_ / size.width();
+        double sizeRatio = (double) view->usableWidth() / size.width();
         size *= sizeRatio;
         QImage thumbnail (size, QImage::Format_ARGB32);
         thumbnail.fill(Qt::transparent);
@@ -168,11 +151,12 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
         thumbPath += ".tif";
         thumbnail.save(thumbPath, "TIFF");
     }
+
     htmlContent += "<center><img src=\"" + thumbPath + "\"";
-    if (thumbSize.width() > usableWidth_)
-        htmlContent += " width=\"" + QString::number(usableWidth_) + "\"";
+    if (thumbSize.width() > view->usableWidth())
+        htmlContent += " width=\"" + QString::number(view->usableWidth()) + "\"";
     htmlContent += "/></center>" + htmlBr;
-    qDebug() << this->width();
+
     htmlContent += imagePath + htmlBr;
     if (isSvg)
         htmlContent += tr("Default image size: ");
@@ -180,19 +164,58 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
         htmlContent += tr("Image size: ");
     htmlContent += QString::number(imageSize.width()) + "x"
             + QString::number(imageSize.height()) + " px" + htmlBr;
+
     QFileInfo info(imagePath);
     htmlContent += tr("File size: ");
     htmlContent += convertDialog->fileSizeString(info.size()) + htmlBr;
+
 #ifdef SIR_METADATA_SUPPORT
     if (metadataEnabled)
         addMetadataToContent();
 #endif // SIR_METADATA_SUPPORT
 }
 
+/** Shows file details or few files summary.\n
+  * This function is called when selection items changed in tree view list.\n
+  * When horizontal spliters widgets containing this details widget width equal
+  * 0 this function will do nothing.
+  * \sa addItem()
+  */
+void DetailsBrowserController::showDetails() {
+    if (convertDialog->horizontalSplitter->widget(1)->width() == 0)
+        return;
+
+    view->clear();
+    htmlContent.clear();
+
+    selectedFiles = convertDialog->filesTreeWidget->selectedItems();
+
+    if (selectedFiles.length() <= 0) {
+        view->setText(tr("Select image to show this one details."));
+        return;
+    }
+
+    if (selectedFiles.length() == 1) {
+        addItem(selectedFiles.first());
+    }
+    else { // many files summary
+        int i = 0;
+        int lastItemIndex = selectedFiles.length() - 1;
+        foreach (QTreeWidgetItem *item, selectedFiles) {
+            addItem(item, i);
+            if (i < lastItemIndex)
+                htmlContent += htmlHr;
+            i++;
+        }
+    }
+
+    view->setHtml(htmlOrigin + htmlContent + htmlEnd);
+}
+
 /** Loads settings.
   * \note If SIR_METADATA_SUPPORT isn't defined this function has no effect.
   */
-void DetailsBrowser::loadSettings() {
+void DetailsBrowserController::loadSettings() {
 #ifdef SIR_METADATA_SUPPORT
     Settings *s = Settings::instance();
     if (s->metadata.enabled) {
@@ -220,7 +243,9 @@ void DetailsBrowser::loadSettings() {
   * This function is available if SIR_METADATA_SUPPORT is defined.
   * \sa DetailsOptions addItem()
   */
-void DetailsBrowser::addMetadataToContent() {
+void DetailsBrowserController::addMetadataToContent() {
+    const ConvertSharedData &csd = convertDialog->convertSharedData();
+
     if (exifStruct->version != String::noData()) {
         if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
             htmlContent += htmlBr;
@@ -240,13 +265,13 @@ void DetailsBrowser::addMetadataToContent() {
                     String::fromDateTimeString(
                         exifStruct->originalDate,
                         MetadataUtils::Exif::dateTimeFormat,
-                        convertDialog->csd->dateTimeFormat) + htmlBr;
+                        csd.dateTimeFormat) + htmlBr;
         if (exifImage & DetailsOptions::DigitizedDateAndTime)
             htmlContent += tr("Digitized Date and Time") + ": " +
                     String::fromDateTimeString(
                         exifStruct->digitizedDate,
                         MetadataUtils::Exif::dateTimeFormat,
-                        convertDialog->csd->dateTimeFormat) + htmlBr;
+                        csd.dateTimeFormat) + htmlBr;
         // exif photo
         if (exifPhoto & DetailsOptions::FocalLenght)
             htmlContent += tr("Focal lenght") + ": " +
@@ -296,23 +321,24 @@ void DetailsBrowser::addMetadataToContent() {
             htmlContent += tr("User Comment") + ": " + exifStruct->userComment
                     + htmlBr;
     }
+
     if (MetadataUtils::Iptc::isVersionKnown()) {
         if (iptcPrint & DetailsOptions::ModelVersion)
             htmlContent += tr("Model version") + ": " +
                     iptcStruct->modelVersion + htmlBr;
         if (iptcPrint & DetailsOptions::DateCreated)
             htmlContent += tr("Created date") + ": " +
-                    iptcStruct->dateCreated.toString(convertDialog->csd->dateFormat) + htmlBr;
+                    iptcStruct->dateCreated.toString(csd.dateFormat) + htmlBr;
         if (iptcPrint & DetailsOptions::TimeCreated)
             htmlContent += tr("Created time") + ": " +
-                    iptcStruct->timeCreated.toString(convertDialog->csd->timeFormat) + htmlBr;
+                    iptcStruct->timeCreated.toString(csd.timeFormat) + htmlBr;
         if (iptcPrint & DetailsOptions::DigitizedDate)
             htmlContent += tr("Digitized date") + ": " +
-                    iptcStruct->digitizationDate.toString(convertDialog->csd->dateFormat)
+                    iptcStruct->digitizationDate.toString(csd.dateFormat)
                     + htmlBr;
         if (iptcPrint & DetailsOptions::DigitizedTime)
             htmlContent += tr("Digitized time") + ": " +
-                    iptcStruct->digitizationTime.toString(convertDialog->csd->timeFormat)
+                    iptcStruct->digitizationTime.toString(csd.timeFormat)
                     + htmlBr;
         if (iptcPrint & DetailsOptions::Byline)
             htmlContent += tr("Author") + ": " + iptcStruct->byline + htmlBr;
@@ -339,10 +365,3 @@ void DetailsBrowser::addMetadataToContent() {
     }
 }
 #endif // SIR_METADATA_SUPPORT
-
-/** Calls QTextEdit::resizeEvent() and changes usableWidth property. */
-void DetailsBrowser::resizeEvent(QResizeEvent *e) {
-    QTextEdit::resizeEvent(e);
-    // vertical scroll bars width (16 px) + horizontal margins (16 px) = 32 px
-    usableWidth_ = this->width() - 32;
-}

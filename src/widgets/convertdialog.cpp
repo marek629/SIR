@@ -35,6 +35,7 @@
 #include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"
+#include "widgets/detailsbrowsercontroller.h"
 #include "widgets/options/generalgroupboxcontroller.h"
 #include "version.h"
 #include "rawutils.h"
@@ -82,6 +83,10 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
         session->restore(cmdAssistant->sessionFile());
 
     effectsCollector = new EffectsCollector(this);
+
+    detailsBrowserController = new DetailsBrowserController(filesTreeWidget,
+                                                            detailsBrowser,
+                                                            this);
 }
 
 /** Destructor.\n
@@ -96,6 +101,7 @@ ConvertDialog::~ConvertDialog() {
     clearTempDir();
     delete session;
     delete effectsCollector;
+    delete detailsBrowserController;
 }
 
 /** Connects UI signals to corresponding slots. */
@@ -127,10 +133,6 @@ void ConvertDialog::createConnections() {
     connect(actionRestoreEffects, SIGNAL(triggered()), SLOT(restoreEffects()));
     connect(actionSaveEffects, SIGNAL(triggered()), SLOT(saveEffects()));
     connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
-
-    // tree view events
-    connect(filesTreeWidget, SIGNAL(itemSelectionChanged()),
-            detailsBrowser, SLOT(showDetails()));
 
     // browse button
     connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
@@ -1019,6 +1021,10 @@ void ConvertDialog::checkSVGTab() {
     list << "svg" << "svgz";
     bool enable = filesTreeWidget->isColumnMember(ExtColumn, list, Qt::CaseInsensitive);
     tabWidget->setTabEnabled(3, enable);
+}
+
+const ConvertSharedData &ConvertDialog::convertSharedData() const {
+    return *csd;
 }
 
 /** Cancels converting if converting runs; otherwise close window. */

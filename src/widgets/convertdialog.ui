@@ -583,7 +583,7 @@
   <customwidget>
    <class>DetailsBrowser</class>
    <extends>QTextEdit</extends>
-   <header>widgets/detailsbrowser.h</header>
+   <header>widgets/detailsbrowserview.h</header>
   </customwidget>
   <customwidget>
    <class>SizeScrollArea</class>

@@ -37,7 +37,6 @@ class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     Q_OBJECT
     friend class Selection;
     friend class SelectionDialog;
-    friend class DetailsBrowser;
     friend class TreeWidget;
     friend class Session;
 
@@ -48,9 +47,9 @@ public:
     void retranslateStrings();
     QString fileSizeString(qint64 size);
     void checkSVGTab();
+    const ConvertSharedData &convertSharedData() const;
 
 private:
-    // fields
     SharedInformation *sharedInfo;
     QList<ConvertThread*> convertThreads;
     QStringList args;
@@ -71,8 +70,9 @@ private:
     EffectsCollector *effectsCollector;
     QDir effectsDir;
     QDir sessionDir;
-    CommandLineAssistant * cmd;
-    // methods
+    CommandLineAssistant *cmd;
+    DetailsBrowserController *detailsBrowserController;
+
     void init();
     void createConnections();
     void setIcons();

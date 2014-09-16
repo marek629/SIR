@@ -19,13 +19,15 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef DETAILSBROWSER_H
-#define DETAILSBROWSER_H
+#ifndef DETAILSBROWSERCONTROLLER_H
+#define DETAILSBROWSERCONTROLLER_H
 
-#include <QTextEdit>
+#include <QObject>
 
 class QTreeWidgetItem;
 class ConvertDialog;
+class TreeWidget;
+class DetailsBrowserView;
 #ifdef SIR_METADATA_SUPPORT
 namespace MetadataUtils {
 struct ExifStruct;
@@ -33,26 +35,24 @@ struct IptcStruct;
 }
 #endif // SIR_METADATA_SUPPORT
 
-//! Image file details browser.
-class DetailsBrowser : public QTextEdit {
+//! Image file details browser controller class.
+class DetailsBrowserController : public QObject {
     Q_OBJECT
-    Q_PROPERTY(int usableWidth READ usableWidth)
 
 public:
-    explicit DetailsBrowser(QWidget *parent = 0);
-    int usableWidth() const { return usableWidth_; }
+    explicit DetailsBrowserController(TreeWidget *model, DetailsBrowserView *view, QObject *parent = 0);
     void addItem(QTreeWidgetItem *item, int index = 0);
 
 public slots:
     void showDetails();
 
 private:
-    // properties
-    int usableWidth_;
-    // fields
+    TreeWidget *model;
+    DetailsBrowserView *view;
     ConvertDialog *convertDialog;
     QList<QTreeWidgetItem*> selectedFiles;
     QString htmlContent;
+
 #ifdef SIR_METADATA_SUPPORT
     int exifAuthor;
     int exifCamera;
@@ -62,14 +62,12 @@ private:
     MetadataUtils::ExifStruct *exifStruct;
     MetadataUtils::IptcStruct *iptcStruct;
 #endif // SIR_METADATA_SUPPORT
-    // methods
+
+
     void loadSettings();
 #ifdef SIR_METADATA_SUPPORT
     void addMetadataToContent();
 #endif // SIR_METADATA_SUPPORT
-
-protected:
-    void resizeEvent(QResizeEvent *e);
 };
 
-#endif // DETAILSBROWSER_H
+#endif // DETAILSBROWSERCONTROLLER_H
