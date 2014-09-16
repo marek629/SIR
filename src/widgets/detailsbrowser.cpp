@@ -28,6 +28,8 @@
 #include "../optionsenums.h"
 #include "../convertshareddata.h"
 
+#include <QDebug>
+
 using namespace sir;
 
 // this file specifed variables
@@ -101,6 +103,7 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
             + item->text(NameColumn) + '.' + ext;
     QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
             + QString::number(index);
+    QSize thumbSize;
     ext = ext.toUpper();
     // thumbnail generation
     if (ext != "SVG" && ext != "SVGZ") {
@@ -122,6 +125,8 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
                                 previewList[0]);
                     preview.writeFile(thumbPath.toStdString());
                     thumbPath += preview.extension().c_str();
+                    thumbSize.setWidth(preview.width());
+                    thumbSize.setHeight(preview.height());
                 }
                 else
                     fromData = true;
@@ -142,6 +147,7 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
             else
                 thumbnail = img;
             thumbnail.save(thumbPath, "TIFF");
+            thumbSize = thumbnail.size();
         }
     }
     else { // render from SVG file
@@ -162,7 +168,11 @@ void DetailsBrowser::addItem(QTreeWidgetItem *item, int index) {
         thumbPath += ".tif";
         thumbnail.save(thumbPath, "TIFF");
     }
-    htmlContent += "<center><img src=\"" + thumbPath + "\" /></center>" + htmlBr;
+    htmlContent += "<center><img src=\"" + thumbPath + "\"";
+    if (thumbSize.width() > usableWidth_)
+        htmlContent += " width=\"" + QString::number(usableWidth_) + "\"";
+    htmlContent += "/></center>" + htmlBr;
+    qDebug() << this->width();
     htmlContent += imagePath + htmlBr;
     if (isSvg)
         htmlContent += tr("Default image size: ");
