@@ -233,9 +233,16 @@ Exiv2::Metadatum & Metadata::metadatum(const std::string &key) {
 void Metadata::setFieldValue(char *field, const std::string &key) {
     if (!isNullValue(*field))
         return;
+
     if (firstEmptyFieldSkipped) {
         Exiv2::Metadatum &datum = metadatum(key);
-        *field = datum.toLong();
+
+        // TODO: set "Exif.Image.Orientation" while converted file save
+        if (datum.count() > 0)
+            *field = datum.toLong();
+        else
+            *field = 1;
+
         // validation structs field for rigth combobox index
         if (*field == -1)
             *field = 1;
