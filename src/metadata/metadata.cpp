@@ -237,7 +237,6 @@ void Metadata::setFieldValue(char *field, const std::string &key) {
     if (firstEmptyFieldSkipped) {
         Exiv2::Metadatum &datum = metadatum(key);
 
-        // TODO: set "Exif.Image.Orientation" while converted file save
         if (datum.count() > 0)
             *field = datum.toLong();
         else

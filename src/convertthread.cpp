@@ -274,7 +274,7 @@ QImage ConvertThread::rotateImage(const QImage &image) {
     bool saveExifOrientation = !shared->realRotate;
 #endif // SIR_METADATA_SUPPORT
     // rotate image
-    if (rotate && angle != 0.0) {
+    if ((rotate && angle != 0.0) || saveExifOrientation) {
 #ifdef SIR_METADATA_SUPPORT
         if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
             saveExifOrientation = false;
@@ -302,12 +302,12 @@ QImage ConvertThread::rotateImage(const QImage &image) {
 
             char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
             if (orientation < 1) { // really rotate when getOrientation() failed
-                metadata.setExifDatum("Exif.Image.Orientation",1);
+                metadata.setExifDatum("Exif.Image.Orientation", 1);
                 metadata.exifStruct()->orientation = 1;
                 saveExifOrientation = false;
             }
             else {
-                metadata.setExifDatum("Exif.Image.Orientation",orientation);
+                metadata.setExifDatum("Exif.Image.Orientation", orientation);
                 metadata.exifStruct()->orientation = orientation;
             }
         }
