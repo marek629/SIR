@@ -5,6 +5,7 @@
     - Fixed left arrow shortcut for previous image in PreviewDialog
     - Fixed no files with lowercase extension in "Add File" dialog
     - Removed defines.h file
+    - Removed files coresponded uploading to Google Code
 
 * Sun Aug 24 2014 - Marek Jędryka <jedryka89@gmail.com> - v2.7.3
     - Changed all occurrences of old SIR webpage URL
