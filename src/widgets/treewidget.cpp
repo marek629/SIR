@@ -176,20 +176,25 @@ void TreeWidget::addDir() {
   * \sa addDir() loadFiles(const QStringList&)
   */
 void TreeWidget::addFile() {
-    QString aux = tr("Images") + "(" + convertDialog->csd->fileFilters + ")";
+    const QString filterString = tr("Images") + "("
+            + convertDialog->csd->fileFilters.toLower()
+            + ' ' + convertDialog->csd->fileFilters.toUpper()
+            + ")";
 
     QStringList files = QFileDialog::getOpenFileNames(
                             this,
                             tr("Select one or more files to open"),
                             Settings::instance()->settings.lastDir,
-                            aux
+                            filterString
                         );
+
     if (files.isEmpty())
         return;
-    aux = files.first();
-    if (!aux.isEmpty()) {
+
+    QString filePath = files.first();
+    if (!filePath.isEmpty()) {
         Settings::instance()->settings.lastDir =
-                aux.left(aux.lastIndexOf(QDir::separator()));
+                filePath.left(filePath.lastIndexOf(QDir::separator()));
         loadFiles(files);
     }
 }

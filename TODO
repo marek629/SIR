@@ -7,8 +7,6 @@
     * Aperture: F-1.0
     * Exposure time: 1/-1 s
   ! extract methods in DetailsBrowser
-  ! fix crash while selecting files modified by SIR (/mnt/sda7/Zdjęcia/sir_test output/2013-07-17-174125_1280x1024_scrot.jpeg)
-  ! fix no file like "/mnt/sda7/Zdjęcia/For you/2013-01-31 14.43.35.jpg" in "Add File..." dialog
   ! change TODO and CHANGELOG files format to Markdown or something else
 
 *** next release ***
