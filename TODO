@@ -1,5 +1,5 @@
 *** nearest release ***
-  ! add Delete key shortcut for remove selected files from the files TreeWidget
+  ! keyboard navigation for selecting files in TreeWidget
   ! CammelCase file naming
   ! automate upload PHP script for check updates option
   ! improve view in DetailBrowser for photos made by HTC Desire S

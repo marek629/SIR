@@ -270,8 +270,9 @@ void ConvertThread::printError() {
   */
 QImage ConvertThread::rotateImage(const QImage &image) {
     int alpha = (int)angle;
+    bool saveExifOrientation = false;
 #ifdef SIR_METADATA_SUPPORT
-    bool saveExifOrientation = !shared->realRotate;
+    saveExifOrientation = !shared->realRotate;
 #endif // SIR_METADATA_SUPPORT
     // rotate image
     if ((rotate && angle != 0.0) || saveExifOrientation) {

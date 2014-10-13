@@ -145,10 +145,10 @@
               </size>
              </property>
              <property name="text">
-              <string>&amp;Remove File(s)</string>
+              <string>Remove File(s)</string>
              </property>
              <property name="shortcut">
-              <string>Alt+R</string>
+              <string>Del</string>
              </property>
             </widget>
            </item>
@@ -421,7 +421,7 @@
      <x>0</x>
      <y>0</y>
      <width>843</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -528,10 +528,13 @@
   </action>
   <action name="actionRemoveAll">
    <property name="text">
-    <string>Remove Al&amp;l</string>
+    <string>Remove All</string>
    </property>
    <property name="toolTip">
     <string>Remove all filles the files list</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
    </property>
   </action>
   <action name="actionSelect">
