@@ -60,7 +60,9 @@ OptionsDialog::~OptionsDialog() {
 
     delete fileListGroupBoxController;
     delete generalGroupBoxController;
+#ifdef SIR_METADATA_SUPPORT
     delete metadataGroupBoxController;
+#endif // SIR_METADATA_SUPPORT
     delete selectionGroupBoxController;
     delete rawGroupBoxController;
 }

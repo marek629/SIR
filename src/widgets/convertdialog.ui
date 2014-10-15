@@ -354,7 +354,7 @@
         </layout>
        </widget>
       </widget>
-      <widget class="DetailsBrowser" name="detailsBrowser"/>
+      <widget class="DetailsBrowserView" name="detailsBrowser"/>
      </widget>
     </item>
     <item>
@@ -584,7 +584,7 @@
    <header>widgets/treewidget.h</header>
   </customwidget>
   <customwidget>
-   <class>DetailsBrowser</class>
+   <class>DetailsBrowserView</class>
    <extends>QTextEdit</extends>
    <header>widgets/detailsbrowserview.h</header>
   </customwidget>
