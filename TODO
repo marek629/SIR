@@ -1,4 +1,5 @@
 *** nearest release ***
+  ! fix freeze while loading many images to SIR
   ! keyboard navigation for selecting files in TreeWidget
   ! CammelCase file naming
   ! automate upload PHP script for check updates option
@@ -16,6 +17,7 @@
   ! graphical dcraw options, for example as checkboxes
 
 *** 3.0 roadmap ***
+  ! SVG & metadata & effects as plugins
   ! dynamically add effects to effect list (empty initially)
   ! multiple effects convertion:
     * save few images from just one, for example diffrent color effects
