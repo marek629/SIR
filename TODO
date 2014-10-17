@@ -10,6 +10,7 @@
   ! change TODO and CHANGELOG files format to Markdown or something else
 
 *** next release ***
+  ! refresh file details settings after save settings
   ! support for animated graphics files (QMovie?)
   ! restore "Let us know that you using SIR" option
   ! search refactorizationable code

@@ -63,10 +63,11 @@ private:
     MetadataUtils::IptcStruct *iptcStruct;
 #endif // SIR_METADATA_SUPPORT
 
-
     void loadSettings();
+
 #ifdef SIR_METADATA_SUPPORT
     void addMetadataToContent();
+    QString iptcContent();
 #endif // SIR_METADATA_SUPPORT
 };
 

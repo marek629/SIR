@@ -322,46 +322,54 @@ void DetailsBrowserController::addMetadataToContent() {
                     + htmlBr;
     }
 
-    if (MetadataUtils::Iptc::isVersionKnown()) {
-        if (iptcPrint & DetailsOptions::ModelVersion)
-            htmlContent += tr("Model version") + ": " +
-                    iptcStruct->modelVersion + htmlBr;
-        if (iptcPrint & DetailsOptions::DateCreated)
-            htmlContent += tr("Created date") + ": " +
-                    iptcStruct->dateCreated.toString(csd.dateFormat) + htmlBr;
-        if (iptcPrint & DetailsOptions::TimeCreated)
-            htmlContent += tr("Created time") + ": " +
-                    iptcStruct->timeCreated.toString(csd.timeFormat) + htmlBr;
-        if (iptcPrint & DetailsOptions::DigitizedDate)
-            htmlContent += tr("Digitized date") + ": " +
-                    iptcStruct->digitizationDate.toString(csd.dateFormat)
-                    + htmlBr;
-        if (iptcPrint & DetailsOptions::DigitizedTime)
-            htmlContent += tr("Digitized time") + ": " +
-                    iptcStruct->digitizationTime.toString(csd.timeFormat)
-                    + htmlBr;
-        if (iptcPrint & DetailsOptions::Byline)
-            htmlContent += tr("Author") + ": " + iptcStruct->byline + htmlBr;
-        if (iptcPrint & DetailsOptions::CopyrightIptc)
-            htmlContent += tr("Copyright") + ": " + iptcStruct->copyright
-                    + htmlBr;
-        if (iptcPrint & DetailsOptions::ObjectName)
-            htmlContent += tr("Object name") + ": " + iptcStruct->objectName
-                    + htmlBr;
-        if (iptcPrint & DetailsOptions::Keywords)
-            htmlContent += tr("Keywords") + ": " + iptcStruct->keywords
-                    + htmlBr;
-        if (iptcPrint & DetailsOptions::Caption)
-            htmlContent += tr("Description") + ": " + iptcStruct->caption
-                    + htmlBr;
-        if (iptcPrint & DetailsOptions::CountryName)
-            htmlContent += tr("Country") + ": " + iptcStruct->countryName
-                    + htmlBr;
-        if (iptcPrint & DetailsOptions::City)
-            htmlContent += tr("City") + ": " + iptcStruct->city + htmlBr;
-        if (iptcPrint & DetailsOptions::EditStatus)
-            htmlContent += tr("Edit status") + ": " + iptcStruct->editStatus
-                    + htmlBr;
-    }
+    htmlContent += iptcContent();
+}
+
+QString DetailsBrowserController::iptcContent() {
+    if (MetadataUtils::Iptc::isVersionKnown())
+        return "";
+
+    QString content;
+    const ConvertSharedData &csd = convertDialog->convertSharedData();
+
+    if (iptcPrint & DetailsOptions::ModelVersion)
+        content += tr("Model version") + ": " +
+                iptcStruct->modelVersion + htmlBr;
+
+    if (iptcPrint & DetailsOptions::DateCreated)
+        content += tr("Created date") + ": " +
+                iptcStruct->dateCreated.toString(csd.dateFormat) + htmlBr;
+    if (iptcPrint & DetailsOptions::TimeCreated)
+        content += tr("Created time") + ": " +
+                iptcStruct->timeCreated.toString(csd.timeFormat) + htmlBr;
+
+    if (iptcPrint & DetailsOptions::DigitizedDate)
+        content += tr("Digitized date") + ": " +
+                iptcStruct->digitizationDate.toString(csd.dateFormat) + htmlBr;
+    if (iptcPrint & DetailsOptions::DigitizedTime)
+        content += tr("Digitized time") + ": " +
+                iptcStruct->digitizationTime.toString(csd.timeFormat) + htmlBr;
+
+    if (iptcPrint & DetailsOptions::Byline)
+        content += tr("Author") + ": " + iptcStruct->byline + htmlBr;
+    if (iptcPrint & DetailsOptions::CopyrightIptc)
+        content += tr("Copyright") + ": " + iptcStruct->copyright + htmlBr;
+
+    if (iptcPrint & DetailsOptions::ObjectName)
+        content += tr("Object name") + ": " + iptcStruct->objectName + htmlBr;
+    if (iptcPrint & DetailsOptions::Keywords)
+        content += tr("Keywords") + ": " + iptcStruct->keywords + htmlBr;
+    if (iptcPrint & DetailsOptions::Caption)
+        content += tr("Description") + ": " + iptcStruct->caption + htmlBr;
+
+    if (iptcPrint & DetailsOptions::CountryName)
+        content += tr("Country") + ": " + iptcStruct->countryName + htmlBr;
+    if (iptcPrint & DetailsOptions::City)
+        content += tr("City") + ": " + iptcStruct->city + htmlBr;
+
+    if (iptcPrint & DetailsOptions::EditStatus)
+        content += tr("Edit status") + ": " + iptcStruct->editStatus + htmlBr;
+
+    return content;
 }
 #endif // SIR_METADATA_SUPPORT
