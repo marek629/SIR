@@ -1,5 +1,8 @@
 *** nearest release ***
   ! fix freeze while loading many images to SIR
+  ! fix Options -> File Details -> Exif tab -> Show All button disabled
+    * when Exif tags selection is empty only Hide All buton is enabled
+    * should be Show All button enabled, Hide All disabled
   ! keyboard navigation for selecting files in TreeWidget
   ! CammelCase file naming
   ! automate upload PHP script for check updates option

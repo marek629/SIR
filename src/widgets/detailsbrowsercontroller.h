@@ -67,6 +67,11 @@ private:
 
 #ifdef SIR_METADATA_SUPPORT
     void addMetadataToContent();
+    QString exifContent();
+    QString exifImageContent();
+    QString exifPhotoContent();
+    QString exifCameraContent();
+    QString exifAuthorContent();
     QString iptcContent();
 #endif // SIR_METADATA_SUPPORT
 };

@@ -244,90 +244,124 @@ void DetailsBrowserController::loadSettings() {
   * \sa DetailsOptions addItem()
   */
 void DetailsBrowserController::addMetadataToContent() {
-    const ConvertSharedData &csd = convertDialog->convertSharedData();
-
-    if (exifStruct->version != String::noData()) {
-        if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
-            htmlContent += htmlBr;
-        // exif image
-        if (exifImage & DetailsOptions::ExifVersion)
-            htmlContent += tr("Exif Version") + ": " + exifStruct->version
-                    + htmlBr;
-        if (exifImage & DetailsOptions::ProcessingSoftware)
-            htmlContent += tr("Processing Software") + ": " +
-                    exifStruct->processingSoftware + htmlBr;
-        if (exifImage & DetailsOptions::Orientation)
-            htmlContent += tr("Orientation") + ": " +
-                    MetadataUtils::Exif::orientationString(
-                        exifStruct->orientation) + htmlBr;
-        if (exifImage & DetailsOptions::GeneratedDateAndTime)
-            htmlContent += tr("Generated Date and Time") + ": " +
-                    String::fromDateTimeString(
-                        exifStruct->originalDate,
-                        MetadataUtils::Exif::dateTimeFormat,
-                        csd.dateTimeFormat) + htmlBr;
-        if (exifImage & DetailsOptions::DigitizedDateAndTime)
-            htmlContent += tr("Digitized Date and Time") + ": " +
-                    String::fromDateTimeString(
-                        exifStruct->digitizedDate,
-                        MetadataUtils::Exif::dateTimeFormat,
-                        csd.dateTimeFormat) + htmlBr;
-        // exif photo
-        if (exifPhoto & DetailsOptions::FocalLenght)
-            htmlContent += tr("Focal lenght") + ": " +
-                    QString::number(exifStruct->focalLength,'f',1) + " mm"
-                    + htmlBr;
-        if (exifPhoto & DetailsOptions::Aperture)
-            htmlContent += tr("Aperture") + ": F" +
-                    QString::number(exifStruct->aperture,'f',1) + htmlBr;
-        if (exifPhoto & DetailsOptions::ExposureTime)
-            htmlContent += tr("Exposure time") + ": " + exifStruct->expTime
-                    + htmlBr;
-        if (exifPhoto & DetailsOptions::ShutterSpeed)
-            htmlContent += tr("Shutter Speed") + ": " +
-                    exifStruct->shutterSpeed + htmlBr;
-        if (exifPhoto & DetailsOptions::ExposureBias)
-            htmlContent += tr("Exposure bias") + ": " +
-                    QString::number(exifStruct->expBias,'f',1) + "EV" + htmlBr;
-        if (exifPhoto & DetailsOptions::IsoSpeed)
-            htmlContent += tr("ISO Speed") + ": " +
-                    QString::number(exifStruct->isoSpeed) + htmlBr;
-        if (exifPhoto & DetailsOptions::ExposureProgram)
-            htmlContent += tr("Exposure program") + ": " +
-                    MetadataUtils::Exif::expProgramString(
-                        exifStruct->expProgram) + htmlBr;
-        if (exifPhoto & DetailsOptions::LightMeteringMode)
-            htmlContent += tr("Light metering mode") + ": " +
-                    MetadataUtils::Exif::meteringModeString(
-                        exifStruct->meteringMode) + htmlBr;
-        if (exifPhoto & DetailsOptions::FlashMode)
-            htmlContent += tr("Flash mode") + ": " +
-                    MetadataUtils::Exif::flashString(exifStruct->flashMode)
-                    + htmlBr;
-        // exif camera
-        if (exifCamera & DetailsOptions::Manufacturer)
-            htmlContent += tr("Camera manufacturer: ") +
-                    exifStruct->cameraManufacturer + htmlBr;
-        if (exifCamera & DetailsOptions::Model)
-            htmlContent += tr("Camera model: ") + exifStruct->cameraModel
-                    + htmlBr;
-        // exif author
-        if (exifAuthor & DetailsOptions::Artist)
-            htmlContent += tr("Artist") + ": " + exifStruct->artist + htmlBr;
-        if (exifAuthor & DetailsOptions::Copyright)
-            htmlContent += tr("Copyright") + ": " + exifStruct->copyright
-                    + htmlBr;
-        if (exifAuthor & DetailsOptions::UserComment)
-            htmlContent += tr("User Comment") + ": " + exifStruct->userComment
-                    + htmlBr;
-    }
-
+    htmlContent += exifContent();
     htmlContent += iptcContent();
 }
 
+QString DetailsBrowserController::exifContent() {
+    if (exifStruct->version == String::noData())
+        return QString();
+
+    QString content;
+
+    if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
+        content += htmlBr;
+
+    content += exifImageContent();
+    content += exifPhotoContent();
+    content += exifCameraContent();
+    content += exifAuthorContent();
+
+    return content;
+}
+
+QString DetailsBrowserController::exifImageContent() {
+    QString content;
+    const ConvertSharedData &csd = convertDialog->convertSharedData();
+
+    if (exifImage & DetailsOptions::ExifVersion)
+        content += tr("Exif Version") + ": " + exifStruct->version + htmlBr;
+    if (exifImage & DetailsOptions::ProcessingSoftware)
+        content += tr("Processing Software") + ": " +
+                exifStruct->processingSoftware + htmlBr;
+
+    if (exifImage & DetailsOptions::Orientation)
+        content += tr("Orientation") + ": " +
+                MetadataUtils::Exif::orientationString(
+                    exifStruct->orientation) + htmlBr;
+
+    if (exifImage & DetailsOptions::GeneratedDateAndTime)
+        content += tr("Generated Date and Time") + ": " +
+                String::fromDateTimeString(
+                    exifStruct->originalDate,
+                    MetadataUtils::Exif::dateTimeFormat,
+                    csd.dateTimeFormat) + htmlBr;
+    if (exifImage & DetailsOptions::DigitizedDateAndTime)
+        content += tr("Digitized Date and Time") + ": " +
+                String::fromDateTimeString(
+                    exifStruct->digitizedDate,
+                    MetadataUtils::Exif::dateTimeFormat,
+                    csd.dateTimeFormat) + htmlBr;
+
+    return content;
+}
+
+QString DetailsBrowserController::exifPhotoContent() {
+    QString content;
+
+    if (exifPhoto & DetailsOptions::FocalLenght)
+        content += tr("Focal lenght") + ": " +
+                QString::number(exifStruct->focalLength,'f',1) + " mm" + htmlBr;
+    if (exifPhoto & DetailsOptions::Aperture)
+        content += tr("Aperture") + ": F" +
+                QString::number(exifStruct->aperture,'f',1) + htmlBr;
+
+    if (exifPhoto & DetailsOptions::ExposureTime)
+        content += tr("Exposure time") + ": " + exifStruct->expTime + htmlBr;
+    if (exifPhoto & DetailsOptions::ShutterSpeed)
+        content += tr("Shutter Speed") + ": " + exifStruct->shutterSpeed + htmlBr;
+
+    if (exifPhoto & DetailsOptions::ExposureBias)
+        content += tr("Exposure bias") + ": " +
+                QString::number(exifStruct->expBias,'f',1) + "EV" + htmlBr;
+    if (exifPhoto & DetailsOptions::IsoSpeed)
+        content += tr("ISO Speed") + ": " +
+                QString::number(exifStruct->isoSpeed) + htmlBr;
+
+    if (exifPhoto & DetailsOptions::ExposureProgram)
+        content += tr("Exposure program") + ": " +
+                MetadataUtils::Exif::expProgramString(
+                    exifStruct->expProgram) + htmlBr;
+    if (exifPhoto & DetailsOptions::LightMeteringMode)
+        content += tr("Light metering mode") + ": " +
+                MetadataUtils::Exif::meteringModeString(
+                    exifStruct->meteringMode) + htmlBr;
+
+    if (exifPhoto & DetailsOptions::FlashMode)
+        content += tr("Flash mode") + ": " +
+                MetadataUtils::Exif::flashString(exifStruct->flashMode) + htmlBr;
+
+    return content;
+}
+
+QString DetailsBrowserController::exifCameraContent() {
+    QString content;
+
+    if (exifCamera & DetailsOptions::Manufacturer)
+        content += tr("Camera manufacturer: ") +
+                exifStruct->cameraManufacturer + htmlBr;
+    if (exifCamera & DetailsOptions::Model)
+        content += tr("Camera model: ") + exifStruct->cameraModel + htmlBr;
+
+    return content;
+}
+
+QString DetailsBrowserController::exifAuthorContent() {
+    QString content;
+
+    if (exifAuthor & DetailsOptions::Artist)
+        content += tr("Artist") + ": " + exifStruct->artist + htmlBr;
+    if (exifAuthor & DetailsOptions::Copyright)
+        content += tr("Copyright") + ": " + exifStruct->copyright + htmlBr;
+    if (exifAuthor & DetailsOptions::UserComment)
+        content += tr("User Comment") + ": " + exifStruct->userComment + htmlBr;
+
+    return content;
+}
+
 QString DetailsBrowserController::iptcContent() {
-    if (MetadataUtils::Iptc::isVersionKnown())
-        return "";
+    if (!MetadataUtils::Iptc::isVersionKnown())
+        return QString();
 
     QString content;
     const ConvertSharedData &csd = convertDialog->convertSharedData();
