@@ -103,18 +103,7 @@ DetailsThumbnail::DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidt
 #ifdef SIR_METADATA_SUPPORT
         metadataEnabled = false;
 #endif // SIR_METADATA_SUPPORT
-        QGraphicsSvgItem svg(imagePath);
-        QSvgRenderer *renderer = svg.renderer();
-        QSize size = renderer->defaultSize();
-        imageSize = size;
-        double sizeRatio = (double) maxWidth / size.width();
-        size *= sizeRatio;
-        QImage thumbnail (size, QImage::Format_ARGB32);
-        thumbnail.fill(Qt::transparent);
-        QPainter painter (&thumbnail);
-        renderer->render(&painter);
-        thumbPath += ".tif";
-        thumbnail.save(thumbPath, "TIFF");
+        writeThumbnailFromSVG(maxWidth);
     }
 }
 
@@ -141,6 +130,24 @@ QString DetailsThumbnail::sourceFilePath() const {
 qint64 DetailsThumbnail::sourceFileSize() const {
     QFileInfo info(imagePath);
     return info.size();
+}
+
+void DetailsThumbnail::writeThumbnailFromSVG(int maxWidth) {
+    QGraphicsSvgItem svg(imagePath);
+    QSvgRenderer *renderer = svg.renderer();
+    QSize size = renderer->defaultSize();
+    imageSize = size;
+
+    double sizeRatio = (double) maxWidth / size.width();
+    size *= sizeRatio;
+
+    QImage thumbnail (size, QImage::Format_ARGB32);
+    thumbnail.fill(Qt::transparent);
+    QPainter painter (&thumbnail);
+    renderer->render(&painter);
+
+    thumbPath += ".tif";
+    thumbnail.save(thumbPath, "TIFF");
 }
 
 #ifdef SIR_METADATA_SUPPORT

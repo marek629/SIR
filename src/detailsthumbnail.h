@@ -58,6 +58,7 @@ private:
     MetadataUtils::IptcStruct iptcStruct;
 #endif // SIR_METADATA_SUPPORT
 
+    void writeThumbnailFromSVG(int maxWidth);
 };
 
 #endif // DETAILSTHUMBNAIL_H
