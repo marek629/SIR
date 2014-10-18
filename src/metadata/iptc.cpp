@@ -76,3 +76,23 @@ void IptcStruct::reset() {
     city = String::noData();
     editStatus = String::noData();
 }
+
+IptcStruct IptcStruct::copy() {
+    IptcStruct copiedStruct;
+
+    copiedStruct.modelVersion = modelVersion;
+    copiedStruct.dateCreated = dateCreated;
+    copiedStruct.timeCreated = timeCreated;
+    copiedStruct.digitizationDate = digitizationDate;
+    copiedStruct.digitizationTime = digitizationTime;
+    copiedStruct.byline = byline;
+    copiedStruct.copyright = copyright;
+    copiedStruct.objectName = objectName;
+    copiedStruct.keywords = keywords;
+    copiedStruct.caption = caption;
+    copiedStruct.countryName = countryName;
+    copiedStruct.city = city;
+    copiedStruct.editStatus = editStatus;
+
+    return copiedStruct;
+}

@@ -69,6 +69,7 @@ namespace MetadataUtils {
 
         // Methods
         void reset();
+        IptcStruct copy();
     };
 }
 

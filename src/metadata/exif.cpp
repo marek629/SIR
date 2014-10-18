@@ -604,4 +604,44 @@ void ExifStruct::clear() {
     userComment = String();
 }
 
+ExifStruct ExifStruct::copy() {
+    ExifStruct copiedStruct;
+
+    // Image section
+    copiedStruct.version = version;
+    copiedStruct.processingSoftware = processingSoftware;
+    copiedStruct.imageWidth = imageWidth;
+    copiedStruct.imageHeight = imageHeight;
+    copiedStruct.orientation = orientation;
+    copiedStruct.originalDate = originalDate;
+    copiedStruct.digitizedDate = digitizedDate;
+
+    // Thumbnail section
+    copiedStruct.thumbnailImage = thumbnailImage;
+    copiedStruct.thumbnailWidth = thumbnailWidth;
+    copiedStruct.thumbnailHeight = thumbnailHeight;
+
+    // Photo section
+    copiedStruct.focalLength = focalLength;
+    copiedStruct.aperture = aperture;
+    copiedStruct.isoSpeed = isoSpeed;
+    copiedStruct.expTime = expTime;
+    copiedStruct.shutterSpeed = shutterSpeed;
+    copiedStruct.expBias = expBias;
+    copiedStruct.expProgram = expProgram;
+    copiedStruct.meteringMode = meteringMode;
+    copiedStruct.flashMode = flashMode;
+
+    // Camera section
+    copiedStruct.cameraManufacturer = cameraManufacturer;
+    copiedStruct.cameraModel = cameraModel;
+
+    // Author section
+    copiedStruct.artist = artist;
+    copiedStruct.copyright = copyright;
+    copiedStruct.userComment = userComment;
+
+    return copiedStruct;
+}
+
 #endif // SIR_METADATA_SUPPORT

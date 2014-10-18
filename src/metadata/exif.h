@@ -137,6 +137,7 @@ struct ExifStruct {
     // Methods
     void reset();
     void clear();
+    ExifStruct copy();
 };
 
 /** \brief Stores flash mode strings coresponding with \e Exif.Photo.Flash

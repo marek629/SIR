@@ -19,16 +19,12 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include <QScrollBar>
-#include <QSvgRenderer>
-#include <QGraphicsSvgItem>
-#include <QPainter>
-
 #include "detailsbrowsercontroller.h"
 #include "detailsbrowserview.h"
 #include "convertdialog.h"
 #include "../optionsenums.h"
 #include "../convertshareddata.h"
+#include "../detailsthumbnail.h"
 
 using namespace sir;
 
@@ -66,111 +62,31 @@ DetailsBrowserController::DetailsBrowserController(TreeWidget *model,
   * \sa addMetadataToContent()
   */
 void DetailsBrowserController::addItem(QTreeWidgetItem *item, int index) {
-    QSize imageSize;
-    bool isSvg = false;
+    DetailsThumbnail thumb(item, index, view->usableWidth());
 
-#ifdef SIR_METADATA_SUPPORT
-    Settings *s = Settings::instance();
-    bool metadataEnabled(s->metadata.enabled);
-    MetadataUtils::Metadata metadata;
-    exifStruct = 0;
-    iptcStruct = 0;
-#endif // SIR_METADATA_SUPPORT
-
-    QString ext = item->text(ExtColumn);
-
-    String imagePath = item->text(PathColumn) + QDir::separator()
-            + item->text(NameColumn) + '.' + ext;
-
-    QString thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
-            + QString::number(index);
-    QSize thumbSize;
-
-    ext = ext.toUpper();
-
-    // thumbnail generation
-    if (ext != "SVG" && ext != "SVGZ") {
-#ifdef SIR_METADATA_SUPPORT
-        bool fromData(!s->metadata.enabled);
-        if (!fromData) {
-            if (!metadata.read(imagePath, true))
-                fromData = true;
-            else {
-                exifStruct = metadata.exifStruct();
-                iptcStruct = metadata.iptcStruct();
-                Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
-                imageSize = QSize(image->pixelWidth(), image->pixelHeight());
-                Exiv2::PreviewManager previewManager (*image);
-                Exiv2::PreviewPropertiesList previewList = previewManager.
-                        getPreviewProperties();
-                if (!previewList.empty()) { // read from metadata thumnail
-                    Exiv2::PreviewImage preview = previewManager.getPreviewImage(
-                                previewList[0]);
-                    preview.writeFile(thumbPath.toStdString());
-                    thumbPath += preview.extension().c_str();
-                    thumbSize.setWidth(preview.width());
-                    thumbSize.setHeight(preview.height());
-                }
-                else
-                    fromData = true;
-            }
-        }
-#else
-        bool fromData(true);
-#endif // SIR_METADATA_SUPPORT
-        if (fromData) { // generate from image data
-            QImage img(imagePath);
-            if (!imageSize.isValid())
-                imageSize = img.size();
-            thumbPath += ".tif";
-            QImage thumbnail;
-            if (img.width() > view->usableWidth())
-                thumbnail = img.scaledToWidth(view->usableWidth(),
-                                              Qt::SmoothTransformation);
-            else
-                thumbnail = img;
-            thumbnail.save(thumbPath, "TIFF");
-            thumbSize = thumbnail.size();
-        }
-    }
-    else { // render from SVG file
-        isSvg = true;
-#ifdef SIR_METADATA_SUPPORT
-        metadataEnabled = false;
-#endif // SIR_METADATA_SUPPORT
-        QGraphicsSvgItem svg(imagePath);
-        QSvgRenderer *renderer = svg.renderer();
-        QSize size = renderer->defaultSize();
-        imageSize = size;
-        double sizeRatio = (double) view->usableWidth() / size.width();
-        size *= sizeRatio;
-        QImage thumbnail (size, QImage::Format_ARGB32);
-        thumbnail.fill(Qt::transparent);
-        QPainter painter (&thumbnail);
-        renderer->render(&painter);
-        thumbPath += ".tif";
-        thumbnail.save(thumbPath, "TIFF");
-    }
-
-    htmlContent += "<center><img src=\"" + thumbPath + "\"";
-    if (thumbSize.width() > view->usableWidth())
+    htmlContent += "<center><img src=\"" + thumb.filePath() + "\"";
+    if (thumb.size().width() > view->usableWidth())
         htmlContent += " width=\"" + QString::number(view->usableWidth()) + "\"";
     htmlContent += "/></center>" + htmlBr;
 
-    htmlContent += imagePath + htmlBr;
-    if (isSvg)
+    htmlContent += thumb.sourceFilePath() + htmlBr;
+
+    if (thumb.isRenderedFromSVG())
         htmlContent += tr("Default image size: ");
     else
         htmlContent += tr("Image size: ");
+    QSize imageSize = thumb.sourceImageSize();
     htmlContent += QString::number(imageSize.width()) + "x"
             + QString::number(imageSize.height()) + " px" + htmlBr;
 
-    QFileInfo info(imagePath);
     htmlContent += tr("File size: ");
-    htmlContent += convertDialog->fileSizeString(info.size()) + htmlBr;
+    htmlContent += convertDialog->fileSizeString(thumb.sourceFileSize()) + htmlBr;
 
 #ifdef SIR_METADATA_SUPPORT
-    if (metadataEnabled)
+    exifStruct = thumb.exifStructPtr();
+    iptcStruct = thumb.iptcStructPtr();
+
+    if (thumb.isReadFromMetadataThumbnail())
         addMetadataToContent();
 #endif // SIR_METADATA_SUPPORT
 }
