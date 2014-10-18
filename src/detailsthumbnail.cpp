@@ -33,7 +33,6 @@
 
 using namespace sir;
 
-/*! Class used in DetailsBrowserController for generate and write image thumbnail. */
 DetailsThumbnail::DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidth) {
     isSvg = false;
 
@@ -42,69 +41,7 @@ DetailsThumbnail::DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidt
     metadataEnabled = bool(s->metadata.enabled);
 #endif // SIR_METADATA_SUPPORT
 
-    QString ext = item->text(ExtColumn);
-
-    imagePath = item->text(PathColumn) + QDir::separator()
-            + item->text(NameColumn) + '.' + ext;
-
-    thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
-            + QString::number(index);
-
-    ext = ext.toUpper();
-
-    // thumbnail generation
-    if (ext != "SVG" && ext != "SVGZ") {
-#ifdef SIR_METADATA_SUPPORT
-        bool fromData(!s->metadata.enabled);
-        if (!fromData) {
-            MetadataUtils::Metadata metadata;
-            if (!metadata.read(imagePath, true))
-                fromData = true;
-            else {
-                exifStruct = metadata.exifStruct()->copy();
-                iptcStruct = metadata.iptcStruct()->copy();
-                Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
-                imageSize = QSize(image->pixelWidth(), image->pixelHeight());
-                Exiv2::PreviewManager previewManager (*image);
-                Exiv2::PreviewPropertiesList previewList = previewManager.
-                        getPreviewProperties();
-                if (!previewList.empty()) { // read from metadata thumnail
-                    Exiv2::PreviewImage preview = previewManager.getPreviewImage(
-                                previewList[0]);
-                    preview.writeFile(thumbPath.toStdString());
-                    thumbPath += preview.extension().c_str();
-                    thumbSize.setWidth(preview.width());
-                    thumbSize.setHeight(preview.height());
-                }
-                else
-                    fromData = true;
-            }
-        }
-#else
-        bool fromData(true);
-#endif // SIR_METADATA_SUPPORT
-        if (fromData) { // generate from image data
-            QImage img(imagePath);
-            if (!imageSize.isValid())
-                imageSize = img.size();
-            thumbPath += ".tif";
-            QImage thumbnail;
-            if (img.width() > maxWidth)
-                thumbnail = img.scaledToWidth(maxWidth,
-                                              Qt::SmoothTransformation);
-            else
-                thumbnail = img;
-            thumbnail.save(thumbPath, "TIFF");
-            thumbSize = thumbnail.size();
-        }
-    }
-    else { // render from SVG file
-        isSvg = true;
-#ifdef SIR_METADATA_SUPPORT
-        metadataEnabled = false;
-#endif // SIR_METADATA_SUPPORT
-        writeThumbnailFromSVG(maxWidth);
-    }
+    writeThumbnail(item, index, maxWidth);
 }
 
 bool DetailsThumbnail::isRenderedFromSVG() const {
@@ -132,6 +69,96 @@ qint64 DetailsThumbnail::sourceFileSize() const {
     return info.size();
 }
 
+#ifdef SIR_METADATA_SUPPORT
+bool DetailsThumbnail::isReadFromMetadataThumbnail() const {
+    return metadataEnabled;
+}
+
+MetadataUtils::ExifStruct *DetailsThumbnail::exifStructPtr() {
+    return &exifStruct;
+}
+
+MetadataUtils::IptcStruct *DetailsThumbnail::iptcStructPtr() {
+    return &iptcStruct;
+}
+#endif // SIR_METADATA_SUPPORT
+
+void DetailsThumbnail::writeThumbnail(QTreeWidgetItem *item, int index, int maxWidth) {
+    QString ext = item->text(ExtColumn);
+
+    imagePath = item->text(PathColumn) + QDir::separator()
+            + item->text(NameColumn) + '.' + ext;
+
+    thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
+            + QString::number(index);
+
+    ext = ext.toUpper();
+
+    // thumbnail generation
+    if (ext != "SVG" && ext != "SVGZ") {
+        bool isThumbSaved = writeThumbnailFromMetadata();
+        if (!isThumbSaved)
+            writeThumbnailFromImageData(maxWidth);
+    }
+    else { // render from SVG file
+        isSvg = true;
+#ifdef SIR_METADATA_SUPPORT
+        metadataEnabled = false;
+#endif // SIR_METADATA_SUPPORT
+        writeThumbnailFromSVG(maxWidth);
+    }
+}
+
+bool DetailsThumbnail::writeThumbnailFromMetadata() {
+#ifdef SIR_METADATA_SUPPORT
+    Settings *s = Settings::instance();
+    if (s->metadata.enabled) {
+        MetadataUtils::Metadata metadata;
+        if (metadata.read(imagePath, true)) {
+            exifStruct = metadata.exifStruct()->copy();
+            iptcStruct = metadata.iptcStruct()->copy();
+            Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
+            imageSize = QSize(image->pixelWidth(), image->pixelHeight());
+            Exiv2::PreviewManager previewManager (*image);
+            Exiv2::PreviewPropertiesList previewList = previewManager.
+                    getPreviewProperties();
+            if (previewList.empty())
+                return false;
+            else { // read from metadata thumnail
+                Exiv2::PreviewImage preview = previewManager.getPreviewImage(
+                            previewList[0]);
+                preview.writeFile(thumbPath.toStdString());
+                thumbPath += preview.extension().c_str();
+                thumbSize.setWidth(preview.width());
+                thumbSize.setHeight(preview.height());
+            }
+            return true;
+        }
+        else
+            return false;
+    }
+#endif // SIR_METADATA_SUPPORT
+
+    return false;
+}
+
+void DetailsThumbnail::writeThumbnailFromImageData(int maxWidth) {
+    QImage img(imagePath);
+
+    if (!imageSize.isValid())
+        imageSize = img.size();
+    thumbPath += ".tif";
+
+    QImage thumbnail;
+    if (img.width() > maxWidth)
+        thumbnail = img.scaledToWidth(maxWidth, Qt::SmoothTransformation);
+    else
+        thumbnail = img;
+    thumbnail.save(thumbPath, "TIFF");
+
+    thumbSize = thumbnail.size();
+}
+
 void DetailsThumbnail::writeThumbnailFromSVG(int maxWidth) {
     QGraphicsSvgItem svg(imagePath);
     QSvgRenderer *renderer = svg.renderer();
@@ -149,17 +176,3 @@ void DetailsThumbnail::writeThumbnailFromSVG(int maxWidth) {
     thumbPath += ".tif";
     thumbnail.save(thumbPath, "TIFF");
 }
-
-#ifdef SIR_METADATA_SUPPORT
-bool DetailsThumbnail::isReadFromMetadataThumbnail() const {
-    return metadataEnabled;
-}
-
-MetadataUtils::ExifStruct *DetailsThumbnail::exifStructPtr() {
-    return &exifStruct;
-}
-
-MetadataUtils::IptcStruct *DetailsThumbnail::iptcStructPtr() {
-    return &iptcStruct;
-}
-#endif // SIR_METADATA_SUPPORT

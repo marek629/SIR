@@ -29,6 +29,7 @@
 
 class QTreeWidgetItem;
 
+/*! Class used in DetailsBrowserController for generate and write image thumbnail. */
 class DetailsThumbnail {
 public:
     DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidth);
@@ -58,6 +59,9 @@ private:
     MetadataUtils::IptcStruct iptcStruct;
 #endif // SIR_METADATA_SUPPORT
 
+    void writeThumbnail(QTreeWidgetItem *item, int index, int maxWidth);
+    bool writeThumbnailFromMetadata();
+    void writeThumbnailFromImageData(int maxWidth);
     void writeThumbnailFromSVG(int maxWidth);
 };
 
