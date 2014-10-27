@@ -66,7 +66,7 @@ private:
     void loadSettings();
 
 #ifdef SIR_METADATA_SUPPORT
-    void addMetadataToContent();
+    QString addMetadataToContent();
     QString exifContent();
     QString exifImageContent();
     QString exifPhotoContent();

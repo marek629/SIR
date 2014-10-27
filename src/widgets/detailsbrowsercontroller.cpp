@@ -83,11 +83,12 @@ void DetailsBrowserController::addItem(QTreeWidgetItem *item, int index) {
     htmlContent += convertDialog->fileSizeString(thumb.sourceFileSize()) + htmlBr;
 
 #ifdef SIR_METADATA_SUPPORT
+    // TODO: exifStruct and iptcStruct should be parameters of methods - not class fields
     exifStruct = thumb.exifStructPtr();
     iptcStruct = thumb.iptcStructPtr();
 
     if (thumb.isReadFromMetadataThumbnail())
-        addMetadataToContent();
+        htmlContent += addMetadataToContent();
 #endif // SIR_METADATA_SUPPORT
 }
 
@@ -153,15 +154,21 @@ void DetailsBrowserController::loadSettings() {
 }
 
 #ifdef SIR_METADATA_SUPPORT
-/** Appends metadata information string into htmlContent string using data
-  * stored in exifStruct and iptcStruct structs and exifPhoto, exifImage,
-  * exifAuthor, exifCamera and iptcPrint enumeration fields.\n
+/** Returns metadata information string using data stored in
+  * exifStruct and iptcStruct structs and exifPhoto, exifImage,
+  * exifAuthor, exifCamera and iptcPrint enumeration fields.
+  *
   * This function is available if SIR_METADATA_SUPPORT is defined.
+  *
   * \sa DetailsOptions addItem()
   */
-void DetailsBrowserController::addMetadataToContent() {
-    htmlContent += exifContent();
-    htmlContent += iptcContent();
+QString DetailsBrowserController::addMetadataToContent() {
+    QString content;
+
+    content += exifContent();
+    content += iptcContent();
+
+    return content;
 }
 
 QString DetailsBrowserController::exifContent() {
