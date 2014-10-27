@@ -83,12 +83,13 @@ void DetailsBrowserController::addItem(QTreeWidgetItem *item, int index) {
     htmlContent += convertDialog->fileSizeString(thumb.sourceFileSize()) + htmlBr;
 
 #ifdef SIR_METADATA_SUPPORT
-    // TODO: exifStruct and iptcStruct should be parameters of methods - not class fields
-    exifStruct = thumb.exifStructPtr();
-    iptcStruct = thumb.iptcStructPtr();
+    if (thumb.isReadFromMetadataThumbnail()) {
+        // TODO: thumb should have getter for metadata struct references
+        MetadataUtils::ExifStruct *exifStruct = thumb.exifStructPtr();
+        MetadataUtils::IptcStruct *iptcStruct = thumb.iptcStructPtr();
 
-    if (thumb.isReadFromMetadataThumbnail())
-        htmlContent += addMetadataToContent();
+        htmlContent += addMetadataToContent(*exifStruct, *iptcStruct);
+    }
 #endif // SIR_METADATA_SUPPORT
 }
 
@@ -162,17 +163,20 @@ void DetailsBrowserController::loadSettings() {
   *
   * \sa DetailsOptions addItem()
   */
-QString DetailsBrowserController::addMetadataToContent() {
+QString DetailsBrowserController::addMetadataToContent(
+        const MetadataUtils::ExifStruct &exifStruct,
+        const MetadataUtils::IptcStruct &iptcStruct) {
     QString content;
 
-    content += exifContent();
-    content += iptcContent();
+    content += exifContent(exifStruct);
+    content += iptcContent(iptcStruct);
 
     return content;
 }
 
-QString DetailsBrowserController::exifContent() {
-    if (exifStruct->version == String::noData())
+QString DetailsBrowserController::exifContent(
+        const MetadataUtils::ExifStruct &exifStruct) {
+    if (exifStruct.version == String::noData())
         return QString();
 
     QString content;
@@ -180,109 +184,114 @@ QString DetailsBrowserController::exifContent() {
     if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
         content += htmlBr;
 
-    content += exifImageContent();
-    content += exifPhotoContent();
-    content += exifCameraContent();
-    content += exifAuthorContent();
+    content += exifImageContent(exifStruct);
+    content += exifPhotoContent(exifStruct);
+    content += exifCameraContent(exifStruct);
+    content += exifAuthorContent(exifStruct);
 
     return content;
 }
 
-QString DetailsBrowserController::exifImageContent() {
+QString DetailsBrowserController::exifImageContent(
+        const MetadataUtils::ExifStruct &exifStruct) {
     QString content;
     const ConvertSharedData &csd = convertDialog->convertSharedData();
 
     if (exifImage & DetailsOptions::ExifVersion)
-        content += tr("Exif Version") + ": " + exifStruct->version + htmlBr;
+        content += tr("Exif Version") + ": " + exifStruct.version + htmlBr;
     if (exifImage & DetailsOptions::ProcessingSoftware)
         content += tr("Processing Software") + ": " +
-                exifStruct->processingSoftware + htmlBr;
+                exifStruct.processingSoftware + htmlBr;
 
     if (exifImage & DetailsOptions::Orientation)
         content += tr("Orientation") + ": " +
                 MetadataUtils::Exif::orientationString(
-                    exifStruct->orientation) + htmlBr;
+                    exifStruct.orientation) + htmlBr;
 
     if (exifImage & DetailsOptions::GeneratedDateAndTime)
         content += tr("Generated Date and Time") + ": " +
                 String::fromDateTimeString(
-                    exifStruct->originalDate,
+                    exifStruct.originalDate,
                     MetadataUtils::Exif::dateTimeFormat,
                     csd.dateTimeFormat) + htmlBr;
     if (exifImage & DetailsOptions::DigitizedDateAndTime)
         content += tr("Digitized Date and Time") + ": " +
                 String::fromDateTimeString(
-                    exifStruct->digitizedDate,
+                    exifStruct.digitizedDate,
                     MetadataUtils::Exif::dateTimeFormat,
                     csd.dateTimeFormat) + htmlBr;
 
     return content;
 }
 
-QString DetailsBrowserController::exifPhotoContent() {
+QString DetailsBrowserController::exifPhotoContent(
+        const MetadataUtils::ExifStruct &exifStruct) {
     QString content;
 
     if (exifPhoto & DetailsOptions::FocalLenght)
         content += tr("Focal lenght") + ": " +
-                QString::number(exifStruct->focalLength,'f',1) + " mm" + htmlBr;
+                QString::number(exifStruct.focalLength,'f',1) + " mm" + htmlBr;
     if (exifPhoto & DetailsOptions::Aperture)
         content += tr("Aperture") + ": F" +
-                QString::number(exifStruct->aperture,'f',1) + htmlBr;
+                QString::number(exifStruct.aperture,'f',1) + htmlBr;
 
     if (exifPhoto & DetailsOptions::ExposureTime)
-        content += tr("Exposure time") + ": " + exifStruct->expTime + htmlBr;
+        content += tr("Exposure time") + ": " + exifStruct.expTime + htmlBr;
     if (exifPhoto & DetailsOptions::ShutterSpeed)
-        content += tr("Shutter Speed") + ": " + exifStruct->shutterSpeed + htmlBr;
+        content += tr("Shutter Speed") + ": " + exifStruct.shutterSpeed + htmlBr;
 
     if (exifPhoto & DetailsOptions::ExposureBias)
         content += tr("Exposure bias") + ": " +
-                QString::number(exifStruct->expBias,'f',1) + "EV" + htmlBr;
+                QString::number(exifStruct.expBias,'f',1) + "EV" + htmlBr;
     if (exifPhoto & DetailsOptions::IsoSpeed)
         content += tr("ISO Speed") + ": " +
-                QString::number(exifStruct->isoSpeed) + htmlBr;
+                QString::number(exifStruct.isoSpeed) + htmlBr;
 
     if (exifPhoto & DetailsOptions::ExposureProgram)
         content += tr("Exposure program") + ": " +
                 MetadataUtils::Exif::expProgramString(
-                    exifStruct->expProgram) + htmlBr;
+                    exifStruct.expProgram) + htmlBr;
     if (exifPhoto & DetailsOptions::LightMeteringMode)
         content += tr("Light metering mode") + ": " +
                 MetadataUtils::Exif::meteringModeString(
-                    exifStruct->meteringMode) + htmlBr;
+                    exifStruct.meteringMode) + htmlBr;
 
     if (exifPhoto & DetailsOptions::FlashMode)
         content += tr("Flash mode") + ": " +
-                MetadataUtils::Exif::flashString(exifStruct->flashMode) + htmlBr;
+                MetadataUtils::Exif::flashString(exifStruct.flashMode) + htmlBr;
 
     return content;
 }
 
-QString DetailsBrowserController::exifCameraContent() {
+QString DetailsBrowserController::exifCameraContent(
+        const MetadataUtils::ExifStruct &exifStruct) {
     QString content;
 
     if (exifCamera & DetailsOptions::Manufacturer)
         content += tr("Camera manufacturer: ") +
-                exifStruct->cameraManufacturer + htmlBr;
+                exifStruct.cameraManufacturer + htmlBr;
     if (exifCamera & DetailsOptions::Model)
-        content += tr("Camera model: ") + exifStruct->cameraModel + htmlBr;
+        content += tr("Camera model: ") + exifStruct.cameraModel + htmlBr;
 
     return content;
 }
 
-QString DetailsBrowserController::exifAuthorContent() {
+QString DetailsBrowserController::exifAuthorContent(
+        const MetadataUtils::ExifStruct &exifStruct) {
     QString content;
 
     if (exifAuthor & DetailsOptions::Artist)
-        content += tr("Artist") + ": " + exifStruct->artist + htmlBr;
+        content += tr("Artist") + ": " + exifStruct.artist + htmlBr;
     if (exifAuthor & DetailsOptions::Copyright)
-        content += tr("Copyright") + ": " + exifStruct->copyright + htmlBr;
+        content += tr("Copyright") + ": " + exifStruct.copyright + htmlBr;
     if (exifAuthor & DetailsOptions::UserComment)
-        content += tr("User Comment") + ": " + exifStruct->userComment + htmlBr;
+        content += tr("User Comment") + ": " + exifStruct.userComment + htmlBr;
 
     return content;
 }
 
-QString DetailsBrowserController::iptcContent() {
+QString DetailsBrowserController::iptcContent(
+        const MetadataUtils::IptcStruct &iptcStruct) {
     if (!MetadataUtils::Iptc::isVersionKnown())
         return QString();
 
@@ -291,41 +300,41 @@ QString DetailsBrowserController::iptcContent() {
 
     if (iptcPrint & DetailsOptions::ModelVersion)
         content += tr("Model version") + ": " +
-                iptcStruct->modelVersion + htmlBr;
+                iptcStruct.modelVersion + htmlBr;
 
     if (iptcPrint & DetailsOptions::DateCreated)
         content += tr("Created date") + ": " +
-                iptcStruct->dateCreated.toString(csd.dateFormat) + htmlBr;
+                iptcStruct.dateCreated.toString(csd.dateFormat) + htmlBr;
     if (iptcPrint & DetailsOptions::TimeCreated)
         content += tr("Created time") + ": " +
-                iptcStruct->timeCreated.toString(csd.timeFormat) + htmlBr;
+                iptcStruct.timeCreated.toString(csd.timeFormat) + htmlBr;
 
     if (iptcPrint & DetailsOptions::DigitizedDate)
         content += tr("Digitized date") + ": " +
-                iptcStruct->digitizationDate.toString(csd.dateFormat) + htmlBr;
+                iptcStruct.digitizationDate.toString(csd.dateFormat) + htmlBr;
     if (iptcPrint & DetailsOptions::DigitizedTime)
         content += tr("Digitized time") + ": " +
-                iptcStruct->digitizationTime.toString(csd.timeFormat) + htmlBr;
+                iptcStruct.digitizationTime.toString(csd.timeFormat) + htmlBr;
 
     if (iptcPrint & DetailsOptions::Byline)
-        content += tr("Author") + ": " + iptcStruct->byline + htmlBr;
+        content += tr("Author") + ": " + iptcStruct.byline + htmlBr;
     if (iptcPrint & DetailsOptions::CopyrightIptc)
-        content += tr("Copyright") + ": " + iptcStruct->copyright + htmlBr;
+        content += tr("Copyright") + ": " + iptcStruct.copyright + htmlBr;
 
     if (iptcPrint & DetailsOptions::ObjectName)
-        content += tr("Object name") + ": " + iptcStruct->objectName + htmlBr;
+        content += tr("Object name") + ": " + iptcStruct.objectName + htmlBr;
     if (iptcPrint & DetailsOptions::Keywords)
-        content += tr("Keywords") + ": " + iptcStruct->keywords + htmlBr;
+        content += tr("Keywords") + ": " + iptcStruct.keywords + htmlBr;
     if (iptcPrint & DetailsOptions::Caption)
-        content += tr("Description") + ": " + iptcStruct->caption + htmlBr;
+        content += tr("Description") + ": " + iptcStruct.caption + htmlBr;
 
     if (iptcPrint & DetailsOptions::CountryName)
-        content += tr("Country") + ": " + iptcStruct->countryName + htmlBr;
+        content += tr("Country") + ": " + iptcStruct.countryName + htmlBr;
     if (iptcPrint & DetailsOptions::City)
-        content += tr("City") + ": " + iptcStruct->city + htmlBr;
+        content += tr("City") + ": " + iptcStruct.city + htmlBr;
 
     if (iptcPrint & DetailsOptions::EditStatus)
-        content += tr("Edit status") + ": " + iptcStruct->editStatus + htmlBr;
+        content += tr("Edit status") + ": " + iptcStruct.editStatus + htmlBr;
 
     return content;
 }
