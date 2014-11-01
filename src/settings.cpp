@@ -88,9 +88,9 @@ void Settings::readSettings() {
     // now settings file is in current version
     // setting object fields
     beginGroup("MainWindow");
-    mainWindow.maximized            = value("maximized",false).toBool();
-    mainWindow.possition            = value("possition").toPoint();
-    mainWindow.size                 = value("size").toSize();
+    mainWindow.maximized            = value("maximized", false).toBool();
+    mainWindow.possition            = value("possition", QPoint(0, 0)).toPoint();
+    mainWindow.size                 = value("size", QSize(900, 600)).toSize();
     mainWindow.horizontalSplitter   = value("horizontalSplitter").toByteArray();
     mainWindow.verticalSplitter     = value("verticalSplitter").toByteArray();
     endGroup(); // MainWindow
