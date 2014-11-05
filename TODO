@@ -6,8 +6,6 @@
   ! keyboard navigation for selecting files in TreeWidget
   ! CammelCase file naming
   ! automate upload PHP script for check updates option
-  ! improve view in DetailBrowser for photos made by HTC Desire S
-    * Exposure time: 1/-1 s
   ! change TODO and CHANGELOG files format to Markdown or something else
 
 *** next release ***

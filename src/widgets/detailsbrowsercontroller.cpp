@@ -236,8 +236,14 @@ QString DetailsBrowserController::exifPhotoContent(
         content += htmlBr;
     }
 
-    if (exifPhoto & DetailsOptions::ExposureTime)
-        content += tr("Exposure time") + ": " + exifStruct.expTime + htmlBr;
+    if (exifPhoto & DetailsOptions::ExposureTime) {
+        content += tr("Exposure time") + ": ";
+        if (exifStruct.expTime == "1/-1 s")
+            content += String::noData();
+        else
+            content += exifStruct.expTime;
+        content += htmlBr;
+    }
     if (exifPhoto & DetailsOptions::ShutterSpeed)
         content += tr("Shutter Speed") + ": " + exifStruct.shutterSpeed + htmlBr;
 
