@@ -42,8 +42,8 @@ public:
 
 #ifdef SIR_METADATA_SUPPORT
     bool isReadFromMetadataThumbnail() const;
-    MetadataUtils::ExifStruct *exifStructPtr();
-    MetadataUtils::IptcStruct *iptcStructPtr();
+    const MetadataUtils::ExifStruct &exifStructRef();
+    const MetadataUtils::IptcStruct &iptcStructRef();
 #endif // SIR_METADATA_SUPPORT
 
 private:

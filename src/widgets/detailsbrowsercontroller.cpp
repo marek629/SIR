@@ -83,13 +83,9 @@ void DetailsBrowserController::addItem(QTreeWidgetItem *item, int index) {
     htmlContent += convertDialog->fileSizeString(thumb.sourceFileSize()) + htmlBr;
 
 #ifdef SIR_METADATA_SUPPORT
-    if (thumb.isReadFromMetadataThumbnail()) {
-        // TODO: thumb should have getter for metadata struct references
-        MetadataUtils::ExifStruct *exifStruct = thumb.exifStructPtr();
-        MetadataUtils::IptcStruct *iptcStruct = thumb.iptcStructPtr();
-
-        htmlContent += addMetadataToContent(*exifStruct, *iptcStruct);
-    }
+    if (thumb.isReadFromMetadataThumbnail())
+        htmlContent += addMetadataToContent(thumb.exifStructRef(),
+                                            thumb.iptcStructRef());
 #endif // SIR_METADATA_SUPPORT
 }
 

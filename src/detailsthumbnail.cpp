@@ -74,12 +74,12 @@ bool DetailsThumbnail::isReadFromMetadataThumbnail() const {
     return metadataEnabled;
 }
 
-MetadataUtils::ExifStruct *DetailsThumbnail::exifStructPtr() {
-    return &exifStruct;
+const MetadataUtils::ExifStruct &DetailsThumbnail::exifStructRef() {
+    return exifStruct;
 }
 
-MetadataUtils::IptcStruct *DetailsThumbnail::iptcStructPtr() {
-    return &iptcStruct;
+const MetadataUtils::IptcStruct &DetailsThumbnail::iptcStructRef() {
+    return iptcStruct;
 }
 #endif // SIR_METADATA_SUPPORT
 
