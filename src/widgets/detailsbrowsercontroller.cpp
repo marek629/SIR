@@ -241,9 +241,14 @@ QString DetailsBrowserController::exifPhotoContent(
     if (exifPhoto & DetailsOptions::ShutterSpeed)
         content += tr("Shutter Speed") + ": " + exifStruct.shutterSpeed + htmlBr;
 
-    if (exifPhoto & DetailsOptions::ExposureBias)
-        content += tr("Exposure bias") + ": " +
-                QString::number(exifStruct.expBias,'f',1) + "EV" + htmlBr;
+    if (exifPhoto & DetailsOptions::ExposureBias) {
+        content += tr("Exposure bias") + ": ";
+        if (exifStruct.expBias == -101)
+            content += String::noData();
+        else
+            content += QString::number(exifStruct.expBias,'f',1) + "EV";
+        content += htmlBr;
+    }
     if (exifPhoto & DetailsOptions::IsoSpeed)
         content += tr("ISO Speed") + ": " +
                 QString::number(exifStruct.isoSpeed) + htmlBr;
