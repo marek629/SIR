@@ -227,9 +227,14 @@ QString DetailsBrowserController::exifPhotoContent(
     if (exifPhoto & DetailsOptions::FocalLenght)
         content += tr("Focal lenght") + ": " +
                 QString::number(exifStruct.focalLength,'f',1) + " mm" + htmlBr;
-    if (exifPhoto & DetailsOptions::Aperture)
-        content += tr("Aperture") + ": F" +
-                QString::number(exifStruct.aperture,'f',1) + htmlBr;
+    if (exifPhoto & DetailsOptions::Aperture) {
+        content += tr("Aperture") + ": ";
+        if (exifStruct.aperture == -1)
+            content += String::noData();
+        else
+            content += "F" + QString::number(exifStruct.aperture,'f',1);
+        content += htmlBr;
+    }
 
     if (exifPhoto & DetailsOptions::ExposureTime)
         content += tr("Exposure time") + ": " + exifStruct.expTime + htmlBr;

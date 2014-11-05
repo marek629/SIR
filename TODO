@@ -7,7 +7,6 @@
   ! CammelCase file naming
   ! automate upload PHP script for check updates option
   ! improve view in DetailBrowser for photos made by HTC Desire S
-    * Aperture: F-1.0
     * Exposure time: 1/-1 s
   ! change TODO and CHANGELOG files format to Markdown or something else
 
