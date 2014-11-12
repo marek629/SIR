@@ -25,6 +25,12 @@ add_custom_target( archive
         COMMAND git archive --format=tar.gz --prefix=sir/ -o ${CMAKE_BINARY_DIR}/sir-src.tar.gz HEAD
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
+# 'make upload' command
+add_custom_target( upload
+        COMMAND curl -T check_updates.php ftp://web.sir.ugu.pl@web.sir.ugu.pl/
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/web
+    )
+
 
 if( NOT CMAKE_BUILD_TYPE )
     set( CMAKE_BUILD_TYPE "release" CACHE STRING "" FORCE )
