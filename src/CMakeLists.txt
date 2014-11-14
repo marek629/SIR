@@ -25,7 +25,7 @@ set( sir_SRCS
         xmlhelper.cpp
         xmlstreamwriter.cpp
         widgets/aboutdialog.cpp
-        widgets/convertdialog.cpp
+        widgets/ConvertDialog.cpp
         widgets/brushframe.cpp
         widgets/colorframe.cpp
         widgets/detailsbrowsercontroller.cpp
@@ -60,7 +60,7 @@ set( sir_SRCS
 # User interface files
 set( sir_UIS
         widgets/about.ui
-        widgets/convertdialog.ui
+        widgets/ConvertDialog.ui
         widgets/gradienteditwidget.ui
         widgets/previewdialog.ui
         widgets/convert/effectsscrollarea.ui

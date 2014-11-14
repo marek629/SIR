@@ -25,7 +25,7 @@
 #include <QMessageBox>
 
 #include "optionsdialog.h"
-#include "widgets/convertdialog.h"
+#include "widgets/ConvertDialog.hpp"
 #include "widgets/options/generalgroupboxcontroller.h"
 #include "widgets/options/generalgroupboxview.h"
 #include "widgets/options/filelistgroupboxcontroller.h"

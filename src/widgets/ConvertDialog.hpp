@@ -22,7 +22,7 @@
 #ifndef CONVERTDIALOG_H
 #define CONVERTDIALOG_H
 
-#include "ui_convertdialog.h"
+#include "ui_ConvertDialog.h"
 #include "convertthread.h"
 #include "settings.h"
 

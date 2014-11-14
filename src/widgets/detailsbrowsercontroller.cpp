@@ -19,12 +19,12 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "detailsbrowsercontroller.h"
-#include "detailsbrowserview.h"
-#include "convertdialog.h"
-#include "../optionsenums.h"
-#include "../convertshareddata.h"
-#include "../detailsthumbnail.h"
+#include "widgets/detailsbrowsercontroller.h"
+#include "widgets/detailsbrowserview.h"
+#include "widgets/ConvertDialog.hpp"
+#include "optionsenums.h"
+#include "convertshareddata.h"
+#include "detailsthumbnail.h"
 
 using namespace sir;
 

@@ -25,7 +25,7 @@
 #include <QApplication>
 #include <QString>
 #include <QLocale>
-#include "widgets/convertdialog.h"
+#include "widgets/ConvertDialog.hpp"
 
 #if QT_VERSION >= 0x050000
 bool findIconTheme();

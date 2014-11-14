@@ -22,7 +22,7 @@
 #include <QDomElement>
 #include <QFile>
 #include <QMessageBox>
-#include "widgets/convertdialog.h"
+#include "widgets/ConvertDialog.hpp"
 #include "sir_string.h"
 #include "xmlstreamwriter.h"
 #include "version.h"

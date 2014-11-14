@@ -23,7 +23,7 @@
 #include <QProgressDialog>
 #include <QElapsedTimer>
 #include "selection.h"
-#include "widgets/convertdialog.h"
+#include "widgets/ConvertDialog.hpp"
 #include "expressiontree.h"
 #include "widgets/selectiondialog.h"
 #include "regexputils.h"

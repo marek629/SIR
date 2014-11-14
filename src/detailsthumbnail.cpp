@@ -29,7 +29,7 @@
 #include "optionsenums.h"
 #include "settings.h"
 #include "metadata/metadata.h"
-#include "widgets/convertdialog.h"
+#include "widgets/ConvertDialog.hpp"
 
 using namespace sir;
 

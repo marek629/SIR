@@ -31,7 +31,7 @@
 #include <QDebug>
 #include <QLibraryInfo>
 #include <cmath>
-#include "convertdialog.h"
+#include "widgets/ConvertDialog.hpp"
 #include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"

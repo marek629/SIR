@@ -31,13 +31,13 @@
 #include <QFileDialog>
 #include <QSvgRenderer>
 #include <QMimeData>
-#include "treewidget.h"
-#include "convertdialog.h"
-#include "../convertshareddata.h"
-#include "../optionsenums.h"
-#include "previewdialog.h"
+#include "convertshareddata.h"
+#include "optionsenums.h"
+#include "widgets/treewidget.h"
+#include "widgets/ConvertDialog.hpp"
+#include "widgets/previewdialog.h"
 #ifdef SIR_METADATA_SUPPORT
-#include "metadatadialog.h"
+#include "widgets/metadatadialog.h"
 #endif // SIR_METADATA_SUPPORT
 
 using namespace sir;
