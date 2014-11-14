@@ -34,7 +34,7 @@
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
-#include "widgets/optionsdialog.h"
+#include "widgets/OptionsDialog.hpp"
 #include "widgets/DetailsBrowserController.hpp"
 #include "widgets/options/generalgroupboxcontroller.h"
 #include "version.h"

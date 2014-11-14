@@ -24,7 +24,7 @@
 #include <QScrollArea>
 #include <QMessageBox>
 
-#include "optionsdialog.h"
+#include "widgets/OptionsDialog.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/options/generalgroupboxcontroller.h"
 #include "widgets/options/generalgroupboxview.h"

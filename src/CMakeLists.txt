@@ -33,7 +33,7 @@ set( sir_SRCS
         widgets/gradienteditwidget.cpp
         widgets/historycombobox.cpp
         widgets/messagebox.cpp
-        widgets/optionsdialog.cpp
+        widgets/OptionsDialog.cpp
         widgets/posspinbox.cpp
         widgets/previewdialog.cpp
         widgets/selectiondialog.cpp
