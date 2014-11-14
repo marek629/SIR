@@ -27,7 +27,7 @@
 #ifdef SIR_METADATA_SUPPORT
 #include <QImage>
 #include <exiv2/exiv2.hpp>
-#include "metadata/metadata.h"
+#include "metadata/Metadata.hpp"
 #include "metadata/iptc.h"
 #include "metadata/error.h"
 

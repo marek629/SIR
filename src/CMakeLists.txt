@@ -76,7 +76,7 @@ set( sir_UIS
 
 if( metadata )
     set( sir_SRCS ${sir_SRCS}
-            metadata/metadata.cpp
+            metadata/Metadata.cpp
             metadata/metadatautils.cpp
             metadata/exif.cpp
             metadata/error.cpp

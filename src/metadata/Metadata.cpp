@@ -24,8 +24,8 @@
 #include <QStringList>
 #include <QDir>
 #include <cmath>
-#include "metadatautils.h"
-#include "metadata.h"
+#include "metadata/metadatautils.h"
+#include "metadata/Metadata.hpp"
 #include "version.h"
 
 using namespace MetadataUtils;

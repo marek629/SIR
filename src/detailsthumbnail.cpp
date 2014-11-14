@@ -28,7 +28,7 @@
 #include "detailsthumbnail.h"
 #include "optionsenums.h"
 #include "settings.h"
-#include "metadata/metadata.h"
+#include "metadata/Metadata.hpp"
 #include "widgets/ConvertDialog.hpp"
 
 using namespace sir;
