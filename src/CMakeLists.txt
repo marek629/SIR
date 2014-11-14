@@ -8,7 +8,7 @@ set( sir_SRCS
         convertthread.cpp
         detailsthumbnail.cpp
         effectscollector.cpp
-        expressiontree.cpp
+        ExpressionTree.cpp
         languageutils.cpp
         main.cpp
         networkutils.cpp

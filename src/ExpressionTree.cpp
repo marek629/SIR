@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "expressiontree.h"
+#include "ExpressionTree.hpp"
 #include "Selection.hpp"
 #include <QStringList>
 #include <QRegExp>

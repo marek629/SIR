@@ -24,7 +24,7 @@
 #include <QElapsedTimer>
 #include "Selection.hpp"
 #include "widgets/ConvertDialog.hpp"
-#include "expressiontree.h"
+#include "ExpressionTree.hpp"
 #include "widgets/selectiondialog.h"
 #include "regexputils.h"
 #include "convertshareddata.h"
