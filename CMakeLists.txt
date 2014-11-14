@@ -27,7 +27,7 @@ add_custom_target( archive
     )
 # 'make upload' command
 add_custom_target( upload
-        COMMAND curl -T check_updates.php ftp://web.sir.ugu.pl@web.sir.ugu.pl/
+        COMMAND python upload.py
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/web
     )
 
