@@ -24,7 +24,7 @@
 #include "widgets/ConvertDialog.hpp"
 #include "optionsenums.h"
 #include "convertshareddata.h"
-#include "detailsthumbnail.h"
+#include "DetailsThumbnail.hpp"
 
 using namespace sir;
 

@@ -6,7 +6,7 @@ set( sir_SRCS
         converteffects.cpp
         convertshareddata.cpp
         convertthread.cpp
-        detailsthumbnail.cpp
+        DetailsThumbnail.cpp
         effectscollector.cpp
         ExpressionTree.cpp
         languageutils.cpp

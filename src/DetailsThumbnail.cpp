@@ -25,7 +25,7 @@
 #include <QPainter>
 #include <QDir>
 
-#include "detailsthumbnail.h"
+#include "DetailsThumbnail.hpp"
 #include "optionsenums.h"
 #include "settings.h"
 #include "metadata/Metadata.hpp"
