@@ -29,7 +29,7 @@
 #include "ui_exifgroupbox.h"
 #include "ui_iptcgroupbox.h"
 #endif // SIR_METADATA_SUPPORT
-#include "selection.h"
+#include "Selection.hpp"
 
 class QScrollArea;
 class QDialogButtonBox;

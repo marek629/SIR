@@ -15,7 +15,7 @@ set( sir_SRCS
         rawutils.cpp
         regexputils.cpp
         rgb.cpp
-        selection.cpp
+        Selection.cpp
         session.cpp
         settings.cpp
         sharedinformation.cpp

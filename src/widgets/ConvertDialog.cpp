@@ -42,7 +42,7 @@
 #include "networkutils.h"
 #include "widgets/messagebox.h"
 #include "metadata/metadatautils.h"
-#include "selection.h"
+#include "Selection.hpp"
 #include "languageutils.h"
 #include "convertshareddata.h"
 #include "session.h"

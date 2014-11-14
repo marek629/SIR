@@ -20,7 +20,7 @@
  */
 
 #include "expressiontree.h"
-#include "selection.h"
+#include "Selection.hpp"
 #include <QStringList>
 #include <QRegExp>
 
