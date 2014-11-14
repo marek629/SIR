@@ -22,7 +22,7 @@
 #include <QDir>
 #include <QThread>
 
-#include "generalgroupboxtest.h"
+#include "tests/widgets/options/GeneralGroupBoxTest.hpp"
 #include "settings.h"
 
 GeneralGroupBoxTest::GeneralGroupBoxTest() {
@@ -269,4 +269,4 @@ void GeneralGroupBoxTest::saveSettings_type_cores_count() {
 }
 
 QTEST_MAIN(GeneralGroupBoxTest)
-#include "generalgroupboxtest.moc"
+#include "GeneralGroupBoxTest.moc"
