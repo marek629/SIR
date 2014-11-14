@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "widgets/detailsbrowsercontroller.h"
+#include "widgets/DetailsBrowserController.hpp"
 #include "widgets/detailsbrowserview.h"
 #include "widgets/ConvertDialog.hpp"
 #include "optionsenums.h"

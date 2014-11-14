@@ -35,7 +35,7 @@
 #include "widgets/treewidget.h"
 #include "widgets/aboutdialog.h"
 #include "widgets/optionsdialog.h"
-#include "widgets/detailsbrowsercontroller.h"
+#include "widgets/DetailsBrowserController.hpp"
 #include "widgets/options/generalgroupboxcontroller.h"
 #include "version.h"
 #include "rawutils.h"
