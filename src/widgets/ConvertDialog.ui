@@ -578,7 +578,7 @@
   <customwidget>
    <class>TreeWidget</class>
    <extends>QTreeWidget</extends>
-   <header>widgets/treewidget.h</header>
+   <header>widgets/TreeWidget.hpp</header>
   </customwidget>
   <customwidget>
    <class>DetailsBrowserView</class>

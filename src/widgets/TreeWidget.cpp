@@ -33,7 +33,7 @@
 #include <QMimeData>
 #include "convertshareddata.h"
 #include "optionsenums.h"
-#include "widgets/treewidget.h"
+#include "widgets/TreeWidget.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/previewdialog.h"
 #ifdef SIR_METADATA_SUPPORT

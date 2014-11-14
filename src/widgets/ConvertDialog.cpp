@@ -32,7 +32,7 @@
 #include <QLibraryInfo>
 #include <cmath>
 #include "widgets/ConvertDialog.hpp"
-#include "widgets/treewidget.h"
+#include "widgets/TreeWidget.hpp"
 #include "widgets/aboutdialog.h"
 #include "widgets/OptionsDialog.hpp"
 #include "widgets/DetailsBrowserController.hpp"

@@ -27,7 +27,7 @@
 #include "languageutils.h"
 #include "settings.h"
 #include "sir_string.h"
-#include "widgets/treewidget.h"
+#include "widgets/TreeWidget.hpp"
 
 #define SHARED_MEMORY_SIZE 200000
 

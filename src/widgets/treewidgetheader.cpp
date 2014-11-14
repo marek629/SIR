@@ -21,8 +21,8 @@
 
 #include <QMenu>
 #include <QShowEvent>
-#include "treewidgetheader.h"
-#include "treewidget.h"
+#include "widgets/treewidgetheader.h"
+#include "widgets/TreeWidget.hpp"
 #include "settings.h"
 #include "optionsenums.h"
 

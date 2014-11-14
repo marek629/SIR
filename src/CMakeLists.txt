@@ -38,7 +38,7 @@ set( sir_SRCS
         widgets/previewdialog.cpp
         widgets/selectiondialog.cpp
         widgets/timecombobox.cpp
-        widgets/treewidget.cpp
+        widgets/TreeWidget.cpp
         widgets/treewidgetheader.cpp
         widgets/convert/effectsscrollarea.cpp
         widgets/convert/optionsscrollarea.cpp
