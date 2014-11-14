@@ -21,7 +21,7 @@
 
 #include <QDomDocument>
 #include <QMessageBox>
-#include "session.h"
+#include "Session.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "xmlstreamwriter.h"
 #include "version.h"

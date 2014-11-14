@@ -45,7 +45,7 @@
 #include "Selection.hpp"
 #include "languageutils.h"
 #include "convertshareddata.h"
-#include "session.h"
+#include "Session.hpp"
 #include "commandlineassistant.h"
 #include "effectscollector.h"
 
