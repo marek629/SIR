@@ -81,9 +81,12 @@ void GeneralGroupBoxTest::setModelSize() {
 }
 
 void GeneralGroupBoxTest::setViewModelSettingsWidgets() {
+    int idx;
+
     view->targetFolderLineEdit->setText(QDir::homePath());
 
-    view->targetFormatComboBox->setCurrentText("gif");
+    idx = view->targetFormatComboBox->findText("gif");
+    view->targetFormatComboBox->setCurrentIndex(idx);
 
     view->targetPrefixLineEdit->setText("save");
     view->targetSuffixLineEdit->setText("settings");
@@ -91,13 +94,16 @@ void GeneralGroupBoxTest::setViewModelSettingsWidgets() {
     view->qualitySpinBox->setValue(62);
     view->historySpinBox->setValue(5);
 
-    view->languagesComboBox->setCurrentText("Portuguese");
+    idx = view->languagesComboBox->findText("Portuguese");
+    view->languagesComboBox->setCurrentIndex(idx);
 
     view->dateDisplayFormatLineEdit->setText("yyyy-MM-dd");
     view->timeDisplayFormatLineEdit->setText("HH:mm");
 }
 
 void GeneralGroupBoxTest::setViewModelSizeWidgets() {
+    int idx;
+
     view->widthPxSpinBox->setValue(500);
     view->widthPercentDoubleSpinBox->setValue(50.);
 
@@ -105,9 +111,11 @@ void GeneralGroupBoxTest::setViewModelSizeWidgets() {
     view->heightPercentDoubleSpinBox->setValue(2.35);
 
     view->fileSizeSpinBox->setValue(50.);
-    view->fileSizeComboBox->setCurrentText("MiB");
+    idx = view->fileSizeComboBox->findText("MiB");
+    view->fileSizeComboBox->setCurrentIndex(idx);
 
-    view->sizeUnitComboBox->setCurrentText("px");
+    idx = view->sizeUnitComboBox->findText("px");
+    view->sizeUnitComboBox->setCurrentIndex(idx);
 
     view->aspectRatioCheckBox->setChecked(true);
 }
