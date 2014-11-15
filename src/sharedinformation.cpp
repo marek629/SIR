@@ -21,7 +21,7 @@
 
 #include "sharedinformation.h"
 #include "settings.h"
-#include "metadata/metadatautils.h"
+#include "metadata/MetadataUtils.hpp"
 
 /** Default constructor.\n
   * Sets default field values.

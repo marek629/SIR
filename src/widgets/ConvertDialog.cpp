@@ -41,7 +41,7 @@
 #include "rawutils.h"
 #include "networkutils.h"
 #include "widgets/messagebox.h"
-#include "metadata/metadatautils.h"
+#include "metadata/MetadataUtils.hpp"
 #include "Selection.hpp"
 #include "languageutils.h"
 #include "convertshareddata.h"

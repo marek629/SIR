@@ -28,7 +28,7 @@
 
 #include <QThread>
 #include <QMutex>
-#include "metadata/metadatautils.h"
+#include "metadata/MetadataUtils.hpp"
 #include "sharedinformation.h"
 
 class QSvgRenderer;

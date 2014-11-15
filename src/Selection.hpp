@@ -25,7 +25,7 @@
 #include <QFileInfoList>
 #include <QStringList>
 #include <QDateTime>
-#include "metadata/metadatautils.h"
+#include "metadata/MetadataUtils.hpp"
 
 class QProgressDialog;
 class ConvertDialog;

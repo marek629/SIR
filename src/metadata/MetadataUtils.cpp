@@ -21,7 +21,7 @@
 
 #ifdef SIR_METADATA_SUPPORT
 
-#include "metadata/metadatautils.h"
+#include "metadata/MetadataUtils.hpp"
 
 using namespace sir;
 

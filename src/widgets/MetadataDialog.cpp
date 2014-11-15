@@ -22,9 +22,9 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <exiv2/exif.hpp>
-#include "metadatadialog.h"
-#include "../metadata/metadatautils.h"
-#include "../settings.h"
+#include "widgets/MetadataDialog.hpp"
+#include "metadata/MetadataUtils.hpp"
+#include "settings.h"
 
 using namespace MetadataUtils;
 using namespace sir;

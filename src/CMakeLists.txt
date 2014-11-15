@@ -77,11 +77,11 @@ set( sir_UIS
 if( metadata )
     set( sir_SRCS ${sir_SRCS}
             metadata/Metadata.cpp
-            metadata/metadatautils.cpp
+            metadata/MetadataUtils.cpp
             metadata/Exif.cpp
             metadata/Error.cpp
             metadata/Iptc.cpp
-            widgets/metadatadialog.cpp
+            widgets/MetadataDialog.cpp
             widgets/options/detailsgroupboxcontroller.cpp
             widgets/options/detailsgroupboxview.cpp
             widgets/options/metadatagroupboxcontroller.cpp
@@ -89,7 +89,7 @@ if( metadata )
             widgets/selection/anymetadatagroupbox.cpp
         )
     set( sir_UIS ${sir_UIS}
-            widgets/metadatadialog.ui
+            widgets/MetadataDialog.ui
             widgets/options/detailsgroupbox.ui
             widgets/options/metadatagroupbox.ui
             widgets/selection/anymetadatagroupbox.ui

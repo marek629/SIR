@@ -37,7 +37,7 @@
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/previewdialog.h"
 #ifdef SIR_METADATA_SUPPORT
-#include "widgets/metadatadialog.h"
+#include "widgets/MetadataDialog.hpp"
 #endif // SIR_METADATA_SUPPORT
 
 using namespace sir;

@@ -25,7 +25,7 @@
 #ifdef SIR_METADATA_SUPPORT
 
 #include <QtTest/QTest>
-#include "metadata/metadatautils.h"
+#include "metadata/MetadataUtils.hpp"
 
 class MetadataUtilsTest : public QObject {
     Q_OBJECT
