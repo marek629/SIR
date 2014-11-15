@@ -23,7 +23,7 @@
 #define PREVIEWDIALOG_H
 
 #include <QGraphicsSvgItem>
-#include "ui_previewdialog.h"
+#include "ui_PreviewDialog.h"
 #include "metadata/MetadataUtils.hpp"
 #include "Settings.hpp"
 

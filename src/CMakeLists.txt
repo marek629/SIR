@@ -71,7 +71,7 @@ set( sir_UIS
         widgets/options/generalgroupbox.ui
         widgets/options/rawgroupbox.ui
         widgets/options/selectiongroupbox.ui
-        widgets/selection/dirwidget.ui
+        widgets/selection/DirWidget.ui
     )
 
 if( metadata )

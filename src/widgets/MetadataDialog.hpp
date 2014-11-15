@@ -22,7 +22,7 @@
 #ifndef METADATADIALOG_H
 #define METADATADIALOG_H
 
-#include "ui_metadatadialog.h"
+#include "ui_MetadataDialog.h"
 
 namespace MetadataUtils {
     class Metadata;

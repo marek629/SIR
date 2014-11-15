@@ -22,7 +22,7 @@
 #ifndef ANYMETADATAGROUPBOX_H
 #define ANYMETADATAGROUPBOX_H
 
-#include "ui_anymetadatagroupbox.h"
+#include "ui_AnyMetadataGroupBox.h"
 
 //! \em "Any metadata" group box class used in SelectionDialog dialog.
 class AnyMetadataGroupBox : public QGroupBox, public Ui::AnyMetadataGroupBox {
