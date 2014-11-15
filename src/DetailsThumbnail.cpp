@@ -27,7 +27,7 @@
 
 #include "DetailsThumbnail.hpp"
 #include "optionsenums.h"
-#include "settings.h"
+#include "Settings.hpp"
 #include "metadata/Metadata.hpp"
 #include "widgets/ConvertDialog.hpp"
 

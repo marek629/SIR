@@ -23,7 +23,7 @@
 #define SELECTIONGROUPBOXCONTROLLER_H
 
 #include "abstractoptionsgroupbox.h"
-#include "settings.h"
+#include "Settings.hpp"
 
 class SelectionGroupBoxView;
 

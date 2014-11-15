@@ -25,7 +25,7 @@
 #include <QGraphicsSvgItem>
 #include "ui_previewdialog.h"
 #include "metadata/MetadataUtils.hpp"
-#include "settings.h"
+#include "Settings.hpp"
 
 //! Preview image window.
 class PreviewDialog : public QDialog, public Ui::PreviewDialog {

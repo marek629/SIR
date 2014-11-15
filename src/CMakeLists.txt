@@ -17,7 +17,7 @@ set( sir_SRCS
         rgb.cpp
         Selection.cpp
         Session.cpp
-        settings.cpp
+        Settings.cpp
         sharedinformation.cpp
         sir_string.cpp
         svgmodifier.cpp

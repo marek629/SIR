@@ -23,7 +23,7 @@
 #include <QShowEvent>
 #include "widgets/TreeWidgetHeader.hpp"
 #include "widgets/TreeWidget.hpp"
-#include "settings.h"
+#include "Settings.hpp"
 #include "optionsenums.h"
 
 /** Default constructor.

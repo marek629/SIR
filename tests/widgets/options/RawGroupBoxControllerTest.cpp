@@ -23,7 +23,7 @@
 
 #include "tests/widgets/options/RawGroupBoxControllerTest.hpp"
 #include "widgets/messagebox.h"
-#include "settings.h"
+#include "Settings.hpp"
 
 RawGroupBoxControllerTest::RawGroupBoxControllerTest() {
     MessageBox::enableTesting(true);

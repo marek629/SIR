@@ -24,7 +24,7 @@
 #include <QLocale>
 #include <QImageWriter>
 #include <QCoreApplication>
-#include "settings.h"
+#include "Settings.hpp"
 #include "LanguageUtils.hpp"
 
 bool Settings::testingEnabled = false;

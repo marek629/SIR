@@ -24,7 +24,7 @@
 #include <exiv2/exif.hpp>
 #include "widgets/MetadataDialog.hpp"
 #include "metadata/MetadataUtils.hpp"
-#include "settings.h"
+#include "Settings.hpp"
 
 using namespace MetadataUtils;
 using namespace sir;

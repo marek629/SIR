@@ -23,7 +23,7 @@
 #define RAWGROUPBOXCONTROLLER_H
 
 #include "abstractoptionsgroupbox.h"
-#include "settings.h"
+#include "Settings.hpp"
 
 class RawGroupBoxView;
 

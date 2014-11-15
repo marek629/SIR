@@ -24,7 +24,7 @@
 
 #include "ui_ConvertDialog.h"
 #include "ConvertThread.hpp"
-#include "settings.h"
+#include "Settings.hpp"
 
 class NetworkUtils;
 class ConvertSharedData;

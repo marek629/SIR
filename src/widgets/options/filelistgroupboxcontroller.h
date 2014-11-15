@@ -25,7 +25,7 @@
 #include <QCheckBox>
 
 #include "abstractoptionsgroupbox.h"
-#include "settings.h"
+#include "Settings.hpp"
 
 class FileListGroupBoxView;
 

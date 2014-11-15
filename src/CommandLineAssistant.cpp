@@ -25,7 +25,7 @@
 #include <iostream>
 #include "CommandLineAssistant.hpp"
 #include "LanguageUtils.hpp"
-#include "settings.h"
+#include "Settings.hpp"
 #include "sir_string.h"
 #include "widgets/TreeWidget.hpp"
 

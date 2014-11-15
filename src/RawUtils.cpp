@@ -26,7 +26,7 @@
 #include <QImageReader>
 #include <QPixmap>
 #include "RawUtils.hpp"
-#include "settings.h"
+#include "Settings.hpp"
 
 /** Returns true if \b imagePath is path to raw image, otherwise returns false. */
 bool RawUtils::isRaw(QString imagePath) {

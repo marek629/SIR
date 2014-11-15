@@ -23,7 +23,7 @@
 #include <QThread>
 
 #include "tests/widgets/options/GeneralGroupBoxTest.hpp"
-#include "settings.h"
+#include "Settings.hpp"
 
 GeneralGroupBoxTest::GeneralGroupBoxTest() {
     Settings::enableTesting(true);

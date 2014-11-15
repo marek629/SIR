@@ -23,7 +23,7 @@
 #define DETAILSGROUPBOXCONTROLLER_H
 
 #include "abstractoptionsgroupbox.h"
-#include "settings.h"
+#include "Settings.hpp"
 
 class QCheckBox;
 class DetailsGroupBoxView;

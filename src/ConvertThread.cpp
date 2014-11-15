@@ -28,7 +28,7 @@
 #include "ConvertThread.hpp"
 #include "RawUtils.hpp"
 #include "widgets/messagebox.h"
-#include "settings.h"
+#include "Settings.hpp"
 #include "svgmodifier.h"
 #include "ConvertEffects.hpp"
 

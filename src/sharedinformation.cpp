@@ -20,7 +20,7 @@
  */
 
 #include "sharedinformation.h"
-#include "settings.h"
+#include "Settings.hpp"
 #include "metadata/MetadataUtils.hpp"
 
 /** Default constructor.\n

@@ -20,7 +20,7 @@
  */
 
 #include "commonoptions.h"
-#include "settings.h"
+#include "Settings.hpp"
 
 /** Default constructor.\n
   * Sets default value of fields of common options object.
