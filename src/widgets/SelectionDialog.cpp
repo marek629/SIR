@@ -23,7 +23,7 @@
 #include <QSpacerItem>
 #include <QScrollArea>
 #include <QDialogButtonBox>
-#include "widgets/selectiondialog.h"
+#include "widgets/SelectionDialog.hpp"
 #include "widgets/ConvertDialog.hpp"
 #ifndef SIR_METADATA_SUPPORT
 #include "widgets/historycombobox.h"

@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "aboutdialog.h"
+#include "widgets/AboutDialog.hpp"
 
 /** Default constructor. */
 AboutDialog::AboutDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {

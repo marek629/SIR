@@ -24,7 +24,7 @@ set( sir_SRCS
         version.cpp
         XmlHelper.cpp
         xmlstreamwriter.cpp
-        widgets/aboutdialog.cpp
+        widgets/AboutDialog.cpp
         widgets/ConvertDialog.cpp
         widgets/brushframe.cpp
         widgets/colorframe.cpp
@@ -35,8 +35,8 @@ set( sir_SRCS
         widgets/MessageBox.cpp
         widgets/OptionsDialog.cpp
         widgets/posspinbox.cpp
-        widgets/previewdialog.cpp
-        widgets/selectiondialog.cpp
+        widgets/PreviewDialog.cpp
+        widgets/SelectionDialog.cpp
         widgets/timecombobox.cpp
         widgets/TreeWidget.cpp
         widgets/TreeWidgetHeader.cpp
@@ -59,10 +59,10 @@ set( sir_SRCS
 
 # User interface files
 set( sir_UIS
-        widgets/about.ui
+        widgets/AboutDialog.ui
         widgets/ConvertDialog.ui
         widgets/gradienteditwidget.ui
-        widgets/previewdialog.ui
+        widgets/PreviewDialog.ui
         widgets/convert/effectsscrollarea.ui
         widgets/convert/optionsscrollarea.ui
         widgets/convert/sizescrollarea.ui

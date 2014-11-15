@@ -25,7 +25,7 @@
 #include "Selection.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "ExpressionTree.hpp"
-#include "widgets/selectiondialog.h"
+#include "widgets/SelectionDialog.hpp"
 #include "RegExpUtils.hpp"
 #include "ConvertSharedData.hpp"
 

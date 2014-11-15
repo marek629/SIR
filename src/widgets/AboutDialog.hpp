@@ -22,7 +22,7 @@
 #ifndef ABOUTDIALOG_H
 #define ABOUTDIALOG_H
 
-#include "ui_about.h"
+#include "ui_AboutDialog.h"
 
 
 //! Class provides a window containing informations about SIR.

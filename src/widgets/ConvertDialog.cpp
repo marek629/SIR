@@ -33,7 +33,7 @@
 #include <cmath>
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/TreeWidget.hpp"
-#include "widgets/aboutdialog.h"
+#include "widgets/AboutDialog.hpp"
 #include "widgets/OptionsDialog.hpp"
 #include "widgets/DetailsBrowserController.hpp"
 #include "widgets/options/generalgroupboxcontroller.h"

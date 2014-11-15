@@ -35,7 +35,7 @@
 #include "optionsenums.h"
 #include "widgets/TreeWidget.hpp"
 #include "widgets/ConvertDialog.hpp"
-#include "widgets/previewdialog.h"
+#include "widgets/PreviewDialog.hpp"
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/MetadataDialog.hpp"
 #endif // SIR_METADATA_SUPPORT
