@@ -21,7 +21,7 @@
 
 #include <QDir>
 
-#include "rawgroupboxcontrollertest.h"
+#include "tests/widgets/options/RawGroupBoxControllerTest.hpp"
 #include "widgets/messagebox.h"
 #include "settings.h"
 
@@ -101,4 +101,4 @@ void RawGroupBoxControllerTest::checkDcrawPath_fileExecutable() {
 }
 
 QTEST_MAIN(RawGroupBoxControllerTest)
-#include "rawgroupboxcontrollertest.moc"
+#include "RawGroupBoxControllerTest.moc"

@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "metadatautilstest.h"
+#include "tests/metadata/MetadataUtilsTest.hpp"
 
 #ifdef SIR_METADATA_SUPPORT
 
@@ -113,7 +113,7 @@ void MetadataUtilsTest::isNullValue_QImage() {
 }
 
 QTEST_APPLESS_MAIN(MetadataUtilsTest)
-#include "metadatautilstest.moc"
+#include "MetadataUtilsTest.moc"
 
 #else // SIR_METADATA_SUPPORT
 #error "Metadata build of SIR is needed for MetadataUtilsTest."

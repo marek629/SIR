@@ -4,7 +4,7 @@ set( sir_UT_LINKING_LIBS sir_library ${sir_UT_LINKING_LIBS} )
 
 
 set( sir_UT_metadatautils_SRCS
-        metadata/metadatautilstest.cpp
+        metadata/MetadataUtilsTest.cpp
     )
 add_executable( sir_metadatautils_test ${sir_UT_metadatautils_SRCS} )
 target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
@@ -21,7 +21,7 @@ add_test( NAME "GeneralGroupBox_UT" COMMAND sir_generalgroupbox_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_UT_rawgroupboxcontroller_SRCS
-        widgets/options/rawgroupboxcontrollertest.cpp
+        widgets/options/RawGroupBoxControllerTest.cpp
     )
 add_executable( sir_rawgroupboxcontroller_test ${sir_UT_rawgroupboxcontroller_SRCS} )
 target_link_libraries( sir_rawgroupboxcontroller_test ${sir_UT_LINKING_LIBS} )
