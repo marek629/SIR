@@ -19,13 +19,30 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "svgscrollarea.h"
+#include "widgets/convert/OptionsScrollArea.hpp"
 
-/** Creates the SvgScrollArea object. Sets up GUI. */
-SvgScrollArea::SvgScrollArea(QWidget *parent) : QScrollArea(parent) {
+/** Creates the OptionsScrollArea object. Sets up GUI and creates connections. */
+OptionsScrollArea::OptionsScrollArea(QWidget *parent) : QScrollArea(parent) {
     setupUi(this);
+    // create connections
+    connect(rotateCheckBox, SIGNAL(stateChanged(int)), SLOT(verifyRotate(int)));
+    // quality spin box & slider
+    connect(qualitySpinBox, SIGNAL(valueChanged(int)), qualitySlider, SLOT(setValue(int)));
+    connect(qualitySlider, SIGNAL(valueChanged(int)), qualitySpinBox, SLOT(setValue(int)));
 }
 
-void SvgScrollArea::retranslateStrings() {
+void OptionsScrollArea::retranslateStrings() {
     retranslateUi(this);
+}
+
+/** Rotate checkbox slot.
+  *
+  * Disables/enables rotation angle line edit.
+  * \param status Status of the checkbox.
+  */
+void OptionsScrollArea::verifyRotate(int status) {
+    if (status == Qt::Checked)
+        rotateLineEdit->setEnabled(true);
+    else
+        rotateLineEdit->setEnabled(false);
 }

@@ -22,7 +22,7 @@
 #ifndef EFFECTSSCROLLAREA_H
 #define EFFECTSSCROLLAREA_H
 
-#include "ui_effectsscrollarea.h"
+#include "ui_EffectsScrollArea.h"
 
 class EffectsScrollArea : public QScrollArea, public Ui::EffectsScrollArea {
     Q_OBJECT

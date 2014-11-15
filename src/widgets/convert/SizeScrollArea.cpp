@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "sizescrollarea.h"
+#include "widgets/convert/SizeScrollArea.hpp"
 #include "ConvertSharedData.hpp"
 
 /** Creates the SizeScrollArea object. Sets up GUI and creates connections. */

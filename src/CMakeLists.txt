@@ -40,10 +40,10 @@ set( sir_SRCS
         widgets/timecombobox.cpp
         widgets/TreeWidget.cpp
         widgets/TreeWidgetHeader.cpp
-        widgets/convert/effectsscrollarea.cpp
-        widgets/convert/optionsscrollarea.cpp
-        widgets/convert/sizescrollarea.cpp
-        widgets/convert/svgscrollarea.cpp
+        widgets/convert/EffectsScrollArea.cpp
+        widgets/convert/OptionsScrollArea.cpp
+        widgets/convert/SizeScrollArea.cpp
+        widgets/convert/SvgScrollArea.cpp
         widgets/options/abstractoptions.cpp
         widgets/options/abstractoptionsgroupbox.cpp
         widgets/options/commonoptions.cpp
@@ -63,10 +63,10 @@ set( sir_UIS
         widgets/ConvertDialog.ui
         widgets/gradienteditwidget.ui
         widgets/PreviewDialog.ui
-        widgets/convert/effectsscrollarea.ui
-        widgets/convert/optionsscrollarea.ui
-        widgets/convert/sizescrollarea.ui
-        widgets/convert/svgscrollarea.ui
+        widgets/convert/EffectsScrollArea.ui
+        widgets/convert/OptionsScrollArea.ui
+        widgets/convert/SizeScrollArea.ui
+        widgets/convert/SvgScrollArea.ui
         widgets/options/filelistgroupbox.ui
         widgets/options/generalgroupbox.ui
         widgets/options/rawgroupbox.ui

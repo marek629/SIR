@@ -22,7 +22,7 @@
 #ifndef SVGSCROLLAREA_H
 #define SVGSCROLLAREA_H
 
-#include "ui_svgscrollarea.h"
+#include "ui_SvgScrollArea.h"
 
 //! SVG image options scroll area used in ConvertDialog
 class SvgScrollArea : public QScrollArea, public Ui::SvgScrollArea {

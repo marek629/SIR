@@ -22,7 +22,7 @@
 #ifndef SIZESCROLLAREA_H
 #define SIZESCROLLAREA_H
 
-#include "ui_sizescrollarea.h"
+#include "ui_SizeScrollArea.h"
 
 //! Image size options scroll area used in ConvertDialog
 class SizeScrollArea : public QScrollArea, public Ui::SizeScrollArea {

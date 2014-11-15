@@ -22,7 +22,7 @@
 #include <QFileDialog>
 #include <QImageReader>
 #include <QStringListModel>
-#include "effectsscrollarea.h"
+#include "widgets/convert/EffectsScrollArea.hpp"
 
 /** Creates the EffectsScrollArea object. Sets up GUI. */
 EffectsScrollArea::EffectsScrollArea(QWidget *parent) : QScrollArea(parent) {

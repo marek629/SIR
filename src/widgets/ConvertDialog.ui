@@ -588,25 +588,25 @@
   <customwidget>
    <class>SizeScrollArea</class>
    <extends>QScrollArea</extends>
-   <header>widgets/convert/sizescrollarea.h</header>
+   <header>widgets/convert/SizeScrollArea.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>OptionsScrollArea</class>
    <extends>QScrollArea</extends>
-   <header>widgets/convert/optionsscrollarea.h</header>
+   <header>widgets/convert/OptionsScrollArea.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SvgScrollArea</class>
    <extends>QScrollArea</extends>
-   <header>widgets/convert/svgscrollarea.h</header>
+   <header>widgets/convert/SvgScrollArea.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>EffectsScrollArea</class>
    <extends>QScrollArea</extends>
-   <header>widgets/convert/effectsscrollarea.h</header>
+   <header>widgets/convert/EffectsScrollArea.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
