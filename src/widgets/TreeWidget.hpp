@@ -23,8 +23,8 @@
 #define TREEWIDGET_H
 
 #include <QTreeWidget>
-#include "treewidgetheader.h"
-#include "../sir_string.h"
+#include "widgets/TreeWidgetHeader.hpp"
+#include "sir_string.h"
 
 class QKeyEvent;
 class QDropEvent;
