@@ -25,7 +25,7 @@
 #include <QProcess>
 #include <QImageReader>
 #include <QPixmap>
-#include "rawutils.h"
+#include "RawUtils.hpp"
 #include "settings.h"
 
 /** Returns true if \b imagePath is path to raw image, otherwise returns false. */

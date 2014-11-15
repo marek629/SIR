@@ -29,7 +29,7 @@
 
 #include "generalgroupboxview.h"
 #include "generalgroupboxcontroller.h"
-#include "languageutils.h"
+#include "LanguageUtils.hpp"
 
 GeneralGroupBoxView::GeneralGroupBoxView(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);

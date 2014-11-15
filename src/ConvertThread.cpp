@@ -26,7 +26,7 @@
 #include <cmath>
 #include <QPainter>
 #include "ConvertThread.hpp"
-#include "rawutils.h"
+#include "RawUtils.hpp"
 #include "widgets/messagebox.h"
 #include "settings.h"
 #include "svgmodifier.h"

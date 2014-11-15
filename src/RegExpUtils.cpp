@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "regexputils.h"
+#include "RegExpUtils.hpp"
 
 namespace RegExpUtils {
 

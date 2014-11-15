@@ -23,7 +23,7 @@
 #include <QList>
 #include <QRegExp>
 #include "svgmodifier.h"
-#include "regexputils.h"
+#include "RegExpUtils.hpp"
 
 /** Creates the SvgModifier object. */
 SvgModifier::SvgModifier() {}

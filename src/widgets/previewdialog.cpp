@@ -35,8 +35,8 @@
 #include <QDebug>
 #include <QtSvg/QSvgRenderer>
 #include <QDialogButtonBox>
-#include "previewdialog.h"
-#include "../rawutils.h"
+#include "widgets/previewdialog.h"
+#include "RawUtils.hpp"
 
 #define H 115
 #define W 50

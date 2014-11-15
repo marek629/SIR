@@ -25,7 +25,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QTranslator>
-#include "languageutils.h"
+#include "LanguageUtils.hpp"
 #include "settings.h"
 
 /** Returns singledon instance pointer.

@@ -24,7 +24,7 @@
 #include <QFileInfo>
 #include <iostream>
 #include "CommandLineAssistant.hpp"
-#include "languageutils.h"
+#include "LanguageUtils.hpp"
 #include "settings.h"
 #include "sir_string.h"
 #include "widgets/TreeWidget.hpp"

@@ -23,7 +23,7 @@
 #define LANGUAGEUTILSTEST_H
 
 #include <QtTest/QTest>
-#include "languageutils.h"
+#include "LanguageUtils.hpp"
 
 class LanguageUtilsTest : public QObject
 {

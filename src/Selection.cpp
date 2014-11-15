@@ -26,7 +26,7 @@
 #include "widgets/ConvertDialog.hpp"
 #include "ExpressionTree.hpp"
 #include "widgets/selectiondialog.h"
-#include "regexputils.h"
+#include "RegExpUtils.hpp"
 #include "ConvertSharedData.hpp"
 
 // static variables

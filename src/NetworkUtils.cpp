@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "networkutils.h"
+#include "NetworkUtils.hpp"
 #include "version.h"
 #include <QNetworkAccessManager>
 #include <QUrl>

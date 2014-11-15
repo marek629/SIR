@@ -9,11 +9,11 @@ set( sir_SRCS
         DetailsThumbnail.cpp
         EffectsCollector.cpp
         ExpressionTree.cpp
-        languageutils.cpp
+        LanguageUtils.cpp
         main.cpp
-        networkutils.cpp
-        rawutils.cpp
-        regexputils.cpp
+        NetworkUtils.cpp
+        RawUtils.cpp
+        RegExpUtils.cpp
         rgb.cpp
         Selection.cpp
         Session.cpp
