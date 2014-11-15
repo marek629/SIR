@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "versiontest.h"
+#include "tests/VersionTest.hpp"
 
 VersionTest::VersionTest() : ver(VERSION) {}
 
@@ -100,4 +100,4 @@ void VersionTest::isAtLeast() {
 }
 
 QTEST_APPLESS_MAIN(VersionTest)
-#include "versiontest.moc"
+#include "VersionTest.moc"

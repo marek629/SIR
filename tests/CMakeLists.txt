@@ -29,21 +29,21 @@ add_test( NAME "RawGroupBoxController_UT" COMMAND sir_rawgroupboxcontroller_test
 
 
 set( sir_UT_converteffects_SRCS
-        converteffectstest.cpp
+        ConvertEffectsTest.cpp
     )
 add_executable( sir_converteffects_test ${sir_UT_converteffects_SRCS} )
 target_link_libraries( sir_converteffects_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertEffects_UT" COMMAND sir_converteffects_test )
 
 set( sir_UT_languageutils_SRCS
-        languageutilstest.cpp
+        LanguageUtilsTest.cpp
     )
 add_executable( sir_languageutils_test ${sir_UT_languageutils_SRCS} )
 target_link_libraries( sir_languageutils_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "LanguageUtils_UT" COMMAND sir_languageutils_test )
 
 set( sir_UT_version_SRCS
-        versiontest.cpp
+        VersionTest.cpp
     )
 add_executable( sir_version_test ${sir_UT_version_SRCS} )
 target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )

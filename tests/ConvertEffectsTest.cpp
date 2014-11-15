@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "converteffectstest.h"
+#include "tests/ConvertEffectsTest.hpp"
 #include <cstdlib>
 #include <ctime>
 #include <QPainter>
@@ -310,4 +310,4 @@ void ConvertEffectsTest::addText_middleBottomEdge() {
 }
 
 QTEST_MAIN(ConvertEffectsTest)
-#include "converteffectstest.moc"
+#include "ConvertEffectsTest.moc"

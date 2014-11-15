@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "languageutilstest.h"
+#include "tests/LanguageUtilsTest.hpp"
 
 LanguageUtilsTest::LanguageUtilsTest() {
     utils = LanguageUtils::instance();
@@ -61,4 +61,4 @@ void LanguageUtilsTest::languageInfo_tooDatailedKey() {
 }
 
 QTEST_MAIN(LanguageUtilsTest)
-#include "languageutilstest.moc"
+#include "LanguageUtilsTest.moc"
