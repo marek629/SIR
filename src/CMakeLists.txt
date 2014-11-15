@@ -82,16 +82,16 @@ if( metadata )
             metadata/Error.cpp
             metadata/Iptc.cpp
             widgets/MetadataDialog.cpp
-            widgets/options/detailsgroupboxcontroller.cpp
-            widgets/options/detailsgroupboxview.cpp
-            widgets/options/metadatagroupboxcontroller.cpp
-            widgets/options/metadatagroupboxview.cpp
+            widgets/options/DetailsGroupBoxController.cpp
+            widgets/options/DetailsGroupBoxView.cpp
+            widgets/options/MetadataGroupBoxController.cpp
+            widgets/options/MetadataGroupBoxView.cpp
             widgets/selection/anymetadatagroupbox.cpp
         )
     set( sir_UIS ${sir_UIS}
             widgets/MetadataDialog.ui
-            widgets/options/detailsgroupbox.ui
-            widgets/options/metadatagroupbox.ui
+            widgets/options/DetailsGroupBox.ui
+            widgets/options/MetadataGroupBox.ui
             widgets/selection/anymetadatagroupbox.ui
             widgets/selection/exifgroupbox.ui
             widgets/selection/iptcgroupbox.ui

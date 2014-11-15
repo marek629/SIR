@@ -32,10 +32,10 @@
 #include "widgets/options/filelistgroupboxview.h"
 
 #ifdef SIR_METADATA_SUPPORT
-#include "widgets/options/detailsgroupboxcontroller.h"
-#include "widgets/options/detailsgroupboxview.h"
-#include "widgets/options/metadatagroupboxcontroller.h"
-#include "widgets/options/metadatagroupboxview.h"
+#include "widgets/options/DetailsGroupBoxController.hpp"
+#include "widgets/options/DetailsGroupBoxView.hpp"
+#include "widgets/options/MetadataGroupBoxController.hpp"
+#include "widgets/options/MetadataGroupBoxView.hpp"
 #endif // SIR_METADATA_SUPPORT
 
 #include "widgets/options/selectiongroupboxcontroller.h"

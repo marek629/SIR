@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "detailsgroupboxcontroller.h"
-#include "detailsgroupboxview.h"
+#include "widgets/options/DetailsGroupBoxController.hpp"
+#include "widgets/options/DetailsGroupBoxView.hpp"
 
 DetailsGroupBoxController::DetailsGroupBoxController(
         Settings::DetailsGroup *model, DetailsGroupBoxView *view, QObject *parent)

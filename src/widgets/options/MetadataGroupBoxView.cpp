@@ -21,8 +21,8 @@
 
 #include <typeinfo>
 
-#include "metadatagroupboxview.h"
-#include "metadatagroupboxcontroller.h"
+#include "widgets/options/MetadataGroupBoxView.hpp"
+#include "widgets/options/MetadataGroupBoxController.hpp"
 
 MetadataGroupBoxView::MetadataGroupBoxView(QWidget *parent)
     : AbstractOptionsGroupBox(parent) {

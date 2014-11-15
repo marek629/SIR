@@ -19,44 +19,34 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef DETAILSGROUPBOXVIEW_H
-#define DETAILSGROUPBOXVIEW_H
+#ifndef METADATAGROUPBOXVIEW_H
+#define METADATAGROUPBOXVIEW_H
 
-#include "ui_detailsgroupbox.h"
+#include "ui_MetadataGroupBox.h"
 #include "abstractoptionsgroupbox.h"
 
-class DetailsGroupBoxController;
+class MetadataGroupBoxController;
 
-//! Details group box class used in OptionsDialog dialog.
-class DetailsGroupBoxView : public AbstractOptionsGroupBox, public Ui::DetailsGroupBox  {
+//! Metadata group box view class used in OptionsDialog dialog.
+class MetadataGroupBoxView
+        : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
     Q_OBJECT
 
 public:
-    explicit DetailsGroupBoxView(QWidget *parent = 0);
+    explicit MetadataGroupBoxView(QWidget *parent = 0);
+    ~MetadataGroupBoxView();
     void loadSettings();
     void saveSettings();
     void setController(AbstractOptionsController *controller);
-    void enableFieldButtons(bool enableShow = true, bool enableHide = true);
-    void checkExifImageCheckBoxes(int hash);
-    void checkExifPhotoCheckBoxes(int hash);
-    void checkExifCameraCheckBoxes(int hash);
-    void checkExifAuthorCheckBoxes(int hash);
-    void checkIptcCheckBoxes(int hash);
-    int getExifImageCheckBoxesHash();
-    int getExifPhotoCheckBoxesHash();
-    int getExifCameraCheckBoxesHash();
-    int getExifAuthorCheckBoxesHash();
-    int getIptcCheckBoxesHash();
-
-private:
-    DetailsGroupBoxController *controller;
 
 private slots:
-    void exifFieldToggled(bool checked);
-    void iptcFieldToggled(bool checked);
-    void showPushButtonClicked();
-    void hidePushButtonClicked();
-    void tabChanged(int currentTab);
+    void metadataCheckBoxChecked(bool checked);
+    void saveMetadataCheckBoxChecked(bool checked);
+    void thumbUpdateCheckBoxChecked(bool checked);
+
+private:
+    QRegExpValidator* validator;
+    MetadataGroupBoxController *controller;
 };
 
-#endif // DETAILSGROUPBOXVIEW_H
+#endif // METADATAGROUPBOXVIEW_H

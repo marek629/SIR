@@ -21,8 +21,8 @@
 
 #include <typeinfo>
 
-#include "detailsgroupboxview.h"
-#include "detailsgroupboxcontroller.h"
+#include "widgets/options/DetailsGroupBoxView.hpp"
+#include "widgets/options/DetailsGroupBoxController.hpp"
 #include "optionsenums.h"
 
 DetailsGroupBoxView::DetailsGroupBoxView(QWidget *parent) : AbstractOptionsGroupBox(parent) {

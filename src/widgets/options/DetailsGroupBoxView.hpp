@@ -19,34 +19,44 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef METADATAGROUPBOXVIEW_H
-#define METADATAGROUPBOXVIEW_H
+#ifndef DETAILSGROUPBOXVIEW_H
+#define DETAILSGROUPBOXVIEW_H
 
-#include "ui_metadatagroupbox.h"
+#include "ui_DetailsGroupBox.h"
 #include "abstractoptionsgroupbox.h"
 
-class MetadataGroupBoxController;
+class DetailsGroupBoxController;
 
-//! Metadata group box view class used in OptionsDialog dialog.
-class MetadataGroupBoxView
-        : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
+//! Details group box class used in OptionsDialog dialog.
+class DetailsGroupBoxView : public AbstractOptionsGroupBox, public Ui::DetailsGroupBox  {
     Q_OBJECT
 
 public:
-    explicit MetadataGroupBoxView(QWidget *parent = 0);
-    ~MetadataGroupBoxView();
+    explicit DetailsGroupBoxView(QWidget *parent = 0);
     void loadSettings();
     void saveSettings();
     void setController(AbstractOptionsController *controller);
-
-private slots:
-    void metadataCheckBoxChecked(bool checked);
-    void saveMetadataCheckBoxChecked(bool checked);
-    void thumbUpdateCheckBoxChecked(bool checked);
+    void enableFieldButtons(bool enableShow = true, bool enableHide = true);
+    void checkExifImageCheckBoxes(int hash);
+    void checkExifPhotoCheckBoxes(int hash);
+    void checkExifCameraCheckBoxes(int hash);
+    void checkExifAuthorCheckBoxes(int hash);
+    void checkIptcCheckBoxes(int hash);
+    int getExifImageCheckBoxesHash();
+    int getExifPhotoCheckBoxesHash();
+    int getExifCameraCheckBoxesHash();
+    int getExifAuthorCheckBoxesHash();
+    int getIptcCheckBoxesHash();
 
 private:
-    QRegExpValidator* validator;
-    MetadataGroupBoxController *controller;
+    DetailsGroupBoxController *controller;
+
+private slots:
+    void exifFieldToggled(bool checked);
+    void iptcFieldToggled(bool checked);
+    void showPushButtonClicked();
+    void hidePushButtonClicked();
+    void tabChanged(int currentTab);
 };
 
-#endif // METADATAGROUPBOXVIEW_H
+#endif // DETAILSGROUPBOXVIEW_H

@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "metadatagroupboxcontroller.h"
-#include "metadatagroupboxview.h"
+#include "widgets/options/MetadataGroupBoxController.hpp"
+#include "widgets/options/MetadataGroupBoxView.hpp"
 #include "commonoptions.h"
 
 MetadataGroupBoxController::MetadataGroupBoxController(
