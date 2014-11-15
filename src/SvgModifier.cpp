@@ -22,7 +22,7 @@
 #include <QFile>
 #include <QList>
 #include <QRegExp>
-#include "svgmodifier.h"
+#include "SvgModifier.hpp"
 #include "RegExpUtils.hpp"
 
 /** Creates the SvgModifier object. */

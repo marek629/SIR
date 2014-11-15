@@ -22,7 +22,7 @@
 #ifndef CONVERTEFFECTS_H
 #define CONVERTEFFECTS_H
 
-#include "sharedinformation.h"
+#include "SharedInformation.hpp"
 #include "rgb.h"
 
 /** \brief Convertion effects class.

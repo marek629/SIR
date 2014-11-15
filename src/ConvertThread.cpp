@@ -27,9 +27,9 @@
 #include <QPainter>
 #include "ConvertThread.hpp"
 #include "RawUtils.hpp"
-#include "widgets/messagebox.h"
+#include "widgets/MessageBox.hpp"
 #include "Settings.hpp"
-#include "svgmodifier.h"
+#include "SvgModifier.hpp"
 #include "ConvertEffects.hpp"
 
 using namespace sir;

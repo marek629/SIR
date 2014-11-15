@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "messagebox.h"
+#include "widgets/MessageBox.hpp"
 
 bool MessageBox::testingEnabled = false;
 int MessageBox::warningStandardButton = QMessageBox::Ok;

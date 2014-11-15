@@ -22,7 +22,7 @@
 #include <QDir>
 
 #include "tests/widgets/options/RawGroupBoxControllerTest.hpp"
-#include "widgets/messagebox.h"
+#include "widgets/MessageBox.hpp"
 #include "Settings.hpp"
 
 RawGroupBoxControllerTest::RawGroupBoxControllerTest() {

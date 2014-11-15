@@ -24,7 +24,7 @@
 #include "rawgroupboxcontroller.h"
 #include "rawgroupboxview.h"
 #include "commonoptions.h"
-#include "widgets/messagebox.h"
+#include "widgets/MessageBox.hpp"
 
 /** Default constructor.\n
   * Sets UI and creates connections.

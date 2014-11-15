@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "sharedinformation.h"
+#include "SharedInformation.hpp"
 #include "Settings.hpp"
 #include "metadata/MetadataUtils.hpp"
 

@@ -18,9 +18,9 @@ set( sir_SRCS
         Selection.cpp
         Session.cpp
         Settings.cpp
-        sharedinformation.cpp
+        SharedInformation.cpp
         sir_string.cpp
-        svgmodifier.cpp
+        SvgModifier.cpp
         version.cpp
         XmlHelper.cpp
         xmlstreamwriter.cpp
@@ -32,7 +32,7 @@ set( sir_SRCS
         widgets/detailsbrowserview.cpp
         widgets/gradienteditwidget.cpp
         widgets/historycombobox.cpp
-        widgets/messagebox.cpp
+        widgets/MessageBox.cpp
         widgets/OptionsDialog.cpp
         widgets/posspinbox.cpp
         widgets/previewdialog.cpp

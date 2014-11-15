@@ -40,7 +40,7 @@
 #include "version.h"
 #include "RawUtils.hpp"
 #include "NetworkUtils.hpp"
-#include "widgets/messagebox.h"
+#include "widgets/MessageBox.hpp"
 #include "metadata/MetadataUtils.hpp"
 #include "Selection.hpp"
 #include "LanguageUtils.hpp"
