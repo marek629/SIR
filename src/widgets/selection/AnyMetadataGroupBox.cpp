@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "anymetadatagroupbox.h"
+#include "widgets/selection/AnyMetadataGroupBox.hpp"
 
 /** Default constructor.\n
   * Sets UI and create connections.

@@ -86,15 +86,15 @@ if( metadata )
             widgets/options/DetailsGroupBoxView.cpp
             widgets/options/MetadataGroupBoxController.cpp
             widgets/options/MetadataGroupBoxView.cpp
-            widgets/selection/anymetadatagroupbox.cpp
+            widgets/selection/AnyMetadataGroupBox.cpp
         )
     set( sir_UIS ${sir_UIS}
             widgets/MetadataDialog.ui
             widgets/options/DetailsGroupBox.ui
             widgets/options/MetadataGroupBox.ui
-            widgets/selection/anymetadatagroupbox.ui
-            widgets/selection/exifgroupbox.ui
-            widgets/selection/iptcgroupbox.ui
+            widgets/selection/AnyMetadataGroupBox.ui
+            widgets/selection/ExifGroupBox.ui
+            widgets/selection/IptcGroupBox.ui
         )
 endif( metadata )
 

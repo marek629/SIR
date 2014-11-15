@@ -25,9 +25,9 @@
 #include <QDialog>
 #include "ui_dirwidget.h"
 #ifdef SIR_METADATA_SUPPORT
-#include "widgets/selection/anymetadatagroupbox.h"
-#include "ui_exifgroupbox.h"
-#include "ui_iptcgroupbox.h"
+#include "widgets/selection/AnyMetadataGroupBox.hpp"
+#include "ui_ExifGroupBox.h"
+#include "ui_IptcGroupBox.h"
 #endif // SIR_METADATA_SUPPORT
 #include "Selection.hpp"
 
