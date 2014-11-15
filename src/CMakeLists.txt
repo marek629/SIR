@@ -3,9 +3,9 @@
 # Source files
 set( sir_SRCS
         CommandLineAssistant.cpp
-        converteffects.cpp
-        convertshareddata.cpp
-        convertthread.cpp
+        ConvertEffects.cpp
+        ConvertSharedData.cpp
+        ConvertThread.cpp
         DetailsThumbnail.cpp
         effectscollector.cpp
         ExpressionTree.cpp

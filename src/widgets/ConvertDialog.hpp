@@ -23,7 +23,7 @@
 #define CONVERTDIALOG_H
 
 #include "ui_ConvertDialog.h"
-#include "convertthread.h"
+#include "ConvertThread.hpp"
 #include "settings.h"
 
 class NetworkUtils;

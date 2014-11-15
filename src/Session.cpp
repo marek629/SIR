@@ -26,7 +26,7 @@
 #include "xmlstreamwriter.h"
 #include "version.h"
 #include "sir_string.h"
-#include "convertshareddata.h"
+#include "ConvertSharedData.hpp"
 #include "effectscollector.h"
 
 using namespace sir;

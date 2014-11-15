@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "convertshareddata.h"
+#include "ConvertSharedData.hpp"
 
 /** Returns pointer to the instance of ConvertSharedData class.
   * \sa ConvertSharedData()

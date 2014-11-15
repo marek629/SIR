@@ -23,7 +23,7 @@
 #define CONVERTEFFECTSTEST_H
 
 #include <QtTest/QTest>
-#include "converteffects.h"
+#include "ConvertEffects.hpp"
 
 class ConvertEffectsTest : public QObject {
     Q_OBJECT

@@ -20,7 +20,7 @@
  */
 
 #include "sizescrollarea.h"
-#include "convertshareddata.h"
+#include "ConvertSharedData.hpp"
 
 /** Creates the SizeScrollArea object. Sets up GUI and creates connections. */
 SizeScrollArea::SizeScrollArea(QWidget *parent) : QScrollArea(parent) {

@@ -44,7 +44,7 @@
 #include "metadata/MetadataUtils.hpp"
 #include "Selection.hpp"
 #include "languageutils.h"
-#include "convertshareddata.h"
+#include "ConvertSharedData.hpp"
 #include "Session.hpp"
 #include "CommandLineAssistant.hpp"
 #include "effectscollector.h"

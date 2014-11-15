@@ -31,7 +31,7 @@
 #include <QFileDialog>
 #include <QSvgRenderer>
 #include <QMimeData>
-#include "convertshareddata.h"
+#include "ConvertSharedData.hpp"
 #include "optionsenums.h"
 #include "widgets/TreeWidget.hpp"
 #include "widgets/ConvertDialog.hpp"

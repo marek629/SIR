@@ -20,7 +20,7 @@
  */
 
 #include <QPainter>
-#include "converteffects.h"
+#include "ConvertEffects.hpp"
 
 /** Creates ConvertEffects object.
   * \sa setSharedInfo()

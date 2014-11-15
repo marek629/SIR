@@ -25,12 +25,12 @@
 #include <QDebug>
 #include <cmath>
 #include <QPainter>
-#include "convertthread.h"
+#include "ConvertThread.hpp"
 #include "rawutils.h"
 #include "widgets/messagebox.h"
 #include "settings.h"
 #include "svgmodifier.h"
-#include "converteffects.h"
+#include "ConvertEffects.hpp"
 
 using namespace sir;
 

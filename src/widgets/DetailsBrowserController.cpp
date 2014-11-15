@@ -23,7 +23,7 @@
 #include "widgets/detailsbrowserview.h"
 #include "widgets/ConvertDialog.hpp"
 #include "optionsenums.h"
-#include "convertshareddata.h"
+#include "ConvertSharedData.hpp"
 #include "DetailsThumbnail.hpp"
 
 using namespace sir;
