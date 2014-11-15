@@ -78,9 +78,9 @@ if( metadata )
     set( sir_SRCS ${sir_SRCS}
             metadata/Metadata.cpp
             metadata/metadatautils.cpp
-            metadata/exif.cpp
-            metadata/error.cpp
-            metadata/iptc.cpp
+            metadata/Exif.cpp
+            metadata/Error.cpp
+            metadata/Iptc.cpp
             widgets/metadatadialog.cpp
             widgets/options/detailsgroupboxcontroller.cpp
             widgets/options/detailsgroupboxview.cpp

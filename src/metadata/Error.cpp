@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "error.h"
+#include "metadata/Error.hpp"
 
 using namespace MetadataUtils;
 

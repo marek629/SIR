@@ -27,9 +27,9 @@
 #include <QCoreApplication>
 #include <QImage>
 #include <exiv2/exiv2.hpp>
-#include "exif.h"
-#include "iptc.h"
-#include "error.h"
+#include "metadata/Exif.hpp"
+#include "metadata/Iptc.hpp"
+#include "metadata/Error.hpp"
 
 namespace MetadataUtils {
 //! Main metadata manipulating class.

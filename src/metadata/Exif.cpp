@@ -21,7 +21,7 @@
 
 #ifdef SIR_METADATA_SUPPORT
 
-#include "exif.h"
+#include "metadata/Exif.hpp"
 #include <exiv2/exif.hpp>
 #include <exiv2/metadatum.hpp>
 

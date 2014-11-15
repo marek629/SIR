@@ -23,13 +23,13 @@
 #define METADATAUTILS_H
 
 #include "sir_string.h"
-#include "metadata/exif.h"
+#include "metadata/Exif.hpp"
 #ifdef SIR_METADATA_SUPPORT
 #include <QImage>
 #include <exiv2/exiv2.hpp>
 #include "metadata/Metadata.hpp"
-#include "metadata/iptc.h"
-#include "metadata/error.h"
+#include "metadata/Iptc.hpp"
+#include "metadata/Error.hpp"
 
 //! Metadata tools.
 namespace MetadataUtils {

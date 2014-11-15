@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "iptc.h"
+#include "metadata/Iptc.hpp"
 
 using namespace MetadataUtils;
 using namespace sir;

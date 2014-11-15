@@ -24,8 +24,8 @@
 
 #include <QString>
 #include <QSize>
-#include "metadata/exif.h"
-#include "metadata/iptc.h"
+#include "metadata/Exif.hpp"
+#include "metadata/Iptc.hpp"
 
 class QTreeWidgetItem;
 
