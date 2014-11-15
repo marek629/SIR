@@ -26,7 +26,7 @@
 #include "sir_string.h"
 #include "xmlstreamwriter.h"
 #include "version.h"
-#include "effectscollector.h"
+#include "EffectsCollector.hpp"
 
 using namespace sir;
 

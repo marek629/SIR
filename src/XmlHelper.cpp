@@ -20,7 +20,7 @@
  */
 
 #include <QDomElement>
-#include "xmlhelper.h"
+#include "XmlHelper.hpp"
 
 const QString XmlHelper::falseString = "no";
 

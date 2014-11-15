@@ -22,7 +22,7 @@
 #ifndef EFFECTSCOLLECTOR_H
 #define EFFECTSCOLLECTOR_H
 
-#include "xmlhelper.h"
+#include "XmlHelper.hpp"
 
 class EffectsScrollArea;
 class XmlStreamWriter;

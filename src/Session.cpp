@@ -27,7 +27,7 @@
 #include "version.h"
 #include "sir_string.h"
 #include "ConvertSharedData.hpp"
-#include "effectscollector.h"
+#include "EffectsCollector.hpp"
 
 using namespace sir;
 

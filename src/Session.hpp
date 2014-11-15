@@ -24,7 +24,7 @@
 
 #include <QDomElement>
 #include <QCoreApplication>
-#include "xmlhelper.h"
+#include "XmlHelper.hpp"
 
 class ConvertDialog;
 class SizeScrollArea;

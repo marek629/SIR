@@ -7,7 +7,7 @@ set( sir_SRCS
         ConvertSharedData.cpp
         ConvertThread.cpp
         DetailsThumbnail.cpp
-        effectscollector.cpp
+        EffectsCollector.cpp
         ExpressionTree.cpp
         languageutils.cpp
         main.cpp
@@ -22,7 +22,7 @@ set( sir_SRCS
         sir_string.cpp
         svgmodifier.cpp
         version.cpp
-        xmlhelper.cpp
+        XmlHelper.cpp
         xmlstreamwriter.cpp
         widgets/aboutdialog.cpp
         widgets/ConvertDialog.cpp

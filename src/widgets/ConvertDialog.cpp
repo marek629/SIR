@@ -47,7 +47,7 @@
 #include "ConvertSharedData.hpp"
 #include "Session.hpp"
 #include "CommandLineAssistant.hpp"
-#include "effectscollector.h"
+#include "EffectsCollector.hpp"
 
 using namespace sir;
 
