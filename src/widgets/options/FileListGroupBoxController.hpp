@@ -19,32 +19,43 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef FILELISTGROUPBOXVIEW_H
-#define FILELISTGROUPBOXVIEW_H
+#ifndef FILELISTGROUPBOXCONTROLLER_H
+#define FILELISTGROUPBOXCONTROLLER_H
 
-#include "ui_filelistgroupbox.h"
-#include "abstractoptionsgroupbox.h"
+#include <QCheckBox>
 
-class FileListGroupBoxController;
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
+#include "Settings.hpp"
 
-//! File list group box view class used in OptionsDialog dialog.
-class FileListGroupBoxView : public AbstractOptionsGroupBox, public Ui::FileListGroupBox {
+class FileListGroupBoxView;
+
+//! File list group box controller class used in OptionsDialog dialog.
+class FileListGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
 
 public:
-    explicit FileListGroupBoxView(QWidget *parent = 0);
+    explicit FileListGroupBoxController(Settings::TreeWidgetGroup *model,
+                                        FileListGroupBoxView *view,
+                                        QObject *parent = 0);
 
     void loadSettings();
     void saveSettings();
 
-    void setController(AbstractOptionsController *controller);
+    void enableColumnButtons(bool enableShow = true, bool enableHide = true);
+
+    void checkAllColumns(bool checked);
+
+    bool isAnyColumnChecked() const;
+
+public slots:
+    void updateViewButtons(bool columnToggled);
 
 private:
-    FileListGroupBoxController *controller;
+    Settings::TreeWidgetGroup *model;
+    FileListGroupBoxView *view;
 
-private slots:
-    void showPushButtonClicked();
-    void hidePushButtonClicked();
+    QList<QCheckBox*> checkBoxList;
+    int visibleColumnsCount;
 };
 
-#endif // FILELISTGROUPBOXVIEW_H
+#endif // FILELISTGROUPBOXCONTROLLER_H

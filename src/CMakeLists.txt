@@ -44,17 +44,17 @@ set( sir_SRCS
         widgets/convert/OptionsScrollArea.cpp
         widgets/convert/SizeScrollArea.cpp
         widgets/convert/SvgScrollArea.cpp
-        widgets/options/abstractoptions.cpp
-        widgets/options/abstractoptionsgroupbox.cpp
-        widgets/options/commonoptions.cpp
-        widgets/options/filelistgroupboxcontroller.cpp
-        widgets/options/filelistgroupboxview.cpp
-        widgets/options/generalgroupboxcontroller.cpp
-        widgets/options/generalgroupboxview.cpp
-        widgets/options/rawgroupboxcontroller.cpp
-        widgets/options/rawgroupboxview.cpp
-        widgets/options/selectiongroupboxcontroller.cpp
-        widgets/options/selectiongroupboxview.cpp
+        widgets/options/AbstractOptions.cpp
+        widgets/options/AbstractOptionsGroupBox.cpp
+        widgets/options/CommonOptions.cpp
+        widgets/options/FileListGroupBoxController.cpp
+        widgets/options/FileListGroupBoxView.cpp
+        widgets/options/GeneralGroupBoxController.cpp
+        widgets/options/GeneralGroupBoxView.cpp
+        widgets/options/RawGroupBoxController.cpp
+        widgets/options/RawGroupBoxView.cpp
+        widgets/options/SelectionGroupBoxController.cpp
+        widgets/options/SelectionGroupBoxView.cpp
     )
 
 # User interface files
@@ -67,10 +67,10 @@ set( sir_UIS
         widgets/convert/OptionsScrollArea.ui
         widgets/convert/SizeScrollArea.ui
         widgets/convert/SvgScrollArea.ui
-        widgets/options/filelistgroupbox.ui
-        widgets/options/generalgroupbox.ui
-        widgets/options/rawgroupbox.ui
-        widgets/options/selectiongroupbox.ui
+        widgets/options/FileListGroupBox.ui
+        widgets/options/GeneralGroupBox.ui
+        widgets/options/RawGroupBox.ui
+        widgets/options/SelectionGroupBox.ui
         widgets/selection/DirWidget.ui
     )
 

@@ -19,34 +19,26 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWGROUPBOXCONTROLLER_H
-#define RAWGROUPBOXCONTROLLER_H
+#include <typeinfo>
 
-#include "abstractoptionsgroupbox.h"
-#include "Settings.hpp"
+#include "widgets/options/SelectionGroupBoxView.hpp"
+#include "widgets/options/SelectionGroupBoxController.hpp"
 
-class RawGroupBoxView;
+SelectionGroupBoxView::SelectionGroupBoxView(QWidget *parent)
+    : AbstractOptionsGroupBox(parent) {
+    setupUi(this);
+}
 
-//! Raw group box controller class used in OptionsDialog dialog.
-class RawGroupBoxController : public AbstractOptionsController {
-    Q_OBJECT
-    friend class RawGroupBoxControllerTest;
+void SelectionGroupBoxView::loadSettings() {
+    controller->loadSettings();
+}
 
-public:
-    explicit RawGroupBoxController(Settings::RawGroup *model, RawGroupBoxView *view,
-                                   QObject *parent = 0);
-    void loadSettings();
-    void saveSettings();
-    void browseDcraw();
-    void setRawStatus(int state);
+void SelectionGroupBoxView::saveSettings() {
+    controller->saveSettings();
+}
 
-signals:
-    void ok(); /**< Indicates write settings success. */
+void SelectionGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(SelectionGroupBoxController));
 
-private:
-    Settings::RawGroup *model;
-    RawGroupBoxView *view;
-    bool checkDcrawPath(const QString &fileName);
-};
-
-#endif // RAWGROUPBOXCONTROLLER_H
+    this->controller = (SelectionGroupBoxController *)controller;
+}

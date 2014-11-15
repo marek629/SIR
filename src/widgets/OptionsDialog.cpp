@@ -26,10 +26,10 @@
 
 #include "widgets/OptionsDialog.hpp"
 #include "widgets/ConvertDialog.hpp"
-#include "widgets/options/generalgroupboxcontroller.h"
-#include "widgets/options/generalgroupboxview.h"
-#include "widgets/options/filelistgroupboxcontroller.h"
-#include "widgets/options/filelistgroupboxview.h"
+#include "widgets/options/GeneralGroupBoxController.hpp"
+#include "widgets/options/GeneralGroupBoxView.hpp"
+#include "widgets/options/FileListGroupBoxController.hpp"
+#include "widgets/options/FileListGroupBoxView.hpp"
 
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/options/DetailsGroupBoxController.hpp"
@@ -38,10 +38,10 @@
 #include "widgets/options/MetadataGroupBoxView.hpp"
 #endif // SIR_METADATA_SUPPORT
 
-#include "widgets/options/selectiongroupboxcontroller.h"
-#include "widgets/options/selectiongroupboxview.h"
-#include "widgets/options/rawgroupboxcontroller.h"
-#include "widgets/options/rawgroupboxview.h"
+#include "widgets/options/SelectionGroupBoxController.hpp"
+#include "widgets/options/SelectionGroupBoxView.hpp"
+#include "widgets/options/RawGroupBoxController.hpp"
+#include "widgets/options/RawGroupBoxView.hpp"
 #include "optionsenums.h"
 
 /** Default constructor.\n

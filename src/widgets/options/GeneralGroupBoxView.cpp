@@ -27,8 +27,8 @@
 
 #include <typeinfo>
 
-#include "generalgroupboxview.h"
-#include "generalgroupboxcontroller.h"
+#include "widgets/options/GeneralGroupBoxView.hpp"
+#include "widgets/options/GeneralGroupBoxController.hpp"
 #include "LanguageUtils.hpp"
 
 GeneralGroupBoxView::GeneralGroupBoxView(QWidget *parent) : AbstractOptionsGroupBox(parent) {

@@ -21,8 +21,8 @@
 
 #include <typeinfo>
 
-#include "filelistgroupboxview.h"
-#include "filelistgroupboxcontroller.h"
+#include "widgets/options/FileListGroupBoxView.hpp"
+#include "widgets/options/FileListGroupBoxController.hpp"
 
 FileListGroupBoxView::FileListGroupBoxView(QWidget *parent) : AbstractOptionsGroupBox(parent) {
     setupUi(this);

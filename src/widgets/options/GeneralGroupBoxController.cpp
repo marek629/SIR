@@ -21,9 +21,9 @@
 
 #include <QThread>
 
-#include "generalgroupboxcontroller.h"
-#include "generalgroupboxview.h"
-#include "commonoptions.h"
+#include "widgets/options/GeneralGroupBoxController.hpp"
+#include "widgets/options/GeneralGroupBoxView.hpp"
+#include "widgets/options/CommonOptions.hpp"
 
 quint8 GeneralGroupBoxController::maxCoresCount_ = 50;
 

@@ -22,7 +22,7 @@
 #ifndef DETAILSGROUPBOXCONTROLLER_H
 #define DETAILSGROUPBOXCONTROLLER_H
 
-#include "abstractoptionsgroupbox.h"
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 #include "Settings.hpp"
 
 class QCheckBox;

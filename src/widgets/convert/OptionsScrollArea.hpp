@@ -22,7 +22,7 @@
 #ifndef OPTIONSSCROLLAREA_H
 #define OPTIONSSCROLLAREA_H
 
-#include "ui_optionsscrollarea.h"
+#include "ui_OptionsScrollArea.h"
 
 //! Image options scroll area used in ConvertDialog
 class OptionsScrollArea : public QScrollArea, public Ui::OptionsScrollArea {

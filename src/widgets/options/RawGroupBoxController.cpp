@@ -21,9 +21,9 @@
 
 #include <QFileDialog>
 
-#include "rawgroupboxcontroller.h"
-#include "rawgroupboxview.h"
-#include "commonoptions.h"
+#include "widgets/options/RawGroupBoxController.hpp"
+#include "widgets/options/RawGroupBoxView.hpp"
+#include "widgets/options/CommonOptions.hpp"
 #include "widgets/MessageBox.hpp"
 
 /** Default constructor.\n

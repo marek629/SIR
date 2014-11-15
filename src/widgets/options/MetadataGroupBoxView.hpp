@@ -23,7 +23,7 @@
 #define METADATAGROUPBOXVIEW_H
 
 #include "ui_MetadataGroupBox.h"
-#include "abstractoptionsgroupbox.h"
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 
 class MetadataGroupBoxController;
 

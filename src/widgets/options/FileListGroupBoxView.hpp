@@ -19,38 +19,32 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include <typeinfo>
+#ifndef FILELISTGROUPBOXVIEW_H
+#define FILELISTGROUPBOXVIEW_H
 
-#include "rawgroupboxview.h"
-#include "rawgroupboxcontroller.h"
+#include "ui_FileListGroupBox.h"
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 
-RawGroupBoxView::RawGroupBoxView(QWidget *parent)
-    : AbstractOptionsGroupBox(parent) {
-    setupUi(this);
-    connect(dcrawPushButton, SIGNAL(clicked()),
-            this, SLOT(browseButtonClicked()));
-    connect(rawCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(rawEnabledStatusChanged(int)));
-}
+class FileListGroupBoxController;
 
-void RawGroupBoxView::loadSettings() {
-    controller->loadSettings();
-}
+//! File list group box view class used in OptionsDialog dialog.
+class FileListGroupBoxView : public AbstractOptionsGroupBox, public Ui::FileListGroupBox {
+    Q_OBJECT
 
-void RawGroupBoxView::saveSettings() {
-    controller->saveSettings();
-}
+public:
+    explicit FileListGroupBoxView(QWidget *parent = 0);
 
-void RawGroupBoxView::setController(AbstractOptionsController *controller) {
-    Q_ASSERT(typeid(*controller) == typeid(RawGroupBoxController));
+    void loadSettings();
+    void saveSettings();
 
-    this->controller = (RawGroupBoxController *)controller;
-}
+    void setController(AbstractOptionsController *controller);
 
-void RawGroupBoxView::browseButtonClicked() {
-    controller->browseDcraw();
-}
+private:
+    FileListGroupBoxController *controller;
 
-void RawGroupBoxView::rawEnabledStatusChanged(int state) {
-    controller->setRawStatus(state);
-}
+private slots:
+    void showPushButtonClicked();
+    void hidePushButtonClicked();
+};
+
+#endif // FILELISTGROUPBOXVIEW_H

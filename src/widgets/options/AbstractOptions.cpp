@@ -19,10 +19,11 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "abstractoptionsgroupbox.h"
+#include <QtGlobal>
+#include "widgets/options/AbstractOptions.hpp"
 
-AbstractOptionsGroupBox::AbstractOptionsGroupBox(QWidget *parent)
-    : QGroupBox(parent) {}
+AbstractOptions::AbstractOptions(QWidget *parent) {
+    Q_UNUSED(parent);
+}
 
-AbstractOptionsController::AbstractOptionsController(QObject *parent)
-    : QObject(parent) {}
+AbstractOptions::~AbstractOptions() {}

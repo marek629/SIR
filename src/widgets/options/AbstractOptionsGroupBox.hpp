@@ -23,7 +23,7 @@
 #define ABSTRACTOPTIONSGROUPBOX_H
 
 #include <QGroupBox>
-#include "abstractoptions.h"
+#include "widgets/options/AbstractOptions.hpp"
 
 /** \brief Abstract base class for all derived classes from AbstractOptions.
   *

@@ -23,8 +23,8 @@
 #define GENERALGROPBOXTEST_H
 
 #include <QtTest/QTest>
-#include "widgets/options/generalgroupboxcontroller.h"
-#include "widgets/options/generalgroupboxview.h"
+#include "widgets/options/GeneralGroupBoxController.hpp"
+#include "widgets/options/GeneralGroupBoxView.hpp"
 
 class GeneralGroupBoxTest : public QObject {
     Q_OBJECT

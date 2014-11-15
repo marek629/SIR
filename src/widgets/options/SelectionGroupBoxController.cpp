@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "selectiongroupboxcontroller.h"
-#include "selectiongroupboxview.h"
+#include "widgets/options/SelectionGroupBoxController.hpp"
+#include "widgets/options/SelectionGroupBoxView.hpp"
 
 SelectionGroupBoxController::SelectionGroupBoxController(
         Settings::SelectionGroup *model, SelectionGroupBoxView *view,

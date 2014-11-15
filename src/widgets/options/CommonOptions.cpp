@@ -19,11 +19,36 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include <QtGlobal>
-#include "abstractoptions.h"
+#include "widgets/options/CommonOptions.hpp"
+#include "Settings.hpp"
 
-AbstractOptions::AbstractOptions(QWidget *parent) {
-    Q_UNUSED(parent);
+/** Default constructor.\n
+  * Sets default value of fields of common options object.
+  */
+CommonOptions::CommonOptions() {
+    targetDirPath_ = QDir::homePath();
+    maxHistoryCount_ = Settings::instance()->settings.maxHistoryCount;
 }
 
-AbstractOptions::~AbstractOptions() {}
+CommonOptions * CommonOptions::instance() {
+    static CommonOptions *object = 0;
+    if (!object && Settings::instance())
+        object = new CommonOptions();
+    return object;
+}
+
+QString CommonOptions::targetDirPath() const {
+    return targetDirPath_;
+}
+
+void CommonOptions::setTargetDirPath(const QString &path) {
+    targetDirPath_ = (path.isEmpty()) ? QDir::homePath() : path;
+}
+
+int CommonOptions::maxHistoryCount() const {
+    return maxHistoryCount_;
+}
+
+void CommonOptions::setMaxHistoryCount(int v) {
+    maxHistoryCount_ = v;
+}

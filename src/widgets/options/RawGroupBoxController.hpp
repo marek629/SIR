@@ -19,36 +19,34 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "commonoptions.h"
+#ifndef RAWGROUPBOXCONTROLLER_H
+#define RAWGROUPBOXCONTROLLER_H
+
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 #include "Settings.hpp"
 
-/** Default constructor.\n
-  * Sets default value of fields of common options object.
-  */
-CommonOptions::CommonOptions() {
-    targetDirPath_ = QDir::homePath();
-    maxHistoryCount_ = Settings::instance()->settings.maxHistoryCount;
-}
+class RawGroupBoxView;
 
-CommonOptions * CommonOptions::instance() {
-    static CommonOptions *object = 0;
-    if (!object && Settings::instance())
-        object = new CommonOptions();
-    return object;
-}
+//! Raw group box controller class used in OptionsDialog dialog.
+class RawGroupBoxController : public AbstractOptionsController {
+    Q_OBJECT
+    friend class RawGroupBoxControllerTest;
 
-QString CommonOptions::targetDirPath() const {
-    return targetDirPath_;
-}
+public:
+    explicit RawGroupBoxController(Settings::RawGroup *model, RawGroupBoxView *view,
+                                   QObject *parent = 0);
+    void loadSettings();
+    void saveSettings();
+    void browseDcraw();
+    void setRawStatus(int state);
 
-void CommonOptions::setTargetDirPath(const QString &path) {
-    targetDirPath_ = (path.isEmpty()) ? QDir::homePath() : path;
-}
+signals:
+    void ok(); /**< Indicates write settings success. */
 
-int CommonOptions::maxHistoryCount() const {
-    return maxHistoryCount_;
-}
+private:
+    Settings::RawGroup *model;
+    RawGroupBoxView *view;
+    bool checkDcrawPath(const QString &fileName);
+};
 
-void CommonOptions::setMaxHistoryCount(int v) {
-    maxHistoryCount_ = v;
-}
+#endif // RAWGROUPBOXCONTROLLER_H

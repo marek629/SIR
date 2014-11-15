@@ -23,7 +23,7 @@
 #define DETAILSGROUPBOXVIEW_H
 
 #include "ui_DetailsGroupBox.h"
-#include "abstractoptionsgroupbox.h"
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 
 class DetailsGroupBoxController;
 

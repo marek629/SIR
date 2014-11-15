@@ -19,32 +19,38 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWGROUPBOXTEST_H
-#define RAWGROUPBOXTEST_H
+#include <typeinfo>
 
-#include <QtTest/QTest>
-#include "widgets/options/RawGroupBoxController.hpp"
 #include "widgets/options/RawGroupBoxView.hpp"
+#include "widgets/options/RawGroupBoxController.hpp"
 
-class RawGroupBoxControllerTest : public QObject {
-    Q_OBJECT
+RawGroupBoxView::RawGroupBoxView(QWidget *parent)
+    : AbstractOptionsGroupBox(parent) {
+    setupUi(this);
+    connect(dcrawPushButton, SIGNAL(clicked()),
+            this, SLOT(browseButtonClicked()));
+    connect(rawCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(rawEnabledStatusChanged(int)));
+}
 
-public:
-    RawGroupBoxControllerTest();
-    ~RawGroupBoxControllerTest();
+void RawGroupBoxView::loadSettings() {
+    controller->loadSettings();
+}
 
-private:
-    RawGroupBoxController *controller;
-    RawGroupBoxView *view;
+void RawGroupBoxView::saveSettings() {
+    controller->saveSettings();
+}
 
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
+void RawGroupBoxView::setController(AbstractOptionsController *controller) {
+    Q_ASSERT(typeid(*controller) == typeid(RawGroupBoxController));
 
-    void checkDcrawPath_emptyString();
-    void checkDcrawPath_fileNotExists();
-    void checkDcrawPath_fileNotExecutable();
-    void checkDcrawPath_fileExecutable();
-};
+    this->controller = (RawGroupBoxController *)controller;
+}
 
-#endif // RAWGROUPBOXTEST_H
+void RawGroupBoxView::browseButtonClicked() {
+    controller->browseDcraw();
+}
+
+void RawGroupBoxView::rawEnabledStatusChanged(int state) {
+    controller->setRawStatus(state);
+}

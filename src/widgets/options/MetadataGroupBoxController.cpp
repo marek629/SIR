@@ -21,7 +21,7 @@
 
 #include "widgets/options/MetadataGroupBoxController.hpp"
 #include "widgets/options/MetadataGroupBoxView.hpp"
-#include "commonoptions.h"
+#include "widgets/options/CommonOptions.hpp"
 
 MetadataGroupBoxController::MetadataGroupBoxController(
         Settings::MetadataGroup *metadataModel, Settings::ExifGroup *exifModel,

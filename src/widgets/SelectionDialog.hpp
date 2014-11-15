@@ -23,7 +23,7 @@
 #define SELECTIONDIALOG_H
 
 #include <QDialog>
-#include "ui_dirwidget.h"
+#include "ui_DirWidget.h"
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/selection/AnyMetadataGroupBox.hpp"
 #include "ui_ExifGroupBox.h"

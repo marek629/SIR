@@ -19,28 +19,10 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef SELECTIONGROUPBOXCONTROLLER_H
-#define SELECTIONGROUPBOXCONTROLLER_H
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 
-#include "abstractoptionsgroupbox.h"
-#include "Settings.hpp"
+AbstractOptionsGroupBox::AbstractOptionsGroupBox(QWidget *parent)
+    : QGroupBox(parent) {}
 
-class SelectionGroupBoxView;
-
-//! Selection group box controller class used in OptionsDialog dialog.
-class SelectionGroupBoxController : public AbstractOptionsController {
-    Q_OBJECT
-
-public:
-    explicit SelectionGroupBoxController(Settings::SelectionGroup *model,
-                                         SelectionGroupBoxView *view,
-                                         QObject *parent = 0);
-    void loadSettings();
-    void saveSettings();
-
-private:
-    Settings::SelectionGroup *model;
-    SelectionGroupBoxView *view;
-};
-
-#endif // SELECTIONGROUPBOXCONTROLLER_H
+AbstractOptionsController::AbstractOptionsController(QObject *parent)
+    : QObject(parent) {}

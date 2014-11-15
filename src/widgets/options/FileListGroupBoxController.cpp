@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "filelistgroupboxcontroller.h"
-#include "filelistgroupboxview.h"
+#include "widgets/options/FileListGroupBoxController.hpp"
+#include "widgets/options/FileListGroupBoxView.hpp"
 #include "optionsenums.h"
 
 using namespace TreeWidgetOptions;

@@ -19,28 +19,42 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef SELECTIONGROUPBOXVIEW_H
-#define SELECTIONGROUPBOXVIEW_H
+#ifndef GENERALGROUPBOX_H
+#define GENERALGROUPBOX_H
 
-#include "ui_selectiongroupbox.h"
-#include "abstractoptionsgroupbox.h"
+#include "ui_GeneralGroupBox.h"
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 
-class SelectionGroupBoxController;
+class LanguageUtils;
+class GeneralGroupBoxController;
 
-//! Selection group box view class used in OptionsDialog dialog.
-class SelectionGroupBoxView
-        : public AbstractOptionsGroupBox, public Ui::SelectionGroupBox {
+//! General group box class used in OptionsDialog dialog.
+class GeneralGroupBoxView : public AbstractOptionsGroupBox, public Ui::GeneralGroupBoxView {
     Q_OBJECT
+    friend class GeneralGroupBoxTest;
+    friend class OptionsDialog;
 
 public:
-    explicit SelectionGroupBoxView(QWidget *parent = 0);
+    explicit GeneralGroupBoxView(QWidget *parent = 0);
+    ~GeneralGroupBoxView();
+
     void loadSettings();
     void saveSettings();
 
     void setController(AbstractOptionsController *controller);
 
+    QString languageName(const QString &fileName) const;
+
+public slots:
+    void browseDestination();
+    void coresSpinBoxChecked(bool checked);
+
 private:
-    SelectionGroupBoxController *controller;
+    GeneralGroupBoxController *controller;
+    LanguageUtils *languages;
+    QMap<QString, QString> *fileToNiceName;
+
+    void createLanguageMenu();
 };
 
-#endif // SELECTIONGROUPBOXVIEW_H
+#endif // GENERALGROUPBOX_H

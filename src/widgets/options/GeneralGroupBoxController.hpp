@@ -22,7 +22,7 @@
 #ifndef GENERALGROUPBOXCONTROLLER_H
 #define GENERALGROUPBOXCONTROLLER_H
 
-#include "abstractoptionsgroupbox.h"
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
 #include "Settings.hpp"
 
 class GeneralGroupBoxView;

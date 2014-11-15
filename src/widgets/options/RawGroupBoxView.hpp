@@ -19,26 +19,32 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include <typeinfo>
+#ifndef RAWGROUPBOXVIEW_H
+#define RAWGROUPBOXVIEW_H
 
-#include "selectiongroupboxview.h"
-#include "selectiongroupboxcontroller.h"
+#include "widgets/options/AbstractOptionsGroupBox.hpp"
+#include "ui_RawGroupBox.h"
 
-SelectionGroupBoxView::SelectionGroupBoxView(QWidget *parent)
-    : AbstractOptionsGroupBox(parent) {
-    setupUi(this);
-}
+class RawGroupBoxController;
 
-void SelectionGroupBoxView::loadSettings() {
-    controller->loadSettings();
-}
+//! Raw group box view class used in OptionsDialog dialog.
+class RawGroupBoxView : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
+    Q_OBJECT
 
-void SelectionGroupBoxView::saveSettings() {
-    controller->saveSettings();
-}
+public:
+    explicit RawGroupBoxView(QWidget *parent = 0);
 
-void SelectionGroupBoxView::setController(AbstractOptionsController *controller) {
-    Q_ASSERT(typeid(*controller) == typeid(SelectionGroupBoxController));
+    void loadSettings();
+    void saveSettings();
 
-    this->controller = (SelectionGroupBoxController *)controller;
-}
+    void setController(AbstractOptionsController *controller);
+
+private slots:
+    void browseButtonClicked();
+    void rawEnabledStatusChanged(int state);
+
+private:
+    RawGroupBoxController *controller;
+};
+
+#endif // RAWGROUPBOXVIEW_H
