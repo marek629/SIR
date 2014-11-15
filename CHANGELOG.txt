@@ -7,6 +7,7 @@
     - Fixed no files with lowercase extension in "Add File" dialog
     - Removed defines.h file
     - Removed files coresponded uploading to Google Code
+    - CamelCase source files naming
 
 * Sun Aug 24 2014 - Marek Jędryka <jedryka89@gmail.com> - v2.7.3
     - Changed all occurrences of old SIR webpage URL

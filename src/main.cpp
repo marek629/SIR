@@ -23,7 +23,7 @@
 #include <QtCore/QTextCodec>
 #include <QDebug>
 
-#include "main.h"
+#include "main.hpp"
 #include "CommandLineAssistant.hpp"
 
 
