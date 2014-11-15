@@ -23,7 +23,7 @@
 #include <QLibraryInfo>
 #include <QFileInfo>
 #include <iostream>
-#include "commandlineassistant.h"
+#include "CommandLineAssistant.hpp"
 #include "languageutils.h"
 #include "settings.h"
 #include "sir_string.h"

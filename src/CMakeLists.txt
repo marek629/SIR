@@ -2,7 +2,7 @@
 
 # Source files
 set( sir_SRCS
-        commandlineassistant.cpp
+        CommandLineAssistant.cpp
         converteffects.cpp
         convertshareddata.cpp
         convertthread.cpp

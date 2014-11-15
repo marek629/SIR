@@ -24,7 +24,7 @@
 #include <QDebug>
 
 #include "main.h"
-#include "commandlineassistant.h"
+#include "CommandLineAssistant.hpp"
 
 
 #if QT_VERSION >= 0x050000 || defined(Q_OS_OS2)

@@ -46,7 +46,7 @@
 #include "languageutils.h"
 #include "convertshareddata.h"
 #include "Session.hpp"
-#include "commandlineassistant.h"
+#include "CommandLineAssistant.hpp"
 #include "effectscollector.h"
 
 using namespace sir;
