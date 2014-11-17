@@ -20,7 +20,7 @@
  */
 
 #include <QStringList>
-#include "version.h"
+#include "Version.hpp"
 
 /** Creates the Version object. */
 Version::Version(const char *v)

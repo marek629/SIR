@@ -23,9 +23,9 @@
 #include <QFile>
 #include <QMessageBox>
 #include "widgets/ConvertDialog.hpp"
-#include "sir_string.h"
-#include "xmlstreamwriter.h"
-#include "version.h"
+#include "sir_String.hpp"
+#include "XmlStreamWriter.hpp"
+#include "Version.hpp"
 #include "EffectsCollector.hpp"
 
 using namespace sir;

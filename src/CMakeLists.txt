@@ -14,16 +14,16 @@ set( sir_SRCS
         NetworkUtils.cpp
         RawUtils.cpp
         RegExpUtils.cpp
-        rgb.cpp
+        Rgb.cpp
         Selection.cpp
         Session.cpp
         Settings.cpp
         SharedInformation.cpp
-        sir_string.cpp
+        sir_String.cpp
         SvgModifier.cpp
-        version.cpp
+        Version.cpp
         XmlHelper.cpp
-        xmlstreamwriter.cpp
+        XmlStreamWriter.cpp
         widgets/AboutDialog.cpp
         widgets/ConvertDialog.cpp
         widgets/BrushFrame.cpp

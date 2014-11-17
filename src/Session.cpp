@@ -23,9 +23,9 @@
 #include <QMessageBox>
 #include "Session.hpp"
 #include "widgets/ConvertDialog.hpp"
-#include "xmlstreamwriter.h"
-#include "version.h"
-#include "sir_string.h"
+#include "XmlStreamWriter.hpp"
+#include "Version.hpp"
+#include "sir_String.hpp"
 #include "ConvertSharedData.hpp"
 #include "EffectsCollector.hpp"
 

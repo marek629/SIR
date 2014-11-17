@@ -26,7 +26,7 @@
 #include "CommandLineAssistant.hpp"
 #include "LanguageUtils.hpp"
 #include "Settings.hpp"
-#include "sir_string.h"
+#include "sir_String.hpp"
 #include "widgets/TreeWidget.hpp"
 
 #define SHARED_MEMORY_SIZE 200000

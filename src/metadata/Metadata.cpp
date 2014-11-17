@@ -26,7 +26,7 @@
 #include <cmath>
 #include "metadata/MetadataUtils.hpp"
 #include "metadata/Metadata.hpp"
-#include "version.h"
+#include "Version.hpp"
 
 using namespace MetadataUtils;
 using namespace sir;

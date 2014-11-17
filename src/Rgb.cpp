@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "rgb.h"
+#include "Rgb.hpp"
 
 Rgb::Rgb() {
     red = 0;

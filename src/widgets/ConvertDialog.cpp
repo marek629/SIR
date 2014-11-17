@@ -37,7 +37,7 @@
 #include "widgets/OptionsDialog.hpp"
 #include "widgets/DetailsBrowserController.hpp"
 #include "widgets/options/GeneralGroupBoxController.hpp"
-#include "version.h"
+#include "Version.hpp"
 #include "RawUtils.hpp"
 #include "NetworkUtils.hpp"
 #include "widgets/MessageBox.hpp"

@@ -23,7 +23,7 @@
 #define CONVERTEFFECTS_H
 
 #include "SharedInformation.hpp"
-#include "rgb.h"
+#include "Rgb.hpp"
 
 /** \brief Convertion effects class.
   *

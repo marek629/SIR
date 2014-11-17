@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "sir_string.h"
+#include "sir_String.hpp"
 #include <cmath>
 #include <QStringList>
 #include <QDateTime>

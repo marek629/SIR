@@ -20,7 +20,7 @@
  */
 
 #include "NetworkUtils.hpp"
-#include "version.h"
+#include "Version.hpp"
 #include <QNetworkAccessManager>
 #include <QUrl>
 #include <QNetworkRequest>

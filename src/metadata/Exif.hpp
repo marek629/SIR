@@ -28,7 +28,7 @@
 
 #include <QCoreApplication>
 #include <QImage>
-#include "../sir_string.h"
+#include "sir_String.hpp"
 
 #ifdef SIR_METADATA_SUPPORT
 //! The namespace of exiv2 library API.

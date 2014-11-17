@@ -24,7 +24,7 @@
 
 #include <QTreeWidget>
 #include "widgets/TreeWidgetHeader.hpp"
-#include "sir_string.h"
+#include "sir_String.hpp"
 
 class QKeyEvent;
 class QDropEvent;

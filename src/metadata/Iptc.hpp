@@ -24,7 +24,7 @@
 
 #include <QDate>
 #include <QTime>
-#include "../sir_string.h"
+#include "../sir_String.hpp"
 
 namespace MetadataUtils {
     /** \brief IPTC metadata storage and manipulation class.

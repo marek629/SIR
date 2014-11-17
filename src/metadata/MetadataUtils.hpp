@@ -22,7 +22,7 @@
 #ifndef METADATAUTILS_H
 #define METADATAUTILS_H
 
-#include "sir_string.h"
+#include "sir_String.hpp"
 #include "metadata/Exif.hpp"
 #ifdef SIR_METADATA_SUPPORT
 #include <QImage>

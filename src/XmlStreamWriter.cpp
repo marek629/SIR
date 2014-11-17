@@ -20,7 +20,7 @@
  */
 
 #include <QPointF>
-#include "xmlstreamwriter.h"
+#include "XmlStreamWriter.hpp"
 
 /** Creates the XmlStreamWriter object. */
 XmlStreamWriter::XmlStreamWriter() : QXmlStreamWriter() {}
