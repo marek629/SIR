@@ -22,7 +22,7 @@
 #ifndef BRUSHFRAME_H
 #define BRUSHFRAME_H
 
-#include "colorframe.h"
+#include "widgets/ColorFrame.hpp"
 
 struct LinearGradientParams {
     QPointF start;

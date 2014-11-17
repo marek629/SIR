@@ -20,7 +20,7 @@
  */
 
 #include "widgets/DetailsBrowserController.hpp"
-#include "widgets/detailsbrowserview.h"
+#include "widgets/DetailsBrowserView.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "optionsenums.h"
 #include "ConvertSharedData.hpp"

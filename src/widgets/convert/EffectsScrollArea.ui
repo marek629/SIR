@@ -684,24 +684,24 @@
   <customwidget>
    <class>ColorFrame</class>
    <extends>QFrame</extends>
-   <header>widgets/colorframe.h</header>
+   <header>widgets/ColorFrame.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>PosSpinBox</class>
    <extends>QSpinBox</extends>
-   <header>widgets/posspinbox.h</header>
+   <header>widgets/PosSpinBox.hpp</header>
   </customwidget>
   <customwidget>
    <class>BrushFrame</class>
    <extends>QFrame</extends>
-   <header>widgets/brushframe.h</header>
+   <header>widgets/BrushFrame.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>GradientEditWidget</class>
    <extends>QWidget</extends>
-   <header>widgets/gradienteditwidget.h</header>
+   <header>widgets/GradientEditWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

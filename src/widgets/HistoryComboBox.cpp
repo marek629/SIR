@@ -26,7 +26,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QCoreApplication>
-#include "historycombobox.h"
+#include "widgets/HistoryComboBox.hpp"
 
 /** Default constructor.\n
   * Constucts by default editable combo box which insert at top policy.

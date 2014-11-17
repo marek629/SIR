@@ -21,7 +21,7 @@
 
 #include <QMouseEvent>
 #include <QApplication>
-#include "colorframe.h"
+#include "widgets/ColorFrame.hpp"
 
 /** Creates ColorFrame object. */
 ColorFrame::ColorFrame(QWidget *parent) : QFrame(parent) {

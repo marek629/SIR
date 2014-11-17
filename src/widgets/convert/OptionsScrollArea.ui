@@ -169,7 +169,7 @@
   <customwidget>
    <class>ColorFrame</class>
    <extends>QFrame</extends>
-   <header>widgets/colorframe.h</header>
+   <header>widgets/ColorFrame.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

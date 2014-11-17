@@ -26,7 +26,7 @@
 #include "widgets/SelectionDialog.hpp"
 #include "widgets/ConvertDialog.hpp"
 #ifndef SIR_METADATA_SUPPORT
-#include "widgets/historycombobox.h"
+#include "widgets/HistoryComboBox.hpp"
 #endif // SIR_METADATA_SUPPORT
 
 using namespace sir;

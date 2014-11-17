@@ -22,7 +22,7 @@
 #ifndef GRADIENTEDITWIDGET_H
 #define GRADIENTEDITWIDGET_H
 
-#include "ui_gradienteditwidget.h"
+#include "ui_GradientEditWidget.h"
 
 //! Class providing graphical QGradient editor.
 class GradientEditWidget : public QWidget, private Ui::GradientEditWidget {

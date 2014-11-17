@@ -126,7 +126,7 @@
   <customwidget>
    <class>HistoryComboBox</class>
    <extends>QComboBox</extends>
-   <header>widgets/historycombobox.h</header>
+   <header>widgets/HistoryComboBox.hpp</header>
   </customwidget>
  </customwidgets>
  <resources/>

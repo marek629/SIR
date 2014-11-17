@@ -21,8 +21,8 @@
 
 #include <QMouseEvent>
 #include <QPainter>
-#include "brushframe.h"
-#include "gradienteditwidget.h"
+#include "widgets/BrushFrame.hpp"
+#include "widgets/GradientEditWidget.hpp"
 
 /** Creates BrushFrame object. */
 BrushFrame::BrushFrame(QWidget *parent) : ColorFrame(parent) {

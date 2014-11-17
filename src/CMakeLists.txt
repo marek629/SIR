@@ -26,18 +26,18 @@ set( sir_SRCS
         xmlstreamwriter.cpp
         widgets/AboutDialog.cpp
         widgets/ConvertDialog.cpp
-        widgets/brushframe.cpp
-        widgets/colorframe.cpp
+        widgets/BrushFrame.cpp
+        widgets/ColorFrame.cpp
         widgets/DetailsBrowserController.cpp
-        widgets/detailsbrowserview.cpp
-        widgets/gradienteditwidget.cpp
-        widgets/historycombobox.cpp
+        widgets/DetailsBrowserView.cpp
+        widgets/GradientEditWidget.cpp
+        widgets/HistoryComboBox.cpp
         widgets/MessageBox.cpp
         widgets/OptionsDialog.cpp
-        widgets/posspinbox.cpp
+        widgets/PosSpinBox.cpp
         widgets/PreviewDialog.cpp
         widgets/SelectionDialog.cpp
-        widgets/timecombobox.cpp
+        widgets/TimeComboBox.cpp
         widgets/TreeWidget.cpp
         widgets/TreeWidgetHeader.cpp
         widgets/convert/EffectsScrollArea.cpp
@@ -61,7 +61,7 @@ set( sir_SRCS
 set( sir_UIS
         widgets/AboutDialog.ui
         widgets/ConvertDialog.ui
-        widgets/gradienteditwidget.ui
+        widgets/GradientEditWidget.ui
         widgets/PreviewDialog.ui
         widgets/convert/EffectsScrollArea.ui
         widgets/convert/OptionsScrollArea.ui

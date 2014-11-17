@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "detailsbrowserview.h"
+#include "widgets/DetailsBrowserView.hpp"
 
 DetailsBrowserView::DetailsBrowserView(QWidget *parent) : QTextEdit(parent) {}
 

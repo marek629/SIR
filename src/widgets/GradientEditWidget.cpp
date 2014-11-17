@@ -21,7 +21,7 @@
 
 #include <QInputDialog>
 #include <QColorDialog>
-#include "gradienteditwidget.h"
+#include "widgets/GradientEditWidget.hpp"
 
 /** Creates the GradientEditWidget object.
   *

@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "posspinbox.h"
+#include "widgets/PosSpinBox.hpp"
 
 /** Creates the PosSpinBox object.
   * \param parent Parent widget.

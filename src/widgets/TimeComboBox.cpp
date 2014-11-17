@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "timecombobox.h"
+#include "widgets/TimeComboBox.hpp"
 #include <QLineEdit>
 #include <QRegExp>
 
