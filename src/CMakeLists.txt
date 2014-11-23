@@ -81,6 +81,9 @@ if( metadata )
             metadata/Exif.cpp
             metadata/Error.cpp
             metadata/Iptc.cpp
+            metadata/structs/MetadataStruct.cpp
+            metadata/visitors/RichTextVisitor.cpp
+            metadata/visitors/ExifRichTextVisitor.cpp
             widgets/MetadataDialog.cpp
             widgets/options/DetailsGroupBoxController.cpp
             widgets/options/DetailsGroupBoxView.cpp

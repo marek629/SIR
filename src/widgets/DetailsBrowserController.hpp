@@ -56,8 +56,8 @@ private:
 #ifdef SIR_METADATA_SUPPORT
     int exifAuthor;
     int exifCamera;
-    int exifPhoto;
     int exifImage;
+    int exifPhoto;
     int iptcPrint;
 #endif // SIR_METADATA_SUPPORT
 
@@ -67,10 +67,6 @@ private:
     QString addMetadataToContent(const MetadataUtils::ExifStruct &exifStruct,
                                  const MetadataUtils::IptcStruct &iptcStruct);
     QString exifContent(const MetadataUtils::ExifStruct &exifStruct);
-    QString exifImageContent(const MetadataUtils::ExifStruct &exifStruct);
-    QString exifPhotoContent(const MetadataUtils::ExifStruct &exifStruct);
-    QString exifCameraContent(const MetadataUtils::ExifStruct &exifStruct);
-    QString exifAuthorContent(const MetadataUtils::ExifStruct &exifStruct);
     QString iptcContent(const MetadataUtils::IptcStruct &iptcStruct);
 #endif // SIR_METADATA_SUPPORT
 };

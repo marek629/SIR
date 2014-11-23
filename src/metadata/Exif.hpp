@@ -29,6 +29,7 @@
 #include <QCoreApplication>
 #include <QImage>
 #include "sir_String.hpp"
+#include "metadata/structs/MetadataStruct.hpp"
 
 #ifdef SIR_METADATA_SUPPORT
 //! The namespace of exiv2 library API.
@@ -103,7 +104,7 @@ private:
 };
 
 //! Stores \a Exif metadata user readable.
-struct ExifStruct {
+struct ExifStruct : public MetadataStruct {
     // Image section
     sir::String version; /**< Contains information about version of Exiv library. */
     sir::String processingSoftware;  /**< Contains information about processing software. */
