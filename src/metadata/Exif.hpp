@@ -27,7 +27,6 @@
 #endif // SIR_CMAKE
 
 #include <QCoreApplication>
-#include <QImage>
 #include "sir_String.hpp"
 #include "metadata/structs/MetadataStruct.hpp"
 
@@ -101,45 +100,6 @@ private:
     static sir::String copyrightString;
     static bool userCommentOverwrite;
     static sir::String userCommentString;
-};
-
-//! Stores \a Exif metadata user readable.
-struct ExifStruct : public MetadataStruct {
-    // Image section
-    sir::String version; /**< Contains information about version of Exiv library. */
-    sir::String processingSoftware;  /**< Contains information about processing software. */
-    sir::String imageWidth; /**< Contains image width with " px" suffix. */
-    sir::String imageHeight;  /**< Contains image height with " px" suffix. */
-    char orientation; /**< Information about orientation of image. */
-    sir::String originalDate; /**< Creation date and time. */
-    sir::String digitizedDate; /**< Digitalization date and time. */
-    // Thumbnail section
-    QImage thumbnailImage; /**< Contains photo thumbnail. */
-    sir::String thumbnailWidth; /**< Contains thumbnail width with " px" suffix. */
-    sir::String thumbnailHeight;  /**< Contains thumbnail height with " px" suffix. */
-    // Photo section
-    float focalLength; /**< Contains Focal Length value in milimeters. */
-    float aperture; /**< Contains Aperture value. */
-    int isoSpeed; /**< Contains ISO Speed value. */
-    sir::String shutterSpeed; /**< Contains Shutter Speed. */
-    sir::String expTime;  /**< Contains Exposure time. */
-    float expBias;  /**< Contains Exposure bias value in EV. */
-    char expProgram; /**< Contains information about Exposure program. */
-    short meteringMode; /**< Contains information about Light metering mode. */
-    short flashMode; /**< Contains information about flash mode. \sa Flash */
-    // Camera section
-    sir::String cameraManufacturer;  /**< Contains information about Light metering mode. */
-    sir::String cameraModel; /**< Contains information about Camera's model. */
-    // Author section
-    sir::String artist; /**< Contains information about autor. */
-    sir::String copyright; /**< Contains copyright information. */
-    sir::String userComment; /**< Contains user comment. */
-
-    // Methods
-    QString accept(RichTextVisitor *visitor);
-    void reset();
-    void clear();
-    ExifStruct copy();
 };
 
 /** \brief Stores flash mode strings coresponding with \e Exif.Photo.Flash

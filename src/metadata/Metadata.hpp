@@ -30,6 +30,7 @@
 #include "metadata/Exif.hpp"
 #include "metadata/Iptc.hpp"
 #include "metadata/Error.hpp"
+#include "metadata/structs/ExifStruct.hpp"
 
 namespace MetadataUtils {
 //! Main metadata manipulating class.

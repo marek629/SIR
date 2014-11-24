@@ -24,6 +24,7 @@
 
 #include "metadata/visitors/RichTextVisitor.hpp"
 #include "metadata/Exif.hpp"
+#include "metadata/structs/ExifStruct.hpp"
 
 class ExifRichTextVisitor : public RichTextVisitor {
     Q_DECLARE_TR_FUNCTIONS(ExifRichTextVisitor)

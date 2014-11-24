@@ -81,6 +81,7 @@ if( metadata )
             metadata/Exif.cpp
             metadata/Error.cpp
             metadata/Iptc.cpp
+            metadata/structs/ExifStruct.cpp
             metadata/structs/MetadataStruct.cpp
             metadata/visitors/RichTextVisitor.cpp
             metadata/visitors/ExifRichTextVisitor.cpp

@@ -26,6 +26,7 @@
 #include <QSize>
 #include "metadata/Exif.hpp"
 #include "metadata/Iptc.hpp"
+#include "metadata/structs/ExifStruct.hpp"
 
 class QTreeWidgetItem;
 
