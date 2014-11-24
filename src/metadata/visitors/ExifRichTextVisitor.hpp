@@ -26,8 +26,11 @@
 #include "metadata/Exif.hpp"
 
 class ExifRichTextVisitor : public RichTextVisitor {
+    Q_DECLARE_TR_FUNCTIONS(ExifRichTextVisitor)
+
 public:
-    ExifRichTextVisitor(int exifAuthor, int exifCamera, int exifImage, int exifPhoto);
+    ExifRichTextVisitor(int exifAuthor, int exifCamera,
+                        int exifImage, int exifPhoto);
     QString visit(const MetadataStruct &metadataStruct);
 
 private:
