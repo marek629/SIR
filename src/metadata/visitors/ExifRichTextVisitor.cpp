@@ -52,6 +52,11 @@ QString ExifRichTextVisitor::visit(MetadataStruct *metadataStruct) {
     return content;
 }
 
+void ExifRichTextVisitor::setDateTimeFormat(const QString &value) {
+    dateTimeFormat = value;
+}
+
+
 QString ExifRichTextVisitor::authorContent(const ExifStruct &exifStruct) {
     QString content;
 
@@ -79,7 +84,6 @@ QString ExifRichTextVisitor::cameraContent(const ExifStruct &exifStruct) {
 
 QString ExifRichTextVisitor::imageContent(const ExifStruct &exifStruct) {
     QString content;
-    const ConvertSharedData &csd = convertDialog->convertSharedData();
 
     if (exifImage & DetailsOptions::ExifVersion)
         content += tr("Exif Version") + ": " + exifStruct.version + htmlBr;
@@ -97,13 +101,13 @@ QString ExifRichTextVisitor::imageContent(const ExifStruct &exifStruct) {
                 String::fromDateTimeString(
                     exifStruct.originalDate,
                     MetadataUtils::Exif::dateTimeFormat,
-                    csd.dateTimeFormat) + htmlBr;
+                    dateTimeFormat) + htmlBr;
     if (exifImage & DetailsOptions::DigitizedDateAndTime)
         content += tr("Digitized Date and Time") + ": " +
                 String::fromDateTimeString(
                     exifStruct.digitizedDate,
                     MetadataUtils::Exif::dateTimeFormat,
-                    csd.dateTimeFormat) + htmlBr;
+                    dateTimeFormat) + htmlBr;
 
     return content;
 }

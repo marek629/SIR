@@ -168,10 +168,11 @@ QString DetailsBrowserController::addMetadataToContent(
 
 QString DetailsBrowserController::exifContent(
         const MetadataUtils::ExifStruct &exifStruct) {
+    const ConvertSharedData &csd = convertDialog->convertSharedData();
 
     ExifRichTextVisitor visitor(exifAuthor, exifCamera, exifImage, exifPhoto);
+    visitor.setDateTimeFormat(csd.dateTimeFormat);
 
-//    return exifStruct.accept(visitor);
     return visitor.visit(const_cast<MetadataUtils::ExifStruct *>(&exifStruct));
 }
 

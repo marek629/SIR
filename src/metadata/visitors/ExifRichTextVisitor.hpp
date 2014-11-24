@@ -32,12 +32,14 @@ public:
     ExifRichTextVisitor(int exifAuthor, int exifCamera,
                         int exifImage, int exifPhoto);
     QString visit(MetadataStruct *metadataStruct);
+    void setDateTimeFormat(const QString &value);
 
 private:
     int exifAuthor;
     int exifCamera;
     int exifImage;
     int exifPhoto;
+    QString dateTimeFormat;
 
     QString authorContent(const MetadataUtils::ExifStruct &exifStruct);
     QString cameraContent(const MetadataUtils::ExifStruct &exifStruct);
