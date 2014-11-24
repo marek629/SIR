@@ -136,6 +136,7 @@ struct ExifStruct : public MetadataStruct {
     sir::String userComment; /**< Contains user comment. */
 
     // Methods
+    QString accept(const RichTextVisitor &visitor);
     void reset();
     void clear();
     ExifStruct copy();

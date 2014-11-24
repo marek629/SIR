@@ -19,6 +19,15 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "metadata/structs/MetadataStruct.hpp"
+#ifndef VISITABLE_HPP
+#define VISITABLE_HPP
 
-MetadataStruct::MetadataStruct() {}
+#include <QString>
+#include "metadata/visitors/RichTextVisitor.hpp"
+
+class Visitable {
+public:
+    virtual QString accept(const RichTextVisitor &visitor) = 0;
+};
+
+#endif // VISITABLE_HPP

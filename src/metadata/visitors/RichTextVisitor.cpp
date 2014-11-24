@@ -32,6 +32,3 @@ const QString RichTextVisitor::htmlEnd =
         "</body></html>";
 const QString RichTextVisitor::htmlBr = "<br />";
 const QString RichTextVisitor::htmlHr = "<hr />";
-
-RichTextVisitor::RichTextVisitor() {
-}

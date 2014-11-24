@@ -22,8 +22,9 @@
 #ifndef METADATASTRUCT_HPP
 #define METADATASTRUCT_HPP
 
-class MetadataStruct {
-public:
+#include "metadata/visitors/Visitable.hpp"
+
+struct MetadataStruct : public Visitable {
     MetadataStruct();
 };
 

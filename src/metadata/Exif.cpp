@@ -22,6 +22,7 @@
 #ifdef SIR_METADATA_SUPPORT
 
 #include "metadata/Exif.hpp"
+#include "metadata/visitors/ExifRichTextVisitor.hpp"
 #include <exiv2/exif.hpp>
 #include <exiv2/metadatum.hpp>
 
@@ -531,6 +532,11 @@ Flip Exif::flipValue(char orientation) {
         break;
     }
     return result;
+}
+
+QString ExifStruct::accept(const RichTextVisitor &visitor) {
+    const ExifRichTextVisitor &exifVisitor = visitor;
+    return exifVisitor.visit(*this);
 }
 
 /** Sets default value of ExifStruct fields, mainly 0 and \em "no data" strings.
