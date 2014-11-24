@@ -33,8 +33,8 @@ public:
     static const QString htmlBr;
     static const QString htmlHr;
 
-protected:
-    virtual QString visit(const MetadataStruct& metadataStruct) = 0;
+//protected:
+    virtual QString visit(MetadataStruct *metadataStruct) = 0;
 };
 
 #endif // RICHTEXTVISITOR_HPP

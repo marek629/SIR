@@ -171,7 +171,8 @@ QString DetailsBrowserController::exifContent(
 
     ExifRichTextVisitor visitor(exifAuthor, exifCamera, exifImage, exifPhoto);
 
-    return visitor.visit(exifStruct);
+//    return exifStruct.accept(visitor);
+    return visitor.visit(const_cast<MetadataUtils::ExifStruct *>(&exifStruct));
 }
 
 QString DetailsBrowserController::iptcContent(

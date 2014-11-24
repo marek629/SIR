@@ -534,9 +534,12 @@ Flip Exif::flipValue(char orientation) {
     return result;
 }
 
-QString ExifStruct::accept(const RichTextVisitor &visitor) {
-    const ExifRichTextVisitor &exifVisitor = visitor;
-    return exifVisitor.visit(*this);
+QString ExifStruct::accept(RichTextVisitor *visitor) {
+    return visitor->visit(this);
+//    const ExifRichTextVisitor &exifVisitor = (const ExifRichTextVisitor &) visitor;
+//    MetadataStruct metadataStruct = *this;
+//    return exifVisitor.visit(this);
+//    return "not implemented";
 }
 
 /** Sets default value of ExifStruct fields, mainly 0 and \em "no data" strings.

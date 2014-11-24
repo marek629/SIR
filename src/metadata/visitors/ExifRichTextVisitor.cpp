@@ -34,9 +34,9 @@ ExifRichTextVisitor::ExifRichTextVisitor(int exifAuthor, int exifCamera,
     this->exifPhoto = exifPhoto;
 }
 
-QString ExifRichTextVisitor::visit(const MetadataStruct &metadataStruct) {
-    const ExifStruct &exifStruct = (const ExifStruct &) metadataStruct;
-    if (exifStruct.version == String::noData())
+QString ExifRichTextVisitor::visit(MetadataStruct *metadataStruct) {
+    ExifStruct *exifStruct = (ExifStruct *) metadataStruct;
+    if (exifStruct->version == String::noData())
         return QString();
 
     QString content;
@@ -44,10 +44,10 @@ QString ExifRichTextVisitor::visit(const MetadataStruct &metadataStruct) {
     if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
         content += htmlBr;
 
-    content += imageContent(exifStruct);
-    content += photoContent(exifStruct);
-    content += cameraContent(exifStruct);
-    content += authorContent(exifStruct);
+    content += imageContent(*exifStruct);
+    content += photoContent(*exifStruct);
+    content += cameraContent(*exifStruct);
+    content += authorContent(*exifStruct);
 
     return content;
 }
