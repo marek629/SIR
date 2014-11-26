@@ -27,6 +27,7 @@
 #include "metadata/Exif.hpp"
 #include "metadata/Iptc.hpp"
 #include "metadata/structs/ExifStruct.hpp"
+#include "metadata/structs/IptcStruct.hpp"
 
 class QTreeWidgetItem;
 

@@ -19,23 +19,37 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RICHTEXTVISITOR_HPP
-#define RICHTEXTVISITOR_HPP
+#ifndef IPTCSTRUCT_HPP
+#define IPTCSTRUCT_HPP
 
-#include <QString>
+#include "metadata/structs/MetadataStruct.hpp"
+#include "sir_String.hpp"
+
+#include <QDate>
+#include <QTime>
 
 namespace MetadataUtils {
-struct MetadataStruct;
+//! Stores \a IPTC metadata user readable.
+struct IptcStruct : public MetadataStruct {
+    sir::String modelVersion;
+    QDate dateCreated;
+    QTime timeCreated;
+    QDate digitizationDate;
+    QTime digitizationTime;
+    sir::String byline;
+    sir::String copyright;
+    sir::String objectName;
+    sir::String keywords;
+    sir::String caption;
+    sir::String countryName;
+    sir::String city;
+    sir::String editStatus;
+
+    // Methods
+    QString accept(RichTextVisitor *visitor);
+    void reset();
+    IptcStruct copy();
+};
 }
 
-class RichTextVisitor {
-public:
-    static const QString htmlOrigin;
-    static const QString htmlEnd;
-    static const QString htmlBr;
-    static const QString htmlHr;
-
-    virtual QString visit(MetadataUtils::MetadataStruct *metadataStruct) = 0;
-};
-
-#endif // RICHTEXTVISITOR_HPP
+#endif // IPTCSTRUCT_HPP

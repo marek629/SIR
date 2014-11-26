@@ -76,12 +76,13 @@ set( sir_UIS
 
 if( metadata )
     set( sir_SRCS ${sir_SRCS}
+            metadata/Error.cpp
+            metadata/Exif.cpp
+            metadata/Iptc.cpp
             metadata/Metadata.cpp
             metadata/MetadataUtils.cpp
-            metadata/Exif.cpp
-            metadata/Error.cpp
-            metadata/Iptc.cpp
             metadata/structs/ExifStruct.cpp
+            metadata/structs/IptcStruct.cpp
             metadata/structs/MetadataStruct.cpp
             metadata/visitors/RichTextVisitor.cpp
             metadata/visitors/ExifRichTextVisitor.cpp
