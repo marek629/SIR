@@ -31,6 +31,7 @@
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
 #endif // SIR_METADATA_SUPPORT
 
+using namespace MetadataUtils;
 using namespace sir;
 
 DetailsBrowserController::DetailsBrowserController(TreeWidget *model,

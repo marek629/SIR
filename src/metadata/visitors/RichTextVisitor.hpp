@@ -24,7 +24,9 @@
 
 #include <QString>
 
+namespace MetadataUtils {
 struct MetadataStruct;
+}
 
 class RichTextVisitor {
 public:
@@ -34,7 +36,7 @@ public:
     static const QString htmlHr;
 
 //protected:
-    virtual QString visit(MetadataStruct *metadataStruct) = 0;
+    virtual QString visit(MetadataUtils::MetadataStruct *metadataStruct) = 0;
 };
 
 #endif // RICHTEXTVISITOR_HPP

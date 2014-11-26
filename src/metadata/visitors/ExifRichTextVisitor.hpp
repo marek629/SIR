@@ -26,6 +26,7 @@
 #include "metadata/Exif.hpp"
 #include "metadata/structs/ExifStruct.hpp"
 
+namespace MetadataUtils {
 class ExifRichTextVisitor : public RichTextVisitor {
     Q_DECLARE_TR_FUNCTIONS(ExifRichTextVisitor)
 
@@ -47,5 +48,6 @@ private:
     QString imageContent(const MetadataUtils::ExifStruct &exifStruct);
     QString photoContent(const MetadataUtils::ExifStruct &exifStruct);
 };
+}
 
 #endif // EXIFRICHTEXTVISITOR_HPP

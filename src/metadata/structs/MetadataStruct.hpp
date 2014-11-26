@@ -24,9 +24,11 @@
 
 #include "metadata/visitors/Visitable.hpp"
 
+namespace MetadataUtils {
 struct MetadataStruct : public Visitable {
     MetadataStruct();
     virtual void reset();
 };
+}
 
 #endif // METADATASTRUCT_HPP
