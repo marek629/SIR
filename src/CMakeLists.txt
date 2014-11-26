@@ -84,8 +84,9 @@ if( metadata )
             metadata/structs/ExifStruct.cpp
             metadata/structs/IptcStruct.cpp
             metadata/structs/MetadataStruct.cpp
-            metadata/visitors/RichTextVisitor.cpp
             metadata/visitors/ExifRichTextVisitor.cpp
+            metadata/visitors/IptcRichTextVisitor.cpp
+            metadata/visitors/RichTextVisitor.cpp
             widgets/MetadataDialog.cpp
             widgets/options/DetailsGroupBoxController.cpp
             widgets/options/DetailsGroupBoxView.cpp

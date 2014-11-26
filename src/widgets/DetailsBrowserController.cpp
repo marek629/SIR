@@ -29,6 +29,7 @@
 #ifdef SIR_METADATA_SUPPORT
 #include "metadata/visitors/RichTextVisitor.hpp"
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
+#include "metadata/visitors/IptcRichTextVisitor.hpp"
 #endif // SIR_METADATA_SUPPORT
 
 using namespace MetadataUtils;
@@ -179,50 +180,12 @@ QString DetailsBrowserController::exifContent(
 
 QString DetailsBrowserController::iptcContent(
         const MetadataUtils::IptcStruct &iptcStruct) {
-    if (!MetadataUtils::Iptc::isVersionKnown())
-        return QString();
-
-    QString content;
     const ConvertSharedData &csd = convertDialog->convertSharedData();
 
-    if (iptcPrint & DetailsOptions::ModelVersion)
-        content += tr("Model version") + ": " +
-                iptcStruct.modelVersion + RichTextVisitor::htmlBr;
+    IptcRichTextVisitor visitor(iptcPrint);
+    visitor.setDateFormat(csd.dateFormat);
+    visitor.setTimeFormat(csd.timeFormat);
 
-    if (iptcPrint & DetailsOptions::DateCreated)
-        content += tr("Created date") + ": " +
-                iptcStruct.dateCreated.toString(csd.dateFormat) + RichTextVisitor::htmlBr;
-    if (iptcPrint & DetailsOptions::TimeCreated)
-        content += tr("Created time") + ": " +
-                iptcStruct.timeCreated.toString(csd.timeFormat) + RichTextVisitor::htmlBr;
-
-    if (iptcPrint & DetailsOptions::DigitizedDate)
-        content += tr("Digitized date") + ": " +
-                iptcStruct.digitizationDate.toString(csd.dateFormat) + RichTextVisitor::htmlBr;
-    if (iptcPrint & DetailsOptions::DigitizedTime)
-        content += tr("Digitized time") + ": " +
-                iptcStruct.digitizationTime.toString(csd.timeFormat) + RichTextVisitor::htmlBr;
-
-    if (iptcPrint & DetailsOptions::Byline)
-        content += tr("Author") + ": " + iptcStruct.byline + RichTextVisitor::htmlBr;
-    if (iptcPrint & DetailsOptions::CopyrightIptc)
-        content += tr("Copyright") + ": " + iptcStruct.copyright + RichTextVisitor::htmlBr;
-
-    if (iptcPrint & DetailsOptions::ObjectName)
-        content += tr("Object name") + ": " + iptcStruct.objectName + RichTextVisitor::htmlBr;
-    if (iptcPrint & DetailsOptions::Keywords)
-        content += tr("Keywords") + ": " + iptcStruct.keywords + RichTextVisitor::htmlBr;
-    if (iptcPrint & DetailsOptions::Caption)
-        content += tr("Description") + ": " + iptcStruct.caption + RichTextVisitor::htmlBr;
-
-    if (iptcPrint & DetailsOptions::CountryName)
-        content += tr("Country") + ": " + iptcStruct.countryName + RichTextVisitor::htmlBr;
-    if (iptcPrint & DetailsOptions::City)
-        content += tr("City") + ": " + iptcStruct.city + RichTextVisitor::htmlBr;
-
-    if (iptcPrint & DetailsOptions::EditStatus)
-        content += tr("Edit status") + ": " + iptcStruct.editStatus + RichTextVisitor::htmlBr;
-
-    return content;
+    return visitor.visit(const_cast<MetadataUtils::IptcStruct *>(&iptcStruct));
 }
 #endif // SIR_METADATA_SUPPORT
