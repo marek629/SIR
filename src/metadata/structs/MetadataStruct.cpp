@@ -22,3 +22,5 @@
 #include "metadata/structs/MetadataStruct.hpp"
 
 MetadataStruct::MetadataStruct() {}
+
+void MetadataStruct::reset() {}

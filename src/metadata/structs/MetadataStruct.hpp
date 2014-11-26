@@ -26,6 +26,7 @@
 
 struct MetadataStruct : public Visitable {
     MetadataStruct();
+    virtual void reset();
 };
 
 #endif // METADATASTRUCT_HPP
