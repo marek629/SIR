@@ -33,6 +33,13 @@ namespace MetadataUtils {
 struct ExifStruct;
 struct IptcStruct;
 }
+
+struct ExifPrintSettings {
+    int author;
+    int camera;
+    int image;
+    int photo;
+};
 #endif // SIR_METADATA_SUPPORT
 
 //! Image file details browser controller class.
@@ -54,20 +61,12 @@ private:
     QString htmlContent;
 
 #ifdef SIR_METADATA_SUPPORT
-    int exifAuthor;
-    int exifCamera;
-    int exifImage;
-    int exifPhoto;
-    int iptcPrint;
-#endif // SIR_METADATA_SUPPORT
-
-    void loadSettings();
-
-#ifdef SIR_METADATA_SUPPORT
     QString addMetadataToContent(const MetadataUtils::ExifStruct &exifStruct,
                                  const MetadataUtils::IptcStruct &iptcStruct);
     QString exifContent(const MetadataUtils::ExifStruct &exifStruct);
     QString iptcContent(const MetadataUtils::IptcStruct &iptcStruct);
+    ExifPrintSettings loadExifPrintSettings();
+    int loadIptcPrintSettings();
 #endif // SIR_METADATA_SUPPORT
 };
 

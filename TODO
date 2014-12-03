@@ -3,7 +3,6 @@
   ! fix Options -> File Details -> Exif tab -> Show All button disabled
     * when Exif tags selection is empty only Hide All buton is enabled
     * should be Show All button enabled, Hide All disabled
-  ! fix refresh file details settings after save settings
   ! keyboard navigation for selecting files in TreeWidget
   ! change TODO and CHANGELOG files format to Markdown or something else
 

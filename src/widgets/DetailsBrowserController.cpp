@@ -47,8 +47,6 @@ DetailsBrowserController::DetailsBrowserController(TreeWidget *model,
     this->view->setReadOnly(true);
 
     convertDialog = (ConvertDialog*)this->view->window();
-
-    loadSettings();
 }
 
 /** Adds detailed information (including thumbnail) about \a item.
@@ -124,30 +122,6 @@ void DetailsBrowserController::showDetails() {
                   + RichTextVisitor::htmlEnd);
 }
 
-/** Loads settings.
-  * \note If SIR_METADATA_SUPPORT isn't defined this function has no effect.
-  */
-void DetailsBrowserController::loadSettings() {
-#ifdef SIR_METADATA_SUPPORT
-    Settings *s = Settings::instance();
-    if (s->metadata.enabled) {
-        // details
-        exifAuthor  = s->details.exifAuthor;
-        exifCamera  = s->details.exifCamera;
-        exifPhoto   = s->details.exifPhoto;
-        exifImage   = s->details.exifImage;
-        iptcPrint   = s->details.iptc;
-    }
-    else {
-        exifAuthor = 0;
-        exifCamera = 0;
-        exifPhoto = 0;
-        exifImage = 0;
-        iptcPrint = 0;
-    }
-#endif // SIR_METADATA_SUPPORT
-}
-
 #ifdef SIR_METADATA_SUPPORT
 /** Returns metadata information string using data stored in
   * exifStruct and iptcStruct structs and exifPhoto, exifImage,
@@ -172,7 +146,9 @@ QString DetailsBrowserController::exifContent(
         const MetadataUtils::ExifStruct &exifStruct) {
     const ConvertSharedData &csd = convertDialog->convertSharedData();
 
-    ExifRichTextVisitor visitor(exifAuthor, exifCamera, exifImage, exifPhoto);
+    ExifPrintSettings exifPrint = loadExifPrintSettings();
+    ExifRichTextVisitor visitor(exifPrint.author, exifPrint.camera,
+                                exifPrint.image, exifPrint.photo);
     visitor.setDateTimeFormat(csd.dateTimeFormat);
 
     return visitor.visit(const_cast<MetadataUtils::ExifStruct *>(&exifStruct));
@@ -182,10 +158,41 @@ QString DetailsBrowserController::iptcContent(
         const MetadataUtils::IptcStruct &iptcStruct) {
     const ConvertSharedData &csd = convertDialog->convertSharedData();
 
+    int iptcPrint = loadIptcPrintSettings();
     IptcRichTextVisitor visitor(iptcPrint);
     visitor.setDateFormat(csd.dateFormat);
     visitor.setTimeFormat(csd.timeFormat);
 
     return visitor.visit(const_cast<MetadataUtils::IptcStruct *>(&iptcStruct));
+}
+
+ExifPrintSettings DetailsBrowserController::loadExifPrintSettings() {
+    ExifPrintSettings result;
+
+    Settings *s = Settings::instance();
+    if (s->metadata.enabled) {
+        result.author = s->details.exifAuthor;
+        result.camera = s->details.exifCamera;
+        result.image = s->details.exifImage;
+        result.photo = s->details.exifPhoto;
+    }
+    else {
+        result.author = 0;
+        result.camera = 0;
+        result.image = 0;
+        result.photo = 0;
+    }
+
+    return result;
+}
+
+int DetailsBrowserController::loadIptcPrintSettings() {
+    Settings *s = Settings::instance();
+    if (s->metadata.enabled) {
+        return s->details.iptc;
+    }
+    else {
+        return 0;
+    }
 }
 #endif // SIR_METADATA_SUPPORT
