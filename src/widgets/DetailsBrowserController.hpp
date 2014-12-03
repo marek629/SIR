@@ -24,6 +24,10 @@
 
 #include <QObject>
 
+#ifdef SIR_METADATA_SUPPORT
+#include "metadata/structs/ExifPrintSettings.hpp"
+#endif // SIR_METADATA_SUPPORT
+
 class QTreeWidgetItem;
 class ConvertDialog;
 class TreeWidget;
@@ -33,13 +37,6 @@ namespace MetadataUtils {
 struct ExifStruct;
 struct IptcStruct;
 }
-
-struct ExifPrintSettings {
-    int author;
-    int camera;
-    int image;
-    int photo;
-};
 #endif // SIR_METADATA_SUPPORT
 
 //! Image file details browser controller class.

@@ -82,6 +82,7 @@ if( metadata )
             metadata/Iptc.cpp
             metadata/Metadata.cpp
             metadata/MetadataUtils.cpp
+            metadata/structs/ExifPrintSettings.cpp
             metadata/structs/ExifStruct.cpp
             metadata/structs/IptcStruct.cpp
             metadata/structs/MetadataStruct.cpp

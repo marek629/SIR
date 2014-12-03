@@ -168,21 +168,7 @@ QString DetailsBrowserController::iptcContent(
 
 ExifPrintSettings DetailsBrowserController::loadExifPrintSettings() {
     ExifPrintSettings result;
-
-    Settings *s = Settings::instance();
-    if (s->metadata.enabled) {
-        result.author = s->details.exifAuthor;
-        result.camera = s->details.exifCamera;
-        result.image = s->details.exifImage;
-        result.photo = s->details.exifPhoto;
-    }
-    else {
-        result.author = 0;
-        result.camera = 0;
-        result.image = 0;
-        result.photo = 0;
-    }
-
+    result.loadSettings();
     return result;
 }
 
