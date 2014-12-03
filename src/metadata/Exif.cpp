@@ -22,6 +22,7 @@
 #ifdef SIR_METADATA_SUPPORT
 
 #include "metadata/Exif.hpp"
+#include "metadata/Flash.hpp"
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
 #include <exiv2/exif.hpp>
 #include <exiv2/metadatum.hpp>

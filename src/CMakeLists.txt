@@ -78,6 +78,7 @@ if( metadata )
     set( sir_SRCS ${sir_SRCS}
             metadata/Error.cpp
             metadata/Exif.cpp
+            metadata/Flash.cpp
             metadata/Iptc.cpp
             metadata/Metadata.cpp
             metadata/MetadataUtils.cpp

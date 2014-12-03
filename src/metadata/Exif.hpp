@@ -101,51 +101,6 @@ private:
     static bool userCommentOverwrite;
     static sir::String userCommentString;
 };
-
-/** \brief Stores flash mode strings coresponding with \e Exif.Photo.Flash
-  * metadata field.
-  * \sa ExifStruct::flashMode
-  */
-class Flash {
-    Q_DECLARE_TR_FUNCTIONS(MetadataUtils::Flash)
-
-public:
-    /** Returns translated string containing information about the lack of flash
-      * function.
-      */
-    static QString noFlashFunction() { return tr("No flash function."); }
-    /** Returns translated string containing information about flash fired.
-      * \sa noFired
-      */
-    static QString fired() { return tr("Flash fired"); }
-    /** Returns translated string containing information about flash didn't fire.
-      * \sa fired
-      */
-    static QString noFired() { return tr("Flash didn't fire"); }
-    /** Returns translated string containing information about flash fired in
-      * compulsory mode.
-      */
-    static QString compulsoryMode() { return tr(", compulsory flash mode"); }
-    /** Returns translated string containing information about flash fired in
-      * auto mode.
-      */
-    static QString autoMode() { return tr(", auto mode"); }
-    /** Returns translated string containing information about flash fired in
-      * red-eye reduction mode. */
-    static QString redEyeReduction() { return tr(", red-eye reduction"); }
-    /** Returns translated string containing information about detection of
-      * returning strobe ligth.
-      * \sa strobeReturnNotDetected
-      */
-    static QString strobeReturnDetected() {
-        return tr(", strobe return light detected"); }
-    /** Returns translated string containing information about failed to
-      * detection of returning strobe ligth.
-      * \sa strobeReturnDetected
-      */
-    static QString strobeReturnNotDetected() {
-        return tr(", strobe return light not detected"); }
-};
 #endif // SIR_METADATA_SUPPORT
 }
 
