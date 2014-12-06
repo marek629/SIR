@@ -27,6 +27,7 @@
 #include "DetailsThumbnail.hpp"
 
 #ifdef SIR_METADATA_SUPPORT
+#include "metadata/structs/IptcPrintSettings.hpp"
 #include "metadata/visitors/RichTextVisitor.hpp"
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
 #include "metadata/visitors/IptcRichTextVisitor.hpp"
@@ -173,12 +174,8 @@ ExifPrintSettings DetailsBrowserController::loadExifPrintSettings() {
 }
 
 int DetailsBrowserController::loadIptcPrintSettings() {
-    Settings *s = Settings::instance();
-    if (s->metadata.enabled) {
-        return s->details.iptc;
-    }
-    else {
-        return 0;
-    }
+    IptcPrintSettings result;
+    result.loadSettings();
+    return result.value;
 }
 #endif // SIR_METADATA_SUPPORT
