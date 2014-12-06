@@ -30,6 +30,7 @@ class DetailsGroupBoxView;
 
 class DetailsGroupBoxController : public AbstractOptionsController {
     Q_OBJECT
+    friend class DetailsGroupBoxTest;
 
 public:
     explicit DetailsGroupBoxController(Settings::DetailsGroup *model,

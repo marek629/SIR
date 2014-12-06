@@ -12,12 +12,20 @@ add_test( NAME "MetadataUtils_UT" COMMAND sir_metadatautils_test )
 
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
-set( sir_UT_generalgroupbox_SRCS
+set( sir_IT_detailsgroupbox_SRCS
+        widgets/options/DetailsGroupBoxTest.cpp
+    )
+add_executable( sir_detailsgroupbox_test ${sir_IT_detailsgroupbox_SRCS} )
+target_link_libraries( sir_detailsgroupbox_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "DetailsGroupBox_IT" COMMAND sir_detailsgroupbox_test )
+
+include_directories( ${CMAKE_BINARY_DIR}/src )
+set( sir_IT_generalgroupbox_SRCS
         widgets/options/GeneralGroupBoxTest.cpp
     )
-add_executable( sir_generalgroupbox_test ${sir_UT_generalgroupbox_SRCS} )
+add_executable( sir_generalgroupbox_test ${sir_IT_generalgroupbox_SRCS} )
 target_link_libraries( sir_generalgroupbox_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "GeneralGroupBox_UT" COMMAND sir_generalgroupbox_test )
+add_test( NAME "GeneralGroupBox_IT" COMMAND sir_generalgroupbox_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_UT_rawgroupboxcontroller_SRCS
