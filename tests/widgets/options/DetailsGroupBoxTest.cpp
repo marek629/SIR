@@ -44,11 +44,12 @@ void DetailsGroupBoxTest::initTestCase() {
 void DetailsGroupBoxTest::cleanupTestCase() {}
 
 void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_noIptcSelected() {
-    controller->model->exifAuthor = 0;
-    controller->model->exifCamera = 0;
-    controller->model->exifImage = 0;
-    controller->model->exifPhoto = 0;
-    controller->model->iptc = 0;
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0;
     controller->loadSettings();
 
     Q_ASSERT(controller->exifSelectedFields == 0);
@@ -59,11 +60,12 @@ void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_noIptcSelected() {
 }
 
 void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_allIptcSelected() {
-    controller->model->exifAuthor = 0;
-    controller->model->exifCamera = 0;
-    controller->model->exifImage = 0;
-    controller->model->exifPhoto = 0;
-    controller->model->iptc = 0xFFFF;
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0xFFFF;
     controller->loadSettings();
 
     Q_ASSERT(controller->exifSelectedFields == 0);
@@ -74,11 +76,12 @@ void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_allIptcSelected() {
 }
 
 void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_oneIptcSelected() {
-    controller->model->exifAuthor = 0;
-    controller->model->exifCamera = 0;
-    controller->model->exifImage = 0;
-    controller->model->exifPhoto = 0;
-    controller->model->iptc = DetailsOptions::TimeCreated;
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = DetailsOptions::TimeCreated;
     controller->loadSettings();
 
     Q_ASSERT(controller->exifSelectedFields == 0);
@@ -89,11 +92,12 @@ void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_oneIptcSelected() {
 }
 
 void DetailsGroupBoxTest::buttonsEnabled_oneExifSelected_noIptcSelected() {
-    controller->model->exifAuthor = DetailsOptions::Artist;
-    controller->model->exifCamera = 0;
-    controller->model->exifImage = 0;
-    controller->model->exifPhoto = 0;
-    controller->model->iptc = 0;
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = DetailsOptions::Artist;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0;
     controller->loadSettings();
 
     Q_ASSERT(controller->exifSelectedFields == 1);
@@ -104,11 +108,12 @@ void DetailsGroupBoxTest::buttonsEnabled_oneExifSelected_noIptcSelected() {
 }
 
 void DetailsGroupBoxTest::buttonsEnabled_allExifSelected_noIptcSelected() {
-    controller->model->exifAuthor = 0xFFFF;
-    controller->model->exifCamera = 0xFFFF;
-    controller->model->exifImage = 0xFFFF;
-    controller->model->exifPhoto = 0xFFFF;
-    controller->model->iptc = 0;
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0xFFFF;
+    model->exifCamera = 0xFFFF;
+    model->exifImage = 0xFFFF;
+    model->exifPhoto = 0xFFFF;
+    model->iptc = 0;
     controller->loadSettings();
 
     Q_ASSERT(controller->exifSelectedFields == controller->exifCheckBoxes.length());
