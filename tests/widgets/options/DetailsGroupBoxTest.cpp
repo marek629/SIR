@@ -24,18 +24,10 @@
 
 DetailsGroupBoxTest::DetailsGroupBoxTest() {
     Settings::enableTesting(true);
-    Settings::DetailsGroup model = Settings::instance()->details;
-
-    model.exifAuthor = 0;
-    model.exifCamera = 0;
-    model.exifImage = 0;
-    model.exifPhoto = 0;
-
-    model.iptc = 0;
+    Settings::DetailsGroup &model = Settings::instance()->details;
 
     view = new DetailsGroupBoxView();
     controller = new DetailsGroupBoxController(&model, view, this);
-    controller->loadSettings();
 }
 
 DetailsGroupBoxTest::~DetailsGroupBoxTest() {
@@ -51,8 +43,30 @@ void DetailsGroupBoxTest::initTestCase() {
 void DetailsGroupBoxTest::cleanupTestCase() {}
 
 void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_noIptcSelected() {
+    controller->model->exifAuthor = 0;
+    controller->model->exifCamera = 0;
+    controller->model->exifImage = 0;
+    controller->model->exifPhoto = 0;
+    controller->model->iptc = 0;
+    controller->loadSettings();
+
     Q_ASSERT(controller->exifSelectedFields == 0);
     Q_ASSERT(controller->iptcSelectedFields == 0);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(!view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_allIptcSelected() {
+    controller->model->exifAuthor = 0;
+    controller->model->exifCamera = 0;
+    controller->model->exifImage = 0;
+    controller->model->exifPhoto = 0;
+    controller->model->iptc = 0xFFFF;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == 0);
+    Q_ASSERT(controller->iptcSelectedFields == controller->iptcCheckBoxes.length());
 
     QVERIFY(view->showPushButton->isEnabled());
     QVERIFY(!view->hidePushButton->isEnabled());

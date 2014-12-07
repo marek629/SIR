@@ -42,6 +42,7 @@ private slots:
     void cleanupTestCase();
 
     void buttonsEnabled_noExifSelected_noIptcSelected();
+    void buttonsEnabled_noExifSelected_allIptcSelected();
 };
 
 #endif // DETAILSGROUPBOXTEST_HPP
