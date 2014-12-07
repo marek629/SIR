@@ -43,6 +43,9 @@ private slots:
 
     void buttonsEnabled_noExifSelected_noIptcSelected();
     void buttonsEnabled_noExifSelected_allIptcSelected();
+    void buttonsEnabled_noExifSelected_oneIptcSelected();
+    void buttonsEnabled_oneExifSelected_noIptcSelected();
+    void buttonsEnabled_allExifSelected_noIptcSelected();
 };
 
 #endif // DETAILSGROUPBOXTEST_HPP

@@ -21,6 +21,7 @@
 
 #include "tests/widgets/options/DetailsGroupBoxTest.hpp"
 #include "Settings.hpp"
+#include "optionsenums.h"
 
 DetailsGroupBoxTest::DetailsGroupBoxTest() {
     Settings::enableTesting(true);
@@ -70,6 +71,51 @@ void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_allIptcSelected() {
 
     QVERIFY(view->showPushButton->isEnabled());
     QVERIFY(!view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::buttonsEnabled_noExifSelected_oneIptcSelected() {
+    controller->model->exifAuthor = 0;
+    controller->model->exifCamera = 0;
+    controller->model->exifImage = 0;
+    controller->model->exifPhoto = 0;
+    controller->model->iptc = DetailsOptions::TimeCreated;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == 0);
+    Q_ASSERT(controller->iptcSelectedFields == 1);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(!view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::buttonsEnabled_oneExifSelected_noIptcSelected() {
+    controller->model->exifAuthor = DetailsOptions::Artist;
+    controller->model->exifCamera = 0;
+    controller->model->exifImage = 0;
+    controller->model->exifPhoto = 0;
+    controller->model->iptc = 0;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == 1);
+    Q_ASSERT(controller->iptcSelectedFields == 0);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::buttonsEnabled_allExifSelected_noIptcSelected() {
+    controller->model->exifAuthor = 0xFFFF;
+    controller->model->exifCamera = 0xFFFF;
+    controller->model->exifImage = 0xFFFF;
+    controller->model->exifPhoto = 0xFFFF;
+    controller->model->iptc = 0;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == controller->exifCheckBoxes.length());
+    Q_ASSERT(controller->iptcSelectedFields == 0);
+
+    QVERIFY(!view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
 }
 
 QTEST_MAIN(DetailsGroupBoxTest)
