@@ -123,5 +123,69 @@ void DetailsGroupBoxTest::buttonsEnabled_allExifSelected_noIptcSelected() {
     QVERIFY(view->hidePushButton->isEnabled());
 }
 
+void DetailsGroupBoxTest::buttonsEnabled_oneExifSelected_oneIptcSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = DetailsOptions::Artist;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = DetailsOptions::TimeCreated;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == 1);
+    Q_ASSERT(controller->iptcSelectedFields == 1);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::buttonsEnabled_oneExifSelected_allIptcSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = DetailsOptions::Artist;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0xFFFF;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == 1);
+    Q_ASSERT(controller->iptcSelectedFields == controller->iptcCheckBoxes.length());
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::buttonsEnabled_allExifSelected_oneIptcSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0xFFFF;
+    model->exifCamera = 0xFFFF;
+    model->exifImage = 0xFFFF;
+    model->exifPhoto = 0xFFFF;
+    model->iptc = DetailsOptions::TimeCreated;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == controller->exifCheckBoxes.length());
+    Q_ASSERT(controller->iptcSelectedFields == 1);
+
+    QVERIFY(!view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::buttonsEnabled_allExifSelected_allIptcSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0xFFFF;
+    model->exifCamera = 0xFFFF;
+    model->exifImage = 0xFFFF;
+    model->exifPhoto = 0xFFFF;
+    model->iptc = 0xFFFF;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == controller->exifCheckBoxes.length());
+    Q_ASSERT(controller->iptcSelectedFields == controller->iptcCheckBoxes.length());
+
+    QVERIFY(!view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
 QTEST_MAIN(DetailsGroupBoxTest)
 #include "DetailsGroupBoxTest.moc"
