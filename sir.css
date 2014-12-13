@@ -13,7 +13,6 @@
 }
 
 #forkongithub a:hover {
-/*    background: rgb(158, 40, 27);*/
     background: rgb(33, 141, 30);
     color: #fff;
 }
@@ -57,4 +56,9 @@
         -o-transform: rotate(45deg);
         box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
     }
+}
+
+time.entry-date {
+    font-size: 65%;
+    color: #999;
 }

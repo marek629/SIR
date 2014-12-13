@@ -56,8 +56,15 @@ var getEntryPage = function(entry) {
         dataType: 'text',
         success: function (content) {
             $('#content').append(content);
-            $('#content .entry-date').last().text(
-                monthName[entry.date.getMonth()] + ' ' + entry.date.getDate() + ', ' + entry.date.getFullYear());
+            var date = entry.date;
+            var timeTag = $('#content .entry-date').last();
+            timeTag.text(
+                monthName[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
+            );
+            timeTag.attr(
+                "datetime",
+                date.toDateString()
+            );
         }
     });
 };
