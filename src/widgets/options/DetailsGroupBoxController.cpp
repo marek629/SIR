@@ -46,6 +46,8 @@ DetailsGroupBoxController::DetailsGroupBoxController(
 void DetailsGroupBoxController::loadSettings() {
     loadExifSettings();
     loadIptcSettings();
+
+    enableFieldButtons(exifCheckBoxes, exifSelectedFields);
 }
 
 void DetailsGroupBoxController::saveSettings() {

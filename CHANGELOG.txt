@@ -5,6 +5,7 @@
     - Removed setting empty dcraw path string after browse cancel
     - Fixed left arrow shortcut for previous image in PreviewDialog
     - Fixed no files with lowercase extension in "Add File" dialog
+    - Fixed enabling/disabling buttons in "File Details" options dialog after load settings
     - Fixed refresh file details settings after save settings
     - Removed defines.h file
     - Removed files coresponded uploading to Google Code
