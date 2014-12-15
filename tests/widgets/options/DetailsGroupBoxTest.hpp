@@ -54,6 +54,9 @@ private slots:
     void setCurrentTab_Exif_noSelected();
     void setCurrentTab_Exif_oneSelected();
     void setCurrentTab_Exif_allSelected();
+    void setCurrentTab_IPTC_noSelected();
+    void setCurrentTab_IPTC_oneSelected();
+    void setCurrentTab_IPTC_allSelected();
 };
 
 #endif // DETAILSGROUPBOXTEST_HPP

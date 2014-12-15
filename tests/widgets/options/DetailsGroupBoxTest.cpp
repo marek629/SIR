@@ -230,9 +230,60 @@ void DetailsGroupBoxTest::setCurrentTab_Exif_allSelected() {
     model->iptc = 0;
     controller->loadSettings();
 
-    Q_ASSERT(controller->exifSelectedFields == controller->exifSelectedFields);
+    Q_ASSERT(controller->exifSelectedFields == controller->exifCheckBoxes.count());
 
     controller->setCurrentTab(DetailsGroupBoxController::Exif_tab);
+
+    QVERIFY(!view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::setCurrentTab_IPTC_noSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->iptcSelectedFields == 0);
+
+    controller->setCurrentTab(DetailsGroupBoxController::IPTC_tab);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(!view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::setCurrentTab_IPTC_oneSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = DetailsOptions::TimeCreated;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->iptcSelectedFields == 1);
+
+    controller->setCurrentTab(DetailsGroupBoxController::IPTC_tab);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::setCurrentTab_IPTC_allSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0xFFFF;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->iptcSelectedFields == controller->iptcCheckBoxes.count());
+
+    controller->setCurrentTab(DetailsGroupBoxController::IPTC_tab);
 
     QVERIFY(!view->showPushButton->isEnabled());
     QVERIFY(view->hidePushButton->isEnabled());
