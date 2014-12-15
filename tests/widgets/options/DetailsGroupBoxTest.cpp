@@ -187,5 +187,56 @@ void DetailsGroupBoxTest::buttonsEnabled_allExifSelected_allIptcSelected() {
     QVERIFY(view->hidePushButton->isEnabled());
 }
 
+void DetailsGroupBoxTest::setCurrentTab_Exif_noSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == 0);
+
+    controller->setCurrentTab(DetailsGroupBoxController::Exif_tab);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(!view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::setCurrentTab_Exif_oneSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = DetailsOptions::Artist;
+    model->exifCamera = 0;
+    model->exifImage = 0;
+    model->exifPhoto = 0;
+    model->iptc = 0;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == 1);
+
+    controller->setCurrentTab(DetailsGroupBoxController::Exif_tab);
+
+    QVERIFY(view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
+void DetailsGroupBoxTest::setCurrentTab_Exif_allSelected() {
+    Settings::DetailsGroup *model = controller->model;
+    model->exifAuthor = 0xFFFF;
+    model->exifCamera = 0xFFFF;
+    model->exifImage = 0xFFFF;
+    model->exifPhoto = 0xFFFF;
+    model->iptc = 0;
+    controller->loadSettings();
+
+    Q_ASSERT(controller->exifSelectedFields == controller->exifSelectedFields);
+
+    controller->setCurrentTab(DetailsGroupBoxController::Exif_tab);
+
+    QVERIFY(!view->showPushButton->isEnabled());
+    QVERIFY(view->hidePushButton->isEnabled());
+}
+
 QTEST_MAIN(DetailsGroupBoxTest)
 #include "DetailsGroupBoxTest.moc"

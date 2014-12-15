@@ -50,6 +50,10 @@ private slots:
     void buttonsEnabled_oneExifSelected_allIptcSelected();
     void buttonsEnabled_allExifSelected_oneIptcSelected();
     void buttonsEnabled_allExifSelected_allIptcSelected();
+
+    void setCurrentTab_Exif_noSelected();
+    void setCurrentTab_Exif_oneSelected();
+    void setCurrentTab_Exif_allSelected();
 };
 
 #endif // DETAILSGROUPBOXTEST_HPP
