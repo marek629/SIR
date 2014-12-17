@@ -47,7 +47,7 @@ void DetailsGroupBoxController::loadSettings() {
     loadExifSettings();
     loadIptcSettings();
 
-    enableFieldButtons(exifCheckBoxes, exifSelectedFields);
+    enableViewFieldButtons(exifCheckBoxes, exifSelectedFields);
 }
 
 void DetailsGroupBoxController::saveSettings() {
@@ -61,7 +61,7 @@ void DetailsGroupBoxController::checkExifFields(bool checked) {
     else
         exifSelectedFields--;
 
-    enableFieldButtons(exifCheckBoxes, exifSelectedFields);
+    enableViewFieldButtons(exifCheckBoxes, exifSelectedFields);
 }
 
 void DetailsGroupBoxController::checkIptcFields(bool checked) {
@@ -70,16 +70,16 @@ void DetailsGroupBoxController::checkIptcFields(bool checked) {
     else
         iptcSelectedFields--;
 
-    enableFieldButtons(iptcCheckBoxes, iptcSelectedFields);
+    enableViewFieldButtons(iptcCheckBoxes, iptcSelectedFields);
 }
 
 void DetailsGroupBoxController::setCurrentTab(int tabId) {
     switch (tabId) {
     case Exif_tab:
-        enableFieldButtons(exifCheckBoxes, exifSelectedFields);
+        enableViewFieldButtons(exifCheckBoxes, exifSelectedFields);
         break;
     case IPTC_tab:
-        enableFieldButtons(iptcCheckBoxes, iptcSelectedFields);
+        enableViewFieldButtons(iptcCheckBoxes, iptcSelectedFields);
         break;
     default:
         view->enableFieldButtons(false, false);
@@ -143,7 +143,7 @@ void DetailsGroupBoxController::saveIptcSettings() {
     model->iptc = view->getIptcCheckBoxesHash();
 }
 
-void DetailsGroupBoxController::enableFieldButtons(
+void DetailsGroupBoxController::enableViewFieldButtons(
         const QList<QCheckBox *> &checkBoxList, int fieldCount) {
     if (fieldCount == checkBoxList.count())
         view->enableFieldButtons(false, true);

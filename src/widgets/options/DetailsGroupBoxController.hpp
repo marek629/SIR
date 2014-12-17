@@ -62,7 +62,7 @@ private:
     void loadIptcSettings();
     void saveExifSettings();
     void saveIptcSettings();
-    void enableFieldButtons(const QList<QCheckBox *> &checkBoxList, int fieldCount);
+    void enableViewFieldButtons(const QList<QCheckBox *> &checkBoxList, int fieldCount);
 };
 
 #endif // DETAILSGROUPBOXCONTROLLER_H
