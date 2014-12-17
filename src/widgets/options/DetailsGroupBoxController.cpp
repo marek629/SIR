@@ -76,20 +76,10 @@ void DetailsGroupBoxController::checkIptcFields(bool checked) {
 void DetailsGroupBoxController::setCurrentTab(int tabId) {
     switch (tabId) {
     case Exif_tab:
-        if (exifSelectedFields == exifCheckBoxes.count())
-            view->enableFieldButtons(false, true);
-        else if (exifSelectedFields == 0)
-            view->enableFieldButtons(true, false);
-        else
-            view->enableFieldButtons();
+        enableFieldButtons(exifCheckBoxes, exifSelectedFields);
         break;
     case IPTC_tab:
-        if (iptcSelectedFields == iptcCheckBoxes.count())
-            view->enableFieldButtons(false, true);
-        else if (iptcSelectedFields == 0)
-            view->enableFieldButtons(true, false);
-        else
-            view->enableFieldButtons();
+        enableFieldButtons(iptcCheckBoxes, iptcSelectedFields);
         break;
     default:
         view->enableFieldButtons(false, false);
