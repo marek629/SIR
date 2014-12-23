@@ -360,6 +360,9 @@
        <number>6</number>
       </property>
       <item>
+       <widget class="StatusWidget" name="statusWidget" native="true"/>
+      </item>
+      <item>
        <spacer>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -607,6 +610,12 @@
    <class>EffectsScrollArea</class>
    <extends>QScrollArea</extends>
    <header>widgets/convert/EffectsScrollArea.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StatusWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/StatusWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -37,6 +37,7 @@ set( sir_SRCS
         widgets/PosSpinBox.cpp
         widgets/PreviewDialog.cpp
         widgets/SelectionDialog.cpp
+        widgets/StatusWidget.cpp
         widgets/TimeComboBox.cpp
         widgets/TreeWidget.cpp
         widgets/TreeWidgetHeader.cpp
@@ -63,6 +64,7 @@ set( sir_UIS
         widgets/ConvertDialog.ui
         widgets/GradientEditWidget.ui
         widgets/PreviewDialog.ui
+        widgets/StatusWidget.ui
         widgets/convert/EffectsScrollArea.ui
         widgets/convert/OptionsScrollArea.ui
         widgets/convert/SizeScrollArea.ui
