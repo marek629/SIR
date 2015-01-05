@@ -72,7 +72,7 @@ set( sir_UIS
         widgets/options/FileListGroupBox.ui
         widgets/options/GeneralGroupBox.ui
         widgets/options/RawGroupBox.ui
-        widgets/options/SelectionGroupBox.ui
+        widgets/options/SelectionGroupBoxView.ui
         widgets/selection/DirWidget.ui
     )
 

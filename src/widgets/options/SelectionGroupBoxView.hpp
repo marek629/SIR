@@ -22,14 +22,14 @@
 #ifndef SELECTIONGROUPBOXVIEW_H
 #define SELECTIONGROUPBOXVIEW_H
 
-#include "ui_SelectionGroupBox.h"
+#include "ui_SelectionGroupBoxView.h"
 #include "widgets/options/AbstractOptionsGroupBox.hpp"
 
 class SelectionGroupBoxController;
 
 //! Selection group box view class used in OptionsDialog dialog.
 class SelectionGroupBoxView
-        : public AbstractOptionsGroupBox, public Ui::SelectionGroupBox {
+        : public AbstractOptionsGroupBox, public Ui::SelectionGroupBoxView {
     Q_OBJECT
 
 public:

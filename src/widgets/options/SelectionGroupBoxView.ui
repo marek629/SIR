@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SelectionGroupBox</class>
- <widget class="QGroupBox" name="SelectionGroupBox">
+ <class>SelectionGroupBoxView</class>
+ <widget class="QGroupBox" name="SelectionGroupBoxView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>341</width>
-    <height>151</height>
+    <width>403</width>
+    <height>181</height>
    </rect>
   </property>
   <property name="title">
