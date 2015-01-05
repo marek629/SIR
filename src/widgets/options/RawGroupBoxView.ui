@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RawGroupBox</class>
- <widget class="QGroupBox" name="RawGroupBox">
+ <class>RawGroupBoxView</class>
+ <widget class="QGroupBox" name="RawGroupBoxView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>318</width>
-    <height>117</height>
+    <width>369</width>
+    <height>124</height>
    </rect>
   </property>
   <property name="title">

@@ -23,12 +23,12 @@
 #define RAWGROUPBOXVIEW_H
 
 #include "widgets/options/AbstractOptionsGroupBox.hpp"
-#include "ui_RawGroupBox.h"
+#include "ui_RawGroupBoxView.h"
 
 class RawGroupBoxController;
 
 //! Raw group box view class used in OptionsDialog dialog.
-class RawGroupBoxView : public AbstractOptionsGroupBox, public Ui::RawGroupBox {
+class RawGroupBoxView : public AbstractOptionsGroupBox, public Ui::RawGroupBoxView {
     Q_OBJECT
 
 public:
