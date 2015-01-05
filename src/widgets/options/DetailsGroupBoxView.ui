@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DetailsGroupBox</class>
- <widget class="QGroupBox" name="DetailsGroupBox">
+ <class>DetailsGroupBoxView</class>
+ <widget class="QGroupBox" name="DetailsGroupBoxView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
+    <width>452</width>
     <height>462</height>
    </rect>
   </property>

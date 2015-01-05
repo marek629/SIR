@@ -101,7 +101,7 @@ if( metadata )
         )
     set( sir_UIS ${sir_UIS}
             widgets/MetadataDialog.ui
-            widgets/options/DetailsGroupBox.ui
+            widgets/options/DetailsGroupBoxView.ui
             widgets/options/MetadataGroupBoxView.ui
             widgets/selection/AnyMetadataGroupBox.ui
             widgets/selection/ExifGroupBox.ui

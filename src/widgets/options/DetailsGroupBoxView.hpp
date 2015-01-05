@@ -22,13 +22,13 @@
 #ifndef DETAILSGROUPBOXVIEW_H
 #define DETAILSGROUPBOXVIEW_H
 
-#include "ui_DetailsGroupBox.h"
+#include "ui_DetailsGroupBoxView.h"
 #include "widgets/options/AbstractOptionsGroupBox.hpp"
 
 class DetailsGroupBoxController;
 
 //! Details group box class used in OptionsDialog dialog.
-class DetailsGroupBoxView : public AbstractOptionsGroupBox, public Ui::DetailsGroupBox  {
+class DetailsGroupBoxView : public AbstractOptionsGroupBox, public Ui::DetailsGroupBoxView {
     Q_OBJECT
 
 public:
