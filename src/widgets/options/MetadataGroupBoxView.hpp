@@ -22,14 +22,14 @@
 #ifndef METADATAGROUPBOXVIEW_H
 #define METADATAGROUPBOXVIEW_H
 
-#include "ui_MetadataGroupBox.h"
+#include "ui_MetadataGroupBoxView.h"
 #include "widgets/options/AbstractOptionsGroupBox.hpp"
 
 class MetadataGroupBoxController;
 
 //! Metadata group box view class used in OptionsDialog dialog.
 class MetadataGroupBoxView
-        : public AbstractOptionsGroupBox, public Ui::MetadataGroupBox {
+        : public AbstractOptionsGroupBox, public Ui::MetadataGroupBoxView {
     Q_OBJECT
 
 public:

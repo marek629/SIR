@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MetadataGroupBox</class>
- <widget class="QGroupBox" name="MetadataGroupBox">
+ <class>MetadataGroupBoxView</class>
+ <widget class="QGroupBox" name="MetadataGroupBoxView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>393</width>
+    <height>427</height>
+   </rect>
+  </property>
   <property name="title">
    <string>Metadata Options</string>
   </property>
