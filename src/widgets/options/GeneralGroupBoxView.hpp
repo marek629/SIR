@@ -19,10 +19,10 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef GENERALGROUPBOX_H
-#define GENERALGROUPBOX_H
+#ifndef GENERALGROUPBOXVIEW_H
+#define GENERALGROUPBOXVIEW_H
 
-#include "ui_GeneralGroupBox.h"
+#include "ui_GeneralGroupBoxView.h"
 #include "widgets/options/AbstractOptionsGroupBox.hpp"
 
 class LanguageUtils;
@@ -57,4 +57,4 @@ private:
     void createLanguageMenu();
 };
 
-#endif // GENERALGROUPBOX_H
+#endif // GENERALGROUPBOXVIEW_H

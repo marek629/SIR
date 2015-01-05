@@ -70,7 +70,7 @@ set( sir_UIS
         widgets/convert/SizeScrollArea.ui
         widgets/convert/SvgScrollArea.ui
         widgets/options/FileListGroupBoxView.ui
-        widgets/options/GeneralGroupBox.ui
+        widgets/options/GeneralGroupBoxView.ui
         widgets/options/RawGroupBoxView.ui
         widgets/options/SelectionGroupBoxView.ui
         widgets/selection/DirWidget.ui
