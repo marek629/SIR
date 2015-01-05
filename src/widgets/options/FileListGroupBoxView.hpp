@@ -22,13 +22,13 @@
 #ifndef FILELISTGROUPBOXVIEW_H
 #define FILELISTGROUPBOXVIEW_H
 
-#include "ui_FileListGroupBox.h"
+#include "ui_FileListGroupBoxView.h"
 #include "widgets/options/AbstractOptionsGroupBox.hpp"
 
 class FileListGroupBoxController;
 
 //! File list group box view class used in OptionsDialog dialog.
-class FileListGroupBoxView : public AbstractOptionsGroupBox, public Ui::FileListGroupBox {
+class FileListGroupBoxView : public AbstractOptionsGroupBox, public Ui::FileListGroupBoxView {
     Q_OBJECT
 
 public:
