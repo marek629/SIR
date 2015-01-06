@@ -24,6 +24,8 @@
 
 #include "ui_StatusWidget.h"
 
+#include <QElapsedTimer>
+
 class StatusWidget : public QWidget, private Ui::StatusWidget {
     Q_OBJECT
 
@@ -31,9 +33,15 @@ public:
     explicit StatusWidget(QWidget *parent = 0);
     void setStatus(const QString &message, int partQuantity = 0, int totalQuantity = 0);
 
+public slots:
+    void onFilesLoadingStart(int totalQuantity);
+    void onFilesLoadingTick(int partQuantity);
+    void onFilesLoadingStop();
+
 private:
     QString defaultMessage;
     QString ofMessage;
+    QElapsedTimer loadingFilesTickTimer;
 };
 
 #endif // STATUSWIDGET_HPP

@@ -220,7 +220,9 @@ void TreeWidget::loadFiles(const QStringList &files) {
     QTreeWidgetItem *item;
     QString fileName;
 
-    while ( it != files.end() ) {
+    emit loadingFilesStart(files.length());
+
+    for (int index = 1; it != files.end(); index++) {
         fileName = QDir::toNativeSeparators(*it);
         QFileInfo info(fileName);
         statusList->insert(info.absoluteFilePath(), ConvertThread::NotConverted);
@@ -229,7 +231,11 @@ void TreeWidget::loadFiles(const QStringList &files) {
         this->addTopLevelItem(item);
         ++it;
         Settings::instance()->settings.lastDir = info.path();
+
+        emit loadingFilesTick(index);
     }
+
+    emit loadingFilesStop();
 
     updateTree();
 }
@@ -242,12 +248,18 @@ void TreeWidget::loadFiles(const QList<QFileInfo> &files) {
     QFileInfo fi;
     QTreeWidgetItem *item;
 
-    while ( it.hasNext() ) {
+    emit loadingFilesStart(files.length());
+
+    for (int index = 1; it.hasNext(); index++) {
         fi = it.next();
         item = new QTreeWidgetItem(itemList(fi));
         this->addTopLevelItem(item);
         statusList->insert(fi.absoluteFilePath(), ConvertThread::NotConverted);
+
+        emit loadingFilesTick(index);
     }
+
+    emit loadingFilesStop();
 
     updateTree();
 }

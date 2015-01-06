@@ -1,5 +1,4 @@
 *** nearest release ***
-  ! fix freeze while loading many images to SIR
   ! keyboard navigation for selecting files in TreeWidget
   ! change TODO and CHANGELOG files format to Markdown or something else
 

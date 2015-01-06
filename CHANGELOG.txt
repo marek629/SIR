@@ -1,5 +1,6 @@
 * unreleased - Marek Jędryka <jedryka89@gmail.com> - v2.8
     - Changed SIR to single instance application
+    - Added status bar
     - Improved saving "Exif.Image.Orientation" metadata tag
     - Improved view in details for Aperture, Exposure Time and Exposure Bias metadata
     - Removed setting empty dcraw path string after browse cancel
@@ -7,6 +8,7 @@
     - Fixed no files with lowercase extension in "Add File" dialog
     - Fixed enabling/disabling buttons in "File Details" options dialog after load settings
     - Fixed refresh file details settings after save settings
+    - Fixed freeze of the application while loading many images
     - Removed defines.h file
     - Removed files coresponded uploading to Google Code
     - CamelCase source files naming

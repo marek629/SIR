@@ -155,8 +155,6 @@ void CommandLineAssistant::setTreeWidget(TreeWidget *widget) {
 }
 
 void CommandLineAssistant::timerEvent(QTimerEvent *event) {
-    Q_UNUSED(event)
-
     QByteArray memoryBytes = getOutSharedMemory();
     QString argString(memoryBytes);
     QStringList args = argString.split(';', QString::SkipEmptyParts);
@@ -170,4 +168,9 @@ void CommandLineAssistant::timerEvent(QTimerEvent *event) {
     }
 
     treeWidget->loadFiles(files);
+
+    if (treeWidget->topLevelItemCount() == files.count()) {
+        int timerId = event->timerId();
+        killTimer(timerId);
+    }
 }

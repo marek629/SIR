@@ -114,13 +114,18 @@ void ConvertDialog::createConnections() {
             filesTreeWidget, SLOT(removeSelectedFromList()));
     connect(removeAllPushButton, SIGNAL(clicked()),
             filesTreeWidget, SLOT(removeAll()));
-    // & actions
+    // and actions
     connect(actionAdd_File, SIGNAL(triggered()), filesTreeWidget, SLOT(addFile()));
     connect(actionAdd_Dir, SIGNAL(triggered()), filesTreeWidget, SLOT(addDir()));
     connect(actionSelect, SIGNAL(triggered()), SLOT(showSelectionDialog()));
     connect(actionImport_files, SIGNAL(triggered()), SLOT(showSelectionDialog()));
     connect(actionRemoveAll, SIGNAL(triggered()),
             filesTreeWidget, SLOT(removeAll()));
+
+    // status bar
+    connect(filesTreeWidget, SIGNAL(loadingFilesStart(int)), statusWidget, SLOT(onFilesLoadingStart(int)));
+    connect(filesTreeWidget, SIGNAL(loadingFilesTick(int)), statusWidget, SLOT(onFilesLoadingTick(int)));
+    connect(filesTreeWidget, SIGNAL(loadingFilesStop()), statusWidget, SLOT(onFilesLoadingStop()));
 
     // menu actions
     connect(actionExit, SIGNAL(triggered()), SLOT(close()));

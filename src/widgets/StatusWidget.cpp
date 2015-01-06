@@ -31,13 +31,15 @@ StatusWidget::StatusWidget(QWidget *parent) : QWidget(parent) {
     partLabel->setText("");
     ofLabel->setText("");
     totalLabel->setText("");
+
+    loadingFilesTickTimer.start();
 }
 
 void StatusWidget::setStatus(const QString &message, int partQuantity,
                              int totalQuantity) {
     messageLabel->setText(message);
 
-    if (totalQuantity > 0) {
+    if (totalQuantity > 0 && totalQuantity != partQuantity) {
         partLabel->setText(QString::number(partQuantity));
         ofLabel->setText(ofMessage);
         totalLabel->setText(QString::number(totalQuantity));
@@ -47,4 +49,23 @@ void StatusWidget::setStatus(const QString &message, int partQuantity,
         ofLabel->setText("");
         totalLabel->setText("");
     }
+}
+
+void StatusWidget::onFilesLoadingStart(int totalQuantity) {
+    QString message = tr("Loading files...");
+    setStatus(message, 0, totalQuantity);
+    QCoreApplication::processEvents();
+}
+
+void StatusWidget::onFilesLoadingTick(int partQuantity) {
+    if (loadingFilesTickTimer.elapsed() > 500) {
+        partLabel->setText(QString::number(partQuantity));
+        QCoreApplication::processEvents();
+        loadingFilesTickTimer.restart();
+    }
+}
+
+void StatusWidget::onFilesLoadingStop() {
+    setStatus(defaultMessage);
+    QCoreApplication::processEvents();
 }

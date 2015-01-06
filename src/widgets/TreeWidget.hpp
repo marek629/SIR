@@ -115,6 +115,9 @@ public slots:
 
 signals:
     void changed(); /**< Indicates changes in this tree widget. \sa dropEvent */
+    void loadingFilesStart(int totalQuantity);
+    void loadingFilesTick(int partQuantity);
+    void loadingFilesStop();
 };
 
 /** Resizes all columns of \a tree to their contents. */
