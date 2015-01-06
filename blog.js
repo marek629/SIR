@@ -1,6 +1,10 @@
 // Blog Data
 
 var blogList = [
+    {   'date': new Date(2015, 0, 6),
+        'file': 'video_2.1.1_to_2.5.1.html',
+        'author': 'marek'
+    },
     {   'date': new Date(2014, 7, 24),
         'file': 'release_2.7.3.html',
         'author': 'marek'
