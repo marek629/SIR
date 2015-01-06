@@ -2,7 +2,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## unreleased
+### unreleased
 
 * Changed SIR to single instance application
 * Added status bar
@@ -23,7 +23,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Sun Aug 24 2014
+### Sun Aug 24 2014
 
 * Changed all occurrences of old SIR webpage URL
 * Windows: fixed button icons
@@ -34,7 +34,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Sat May 31 2014
+### Sat May 31 2014
 
 * Polish translation improved
 * Spanish translation updated (thanks Garbage Collector)
@@ -47,7 +47,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Thu Apr 17 2014
+### Thu Apr 17 2014
 
 * fixed translating of Gradient Effect widgets
 * fixed initialization of Gradient Effect
@@ -58,7 +58,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Fri Feb 28 2014
+### Fri Feb 28 2014
 
 * added filter effect
 * added disabling SVG tab if no SVG file loaded on file tree view and the view is not empty
@@ -79,7 +79,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Sun Apr 28 2013
+### Sun Apr 28 2013
 
 * added command line arguments --help, --session and --lang support
 * added background color in convertion options
@@ -96,7 +96,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Wed Nov 14 2012
+### Wed Nov 14 2012
 
 * relative path bug-fix
 
@@ -105,7 +105,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Tue Nov 13 2012
+### Tue Nov 13 2012
 
 * project moved to CMake
 * Conditional compilation: disable or enable metadata support
@@ -134,7 +134,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Tue Jul 31 2012
+### Tue Jul 31 2012
 
 * Changelog file provided
 * Selected file (or files) details in splitter on rigth option added
@@ -158,7 +158,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Mon May 07 2012
+### Mon May 07 2012
 
 * saving image size in Exif metadata bugfix
 * Serbian translation added
@@ -166,9 +166,9 @@
 
 # v2.3
 
-## Tue Apr 10 2012
-
 ## Marek Jędryka <jedryka89@gmail.com>
+
+### Tue Apr 10 2012
 
 * flip support in convert and preview dialogs
 * full support of Exif.Image.Orientation field
@@ -185,7 +185,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-## Sun Sep 25 2011
+### Sun Sep 25 2011
 
 * Bug fixes in convert threads
 * New message box
@@ -196,7 +196,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Wed Dec 15 2010
+### Wed Dec 15 2010
 
 * Russian translation updated (Thanks Timur Antipin)
 
@@ -205,7 +205,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Sun Apr 11 2010
+### Sun Apr 11 2010
 
 * Czech translation added (Thanks Pavel Fric).
 * Corrected some possible memory leak.
@@ -222,7 +222,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Sat Mar 13 2010
+### Sat Mar 13 2010
 
 * Greek Translation Added (Thanks Steve Jemens)
 
@@ -231,7 +231,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Sun Mar 07 2010
+### Sun Mar 07 2010
 
 * Translations update
 * Debian control file updated to recommend dcraw
@@ -244,7 +244,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Sun Feb 28 2010
+### Sun Feb 28 2010
 
 * Added option to use dcraw to convert raw images
 * Added Cancel Button when converting images
@@ -258,7 +258,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Sun Feb 21 2010
+### Sun Feb 21 2010
 
 * French translation added. Thanks Jérôme Launay.
 
@@ -267,7 +267,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Sat Feb 06 2010
+### Sat Feb 06 2010
 
 * Restore convert selected function because in last release was commented
 * Setup conversion threads added - parralel conversion added
@@ -279,7 +279,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Thu May 28 2009
+### Thu May 28 2009
 
 * Code refactorization
 * Multithreading support added. SharedInformation class provided.
@@ -295,7 +295,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Fri Sep 12 2008
+### Fri Sep 12 2008
 
 * Debian directory added containign Debian package build rules
 
@@ -304,7 +304,7 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Sun May 04 2008
+### Sun May 04 2008
 
 * Polish translation added. Thanks zoteek
 * Dutch translation added. Thanks Youp
@@ -316,6 +316,6 @@
 
 ## Rafael Sachetto <rsachetto@gmail.com>
 
-## Tue Jul 17 2007
+### Tue Jul 17 2007
 
 * It's first release in SVN repository. It's all I know.
