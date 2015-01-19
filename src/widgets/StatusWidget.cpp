@@ -55,17 +55,26 @@ void StatusWidget::onFilesLoadingStart(int totalQuantity) {
     QString message = tr("Loading files...");
     setStatus(message, 0, totalQuantity);
     QCoreApplication::processEvents();
+
+    qDebug("StatusWidget::onFilesLoadingStart(%d)", totalQuantity);
 }
 
 void StatusWidget::onFilesLoadingTick(int partQuantity) {
-    if (loadingFilesTickTimer.elapsed() > 500) {
+    qint64 elapsed = loadingFilesTickTimer.elapsed();
+
+    if (elapsed > 500) {
         partLabel->setText(QString::number(partQuantity));
         QCoreApplication::processEvents();
         loadingFilesTickTimer.restart();
+
+        qDebug("StatusWidget::onFilesLoadingTick(%d) %d ms elapsed",
+               partQuantity, elapsed);
     }
 }
 
 void StatusWidget::onFilesLoadingStop() {
     setStatus(defaultMessage);
     QCoreApplication::processEvents();
+
+    qDebug("StatusWidget::onFilesLoadingStop()");
 }

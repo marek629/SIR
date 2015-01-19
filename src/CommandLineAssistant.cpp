@@ -169,7 +169,7 @@ void CommandLineAssistant::timerEvent(QTimerEvent *event) {
 
     treeWidget->loadFiles(files);
 
-    if (treeWidget->topLevelItemCount() == files.count()) {
+    if (treeWidget->topLevelItemCount() == files.count() || files.count() == 0) {
         int timerId = event->timerId();
         killTimer(timerId);
     }
