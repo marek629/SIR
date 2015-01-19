@@ -113,12 +113,10 @@ int CommandLineAssistant::parse(const QStringList &args) {
                "$ sir -hl pl\n"
                "is equivalent to\n"
                "$ sir --help --lang pl\n"
-               "both print help message in Polish language and quit.\n"
-               );
+               "both print help message in Polish language and quit.\n");
         std::cout << help.toNativeStdString() << std::endl;
         return 0;
-    }
-    else {
+    } else {
         // set language
         if (!lang.isEmpty()) {
             Settings *s = Settings::instance();
