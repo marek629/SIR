@@ -8,6 +8,7 @@
 * Added status bar
 * Improved saving "Exif.Image.Orientation" metadata tag
 * Improved view in details for Aperture, Exposure Time and Exposure Bias metadata
+* Improved keyboard navigation for selecting files in TreeWidget
 * Removed setting empty dcraw path string after browse cancel
 * Fixed left arrow shortcut for previous image in PreviewDialog
 * Fixed no files with lowercase extension in "Add File" dialog

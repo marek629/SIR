@@ -3,7 +3,6 @@
 
 ## Nearest Release
 
-* keyboard navigation for selecting files in TreeWidget
 
 
 ## Next Release

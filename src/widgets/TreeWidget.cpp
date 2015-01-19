@@ -416,14 +416,19 @@ void TreeWidget::retranslateStrings() {
     }
 }
 
-/** Removes selected items when \a Delete key pressed by user. */
-void TreeWidget::keyPressEvent( QKeyEvent *k ) {
-    if(k->key() == Qt::Key_Delete) {
+/** Controlls selecting and deleting of this widget items. */
+void TreeWidget::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
+    case Qt::Key_Delete:
         for (int i = 0; i < this->topLevelItemCount(); i++) {
             if ((this->topLevelItem(i))->isSelected()) {
                 this->takeTopLevelItem(i);
             }
         }
+        break;
+    default:
+        QTreeWidget::keyPressEvent(event);
+        break;
     }
 }
 
