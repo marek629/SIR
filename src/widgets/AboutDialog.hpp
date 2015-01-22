@@ -43,6 +43,7 @@ private:
                          const QString &text3) const;
     QString htmlTableEnd() const { return "</table>"; }
     QString htmlLink(const QString &url) const;
+    QString htmlLink(const QString &url, const QString &label) const;
 };
 #endif
 

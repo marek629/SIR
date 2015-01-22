@@ -89,9 +89,10 @@ QString AboutDialog::htmlTableRow(const QString &text1, const QString &text2) co
 QString AboutDialog::htmlTableRow(const QString &text1, const QString &text2,
                                const QString &text3) const {
     QString result = "<tr><td>" + text1 + "</td>" + "<td>" + text2 + "</td>";
-    if (text3.contains('@')) { // convert to email address
+    if (text3.contains('@')) {
         QString mail = text3.toLower();
-        result += "<td><a href=\"mailto:" + mail + "\">" + mail + "</a></td></tr>";
+        QString mailUrl = "mailto:" + mail;
+        result += "<td>" + htmlLink(mailUrl, mail) + "</td></tr>";
     }
     else
         result += "<td>" + text3 + "</td></tr>";
@@ -99,6 +100,10 @@ QString AboutDialog::htmlTableRow(const QString &text1, const QString &text2,
 }
 
 QString AboutDialog::htmlLink(const QString &url) const {
-    QString result = "<a href=\"" + url + "\">" + url + "</a>";
+    return htmlLink(url, url);
+}
+
+QString AboutDialog::htmlLink(const QString &url, const QString &label) const {
+    QString result = "<a href=\"" + url + "\">" + label + "</a>";
     return result;
 }
