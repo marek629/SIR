@@ -26,11 +26,12 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QTextDocument>
+#include <QImage>
 
-/** Default constructor. */
+#include <QDebug>
+
 NetworkUtils::NetworkUtils() : QObject() {}
 
-/** Destructor. */
 NetworkUtils::~NetworkUtils() {
     delete reply;
 }
@@ -71,6 +72,14 @@ void NetworkUtils::sendInstalltoSite() {
 
 }
 
+void NetworkUtils::getImage(const QUrl &url) {
+    QNetworkAccessManager *networkAccessManager = new QNetworkAccessManager(this);
+    connect(networkAccessManager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(onGetImageFinished(QNetworkReply*)));
+
+    reply = networkAccessManager->get(QNetworkRequest(url));
+}
+
 /** Emits checkDone signal.
   * \note In fact, result information could be shown in checkDone slot.
   */
@@ -86,11 +95,31 @@ void NetworkUtils::showResults(QNetworkReply* reply) {
 
         response = new QString(document.toPlainText());
         error = false;
-    }
-    else {
+    } else {
         response = new QString("");
         error = true;
     }
 
     emit checkDone(response, error);
+}
+
+void NetworkUtils::onGetImageFinished(QNetworkReply *reply) {
+    QImage *response = 0;
+    bool error = false;
+
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray bytes = reply->readAll();
+        qDebug() << "response size:" << bytes.size() << bytes.constData();
+
+        response = new QImage();
+        qDebug() << "load..." << response->loadFromData(bytes);
+        error = false;
+    } else {
+        response = new QImage();
+        error = true;
+    }
+
+    qDebug() << response->size() << response->isNull() << error;
+
+    emit gotImage(response, error);
 }

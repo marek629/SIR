@@ -24,6 +24,7 @@
 
 #include "ui_AboutDialog.h"
 
+#include <QTemporaryFile>
 
 //! Class provides a window containing informations about SIR.
 class AboutDialog : public QDialog, public Ui::About {
@@ -34,6 +35,8 @@ public:
     void setVersion(QString version);
 
 private:
+    QTemporaryFile tempFile;
+
     inline void setAboutText();
     QString htmlTableHead(const QString &text1, const QString &text2) const;
     QString htmlTableHead(const QString &text1, const QString &text2,
@@ -44,10 +47,10 @@ private:
     QString htmlTableEnd() const { return "</table>"; }
     QString htmlLink(const QString &url) const;
     QString htmlLink(const QString &url, const QString &label) const;
+    QString htmlImage(const QString &url, const QString &alternativeLabel) const;
+
+private slots:
+    void onGotImage(QImage* img, bool error);
 };
+
 #endif
-
-
-
-
-

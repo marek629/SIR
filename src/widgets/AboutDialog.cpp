@@ -20,15 +20,20 @@
  */
 
 #include "widgets/AboutDialog.hpp"
+#include "NetworkUtils.hpp"
 
-/** Default constructor. */
+#include <QDir>
+#include <QDebug>
+
 AboutDialog::AboutDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {
     setupUi(this);
+    tempFile.setTextModeEnabled(false);
+    tempFile.setFileName(QDir::tempPath() + QDir::separator() + "SIR_donate_logo.jpg");
+    textBrowser->setOpenExternalLinks(true);
     setAboutText();
     retranslateUi(this);
 }
 
-/** Sets version string. */
 void AboutDialog::setVersion(QString version) {
     this->version->setText(version);
 }
@@ -62,10 +67,17 @@ void AboutDialog::setAboutText() {
             + htmlTableRow(tr("Czech"), "Pavel Fric")
             + htmlTableRow(tr("Serbian"), "")
             + htmlTableEnd()
-            + "<p>" + tr("To enable dcraw visit: ")
+            + "<p>"
+            + tr("To enable dcraw visit: ")
             + htmlLink("http://www.cybercom.net/~dcoffin/dcraw/") + "<br />"
-            + tr("or do a sudo apt-get install dcraw on Debian based systems.") + "</p>"
-            + htmlLink("http://marek629.github.io/sir/");
+            + tr("or do a sudo apt-get install dcraw on Debian based systems.")
+            + "</p>"
+            + "<p>"
+            + htmlLink("http://marek629.github.io/SIR/donate.html",
+                       htmlImage("https://www.paypalobjects.com/en_US/PL/i/btn/btn_donateCC_LG.gif",
+                                 tr("Donate")))
+            + "</p>"
+            + htmlLink("http://marek629.github.io/SIR/");
     textBrowser->setHtml(htmlStart + htmlContent + htmlStop);
 }
 
@@ -106,4 +118,47 @@ QString AboutDialog::htmlLink(const QString &url) const {
 QString AboutDialog::htmlLink(const QString &url, const QString &label) const {
     QString result = "<a href=\"" + url + "\">" + label + "</a>";
     return result;
+}
+
+QString AboutDialog::htmlImage(const QString &url, const QString &alternativeLabel) const {
+    QUrl urlObject = url;
+    if (!urlObject.isValid())
+        return alternativeLabel;
+
+    QString result;
+
+    if (urlObject.isLocalFile()) {
+        result = "<img src=\"" + url + "\" alt=\"" + alternativeLabel +"\" />";
+    } else {
+        NetworkUtils *networkUtils = new NetworkUtils();
+        connect(networkUtils, SIGNAL(gotImage(QImage*,bool)),
+                this, SLOT(onGotImage(QImage*,bool)));
+        networkUtils->getImage(urlObject);
+        result = "<img width=\"168\" height=\"47\" src=\"" + tempFile.fileName() + "\" alt=\"" + alternativeLabel +"\" />";
+    }
+
+    return result;
+}
+
+void AboutDialog::onGotImage(QImage *img, bool error) {
+    if (error)
+        return;
+
+    qDebug() << tempFile.isOpen() << tempFile.openMode() << bool(tempFile.openMode() | QIODevice::WriteOnly);
+
+//    if (!(tempFile.isOpen() && tempFile.openMode() ^ QIODevice::WriteOnly)) {
+//        if (!tempFile.open(QIODevice::WriteOnly))
+//            return;
+
+    QFile file(tempFile.fileName());
+    if (!file.open(QIODevice::WriteOnly)) {
+        qDebug() << "open" << file.fileName() << "file failed";
+        return;
+    }
+    qDebug() << file.fileName();
+
+    qDebug() << "image save:" << img->save(&file) << img->size();
+    delete img;
+
+    textBrowser->loadResource(QTextDocument::ImageResource, QUrl(tempFile.fileName()));
 }

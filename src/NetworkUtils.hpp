@@ -25,23 +25,29 @@
 #include <QObject>
 
 class QNetworkReply;
+class QUrl;
+class QImage;
 
-/** \brief Network tools useful for updates checking and sending anonymous
-  * information about SIR instalation.
-  */
 class NetworkUtils : public QObject {
     Q_OBJECT
+
 public:
     explicit NetworkUtils();
     ~NetworkUtils();
     void checkUpdates();
     void sendInstalltoSite();
-    QNetworkReply* reply; /**< Stores information returning from SIR website server. */
+    void getImage(const QUrl &url);
+
+private:
+    QNetworkReply* reply;
+
 signals:
     void checkDone(QString *msg, bool error);
+    void gotImage(QImage *img, bool error);
 
 public slots:
-    virtual void showResults(QNetworkReply* reply);
+    void showResults(QNetworkReply* reply);
+    void onGetImageFinished(QNetworkReply* reply);
 };
 
 #endif // NETWORKUTILS_H
