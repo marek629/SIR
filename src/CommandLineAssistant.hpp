@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef COMMANDLINEASSISTANT_H
-#define COMMANDLINEASSISTANT_H
+#ifndef COMMANDLINEASSISTANT_HPP
+#define COMMANDLINEASSISTANT_HPP
 
 #include <QStringList>
 #include <QCoreApplication>
@@ -68,4 +68,4 @@ private:
     TreeWidget *treeWidget;
 };
 
-#endif // COMMANDLINEASSISTANT_H
+#endif // COMMANDLINEASSISTANT_HPP

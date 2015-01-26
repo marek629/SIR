@@ -73,6 +73,7 @@ typedef QPair <PosUnit, PosUnit> PosUnitPair;
 class SharedInformation {
     friend class ConvertThread;
     friend class ConvertDialog;
+    friend class ConvertDialogTest;
     friend class ConvertEffects;
     friend class ConvertEffectsTest;
 

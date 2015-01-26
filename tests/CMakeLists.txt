@@ -36,6 +36,15 @@ target_link_libraries( sir_rawgroupboxcontroller_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "RawGroupBoxController_UT" COMMAND sir_rawgroupboxcontroller_test )
 
 
+set( sir_IT_convertdialog_SRCS
+        widgets/ConvertDialogTest.cpp
+        fake/CommandLineAssistantFake.cpp
+    )
+add_executable( sir_convertdialog_test ${sir_IT_convertdialog_SRCS} )
+target_link_libraries( sir_convertdialog_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "ConvertDialog_IT" COMMAND sir_convertdialog_test )
+
+
 set( sir_UT_converteffects_SRCS
         ConvertEffectsTest.cpp
     )

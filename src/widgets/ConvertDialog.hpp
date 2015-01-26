@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef CONVERTDIALOG_H
-#define CONVERTDIALOG_H
+#ifndef CONVERTDIALOG_HPP
+#define CONVERTDIALOG_HPP
 
 #include "ui_ConvertDialog.h"
 #include "ConvertThread.hpp"
@@ -35,6 +35,7 @@ class EffectsCollector;
 //! Main window class provides images convertion dialog.
 class ConvertDialog : public QMainWindow, public Ui::ConvertDialog {
     Q_OBJECT
+    friend class ConvertDialogTest;
     friend class Selection;
     friend class SelectionDialog;
     friend class TreeWidget;
@@ -153,4 +154,4 @@ void ConvertDialog::clearTempDir() {
         QFile::remove(info.absoluteFilePath());
 }
 
-#endif // CONVERTDIALOG_H
+#endif // CONVERTDIALOG_HPP
