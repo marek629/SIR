@@ -6,6 +6,7 @@
 
 * Changed SIR to single instance application
 * Added status bar
+* Added Dotate button in About dialog
 * Improved saving "Exif.Image.Orientation" metadata tag
 * Improved view in details for Aperture, Exposure Time and Exposure Bias metadata
 * Improved keyboard navigation for selecting files in TreeWidget
@@ -14,6 +15,7 @@
 * Fixed no files with lowercase extension in "Add File" dialog
 * Fixed enabling/disabling buttons in "File Details" options dialog after load settings
 * Fixed refresh file details settings after save settings
+* Fixed open link in default web browser  instead About dialog
 * Fixed freeze of the application while loading many images
 * Removed defines.h file
 * Removed files coresponded uploading to Google Code

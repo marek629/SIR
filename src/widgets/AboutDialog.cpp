@@ -23,7 +23,6 @@
 #include "NetworkUtils.hpp"
 
 #include <QDir>
-#include <QDebug>
 
 AboutDialog::AboutDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {
     setupUi(this);
@@ -39,6 +38,8 @@ void AboutDialog::setVersion(QString version) {
 }
 
 void AboutDialog::setAboutText() {
+    QSize donateButtonSize(168, 47);
+
     QString htmlStart = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
             "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
             "<html><head><meta name=\"qrichtext\" content=\"1\" />"
@@ -75,7 +76,7 @@ void AboutDialog::setAboutText() {
             + "<p>"
             + htmlLink("http://marek629.github.io/SIR/donate.html",
                        htmlImage("https://www.paypalobjects.com/en_US/PL/i/btn/btn_donateCC_LG.gif",
-                                 tr("Donate")))
+                                 tr("Donate"), donateButtonSize))
             + "</p>"
             + htmlLink("http://marek629.github.io/SIR/");
     textBrowser->setHtml(htmlStart + htmlContent + htmlStop);
@@ -120,7 +121,8 @@ QString AboutDialog::htmlLink(const QString &url, const QString &label) const {
     return result;
 }
 
-QString AboutDialog::htmlImage(const QString &url, const QString &alternativeLabel) const {
+QString AboutDialog::htmlImage(const QString &url, const QString &alternativeLabel,
+                               const QSize &imageSize) const {
     QUrl urlObject = url;
     if (!urlObject.isValid())
         return alternativeLabel;
@@ -134,7 +136,10 @@ QString AboutDialog::htmlImage(const QString &url, const QString &alternativeLab
         connect(networkUtils, SIGNAL(gotImage(QImage*,bool)),
                 this, SLOT(onGotImage(QImage*,bool)));
         networkUtils->getImage(urlObject);
-        result = "<img width=\"168\" height=\"47\" src=\"" + tempFile.fileName() + "\" alt=\"" + alternativeLabel +"\" />";
+        result = "<img width=\"" + QString::number(imageSize.width())
+                + "\" height=\"" + QString::number(imageSize.height())
+                + "\" src=\"" + tempFile.fileName()
+                + "\" alt=\"" + alternativeLabel +"\" />";
     }
 
     return result;
@@ -144,21 +149,13 @@ void AboutDialog::onGotImage(QImage *img, bool error) {
     if (error)
         return;
 
-    qDebug() << tempFile.isOpen() << tempFile.openMode() << bool(tempFile.openMode() | QIODevice::WriteOnly);
-
-//    if (!(tempFile.isOpen() && tempFile.openMode() ^ QIODevice::WriteOnly)) {
-//        if (!tempFile.open(QIODevice::WriteOnly))
-//            return;
-
     QFile file(tempFile.fileName());
-    if (!file.open(QIODevice::WriteOnly)) {
-        qDebug() << "open" << file.fileName() << "file failed";
+    if (!file.open(QIODevice::WriteOnly))
         return;
-    }
-    qDebug() << file.fileName();
 
-    qDebug() << "image save:" << img->save(&file) << img->size();
+    img->save(&file);
     delete img;
 
-    textBrowser->loadResource(QTextDocument::ImageResource, QUrl(tempFile.fileName()));
+    textBrowser->loadResource(QTextDocument::ImageResource,
+                              QUrl(tempFile.fileName()));
 }

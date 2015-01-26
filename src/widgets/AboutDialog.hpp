@@ -47,7 +47,7 @@ private:
     QString htmlTableEnd() const { return "</table>"; }
     QString htmlLink(const QString &url) const;
     QString htmlLink(const QString &url, const QString &label) const;
-    QString htmlImage(const QString &url, const QString &alternativeLabel) const;
+    QString htmlImage(const QString &url, const QString &alternativeLabel, const QSize &imageSize) const;
 
 private slots:
     void onGotImage(QImage* img, bool error);

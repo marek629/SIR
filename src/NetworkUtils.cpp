@@ -21,14 +21,13 @@
 
 #include "NetworkUtils.hpp"
 #include "Version.hpp"
+
 #include <QNetworkAccessManager>
 #include <QUrl>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QTextDocument>
 #include <QImage>
-
-#include <QDebug>
 
 NetworkUtils::NetworkUtils() : QObject() {}
 
@@ -109,17 +108,14 @@ void NetworkUtils::onGetImageFinished(QNetworkReply *reply) {
 
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray bytes = reply->readAll();
-        qDebug() << "response size:" << bytes.size() << bytes.constData();
 
         response = new QImage();
-        qDebug() << "load..." << response->loadFromData(bytes);
+        response->loadFromData(bytes);
         error = false;
     } else {
         response = new QImage();
         error = true;
     }
-
-    qDebug() << response->size() << response->isNull() << error;
 
     emit gotImage(response, error);
 }
