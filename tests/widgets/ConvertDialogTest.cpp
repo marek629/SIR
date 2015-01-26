@@ -31,17 +31,11 @@ ConvertDialogTest::~ConvertDialogTest() {
     delete convertDialog;
 }
 
-void ConvertDialogTest::initTestCase() {
+void ConvertDialogTest::initTestCase() {}
 
-}
-
-void ConvertDialogTest::cleanupTestCase() {
-
-}
+void ConvertDialogTest::cleanupTestCase() {}
 
 void ConvertDialogTest::convert_defaultPath() {
-
-
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
@@ -81,14 +75,43 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->imagePos, QPoint());
     QCOMPARE(sharedInfo->imageUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
     QCOMPARE(sharedInfo->imageRotation, 0);
+
+    QCOMPARE(convertDialog->convertedImages, 0);
+    QCOMPARE(convertDialog->numImages, 0);
+}
+
+void ConvertDialogTest::convert_svg_removeText() {
+    SvgScrollArea *svgScrollArea = convertDialog->svgScrollArea;
+    QString textToRemove = "text to remove";
+    svgScrollArea->removeTextCheckBox->setChecked(true);
+    svgScrollArea->removeTextLineEdit->setText(textToRemove);
+    svgScrollArea->saveCheckBox->setChecked(false);
+    svgScrollArea->removeGroupsCheckBox->setChecked(false);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->svgRemoveText, textToRemove);
+    QCOMPARE(sharedInfo->svgRemoveEmptyGroup, false);
+    QCOMPARE(sharedInfo->svgSave, false);
+    QCOMPARE(sharedInfo->svgModifiersEnabled, true);
+}
+
+void ConvertDialogTest::convert_svg_doNotRemoveText() {
+    SvgScrollArea *svgScrollArea = convertDialog->svgScrollArea;
+    QString textToRemove = "text to remove";
+    svgScrollArea->removeTextCheckBox->setChecked(false);
+    svgScrollArea->removeTextLineEdit->setText(textToRemove);
+    svgScrollArea->saveCheckBox->setChecked(false);
+    svgScrollArea->removeGroupsCheckBox->setChecked(false);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
     QCOMPARE(sharedInfo->svgRemoveText, QString());
-    QCOMPARE(sharedInfo->svgRemoveEmptyGroup,
-             convertDialog->svgScrollArea->removeGroupsCheckBox->isChecked());
-    QCOMPARE(sharedInfo->svgSave,
-             convertDialog->svgScrollArea->saveCheckBox->isChecked());
-    QCOMPARE(sharedInfo->svgModifiersEnabled,
-             (sharedInfo->svgSave|| sharedInfo->svgRemoveEmptyGroup
-              || !sharedInfo->svgRemoveText.isNull()));
+    QCOMPARE(sharedInfo->svgRemoveEmptyGroup, false);
+    QCOMPARE(sharedInfo->svgSave, false);
+    QCOMPARE(sharedInfo->svgModifiersEnabled, false);
 }
 
 QTEST_MAIN(ConvertDialogTest)

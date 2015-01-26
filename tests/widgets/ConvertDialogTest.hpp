@@ -42,6 +42,8 @@ private slots:
     void cleanupTestCase();
 
     void convert_defaultPath();
+    void convert_svg_removeText();
+    void convert_svg_doNotRemoveText();
 };
 
 #endif // CONVERTDIALOGTEST_HPP
