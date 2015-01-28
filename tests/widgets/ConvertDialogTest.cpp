@@ -103,6 +103,7 @@ void ConvertDialogTest::convert_addImage_imageNotNull() {
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
     QCOMPARE(sharedInfo->image, image);
+    QCOMPARE(sharedInfo->imageLoadError, false);
     QCOMPARE(sharedInfo->imagePosModifier, MiddleTopEdge);
     QCOMPARE(sharedInfo->imagePos, imagePoint);
     QCOMPARE(sharedInfo->imageUnitPair, PosUnitPair(Percent, Percent));
@@ -119,6 +120,7 @@ void ConvertDialogTest::convert_addImage_no() {
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
     QCOMPARE(sharedInfo->image, QImage());
+    QCOMPARE(sharedInfo->imageLoadError, false);
     QCOMPARE(sharedInfo->imagePosModifier, UndefinedPosModifier);
     QCOMPARE(sharedInfo->imagePos, QPoint());
     QCOMPARE(sharedInfo->imageUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
