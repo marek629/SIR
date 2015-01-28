@@ -203,6 +203,7 @@ private:
     /** Image position modificator for \em "Add Image" effect.
       * \sa #imagePos
       */
+    bool imageLoadError;
     PosModifier imagePosModifier;
     /** Image position for \em "Add Image" effect.
       * \sa #imagePosModifier #imageUnitPair

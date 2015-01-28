@@ -640,35 +640,16 @@ void ConvertDialog::convert() {
         sharedInfo->textRotation = 0;
     }
     // add image
-    if (effectsScrollArea->imageGroupBox->isChecked()) {
-        sharedInfo->image = QImage(effectsScrollArea->imagePathLineEdit->text());
-        if (sharedInfo->image.isNull()) {
-            QMessageBox::StandardButton answer =
-                    QMessageBox::warning(this, tr("Load image failed"),
-                                         tr("Load image to add failed.\n"
-                                            "Do you want continue anyway?"),
-                                         QMessageBox::Ignore | QMessageBox::Abort,
-                                         QMessageBox::Abort);
-            if (answer != QMessageBox::Ignore)
-                return;
-        }
-        sharedInfo->imagePosModifier = static_cast<PosModifier>(
-                    effectsScrollArea->imagePositionComboBox->currentIndex() );
-        sharedInfo->imagePos = QPoint( effectsScrollArea->imageXSpinBox->value(),
-                                       effectsScrollArea->imageYSpinBox->value() );
-        sharedInfo->imageUnitPair.first = static_cast<PosUnit>(
-                    effectsScrollArea->imageXComboBox->currentIndex() );
-        sharedInfo->imageUnitPair.second = static_cast<PosUnit>(
-                    effectsScrollArea->imageYComboBox->currentIndex() );
-        sharedInfo->imageOpacity = effectsScrollArea->imageOpacitySpinBox->value();
-        sharedInfo->imageRotation = effectsScrollArea->imageRotationSpinBox->value();
-    }
-    else {
-        sharedInfo->image = QImage();
-        sharedInfo->imagePosModifier = UndefinedPosModifier;
-        sharedInfo->imagePos = QPoint();
-        sharedInfo->imageUnitPair = PosUnitPair(UndefinedUnit, UndefinedUnit);
-        sharedInfo->imageRotation = 0;
+    sharedInfo = configureAddImage(sharedInfo);
+    if (sharedInfo->imageLoadError) {
+        QMessageBox::StandardButton answer =
+                QMessageBox::warning(this, tr("Load image failed"),
+                                     tr("Load image to add failed.\n"
+                                        "Do you want continue anyway?"),
+                                     QMessageBox::Ignore | QMessageBox::Abort,
+                                     QMessageBox::Abort);
+        if (answer != QMessageBox::Ignore)
+            return;
     }
     // svg
     sharedInfo = configureSVG(sharedInfo);
@@ -684,7 +665,33 @@ void ConvertDialog::convert() {
     }
 }
 
-SharedInformation * ConvertDialog::configureSVG(SharedInformation *sharedInformation) {
+SharedInformation *ConvertDialog::configureAddImage(SharedInformation *sharedInformation) {
+    if (effectsScrollArea->imageGroupBox->isChecked()) {
+        sharedInformation->image = QImage(effectsScrollArea->imagePathLineEdit->text());
+        sharedInformation->imageLoadError = sharedInformation->image.isNull();
+        sharedInformation->imagePosModifier = static_cast<PosModifier>(
+                    effectsScrollArea->imagePositionComboBox->currentIndex() );
+        sharedInformation->imagePos = QPoint( effectsScrollArea->imageXSpinBox->value(),
+                                       effectsScrollArea->imageYSpinBox->value() );
+        sharedInformation->imageUnitPair.first = static_cast<PosUnit>(
+                    effectsScrollArea->imageXComboBox->currentIndex() );
+        sharedInformation->imageUnitPair.second = static_cast<PosUnit>(
+                    effectsScrollArea->imageYComboBox->currentIndex() );
+        sharedInformation->imageOpacity = effectsScrollArea->imageOpacitySpinBox->value();
+        sharedInformation->imageRotation = effectsScrollArea->imageRotationSpinBox->value();
+    }
+    else {
+        sharedInformation->image = QImage();
+        sharedInformation->imageLoadError = false;
+        sharedInformation->imagePosModifier = UndefinedPosModifier;
+        sharedInformation->imagePos = QPoint();
+        sharedInformation->imageUnitPair = PosUnitPair(UndefinedUnit, UndefinedUnit);
+        sharedInformation->imageRotation = 0;
+    }
+    return sharedInformation;
+}
+
+SharedInformation *ConvertDialog::configureSVG(SharedInformation *sharedInformation) {
     if (svgScrollArea->removeTextCheckBox->isChecked())
         sharedInformation->svgRemoveText = svgScrollArea->removeTextLineEdit->text();
     else
