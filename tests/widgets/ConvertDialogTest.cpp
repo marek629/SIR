@@ -70,14 +70,59 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
     QCOMPARE(sharedInfo->textFrame, false);
     QCOMPARE(sharedInfo->textRotation, 0);
+
+    QCOMPARE(convertDialog->convertedImages, 0);
+    QCOMPARE(convertDialog->numImages, 0);
+}
+
+void ConvertDialogTest::convert_addImage_imageNotNull() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *imageGroupBox = effectsScrollArea->imageGroupBox;
+    imageGroupBox->setChecked(true);
+
+    QString filePath = QDir::tempPath() + QDir::separator()
+            + "sir_test_convert_addImage_imageNotNull.bmp";
+    effectsScrollArea->imagePathLineEdit->setText(filePath);
+    effectsScrollArea->imagePositionComboBox->setCurrentIndex(MiddleTopEdge);
+    QPoint imagePoint(1, 2);
+    effectsScrollArea->imageXSpinBox->setValue(imagePoint.x());
+    effectsScrollArea->imageYSpinBox->setValue(imagePoint.y());
+    effectsScrollArea->imageXComboBox->setCurrentIndex(Percent);
+    effectsScrollArea->imageYComboBox->setCurrentIndex(Percent);
+    effectsScrollArea->imageOpacitySpinBox->setValue(0.5);
+    effectsScrollArea->imageRotationSpinBox->setValue(40);
+
+    QImage image(2, 3, QImage::Format_RGB32);
+    image.fill(Qt::green);
+    QVERIFY(image.save(filePath));
+
+    convertDialog->convert();
+
+    QFile file(filePath);
+    QVERIFY(file.remove());
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->image, image);
+    QCOMPARE(sharedInfo->imagePosModifier, MiddleTopEdge);
+    QCOMPARE(sharedInfo->imagePos, imagePoint);
+    QCOMPARE(sharedInfo->imageUnitPair, PosUnitPair(Percent, Percent));
+    QCOMPARE(sharedInfo->imageOpacity, 0.5);
+    QCOMPARE(sharedInfo->imageRotation, 40);
+}
+
+void ConvertDialogTest::convert_addImage_no() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *imageGroupBox = effectsScrollArea->imageGroupBox;
+    imageGroupBox->setChecked(false);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
     QCOMPARE(sharedInfo->image, QImage());
     QCOMPARE(sharedInfo->imagePosModifier, UndefinedPosModifier);
     QCOMPARE(sharedInfo->imagePos, QPoint());
     QCOMPARE(sharedInfo->imageUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
     QCOMPARE(sharedInfo->imageRotation, 0);
-
-    QCOMPARE(convertDialog->convertedImages, 0);
-    QCOMPARE(convertDialog->numImages, 0);
 }
 
 void ConvertDialogTest::convert_svg_removeText() {
