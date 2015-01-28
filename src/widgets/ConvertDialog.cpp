@@ -671,15 +671,7 @@ void ConvertDialog::convert() {
         sharedInfo->imageRotation = 0;
     }
     // svg
-    if (svgScrollArea->removeTextCheckBox->isChecked())
-        sharedInfo->svgRemoveText = svgScrollArea->removeTextLineEdit->text();
-    else
-        sharedInfo->svgRemoveText = QString();
-    sharedInfo->svgRemoveEmptyGroup = svgScrollArea->removeGroupsCheckBox->isChecked();
-    sharedInfo->svgSave = svgScrollArea->saveCheckBox->isChecked();
-    sharedInfo->svgModifiersEnabled = (sharedInfo->svgSave
-                                       || sharedInfo->svgRemoveEmptyGroup
-                                       || !sharedInfo->svgRemoveText.isNull());
+    sharedInfo = configureSVG(sharedInfo);
 
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
@@ -690,6 +682,19 @@ void ConvertDialog::convert() {
                                         item->text(PathColumn));
         convertedImages++;
     }
+}
+
+SharedInformation * ConvertDialog::configureSVG(SharedInformation *sharedInformation) {
+    if (svgScrollArea->removeTextCheckBox->isChecked())
+        sharedInformation->svgRemoveText = svgScrollArea->removeTextLineEdit->text();
+    else
+        sharedInformation->svgRemoveText = QString();
+    sharedInformation->svgRemoveEmptyGroup = svgScrollArea->removeGroupsCheckBox->isChecked();
+    sharedInformation->svgSave = svgScrollArea->saveCheckBox->isChecked();
+    sharedInformation->svgModifiersEnabled = bool(sharedInformation->svgSave
+                                       || sharedInformation->svgRemoveEmptyGroup
+                                       || !sharedInformation->svgRemoveText.isNull());
+    return sharedInformation;
 }
 
 /** Shows selection dialog.
