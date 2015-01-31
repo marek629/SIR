@@ -604,41 +604,7 @@ void ConvertDialog::convert() {
         sharedInfo->borderInsideColor = QColor();
     }
     // add text
-    if (effectsScrollArea->textGroupBox->isChecked() &&
-            !effectsScrollArea->textLineEdit->text().isEmpty()) {
-        sharedInfo->textString = effectsScrollArea->textLineEdit->text();
-        sharedInfo->textFont = effectsScrollArea->textFontComboBox->currentFont();
-        if (effectsScrollArea->textFontSizeComboBox->currentIndex() == 0) // pt
-            sharedInfo->textFont.setPointSize(effectsScrollArea->textFontSizeSpinBox->value());
-        else
-            sharedInfo->textFont.setPixelSize(effectsScrollArea->textFontSizeSpinBox->value());
-        sharedInfo->textFont.setBold(effectsScrollArea->textBoldPushButton->isChecked());
-        sharedInfo->textFont.setItalic(effectsScrollArea->textItalicPushButton->isChecked());
-        sharedInfo->textFont.setUnderline(effectsScrollArea->textUnderlinePushButton->isChecked());
-        sharedInfo->textFont.setStrikeOut(effectsScrollArea->textStrikeOutPushButton->isChecked());
-        sharedInfo->textColor = effectsScrollArea->textColorFrame->color();
-        sharedInfo->textOpacity = effectsScrollArea->textOpacitySpinBox->value();
-        sharedInfo->textPosModifier = static_cast<PosModifier>(
-                    effectsScrollArea->textPositionComboBox->currentIndex() );
-        sharedInfo->textPos = QPoint( effectsScrollArea->textXSpinBox->value(),
-                                      effectsScrollArea->textYSpinBox->value() );
-        sharedInfo->textUnitPair.first = static_cast<PosUnit>(
-                    effectsScrollArea->textXComboBox->currentIndex() );
-        sharedInfo->textUnitPair.second = static_cast<PosUnit>(
-                    effectsScrollArea->textYComboBox->currentIndex() );
-        sharedInfo->textFrame = effectsScrollArea->textFrameCheckBox->isChecked();
-        sharedInfo->textRotation = effectsScrollArea->textRotationSpinBox->value();
-    }
-    else {
-        sharedInfo->textString = QString();
-        sharedInfo->textFont = QFont();
-        sharedInfo->textColor = QColor();
-        sharedInfo->textPosModifier = UndefinedPosModifier;
-        sharedInfo->textPos = QPoint();
-        sharedInfo->textUnitPair = PosUnitPair(UndefinedUnit, UndefinedUnit);
-        sharedInfo->textFrame = false;
-        sharedInfo->textRotation = 0;
-    }
+    sharedInfo = configureAddText(sharedInfo);
     // add image
     sharedInfo = configureAddImage(sharedInfo);
     if (sharedInfo->imageLoadError) {
@@ -665,6 +631,44 @@ void ConvertDialog::convert() {
     }
 }
 
+SharedInformation *ConvertDialog::configureAddText(SharedInformation *sharedInformation) {
+    if (effectsScrollArea->textGroupBox->isChecked() &&
+            !effectsScrollArea->textLineEdit->text().isEmpty()) {
+        sharedInformation->textString = effectsScrollArea->textLineEdit->text();
+        sharedInformation->textFont = effectsScrollArea->textFontComboBox->currentFont();
+        if (effectsScrollArea->textFontSizeComboBox->currentIndex() == 0) // pt
+            sharedInformation->textFont.setPointSize(effectsScrollArea->textFontSizeSpinBox->value());
+        else
+            sharedInformation->textFont.setPixelSize(effectsScrollArea->textFontSizeSpinBox->value());
+        sharedInformation->textFont.setBold(effectsScrollArea->textBoldPushButton->isChecked());
+        sharedInformation->textFont.setItalic(effectsScrollArea->textItalicPushButton->isChecked());
+        sharedInformation->textFont.setUnderline(effectsScrollArea->textUnderlinePushButton->isChecked());
+        sharedInformation->textFont.setStrikeOut(effectsScrollArea->textStrikeOutPushButton->isChecked());
+        sharedInformation->textColor = effectsScrollArea->textColorFrame->color();
+        sharedInformation->textOpacity = effectsScrollArea->textOpacitySpinBox->value();
+        sharedInformation->textPosModifier = static_cast<PosModifier>(
+                    effectsScrollArea->textPositionComboBox->currentIndex() );
+        sharedInformation->textPos = QPoint( effectsScrollArea->textXSpinBox->value(),
+                                      effectsScrollArea->textYSpinBox->value() );
+        sharedInformation->textUnitPair.first = static_cast<PosUnit>(
+                    effectsScrollArea->textXComboBox->currentIndex() );
+        sharedInformation->textUnitPair.second = static_cast<PosUnit>(
+                    effectsScrollArea->textYComboBox->currentIndex() );
+        sharedInformation->textFrame = effectsScrollArea->textFrameCheckBox->isChecked();
+        sharedInformation->textRotation = effectsScrollArea->textRotationSpinBox->value();
+    } else {
+        sharedInformation->textString = QString();
+        sharedInformation->textFont = QFont();
+        sharedInformation->textColor = QColor();
+        sharedInformation->textPosModifier = UndefinedPosModifier;
+        sharedInformation->textPos = QPoint();
+        sharedInformation->textUnitPair = PosUnitPair(UndefinedUnit, UndefinedUnit);
+        sharedInformation->textFrame = false;
+        sharedInformation->textRotation = 0;
+    }
+    return sharedInformation;
+}
+
 SharedInformation *ConvertDialog::configureAddImage(SharedInformation *sharedInformation) {
     if (effectsScrollArea->imageGroupBox->isChecked()) {
         sharedInformation->image = QImage(effectsScrollArea->imagePathLineEdit->text());
@@ -679,8 +683,7 @@ SharedInformation *ConvertDialog::configureAddImage(SharedInformation *sharedInf
                     effectsScrollArea->imageYComboBox->currentIndex() );
         sharedInformation->imageOpacity = effectsScrollArea->imageOpacitySpinBox->value();
         sharedInformation->imageRotation = effectsScrollArea->imageRotationSpinBox->value();
-    }
-    else {
+    } else {
         sharedInformation->image = QImage();
         sharedInformation->imageLoadError = false;
         sharedInformation->imagePosModifier = UndefinedPosModifier;
