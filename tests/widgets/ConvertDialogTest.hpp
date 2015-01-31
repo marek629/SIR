@@ -42,6 +42,9 @@ private slots:
     void cleanupTestCase();
 
     void convert_defaultPath();
+    void convert_addFrame_withBorder();
+    void convert_addFrame_withoutBorder();
+    void convert_addFrame_no();
     void convert_addText_fontPt();
     void convert_addText_fontPx();
     void convert_addText_textIsEmpty();

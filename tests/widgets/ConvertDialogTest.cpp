@@ -55,6 +55,77 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->histogramOperation, quint8(0));
     QCOMPARE(sharedInfo->filterType, int(NoFilter));
     QCOMPARE(sharedInfo->filterBrush, QBrush());
+
+    QCOMPARE(convertDialog->convertedImages, 0);
+    QCOMPARE(convertDialog->numImages, 0);
+}
+
+void ConvertDialogTest::convert_addFrame_withBorder() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *frameGroupBox = effectsScrollArea->frameGroupBox;
+    frameGroupBox->setChecked(true);
+
+    effectsScrollArea->frameAroundRadioButton->setChecked(true);
+    effectsScrollArea->frameWidthSpinBox->setValue(20);
+    effectsScrollArea->frameColorFrame->setColor(Qt::red);
+
+    QGroupBox *borderOutsideGroupBox = effectsScrollArea->borderOutsideGroupBox;
+    borderOutsideGroupBox->setChecked(true);
+    effectsScrollArea->borderOutsideSpinBox->setValue(2);
+    effectsScrollArea->borderOutsideColorFrame->setColor(Qt::green);
+
+    QGroupBox *borderInsideGroupBox = effectsScrollArea->borderInsideGroupBox;
+    borderInsideGroupBox->setChecked(true);
+    effectsScrollArea->borderInsideSpinBox->setValue(3);
+    effectsScrollArea->borderInsideColorFrame->setColor(Qt::blue);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->frameAddAround, true);
+    QCOMPARE(sharedInfo->frameWidth, 20);
+    QCOMPARE(sharedInfo->frameColor, QColor(Qt::red));
+    QCOMPARE(sharedInfo->borderOutsideWidth, 2);
+    QCOMPARE(sharedInfo->borderOutsideColor, QColor(Qt::green));
+    QCOMPARE(sharedInfo->borderInsideWidth, 3);
+    QCOMPARE(sharedInfo->borderInsideColor, QColor(Qt::blue));
+}
+
+void ConvertDialogTest::convert_addFrame_withoutBorder() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *frameGroupBox = effectsScrollArea->frameGroupBox;
+    frameGroupBox->setChecked(true);
+    QGroupBox *borderOutsideGroupBox = effectsScrollArea->borderOutsideGroupBox;
+    borderOutsideGroupBox->setChecked(false);
+    QGroupBox *borderInsideGroupBox = effectsScrollArea->borderInsideGroupBox;
+    borderInsideGroupBox->setChecked(false);
+
+    effectsScrollArea->frameAroundRadioButton->setChecked(true);
+    effectsScrollArea->frameWidthSpinBox->setValue(20);
+
+    QColor color = Qt::red;
+    effectsScrollArea->frameColorFrame->setColor(color);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->frameAddAround, true);
+    QCOMPARE(sharedInfo->frameWidth, 20);
+    QCOMPARE(sharedInfo->frameColor, color);
+    QCOMPARE(sharedInfo->borderOutsideWidth, -1);
+    QCOMPARE(sharedInfo->borderOutsideColor, QColor());
+    QCOMPARE(sharedInfo->borderInsideWidth, -1);
+    QCOMPARE(sharedInfo->borderInsideColor, QColor());
+}
+
+void ConvertDialogTest::convert_addFrame_no() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *frameGroupBox = effectsScrollArea->frameGroupBox;
+    frameGroupBox->setChecked(false);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
     QCOMPARE(sharedInfo->frameAddAround, false);
     QCOMPARE(sharedInfo->frameWidth, -1);
     QCOMPARE(sharedInfo->frameColor, QColor());
@@ -62,9 +133,6 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->borderOutsideColor, QColor());
     QCOMPARE(sharedInfo->borderInsideWidth, -1);
     QCOMPARE(sharedInfo->borderInsideColor, QColor());
-
-    QCOMPARE(convertDialog->convertedImages, 0);
-    QCOMPARE(convertDialog->numImages, 0);
 }
 
 void ConvertDialogTest::convert_addText_fontPt() {
