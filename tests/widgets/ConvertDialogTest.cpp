@@ -62,6 +62,119 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->borderOutsideColor, QColor());
     QCOMPARE(sharedInfo->borderInsideWidth, -1);
     QCOMPARE(sharedInfo->borderInsideColor, QColor());
+
+    QCOMPARE(convertDialog->convertedImages, 0);
+    QCOMPARE(convertDialog->numImages, 0);
+}
+
+void ConvertDialogTest::convert_addText_fontPt() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
+    textGroupBox->setChecked(true);
+    QLineEdit *textLineEdit = effectsScrollArea->textLineEdit;
+    QString testText = "Test Text";
+    textLineEdit->setText(testText);
+    QComboBox *fontSizeComboBox = effectsScrollArea->textFontSizeComboBox;
+    int pt = 0;
+    fontSizeComboBox->setCurrentIndex(pt);
+
+    QFont font = effectsScrollArea->textFontComboBox->currentFont();
+    int fontSize = 20;
+    font.setPointSize(fontSize);
+    font.setBold(true);
+    font.setItalic(true);
+    font.setUnderline(true);
+    font.setStrikeOut(true);
+
+    effectsScrollArea->textFontSizeSpinBox->setValue(fontSize);
+    effectsScrollArea->textBoldPushButton->setChecked(font.bold());
+    effectsScrollArea->textItalicPushButton->setChecked(font.italic());
+    effectsScrollArea->textUnderlinePushButton->setChecked(font.underline());
+    effectsScrollArea->textStrikeOutPushButton->setChecked(font.strikeOut());
+
+    QColor color = Qt::green;
+    effectsScrollArea->textColorFrame->setColor(color);
+
+    effectsScrollArea->textOpacitySpinBox->setValue(0.5);
+    effectsScrollArea->textPositionComboBox->setCurrentIndex(TopRightCorner);
+
+    QPoint position = QPoint(4, 3);
+    effectsScrollArea->textXSpinBox->setValue(position.x());
+    effectsScrollArea->textYSpinBox->setValue(position.y());
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->textString, testText);
+    QCOMPARE(sharedInfo->textFont, font);
+    QCOMPARE(sharedInfo->textColor, color);
+    QCOMPARE(sharedInfo->textOpacity, 0.5);
+    QCOMPARE(sharedInfo->textPosModifier, TopRightCorner);
+    QCOMPARE(sharedInfo->textPos, position);
+    QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(Pixel, Pixel));
+    QCOMPARE(sharedInfo->textFrame, false);
+    QCOMPARE(sharedInfo->textRotation, 0);
+}
+
+void ConvertDialogTest::convert_addText_fontPx() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
+    textGroupBox->setChecked(true);
+    QLineEdit *textLineEdit = effectsScrollArea->textLineEdit;
+    QString testText = "Test Text";
+    textLineEdit->setText(testText);
+    QComboBox *fontSizeComboBox = effectsScrollArea->textFontSizeComboBox;
+    int px = 1;
+    fontSizeComboBox->setCurrentIndex(px);
+
+    QFont font = effectsScrollArea->textFontComboBox->currentFont();
+    int fontSize = 20;
+    font.setPixelSize(fontSize);
+    font.setBold(true);
+    font.setItalic(true);
+    font.setUnderline(true);
+    font.setStrikeOut(true);
+
+    effectsScrollArea->textFontSizeSpinBox->setValue(fontSize);
+    effectsScrollArea->textBoldPushButton->setChecked(font.bold());
+    effectsScrollArea->textItalicPushButton->setChecked(font.italic());
+    effectsScrollArea->textUnderlinePushButton->setChecked(font.underline());
+    effectsScrollArea->textStrikeOutPushButton->setChecked(font.strikeOut());
+
+    QColor color = Qt::green;
+    effectsScrollArea->textColorFrame->setColor(color);
+
+    effectsScrollArea->textOpacitySpinBox->setValue(0.5);
+    effectsScrollArea->textPositionComboBox->setCurrentIndex(TopRightCorner);
+
+    QPoint position = QPoint(4, 3);
+    effectsScrollArea->textXSpinBox->setValue(position.x());
+    effectsScrollArea->textYSpinBox->setValue(position.y());
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->textString, testText);
+    QCOMPARE(sharedInfo->textFont, font);
+    QCOMPARE(sharedInfo->textColor, color);
+    QCOMPARE(sharedInfo->textOpacity, 0.5);
+    QCOMPARE(sharedInfo->textPosModifier, TopRightCorner);
+    QCOMPARE(sharedInfo->textPos, position);
+    QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(Pixel, Pixel));
+    QCOMPARE(sharedInfo->textFrame, false);
+    QCOMPARE(sharedInfo->textRotation, 0);
+}
+
+void ConvertDialogTest::convert_addText_textIsEmpty() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
+    textGroupBox->setChecked(true);
+    QLineEdit *textLineEdit = effectsScrollArea->textLineEdit;
+    textLineEdit->setText("");
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
     QCOMPARE(sharedInfo->textString, QString());
     QCOMPARE(sharedInfo->textFont, QFont());
     QCOMPARE(sharedInfo->textColor, QColor());
@@ -70,9 +183,24 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
     QCOMPARE(sharedInfo->textFrame, false);
     QCOMPARE(sharedInfo->textRotation, 0);
+}
 
-    QCOMPARE(convertDialog->convertedImages, 0);
-    QCOMPARE(convertDialog->numImages, 0);
+void ConvertDialogTest::convert_addText_no() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
+    textGroupBox->setChecked(false);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->textString, QString());
+    QCOMPARE(sharedInfo->textFont, QFont());
+    QCOMPARE(sharedInfo->textColor, QColor());
+    QCOMPARE(sharedInfo->textPosModifier, UndefinedPosModifier);
+    QCOMPARE(sharedInfo->textPos, QPoint());
+    QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
+    QCOMPARE(sharedInfo->textFrame, false);
+    QCOMPARE(sharedInfo->textRotation, 0);
 }
 
 void ConvertDialogTest::convert_addImage_imageNotNull() {

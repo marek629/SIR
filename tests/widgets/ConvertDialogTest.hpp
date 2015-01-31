@@ -42,6 +42,10 @@ private slots:
     void cleanupTestCase();
 
     void convert_defaultPath();
+    void convert_addText_fontPt();
+    void convert_addText_fontPx();
+    void convert_addText_textIsEmpty();
+    void convert_addText_no();
     void convert_addImage_imageNotNull();
     void convert_addImage_no();
     void convert_svg_removeText();
