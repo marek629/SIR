@@ -81,6 +81,7 @@ private:
     inline void writeWindowProperties();
     inline void resetAnswers();
     void convert();
+    SharedInformation *configureAddFrame(SharedInformation *sharedInformation);
     SharedInformation *configureAddText(SharedInformation *sharedInformation);
     SharedInformation *configureAddImage(SharedInformation *sharedInformation);
     SharedInformation *configureSVG(SharedInformation *sharedInformation);

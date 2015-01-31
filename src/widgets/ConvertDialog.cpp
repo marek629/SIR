@@ -573,36 +573,7 @@ void ConvertDialog::convert() {
         sharedInfo->filterBrush = QBrush();
     }
     // add frame
-    if (effectsScrollArea->frameGroupBox->isChecked()) {
-        sharedInfo->frameAddAround = effectsScrollArea->frameAroundRadioButton->isChecked();
-        sharedInfo->frameWidth = effectsScrollArea->frameWidthSpinBox->value();
-        sharedInfo->frameColor = effectsScrollArea->frameColorFrame->color();
-        if (effectsScrollArea->borderOutsideGroupBox->isChecked()) {
-            sharedInfo->borderOutsideWidth = effectsScrollArea->borderOutsideSpinBox->value();
-            sharedInfo->borderOutsideColor = effectsScrollArea->borderOutsideColorFrame->color();
-        }
-        else {
-            sharedInfo->borderOutsideWidth = -1;
-            sharedInfo->borderOutsideColor = QColor();
-        }
-        if (effectsScrollArea->borderInsideGroupBox->isChecked()) {
-            sharedInfo->borderInsideWidth = effectsScrollArea->borderInsideSpinBox->value();
-            sharedInfo->borderInsideColor = effectsScrollArea->borderInsideColorFrame->color();
-        }
-        else {
-            sharedInfo->borderInsideWidth = -1;
-            sharedInfo->borderInsideColor = QColor();
-        }
-    }
-    else {
-        sharedInfo->frameAddAround = false;
-        sharedInfo->frameWidth = -1;
-        sharedInfo->frameColor = QColor();
-        sharedInfo->borderOutsideWidth = -1;
-        sharedInfo->borderOutsideColor = QColor();
-        sharedInfo->borderInsideWidth = -1;
-        sharedInfo->borderInsideColor = QColor();
-    }
+    sharedInfo = configureAddFrame(sharedInfo);
     // add text
     sharedInfo = configureAddText(sharedInfo);
     // add image
@@ -629,6 +600,37 @@ void ConvertDialog::convert() {
                                         item->text(PathColumn));
         convertedImages++;
     }
+}
+
+SharedInformation *ConvertDialog::configureAddFrame(SharedInformation *sharedInformation) {
+    if (effectsScrollArea->frameGroupBox->isChecked()) {
+        sharedInformation->frameAddAround = effectsScrollArea->frameAroundRadioButton->isChecked();
+        sharedInformation->frameWidth = effectsScrollArea->frameWidthSpinBox->value();
+        sharedInformation->frameColor = effectsScrollArea->frameColorFrame->color();
+        if (effectsScrollArea->borderOutsideGroupBox->isChecked()) {
+            sharedInformation->borderOutsideWidth = effectsScrollArea->borderOutsideSpinBox->value();
+            sharedInformation->borderOutsideColor = effectsScrollArea->borderOutsideColorFrame->color();
+        } else {
+            sharedInformation->borderOutsideWidth = -1;
+            sharedInformation->borderOutsideColor = QColor();
+        }
+        if (effectsScrollArea->borderInsideGroupBox->isChecked()) {
+            sharedInformation->borderInsideWidth = effectsScrollArea->borderInsideSpinBox->value();
+            sharedInformation->borderInsideColor = effectsScrollArea->borderInsideColorFrame->color();
+        } else {
+            sharedInformation->borderInsideWidth = -1;
+            sharedInformation->borderInsideColor = QColor();
+        }
+    } else {
+        sharedInformation->frameAddAround = false;
+        sharedInformation->frameWidth = -1;
+        sharedInformation->frameColor = QColor();
+        sharedInformation->borderOutsideWidth = -1;
+        sharedInformation->borderOutsideColor = QColor();
+        sharedInformation->borderInsideWidth = -1;
+        sharedInformation->borderInsideColor = QColor();
+    }
+    return sharedInformation;
 }
 
 SharedInformation *ConvertDialog::configureAddText(SharedInformation *sharedInformation) {
