@@ -53,11 +53,103 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->overwriteAll, false);
     QCOMPARE(sharedInfo->backgroundColor, QColor());
     QCOMPARE(sharedInfo->histogramOperation, quint8(0));
-    QCOMPARE(sharedInfo->filterType, int(NoFilter));
-    QCOMPARE(sharedInfo->filterBrush, QBrush());
 
     QCOMPARE(convertDialog->convertedImages, 0);
     QCOMPARE(convertDialog->numImages, 0);
+}
+
+void ConvertDialogTest::convert_filter_colorBlackAndWhite() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
+    filterGroupBox->setChecked(true);
+
+    QRadioButton *filterColorRadioButton = effectsScrollArea->filterColorRadioButton;
+    filterColorRadioButton->setChecked(true);
+
+    int blackAndWhite = 0;
+    QComboBox *filterTypeComboBox = effectsScrollArea->filterTypeComboBox;
+    filterTypeComboBox->setCurrentIndex(blackAndWhite);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->filterType, int(BlackAndWhite));
+    QCOMPARE(sharedInfo->filterBrush, QBrush());
+}
+
+void ConvertDialogTest::convert_filter_colorSepia() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
+    filterGroupBox->setChecked(true);
+
+    QRadioButton *filterColorRadioButton = effectsScrollArea->filterColorRadioButton;
+    filterColorRadioButton->setChecked(true);
+
+    int sepia = 1;
+    QComboBox *filterTypeComboBox = effectsScrollArea->filterTypeComboBox;
+    filterTypeComboBox->setCurrentIndex(sepia);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->filterType, int(Sepia));
+    QCOMPARE(sharedInfo->filterBrush, QBrush());
+}
+
+void ConvertDialogTest::convert_filter_colorCustom() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
+    filterGroupBox->setChecked(true);
+
+    QRadioButton *filterColorRadioButton = effectsScrollArea->filterColorRadioButton;
+    filterColorRadioButton->setChecked(true);
+
+    int custom = 2;
+    QComboBox *filterTypeComboBox = effectsScrollArea->filterTypeComboBox;
+    filterTypeComboBox->setCurrentIndex(custom);
+
+    QColor color = Qt::red;
+    BrushFrame *filterBrushFrame = effectsScrollArea->filterBrushFrame;
+    filterBrushFrame->setColor(color);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->filterType, int(CustomColor));
+    QCOMPARE(sharedInfo->filterBrush, QBrush(color));
+}
+
+void ConvertDialogTest::convert_filter_gradient() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
+    filterGroupBox->setChecked(true);
+
+    QRadioButton *filterGradientRadioButton = effectsScrollArea->filterGradientRadioButton;
+    filterGradientRadioButton->setChecked(true);
+
+    QRadialGradient gradient = QRadialGradient(QPoint(1, 2), 2.5);
+    gradient.setColorAt(0.0, Qt::green);
+    gradient.setColorAt(1.0, Qt::red);
+    BrushFrame *filterBrushFrame = effectsScrollArea->filterBrushFrame;
+    filterBrushFrame->setBrush(gradient);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->filterType, int(Gradient));
+    QCOMPARE(sharedInfo->filterBrush, QBrush(gradient));
+}
+
+void ConvertDialogTest::convert_filter_no() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
+    filterGroupBox->setChecked(false);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->filterType, int(NoFilter));
+    QCOMPARE(sharedInfo->filterBrush, QBrush());
 }
 
 void ConvertDialogTest::convert_addFrame_withBorder() {

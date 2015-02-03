@@ -42,6 +42,11 @@ private slots:
     void cleanupTestCase();
 
     void convert_defaultPath();
+    void convert_filter_colorBlackAndWhite();
+    void convert_filter_colorSepia();
+    void convert_filter_colorCustom();
+    void convert_filter_gradient();
+    void convert_filter_no();
     void convert_addFrame_withBorder();
     void convert_addFrame_withoutBorder();
     void convert_addFrame_no();
