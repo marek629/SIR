@@ -597,6 +597,7 @@ SharedInformation *ConvertDialog::configureFilter(SharedInformation *sharedInfor
             }
         } else {
             sharedInformation->filterType = Gradient;
+            // TODO: strange entries count in code coverage
             sharedInformation->filterBrush = effectsScrollArea->filterBrushFrame->brush();
         }
     } else {

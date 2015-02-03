@@ -42,6 +42,9 @@ private slots:
     void cleanupTestCase();
 
     void convert_defaultPath();
+    void convert_histogram_stretch();
+    void convert_histogram_equalize();
+    void convert_histogram_no();
     void convert_filter_colorBlackAndWhite();
     void convert_filter_colorSepia();
     void convert_filter_colorCustom();

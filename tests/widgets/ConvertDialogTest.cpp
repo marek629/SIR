@@ -52,10 +52,44 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(sharedInfo->suffix, convertDialog->destSuffixEdit->text());
     QCOMPARE(sharedInfo->overwriteAll, false);
     QCOMPARE(sharedInfo->backgroundColor, QColor());
-    QCOMPARE(sharedInfo->histogramOperation, quint8(0));
 
     QCOMPARE(convertDialog->convertedImages, 0);
     QCOMPARE(convertDialog->numImages, 0);
+}
+
+void ConvertDialogTest::convert_histogram_stretch() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *histogramGroupBox = effectsScrollArea->histogramGroupBox;
+    histogramGroupBox->setChecked(true);
+    effectsScrollArea->stretchHistogramRadioButton->setChecked(true);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->histogramOperation, quint8(1));
+}
+
+void ConvertDialogTest::convert_histogram_equalize() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *histogramGroupBox = effectsScrollArea->histogramGroupBox;
+    histogramGroupBox->setChecked(true);
+    effectsScrollArea->equalizeHistogramRadioButton->setChecked(true);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->histogramOperation, quint8(2));
+}
+
+void ConvertDialogTest::convert_histogram_no() {
+    EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
+    QGroupBox *histogramGroupBox = effectsScrollArea->histogramGroupBox;
+    histogramGroupBox->setChecked(false);
+
+    convertDialog->convert();
+
+    SharedInformation *sharedInfo = convertDialog->sharedInfo;
+    QCOMPARE(sharedInfo->histogramOperation, quint8(0));
 }
 
 void ConvertDialogTest::convert_filter_colorBlackAndWhite() {
