@@ -80,8 +80,8 @@ void DetailsBrowserController::addItem(QTreeWidgetItem *item, int index) {
 
 #ifdef SIR_METADATA_SUPPORT
     if (thumb.isReadFromMetadataThumbnail())
-        htmlContent += addMetadataToContent(thumb.exifStructRef(),
-                                            thumb.iptcStructRef());
+        htmlContent += addMetadataToContent(thumb.exifStruct(),
+                                            thumb.iptcStruct());
 #endif // SIR_METADATA_SUPPORT
 }
 
@@ -133,8 +133,8 @@ void DetailsBrowserController::showDetails() {
   * \sa DetailsOptions addItem()
   */
 QString DetailsBrowserController::addMetadataToContent(
-        const MetadataUtils::ExifStruct &exifStruct,
-        const MetadataUtils::IptcStruct &iptcStruct) {
+        MetadataUtils::ExifStruct *exifStruct,
+        MetadataUtils::IptcStruct *iptcStruct) {
     QString content;
 
     content += exifContent(exifStruct);
@@ -144,7 +144,7 @@ QString DetailsBrowserController::addMetadataToContent(
 }
 
 QString DetailsBrowserController::exifContent(
-        const MetadataUtils::ExifStruct &exifStruct) {
+        MetadataUtils::ExifStruct *exifStruct) {
     const ConvertSharedData &csd = convertDialog->convertSharedData();
 
     ExifPrintSettings exifPrint = loadExifPrintSettings();
@@ -152,11 +152,11 @@ QString DetailsBrowserController::exifContent(
                                 exifPrint.image, exifPrint.photo);
     visitor.setDateTimeFormat(csd.dateTimeFormat);
 
-    return visitor.visit(const_cast<MetadataUtils::ExifStruct *>(&exifStruct));
+    return exifStruct->accept(&visitor);
 }
 
 QString DetailsBrowserController::iptcContent(
-        const MetadataUtils::IptcStruct &iptcStruct) {
+        MetadataUtils::IptcStruct *iptcStruct) {
     const ConvertSharedData &csd = convertDialog->convertSharedData();
 
     int iptcPrint = loadIptcPrintSettings();
@@ -164,7 +164,7 @@ QString DetailsBrowserController::iptcContent(
     visitor.setDateFormat(csd.dateFormat);
     visitor.setTimeFormat(csd.timeFormat);
 
-    return visitor.visit(const_cast<MetadataUtils::IptcStruct *>(&iptcStruct));
+    return iptcStruct->accept(&visitor);
 }
 
 ExifPrintSettings DetailsBrowserController::loadExifPrintSettings() {

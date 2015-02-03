@@ -74,12 +74,12 @@ bool DetailsThumbnail::isReadFromMetadataThumbnail() const {
     return metadataEnabled;
 }
 
-const MetadataUtils::ExifStruct &DetailsThumbnail::exifStructRef() {
-    return exifStruct;
+MetadataUtils::ExifStruct *DetailsThumbnail::exifStruct() {
+    return &exifStruct_;
 }
 
-const MetadataUtils::IptcStruct &DetailsThumbnail::iptcStructRef() {
-    return iptcStruct;
+MetadataUtils::IptcStruct *DetailsThumbnail::iptcStruct() {
+    return &iptcStruct_;
 }
 #endif // SIR_METADATA_SUPPORT
 
@@ -115,8 +115,8 @@ bool DetailsThumbnail::writeThumbnailFromMetadata() {
     if (s->metadata.enabled) {
         MetadataUtils::Metadata metadata;
         if (metadata.read(imagePath, true)) {
-            exifStruct = metadata.exifStruct()->copy();
-            iptcStruct = metadata.iptcStruct()->copy();
+            exifStruct_ = metadata.exifStruct()->copy();
+            iptcStruct_ = metadata.iptcStruct()->copy();
             Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
             imageSize = QSize(image->pixelWidth(), image->pixelHeight());
             Exiv2::PreviewManager previewManager (*image);

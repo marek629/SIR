@@ -576,10 +576,9 @@ SharedInformation *ConvertDialog::configureHistogram(SharedInformation *sharedIn
             sharedInformation->histogramOperation = 1;
         else
             sharedInformation->histogramOperation = 2;
-    }
-    else
+    } else {
         sharedInformation->histogramOperation = 0;
-
+    }
     return sharedInformation;
 }
 
@@ -610,7 +609,6 @@ SharedInformation *ConvertDialog::configureFilter(SharedInformation *sharedInfor
         sharedInformation->filterType = NoFilter;
         sharedInformation->filterBrush = QBrush();
     }
-
     return sharedInformation;
 }
 

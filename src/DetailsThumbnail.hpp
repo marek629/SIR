@@ -44,8 +44,8 @@ public:
 
 #ifdef SIR_METADATA_SUPPORT
     bool isReadFromMetadataThumbnail() const;
-    const MetadataUtils::ExifStruct &exifStructRef();
-    const MetadataUtils::IptcStruct &iptcStructRef();
+    MetadataUtils::ExifStruct *exifStruct();
+    MetadataUtils::IptcStruct *iptcStruct();
 #endif // SIR_METADATA_SUPPORT
 
 private:
@@ -57,8 +57,8 @@ private:
 
 #ifdef SIR_METADATA_SUPPORT
     bool metadataEnabled;
-    MetadataUtils::ExifStruct exifStruct;
-    MetadataUtils::IptcStruct iptcStruct;
+    MetadataUtils::ExifStruct exifStruct_;
+    MetadataUtils::IptcStruct iptcStruct_;
 #endif // SIR_METADATA_SUPPORT
 
     void writeThumbnail(QTreeWidgetItem *item, int index, int maxWidth);

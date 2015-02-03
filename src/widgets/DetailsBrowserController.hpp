@@ -58,10 +58,10 @@ private:
     QString htmlContent;
 
 #ifdef SIR_METADATA_SUPPORT
-    QString addMetadataToContent(const MetadataUtils::ExifStruct &exifStruct,
-                                 const MetadataUtils::IptcStruct &iptcStruct);
-    QString exifContent(const MetadataUtils::ExifStruct &exifStruct);
-    QString iptcContent(const MetadataUtils::IptcStruct &iptcStruct);
+    QString addMetadataToContent(MetadataUtils::ExifStruct *exifStruct,
+                                 MetadataUtils::IptcStruct *iptcStruct);
+    QString exifContent(MetadataUtils::ExifStruct *exifStruct);
+    QString iptcContent(MetadataUtils::IptcStruct *iptcStruct);
     ExifPrintSettings loadExifPrintSettings();
     int loadIptcPrintSettings();
 #endif // SIR_METADATA_SUPPORT

@@ -26,9 +26,7 @@
 
 using namespace MetadataUtils;
 
-IptcRichTextVisitor::IptcRichTextVisitor(int iptcPrint)
-//    : iptcPrint(iptcPrint) {}
-{
+IptcRichTextVisitor::IptcRichTextVisitor(int iptcPrint) {
     this->iptcPrint = iptcPrint;
 }
 
