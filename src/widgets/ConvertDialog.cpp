@@ -537,14 +537,7 @@ void ConvertDialog::convert() {
     else
         sharedInfo->backgroundColor = QColor();
     // histogram
-    if (effectsScrollArea->histogramGroupBox->isChecked()) {
-        if (effectsScrollArea->stretchHistogramRadioButton->isChecked())
-            sharedInfo->histogramOperation = 1;
-        else
-            sharedInfo->histogramOperation = 2;
-    }
-    else
-        sharedInfo->histogramOperation = 0;
+    sharedInfo = configureHistogram(sharedInfo);
     // filter
     sharedInfo = configureFilter(sharedInfo);
     // add frame
@@ -575,6 +568,19 @@ void ConvertDialog::convert() {
                                         item->text(PathColumn));
         convertedImages++;
     }
+}
+
+SharedInformation *ConvertDialog::configureHistogram(SharedInformation *sharedInformation) {
+    if (effectsScrollArea->histogramGroupBox->isChecked()) {
+        if (effectsScrollArea->stretchHistogramRadioButton->isChecked())
+            sharedInformation->histogramOperation = 1;
+        else
+            sharedInformation->histogramOperation = 2;
+    }
+    else
+        sharedInformation->histogramOperation = 0;
+
+    return sharedInformation;
 }
 
 SharedInformation *ConvertDialog::configureFilter(SharedInformation *sharedInformation) {
