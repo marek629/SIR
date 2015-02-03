@@ -546,32 +546,7 @@ void ConvertDialog::convert() {
     else
         sharedInfo->histogramOperation = 0;
     // filter
-    if (effectsScrollArea->filterGroupBox->isChecked()) {
-        if (effectsScrollArea->filterColorRadioButton->isChecked()) {
-            sharedInfo->filterBrush = QBrush();
-            switch (effectsScrollArea->filterTypeComboBox->currentIndex()) {
-            case 0:
-                sharedInfo->filterType = BlackAndWhite;
-                break;
-            case 1:
-                sharedInfo->filterType = Sepia;
-                break;
-            case 2:
-            default:
-                sharedInfo->filterType = CustomColor;
-                sharedInfo->filterBrush = QBrush(effectsScrollArea->filterBrushFrame->color());
-                break;
-            }
-        }
-        else {
-            sharedInfo->filterType = Gradient;
-            sharedInfo->filterBrush = effectsScrollArea->filterBrushFrame->brush();
-        }
-    }
-    else {
-        sharedInfo->filterType = NoFilter;
-        sharedInfo->filterBrush = QBrush();
-    }
+    sharedInfo = configureFilter(sharedInfo);
     // add frame
     sharedInfo = configureAddFrame(sharedInfo);
     // add text
@@ -600,6 +575,36 @@ void ConvertDialog::convert() {
                                         item->text(PathColumn));
         convertedImages++;
     }
+}
+
+SharedInformation *ConvertDialog::configureFilter(SharedInformation *sharedInformation) {
+    if (effectsScrollArea->filterGroupBox->isChecked()) {
+        if (effectsScrollArea->filterColorRadioButton->isChecked()) {
+            sharedInformation->filterBrush = QBrush();
+            switch (effectsScrollArea->filterTypeComboBox->currentIndex()) {
+            case 0:
+                sharedInformation->filterType = BlackAndWhite;
+                break;
+            case 1:
+                sharedInformation->filterType = Sepia;
+                break;
+            case 2:
+                sharedInformation->filterType = CustomColor;
+                sharedInformation->filterBrush = QBrush(effectsScrollArea->filterBrushFrame->color());
+                break;
+            default:
+                break;
+            }
+        } else {
+            sharedInformation->filterType = Gradient;
+            sharedInformation->filterBrush = effectsScrollArea->filterBrushFrame->brush();
+        }
+    } else {
+        sharedInformation->filterType = NoFilter;
+        sharedInformation->filterBrush = QBrush();
+    }
+
+    return sharedInformation;
 }
 
 SharedInformation *ConvertDialog::configureAddFrame(SharedInformation *sharedInformation) {
