@@ -24,6 +24,9 @@
 
 #include "ui_EffectsScrollArea.h"
 
+class SharedInformation;
+
+
 class EffectsScrollArea : public QScrollArea, public Ui::EffectsScrollArea {
     Q_OBJECT
     friend class EffectsCollector;
@@ -34,6 +37,7 @@ public:
     void retranslateStrings();
     QStringList colorFilterStringList();
     QStringList gradientFilterStringList();
+    SharedInformation *configureEffects(SharedInformation *sharedInformation);
 
 private:
     // fields
@@ -45,6 +49,11 @@ private:
     QBrush filterBrush;
     // methods
     void setupFilterModels();
+    SharedInformation *configureHistogram(SharedInformation *sharedInformation);
+    SharedInformation *configureFilter(SharedInformation *sharedInformation);
+    SharedInformation *configureAddFrame(SharedInformation *sharedInformation);
+    SharedInformation *configureAddText(SharedInformation *sharedInformation);
+    SharedInformation *configureAddImage(SharedInformation *sharedInformation);
 
 private slots:
     void filterToogled(bool colorToogled);

@@ -101,6 +101,84 @@ public:
     void setRotateThumbnail(bool rotate);
 #endif // SIR_METADATA_SUPPORT
 
+    quint8 getHistogramOperation() const;
+    void setHistogramOperation(const quint8 &value);
+
+    int getFilterType() const;
+    void setFilterType(int value);
+
+    QBrush getFilterBrush() const;
+    void setFilterBrush(const QBrush &value);
+
+    int getFrameWidth() const;
+    void setFrameWidth(int value);
+
+    QColor getFrameColor() const;
+    void setFrameColor(const QColor &value);
+
+    bool getFrameAddAround() const;
+    void setFrameAddAround(bool value);
+
+    int getBorderInsideWidth() const;
+    void setBorderInsideWidth(int value);
+
+    QColor getBorderInsideColor() const;
+    void setBorderInsideColor(const QColor &value);
+
+    int getBorderOutsideWidth() const;
+    void setBorderOutsideWidth(int value);
+
+    QColor getBorderOutsideColor() const;
+    void setBorderOutsideColor(const QColor &value);
+
+    QString getTextString() const;
+    void setTextString(const QString &value);
+
+    QFont getTextFont() const;
+    void setTextFont(const QFont &value);
+
+    QColor getTextColor() const;
+    void setTextColor(const QColor &value);
+
+    double getTextOpacity() const;
+    void setTextOpacity(double value);
+
+    PosModifier getTextPosModifier() const;
+    void setTextPosModifier(const PosModifier &value);
+
+    QPoint getTextPos() const;
+    void setTextPos(const QPoint &value);
+
+    PosUnitPair getTextUnitPair() const;
+    void setTextUnitPair(const PosUnitPair &value);
+
+    bool getTextFrame() const;
+    void setTextFrame(bool value);
+
+    int getTextRotation() const;
+    void setTextRotation(int value);
+
+    QImage getImage() const;
+    void setImage(const QImage &value);
+
+    bool getImageLoadError() const;
+    void setImageLoadError(bool value);
+
+    PosModifier getImagePosModifier() const;
+    void setImagePosModifier(const PosModifier &value);
+
+    QPoint getImagePos() const;
+    void setImagePos(const QPoint &value);
+
+    PosUnitPair getImageUnitPair() const;
+    void setImageUnitPair(const PosUnitPair &value);
+
+    double getImageOpacity() const;
+    void setImageOpacity(double value);
+
+    int getImageRotation() const;
+    void setImageRotation(int value);
+
 private:
     // fields
     // image data
