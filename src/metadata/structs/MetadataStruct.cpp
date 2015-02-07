@@ -21,8 +21,19 @@
 
 #include "metadata/structs/MetadataStruct.hpp"
 
+#include <typeinfo>
+
+#include "Visitor.hpp"
+#include "metadata/visitors/RichTextVisitor.hpp"
+
+
 using namespace MetadataUtils;
 
 MetadataStruct::MetadataStruct() {}
+
+void MetadataStruct::accept(Visitor *visitor) {
+    Q_ASSERT(typeid(*visitor) == typeid(RichTextVisitor));
+    accept(reinterpret_cast<RichTextVisitor *>(visitor));
+}
 
 void MetadataStruct::reset() {}

@@ -23,11 +23,12 @@
 #define VISITABLE_HPP
 
 #include <QString>
-#include "metadata/visitors/RichTextVisitor.hpp"
+
+class Visitor;
 
 class Visitable {
 public:
-    virtual void accept(RichTextVisitor *visitor) = 0;
+    virtual void accept(Visitor *visitor) = 0;
 };
 
 #endif // VISITABLE_HPP

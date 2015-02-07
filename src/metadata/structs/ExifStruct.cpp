@@ -21,8 +21,12 @@
 
 #include "ExifStruct.hpp"
 
+#include "metadata/visitors/RichTextVisitor.hpp"
+
+
 using namespace MetadataUtils;
 using namespace sir;
+
 
 void ExifStruct::accept(RichTextVisitor *visitor) {
     visitor->visit(this);

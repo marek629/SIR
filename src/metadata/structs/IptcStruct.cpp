@@ -21,8 +21,12 @@
 
 #include "metadata/structs/IptcStruct.hpp"
 
+#include "metadata/visitors/RichTextVisitor.hpp"
+
+
 using namespace MetadataUtils;
 using namespace sir;
+
 
 void IptcStruct::accept(RichTextVisitor *visitor) {
     visitor->visit(this);

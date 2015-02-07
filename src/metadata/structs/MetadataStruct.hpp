@@ -24,9 +24,14 @@
 
 #include "metadata/visitors/Visitable.hpp"
 
+class RichTextVisitor;
+
+
 namespace MetadataUtils {
 struct MetadataStruct : public Visitable {
     MetadataStruct();
+    virtual void accept(Visitor *visitor);
+    virtual void accept(RichTextVisitor *visitor) = 0;
     virtual void reset();
 };
 }
