@@ -31,11 +31,13 @@ class IptcRichTextVisitor : public RichTextVisitor {
 
 public:
     IptcRichTextVisitor(int iptcPrint);
-    QString visit(MetadataStruct *metadataStruct);
+    void visit(MetadataStruct *metadataStruct);
+    QString richTextString() const;
     void setDateFormat(const QString &value);
     void setTimeFormat(const QString &value);
 
 private:
+    QString richText;
     int iptcPrint;
     QString dateFormat;
     QString timeFormat;

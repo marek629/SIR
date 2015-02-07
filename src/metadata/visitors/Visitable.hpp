@@ -27,7 +27,7 @@
 
 class Visitable {
 public:
-    virtual QString accept(RichTextVisitor *visitor) = 0;
+    virtual void accept(RichTextVisitor *visitor) = 0;
 };
 
 #endif // VISITABLE_HPP

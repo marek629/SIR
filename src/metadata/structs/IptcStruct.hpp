@@ -46,7 +46,7 @@ struct IptcStruct : public MetadataStruct {
     sir::String editStatus;
 
     // Methods
-    QString accept(RichTextVisitor *visitor);
+    void accept(RichTextVisitor *visitor);
     void reset();
     IptcStruct copy();
 };

@@ -33,10 +33,12 @@ class ExifRichTextVisitor : public RichTextVisitor {
 public:
     ExifRichTextVisitor(int exifAuthor, int exifCamera,
                         int exifImage, int exifPhoto);
-    QString visit(MetadataStruct *metadataStruct);
+    void visit(MetadataStruct *metadataStruct);
+    QString richTextString() const;
     void setDateTimeFormat(const QString &value);
 
 private:
+    QString richText;
     int exifAuthor;
     int exifCamera;
     int exifImage;

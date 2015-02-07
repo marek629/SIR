@@ -35,7 +35,8 @@ public:
     static const QString htmlBr;
     static const QString htmlHr;
 
-    virtual QString visit(MetadataUtils::MetadataStruct *metadataStruct) = 0;
+    virtual void visit(MetadataUtils::MetadataStruct *metadataStruct) = 0;
+    virtual QString richTextString() const = 0;
 };
 
 #endif // RICHTEXTVISITOR_HPP

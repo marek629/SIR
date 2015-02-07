@@ -24,8 +24,8 @@
 using namespace MetadataUtils;
 using namespace sir;
 
-QString IptcStruct::accept(RichTextVisitor *visitor) {
-    return QString();
+void IptcStruct::accept(RichTextVisitor *visitor) {
+    visitor->visit(this);
 }
 
 /** Sets default value of IptcStruct fields - \em "no data" strings and null

@@ -30,52 +30,54 @@ IptcRichTextVisitor::IptcRichTextVisitor(int iptcPrint) {
     this->iptcPrint = iptcPrint;
 }
 
-QString IptcRichTextVisitor::visit(MetadataStruct *metadataStruct) {
+void IptcRichTextVisitor::visit(MetadataStruct *metadataStruct) {
+    richText = QString();
+
     IptcStruct *iptcStruct = (IptcStruct *) metadataStruct;
     if (!Iptc::isVersionKnown())
-        return QString();
-
-    QString content;
+        return;
 
     if (iptcPrint & DetailsOptions::ModelVersion)
-        content += tr("Model version") + ": " +
+        richText += tr("Model version") + ": " +
                 iptcStruct->modelVersion + htmlBr;
 
     if (iptcPrint & DetailsOptions::DateCreated)
-        content += tr("Created date") + ": " +
+        richText += tr("Created date") + ": " +
                 iptcStruct->dateCreated.toString(dateFormat) + htmlBr;
     if (iptcPrint & DetailsOptions::TimeCreated)
-        content += tr("Created time") + ": " +
+        richText += tr("Created time") + ": " +
                 iptcStruct->timeCreated.toString(timeFormat) + htmlBr;
 
     if (iptcPrint & DetailsOptions::DigitizedDate)
-        content += tr("Digitized date") + ": " +
+        richText += tr("Digitized date") + ": " +
                 iptcStruct->digitizationDate.toString(dateFormat) + htmlBr;
     if (iptcPrint & DetailsOptions::DigitizedTime)
-        content += tr("Digitized time") + ": " +
+        richText += tr("Digitized time") + ": " +
                 iptcStruct->digitizationTime.toString(timeFormat) + htmlBr;
 
     if (iptcPrint & DetailsOptions::Byline)
-        content += tr("Author") + ": " + iptcStruct->byline + htmlBr;
+        richText += tr("Author") + ": " + iptcStruct->byline + htmlBr;
     if (iptcPrint & DetailsOptions::CopyrightIptc)
-        content += tr("Copyright") + ": " + iptcStruct->copyright + htmlBr;
+        richText += tr("Copyright") + ": " + iptcStruct->copyright + htmlBr;
 
     if (iptcPrint & DetailsOptions::ObjectName)
-        content += tr("Object name") + ": " + iptcStruct->objectName + htmlBr;
+        richText += tr("Object name") + ": " + iptcStruct->objectName + htmlBr;
     if (iptcPrint & DetailsOptions::Keywords)
-        content += tr("Keywords") + ": " + iptcStruct->keywords + htmlBr;
+        richText += tr("Keywords") + ": " + iptcStruct->keywords + htmlBr;
     if (iptcPrint & DetailsOptions::Caption)
-        content += tr("Description") + ": " + iptcStruct->caption + htmlBr;
+        richText += tr("Description") + ": " + iptcStruct->caption + htmlBr;
 
     if (iptcPrint & DetailsOptions::CountryName)
-        content += tr("Country") + ": " + iptcStruct->countryName + htmlBr;
+        richText += tr("Country") + ": " + iptcStruct->countryName + htmlBr;
     if (iptcPrint & DetailsOptions::City)
-        content += tr("City") + ": " + iptcStruct->city + htmlBr;
+        richText += tr("City") + ": " + iptcStruct->city + htmlBr;
 
     if (iptcPrint & DetailsOptions::EditStatus)
-        content += tr("Edit status") + ": " + iptcStruct->editStatus + htmlBr;
+        richText += tr("Edit status") + ": " + iptcStruct->editStatus + htmlBr;
+}
 
-    return content;
+QString IptcRichTextVisitor::richTextString() const {
+    return richText;
 }
 
 void IptcRichTextVisitor::setDateFormat(const QString &value) {

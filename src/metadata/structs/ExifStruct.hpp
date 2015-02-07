@@ -60,7 +60,7 @@ struct ExifStruct : public MetadataStruct {
     sir::String userComment; /**< Contains user comment. */
 
     // Methods
-    QString accept(RichTextVisitor *visitor);
+    void accept(RichTextVisitor *visitor);
     void reset();
     void clear();
     ExifStruct copy();

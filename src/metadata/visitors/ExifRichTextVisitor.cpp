@@ -34,28 +34,29 @@ ExifRichTextVisitor::ExifRichTextVisitor(int exifAuthor, int exifCamera,
     this->exifPhoto = exifPhoto;
 }
 
-QString ExifRichTextVisitor::visit(MetadataStruct *metadataStruct) {
+void ExifRichTextVisitor::visit(MetadataStruct *metadataStruct) {
+    richText = QString();
+
     ExifStruct *exifStruct = (ExifStruct *) metadataStruct;
     if (exifStruct->version == String::noData())
-        return QString();
-
-    QString content;
+        return;
 
     if (exifPhoto != 0 || exifImage != 0 || exifAuthor != 0 || exifCamera != 0)
-        content += htmlBr;
+        richText += htmlBr;
 
-    content += imageContent(*exifStruct);
-    content += photoContent(*exifStruct);
-    content += cameraContent(*exifStruct);
-    content += authorContent(*exifStruct);
+    richText += imageContent(*exifStruct);
+    richText += photoContent(*exifStruct);
+    richText += cameraContent(*exifStruct);
+    richText += authorContent(*exifStruct);
+}
 
-    return content;
+QString ExifRichTextVisitor::richTextString() const {
+    return richText;
 }
 
 void ExifRichTextVisitor::setDateTimeFormat(const QString &value) {
     dateTimeFormat = value;
 }
-
 
 QString ExifRichTextVisitor::authorContent(const ExifStruct &exifStruct) {
     QString content;

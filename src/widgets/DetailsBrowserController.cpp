@@ -152,7 +152,8 @@ QString DetailsBrowserController::exifContent(
                                 exifPrint.image, exifPrint.photo);
     visitor.setDateTimeFormat(csd.dateTimeFormat);
 
-    return exifStruct->accept(&visitor);
+    exifStruct->accept(&visitor);
+    return visitor.richTextString();
 }
 
 QString DetailsBrowserController::iptcContent(
@@ -164,7 +165,8 @@ QString DetailsBrowserController::iptcContent(
     visitor.setDateFormat(csd.dateFormat);
     visitor.setTimeFormat(csd.timeFormat);
 
-    return iptcStruct->accept(&visitor);
+    iptcStruct->accept(&visitor);
+    return visitor.richTextString();
 }
 
 ExifPrintSettings DetailsBrowserController::loadExifPrintSettings() {

@@ -24,8 +24,8 @@
 using namespace MetadataUtils;
 using namespace sir;
 
-QString ExifStruct::accept(RichTextVisitor *visitor) {
-    return visitor->visit(this);
+void ExifStruct::accept(RichTextVisitor *visitor) {
+    visitor->visit(this);
 }
 
 /** Sets default value of ExifStruct fields, mainly 0 and \em "no data" strings.
