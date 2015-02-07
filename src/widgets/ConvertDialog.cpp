@@ -536,16 +536,8 @@ void ConvertDialog::convert() {
         sharedInfo->backgroundColor = optionsScrollArea->backgroundColorFrame->color();
     else
         sharedInfo->backgroundColor = QColor();
-    // histogram
-    sharedInfo = configureHistogram(sharedInfo);
-    // filter
-    sharedInfo = configureFilter(sharedInfo);
-    // add frame
-    sharedInfo = configureAddFrame(sharedInfo);
-    // add text
-    sharedInfo = configureAddText(sharedInfo);
-    // add image
-    sharedInfo = configureAddImage(sharedInfo);
+
+    sharedInfo = configureEffects(sharedInfo, effectsScrollArea);
     if (sharedInfo->imageLoadError) {
         QMessageBox::StandardButton answer =
                 QMessageBox::warning(this, tr("Load image failed"),
@@ -556,8 +548,8 @@ void ConvertDialog::convert() {
         if (answer != QMessageBox::Ignore)
             return;
     }
-    // svg
-    sharedInfo = configureSVG(sharedInfo);
+
+    sharedInfo = configureSVG(sharedInfo, svgScrollArea);
 
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
@@ -570,7 +562,20 @@ void ConvertDialog::convert() {
     }
 }
 
-SharedInformation *ConvertDialog::configureHistogram(SharedInformation *sharedInformation) {
+SharedInformation *ConvertDialog::configureEffects(
+        SharedInformation *sharedInformation,
+        EffectsScrollArea *effectsScrollArea) {
+    sharedInformation = configureHistogram(sharedInformation, effectsScrollArea);
+    sharedInformation = configureFilter(sharedInformation, effectsScrollArea);
+    sharedInformation = configureAddFrame(sharedInformation, effectsScrollArea);
+    sharedInformation = configureAddText(sharedInformation, effectsScrollArea);
+    sharedInformation = configureAddImage(sharedInformation, effectsScrollArea);
+    return sharedInformation;
+}
+
+SharedInformation *ConvertDialog::configureHistogram(
+        SharedInformation *sharedInformation,
+        EffectsScrollArea *effectsScrollArea) {
     if (effectsScrollArea->histogramGroupBox->isChecked()) {
         if (effectsScrollArea->stretchHistogramRadioButton->isChecked())
             sharedInformation->histogramOperation = 1;
@@ -582,7 +587,9 @@ SharedInformation *ConvertDialog::configureHistogram(SharedInformation *sharedIn
     return sharedInformation;
 }
 
-SharedInformation *ConvertDialog::configureFilter(SharedInformation *sharedInformation) {
+SharedInformation *ConvertDialog::configureFilter(
+        SharedInformation *sharedInformation,
+        EffectsScrollArea *effectsScrollArea) {
     if (effectsScrollArea->filterGroupBox->isChecked()) {
         if (effectsScrollArea->filterColorRadioButton->isChecked()) {
             sharedInformation->filterBrush = QBrush();
@@ -612,7 +619,9 @@ SharedInformation *ConvertDialog::configureFilter(SharedInformation *sharedInfor
     return sharedInformation;
 }
 
-SharedInformation *ConvertDialog::configureAddFrame(SharedInformation *sharedInformation) {
+SharedInformation *ConvertDialog::configureAddFrame(
+        SharedInformation *sharedInformation,
+        EffectsScrollArea *effectsScrollArea) {
     if (effectsScrollArea->frameGroupBox->isChecked()) {
         sharedInformation->frameAddAround = effectsScrollArea->frameAroundRadioButton->isChecked();
         sharedInformation->frameWidth = effectsScrollArea->frameWidthSpinBox->value();
@@ -643,7 +652,9 @@ SharedInformation *ConvertDialog::configureAddFrame(SharedInformation *sharedInf
     return sharedInformation;
 }
 
-SharedInformation *ConvertDialog::configureAddText(SharedInformation *sharedInformation) {
+SharedInformation *ConvertDialog::configureAddText(
+        SharedInformation *sharedInformation,
+        EffectsScrollArea *effectsScrollArea) {
     if (effectsScrollArea->textGroupBox->isChecked() &&
             !effectsScrollArea->textLineEdit->text().isEmpty()) {
         sharedInformation->textString = effectsScrollArea->textLineEdit->text();
@@ -681,7 +692,9 @@ SharedInformation *ConvertDialog::configureAddText(SharedInformation *sharedInfo
     return sharedInformation;
 }
 
-SharedInformation *ConvertDialog::configureAddImage(SharedInformation *sharedInformation) {
+SharedInformation *ConvertDialog::configureAddImage(
+        SharedInformation *sharedInformation,
+        EffectsScrollArea *effectsScrollArea) {
     if (effectsScrollArea->imageGroupBox->isChecked()) {
         sharedInformation->image = QImage(effectsScrollArea->imagePathLineEdit->text());
         sharedInformation->imageLoadError = sharedInformation->image.isNull();
@@ -706,7 +719,8 @@ SharedInformation *ConvertDialog::configureAddImage(SharedInformation *sharedInf
     return sharedInformation;
 }
 
-SharedInformation *ConvertDialog::configureSVG(SharedInformation *sharedInformation) {
+SharedInformation *ConvertDialog::configureSVG(
+        SharedInformation *sharedInformation, SvgScrollArea *svgScrollArea) {
     if (svgScrollArea->removeTextCheckBox->isChecked())
         sharedInformation->svgRemoveText = svgScrollArea->removeTextLineEdit->text();
     else

@@ -81,12 +81,20 @@ private:
     inline void writeWindowProperties();
     inline void resetAnswers();
     void convert();
-    SharedInformation *configureHistogram(SharedInformation *sharedInformation);
-    SharedInformation *configureFilter(SharedInformation *sharedInformation);
-    SharedInformation *configureAddFrame(SharedInformation *sharedInformation);
-    SharedInformation *configureAddText(SharedInformation *sharedInformation);
-    SharedInformation *configureAddImage(SharedInformation *sharedInformation);
-    SharedInformation *configureSVG(SharedInformation *sharedInformation);
+    SharedInformation *configureEffects(SharedInformation *sharedInformation,
+                                        EffectsScrollArea *effectsScrollArea);
+    SharedInformation *configureHistogram(SharedInformation *sharedInformation,
+                                          EffectsScrollArea *effectsScrollArea);
+    SharedInformation *configureFilter(SharedInformation *sharedInformation,
+                                       EffectsScrollArea *effectsScrollArea);
+    SharedInformation *configureAddFrame(SharedInformation *sharedInformation,
+                                         EffectsScrollArea *effectsScrollArea);
+    SharedInformation *configureAddText(SharedInformation *sharedInformation,
+                                        EffectsScrollArea *effectsScrollArea);
+    SharedInformation *configureAddImage(SharedInformation *sharedInformation,
+                                         EffectsScrollArea *effectsScrollArea);
+    SharedInformation *configureSVG(SharedInformation *sharedInformation,
+                                    SvgScrollArea *svgScrollArea);
     inline void clearTempDir();
 
 protected:
