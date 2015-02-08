@@ -26,48 +26,10 @@
 #include <QString>
 #include <QDir>
 #include <QColor>
-#include <QFont>
-#include <QPair>
 #include <QImage>
-#include <QBrush>
 
-/** Position modificators enumerator for \em "Add Text" and \em "Add Image"
-  * effects. It's correlated position combo boxes in EffectsScrollArea.
-  * \sa PosUnit
-  */
-enum PosModifier {
-    TopLeftCorner,
-    MiddleTopEdge,
-    TopRightCorner,
-    Center,
-    MiddleRightEdge,
-    BottomRightCorner,
-    MiddleBottomEdge,
-    BottomLeftCorner,
-    MiddleLeftEdge,
-    UndefinedPosModifier = -1
-};
+#include "shared/EffectsConfiguration.hpp"
 
-/** Position unit enumerator for \em "Add Text" and \em "Add Image" effects.
-  * It's correlated position combo boxes in EffectsScrollArea.
-  * \sa PosUnitPair PosModifier
-  */
-enum PosUnit {
-    Pixel,
-    Percent,
-    UndefinedUnit = -1
-};
-
-enum Filter {
-    NoFilter,
-    BlackAndWhite,
-    Sepia,
-    CustomColor,
-    Gradient
-};
-
-/** Pair of two PosUnit: first item is X coordinate, second is Y coordinate. */
-typedef QPair <PosUnit, PosUnit> PosUnitPair;
 
 //! ConvertThread threads shared information.
 class SharedInformation {
@@ -100,84 +62,8 @@ public:
     void setUpdateThumbnail(bool update);
     void setRotateThumbnail(bool rotate);
 #endif // SIR_METADATA_SUPPORT
-
-    quint8 getHistogramOperation() const;
-    void setHistogramOperation(const quint8 &value);
-
-    int getFilterType() const;
-    void setFilterType(int value);
-
-    QBrush getFilterBrush() const;
-    void setFilterBrush(const QBrush &value);
-
-    int getFrameWidth() const;
-    void setFrameWidth(int value);
-
-    QColor getFrameColor() const;
-    void setFrameColor(const QColor &value);
-
-    bool getFrameAddAround() const;
-    void setFrameAddAround(bool value);
-
-    int getBorderInsideWidth() const;
-    void setBorderInsideWidth(int value);
-
-    QColor getBorderInsideColor() const;
-    void setBorderInsideColor(const QColor &value);
-
-    int getBorderOutsideWidth() const;
-    void setBorderOutsideWidth(int value);
-
-    QColor getBorderOutsideColor() const;
-    void setBorderOutsideColor(const QColor &value);
-
-    QString getTextString() const;
-    void setTextString(const QString &value);
-
-    QFont getTextFont() const;
-    void setTextFont(const QFont &value);
-
-    QColor getTextColor() const;
-    void setTextColor(const QColor &value);
-
-    double getTextOpacity() const;
-    void setTextOpacity(double value);
-
-    PosModifier getTextPosModifier() const;
-    void setTextPosModifier(const PosModifier &value);
-
-    QPoint getTextPos() const;
-    void setTextPos(const QPoint &value);
-
-    PosUnitPair getTextUnitPair() const;
-    void setTextUnitPair(const PosUnitPair &value);
-
-    bool getTextFrame() const;
-    void setTextFrame(bool value);
-
-    int getTextRotation() const;
-    void setTextRotation(int value);
-
-    QImage getImage() const;
-    void setImage(const QImage &value);
-
-    bool getImageLoadError() const;
-    void setImageLoadError(bool value);
-
-    PosModifier getImagePosModifier() const;
-    void setImagePosModifier(const PosModifier &value);
-
-    QPoint getImagePos() const;
-    void setImagePos(const QPoint &value);
-
-    PosUnitPair getImageUnitPair() const;
-    void setImageUnitPair(const PosUnitPair &value);
-
-    double getImageOpacity() const;
-    void setImageOpacity(double value);
-
-    int getImageRotation() const;
-    void setImageRotation(int value);
+    EffectsConfiguration effectsConfiguration() const;
+    void setEffectsConfiguration(const EffectsConfiguration &conf);
 
 private:
     // fields
@@ -201,99 +87,15 @@ private:
     bool rotate; /**< Rotation indicator. */
     double angle; /**< Rotation angle. */
     int flip; /**< MetadataUtils::Flip code. */
+
     // destinated effects
     /** Custom background color of image.
       * If custom background color is disabled it's invalid QColor object.
       */
     QColor backgroundColor;
-    quint8 histogramOperation; // 0 (none), 1 (stretch), 2 (equalize)
-    // filter
-    int filterType;
-    QBrush filterBrush;
-    // add frame
-    /** Frame width for \em "Add Frame" effect.
-      * \sa #frameColor
-      */
-    int frameWidth;
-    /** Frame color for \em "Add Frame" effect.
-      * \sa #frameWidth
-      */
-    QColor frameColor;
-    /** A flag for \em "Add Frame" effect.
-      *
-      * True means the frame will be added around the converting image and it
-      * will be extended in coclusion.
-      *
-      * False means the frame will be painted on the current converting image.
-      */
-    bool frameAddAround;
-    /** Width of border painded on inside edge of the \em "Add Frame" effects frame.
-      * \sa #borderInsideColor
-      */
-    int borderInsideWidth;
-    /** Color of border painded on inside edge of the \em "Add Frame" effects frame.
-      * \sa #borderInsideWidth
-      */
-    QColor borderInsideColor;
-    /** Width of border painded on outside edge of the \em "Add Frame" effects frame.
-      * \sa #borderOutsideColor
-      */
-    int borderOutsideWidth;
-    /** Color of border painded on outside edge of the \em "Add Frame" effects frame.
-      * \sa #borderOutsideWidth
-      */
-    QColor borderOutsideColor;
-    // add text
-    /** Text for \em "Add Text" effect.
-      * \sa #textFont #textColor
-      */
-    QString textString;
-    /** Font for \em "Add Text" effect.
-      * \sa #textString #textColor
-      */
-    QFont textFont;
-    /** Font color for \em "Add Text" effect.
-      * \sa #textString #textFont
-      */
-    QColor textColor;
-    /** Text position modificator for \em "Add Text" effect.
-      * \sa #textPos
-      */
-    double textOpacity; /**< Text opacity for \em "Add Text" effect. */
-    PosModifier textPosModifier;
-    /** Text position for \em "Add Text" effect.
-      * \sa #textPosModifier #textUnitPair
-      */
-    QPoint textPos;
-    /** \link #textPos Text position \endlink units for \em "Add Text" effect.
-      * \sa #textPos
-      */
-    PosUnitPair textUnitPair;
-    /** Drawing text flag for \em "Add Text" effect.
-      *
-      * True means a rectangle will be drawn around the text.
-      */
-    bool textFrame;
-    /** Text rotation angle in degree for \em "Add Text" effect. */
-    int textRotation;
-    // add image
-    QImage image; /**< Image for \em "Add Image" effect. */
-    /** Image position modificator for \em "Add Image" effect.
-      * \sa #imagePos
-      */
-    bool imageLoadError;
-    PosModifier imagePosModifier;
-    /** Image position for \em "Add Image" effect.
-      * \sa #imagePosModifier #imageUnitPair
-      */
-    QPoint imagePos;
-    /** \link #imagePos Text position \endlink units for \em "Add Image" effect.
-      * \sa #imagePos
-      */
-    PosUnitPair imageUnitPair;
-    double imageOpacity; /**< Image opacity for \em "Add Image" effect. */
-    /** Image rotation angle in degree for \em "Add Image" effect. */
-    int imageRotation;
+
+    EffectsConfiguration effectsConf;
+
     // SVG modifiers
     bool svgModifiersEnabled; /**< Set it true if you want modify SVG file. */
     /** Text value of SVG \e text nodes to delete. Plain text and regular

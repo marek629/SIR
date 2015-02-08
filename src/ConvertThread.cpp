@@ -770,17 +770,18 @@ QImage * ConvertThread::loadSvgImage() {
 QImage ConvertThread::paintEffects(QImage *image) {
     QImage destImg(*image);
     ConvertEffects effectPainter(&destImg, shared);
-    if (shared->histogramOperation > 0)
+    if (shared->effectsConfiguration().getHistogramOperation() > 0)
         effectPainter.modifyHistogram();
-    if (shared->filterType != NoFilter)
+    if (shared->effectsConfiguration().getFilterType() != NoFilter)
         effectPainter.filtrate();
-    if (shared->frameWidth > 0 && shared->frameColor.isValid()) {
+    if (shared->effectsConfiguration().getFrameWidth() > 0
+            && shared->effectsConfiguration().getFrameColor().isValid()) {
         destImg = effectPainter.framedImage();
         effectPainter.setImage(&destImg);
     }
-    if (!shared->image.isNull())
+    if (!shared->effectsConfiguration().getImage().isNull())
         effectPainter.addImage();
-    if (!shared->textString.isEmpty())
+    if (!shared->effectsConfiguration().getTextString().isEmpty())
         effectPainter.addText();
     return destImg;
 }

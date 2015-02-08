@@ -24,6 +24,7 @@ set( sir_SRCS
         Version.cpp
         XmlHelper.cpp
         XmlStreamWriter.cpp
+        shared/EffectsConfiguration.cpp
         widgets/AboutDialog.cpp
         widgets/ConvertDialog.cpp
         widgets/BrushFrame.cpp

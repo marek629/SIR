@@ -66,7 +66,8 @@ void ConvertDialogTest::convert_histogram_stretch() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->histogramOperation, quint8(1));
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getHistogramOperation(), quint8(1));
 }
 
 void ConvertDialogTest::convert_histogram_equalize() {
@@ -78,7 +79,8 @@ void ConvertDialogTest::convert_histogram_equalize() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->histogramOperation, quint8(2));
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getHistogramOperation(), quint8(2));
 }
 
 void ConvertDialogTest::convert_histogram_no() {
@@ -89,7 +91,8 @@ void ConvertDialogTest::convert_histogram_no() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->histogramOperation, quint8(0));
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getHistogramOperation(), quint8(0));
 }
 
 void ConvertDialogTest::convert_filter_colorBlackAndWhite() {
@@ -107,8 +110,9 @@ void ConvertDialogTest::convert_filter_colorBlackAndWhite() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->filterType, int(BlackAndWhite));
-    QCOMPARE(sharedInfo->filterBrush, QBrush());
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFilterType(), int(BlackAndWhite));
+    QCOMPARE(conf.getFilterBrush(), QBrush());
 }
 
 void ConvertDialogTest::convert_filter_colorSepia() {
@@ -126,8 +130,9 @@ void ConvertDialogTest::convert_filter_colorSepia() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->filterType, int(Sepia));
-    QCOMPARE(sharedInfo->filterBrush, QBrush());
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFilterType(), int(Sepia));
+    QCOMPARE(conf.getFilterBrush(), QBrush());
 }
 
 void ConvertDialogTest::convert_filter_colorCustom() {
@@ -149,8 +154,9 @@ void ConvertDialogTest::convert_filter_colorCustom() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->filterType, int(CustomColor));
-    QCOMPARE(sharedInfo->filterBrush, QBrush(color));
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFilterType(), int(CustomColor));
+    QCOMPARE(conf.getFilterBrush(), QBrush(color));
 }
 
 void ConvertDialogTest::convert_filter_gradient() {
@@ -170,8 +176,9 @@ void ConvertDialogTest::convert_filter_gradient() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->filterType, int(Gradient));
-    QCOMPARE(sharedInfo->filterBrush, QBrush(gradient));
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFilterType(), int(Gradient));
+    QCOMPARE(conf.getFilterBrush(), QBrush(gradient));
 }
 
 void ConvertDialogTest::convert_filter_no() {
@@ -182,8 +189,9 @@ void ConvertDialogTest::convert_filter_no() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->filterType, int(NoFilter));
-    QCOMPARE(sharedInfo->filterBrush, QBrush());
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFilterType(), int(NoFilter));
+    QCOMPARE(conf.getFilterBrush(), QBrush());
 }
 
 void ConvertDialogTest::convert_addFrame_withBorder() {
@@ -208,13 +216,14 @@ void ConvertDialogTest::convert_addFrame_withBorder() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->frameAddAround, true);
-    QCOMPARE(sharedInfo->frameWidth, 20);
-    QCOMPARE(sharedInfo->frameColor, QColor(Qt::red));
-    QCOMPARE(sharedInfo->borderOutsideWidth, 2);
-    QCOMPARE(sharedInfo->borderOutsideColor, QColor(Qt::green));
-    QCOMPARE(sharedInfo->borderInsideWidth, 3);
-    QCOMPARE(sharedInfo->borderInsideColor, QColor(Qt::blue));
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFrameAddAround(), true);
+    QCOMPARE(conf.getFrameWidth(), 20);
+    QCOMPARE(conf.getFrameColor(), QColor(Qt::red));
+    QCOMPARE(conf.getBorderOutsideWidth(), 2);
+    QCOMPARE(conf.getBorderOutsideColor(), QColor(Qt::green));
+    QCOMPARE(conf.getBorderInsideWidth(), 3);
+    QCOMPARE(conf.getBorderInsideColor(), QColor(Qt::blue));
 }
 
 void ConvertDialogTest::convert_addFrame_withoutBorder() {
@@ -235,13 +244,14 @@ void ConvertDialogTest::convert_addFrame_withoutBorder() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->frameAddAround, true);
-    QCOMPARE(sharedInfo->frameWidth, 20);
-    QCOMPARE(sharedInfo->frameColor, color);
-    QCOMPARE(sharedInfo->borderOutsideWidth, -1);
-    QCOMPARE(sharedInfo->borderOutsideColor, QColor());
-    QCOMPARE(sharedInfo->borderInsideWidth, -1);
-    QCOMPARE(sharedInfo->borderInsideColor, QColor());
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFrameAddAround(), true);
+    QCOMPARE(conf.getFrameWidth(), 20);
+    QCOMPARE(conf.getFrameColor(), color);
+    QCOMPARE(conf.getBorderOutsideWidth(), -1);
+    QCOMPARE(conf.getBorderOutsideColor(), QColor());
+    QCOMPARE(conf.getBorderInsideWidth(), -1);
+    QCOMPARE(conf.getBorderInsideColor(), QColor());
 }
 
 void ConvertDialogTest::convert_addFrame_no() {
@@ -252,13 +262,14 @@ void ConvertDialogTest::convert_addFrame_no() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->frameAddAround, false);
-    QCOMPARE(sharedInfo->frameWidth, -1);
-    QCOMPARE(sharedInfo->frameColor, QColor());
-    QCOMPARE(sharedInfo->borderOutsideWidth, -1);
-    QCOMPARE(sharedInfo->borderOutsideColor, QColor());
-    QCOMPARE(sharedInfo->borderInsideWidth, -1);
-    QCOMPARE(sharedInfo->borderInsideColor, QColor());
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getFrameAddAround(), false);
+    QCOMPARE(conf.getFrameWidth(), -1);
+    QCOMPARE(conf.getFrameColor(), QColor());
+    QCOMPARE(conf.getBorderOutsideWidth(), -1);
+    QCOMPARE(conf.getBorderOutsideColor(), QColor());
+    QCOMPARE(conf.getBorderInsideWidth(), -1);
+    QCOMPARE(conf.getBorderInsideColor(), QColor());
 }
 
 void ConvertDialogTest::convert_addText_fontPt() {
@@ -299,15 +310,16 @@ void ConvertDialogTest::convert_addText_fontPt() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->textString, testText);
-    QCOMPARE(sharedInfo->textFont, font);
-    QCOMPARE(sharedInfo->textColor, color);
-    QCOMPARE(sharedInfo->textOpacity, 0.5);
-    QCOMPARE(sharedInfo->textPosModifier, TopRightCorner);
-    QCOMPARE(sharedInfo->textPos, position);
-    QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(Pixel, Pixel));
-    QCOMPARE(sharedInfo->textFrame, false);
-    QCOMPARE(sharedInfo->textRotation, 0);
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getTextString(), testText);
+    QCOMPARE(conf.getTextFont(), font);
+    QCOMPARE(conf.getTextColor(), color);
+    QCOMPARE(conf.getTextOpacity(), 0.5);
+    QCOMPARE(conf.getTextPosModifier(), TopRightCorner);
+    QCOMPARE(conf.getTextPos(), position);
+    QCOMPARE(conf.getTextUnitPair(), PosUnitPair(Pixel, Pixel));
+    QCOMPARE(conf.getTextFrame(), false);
+    QCOMPARE(conf.getTextRotation(), 0);
 }
 
 void ConvertDialogTest::convert_addText_fontPx() {
@@ -348,15 +360,16 @@ void ConvertDialogTest::convert_addText_fontPx() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->textString, testText);
-    QCOMPARE(sharedInfo->textFont, font);
-    QCOMPARE(sharedInfo->textColor, color);
-    QCOMPARE(sharedInfo->textOpacity, 0.5);
-    QCOMPARE(sharedInfo->textPosModifier, TopRightCorner);
-    QCOMPARE(sharedInfo->textPos, position);
-    QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(Pixel, Pixel));
-    QCOMPARE(sharedInfo->textFrame, false);
-    QCOMPARE(sharedInfo->textRotation, 0);
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getTextString(), testText);
+    QCOMPARE(conf.getTextFont(), font);
+    QCOMPARE(conf.getTextColor(), color);
+    QCOMPARE(conf.getTextOpacity(), 0.5);
+    QCOMPARE(conf.getTextPosModifier(), TopRightCorner);
+    QCOMPARE(conf.getTextPos(), position);
+    QCOMPARE(conf.getTextUnitPair(), PosUnitPair(Pixel, Pixel));
+    QCOMPARE(conf.getTextFrame(), false);
+    QCOMPARE(conf.getTextRotation(), 0);
 }
 
 void ConvertDialogTest::convert_addText_textIsEmpty() {
@@ -369,14 +382,15 @@ void ConvertDialogTest::convert_addText_textIsEmpty() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->textString, QString());
-    QCOMPARE(sharedInfo->textFont, QFont());
-    QCOMPARE(sharedInfo->textColor, QColor());
-    QCOMPARE(sharedInfo->textPosModifier, UndefinedPosModifier);
-    QCOMPARE(sharedInfo->textPos, QPoint());
-    QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
-    QCOMPARE(sharedInfo->textFrame, false);
-    QCOMPARE(sharedInfo->textRotation, 0);
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getTextString(), QString());
+    QCOMPARE(conf.getTextFont(), QFont());
+    QCOMPARE(conf.getTextColor(), QColor());
+    QCOMPARE(conf.getTextPosModifier(), UndefinedPosModifier);
+    QCOMPARE(conf.getTextPos(), QPoint());
+    QCOMPARE(conf.getTextUnitPair(), PosUnitPair(UndefinedUnit, UndefinedUnit));
+    QCOMPARE(conf.getTextFrame(), false);
+    QCOMPARE(conf.getTextRotation(), 0);
 }
 
 void ConvertDialogTest::convert_addText_no() {
@@ -387,14 +401,15 @@ void ConvertDialogTest::convert_addText_no() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->textString, QString());
-    QCOMPARE(sharedInfo->textFont, QFont());
-    QCOMPARE(sharedInfo->textColor, QColor());
-    QCOMPARE(sharedInfo->textPosModifier, UndefinedPosModifier);
-    QCOMPARE(sharedInfo->textPos, QPoint());
-    QCOMPARE(sharedInfo->textUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
-    QCOMPARE(sharedInfo->textFrame, false);
-    QCOMPARE(sharedInfo->textRotation, 0);
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getTextString(), QString());
+    QCOMPARE(conf.getTextFont(), QFont());
+    QCOMPARE(conf.getTextColor(), QColor());
+    QCOMPARE(conf.getTextPosModifier(), UndefinedPosModifier);
+    QCOMPARE(conf.getTextPos(), QPoint());
+    QCOMPARE(conf.getTextUnitPair(), PosUnitPair(UndefinedUnit, UndefinedUnit));
+    QCOMPARE(conf.getTextFrame(), false);
+    QCOMPARE(conf.getTextRotation(), 0);
 }
 
 void ConvertDialogTest::convert_addImage_imageNotNull() {
@@ -424,13 +439,14 @@ void ConvertDialogTest::convert_addImage_imageNotNull() {
     QVERIFY(file.remove());
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->image, image);
-    QCOMPARE(sharedInfo->imageLoadError, false);
-    QCOMPARE(sharedInfo->imagePosModifier, MiddleTopEdge);
-    QCOMPARE(sharedInfo->imagePos, imagePoint);
-    QCOMPARE(sharedInfo->imageUnitPair, PosUnitPair(Percent, Percent));
-    QCOMPARE(sharedInfo->imageOpacity, 0.5);
-    QCOMPARE(sharedInfo->imageRotation, 40);
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getImage(), image);
+    QCOMPARE(conf.getImageLoadError(), false);
+    QCOMPARE(conf.getImagePosModifier(), MiddleTopEdge);
+    QCOMPARE(conf.getImagePos(), imagePoint);
+    QCOMPARE(conf.getImageUnitPair(), PosUnitPair(Percent, Percent));
+    QCOMPARE(conf.getImageOpacity(), 0.5);
+    QCOMPARE(conf.getImageRotation(), 40);
 }
 
 void ConvertDialogTest::convert_addImage_no() {
@@ -441,12 +457,13 @@ void ConvertDialogTest::convert_addImage_no() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->image, QImage());
-    QCOMPARE(sharedInfo->imageLoadError, false);
-    QCOMPARE(sharedInfo->imagePosModifier, UndefinedPosModifier);
-    QCOMPARE(sharedInfo->imagePos, QPoint());
-    QCOMPARE(sharedInfo->imageUnitPair, PosUnitPair(UndefinedUnit, UndefinedUnit));
-    QCOMPARE(sharedInfo->imageRotation, 0);
+    EffectsConfiguration conf = sharedInfo->effectsConfiguration();
+    QCOMPARE(conf.getImage(), QImage());
+    QCOMPARE(conf.getImageLoadError(), false);
+    QCOMPARE(conf.getImagePosModifier(), UndefinedPosModifier);
+    QCOMPARE(conf.getImagePos(), QPoint());
+    QCOMPARE(conf.getImageUnitPair(), PosUnitPair(UndefinedUnit, UndefinedUnit));
+    QCOMPARE(conf.getImageRotation(), 0);
 }
 
 void ConvertDialogTest::convert_svg_removeText() {

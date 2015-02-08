@@ -538,7 +538,7 @@ void ConvertDialog::convert() {
         sharedInfo->backgroundColor = QColor();
 
     sharedInfo = effectsScrollArea->configureEffects(sharedInfo);
-    if (sharedInfo->imageLoadError) {
+    if (sharedInfo->effectsConfiguration().getImageLoadError()) {
         QMessageBox::StandardButton answer =
                 QMessageBox::warning(this, tr("Load image failed"),
                                      tr("Load image to add failed.\n"

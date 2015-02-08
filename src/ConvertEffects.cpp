@@ -62,7 +62,7 @@ QImage * ConvertEffects::image() const {
 }
 
 void ConvertEffects::modifyHistogram() {
-    switch (shared->histogramOperation) {
+    switch (shared->effectsConfiguration().getHistogramOperation()) {
     case 1:
         stretchHistogram();
         break;
@@ -120,7 +120,7 @@ void ConvertEffects::filtrate() {
     Q_ASSERT(img != NULL);
     Q_ASSERT(!img->isNull());
 
-    switch (shared->filterType) {
+    switch (shared->effectsConfiguration().getFilterType()) {
     case BlackAndWhite:
         for (int y=0; y<img->height(); y++) {
             for (int x=0; x<img->width(); x++) {
@@ -133,10 +133,10 @@ void ConvertEffects::filtrate() {
         combine(QColor(112, 66, 20));
         break;
     case CustomColor:
-        combine(shared->filterBrush.color());
+        combine(shared->effectsConfiguration().getFilterBrush().color());
         break;
     case Gradient:
-        combine(shared->filterBrush);
+        combine(shared->effectsConfiguration().getFilterBrush());
         break;
     default:
         qDebug("ConvertEffects::filtate(): unexpected filter type occured");
@@ -152,8 +152,8 @@ QImage ConvertEffects::framedImage() {
     QImage result;
     if (!img || img->isNull())
         return result;
-    int w2 = 2 * shared->frameWidth; // double frame width
-    if (shared->frameAddAround) {
+    int w2 = 2 * shared->effectsConfiguration().getFrameWidth(); // double frame width
+    if (shared->effectsConfiguration().getFrameAddAround()) {
         QSize size = img->size();
         size += QSize(w2, w2);
         result = QImage(size, img->format());
@@ -162,28 +162,33 @@ QImage ConvertEffects::framedImage() {
         result = *img;
     QPainter painter(&result);
     QPen pen(Qt::SolidLine);
-    if (shared->borderInsideWidth + shared->borderOutsideWidth < shared->frameWidth) {
+    if (shared->effectsConfiguration().getBorderInsideWidth()
+            + shared->effectsConfiguration().getBorderOutsideWidth()
+            < shared->effectsConfiguration().getFrameWidth()) {
         pen.setWidth(w2);
-        pen.setColor(shared->frameColor);
+        pen.setColor(shared->effectsConfiguration().getFrameColor());
         painter.setPen(pen);
         painter.drawRect(result.rect());
     }
-    if (shared->borderOutsideWidth > 0) {
-        pen.setWidth(2*shared->borderOutsideWidth);
-        pen.setColor(shared->borderOutsideColor);
+    if (shared->effectsConfiguration().getBorderOutsideWidth() > 0) {
+        pen.setWidth(2 * shared->effectsConfiguration().getBorderOutsideWidth());
+        pen.setColor(shared->effectsConfiguration().getBorderOutsideColor());
         painter.setPen(pen);
         painter.drawRect(result.rect());
     }
-    if (shared->borderInsideWidth > 0) {
-        pen.setWidth(shared->borderInsideWidth);
-        pen.setColor(shared->borderInsideColor);
+    if (shared->effectsConfiguration().getBorderInsideWidth() > 0) {
+        pen.setWidth(shared->effectsConfiguration().getBorderInsideWidth());
+        pen.setColor(shared->effectsConfiguration().getBorderInsideColor());
         painter.setPen(pen);
-        int ih = shared->frameWidth - shared->borderInsideWidth * 0.5; // half of inside border
+        int ih = shared->effectsConfiguration().getFrameWidth()
+                - shared->effectsConfiguration().getBorderInsideWidth() * 0.5; // half of inside border
         int sub = w2 - ih + 1;
         painter.drawRect(ih, ih, result.width()-sub, result.height()-sub);
     }
-    if (shared->frameAddAround)
-        painter.drawImage(shared->frameWidth, shared->frameWidth, *img);
+    if (shared->effectsConfiguration().getFrameAddAround())
+        painter.drawImage(shared->effectsConfiguration().getFrameWidth(),
+                          shared->effectsConfiguration().getFrameWidth(),
+                          *img);
     return result;
 }
 
@@ -195,27 +200,28 @@ void ConvertEffects::addText() {
     Q_ASSERT(!img->isNull());
 
     // reference point setup
-    QPoint point = getTransformOriginPoint(shared->textPos, shared->textUnitPair);
+    QPoint point = getTransformOriginPoint(shared->effectsConfiguration().getTextPos(),
+                                           shared->effectsConfiguration().getTextUnitPair());
 
     // text bounding rect setup
-    QFontMetrics fontMetrics(shared->textFont, img);
-    QRect rect = fontMetrics.boundingRect(shared->textString);
+    QFontMetrics fontMetrics(shared->effectsConfiguration().getTextFont(), img);
+    QRect rect = fontMetrics.boundingRect(shared->effectsConfiguration().getTextString());
     const int dx = 5;
     const int dy = 1;
     rect.adjust(-dx, -dy, dx, dy);
-    rect = getEffectBoundingRect(rect, point, shared->textPosModifier);
+    rect = getEffectBoundingRect(rect, point, shared->effectsConfiguration().getTextPosModifier());
 
     QPainter painter(img);
-    painter.setPen(shared->textColor);
-    painter.setFont(shared->textFont);
-    painter.setOpacity(shared->textOpacity);
+    painter.setPen(shared->effectsConfiguration().getTextColor());
+    painter.setFont(shared->effectsConfiguration().getTextFont());
+    painter.setOpacity(shared->effectsConfiguration().getTextOpacity());
 
     // rotate painter around center point of image
-    this->rotate(&painter, point, shared->textRotation);
+    this->rotate(&painter, point, shared->effectsConfiguration().getTextRotation());
 
     // draw text
-    painter.drawText(rect, Qt::AlignCenter, shared->textString);
-    if (shared->textFrame) {
+    painter.drawText(rect, Qt::AlignCenter, shared->effectsConfiguration().getTextString());
+    if (shared->effectsConfiguration().getTextFrame()) {
         painter.setRenderHint(QPainter::HighQualityAntialiasing);
         painter.drawRect(rect);
     }
@@ -228,18 +234,19 @@ void ConvertEffects::addImage() {
     Q_ASSERT(img != NULL);
     Q_ASSERT(!img->isNull());
 
-    QPoint point = getTransformOriginPoint(shared->imagePos, shared->imageUnitPair);
+    QPoint point = getTransformOriginPoint(shared->effectsConfiguration().getImagePos(),
+                                           shared->effectsConfiguration().getImageUnitPair());
 
-    QRect rect = getEffectBoundingRect(shared->image.rect(), point,
-                                       shared->imagePosModifier);
+    QRect rect = getEffectBoundingRect(shared->effectsConfiguration().getImage().rect(), point,
+                                       shared->effectsConfiguration().getImagePosModifier());
 
     QPainter painter(img);
-    painter.setOpacity(shared->imageOpacity);
+    painter.setOpacity(shared->effectsConfiguration().getImageOpacity());
     painter.resetTransform();
 
-    this->rotate(&painter, point, shared->imageRotation);
+    this->rotate(&painter, point, shared->effectsConfiguration().getImageRotation());
 
-    painter.drawImage(rect, shared->image);
+    painter.drawImage(rect, shared->effectsConfiguration().getImage());
 }
 
 /** Rotates given \a painter around \a originPoint by \a angle in degrees. */
