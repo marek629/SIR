@@ -36,6 +36,7 @@
 #include "widgets/AboutDialog.hpp"
 #include "widgets/OptionsDialog.hpp"
 #include "widgets/DetailsBrowserController.hpp"
+#include "widgets/convert/EffectsScrollAreaVisitor.hpp"
 #include "widgets/options/GeneralGroupBoxController.hpp"
 #include "Version.hpp"
 #include "RawUtils.hpp"
@@ -537,7 +538,11 @@ void ConvertDialog::convert() {
     else
         sharedInfo->backgroundColor = QColor();
 
-    sharedInfo = effectsScrollArea->configureEffects(sharedInfo);
+    EffectsScrollAreaVisitor effectsScrollAreaVisitor;
+    effectsScrollArea->accept(&effectsScrollAreaVisitor);
+    sharedInfo->setEffectsConfiguration(
+                effectsScrollAreaVisitor.effectsConfiguration());
+
     if (sharedInfo->effectsConfiguration().getImageLoadError()) {
         QMessageBox::StandardButton answer =
                 QMessageBox::warning(this, tr("Load image failed"),

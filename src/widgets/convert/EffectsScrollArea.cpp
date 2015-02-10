@@ -21,11 +21,14 @@
 
 #include "widgets/convert/EffectsScrollArea.hpp"
 
+#include <typeinfo>
+
 #include <QFileDialog>
 #include <QImageReader>
 #include <QStringListModel>
 
 #include "SharedInformation.hpp"
+#include "widgets/convert/EffectsScrollAreaVisitor.hpp"
 
 
 /** Creates the EffectsScrollArea object. Sets up GUI. */
@@ -114,19 +117,10 @@ QStringList EffectsScrollArea::gradientFilterStringList() {
     return stringList;
 }
 
-SharedInformation *EffectsScrollArea::configureEffects(
-        SharedInformation *sharedInformation) {
-    EffectsConfiguration conf = sharedInformation->effectsConfiguration();
+void EffectsScrollArea::accept(Visitor *visitor) {
+    Q_ASSERT(typeid(*visitor) == typeid(EffectsScrollAreaVisitor));
 
-    EffectsConfiguration *confPtr = &conf;
-    confPtr = configureHistogram(confPtr);
-    confPtr = configureFilter(confPtr);
-    confPtr = configureAddFrame(confPtr);
-    confPtr = configureAddText(confPtr);
-    confPtr = configureAddImage(confPtr);
-
-    sharedInformation->setEffectsConfiguration(*confPtr);
-    return sharedInformation;
+    visitor->visit(this);
 }
 
 /** Sets up filters combo box models. */
@@ -135,156 +129,6 @@ void EffectsScrollArea::setupFilterModels() {
     filterColorModelIndex = 0;
     filterGradientModel = new QStringListModel(gradientFilterStringList(), this);
     filterGradientModelIndex = 0;
-}
-
-EffectsConfiguration *EffectsScrollArea::configureHistogram(EffectsConfiguration *conf) {
-    if (histogramGroupBox->isChecked()) {
-        if (stretchHistogramRadioButton->isChecked())
-            conf->setHistogramOperation(1);
-        else
-            conf->setHistogramOperation(2);
-    } else {
-        conf->setHistogramOperation(0);
-    }
-    return conf;
-}
-
-EffectsConfiguration *EffectsScrollArea::configureFilter(EffectsConfiguration *conf) {
-    if (filterGroupBox->isChecked()) {
-        if (filterColorRadioButton->isChecked()) {
-            conf->setFilterBrush(QBrush());
-            switch (filterTypeComboBox->currentIndex()) {
-            case 0:
-                conf->setFilterType(BlackAndWhite);
-                break;
-            case 1:
-                conf->setFilterType(Sepia);
-                break;
-            case 2:
-                conf->setFilterType(CustomColor);
-                conf->setFilterBrush(
-                            QBrush(filterBrushFrame->color()));
-                break;
-            default:
-                break;
-            }
-        } else {
-            conf->setFilterType(Gradient);
-            // TODO: strange entries count in code coverage
-            conf->setFilterBrush(filterBrushFrame->brush());
-        }
-    } else {
-        conf->setFilterType(NoFilter);
-        conf->setFilterBrush(QBrush());
-    }
-    return conf;
-}
-
-EffectsConfiguration *EffectsScrollArea::configureAddFrame(EffectsConfiguration *conf) {
-    if (frameGroupBox->isChecked()) {
-        conf->setFrameAddAround(
-                    frameAroundRadioButton->isChecked());
-        conf->setFrameWidth(frameWidthSpinBox->value());
-        conf->setFrameColor(frameColorFrame->color());
-        if (borderOutsideGroupBox->isChecked()) {
-            conf->setBorderOutsideWidth(
-                        borderOutsideSpinBox->value());
-            conf->setBorderOutsideColor(
-                        borderOutsideColorFrame->color());
-        } else {
-            conf->setBorderOutsideWidth(-1);
-            conf->setBorderOutsideColor(QColor());
-        }
-        if (borderInsideGroupBox->isChecked()) {
-            conf->setBorderInsideWidth(
-                        borderInsideSpinBox->value());
-            conf->setBorderInsideColor(
-                        borderInsideColorFrame->color());
-        } else {
-            conf->setBorderInsideWidth(-1);
-            conf->setBorderInsideColor(QColor());
-        }
-    } else {
-        conf->setFrameAddAround(false);
-        conf->setFrameWidth(-1);
-        conf->setFrameColor(QColor());
-        conf->setBorderOutsideWidth(-1);
-        conf->setBorderOutsideColor(QColor());
-        conf->setBorderInsideWidth(-1);
-        conf->setBorderInsideColor(QColor());
-    }
-    return conf;
-}
-
-EffectsConfiguration *EffectsScrollArea::configureAddText(EffectsConfiguration *conf) {
-    if (textGroupBox->isChecked() &&
-            !textLineEdit->text().isEmpty()) {
-        conf->setTextString(textLineEdit->text());
-        QFont font = textFontComboBox->currentFont();
-        if (textFontSizeComboBox->currentIndex() == 0) // pt
-            font.setPointSize(textFontSizeSpinBox->value());
-        else
-            font.setPixelSize(textFontSizeSpinBox->value());
-        font.setBold(textBoldPushButton->isChecked());
-        font.setItalic(textItalicPushButton->isChecked());
-        font.setUnderline(textUnderlinePushButton->isChecked());
-        font.setStrikeOut(textStrikeOutPushButton->isChecked());
-        conf->setTextFont(font);
-        conf->setTextColor(textColorFrame->color());
-        conf->setTextOpacity(textOpacitySpinBox->value());
-        conf->setTextPosModifier(
-                    static_cast<PosModifier>(
-                        textPositionComboBox->currentIndex() ));
-        conf->setTextPos(QPoint(
-                                          textXSpinBox->value(),
-                                          textYSpinBox->value()));
-        PosUnitPair posUnitPair = PosUnitPair(
-                    static_cast<PosUnit>(textXComboBox->currentIndex()),
-                    static_cast<PosUnit>(textYComboBox->currentIndex()));
-        conf->setTextUnitPair(posUnitPair);
-        conf->setTextFrame(textFrameCheckBox->isChecked());
-        conf->setTextRotation(textRotationSpinBox->value());
-    } else {
-        conf->setTextString(QString());
-        conf->setTextFont(QFont());
-        conf->setTextColor(QColor());
-        conf->setTextPosModifier(UndefinedPosModifier);
-        conf->setTextPos(QPoint());
-        conf->setTextUnitPair(
-                    PosUnitPair(UndefinedUnit, UndefinedUnit));
-        conf->setTextFrame(false);
-        conf->setTextRotation(0);
-    }
-    return conf;
-}
-
-EffectsConfiguration *EffectsScrollArea::configureAddImage(EffectsConfiguration *conf) {
-    if (imageGroupBox->isChecked()) {
-        conf->setImage(QImage(imagePathLineEdit->text()));
-        conf->setImageLoadError(
-                    conf->getImage().isNull());
-        conf->setImagePosModifier(
-                    static_cast<PosModifier>(
-                        imagePositionComboBox->currentIndex() ));
-        conf->setImagePos(QPoint(
-                                           imageXSpinBox->value(),
-                                           imageYSpinBox->value()));
-        PosUnitPair posUnitPair = PosUnitPair(
-                    static_cast<PosUnit>(imageXComboBox->currentIndex()),
-                    static_cast<PosUnit>(imageYComboBox->currentIndex()));
-        conf->setImageUnitPair(posUnitPair);
-        conf->setImageOpacity(imageOpacitySpinBox->value());
-        conf->setImageRotation(imageRotationSpinBox->value());
-    } else {
-        conf->setImage(QImage());
-        conf->setImageLoadError(false);
-        conf->setImagePosModifier(UndefinedPosModifier);
-        conf->setImagePos(QPoint());
-        conf->setImageUnitPair(
-                    PosUnitPair(UndefinedUnit, UndefinedUnit));
-        conf->setImageRotation(0);
-    }
-    return conf;
 }
 
 /** Shows widgets for color filter if \a colorToogled is true. Otherwise shows

@@ -43,6 +43,7 @@ set( sir_SRCS
         widgets/TreeWidget.cpp
         widgets/TreeWidgetHeader.cpp
         widgets/convert/EffectsScrollArea.cpp
+        widgets/convert/EffectsScrollAreaVisitor.cpp
         widgets/convert/OptionsScrollArea.cpp
         widgets/convert/SizeScrollArea.cpp
         widgets/convert/SvgScrollArea.cpp

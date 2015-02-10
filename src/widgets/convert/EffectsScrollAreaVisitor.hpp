@@ -19,46 +19,29 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef EFFECTSSCROLLAREA_H
-#define EFFECTSSCROLLAREA_H
+#ifndef EFFECTSSCROLLAREAVISITOR_HPP
+#define EFFECTSSCROLLAREAVISITOR_HPP
 
-#include "ui_EffectsScrollArea.h"
-
-#include "Visitable.hpp"
-
-
-class SharedInformation;
-class EffectsConfiguration;
+#include "Visitor.hpp"
+#include "shared/EffectsConfiguration.hpp"
 
 
-class EffectsScrollArea
-        : public QScrollArea, public Ui::EffectsScrollArea, public Visitable {
-    Q_OBJECT
-    friend class EffectsCollector;
+class EffectsScrollArea;
 
+
+class EffectsScrollAreaVisitor : public Visitor {
 public:
-    explicit EffectsScrollArea(QWidget *parent = 0);
-    ~EffectsScrollArea();
-    void retranslateStrings();
-    QStringList colorFilterStringList();
-    QStringList gradientFilterStringList();
-    virtual void accept(Visitor *visitor);
+    virtual void visit(Visitable *visitable);
+    EffectsConfiguration effectsConfiguration() const;
 
 private:
-    // fields
-    QAbstractItemModel *filterColorModel;
-    QAbstractItemModel *filterGradientModel;
-    int filterColorModelIndex;
-    int filterGradientModelIndex;
-    QColor filterColor;
-    QBrush filterBrush;
-    // methods
-    void setupFilterModels();
+    EffectsConfiguration conf;
 
-private slots:
-    void filterToogled(bool colorToogled);
-    void filterTypeChanged(int type);
-    void browseImage();
+    void configureHistogram(EffectsScrollArea *area);
+    void configureFilter(EffectsScrollArea *area);
+    void configureAddFrame(EffectsScrollArea *area);
+    void configureAddText(EffectsScrollArea *area);
+    void configureAddImage(EffectsScrollArea *area);
 };
 
-#endif // EFFECTSSCROLLAREA_H
+#endif // EFFECTSSCROLLAREAVISITOR_HPP
