@@ -81,6 +81,8 @@ private:
     inline void writeWindowProperties();
     inline void resetAnswers();
     void convert();
+    SharedInformation *configureEffects(SharedInformation *sharedInformation,
+                                        EffectsScrollArea *effectsScrollArea);
     SharedInformation *configureSVG(SharedInformation *sharedInformation,
                                     SvgScrollArea *svgScrollArea);
     inline void clearTempDir();

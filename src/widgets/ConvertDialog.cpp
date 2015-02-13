@@ -538,10 +538,7 @@ void ConvertDialog::convert() {
     else
         sharedInfo->backgroundColor = QColor();
 
-    EffectsScrollAreaVisitor effectsScrollAreaVisitor;
-    effectsScrollArea->accept(&effectsScrollAreaVisitor);
-    sharedInfo->setEffectsConfiguration(
-                effectsScrollAreaVisitor.effectsConfiguration());
+    sharedInfo = configureEffects(sharedInfo, effectsScrollArea);
 
     if (sharedInfo->effectsConfiguration().getImageLoadError()) {
         QMessageBox::StandardButton answer =
@@ -565,6 +562,16 @@ void ConvertDialog::convert() {
                                         item->text(PathColumn));
         convertedImages++;
     }
+}
+
+SharedInformation *ConvertDialog::configureEffects(
+        SharedInformation *sharedInformation, EffectsScrollArea *effectsScrollArea) {
+    EffectsScrollAreaVisitor visitor;
+    effectsScrollArea->accept(&visitor);
+
+    sharedInformation->setEffectsConfiguration(visitor.effectsConfiguration());
+
+    return sharedInformation;
 }
 
 SharedInformation *ConvertDialog::configureSVG(
