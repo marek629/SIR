@@ -10,7 +10,7 @@
 
   #echo $clientVersion[1];
 
-  $releaseVersion = array(2,7,3);
+  $releaseVersion = array(2,8,0);
 
   # versions comparition
   $count = count($releaseVersion);
