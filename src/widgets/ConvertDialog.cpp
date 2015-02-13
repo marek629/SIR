@@ -127,6 +127,9 @@ void ConvertDialog::createConnections() {
     connect(filesTreeWidget, SIGNAL(loadingFilesStart(int)), statusWidget, SLOT(onFilesLoadingStart(int)));
     connect(filesTreeWidget, SIGNAL(loadingFilesTick(int)), statusWidget, SLOT(onFilesLoadingTick(int)));
     connect(filesTreeWidget, SIGNAL(loadingFilesStop()), statusWidget, SLOT(onFilesLoadingStop()));
+    connect(this, SIGNAL(convertStart(int)), statusWidget, SLOT(onConvetionStart(int)));
+    connect(this, SIGNAL(convertTick(int)), statusWidget, SLOT(onConvetionTick(int)));
+    connect(this, SIGNAL(convertStop()), statusWidget, SLOT(onConvetionStop()));
 
     // menu actions
     connect(actionExit, SIGNAL(triggered()), SLOT(close()));
@@ -401,9 +404,11 @@ void ConvertDialog::giveNextImage(int threadNum) {
                                                 item->text(ExtColumn),
                                                 item->text(PathColumn));
         convertedImages++;
+        emit convertTick(convertedImages);
     }
     else {
         convertThreads[threadNum]->setAcceptWork(false);
+        emit convertStop();
     }
 }
 
@@ -494,6 +499,8 @@ void ConvertDialog::convert() {
     convertedImages = 0;
     int nt = numThreads;
 
+    emit convertStart(numImages);
+
     quitButton->setText(tr("Cancel"));
     converting = true;
     this->setCursor(Qt::WaitCursor);
@@ -562,6 +569,7 @@ void ConvertDialog::convert() {
                                         item->text(PathColumn));
         convertedImages++;
     }
+    emit convertTick(convertedImages);
 }
 
 SharedInformation *ConvertDialog::configureEffects(

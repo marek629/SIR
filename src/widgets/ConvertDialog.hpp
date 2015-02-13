@@ -115,6 +115,11 @@ public slots:
     void saveSession();
     void restoreEffects();
     void saveEffects();
+
+signals:
+    void convertStart(int totalQuantity);
+    void convertTick(int partQuantity);
+    void convertStop();
 };
 
 /** Saves window maximized status, possition on screen and size and last

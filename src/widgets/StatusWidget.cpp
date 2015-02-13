@@ -32,7 +32,7 @@ StatusWidget::StatusWidget(QWidget *parent) : QWidget(parent) {
     ofLabel->setText("");
     totalLabel->setText("");
 
-    loadingFilesTickTimer.start();
+    tickTimer.start();
 }
 
 void StatusWidget::setStatus(const QString &message, int partQuantity,
@@ -60,12 +60,12 @@ void StatusWidget::onFilesLoadingStart(int totalQuantity) {
 }
 
 void StatusWidget::onFilesLoadingTick(int partQuantity) {
-    qint64 elapsed = loadingFilesTickTimer.elapsed();
+    qint64 elapsed = tickTimer.elapsed();
 
     if (elapsed > 500) {
         partLabel->setText(QString::number(partQuantity));
         QCoreApplication::processEvents();
-        loadingFilesTickTimer.restart();
+        tickTimer.restart();
 
         qDebug("StatusWidget::onFilesLoadingTick(%d) %d ms elapsed",
                partQuantity, elapsed);
@@ -77,4 +77,34 @@ void StatusWidget::onFilesLoadingStop() {
     QCoreApplication::processEvents();
 
     qDebug("StatusWidget::onFilesLoadingStop()");
+}
+
+void StatusWidget::onConvetionStart(int totalQuantity) {
+    QString message = tr("Converting images...");
+    setStatus(message, 0, totalQuantity);
+
+    QCoreApplication::processEvents();
+
+    convertionTotalQuantity = totalQuantity;
+
+    convertionTimer.start();
+}
+
+void StatusWidget::onConvetionTick(int partQuantity) {
+    qint64 elapsedMiliseconds = tickTimer.elapsed();
+
+    if (elapsedMiliseconds > 500) {
+        partLabel->setText(QString::number(partQuantity));
+        tickTimer.restart();
+    }
+}
+
+void StatusWidget::onConvetionStop() {
+    qint64 elapsedMiliseconds = convertionTimer.elapsed();
+    qint64 elapsedSeconds = elapsedMiliseconds / 1000 + 1;
+
+    QString message = tr("%1 images converted in %2 seconds")
+            .arg(convertionTotalQuantity)
+            .arg(elapsedSeconds);
+    setStatus(message);
 }

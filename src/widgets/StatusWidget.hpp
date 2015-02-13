@@ -33,15 +33,25 @@ public:
     explicit StatusWidget(QWidget *parent = 0);
     void setStatus(const QString &message, int partQuantity = 0, int totalQuantity = 0);
 
+
 public slots:
     void onFilesLoadingStart(int totalQuantity);
     void onFilesLoadingTick(int partQuantity);
     void onFilesLoadingStop();
 
+    void onConvetionStart(int totalQuantity);
+    void onConvetionTick(int partQuantity);
+    void onConvetionStop();
+
+
 private:
     QString defaultMessage;
     QString ofMessage;
-    QElapsedTimer loadingFilesTickTimer;
+
+    QElapsedTimer tickTimer;
+    QElapsedTimer convertionTimer;
+
+    int convertionTotalQuantity;
 };
 
 #endif // STATUSWIDGET_HPP
