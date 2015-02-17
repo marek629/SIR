@@ -23,6 +23,11 @@
 #include "NetworkUtils.hpp"
 
 #include <QDir>
+#include <QPainter>
+
+
+const QSize donateButtonSize(168, 47);
+
 
 AboutDialog::AboutDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {
     setupUi(this);
@@ -38,8 +43,6 @@ void AboutDialog::setVersion(QString version) {
 }
 
 void AboutDialog::setAboutText() {
-    QSize donateButtonSize(168, 47);
-
     QString htmlStart = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
             "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
             "<html><head><meta name=\"qrichtext\" content=\"1\" />"
@@ -146,8 +149,15 @@ QString AboutDialog::htmlImage(const QString &url, const QString &alternativeLab
 }
 
 void AboutDialog::onGotImage(QImage *img, bool error) {
-    if (error)
-        return;
+    if (error) {
+        delete img;
+        img = new QImage(donateButtonSize, QImage::Format_ARGB32);
+        img->fill(Qt::yellow);
+
+        QString donateString = tr("Donate");
+        QPainter painter(img);
+        painter.drawText(img->rect(), Qt::AlignCenter, donateString);
+    }
 
     QFile file(tempFile.fileName());
     if (!file.open(QIODevice::WriteOnly))
