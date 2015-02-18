@@ -20,6 +20,7 @@
 * Removed defines.h file
 * Removed files coresponded uploading to Google Code
 * CamelCase source files naming
+* Updated Polish translation
 
 
 #v2.7.3

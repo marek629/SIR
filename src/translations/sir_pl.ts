@@ -106,6 +106,10 @@
         <source>or do a sudo apt-get install dcraw on Debian based systems.</source>
         <translation>lub wykonaj sudo apt get install dcraw w systemach opartych na Debianie.</translation>
     </message>
+    <message>
+        <source>Donate</source>
+        <translation>Wspomóż</translation>
+    </message>
 </context>
 <context>
     <name>AnyMetadataGroupBox</name>
@@ -205,11 +209,11 @@ oba wypisują pomoc w języku polskim i wychodzą.</translation>
     </message>
     <message>
         <source>&amp;Remove File(s)</source>
-        <translation>&amp;Usuń plik(i)</translation>
+        <translation type="vanished">&amp;Usuń plik(i)</translation>
     </message>
     <message>
         <source>Alt+R</source>
-        <translation>Alt+U</translation>
+        <translation type="vanished">Alt+U</translation>
     </message>
     <message>
         <source>Add &amp;Dir...</source>
@@ -221,11 +225,11 @@ oba wypisują pomoc w języku polskim i wychodzą.</translation>
     </message>
     <message>
         <source>Remove Al&amp;l</source>
-        <translation>Usuń w&amp;szystkie</translation>
+        <translation type="vanished">Usuń w&amp;szystkie</translation>
     </message>
     <message>
         <source>Alt+L</source>
-        <translation>Alt+S</translation>
+        <translation type="vanished">Alt+S</translation>
     </message>
     <message>
         <source>Target Folder:</source>
@@ -561,6 +565,22 @@ Chcesz kontynuować mimo to?</translation>
         <source>Choose effects file</source>
         <translation>Wybierz plik efektów</translation>
     </message>
+    <message>
+        <source>Remove File(s)</source>
+        <translation>Usuń pliki</translation>
+    </message>
+    <message>
+        <source>Del</source>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Usuń wszystkie</translation>
+    </message>
+    <message>
+        <source>Ctrl+Del</source>
+        <translation>Ctrl+Delete</translation>
+    </message>
 </context>
 <context>
     <name>ConvertThread</name>
@@ -617,8 +637,147 @@ Chcesz kontynuować mimo to?</translation>
     <name>DetailsBrowser</name>
     <message>
         <source>Select image to show this one details.</source>
-        <translation>Zaznacz obraz, by zobaczyć jego szczegóły.</translation>
+        <translation type="vanished">Zaznacz obraz, by zobaczyć jego szczegóły.</translation>
     </message>
+    <message>
+        <source>Default image size: </source>
+        <translation type="vanished">Domyślny rozmiar obrazu: </translation>
+    </message>
+    <message>
+        <source>Image size: </source>
+        <translation type="vanished">Rozmiar obrazu: </translation>
+    </message>
+    <message>
+        <source>File size: </source>
+        <translation type="vanished">Rozmiar pliku: </translation>
+    </message>
+    <message>
+        <source>Exif Version</source>
+        <translation type="vanished">Wersja Exif</translation>
+    </message>
+    <message>
+        <source>Processing Software</source>
+        <translation type="vanished">Obróbka programem</translation>
+    </message>
+    <message>
+        <source>Orientation</source>
+        <translation type="vanished">Orientacja</translation>
+    </message>
+    <message>
+        <source>Generated Date and Time</source>
+        <translation type="vanished">Data i godzina utworzenia</translation>
+    </message>
+    <message>
+        <source>Digitized Date and Time</source>
+        <translation type="vanished">Data i godzina cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Focal lenght</source>
+        <translation type="vanished">Ogniskowa</translation>
+    </message>
+    <message>
+        <source>Aperture</source>
+        <translation type="vanished">Przesłona</translation>
+    </message>
+    <message>
+        <source>Exposure time</source>
+        <translation type="vanished">Czas naświetlania</translation>
+    </message>
+    <message>
+        <source>Shutter Speed</source>
+        <translation type="vanished">Czas migawki</translation>
+    </message>
+    <message>
+        <source>Exposure bias</source>
+        <translation type="vanished">Ekspozycja</translation>
+    </message>
+    <message>
+        <source>ISO Speed</source>
+        <translation type="vanished">Czułość ISO</translation>
+    </message>
+    <message>
+        <source>Exposure program</source>
+        <translation type="vanished">Program ekspozycji</translation>
+    </message>
+    <message>
+        <source>Light metering mode</source>
+        <translation type="vanished">Tryb pomiaru światła</translation>
+    </message>
+    <message>
+        <source>Flash mode</source>
+        <translation type="vanished">Tryb lampy błyskowej</translation>
+    </message>
+    <message>
+        <source>Camera manufacturer: </source>
+        <translation type="vanished">Producent aparatu: </translation>
+    </message>
+    <message>
+        <source>Camera model: </source>
+        <translation type="vanished">Model aparatu: </translation>
+    </message>
+    <message>
+        <source>Artist</source>
+        <translation type="vanished">Artysta</translation>
+    </message>
+    <message>
+        <source>Copyright</source>
+        <translation type="vanished">Prawa autorskie</translation>
+    </message>
+    <message>
+        <source>User Comment</source>
+        <translation type="vanished">Komentarz użytkownika</translation>
+    </message>
+    <message>
+        <source>Model version</source>
+        <translation type="vanished">Wersja wzoru</translation>
+    </message>
+    <message>
+        <source>Created date</source>
+        <translation type="vanished">Data utworzenia</translation>
+    </message>
+    <message>
+        <source>Created time</source>
+        <translation type="vanished">Godzina utworzenia</translation>
+    </message>
+    <message>
+        <source>Digitized date</source>
+        <translation type="vanished">Data cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Digitized time</source>
+        <translation type="vanished">Godzina cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="vanished">Autor</translation>
+    </message>
+    <message>
+        <source>Object name</source>
+        <translation type="vanished">Nazwa objektu</translation>
+    </message>
+    <message>
+        <source>Keywords</source>
+        <translation type="vanished">Słowa kluczowe</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="vanished">Opis</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="vanished">Kraj</translation>
+    </message>
+    <message>
+        <source>City</source>
+        <translation type="vanished">Miasto</translation>
+    </message>
+    <message>
+        <source>Edit status</source>
+        <translation type="vanished">Status edycji</translation>
+    </message>
+</context>
+<context>
+    <name>DetailsBrowserController</name>
     <message>
         <source>Default image size: </source>
         <translation>Domyślny rozmiar obrazu: </translation>
@@ -632,132 +791,163 @@ Chcesz kontynuować mimo to?</translation>
         <translation>Rozmiar pliku: </translation>
     </message>
     <message>
-        <source>Exif Version</source>
-        <translation>Wersja Exif</translation>
-    </message>
-    <message>
-        <source>Processing Software</source>
-        <translation>Obróbka programem</translation>
-    </message>
-    <message>
-        <source>Orientation</source>
-        <translation>Orientacja</translation>
-    </message>
-    <message>
-        <source>Generated Date and Time</source>
-        <translation>Data i godzina utworzenia</translation>
-    </message>
-    <message>
-        <source>Digitized Date and Time</source>
-        <translation>Data i godzina cyfryzacji</translation>
-    </message>
-    <message>
-        <source>Focal lenght</source>
-        <translation>Ogniskowa</translation>
-    </message>
-    <message>
-        <source>Aperture</source>
-        <translation>Przesłona</translation>
-    </message>
-    <message>
-        <source>Exposure time</source>
-        <translation>Czas naświetlania</translation>
-    </message>
-    <message>
-        <source>Shutter Speed</source>
-        <translation>Czas migawki</translation>
-    </message>
-    <message>
-        <source>Exposure bias</source>
-        <translation>Ekspozycja</translation>
-    </message>
-    <message>
-        <source>ISO Speed</source>
-        <translation>Czułość ISO</translation>
-    </message>
-    <message>
-        <source>Exposure program</source>
-        <translation>Program ekspozycji</translation>
-    </message>
-    <message>
-        <source>Light metering mode</source>
-        <translation>Tryb pomiaru światła</translation>
-    </message>
-    <message>
-        <source>Flash mode</source>
-        <translation>Tryb lampy błyskowej</translation>
-    </message>
-    <message>
-        <source>Camera manufacturer: </source>
-        <translation>Producent aparatu: </translation>
-    </message>
-    <message>
-        <source>Camera model: </source>
-        <translation>Model aparatu: </translation>
-    </message>
-    <message>
-        <source>Artist</source>
-        <translation>Artysta</translation>
-    </message>
-    <message>
-        <source>Copyright</source>
-        <translation>Prawa autorskie</translation>
-    </message>
-    <message>
-        <source>User Comment</source>
-        <translation>Komentarz użytkownika</translation>
-    </message>
-    <message>
-        <source>Model version</source>
-        <translation>Wersja wzoru</translation>
-    </message>
-    <message>
-        <source>Created date</source>
-        <translation>Data utworzenia</translation>
-    </message>
-    <message>
-        <source>Created time</source>
-        <translation>Godzina utworzenia</translation>
-    </message>
-    <message>
-        <source>Digitized date</source>
-        <translation>Data cyfryzacji</translation>
-    </message>
-    <message>
-        <source>Digitized time</source>
-        <translation>Godzina cyfryzacji</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>Autor</translation>
-    </message>
-    <message>
-        <source>Object name</source>
-        <translation>Nazwa objektu</translation>
-    </message>
-    <message>
-        <source>Keywords</source>
-        <translation>Słowa kluczowe</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Opis</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation>Kraj</translation>
-    </message>
-    <message>
-        <source>City</source>
-        <translation>Miasto</translation>
-    </message>
-    <message>
-        <source>Edit status</source>
-        <translation>Status edycji</translation>
+        <source>Select image to show this one details.</source>
+        <translation>Zaznacz obraz, by zobaczyć jego szczegóły.</translation>
     </message>
 </context>
 <context>
     <name>DetailsGroupBox</name>
+    <message>
+        <source>File details options</source>
+        <translation type="vanished">Opcje szczegółów plików</translation>
+    </message>
+    <message>
+        <source>Exif</source>
+        <translation type="vanished">Exif</translation>
+    </message>
+    <message>
+        <source>Flash mode</source>
+        <translation type="vanished">Tryb lampy błyskowej</translation>
+    </message>
+    <message>
+        <source>User Comment</source>
+        <translation type="vanished">Komentarz użytkownika</translation>
+    </message>
+    <message>
+        <source>Exposure bias</source>
+        <translation type="vanished">Ekspozycja</translation>
+    </message>
+    <message>
+        <source>Camera Model</source>
+        <translation type="vanished">Model aparatu</translation>
+    </message>
+    <message>
+        <source>ISO Speed</source>
+        <translation type="vanished">Czułość ISO</translation>
+    </message>
+    <message>
+        <source>Orientation</source>
+        <translation type="vanished">Orientacja</translation>
+    </message>
+    <message>
+        <source>Artist</source>
+        <translation type="vanished">Artysta</translation>
+    </message>
+    <message>
+        <source>Copyright</source>
+        <translation type="vanished">Prawa autorskie</translation>
+    </message>
+    <message>
+        <source>Exposure program</source>
+        <translation type="vanished">Program ekspozycji</translation>
+    </message>
+    <message>
+        <source>Exposure time</source>
+        <translation type="vanished">Czas naświetlania</translation>
+    </message>
+    <message>
+        <source>Digitized Date and Time</source>
+        <translation type="vanished">Data i godzina cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Processing Software</source>
+        <translation type="vanished">Obróbka programem</translation>
+    </message>
+    <message>
+        <source>Shutter Speed</source>
+        <translation type="vanished">Czas migawki</translation>
+    </message>
+    <message>
+        <source>Exif Version</source>
+        <translation type="vanished">Wersja Exif</translation>
+    </message>
+    <message>
+        <source>Aperture</source>
+        <translation type="vanished">Przesłona</translation>
+    </message>
+    <message>
+        <source>Camera Manufacturer</source>
+        <translation type="vanished">Producent aparatu</translation>
+    </message>
+    <message>
+        <source>Focal length</source>
+        <translation type="vanished">Ogniskowa</translation>
+    </message>
+    <message>
+        <source>Light metering mode</source>
+        <translation type="vanished">Tryb pomiaru światła</translation>
+    </message>
+    <message>
+        <source>Generated Date and Time</source>
+        <translation type="vanished">Data i godzina utworzenia</translation>
+    </message>
+    <message>
+        <source>IPTC</source>
+        <translation type="vanished">IPTC</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="vanished">Opis</translation>
+    </message>
+    <message>
+        <source>Digitized date</source>
+        <translation type="vanished">Data cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Edit status</source>
+        <translation type="vanished">Status edycji</translation>
+    </message>
+    <message>
+        <source>Created date</source>
+        <translation type="vanished">Data utworzenia</translation>
+    </message>
+    <message>
+        <source>Created time</source>
+        <translation type="vanished">Godzina utworzenia</translation>
+    </message>
+    <message>
+        <source>Keywords</source>
+        <translation type="vanished">Słowa kluczowe</translation>
+    </message>
+    <message>
+        <source>City</source>
+        <translation type="vanished">Miasto</translation>
+    </message>
+    <message>
+        <source>Object name</source>
+        <translation type="vanished">Nazwa objektu</translation>
+    </message>
+    <message>
+        <source>Model version</source>
+        <translation type="vanished">Wersja wzoru</translation>
+    </message>
+    <message>
+        <source>Digitized time</source>
+        <translation type="vanished">Godzina cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="vanished">Autor</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="vanished">Kraj</translation>
+    </message>
+    <message>
+        <source>Print metadata fields:</source>
+        <translation type="vanished">Wypisz pola metadanych:</translation>
+    </message>
+    <message>
+        <source>Show all</source>
+        <translation type="vanished">Pokaż wszystkie</translation>
+    </message>
+    <message>
+        <source>Hide all</source>
+        <translation type="vanished">Ukryj wszystkie</translation>
+    </message>
+</context>
+<context>
+    <name>DetailsGroupBoxView</name>
     <message>
         <source>File details options</source>
         <translation>Opcje szczegółów plików</translation>
@@ -1204,7 +1394,129 @@ Niewłaściwy format pliku.</translation>
     </message>
 </context>
 <context>
+    <name>ExifRichTextVisitor</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artysta</translation>
+    </message>
+    <message>
+        <source>Copyright</source>
+        <translation>Prawa autorskie</translation>
+    </message>
+    <message>
+        <source>User Comment</source>
+        <translation>Komentarz użytkownika</translation>
+    </message>
+    <message>
+        <source>Camera manufacturer: </source>
+        <translation>Producent aparatu: </translation>
+    </message>
+    <message>
+        <source>Camera model: </source>
+        <translation>Model aparatu: </translation>
+    </message>
+    <message>
+        <source>Exif Version</source>
+        <translation>Wersja Exif</translation>
+    </message>
+    <message>
+        <source>Processing Software</source>
+        <translation>Obróbka programem</translation>
+    </message>
+    <message>
+        <source>Orientation</source>
+        <translation>Orientacja</translation>
+    </message>
+    <message>
+        <source>Generated Date and Time</source>
+        <translation>Data i godzina utworzenia</translation>
+    </message>
+    <message>
+        <source>Digitized Date and Time</source>
+        <translation>Data i godzina cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Focal lenght</source>
+        <translation>Ogniskowa</translation>
+    </message>
+    <message>
+        <source>Aperture</source>
+        <translation>Przesłona</translation>
+    </message>
+    <message>
+        <source>Exposure time</source>
+        <translation>Czas naświetlania</translation>
+    </message>
+    <message>
+        <source>Shutter Speed</source>
+        <translation>Czas migawki</translation>
+    </message>
+    <message>
+        <source>Exposure bias</source>
+        <translation>Ekspozycja</translation>
+    </message>
+    <message>
+        <source>ISO Speed</source>
+        <translation>Czułość ISO</translation>
+    </message>
+    <message>
+        <source>Exposure program</source>
+        <translation>Program ekspozycji</translation>
+    </message>
+    <message>
+        <source>Light metering mode</source>
+        <translation>Tryb pomiaru światła</translation>
+    </message>
+    <message>
+        <source>Flash mode</source>
+        <translation>Tryb lampy błyskowej</translation>
+    </message>
+</context>
+<context>
     <name>FileListGroupBox</name>
+    <message>
+        <source>File List Settings</source>
+        <translation type="vanished">Ustawienia listy plików</translation>
+    </message>
+    <message>
+        <source>Show columns</source>
+        <translation type="vanished">Pokaż kolumny</translation>
+    </message>
+    <message>
+        <source>Ext</source>
+        <translation type="vanished">Rozszerzenie</translation>
+    </message>
+    <message>
+        <source>File size</source>
+        <translation type="vanished">Rozmiar pliku</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="vanished">Ścieżka</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="vanished">Status</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="vanished">Nazwa</translation>
+    </message>
+    <message>
+        <source>Image size</source>
+        <translation type="vanished">Rozmiar obrazu</translation>
+    </message>
+    <message>
+        <source>Show all</source>
+        <translation type="vanished">Pokaż wszystkie</translation>
+    </message>
+    <message>
+        <source>Hide all</source>
+        <translation type="vanished">Ukryj wszystkie</translation>
+    </message>
+</context>
+<context>
+    <name>FileListGroupBoxView</name>
     <message>
         <source>File List Settings</source>
         <translation>Ustawienia listy plików</translation>
@@ -1248,6 +1560,85 @@ Niewłaściwy format pliku.</translation>
 </context>
 <context>
     <name>GeneralGroupBox</name>
+    <message>
+        <source>General Settings</source>
+        <translation type="vanished">Ogólne ustawienia</translation>
+    </message>
+    <message>
+        <source>Default Target Format:</source>
+        <translation type="vanished">Domyślny format docelowy:</translation>
+    </message>
+    <message>
+        <source>Text history count:</source>
+        <translation type="vanished">Długość historii edycji:</translation>
+    </message>
+    <message>
+        <source>Default Size Unit:</source>
+        <translation type="vanished">Domyślna jednostka rozmiaru:</translation>
+    </message>
+    <message>
+        <source>Default Target Suffix:</source>
+        <translation type="vanished">Domyślny sufix:</translation>
+    </message>
+    <message>
+        <source>Default Height:</source>
+        <translation type="vanished">Domyślna wysokość:</translation>
+    </message>
+    <message>
+        <source>Default Language:</source>
+        <translation type="vanished">Domyślny język:</translation>
+    </message>
+    <message>
+        <source>Default Width:</source>
+        <translation type="vanished">Domyślna szerokość:</translation>
+    </message>
+    <message>
+        <source>Number of Cores:</source>
+        <translation type="vanished">Ilość rdzeni:</translation>
+    </message>
+    <message>
+        <source>Default Target Folder:</source>
+        <translation type="vanished">Domyślny katalog docelowy:</translation>
+    </message>
+    <message>
+        <source>Detect automatically</source>
+        <translation type="vanished">Wykryj automatycznie</translation>
+    </message>
+    <message>
+        <source>Time display format:</source>
+        <translation type="vanished">Format wyświetlania godziny:</translation>
+    </message>
+    <message>
+        <source>Date display format:</source>
+        <translation type="vanished">Format wyświetlania daty:</translation>
+    </message>
+    <message>
+        <source>Default Target Prefix:</source>
+        <translation type="vanished">Domyślny prefix:</translation>
+    </message>
+    <message>
+        <source>Default File Size:</source>
+        <translation type="vanished">Domyślny rozmiar pliku:</translation>
+    </message>
+    <message>
+        <source>Default Quality:</source>
+        <translation type="vanished">Domyślna jakość:</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="vanished">Przeglądaj</translation>
+    </message>
+    <message>
+        <source>Maintain Aspect Ratio</source>
+        <translation type="vanished">Zachowaj proporcje obrazu</translation>
+    </message>
+    <message>
+        <source>Choose a directory</source>
+        <translation type="vanished">Wybierz katalog</translation>
+    </message>
+</context>
+<context>
+    <name>GeneralGroupBoxView</name>
     <message>
         <source>General Settings</source>
         <translation>Ogólne ustawienia</translation>
@@ -1422,6 +1813,61 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <message>
         <source>Description</source>
         <translation>Opis</translation>
+    </message>
+</context>
+<context>
+    <name>IptcRichTextVisitor</name>
+    <message>
+        <source>Model version</source>
+        <translation>Wersja wzoru</translation>
+    </message>
+    <message>
+        <source>Created date</source>
+        <translation>Data utworzenia</translation>
+    </message>
+    <message>
+        <source>Created time</source>
+        <translation>Godzina utworzenia</translation>
+    </message>
+    <message>
+        <source>Digitized date</source>
+        <translation>Data cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Digitized time</source>
+        <translation>Godzina cyfryzacji</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <source>Copyright</source>
+        <translation>Prawa autorskie</translation>
+    </message>
+    <message>
+        <source>Object name</source>
+        <translation>Nazwa objektu</translation>
+    </message>
+    <message>
+        <source>Keywords</source>
+        <translation>Słowa kluczowe</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Opis</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation>Kraj</translation>
+    </message>
+    <message>
+        <source>City</source>
+        <translation>Miasto</translation>
+    </message>
+    <message>
+        <source>Edit status</source>
+        <translation>Status edycji</translation>
     </message>
 </context>
 <context>
@@ -1887,6 +2333,84 @@ Informacja: %2</translation>
     <name>MetadataGroupBox</name>
     <message>
         <source>Metadata Options</source>
+        <translation type="vanished">Opcje metadanych</translation>
+    </message>
+    <message>
+        <source>EXIF, IPTC and XMP supported</source>
+        <translation type="vanished">EXIF, IPTC i XMP są wspierane</translation>
+    </message>
+    <message>
+        <source>Enable metadata support</source>
+        <translation type="vanished">Włącz wsparcie dla metadanych</translation>
+    </message>
+    <message>
+        <source>Save also metadata</source>
+        <translation type="vanished">Zapisuj także metadane</translation>
+    </message>
+    <message>
+        <source>Update thumbnail</source>
+        <translation type="vanished">Aktualizuj miniaturę</translation>
+    </message>
+    <message>
+        <source>Apply Exif Orientation tag to thumbnail</source>
+        <translation type="vanished">Zastosuj orientację Exif w miniaturce</translation>
+    </message>
+    <message>
+        <source>When image is rotated</source>
+        <translation type="vanished">Kiedy obraz jest obracany</translation>
+    </message>
+    <message>
+        <source>rotate seriously</source>
+        <translation type="vanished">rzeczywiście obróć</translation>
+    </message>
+    <message>
+        <source>save orientation in Exif</source>
+        <translation type="vanished">zapisz orientację w Exif</translation>
+    </message>
+    <message>
+        <source>Overwrite Exif Artist</source>
+        <translation type="vanished">Nadpisz artystę Exif</translation>
+    </message>
+    <message>
+        <source>Overwrite Exif Copyright</source>
+        <translation type="vanished">Nadpisz prawa autorskie Exif</translation>
+    </message>
+    <message>
+        <source>Overwrite Exif User Comment</source>
+        <translation type="vanished">Nadpisz komentarz użytkownika Exif</translation>
+    </message>
+    <message>
+        <source>Camera owner: ; Photographer: </source>
+        <translation type="vanished">Właściciel aparatu: ; Fotograf: </translation>
+    </message>
+    <message>
+        <source>Copyright owner</source>
+        <translation type="vanished">Właściciel praw autorskich</translation>
+    </message>
+    <message>
+        <source>This picture was edited with Simple Image Resizer</source>
+        <translation type="vanished">Ten program był edytowany przy pomocy Simple Image Resizer</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataGroupBoxController</name>
+    <message>
+        <source>Camera owner: ; Photographer: </source>
+        <translation>Właściciel aparatu: ; Fotograf: </translation>
+    </message>
+    <message>
+        <source>Copyright owner</source>
+        <translation>Właściciel praw autorskich</translation>
+    </message>
+    <message>
+        <source>This picture was edited with Simple Image Resizer</source>
+        <translation>Ten program był edytowany przy pomocy Simple Image Resizer</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataGroupBoxView</name>
+    <message>
+        <source>Metadata Options</source>
         <translation>Opcje metadanych</translation>
     </message>
     <message>
@@ -1932,18 +2456,6 @@ Informacja: %2</translation>
     <message>
         <source>Overwrite Exif User Comment</source>
         <translation>Nadpisz komentarz użytkownika Exif</translation>
-    </message>
-    <message>
-        <source>Camera owner: ; Photographer: </source>
-        <translation>Właściciel aparatu: ; Fotograf: </translation>
-    </message>
-    <message>
-        <source>Copyright owner</source>
-        <translation>Właściciel praw autorskich</translation>
-    </message>
-    <message>
-        <source>This picture was edited with Simple Image Resizer</source>
-        <translation>Ten program był edytowany przy pomocy Simple Image Resizer</translation>
     </message>
 </context>
 <context>
@@ -2317,6 +2829,64 @@ Informacja: %2</translation>
     <name>RawGroupBox</name>
     <message>
         <source>Raw Options</source>
+        <translation type="vanished">Opcje RAW</translation>
+    </message>
+    <message>
+        <source>Enable RAW images support (needs dcraw)</source>
+        <translation type="vanished">Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="vanished">Przeglądaj</translation>
+    </message>
+    <message>
+        <source>dcraw Executable Path:</source>
+        <translation type="vanished">dcraw ścieżka:</translation>
+    </message>
+    <message>
+        <source>dcraw options:</source>
+        <translation type="vanished">dcraw opcje:</translation>
+    </message>
+    <message>
+        <source>Select dcraw executable</source>
+        <translation type="vanished">Wybierz plik wykonywalny dla dcraw</translation>
+    </message>
+    <message>
+        <source>dcraw executable not found. RAW support will not be enabled!</source>
+        <translation type="vanished">Nie odnaleziono pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+    <message>
+        <source>The chosen file is not executable. RAW support will not be enabled!</source>
+        <translation type="vanished">Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+    <message>
+        <source>No dcraw executable chosen. RAW support will not be enabled!</source>
+        <translation type="vanished">Nie wybrano pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+</context>
+<context>
+    <name>RawGroupBoxController</name>
+    <message>
+        <source>Select dcraw executable</source>
+        <translation>Wybierz plik wykonywalny dcraw</translation>
+    </message>
+    <message>
+        <source>No dcraw executable chosen. RAW support will not be enabled!</source>
+        <translation>Nie wybrano pliku wykonywalnego dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+    <message>
+        <source>The chosen file is not executable. RAW support will not be enabled!</source>
+        <translation>Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+    <message>
+        <source>dcraw executable not found. RAW support will not be enabled!</source>
+        <translation>Nie odnaleziono pliku wykonywalnego dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+</context>
+<context>
+    <name>RawGroupBoxView</name>
+    <message>
+        <source>Raw Options</source>
         <translation>Opcje RAW</translation>
     </message>
     <message>
@@ -2329,27 +2899,11 @@ Informacja: %2</translation>
     </message>
     <message>
         <source>dcraw Executable Path:</source>
-        <translation>dcraw ścieżka:</translation>
+        <translation>Ścieżka dcraw:</translation>
     </message>
     <message>
         <source>dcraw options:</source>
-        <translation>dcraw opcje:</translation>
-    </message>
-    <message>
-        <source>Select dcraw executable</source>
-        <translation>Wybierz plik wykonywalny dla dcraw</translation>
-    </message>
-    <message>
-        <source>dcraw executable not found. RAW support will not be enabled!</source>
-        <translation>Nie odnaleziono pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
-    </message>
-    <message>
-        <source>The chosen file is not executable. RAW support will not be enabled!</source>
-        <translation>Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
-    </message>
-    <message>
-        <source>No dcraw executable chosen. RAW support will not be enabled!</source>
-        <translation>Nie wybrano pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+        <translation>Opcje dcraw:</translation>
     </message>
 </context>
 <context>
@@ -2412,6 +2966,37 @@ Informacja: %2</translation>
 </context>
 <context>
     <name>SelectionGroupBox</name>
+    <message>
+        <source>Selection Options</source>
+        <translation type="vanished">Opcje selekcji</translation>
+    </message>
+    <message>
+        <source>Image width symbol</source>
+        <translation type="vanished">Symbol szerokości obrazu</translation>
+    </message>
+    <message>
+        <source>Select imported files</source>
+        <translation type="vanished">Zaznacz zaimportowane pliki</translation>
+    </message>
+    <message>
+        <source>Clear current selection</source>
+        <translation type="vanished">Wyczyść bieżące zaznaczenie</translation>
+    </message>
+    <message>
+        <source>Browse subdirectories</source>
+        <translation type="vanished">Przeglądaj podkatalogi</translation>
+    </message>
+    <message>
+        <source>Image height symbol</source>
+        <translation type="vanished">Symbol wysokości obrazu</translation>
+    </message>
+    <message>
+        <source>File size symbol</source>
+        <translation type="vanished">Symbol rozmiaru pliku</translation>
+    </message>
+</context>
+<context>
+    <name>SelectionGroupBoxView</name>
     <message>
         <source>Selection Options</source>
         <translation>Opcje selekcji</translation>
@@ -2525,6 +3110,41 @@ Nieprawidłowy format pliku.</translation>
     <message>
         <source>MiB</source>
         <translation>MiB</translation>
+    </message>
+</context>
+<context>
+    <name>StatusWidget</name>
+    <message>
+        <source>Message...</source>
+        <translation>Wiadomość...</translation>
+    </message>
+    <message>
+        <source>part</source>
+        <translation>część</translation>
+    </message>
+    <message>
+        <source>of</source>
+        <translation>z</translation>
+    </message>
+    <message>
+        <source>total</source>
+        <translation>całości</translation>
+    </message>
+    <message>
+        <source>Ready</source>
+        <translation>Gotów</translation>
+    </message>
+    <message>
+        <source>Loading files...</source>
+        <translation>Wczytywanie plików...</translation>
+    </message>
+    <message>
+        <source>Converting images...</source>
+        <translation>Konwertowanie obrazów...</translation>
+    </message>
+    <message>
+        <source>%1 images converted in %2 seconds</source>
+        <translation>%1 obrazów skonwertowano w %2 sekund</translation>
     </message>
 </context>
 <context>
