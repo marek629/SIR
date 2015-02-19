@@ -21,10 +21,6 @@
 
 #include "metadata/visitors/RichTextVisitor.hpp"
 
-#include <typeinfo>
-
-#include "metadata/structs/MetadataStruct.hpp"
-
 
 const QString RichTextVisitor::htmlOrigin =
         "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
@@ -37,9 +33,3 @@ const QString RichTextVisitor::htmlEnd =
         "</body></html>";
 const QString RichTextVisitor::htmlBr = "<br />";
 const QString RichTextVisitor::htmlHr = "<hr />";
-
-
-void RichTextVisitor::visit(Visitable *visitable) {
-    Q_ASSERT(typeid(*visitable) == typeid(MetadataUtils::MetadataStruct));
-    visit(reinterpret_cast<MetadataUtils::MetadataStruct *>(visitable));
-}

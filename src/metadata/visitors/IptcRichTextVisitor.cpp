@@ -20,9 +20,13 @@
  */
 
 #include "metadata/visitors/IptcRichTextVisitor.hpp"
+
+#include <typeinfo>
+
+#include "optionsenums.h"
 #include "metadata/Iptc.hpp"
 #include "metadata/structs/IptcStruct.hpp"
-#include "optionsenums.h"
+
 
 using namespace MetadataUtils;
 
@@ -30,10 +34,12 @@ IptcRichTextVisitor::IptcRichTextVisitor(int iptcPrint) {
     this->iptcPrint = iptcPrint;
 }
 
-void IptcRichTextVisitor::visit(MetadataStruct *metadataStruct) {
+void IptcRichTextVisitor::visit(Visitable *visitable) {
+    Q_ASSERT(typeid(*visitable) == typeid(IptcStruct));
+
     richText = QString();
 
-    IptcStruct *iptcStruct = (IptcStruct *) metadataStruct;
+    IptcStruct *iptcStruct = static_cast<IptcStruct *>(visitable);
     if (!Iptc::isVersionKnown())
         return;
 

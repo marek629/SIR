@@ -20,8 +20,12 @@
  */
 
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
+
+#include <typeinfo>
+
 #include "sir_String.hpp"
 #include "optionsenums.h"
+
 
 using namespace MetadataUtils;
 using namespace sir;
@@ -34,10 +38,12 @@ ExifRichTextVisitor::ExifRichTextVisitor(int exifAuthor, int exifCamera,
     this->exifPhoto = exifPhoto;
 }
 
-void ExifRichTextVisitor::visit(MetadataStruct *metadataStruct) {
+void ExifRichTextVisitor::visit(Visitable *visitable) {
+    Q_ASSERT(typeid(*visitable) == typeid(ExifStruct));
+
     richText = QString();
 
-    ExifStruct *exifStruct = (ExifStruct *) metadataStruct;
+    ExifStruct *exifStruct = static_cast<ExifStruct *>(visitable);
     if (exifStruct->version == String::noData())
         return;
 

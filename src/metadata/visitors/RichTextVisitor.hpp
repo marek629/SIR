@@ -26,10 +26,6 @@
 
 #include "Visitor.hpp"
 
-namespace MetadataUtils {
-struct MetadataStruct;
-}
-
 
 class RichTextVisitor : public Visitor {
 public:
@@ -38,8 +34,7 @@ public:
     static const QString htmlBr;
     static const QString htmlHr;
 
-    virtual void visit(Visitable *visitable);
-    virtual void visit(MetadataUtils::MetadataStruct *metadataStruct) = 0;
+    virtual void visit(Visitable *visitable) = 0;
     virtual QString richTextString() const = 0;
 };
 

@@ -23,8 +23,10 @@
 #define EXIFRICHTEXTVISITOR_HPP
 
 #include "metadata/visitors/RichTextVisitor.hpp"
+
 #include "metadata/Exif.hpp"
 #include "metadata/structs/ExifStruct.hpp"
+
 
 namespace MetadataUtils {
 class ExifRichTextVisitor : public RichTextVisitor {
@@ -33,7 +35,7 @@ class ExifRichTextVisitor : public RichTextVisitor {
 public:
     ExifRichTextVisitor(int exifAuthor, int exifCamera,
                         int exifImage, int exifPhoto);
-    void visit(MetadataStruct *metadataStruct);
+    void visit(Visitable *visitable);
     QString richTextString() const;
     void setDateTimeFormat(const QString &value);
 

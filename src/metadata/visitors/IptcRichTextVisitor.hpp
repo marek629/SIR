@@ -23,7 +23,9 @@
 #define IPTCRICHTEXTVISITOR_HPP
 
 #include "metadata/visitors/RichTextVisitor.hpp"
+
 #include <QCoreApplication>
+
 
 namespace MetadataUtils {
 class IptcRichTextVisitor : public RichTextVisitor {
@@ -31,7 +33,7 @@ class IptcRichTextVisitor : public RichTextVisitor {
 
 public:
     IptcRichTextVisitor(int iptcPrint);
-    void visit(MetadataStruct *metadataStruct);
+    void visit(Visitable *visitable);
     QString richTextString() const;
     void setDateFormat(const QString &value);
     void setTimeFormat(const QString &value);
