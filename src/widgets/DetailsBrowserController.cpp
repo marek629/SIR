@@ -20,18 +20,20 @@
  */
 
 #include "widgets/DetailsBrowserController.hpp"
-#include "widgets/DetailsBrowserView.hpp"
-#include "widgets/ConvertDialog.hpp"
-#include "optionsenums.h"
+
 #include "ConvertSharedData.hpp"
 #include "DetailsThumbnail.hpp"
+#include "optionsenums.h"
+#include "widgets/ConvertDialog.hpp"
+#include "widgets/DetailsBrowserView.hpp"
+#include "visitors/RichTextVisitor.hpp"
 
 #ifdef SIR_METADATA_SUPPORT
 #include "metadata/structs/IptcPrintSettings.hpp"
-#include "visitors/RichTextVisitor.hpp"
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
 #include "metadata/visitors/IptcRichTextVisitor.hpp"
 #endif // SIR_METADATA_SUPPORT
+
 
 using namespace MetadataUtils;
 using namespace sir;

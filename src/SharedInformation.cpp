@@ -154,6 +154,14 @@ void SharedInformation::setOverwriteAll(bool overwriteAll) {
     this->overwriteAll = overwriteAll;
 }
 
+EffectsConfiguration SharedInformation::effectsConfiguration() const {
+    return effectsConf;
+}
+
+void SharedInformation::setEffectsConfiguration(const EffectsConfiguration &conf) {
+    this->effectsConf = conf;
+}
+
 #ifdef SIR_METADATA_SUPPORT
 /** Enables (or disables) metadata support if true, otherwise disables metadata
   * support.
@@ -189,13 +197,4 @@ void SharedInformation::setUpdateThumbnail(bool update) {
 void SharedInformation::setRotateThumbnail(bool rotate) {
     this->rotateThumbnail = rotate;
 }
-
-EffectsConfiguration SharedInformation::effectsConfiguration() const {
-    return effectsConf;
-}
-
-void SharedInformation::setEffectsConfiguration(const EffectsConfiguration &conf) {
-    this->effectsConf = conf;
-}
-
 #endif // SIR_METADATA_SUPPORT
