@@ -16,17 +16,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Program URL: http://marek629.github.io/sir/
+ * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef NETWORKUTILS_H
-#define NETWORKUTILS_H
+#ifndef NETWORKUTILS_HPP
+#define NETWORKUTILS_HPP
 
 #include <QObject>
 
 class QNetworkReply;
 class QUrl;
 class QImage;
+
 
 class NetworkUtils : public QObject {
     Q_OBJECT
@@ -50,4 +51,4 @@ public slots:
     void onGetImageFinished(QNetworkReply* reply);
 };
 
-#endif // NETWORKUTILS_H
+#endif // NETWORKUTILS_HPP
