@@ -21,7 +21,7 @@
 
 #include "ExifStruct.hpp"
 
-#include "metadata/visitors/RichTextVisitor.hpp"
+#include "visitors/RichTextVisitor.hpp"
 
 
 using namespace MetadataUtils;

@@ -24,7 +24,7 @@
 
 #include "ui_EffectsScrollArea.h"
 
-#include "Visitable.hpp"
+#include "visitors/Visitable.hpp"
 
 
 class SharedInformation;

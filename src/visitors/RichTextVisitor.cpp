@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "metadata/visitors/RichTextVisitor.hpp"
+#include "visitors/RichTextVisitor.hpp"
 
 
 const QString RichTextVisitor::htmlOrigin =

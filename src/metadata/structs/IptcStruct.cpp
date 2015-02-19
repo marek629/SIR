@@ -21,7 +21,7 @@
 
 #include "metadata/structs/IptcStruct.hpp"
 
-#include "metadata/visitors/RichTextVisitor.hpp"
+#include "visitors/RichTextVisitor.hpp"
 
 
 using namespace MetadataUtils;

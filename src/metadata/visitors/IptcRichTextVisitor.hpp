@@ -22,7 +22,7 @@
 #ifndef IPTCRICHTEXTVISITOR_HPP
 #define IPTCRICHTEXTVISITOR_HPP
 
-#include "metadata/visitors/RichTextVisitor.hpp"
+#include "visitors/RichTextVisitor.hpp"
 
 #include <QCoreApplication>
 

@@ -23,8 +23,8 @@
 
 #include <typeinfo>
 
-#include "Visitor.hpp"
-#include "metadata/visitors/RichTextVisitor.hpp"
+#include "visitors/Visitor.hpp"
+#include "visitors/RichTextVisitor.hpp"
 
 
 using namespace MetadataUtils;

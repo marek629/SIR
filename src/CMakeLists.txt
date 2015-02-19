@@ -25,6 +25,7 @@ set( sir_SRCS
         XmlHelper.cpp
         XmlStreamWriter.cpp
         shared/EffectsConfiguration.cpp
+        visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
         widgets/ConvertDialog.cpp
         widgets/BrushFrame.cpp
@@ -93,7 +94,6 @@ if( metadata )
             metadata/structs/MetadataStruct.cpp
             metadata/visitors/ExifRichTextVisitor.cpp
             metadata/visitors/IptcRichTextVisitor.cpp
-            metadata/visitors/RichTextVisitor.cpp
             widgets/MetadataDialog.cpp
             widgets/options/DetailsGroupBoxController.cpp
             widgets/options/DetailsGroupBoxView.cpp

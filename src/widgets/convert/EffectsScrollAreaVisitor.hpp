@@ -22,7 +22,7 @@
 #ifndef EFFECTSSCROLLAREAVISITOR_HPP
 #define EFFECTSSCROLLAREAVISITOR_HPP
 
-#include "Visitor.hpp"
+#include "visitors/Visitor.hpp"
 #include "shared/EffectsConfiguration.hpp"
 
 

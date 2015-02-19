@@ -22,7 +22,7 @@
 #ifndef EXIFRICHTEXTVISITOR_HPP
 #define EXIFRICHTEXTVISITOR_HPP
 
-#include "metadata/visitors/RichTextVisitor.hpp"
+#include "visitors/RichTextVisitor.hpp"
 
 #include "metadata/Exif.hpp"
 #include "metadata/structs/ExifStruct.hpp"

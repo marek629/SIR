@@ -22,9 +22,9 @@
 #ifndef RICHTEXTVISITOR_HPP
 #define RICHTEXTVISITOR_HPP
 
-#include <QString>
+#include "visitors/Visitor.hpp"
 
-#include "Visitor.hpp"
+#include <QString>
 
 
 class RichTextVisitor : public Visitor {

@@ -28,7 +28,7 @@
 
 #ifdef SIR_METADATA_SUPPORT
 #include "metadata/structs/IptcPrintSettings.hpp"
-#include "metadata/visitors/RichTextVisitor.hpp"
+#include "visitors/RichTextVisitor.hpp"
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
 #include "metadata/visitors/IptcRichTextVisitor.hpp"
 #endif // SIR_METADATA_SUPPORT

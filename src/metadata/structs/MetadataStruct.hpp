@@ -22,7 +22,7 @@
 #ifndef METADATASTRUCT_HPP
 #define METADATASTRUCT_HPP
 
-#include "Visitable.hpp"
+#include "visitors/Visitable.hpp"
 
 class RichTextVisitor;
 
