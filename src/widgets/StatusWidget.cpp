@@ -24,8 +24,7 @@
 StatusWidget::StatusWidget(QWidget *parent) : QWidget(parent) {
     setupUi(this);
 
-    defaultMessage = tr("Ready");
-    ofMessage = tr("of");
+    retranslateStrings();
 
     messageLabel->setText(defaultMessage);
     partLabel->setText("");
@@ -33,6 +32,14 @@ StatusWidget::StatusWidget(QWidget *parent) : QWidget(parent) {
     totalLabel->setText("");
 
     tickTimer.start();
+}
+
+void StatusWidget::retranslateStrings() {
+    defaultMessage = tr("Ready");
+    ofMessage = tr("of");
+
+    messageLabel->setText(defaultMessage);
+    qDebug(ofMessage.toLocal8Bit().constData());
 }
 
 void StatusWidget::setStatus(const QString &message, int partQuantity,

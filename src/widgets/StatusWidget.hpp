@@ -31,6 +31,9 @@ class StatusWidget : public QWidget, private Ui::StatusWidget {
 
 public:
     explicit StatusWidget(QWidget *parent = 0);
+
+    void retranslateStrings();
+
     void setStatus(const QString &message, int partQuantity = 0, int totalQuantity = 0);
 
 

@@ -910,6 +910,8 @@ void ConvertDialog::retranslateStrings() {
     optionsScrollArea->retranslateStrings();
     effectsScrollArea->retranslateStrings();
     svgScrollArea->retranslateStrings();
+
+    statusWidget->retranslateStrings();
 }
 
 /** Returns file size string with \e KiB or \e MiB suffix (depending
