@@ -38,8 +38,8 @@ void StatusWidget::retranslateStrings() {
     defaultMessage = tr("Ready");
     ofMessage = tr("of");
 
+    // TODO: really restore previous status message
     messageLabel->setText(defaultMessage);
-    qDebug(ofMessage.toLocal8Bit().constData());
 }
 
 void StatusWidget::setStatus(const QString &message, int partQuantity,
@@ -62,28 +62,21 @@ void StatusWidget::onFilesLoadingStart(int totalQuantity) {
     QString message = tr("Loading files...");
     setStatus(message, 0, totalQuantity);
     QCoreApplication::processEvents();
-
-    qDebug("StatusWidget::onFilesLoadingStart(%d)", totalQuantity);
 }
 
 void StatusWidget::onFilesLoadingTick(int partQuantity) {
-    qint64 elapsed = tickTimer.elapsed();
+    qint64 elapsedMiliseconds = tickTimer.elapsed();
 
-    if (elapsed > 500) {
+    if (elapsedMiliseconds > 500) {
         partLabel->setText(QString::number(partQuantity));
         QCoreApplication::processEvents();
         tickTimer.restart();
-
-        qDebug("StatusWidget::onFilesLoadingTick(%d) %d ms elapsed",
-               partQuantity, elapsed);
     }
 }
 
 void StatusWidget::onFilesLoadingStop() {
     setStatus(defaultMessage);
     QCoreApplication::processEvents();
-
-    qDebug("StatusWidget::onFilesLoadingStop()");
 }
 
 void StatusWidget::onConvetionStart(int totalQuantity) {
