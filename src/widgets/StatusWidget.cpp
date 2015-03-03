@@ -24,24 +24,46 @@
 StatusWidget::StatusWidget(QWidget *parent) : QWidget(parent) {
     setupUi(this);
 
-    retranslateStrings();
-
-    messageLabel->setText(defaultMessage);
     partLabel->setText("");
     ofLabel->setText("");
     totalLabel->setText("");
+
+    statusWidgetState = StatusReady;
+
+    retranslateStrings();
 
     tickTimer.start();
 }
 
 void StatusWidget::retranslateStrings() {
-    defaultMessage = tr("Ready");
+    readyMessage = tr("Ready");
     ofMessage = tr("of");
+    filesLoadingMessage = tr("Loading files...");
+    convertionMessage = tr("Converting images...");
+    convertionSummaryMessage = tr("%1 images converted in %2 seconds");
 
-    // TODO: really restore previous status message
-    messageLabel->setText(defaultMessage);
+    switch (statusWidgetState) {
+    case StatusReady:
+        messageLabel->setText(readyMessage);
+        break;
+    case StatusFilesLoading:
+        messageLabel->setText(filesLoadingMessage);
+        ofLabel->setText(ofMessage);
+        break;
+    case StatusConvertionProgress:
+        messageLabel->setText(convertionMessage);
+        ofLabel->setText(ofMessage);
+        break;
+    case StatusConvertionSummary:
+        QString summaryMessage = convertionSummaryMessage
+                .arg(convertionTotalQuantity)
+                .arg(convertionElapsedSeconds);
+        messageLabel->setText(summaryMessage);
+        break;
+    }
 }
 
+// TODO: change 1st parameter type to StatusWidgetState
 void StatusWidget::setStatus(const QString &message, int partQuantity,
                              int totalQuantity) {
     messageLabel->setText(message);
@@ -59,8 +81,7 @@ void StatusWidget::setStatus(const QString &message, int partQuantity,
 }
 
 void StatusWidget::onFilesLoadingStart(int totalQuantity) {
-    QString message = tr("Loading files...");
-    setStatus(message, 0, totalQuantity);
+    setStatus(filesLoadingMessage, 0, totalQuantity);
     QCoreApplication::processEvents();
 }
 
@@ -75,13 +96,12 @@ void StatusWidget::onFilesLoadingTick(int partQuantity) {
 }
 
 void StatusWidget::onFilesLoadingStop() {
-    setStatus(defaultMessage);
+    setStatus(readyMessage);
     QCoreApplication::processEvents();
 }
 
 void StatusWidget::onConvetionStart(int totalQuantity) {
-    QString message = tr("Converting images...");
-    setStatus(message, 0, totalQuantity);
+    setStatus(convertionMessage, 0, totalQuantity);
 
     QCoreApplication::processEvents();
 
@@ -101,10 +121,10 @@ void StatusWidget::onConvetionTick(int partQuantity) {
 
 void StatusWidget::onConvetionStop() {
     qint64 elapsedMiliseconds = convertionTimer.elapsed();
-    qint64 elapsedSeconds = elapsedMiliseconds / 1000 + 1;
+    convertionElapsedSeconds = elapsedMiliseconds / 1000 + 1;
 
-    QString message = tr("%1 images converted in %2 seconds")
+    QString message = convertionSummaryMessage
             .arg(convertionTotalQuantity)
-            .arg(elapsedSeconds);
+            .arg(convertionElapsedSeconds);
     setStatus(message);
 }

@@ -52,7 +52,7 @@ Read LICENSE file for details.
 
 ## Dependences
 
-* [Qt 4.6+ or Qt 5](http://qt-project.org/)
+* [Qt 4.7+ or Qt 5.0+](http://qt-project.org/)
 
 
 ### Optional dependences

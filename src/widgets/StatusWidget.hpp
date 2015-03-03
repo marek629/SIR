@@ -26,6 +26,15 @@
 
 #include <QElapsedTimer>
 
+
+enum StatusWidgetState {
+    StatusReady,
+    StatusFilesLoading,
+    StatusConvertionProgress,
+    StatusConvertionSummary
+};
+
+
 class StatusWidget : public QWidget, private Ui::StatusWidget {
     Q_OBJECT
 
@@ -48,13 +57,19 @@ public slots:
 
 
 private:
-    QString defaultMessage;
+    QString readyMessage;
     QString ofMessage;
+    QString filesLoadingMessage;
+    QString convertionSummaryMessage;
+    QString convertionMessage;
+
+    StatusWidgetState statusWidgetState;
 
     QElapsedTimer tickTimer;
     QElapsedTimer convertionTimer;
 
     int convertionTotalQuantity;
+    qint64 convertionElapsedSeconds;
 };
 
 #endif // STATUSWIDGET_HPP
