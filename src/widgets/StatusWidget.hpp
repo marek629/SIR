@@ -57,12 +57,6 @@ public slots:
 
 
 private:
-    QString readyMessage;
-    QString ofMessage;
-    QString filesLoadingMessage;
-    QString convertionSummaryMessage;
-    QString convertionMessage;
-
     StatusWidgetState statusWidgetState;
 
     QElapsedTimer tickTimer;

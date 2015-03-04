@@ -36,12 +36,6 @@ StatusWidget::StatusWidget(QWidget *parent) : QWidget(parent) {
 }
 
 void StatusWidget::retranslateStrings() {
-    readyMessage = tr("Ready");
-    ofMessage = tr("of");
-    filesLoadingMessage = tr("Loading files...");
-    convertionMessage = tr("Converting images...");
-    convertionSummaryMessage = tr("%1 images converted in %2 seconds");
-
     setTextMessageLabel(statusWidgetState);
     setTextOfLabel(statusWidgetState);
 }
@@ -111,16 +105,16 @@ void StatusWidget::onConvetionStop() {
 void StatusWidget::setTextMessageLabel(StatusWidgetState statusWidgetState) {
     switch (statusWidgetState) {
     case StatusReady:
-        messageLabel->setText(readyMessage);
+        messageLabel->setText(tr("Ready"));
         break;
     case StatusFilesLoading:
-        messageLabel->setText(filesLoadingMessage);
+        messageLabel->setText(tr("Loading files..."));
         break;
     case StatusConvertionProgress:
-        messageLabel->setText(convertionMessage);
+        messageLabel->setText(tr("Converting images..."));
         break;
     case StatusConvertionSummary:
-        QString summaryMessage = convertionSummaryMessage
+        QString summaryMessage = tr("%1 images converted in %2 seconds")
                 .arg(convertionTotalQuantity)
                 .arg(convertionElapsedSeconds);
         messageLabel->setText(summaryMessage);
@@ -136,7 +130,7 @@ void StatusWidget::setTextOfLabel(StatusWidgetState statusWidgetState) {
         break;
     case StatusFilesLoading:
     case StatusConvertionProgress:
-        ofLabel->setText(ofMessage);
+        ofLabel->setText(tr("of"));
         break;
     }
 }
