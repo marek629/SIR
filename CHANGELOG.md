@@ -5,6 +5,7 @@
 ### unreleased
 
 * Changed SIR to single instance application
+* Changed minimum Qt 4.7 required
 * Added status bar
 * Added Dotate button in About dialog
 * Improved saving "Exif.Image.Orientation" metadata tag
