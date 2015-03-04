@@ -43,7 +43,7 @@ public:
 
     void retranslateStrings();
 
-    void setStatus(const QString &message, int partQuantity = 0, int totalQuantity = 0);
+    void setStatus(StatusWidgetState status, int partQuantity = 0, int totalQuantity = 0);
 
 
 public slots:

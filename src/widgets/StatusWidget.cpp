@@ -46,23 +46,24 @@ void StatusWidget::retranslateStrings() {
     setTextOfLabel(statusWidgetState);
 }
 
-// TODO: change 1st parameter type to StatusWidgetState
-void StatusWidget::setStatus(const QString &message, int partQuantity,
+void StatusWidget::setStatus(StatusWidgetState status, int partQuantity,
                              int totalQuantity) {
-    messageLabel->setText(message);
+    statusWidgetState = status;
+
+    setTextMessageLabel(statusWidgetState);
+    setTextOfLabel(statusWidgetState);
 
     if (totalQuantity > 0 && totalQuantity != partQuantity) {
         partLabel->setText(QString::number(partQuantity));
         totalLabel->setText(QString::number(totalQuantity));
-    }
-    else {
+    } else {
         partLabel->setText("");
         totalLabel->setText("");
     }
 }
 
 void StatusWidget::onFilesLoadingStart(int totalQuantity) {
-    setStatus(filesLoadingMessage, 0, totalQuantity);
+    setStatus(StatusFilesLoading, 0, totalQuantity);
     QCoreApplication::processEvents();
 }
 
@@ -77,12 +78,12 @@ void StatusWidget::onFilesLoadingTick(int partQuantity) {
 }
 
 void StatusWidget::onFilesLoadingStop() {
-    setStatus(readyMessage);
+    setStatus(StatusReady);
     QCoreApplication::processEvents();
 }
 
 void StatusWidget::onConvetionStart(int totalQuantity) {
-    setStatus(convertionMessage, 0, totalQuantity);
+    setStatus(StatusConvertionProgress, 0, totalQuantity);
 
     QCoreApplication::processEvents();
 
@@ -104,10 +105,7 @@ void StatusWidget::onConvetionStop() {
     qint64 elapsedMiliseconds = convertionTimer.elapsed();
     convertionElapsedSeconds = elapsedMiliseconds / 1000 + 1;
 
-    QString message = convertionSummaryMessage
-            .arg(convertionTotalQuantity)
-            .arg(convertionElapsedSeconds);
-    setStatus(message);
+    setStatus(StatusConvertionSummary);
 }
 
 void StatusWidget::setTextMessageLabel(StatusWidgetState statusWidgetState) {
