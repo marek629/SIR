@@ -3,6 +3,7 @@
 
 ## Nearest Release
 
+* Remove timer from files loading
 
 
 ## Next Release

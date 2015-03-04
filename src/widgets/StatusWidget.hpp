@@ -70,6 +70,9 @@ private:
 
     int convertionTotalQuantity;
     qint64 convertionElapsedSeconds;
+
+    void setTextMessageLabel(StatusWidgetState statusWidgetState);
+    void setTextOfLabel(StatusWidgetState statusWidgetState);
 };
 
 #endif // STATUSWIDGET_HPP

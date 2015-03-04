@@ -42,25 +42,8 @@ void StatusWidget::retranslateStrings() {
     convertionMessage = tr("Converting images...");
     convertionSummaryMessage = tr("%1 images converted in %2 seconds");
 
-    switch (statusWidgetState) {
-    case StatusReady:
-        messageLabel->setText(readyMessage);
-        break;
-    case StatusFilesLoading:
-        messageLabel->setText(filesLoadingMessage);
-        ofLabel->setText(ofMessage);
-        break;
-    case StatusConvertionProgress:
-        messageLabel->setText(convertionMessage);
-        ofLabel->setText(ofMessage);
-        break;
-    case StatusConvertionSummary:
-        QString summaryMessage = convertionSummaryMessage
-                .arg(convertionTotalQuantity)
-                .arg(convertionElapsedSeconds);
-        messageLabel->setText(summaryMessage);
-        break;
-    }
+    setTextMessageLabel(statusWidgetState);
+    setTextOfLabel(statusWidgetState);
 }
 
 // TODO: change 1st parameter type to StatusWidgetState
@@ -70,12 +53,10 @@ void StatusWidget::setStatus(const QString &message, int partQuantity,
 
     if (totalQuantity > 0 && totalQuantity != partQuantity) {
         partLabel->setText(QString::number(partQuantity));
-        ofLabel->setText(ofMessage);
         totalLabel->setText(QString::number(totalQuantity));
     }
     else {
         partLabel->setText("");
-        ofLabel->setText("");
         totalLabel->setText("");
     }
 }
@@ -127,4 +108,37 @@ void StatusWidget::onConvetionStop() {
             .arg(convertionTotalQuantity)
             .arg(convertionElapsedSeconds);
     setStatus(message);
+}
+
+void StatusWidget::setTextMessageLabel(StatusWidgetState statusWidgetState) {
+    switch (statusWidgetState) {
+    case StatusReady:
+        messageLabel->setText(readyMessage);
+        break;
+    case StatusFilesLoading:
+        messageLabel->setText(filesLoadingMessage);
+        break;
+    case StatusConvertionProgress:
+        messageLabel->setText(convertionMessage);
+        break;
+    case StatusConvertionSummary:
+        QString summaryMessage = convertionSummaryMessage
+                .arg(convertionTotalQuantity)
+                .arg(convertionElapsedSeconds);
+        messageLabel->setText(summaryMessage);
+        break;
+    }
+}
+
+void StatusWidget::setTextOfLabel(StatusWidgetState statusWidgetState) {
+    switch (statusWidgetState) {
+    case StatusReady:
+    case StatusConvertionSummary:
+        ofLabel->setText("");
+        break;
+    case StatusFilesLoading:
+    case StatusConvertionProgress:
+        ofLabel->setText(ofMessage);
+        break;
+    }
 }
