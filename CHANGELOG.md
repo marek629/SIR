@@ -2,7 +2,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-### unreleased
+### Thu Mar 05 2015
 
 * Changed SIR to single instance application
 * Changed minimum Qt 4.7 required
@@ -24,7 +24,7 @@
 * Updated Polish translation
 
 
-#v2.7.3
+# v2.7.3
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
