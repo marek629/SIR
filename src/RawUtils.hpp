@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWUTILS_H
-#define RAWUTILS_H
+#ifndef RAWUTILS_HPP
+#define RAWUTILS_HPP
 
 class QImage;
 class QString;
@@ -28,6 +28,7 @@ class QStringList;
 class QPixmap;
 
 //! Raw image tools class.
+// TODO: Extract classes: RawLoader, RawPixmapLoader, RawImageLoader
 class  RawUtils {
 
 public:
@@ -44,4 +45,4 @@ private:
     static QStringList readDcrawOptions();
 };
 
-#endif // RAWUTILS_H
+#endif // RAWUTILS_HPP

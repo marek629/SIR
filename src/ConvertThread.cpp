@@ -110,11 +110,17 @@ void ConvertThread::run() {
 
         // load image data
         if(rawEnabled) {
+            /* TODO: Extract loadImage() method in ImageLoader interface.
+             *       Extracted method should return QImage object.
+             */
+            // === method start ===
             image = new QImage();
             if(RawUtils::isRaw(pd.imagePath))
+                // TODO: Memory leak risk!
                 image = RawUtils::loadRawImage(pd.imagePath);
             else
                 image->load(pd.imagePath);
+            // === method stop ===
         }
         else if (svgSource) {
             image = loadSvgImage();

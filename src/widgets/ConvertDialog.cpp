@@ -338,6 +338,10 @@ void ConvertDialog::init() {
     csd->fileFilters = "*.";
     csd->fileFilters.append(list.join(" *.").toUpper());
 
+    /* TODO: Extract getFileFilters() method in ImageLoader interface.
+     *       Method should return QStringList object.
+     *       Method should pass no parameters.
+     */
     RawUtils::createRawFilesList(rawFormats);
     loadSettings();
 
