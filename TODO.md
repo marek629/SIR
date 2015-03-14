@@ -3,16 +3,19 @@
 
 ## Nearest Release
 
+* Describe release procedure
 * Remove timer from files loading
+* Graphical dcraw options, for example as checkboxes
+    * Help message in dialog from dcraw command
+* Support for animated graphics files (QMovie?)
 
 
 ## Next Release
 
-* support for animated graphics files (QMovie?)
-* restore "Let us know that you using SIR" option
-* search refactorizationable code
-* add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
-* graphical dcraw options, for example as checkboxes
+* Restore "Let us know that you using SIR" option
+* Search refactorizationable code
+* Add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
+* Integrate tests within TravisCI
 
 
 ## 3.0 Roadmap
