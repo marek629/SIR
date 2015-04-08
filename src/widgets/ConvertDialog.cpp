@@ -49,6 +49,7 @@
 #include "Session.hpp"
 #include "CommandLineAssistant.hpp"
 #include "EffectsCollector.hpp"
+#include "raw/RawPixmapLoader.hpp"
 
 using namespace sir;
 
@@ -338,11 +339,9 @@ void ConvertDialog::init() {
     csd->fileFilters = "*.";
     csd->fileFilters.append(list.join(" *.").toUpper());
 
-    /* TODO: Extract fileFilters() method in RawLoader class.
-     *       Method should return QStringList object.
-     *       Method should pass no parameters.
-     */
-    RawUtils::createRawFilesList(rawFormats);
+    const RawLoader &rawLoader = RawPixmapLoader();
+    rawFormats = rawLoader.fileFilters();
+
     loadSettings();
 
     if (!args.isEmpty())

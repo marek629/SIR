@@ -38,7 +38,7 @@ public:
     QString dcrawPath() const;
 
 protected:
-    QPaintDevice *load(const QString &filePath) = 0;
+    virtual QPaintDevice *load(const QString &filePath) = 0;
 
 private:
     Settings::RawGroup rawSettings;

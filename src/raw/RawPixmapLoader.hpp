@@ -24,6 +24,8 @@
 
 #include "raw/RawLoader.hpp"
 
+#include <QPixmap>
+
 
 class RawPixmapLoader : public RawLoader {
 public:
