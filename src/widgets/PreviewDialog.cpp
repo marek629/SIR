@@ -685,7 +685,7 @@ void PreviewDialog::loadPixmap() {
     svgLoaded = false;
 
     // reading...
-    /* TODO: Extract loadPixmap() method in PixmapLoader.
+    /* TODO: Extract loadPixmap() method in RawPixmapLoader class.
      *       Extracted method should return QPixmap object.
      */
     if (rawEnabled) { // raw image

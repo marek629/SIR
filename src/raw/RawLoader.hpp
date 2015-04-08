@@ -16,32 +16,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Program URL: http://marek629.github.io/SIR/
+ * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWUTILS_HPP
-#define RAWUTILS_HPP
+#ifndef RAWLOADER_HPP
+#define RAWLOADER_HPP
 
-class QImage;
-class QString;
-class QStringList;
-class QPixmap;
+#include <QStringList>
 
-//! Raw image tools class.
-// TODO: Extract classes: RawLoader, RawPixmapLoader, RawImageLoader
-class RawUtils {
+class QPaintDevice;
+
+
+class RawLoader {
 public:
-    static bool isRaw(QString imagePath);
-    static QImage *loadRawImage(QString imagePath);
-    static QPixmap *loadRawPixmap(QString imagePath);
-    static void createRawFilesList(QStringList &rawFormats);
-    static bool isRawEnabled();
+    RawLoader();
 
-private:
-    RawUtils(const RawUtils &);
-    RawUtils &operator=(const RawUtils &);
-    static QString readDcrawPath();
-    static QStringList readDcrawOptions();
+    QStringList fileFilters() const;
+
+protected:
+    QPaintDevice *load(const QString &filePath) = 0;
 };
 
-#endif // RAWUTILS_HPP
+#endif // RAWLOADER_HPP

@@ -110,7 +110,7 @@ void ConvertThread::run() {
 
         // load image data
         if(rawEnabled) {
-            /* TODO: Extract loadImage() method in ImageLoader interface.
+            /* TODO: Extract loadImage() method in RawImageLoader class.
              *       Extracted method should return QImage object.
              */
             // === method start ===
