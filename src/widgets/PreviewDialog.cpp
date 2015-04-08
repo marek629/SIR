@@ -37,6 +37,7 @@
 #include <QDialogButtonBox>
 #include "widgets/PreviewDialog.hpp"
 #include "RawUtils.hpp"
+#include "raw/RawPixmapLoader.hpp"
 
 #define H 115
 #define W 50
@@ -685,16 +686,10 @@ void PreviewDialog::loadPixmap() {
     svgLoaded = false;
 
     // reading...
-    /* TODO: Extract loadPixmap() method in RawPixmapLoader class.
-     *       Extracted method should return QPixmap object.
-     */
     if (rawEnabled) { // raw image
-        if(RawUtils::isRaw(imagePath)) {
-            image = RawUtils::loadRawPixmap(imagePath);
-            readSuccess = image;
-        }
-        else
-            readSuccess = image->load(imagePath);
+        RawPixmapLoader rawLoader;
+        image = rawLoader.load(imagePath);
+        readSuccess = (bool) image;
     }
     else if (fileExt == "svg" || fileExt == "svgz") { // SVG file
         svgImage = new QGraphicsSvgItem(imagePath);

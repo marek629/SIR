@@ -21,6 +21,8 @@
 
 #include "raw/RawLoader.hpp"
 
+#include "RawUtils.hpp"
+
 
 RawLoader::RawLoader() {
     rawSettings = Settings::instance()->raw;
@@ -71,4 +73,8 @@ QStringList RawLoader::fileFilters() const {
 
 QString RawLoader::dcrawPath() const {
     return rawSettings.dcrawPath;
+}
+
+bool RawLoader::isRawImage(const QString &filePath) const {
+    return RawUtils::isRaw(filePath);
 }

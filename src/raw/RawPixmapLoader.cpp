@@ -27,6 +27,13 @@
 RawPixmapLoader::RawPixmapLoader() : RawLoader() {}
 
 QPixmap *RawPixmapLoader::load(const QString &filePath) {
+    // TODO: make filePath to be a field of the class
+    return (isRawImage(filePath))
+            ? loadFromRawFile(filePath)
+            : loadFromNormalFile(filePath);
+}
+
+QPixmap *RawPixmapLoader::loadFromRawFile(const QString &filePath) {
     QPixmap *pixmap = new QPixmap();
     QProcess process;
 
@@ -37,5 +44,11 @@ QPixmap *RawPixmapLoader::load(const QString &filePath) {
         pixmap->loadFromData(process.readAll(), "PPM");
     }
 
+    return pixmap;
+}
+
+QPixmap *RawPixmapLoader::loadFromNormalFile(const QString &filePath) {
+    QPixmap *pixmap = new QPixmap();
+    pixmap->load(filePath);
     return pixmap;
 }

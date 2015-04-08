@@ -31,6 +31,10 @@ class RawPixmapLoader : public RawLoader {
 public:
     RawPixmapLoader();
     QPixmap *load(const QString &filePath);
+
+private:
+    QPixmap *loadFromRawFile(const QString &filePath);
+    QPixmap *loadFromNormalFile(const QString &filePath);
 };
 
 #endif // RAWPIXMAPLOADER_HPP

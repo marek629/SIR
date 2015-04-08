@@ -36,6 +36,7 @@ public:
     QStringList fileFilters() const;
 
     QString dcrawPath() const;
+    bool isRawImage(const QString &filePath) const;
 
 protected:
     virtual QPaintDevice *load(const QString &filePath) = 0;
