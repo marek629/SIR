@@ -19,29 +19,25 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWLOADER_HPP
-#define RAWLOADER_HPP
+#include "RawPixmapLoader.hpp"
 
-#include "Settings.hpp"
-
-#include <QStringList>
-
-class QPaintDevice;
+#include <QProcess>
 
 
-class RawLoader {
-public:
-    RawLoader();
+RawPixmapLoader::RawPixmapLoader() : RawLoader() {}
 
-    QStringList fileFilters() const;
+QPixmap *RawPixmapLoader::load(const QString &filePath) {
+    QPixmap *pixmap = new QPixmap();
+    QProcess *process = new QProcess(); // TODO: make object - not pointer
 
-    QString dcrawPath() const;
+    process->start(dcrawPath() + " -c " + filePath);
+    process->waitForFinished(-1);
 
-protected:
-    QPaintDevice *load(const QString &filePath) = 0;
+    // exitCode is 0 if dcraw was able to identify a raw image and 1 otherwise
+    if (process->exitCode() == 0) {
+        pixmap->loadFromData(process->readAll(), "PPM");
+    }
 
-private:
-    Settings::RawGroup rawSettings;
-};
-
-#endif // RAWLOADER_HPP
+    delete process;
+    return pixmap;
+}

@@ -19,29 +19,16 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWLOADER_HPP
-#define RAWLOADER_HPP
+#ifndef RAWPIXMAPLOADER_HPP
+#define RAWPIXMAPLOADER_HPP
 
-#include "Settings.hpp"
-
-#include <QStringList>
-
-class QPaintDevice;
+#include "raw/RawLoader.hpp"
 
 
-class RawLoader {
+class RawPixmapLoader : public RawLoader {
 public:
-    RawLoader();
-
-    QStringList fileFilters() const;
-
-    QString dcrawPath() const;
-
-protected:
-    QPaintDevice *load(const QString &filePath) = 0;
-
-private:
-    Settings::RawGroup rawSettings;
+    RawPixmapLoader();
+    QPixmap *load(const QString &filePath);
 };
 
-#endif // RAWLOADER_HPP
+#endif // RAWPIXMAPLOADER_HPP

@@ -22,7 +22,9 @@
 #include "raw/RawLoader.hpp"
 
 
-RawLoader::RawLoader() {}
+RawLoader::RawLoader() {
+    rawSettings = Settings::instance()->raw;
+}
 
 QStringList RawLoader::fileFilters() const {
     QStringList rawFormats;
@@ -65,4 +67,8 @@ QStringList RawLoader::fileFilters() const {
     rawFormats.append(" *.X3F");
 
     return rawFormats;
+}
+
+QString RawLoader::dcrawPath() const {
+    return rawSettings.dcrawPath;
 }
