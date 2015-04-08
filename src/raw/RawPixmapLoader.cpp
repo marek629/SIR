@@ -28,16 +28,14 @@ RawPixmapLoader::RawPixmapLoader() : RawLoader() {}
 
 QPixmap *RawPixmapLoader::load(const QString &filePath) {
     QPixmap *pixmap = new QPixmap();
-    QProcess *process = new QProcess(); // TODO: make object - not pointer
+    QProcess process;
 
-    process->start(dcrawPath() + " -c " + filePath);
-    process->waitForFinished(-1);
+    process.start(dcrawPath() + " -c " + filePath);
 
     // exitCode is 0 if dcraw was able to identify a raw image and 1 otherwise
-    if (process->exitCode() == 0) {
-        pixmap->loadFromData(process->readAll(), "PPM");
+    if (process.waitForFinished(-1) && process.exitCode() == 0) {
+        pixmap->loadFromData(process.readAll(), "PPM");
     }
 
-    delete process;
     return pixmap;
 }
