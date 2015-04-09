@@ -24,6 +24,7 @@ set( sir_SRCS
         Version.cpp
         XmlHelper.cpp
         XmlStreamWriter.cpp
+        raw/RawImageLoader.cpp
         raw/RawLoader.cpp
         raw/RawPixmapLoader.cpp
         raw/RawToolbox.cpp
