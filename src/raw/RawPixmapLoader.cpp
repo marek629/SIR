@@ -24,7 +24,8 @@
 #include <QProcess>
 
 
-RawPixmapLoader::RawPixmapLoader() : RawLoader() {}
+RawPixmapLoader::RawPixmapLoader(Settings::RawGroup *rawSettings)
+    : RawLoader(rawSettings) {}
 
 QPixmap *RawPixmapLoader::load(const QString &filePath) {
     // TODO: make filePath to be a field of the class

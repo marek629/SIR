@@ -29,12 +29,13 @@ class QPaintDevice;
 
 class RawLoader : public RawToolbox {
 public:
-    RawLoader();
+    RawLoader(Settings::RawGroup *rawSettings);
 
     bool isRawImage(const QString &filePath) const;
 
 protected:
     virtual QPaintDevice *load(const QString &filePath) = 0;
+    // TODO: filePath as private field
 };
 
 #endif // RAWLOADER_HPP

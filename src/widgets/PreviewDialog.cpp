@@ -687,7 +687,7 @@ void PreviewDialog::loadPixmap() {
 
     // reading...
     if (rawEnabled) { // raw image
-        RawPixmapLoader rawLoader;
+        RawPixmapLoader rawLoader = RawPixmapLoader(&(Settings::instance()->raw));
         image = rawLoader.load(imagePath);
         readSuccess = (bool) image;
     }

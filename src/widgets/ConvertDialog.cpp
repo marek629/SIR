@@ -339,7 +339,7 @@ void ConvertDialog::init() {
     csd->fileFilters = "*.";
     csd->fileFilters.append(list.join(" *.").toUpper());
 
-    RawToolbox rawToolbox;
+    RawToolbox rawToolbox = RawToolbox(&(Settings::instance()->raw));
     rawFormats = rawToolbox.fileFilters();
 
     loadSettings();

@@ -29,14 +29,14 @@
 
 class RawToolbox {
 public:
-    RawToolbox();
+    RawToolbox(Settings::RawGroup *rawSettings);
 
     QStringList fileFilters() const;
 
     QString dcrawPath() const;
 
 private:
-    Settings::RawGroup rawSettings;
+    Settings::RawGroup *rawSettings;
 };
 
 #endif // RAWTOOLBOX_HPP

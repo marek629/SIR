@@ -24,7 +24,7 @@
 #include "RawUtils.hpp"
 
 
-RawLoader::RawLoader() : RawToolbox() {}
+RawLoader::RawLoader(Settings::RawGroup *rawSettings) : RawToolbox(rawSettings) {}
 
 bool RawLoader::isRawImage(const QString &filePath) const {
     // TODO: remove RawUtils dependency

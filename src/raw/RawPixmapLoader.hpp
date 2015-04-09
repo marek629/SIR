@@ -29,7 +29,7 @@
 
 class RawPixmapLoader : public RawLoader {
 public:
-    RawPixmapLoader();
+    RawPixmapLoader(Settings::RawGroup *rawSettings);
     QPixmap *load(const QString &filePath);
 
 private:

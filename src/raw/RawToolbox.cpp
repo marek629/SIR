@@ -21,8 +21,8 @@
 
 #include "RawToolbox.hpp"
 
-RawToolbox::RawToolbox() {
-    rawSettings = Settings::instance()->raw;
+RawToolbox::RawToolbox(Settings::RawGroup *rawSettings) {
+    this->rawSettings = rawSettings;
 }
 
 QStringList RawToolbox::fileFilters() const {
@@ -69,5 +69,5 @@ QStringList RawToolbox::fileFilters() const {
 }
 
 QString RawToolbox::dcrawPath() const {
-    return rawSettings.dcrawPath;
+    return rawSettings->dcrawPath;
 }
