@@ -19,14 +19,24 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#include "raw/RawLoader.hpp"
+#ifndef RAWTOOLBOX_HPP
+#define RAWTOOLBOX_HPP
 
-#include "RawUtils.hpp"
+#include "Settings.hpp"
+
+#include <QStringList>
 
 
-RawLoader::RawLoader() : RawToolbox() {}
+class RawToolbox {
+public:
+    RawToolbox();
 
-bool RawLoader::isRawImage(const QString &filePath) const {
-    // TODO: remove RawUtils dependency
-    return RawUtils::isRaw(filePath);
-}
+    QStringList fileFilters() const;
+
+    QString dcrawPath() const;
+
+private:
+    Settings::RawGroup rawSettings;
+};
+
+#endif // RAWTOOLBOX_HPP

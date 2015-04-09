@@ -26,6 +26,7 @@ set( sir_SRCS
         XmlStreamWriter.cpp
         raw/RawLoader.cpp
         raw/RawPixmapLoader.cpp
+        raw/RawToolbox.cpp
         shared/EffectsConfiguration.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp

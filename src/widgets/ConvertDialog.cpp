@@ -49,7 +49,7 @@
 #include "Session.hpp"
 #include "CommandLineAssistant.hpp"
 #include "EffectsCollector.hpp"
-#include "raw/RawPixmapLoader.hpp"
+#include "raw/RawToolbox.hpp"
 
 using namespace sir;
 
@@ -339,8 +339,8 @@ void ConvertDialog::init() {
     csd->fileFilters = "*.";
     csd->fileFilters.append(list.join(" *.").toUpper());
 
-    const RawLoader &rawLoader = RawPixmapLoader();
-    rawFormats = rawLoader.fileFilters();
+    RawToolbox rawToolbox;
+    rawFormats = rawToolbox.fileFilters();
 
     loadSettings();
 

@@ -22,27 +22,19 @@
 #ifndef RAWLOADER_HPP
 #define RAWLOADER_HPP
 
-#include "Settings.hpp"
-
-#include <QStringList>
+#include "raw/RawToolbox.hpp"
 
 class QPaintDevice;
 
 
-class RawLoader {
+class RawLoader : public RawToolbox {
 public:
     RawLoader();
 
-    QStringList fileFilters() const;
-
-    QString dcrawPath() const;
     bool isRawImage(const QString &filePath) const;
 
 protected:
     virtual QPaintDevice *load(const QString &filePath) = 0;
-
-private:
-    Settings::RawGroup rawSettings;
 };
 
 #endif // RAWLOADER_HPP
