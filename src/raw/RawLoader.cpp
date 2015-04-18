@@ -21,12 +21,37 @@
 
 #include "raw/RawLoader.hpp"
 
-#include "RawUtils.hpp"
+#include <QImageReader>
+#include <QProcess>
 
 
-RawLoader::RawLoader(Settings::RawGroup *rawSettings) : RawToolbox(rawSettings) {}
+RawLoader::RawLoader(Settings::RawGroup *rawSettings)
+    : RawToolbox(rawSettings) {}
 
 bool RawLoader::isRawImage(const QString &filePath) const {
-    // TODO: remove RawUtils dependency
-    return RawUtils::isRaw(filePath);
+    QStringList list;
+
+    foreach(QByteArray format, QImageReader::supportedImageFormats()) {
+        list << QString(format);
+    }
+    list << "jpg" << "JPG" << "JPEG" << "Jpg" << "Jpeg";
+
+    QString extension = fileExtension(filePath);
+    if (list.contains(extension)) {
+        //Is not a raw image file. Its a regular image.
+        return false;
+    }
+
+    //Its not a regular image file, using dcraw to identify it!
+    QProcess dcrawProcess;
+
+    dcrawProcess.start(rawSettings->dcrawPath + " -i " + filePath);
+    dcrawProcess.waitForFinished(-1);
+
+    return dcrawProcess.exitCode() == 0;
+}
+
+QString RawLoader::fileExtension(const QString &filePath) const {
+    int aux = filePath.size() - filePath.lastIndexOf(".") - 1;
+    return filePath.right(aux);
 }

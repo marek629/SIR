@@ -36,6 +36,9 @@ public:
 protected:
     virtual QPaintDevice *load(const QString &filePath) = 0;
     // TODO: filePath as private field
+
+private:
+    QString fileExtension(const QString &filePath) const;
 };
 
 #endif // RAWLOADER_HPP
