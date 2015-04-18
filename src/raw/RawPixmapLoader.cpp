@@ -24,10 +24,12 @@
 #include <QProcess>
 
 
-RawPixmapLoader::RawPixmapLoader(Settings::RawGroup *rawSettings)
-    : RawLoader(rawSettings) {}
+RawPixmapLoader::RawPixmapLoader(Settings::RawGroup *rawSettings,
+                                 const QString &filePath)
+    : RawLoader(rawSettings, filePath) {}
 
-QPixmap *RawPixmapLoader::load(const QString &filePath) {
+QPixmap *RawPixmapLoader::load()
+{
     // TODO: make filePath to be a field of the class
     return (isRawImage(filePath))
             ? loadFromRawFile(filePath)

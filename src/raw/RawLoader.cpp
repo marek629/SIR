@@ -25,12 +25,15 @@
 #include <QProcess>
 
 
-RawLoader::RawLoader(Settings::RawGroup *rawSettings)
-    : RawToolbox(rawSettings) {}
+RawLoader::RawLoader(Settings::RawGroup *rawSettings, const QString &filePath)
+    : RawToolbox(rawSettings)
+{
+    this->filePath = filePath;
+}
 
 bool RawLoader::isRawImage(const QString &filePath) const
 {
-    QString extension = fileExtension(filePath);
+    QString extension = fileExtension();
     if (regularImageFormatList().contains(extension)) {
         return false;
     }
@@ -55,7 +58,7 @@ QStringList RawLoader::regularImageFormatList() const
     return list;
 }
 
-QString RawLoader::fileExtension(const QString &filePath) const
+QString RawLoader::fileExtension() const
 {
     int index = filePath.size() - filePath.lastIndexOf(".") - 1;
     return filePath.right(index);

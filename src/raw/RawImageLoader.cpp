@@ -24,10 +24,12 @@
 #include <QProcess>
 
 // TODO: use this class
-RawImageLoader::RawImageLoader(Settings::RawGroup *rawSettings)
-    : RawLoader(rawSettings) {}
+RawImageLoader::RawImageLoader(Settings::RawGroup *rawSettings,
+                               const QString &filePath)
+    : RawLoader(rawSettings, filePath) {}
 
-QImage *RawImageLoader::load(const QString &filePath) {
+QImage *RawImageLoader::load()
+{
     // TODO: make filePath to be a field of the class
     return (isRawImage(filePath))
             ? loadFromRawFile(filePath)

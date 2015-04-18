@@ -687,8 +687,9 @@ void PreviewDialog::loadPixmap() {
 
     // reading...
     if (rawEnabled) { // raw image
-        RawPixmapLoader rawLoader = RawPixmapLoader(&(Settings::instance()->raw));
-        image = rawLoader.load(imagePath);
+        RawPixmapLoader rawLoader = RawPixmapLoader(
+                    &(Settings::instance()->raw), imagePath);
+        image = rawLoader.load();
         readSuccess = (bool) image;
     }
     else if (fileExt == "svg" || fileExt == "svgz") { // SVG file
