@@ -28,7 +28,23 @@
 RawLoader::RawLoader(Settings::RawGroup *rawSettings)
     : RawToolbox(rawSettings) {}
 
-bool RawLoader::isRawImage(const QString &filePath) const {
+bool RawLoader::isRawImage(const QString &filePath) const
+{
+    QString extension = fileExtension(filePath);
+    if (regularImageFormatList().contains(extension)) {
+        return false;
+    }
+
+    QProcess dcrawProcess;
+
+    dcrawProcess.start(dcrawPath() + " -i " + filePath);
+    dcrawProcess.waitForFinished(-1);
+
+    return dcrawProcess.exitCode() == 0;
+}
+
+QStringList RawLoader::regularImageFormatList() const
+{
     QStringList list;
 
     foreach(QByteArray format, QImageReader::supportedImageFormats()) {
@@ -36,22 +52,11 @@ bool RawLoader::isRawImage(const QString &filePath) const {
     }
     list << "jpg" << "JPG" << "JPEG" << "Jpg" << "Jpeg";
 
-    QString extension = fileExtension(filePath);
-    if (list.contains(extension)) {
-        //Is not a raw image file. Its a regular image.
-        return false;
-    }
-
-    //Its not a regular image file, using dcraw to identify it!
-    QProcess dcrawProcess;
-
-    dcrawProcess.start(rawSettings->dcrawPath + " -i " + filePath);
-    dcrawProcess.waitForFinished(-1);
-
-    return dcrawProcess.exitCode() == 0;
+    return list;
 }
 
-QString RawLoader::fileExtension(const QString &filePath) const {
-    int aux = filePath.size() - filePath.lastIndexOf(".") - 1;
-    return filePath.right(aux);
+QString RawLoader::fileExtension(const QString &filePath) const
+{
+    int index = filePath.size() - filePath.lastIndexOf(".") - 1;
+    return filePath.right(index);
 }

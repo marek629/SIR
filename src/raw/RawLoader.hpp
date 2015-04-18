@@ -38,6 +38,7 @@ protected:
     // TODO: filePath as private field
 
 private:
+    QStringList regularImageFormatList() const;
     QString fileExtension(const QString &filePath) const;
 };
 
