@@ -19,22 +19,21 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWPIXMAPLOADER_HPP
-#define RAWPIXMAPLOADER_HPP
+#ifndef PAINTDEVICE_HPP
+#define PAINTDEVICE_HPP
 
-#include "raw/RawLoader.hpp"
+class QString;
+class QByteArray;
 
-#include "raw/Pixmap.hpp"
 
-
-class RawPixmapLoader : public RawLoader
+class PaintDevice
 {
 public:
-    RawPixmapLoader(Settings::RawGroup *rawSettings, const QString &filePath);
-    Pixmap *load();
+    PaintDevice();
+    ~PaintDevice();
 
-protected:
-    Pixmap *createPaintDevice();
+    virtual bool load(const QString &fileName) = 0;
+    virtual bool loadFromData(const QByteArray &data, const char *format) = 0;
 };
 
-#endif // RAWPIXMAPLOADER_HPP
+#endif // PAINTDEVICE_HPP

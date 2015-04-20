@@ -21,6 +21,8 @@
 
 #include "raw/RawLoader.hpp"
 
+#include "raw/PaintDevice.hpp"
+
 #include <QImageReader>
 #include <QProcess>
 
@@ -44,6 +46,33 @@ bool RawLoader::isRawImage() const
     dcrawProcess.waitForFinished(-1);
 
     return dcrawProcess.exitCode() == 0;
+}
+
+PaintDevice *RawLoader::load()
+{
+    return (isRawImage()) ? loadFromRawFile() : loadFromNormalFile();
+}
+
+PaintDevice *RawLoader::loadFromRawFile()
+{
+    PaintDevice *paintDevice = createPaintDevice();
+    QProcess process;
+
+    process.start(dcrawPath() + " -c " + filePath);
+
+    // exitCode is 0 if dcraw was able to identify a raw image and 1 otherwise
+    if (process.waitForFinished(-1) && process.exitCode() == 0) {
+        paintDevice->loadFromData(process.readAll(), "PPM");
+    }
+
+    return paintDevice;
+}
+
+PaintDevice *RawLoader::loadFromNormalFile()
+{
+    PaintDevice *paintDevice = createPaintDevice();
+    paintDevice->load(filePath);
+    return paintDevice;
 }
 
 QStringList RawLoader::regularImageFormatList() const

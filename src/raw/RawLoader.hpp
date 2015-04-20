@@ -24,7 +24,7 @@
 
 #include "raw/RawToolbox.hpp"
 
-class QPaintDevice;
+class PaintDevice;
 
 
 class RawLoader : public RawToolbox
@@ -37,8 +37,11 @@ public:
 protected:
     QString filePath;
 
-    virtual QPaintDevice *load() = 0;
-    virtual QPaintDevice *createPaintDevice() = 0;
+    virtual PaintDevice *createPaintDevice() = 0;
+    virtual PaintDevice *load();
+
+    PaintDevice *loadFromRawFile();
+    PaintDevice *loadFromNormalFile();
 
 private:
     QStringList regularImageFormatList() const;

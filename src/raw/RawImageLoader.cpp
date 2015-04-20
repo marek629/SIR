@@ -28,36 +28,12 @@ RawImageLoader::RawImageLoader(Settings::RawGroup *rawSettings,
                                const QString &filePath)
     : RawLoader(rawSettings, filePath) {}
 
-QImage *RawImageLoader::load()
+Image *RawImageLoader::load()
 {
-    return (isRawImage())
-            ? loadFromRawFile()
-            : loadFromNormalFile();
+    return static_cast<Image *>(RawLoader::load());
 }
 
-QImage *RawImageLoader::createPaintDevice()
+Image *RawImageLoader::createPaintDevice()
 {
-    return new QImage();
-}
-
-QImage *RawImageLoader::loadFromRawFile()
-{
-    QImage *image = createPaintDevice();
-    QProcess process;
-
-    process.start(dcrawPath() + " -c " + filePath);
-
-    // exitCode is 0 if dcraw was able to identify a raw image and 1 otherwise
-    if (process.waitForFinished(-1) && process.exitCode() == 0) {
-        image->loadFromData(process.readAll(), "PPM");
-    }
-
-    return image;
-}
-
-QImage *RawImageLoader::loadFromNormalFile()
-{
-    QImage *image = new QImage();
-    image->load(filePath);
-    return image;
+    return new Image();
 }

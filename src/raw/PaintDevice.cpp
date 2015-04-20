@@ -19,22 +19,9 @@
  * Program URL: http://marek629.github.io/sir/
  */
 
-#ifndef RAWPIXMAPLOADER_HPP
-#define RAWPIXMAPLOADER_HPP
-
-#include "raw/RawLoader.hpp"
-
-#include "raw/Pixmap.hpp"
+#include "PaintDevice.hpp"
 
 
-class RawPixmapLoader : public RawLoader
-{
-public:
-    RawPixmapLoader(Settings::RawGroup *rawSettings, const QString &filePath);
-    Pixmap *load();
+PaintDevice::PaintDevice() {}
 
-protected:
-    Pixmap *createPaintDevice();
-};
-
-#endif // RAWPIXMAPLOADER_HPP
+PaintDevice::~PaintDevice() {}

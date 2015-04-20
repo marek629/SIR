@@ -24,21 +24,17 @@
 
 #include "raw/RawLoader.hpp"
 
-#include <QImage>
+#include "raw/Image.hpp"
 
 
 class RawImageLoader : public RawLoader
 {
 public:
     RawImageLoader(Settings::RawGroup *rawSettings, const QString &filePath);
-    QImage *load();
+    Image *load();
 
 protected:
-    QImage *createPaintDevice();
-
-private:
-    QImage *loadFromRawFile();
-    QImage *loadFromNormalFile();
+    Image *createPaintDevice();
 };
 
 #endif // RAWIMAGELOADER_HPP
