@@ -33,6 +33,9 @@ public:
     RawImageLoader(Settings::RawGroup *rawSettings, const QString &filePath);
     QImage *load();
 
+protected:
+    QImage *createPaintDevice();
+
 private:
     QImage *loadFromRawFile();
     QImage *loadFromNormalFile();

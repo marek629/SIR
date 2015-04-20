@@ -33,6 +33,9 @@ public:
     RawPixmapLoader(Settings::RawGroup *rawSettings, const QString &filePath);
     QPixmap *load();
 
+protected:
+    QPixmap *createPaintDevice();
+
 private:
     QPixmap *loadFromRawFile();
     QPixmap *loadFromNormalFile();

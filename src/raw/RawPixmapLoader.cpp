@@ -35,9 +35,14 @@ QPixmap *RawPixmapLoader::load()
             : loadFromNormalFile();
 }
 
+QPixmap *RawPixmapLoader::createPaintDevice()
+{
+    return new QPixmap();
+}
+
 QPixmap *RawPixmapLoader::loadFromRawFile()
 {
-    QPixmap *pixmap = new QPixmap();
+    QPixmap *pixmap = createPaintDevice();
     QProcess process;
 
     process.start(dcrawPath() + " -c " + filePath);

@@ -35,9 +35,14 @@ QImage *RawImageLoader::load()
             : loadFromNormalFile();
 }
 
+QImage *RawImageLoader::createPaintDevice()
+{
+    return new QImage();
+}
+
 QImage *RawImageLoader::loadFromRawFile()
 {
-    QImage *image = new QImage();
+    QImage *image = createPaintDevice();
     QProcess process;
 
     process.start(dcrawPath() + " -c " + filePath);

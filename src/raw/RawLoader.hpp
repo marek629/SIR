@@ -35,9 +35,10 @@ public:
     bool isRawImage() const;
 
 protected:
-    virtual QPaintDevice *load() = 0;
-    // TODO: filePath as private field
     QString filePath;
+
+    virtual QPaintDevice *load() = 0;
+    virtual QPaintDevice *createPaintDevice() = 0;
 
 private:
     QStringList regularImageFormatList() const;
