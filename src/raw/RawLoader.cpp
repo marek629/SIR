@@ -60,8 +60,12 @@ PaintDevice *RawLoader::loadFromRawFile()
 
     process.start(dcrawPath() + " -c " + filePath);
 
-    // exitCode is 0 if dcraw was able to identify a raw image and 1 otherwise
-    if (process.waitForFinished(-1) && process.exitCode() == 0) {
+    if (!process.waitForFinished(-1)) {
+        return paintDevice;
+    }
+
+    const int exitCodeOk = 0;
+    if (process.exitCode() == exitCodeOk) {
         paintDevice->loadFromData(process.readAll(), "PPM");
     }
 
