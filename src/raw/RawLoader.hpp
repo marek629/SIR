@@ -27,11 +27,12 @@
 class QPaintDevice;
 
 
-class RawLoader : public RawToolbox {
+class RawLoader : public RawToolbox
+{
 public:
     RawLoader(Settings::RawGroup *rawSettings, const QString &filePath);
 
-    bool isRawImage(const QString &filePath) const;
+    bool isRawImage() const;
 
 protected:
     virtual QPaintDevice *load() = 0;

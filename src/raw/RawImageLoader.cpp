@@ -30,13 +30,13 @@ RawImageLoader::RawImageLoader(Settings::RawGroup *rawSettings,
 
 QImage *RawImageLoader::load()
 {
-    // TODO: make filePath to be a field of the class
-    return (isRawImage(filePath))
-            ? loadFromRawFile(filePath)
-            : loadFromNormalFile(filePath);
+    return (isRawImage())
+            ? loadFromRawFile()
+            : loadFromNormalFile();
 }
 
-QImage *RawImageLoader::loadFromRawFile(const QString &filePath) {
+QImage *RawImageLoader::loadFromRawFile()
+{
     QImage *image = new QImage();
     QProcess process;
 
@@ -50,7 +50,8 @@ QImage *RawImageLoader::loadFromRawFile(const QString &filePath) {
     return image;
 }
 
-QImage *RawImageLoader::loadFromNormalFile(const QString &filePath) {
+QImage *RawImageLoader::loadFromNormalFile()
+{
     QImage *image = new QImage();
     image->load(filePath);
     return image;

@@ -27,14 +27,15 @@
 #include <QImage>
 
 
-class RawImageLoader : public RawLoader {
+class RawImageLoader : public RawLoader
+{
 public:
     RawImageLoader(Settings::RawGroup *rawSettings, const QString &filePath);
     QImage *load();
 
 private:
-    QImage *loadFromRawFile(const QString &filePath);
-    QImage *loadFromNormalFile(const QString &filePath);
+    QImage *loadFromRawFile();
+    QImage *loadFromNormalFile();
 };
 
 #endif // RAWIMAGELOADER_HPP

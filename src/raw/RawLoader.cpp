@@ -31,7 +31,7 @@ RawLoader::RawLoader(Settings::RawGroup *rawSettings, const QString &filePath)
     this->filePath = filePath;
 }
 
-bool RawLoader::isRawImage(const QString &filePath) const
+bool RawLoader::isRawImage() const
 {
     QString extension = fileExtension();
     if (regularImageFormatList().contains(extension)) {

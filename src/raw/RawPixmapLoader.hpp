@@ -27,14 +27,15 @@
 #include <QPixmap>
 
 
-class RawPixmapLoader : public RawLoader {
+class RawPixmapLoader : public RawLoader
+{
 public:
     RawPixmapLoader(Settings::RawGroup *rawSettings, const QString &filePath);
     QPixmap *load();
 
 private:
-    QPixmap *loadFromRawFile(const QString &filePath);
-    QPixmap *loadFromNormalFile(const QString &filePath);
+    QPixmap *loadFromRawFile();
+    QPixmap *loadFromNormalFile();
 };
 
 #endif // RAWPIXMAPLOADER_HPP

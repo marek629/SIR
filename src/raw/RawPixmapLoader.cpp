@@ -30,13 +30,13 @@ RawPixmapLoader::RawPixmapLoader(Settings::RawGroup *rawSettings,
 
 QPixmap *RawPixmapLoader::load()
 {
-    // TODO: make filePath to be a field of the class
-    return (isRawImage(filePath))
-            ? loadFromRawFile(filePath)
-            : loadFromNormalFile(filePath);
+    return (isRawImage())
+            ? loadFromRawFile()
+            : loadFromNormalFile();
 }
 
-QPixmap *RawPixmapLoader::loadFromRawFile(const QString &filePath) {
+QPixmap *RawPixmapLoader::loadFromRawFile()
+{
     QPixmap *pixmap = new QPixmap();
     QProcess process;
 
@@ -50,7 +50,8 @@ QPixmap *RawPixmapLoader::loadFromRawFile(const QString &filePath) {
     return pixmap;
 }
 
-QPixmap *RawPixmapLoader::loadFromNormalFile(const QString &filePath) {
+QPixmap *RawPixmapLoader::loadFromNormalFile()
+{
     QPixmap *pixmap = new QPixmap();
     pixmap->load(filePath);
     return pixmap;
