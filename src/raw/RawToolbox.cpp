@@ -21,11 +21,13 @@
 
 #include "RawToolbox.hpp"
 
-RawToolbox::RawToolbox(Settings::RawGroup *rawSettings) {
+RawToolbox::RawToolbox(Settings::RawGroup *rawSettings)
+{
     this->rawSettings = rawSettings;
 }
 
-QStringList RawToolbox::fileFilters() const {
+QStringList RawToolbox::fileFilters() const
+{
     QStringList rawFormats;
 
     rawFormats.append(" *.3FR");
@@ -68,6 +70,12 @@ QStringList RawToolbox::fileFilters() const {
     return rawFormats;
 }
 
-QString RawToolbox::dcrawPath() const {
+QString RawToolbox::dcrawPath() const
+{
     return rawSettings->dcrawPath;
+}
+
+bool RawToolbox::isRawSupportEnabled() const
+{
+    return rawSettings->enabled;
 }

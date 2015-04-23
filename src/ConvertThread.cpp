@@ -70,9 +70,10 @@ void ConvertThread::convertImage(const QString& name, const QString& extension,
 /** This is main function of thread.\n
   * Converts selected images to desired size, format and quality.
   */
-void ConvertThread::run() {
-
-    bool rawEnabled = RawUtils::isRawEnabled();
+void ConvertThread::run()
+{
+    RawToolbox rawToolbox = RawToolbox(&(Settings::instance()->raw));
+    bool rawEnabled = rawToolbox.isRawSupportEnabled();
 
     while(work) {
         pd.imgData = this->imageData; // imageData change protection by convertImage()

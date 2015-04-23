@@ -63,7 +63,8 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->setFocus();
     this->setModal(true);
 
-    rawEnabled = RawUtils::isRawEnabled();
+    RawToolbox rawToolbox = RawToolbox(&(Settings::instance()->raw));
+    rawEnabled = rawToolbox.isRawSupportEnabled();
 #ifdef SIR_METADATA_SUPPORT
     metadataEnabled = isntTiffImage();
     saveMetadata = Settings::instance()->metadata.saveMetadata;

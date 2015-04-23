@@ -34,6 +34,7 @@ public:
     QStringList fileFilters() const;
 
     QString dcrawPath() const;
+    bool isRawSupportEnabled() const;
 
 private:
     Settings::RawGroup *rawSettings;
