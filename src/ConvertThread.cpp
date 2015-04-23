@@ -19,18 +19,21 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
+#include "ConvertThread.hpp"
+
+#include "RawUtils.hpp"
+#include "widgets/MessageBox.hpp"
+#include "Settings.hpp"
+#include "SvgModifier.hpp"
+#include "ConvertEffects.hpp"
+#include "raw/RawImageLoader.hpp"
+
 #include <QImage>
 #include <QDir>
 #include <QtSvg/QSvgRenderer>
 #include <QDebug>
 #include <cmath>
 #include <QPainter>
-#include "ConvertThread.hpp"
-#include "RawUtils.hpp"
-#include "widgets/MessageBox.hpp"
-#include "Settings.hpp"
-#include "SvgModifier.hpp"
-#include "ConvertEffects.hpp"
 
 using namespace sir;
 
@@ -109,27 +112,17 @@ void ConvertThread::run() {
         QImage *image = 0;
 
         // load image data
-        if(rawEnabled) {
-            /* TODO: Extract loadImage() method in RawImageLoader class.
-             *       Extracted method should return QImage object.
-             */
-            // === method start ===
-            image = new QImage();
-            if(RawUtils::isRaw(pd.imagePath))
-                // TODO: Memory leak risk!
-                image = RawUtils::loadRawImage(pd.imagePath);
-            else
-                image->load(pd.imagePath);
-            // === method stop ===
-        }
-        else if (svgSource) {
+        if (rawEnabled) {
+            RawImageLoader rawLoader = RawImageLoader(
+                        &(Settings::instance()->raw), pd.imagePath);
+            image = rawLoader.load();
+        } else if (svgSource) {
             image = loadSvgImage();
             if (!image) {
                 getNextOrStop();
                 continue;
             }
-        }
-        else {
+        } else {
             image = new QImage();
             image->load(pd.imagePath);
         }

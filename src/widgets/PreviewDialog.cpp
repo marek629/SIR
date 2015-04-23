@@ -681,7 +681,6 @@ void PreviewDialog::reloadImage(QString imageName) {
   * set false.
   */
 void PreviewDialog::loadPixmap() {
-    image = new QPixmap();
     bool readSuccess;
     svgLoaded = false;
 
@@ -696,9 +695,10 @@ void PreviewDialog::loadPixmap() {
         svgImage = new QGraphicsSvgItem(imagePath);
         svgLoaded = true;
         readSuccess = (svgImage != 0);
-    }
-    else // other image formats
+    } else { // other image formats
+        image = new QPixmap();
         readSuccess = image->load(imagePath);
+    }
 
 #ifdef SIR_METADATA_SUPPORT
     bool metadataReadError = false;
