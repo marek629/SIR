@@ -21,21 +21,23 @@
 
 #include "ConvertThread.hpp"
 
-#include "RawUtils.hpp"
-#include "widgets/MessageBox.hpp"
+#include "ConvertEffects.hpp"
 #include "Settings.hpp"
 #include "SvgModifier.hpp"
-#include "ConvertEffects.hpp"
 #include "raw/RawImageLoader.hpp"
+#include "widgets/MessageBox.hpp"
 
-#include <QImage>
-#include <QDir>
-#include <QtSvg/QSvgRenderer>
 #include <QDebug>
-#include <cmath>
+#include <QDir>
+#include <QImage>
 #include <QPainter>
+#include <QtSvg/QSvgRenderer>
+
+#include <cmath>
+
 
 using namespace sir;
+
 
 // setup static fields
 SharedInformation * ConvertThread::shared = new SharedInformation();

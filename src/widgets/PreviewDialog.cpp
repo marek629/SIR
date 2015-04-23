@@ -19,30 +19,34 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include <QGraphicsScene>
-#include <QPixmap>
-#include <QResizeEvent>
-#include <QWheelEvent>
-#include <QMessageBox>
-#include <QStringList>
-#include <QGraphicsPixmapItem>
+#include "widgets/PreviewDialog.hpp"
+
+#include "raw/RawPixmapLoader.hpp"
+
+#include <QDebug>
+#include <QDesktopWidget>
+#include <QDialogButtonBox>
 #include <QFileDialog>
-#include <QPrinter>
-#include <QPrintDialog>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 #include <QImageWriter>
 #include <QKeyEvent>
-#include <QDesktopWidget>
-#include <QDebug>
+#include <QMessageBox>
+#include <QPixmap>
+#include <QPrintDialog>
+#include <QPrinter>
+#include <QResizeEvent>
+#include <QStringList>
 #include <QtSvg/QSvgRenderer>
-#include <QDialogButtonBox>
-#include "widgets/PreviewDialog.hpp"
-#include "RawUtils.hpp"
-#include "raw/RawPixmapLoader.hpp"
+#include <QWheelEvent>
+
 
 #define H 115
 #define W 50
 
+
 using namespace sir;
+
 
 /** Default constructor.
   * \param parent Parent widget.

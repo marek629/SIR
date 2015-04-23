@@ -12,7 +12,6 @@ set( sir_SRCS
         LanguageUtils.cpp
         main.cpp
         NetworkUtils.cpp
-        RawUtils.cpp
         RegExpUtils.cpp
         Rgb.cpp
         Selection.cpp

@@ -19,37 +19,40 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
+#include "widgets/ConvertDialog.hpp"
+
+#include "CommandLineAssistant.hpp"
+#include "ConvertSharedData.hpp"
+#include "EffectsCollector.hpp"
+#include "LanguageUtils.hpp"
+#include "metadata/MetadataUtils.hpp"
+#include "NetworkUtils.hpp"
+#include "Selection.hpp"
+#include "Session.hpp"
+#include "raw/RawToolbox.hpp"
+#include "Version.hpp"
+#include "widgets/AboutDialog.hpp"
+#include "widgets/convert/EffectsScrollAreaVisitor.hpp"
+#include "widgets/DetailsBrowserController.hpp"
+#include "widgets/MessageBox.hpp"
+#include "widgets/TreeWidget.hpp"
+#include "widgets/OptionsDialog.hpp"
+#include "widgets/options/GeneralGroupBoxController.hpp"
+
+#include <QCompleter>
+#include <QDebug>
+#include <QDesktopServices>
+#include <QDirModel>
 #include <QFileDialog>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QCompleter>
-#include <QDirModel>
+#include <QLibraryInfo>
 #include <QTranslator>
-#include <QDesktopServices>
 #include <QUrl>
 #include <QWindowStateChangeEvent>
-#include <QDebug>
-#include <QLibraryInfo>
+
 #include <cmath>
-#include "widgets/ConvertDialog.hpp"
-#include "widgets/TreeWidget.hpp"
-#include "widgets/AboutDialog.hpp"
-#include "widgets/OptionsDialog.hpp"
-#include "widgets/DetailsBrowserController.hpp"
-#include "widgets/convert/EffectsScrollAreaVisitor.hpp"
-#include "widgets/options/GeneralGroupBoxController.hpp"
-#include "Version.hpp"
-#include "RawUtils.hpp"
-#include "NetworkUtils.hpp"
-#include "widgets/MessageBox.hpp"
-#include "metadata/MetadataUtils.hpp"
-#include "Selection.hpp"
-#include "LanguageUtils.hpp"
-#include "ConvertSharedData.hpp"
-#include "Session.hpp"
-#include "CommandLineAssistant.hpp"
-#include "EffectsCollector.hpp"
-#include "raw/RawToolbox.hpp"
+
 
 using namespace sir;
 
