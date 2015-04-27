@@ -131,7 +131,15 @@ $().ready( function() {
 
     $('#content').empty();
     showBlog();
+    onWindowResize();
 });
+
+$(window).resize( onWindowResize );
+function onWindowResize() {
+    var menuBox = $('#menu-box');
+    if ($(window).width() > 768) menuBox.addClass('nav-stacked');
+    else menuBox.removeClass('nav-stacked');
+}
 
 $(window).bind('pathchange', function() {
     $('#content').empty();

@@ -33,7 +33,7 @@
     top:auto;
 }
 
-@media screen and (min-width:800px) {
+@media screen and (min-width: 800px) {
     #forkongithub {
         position: absolute;
         display: block;
@@ -61,4 +61,17 @@
 time.entry-date {
     font-size: 65%;
     color: #999;
+}
+
+#side-menu-div {
+    float: none;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    #side-menu-div {
+        float: right;
+        margin-top: 90px;
+    }
 }
