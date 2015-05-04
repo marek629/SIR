@@ -28,6 +28,9 @@ set( sir_SRCS
         raw/Pixmap.cpp
         raw/RawImageLoader.cpp
         raw/RawLoader.cpp
+        raw/RawModel.cpp
+        raw/RawModelRuntime.cpp
+        raw/RawModelSettings.cpp
         raw/RawPixmapLoader.cpp
         raw/RawToolbox.cpp
         shared/EffectsConfiguration.cpp

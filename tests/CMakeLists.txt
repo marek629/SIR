@@ -35,6 +35,14 @@ add_executable( sir_rawgroupboxcontroller_test ${sir_UT_rawgroupboxcontroller_SR
 target_link_libraries( sir_rawgroupboxcontroller_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "RawGroupBoxController_UT" COMMAND sir_rawgroupboxcontroller_test )
 
+include_directories( ${CMAKE_BINARY_DIR}/src )
+set( sir_UT_rawmodel_SRCS
+        raw/RawModelTest.cpp
+    )
+add_executable( sir_rawmodel_test ${sir_UT_rawmodel_SRCS} )
+target_link_libraries( sir_rawmodel_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "RawModel_UT" COMMAND sir_rawmodel_test )
+
 
 set( sir_IT_convertdialog_SRCS
         widgets/ConvertDialogTest.cpp
