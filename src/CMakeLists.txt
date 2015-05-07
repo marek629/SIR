@@ -26,6 +26,7 @@ set( sir_SRCS
         raw/Image.cpp
         raw/PaintDevice.cpp
         raw/Pixmap.cpp
+        raw/RawController.cpp
         raw/RawImageLoader.cpp
         raw/RawLoader.cpp
         raw/RawModel.cpp
@@ -33,6 +34,7 @@ set( sir_SRCS
         raw/RawModelSettings.cpp
         raw/RawPixmapLoader.cpp
         raw/RawToolbox.cpp
+        raw/RawView.cpp
         shared/EffectsConfiguration.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
