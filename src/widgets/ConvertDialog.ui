@@ -302,7 +302,7 @@
             <enum>QTabWidget::North</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>4</number>
            </property>
            <widget class="SizeScrollArea" name="sizeScrollArea">
             <property name="widgetResizable">
@@ -334,6 +334,11 @@
             </property>
             <attribute name="title">
              <string notr="true">SVG</string>
+            </attribute>
+           </widget>
+           <widget class="RawWidget" name="rawScrollArea">
+            <attribute name="title">
+             <string>Raw</string>
             </attribute>
            </widget>
           </widget>
@@ -421,7 +426,7 @@
      <x>0</x>
      <y>0</y>
      <width>843</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -616,6 +621,12 @@
    <class>StatusWidget</class>
    <extends>QWidget</extends>
    <header>widgets/StatusWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RawWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/convert/RawWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

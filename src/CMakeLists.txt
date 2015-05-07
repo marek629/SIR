@@ -57,6 +57,7 @@ set( sir_SRCS
         widgets/convert/EffectsScrollArea.cpp
         widgets/convert/EffectsScrollAreaVisitor.cpp
         widgets/convert/OptionsScrollArea.cpp
+        widgets/convert/RawWidget.cpp
         widgets/convert/SizeScrollArea.cpp
         widgets/convert/SvgScrollArea.cpp
         widgets/options/AbstractOptions.cpp
