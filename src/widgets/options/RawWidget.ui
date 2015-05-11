@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RawGroupBoxView</class>
+ <class>RawWidget</class>
  <widget class="QWidget" name="RawWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>369</width>
-    <height>124</height>
+    <height>170</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -15,20 +15,6 @@
     <widget class="QCheckBox" name="rawCheckBox">
      <property name="text">
       <string>Enable RAW images support (needs dcraw)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="dcrawPushButton">
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>dcraw Executable Path:</string>
      </property>
     </widget>
    </item>
@@ -42,8 +28,38 @@
    <item row="1" column="1">
     <widget class="QLineEdit" name="dcrawLineEdit"/>
    </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>dcraw Executable Path:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="dcrawPushButton">
+     <property name="text">
+      <string>Browse</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="1" colspan="2">
     <widget class="QLineEdit" name="dcrawOptions"/>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QTextBrowser" name="helpTextBrowser">
+     <property name="lineWrapMode">
+      <enum>QTextEdit::NoWrap</enum>
+     </property>
+     <property name="acceptRichText">
+      <bool>false</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+     </property>
+     <property name="openLinks">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

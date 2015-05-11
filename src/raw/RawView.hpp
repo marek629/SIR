@@ -23,12 +23,12 @@
 #define RAWVIEW_HPP
 
 #include <QGroupBox>
-#include "ui_RawGroupBoxView.h"
+#include "ui_RawWidget.h"
 
 class RawController;
 
 
-class RawView : public QWidget, public Ui::RawGroupBoxView
+class RawView : public QWidget, public Ui::RawWidget
 {
     Q_OBJECT
 

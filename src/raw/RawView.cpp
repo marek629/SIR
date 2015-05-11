@@ -27,6 +27,11 @@
 RawView::RawView(QWidget *parent) : QWidget(parent)
 {
     setupUi(this);
+
+#if QT_VERSION >= 0x050200
+    helpTextBrowser->setPlaceholderText(tr("dcraw Help"));
+#endif
+
     connect(dcrawPushButton, SIGNAL(clicked()),
             this, SLOT(browseButtonClicked()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)),
