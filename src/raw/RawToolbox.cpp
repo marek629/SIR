@@ -21,9 +21,27 @@
 
 #include "RawToolbox.hpp"
 
+#include <QProcess>
+
+
+// TODO: migrate dependency from RawGroup to RawModel
 RawToolbox::RawToolbox(Settings::RawGroup *rawSettings)
 {
     this->rawSettings = rawSettings;
+}
+
+QString RawToolbox::helpMessage()
+{
+    QProcess dcraw;
+    dcraw.start(rawSettings->dcrawPath);
+
+    if (!dcraw.waitForStarted())
+        return QString();
+
+    if (!dcraw.waitForFinished())
+        return QString();
+
+    return dcraw.readAll();
 }
 
 QStringList RawToolbox::fileFilters() const

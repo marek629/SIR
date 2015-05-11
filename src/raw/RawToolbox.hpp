@@ -31,6 +31,8 @@ class RawToolbox {
 public:
     RawToolbox(Settings::RawGroup *rawSettings);
 
+    QString helpMessage();
+
     QStringList fileFilters() const;
 
     QString dcrawPath() const;

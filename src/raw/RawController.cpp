@@ -22,6 +22,7 @@
 #include "raw/RawController.hpp"
 
 #include "raw/RawModel.hpp"
+#include "raw/RawToolbox.hpp"
 #include "raw/RawView.hpp"
 #include "widgets/MessageBox.hpp"
 #include "widgets/options/CommonOptions.hpp"
@@ -43,8 +44,11 @@ void RawController::loadSettings()
 
     setRawStatus(model->isEnabled());
 
-    view->dcrawLineEdit->setText(model->getDcrawPath());
     view->dcrawOptions->setText(model->getDcrawOptions());
+
+    if (checkDcrawPath(model->getDcrawPath())) {
+        setDcrawPath(model->getDcrawPath());
+    }
 }
 
 void RawController::saveSettings()
@@ -89,7 +93,10 @@ void RawController::browseDcraw()
         return;
 
     fileName = QDir::toNativeSeparators(fileName);
-    view->dcrawLineEdit->setText(fileName);
+
+    if (checkDcrawPath(fileName)) {
+        setDcrawPath(fileName);
+    }
 }
 
 void RawController::setRawStatus(int state)
@@ -101,6 +108,8 @@ void RawController::setRawStatus(int state)
 
 bool RawController::checkDcrawPath(const QString &fileName)
 {
+    // TODO: refactor - reduce code branch count
+    // TODO: return true instruction should be first
     if (fileName.isEmpty()) {
         MessageBox::warning(
                     view, "SIR",
@@ -127,4 +136,16 @@ bool RawController::checkDcrawPath(const QString &fileName)
             return false;
         }
     }
+}
+
+void RawController::setDcrawPath(const QString &fileName)
+{
+    view->dcrawLineEdit->setText(fileName);
+
+    // TODO: RawToolbox toolbox = RawToolbox(model);
+    Settings::RawGroup rawGroup;
+    rawGroup.dcrawPath = model->getDcrawPath();
+    rawGroup.enabled = model->isEnabled();
+    RawToolbox toolbox = RawToolbox(&rawGroup);
+    view->helpTextBrowser->setPlainText(toolbox.helpMessage());
 }

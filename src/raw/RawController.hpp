@@ -46,6 +46,7 @@ private:
     RawModel *model;
     RawView *view;
     bool checkDcrawPath(const QString &fileName);
+    void setDcrawPath(const QString &fileName);
 };
 
 #endif // RAWCONTROLLER_HPP

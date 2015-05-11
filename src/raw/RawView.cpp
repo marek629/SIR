@@ -32,6 +32,8 @@ RawView::RawView(QWidget *parent) : QWidget(parent)
     helpTextBrowser->setPlaceholderText(tr("dcraw Help"));
 #endif
 
+    helpTextBrowser->setFontFamily("monospace");
+
     connect(dcrawPushButton, SIGNAL(clicked()),
             this, SLOT(browseButtonClicked()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)),
