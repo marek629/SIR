@@ -31,6 +31,7 @@ RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
     model = new RawModelRuntime(true, "/usr/bin/dcraw", "");
     view = new RawView(this);
     controller = new RawController(model, view, this);
+    controller->loadSettings();
 
     QLayout *layout = new QHBoxLayout(this);
     layout->addWidget(view);
