@@ -25,32 +25,40 @@
 #include "widgets/options/RawGroupBoxController.hpp"
 
 RawGroupBoxView::RawGroupBoxView(QWidget *parent)
-    : AbstractOptionsGroupBox(parent) {
+    : AbstractOptionsGroupBox(parent)
+{
     setupUi(this);
+    setTitle(tr("Raw Options"));
+
     connect(dcrawPushButton, SIGNAL(clicked()),
             this, SLOT(browseButtonClicked()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(rawEnabledStatusChanged(int)));
 }
 
-void RawGroupBoxView::loadSettings() {
+void RawGroupBoxView::loadSettings()
+{
     controller->loadSettings();
 }
 
-void RawGroupBoxView::saveSettings() {
+void RawGroupBoxView::saveSettings()
+{
     controller->saveSettings();
 }
 
-void RawGroupBoxView::setController(AbstractOptionsController *controller) {
+void RawGroupBoxView::setController(AbstractOptionsController *controller)
+{
     Q_ASSERT(typeid(*controller) == typeid(RawGroupBoxController));
 
     this->controller = (RawGroupBoxController *)controller;
 }
 
-void RawGroupBoxView::browseButtonClicked() {
+void RawGroupBoxView::browseButtonClicked()
+{
     controller->browseDcraw();
 }
 
-void RawGroupBoxView::rawEnabledStatusChanged(int state) {
+void RawGroupBoxView::rawEnabledStatusChanged(int state)
+{
     controller->setRawStatus(state);
 }

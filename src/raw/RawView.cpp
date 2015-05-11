@@ -24,7 +24,7 @@
 #include "raw/RawController.hpp"
 
 
-RawView::RawView(QWidget *parent) : QGroupBox(parent)
+RawView::RawView(QWidget *parent) : QWidget(parent)
 {
     setupUi(this);
     connect(dcrawPushButton, SIGNAL(clicked()),

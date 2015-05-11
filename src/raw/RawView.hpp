@@ -28,7 +28,7 @@
 class RawController;
 
 
-class RawView : public QGroupBox, public Ui::RawGroupBoxView
+class RawView : public QWidget, public Ui::RawGroupBoxView
 {
     Q_OBJECT
 

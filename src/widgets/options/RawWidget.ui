@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>RawGroupBoxView</class>
- <widget class="QGroupBox" name="RawGroupBoxView">
+ <widget class="QWidget" name="RawWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,9 +9,6 @@
     <width>369</width>
     <height>124</height>
    </rect>
-  </property>
-  <property name="title">
-   <string>Raw Options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0" colspan="3">
