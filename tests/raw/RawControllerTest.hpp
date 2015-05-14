@@ -19,23 +19,25 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWGROUPBOXCONROLLERTEST_H
-#define RAWGROUPBOXCONROLLERTEST_H
+#ifndef RAWCONTROLLERTEST_HPP
+#define RAWCONTROLLERTEST_HPP
 
 #include <QtTest/QTest>
-#include "widgets/options/RawGroupBoxController.hpp"
-#include "widgets/options/RawGroupBoxView.hpp"
 
-class RawGroupBoxControllerTest : public QObject {
+class RawController;
+class RawView;
+
+
+class RawControllerTest : public QObject
+{
     Q_OBJECT
-
 public:
-    RawGroupBoxControllerTest();
-    ~RawGroupBoxControllerTest();
+    RawControllerTest();
+    ~RawControllerTest();
 
 private:
-    RawGroupBoxController *controller;
-    RawGroupBoxView *view;
+    RawController *controller;
+    RawView *view;
 
 private slots:
     void initTestCase();
@@ -47,4 +49,4 @@ private slots:
     void checkDcrawPath_fileExecutable();
 };
 
-#endif // RAWGROUPBOXCONROLLERTEST_H
+#endif // RAWCONTROLLERTEST_HPP

@@ -32,6 +32,8 @@ class RawController : public QObject
 {
     Q_OBJECT
 
+    friend class RawControllerTest;
+
 public:
     RawController(RawModel *model, RawView *view, QObject *parent = 0);
     void loadSettings();
