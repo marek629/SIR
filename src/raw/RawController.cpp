@@ -108,33 +108,28 @@ void RawController::setRawStatus(int state)
 
 bool RawController::checkDcrawPath(const QString &fileName)
 {
-    // TODO: refactor - reduce code branch count
-    // TODO: return true instruction should be first
     if (fileName.isEmpty()) {
-        MessageBox::warning(
-                    view, "SIR",
-                    tr("No dcraw executable chosen. "
-                       "RAW support will not be enabled!"));
+        QString message = tr("No dcraw executable chosen. "
+                             "RAW support will not be enabled!");
+        MessageBox::warning(view, "SIR", message);
+        return false;
+    }
+
+    QFile dcraw(fileName);
+    if (dcraw.exists() && dcraw.permissions().testFlag(QFile::ExeOwner)) {
+        return true;
+    }
+
+    if (dcraw.exists()) {
+        QString message = tr("The chosen file is not executable. "
+                             "RAW support will not be enabled!");
+        MessageBox::warning(view, "SIR", message);
         return false;
     } else {
-        QFile dcraw(fileName);
-        if (dcraw.exists()) {
-            if (dcraw.permissions().testFlag(QFile::ExeOwner)) {
-                return true;
-            } else {
-                MessageBox::warning(
-                            view, "SIR",
-                            tr("The chosen file is not executable. "
-                               "RAW support will not be enabled!"));
-                return false;
-            }
-        } else {
-            MessageBox::warning(
-                        view, "SIR",
-                        tr("dcraw executable not found. "
-                           "RAW support will not be enabled!"));
-            return false;
-        }
+        QString message = tr("dcraw executable not found. "
+                             "RAW support will not be enabled!");
+        MessageBox::warning(view, "SIR", message);
+        return false;
     }
 }
 
