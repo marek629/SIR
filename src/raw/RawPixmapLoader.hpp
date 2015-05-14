@@ -30,7 +30,7 @@
 class RawPixmapLoader : public RawLoader
 {
 public:
-    RawPixmapLoader(Settings::RawGroup *rawSettings, const QString &filePath);
+    RawPixmapLoader(RawModel *rawModel, const QString &filePath);
     Pixmap *load();
 
 protected:

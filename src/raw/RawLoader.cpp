@@ -27,8 +27,8 @@
 #include <QProcess>
 
 
-RawLoader::RawLoader(Settings::RawGroup *rawSettings, const QString &filePath)
-    : RawToolbox(rawSettings)
+RawLoader::RawLoader(RawModel *rawModel, const QString &filePath)
+    : RawToolbox(rawModel)
 {
     this->filePath = filePath;
 }

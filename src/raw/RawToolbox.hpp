@@ -22,14 +22,15 @@
 #ifndef RAWTOOLBOX_HPP
 #define RAWTOOLBOX_HPP
 
-#include "Settings.hpp"
-
 #include <QStringList>
 
+class RawModel;
 
-class RawToolbox {
+
+class RawToolbox
+{
 public:
-    RawToolbox(Settings::RawGroup *rawSettings);
+    RawToolbox(RawModel *rawModel);
 
     QString helpMessage();
 
@@ -39,7 +40,7 @@ public:
     bool isRawSupportEnabled() const;
 
 private:
-    Settings::RawGroup *rawSettings;
+    RawModel *rawModel;
 };
 
 #endif // RAWTOOLBOX_HPP

@@ -30,7 +30,7 @@ class PaintDevice;
 class RawLoader : public RawToolbox
 {
 public:
-    RawLoader(Settings::RawGroup *rawSettings, const QString &filePath);
+    RawLoader(RawModel *rawModel, const QString &filePath);
 
     bool isRawImage() const;
 

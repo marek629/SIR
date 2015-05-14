@@ -22,7 +22,8 @@
 #include "raw/RawModel.hpp"
 
 
-RawModel::RawModel(bool enabled, QString dcrawPath, QString dcrawOptions)
+RawModel::RawModel(bool enabled, const QString &dcrawPath,
+                   const QString &dcrawOptions)
 {
     this->enabled = enabled;
     this->dcrawPath = dcrawPath;

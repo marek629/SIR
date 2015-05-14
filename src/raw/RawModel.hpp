@@ -32,7 +32,7 @@ protected:
     QString dcrawPath;
     QString dcrawOptions;
 
-    RawModel(bool enabled, QString dcrawPath, QString dcrawOptions);
+    RawModel(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
 
 public:
     bool isValid() const;

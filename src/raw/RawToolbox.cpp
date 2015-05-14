@@ -19,21 +19,22 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "RawToolbox.hpp"
+#include "raw/RawToolbox.hpp"
+
+#include "raw/RawModel.hpp"
 
 #include <QProcess>
 
 
-// TODO: migrate dependency from RawGroup to RawModel
-RawToolbox::RawToolbox(Settings::RawGroup *rawSettings)
+RawToolbox::RawToolbox(RawModel *rawModel)
 {
-    this->rawSettings = rawSettings;
+    this->rawModel = rawModel;
 }
 
 QString RawToolbox::helpMessage()
 {
     QProcess dcraw;
-    dcraw.start(rawSettings->dcrawPath);
+    dcraw.start(rawModel->getDcrawPath());
 
     if (!dcraw.waitForStarted())
         return QString();
@@ -90,10 +91,10 @@ QStringList RawToolbox::fileFilters() const
 
 QString RawToolbox::dcrawPath() const
 {
-    return rawSettings->dcrawPath;
+    return rawModel->getDcrawPath();
 }
 
 bool RawToolbox::isRawSupportEnabled() const
 {
-    return rawSettings->enabled;
+    return rawModel->isEnabled();
 }

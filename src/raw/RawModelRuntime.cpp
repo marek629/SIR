@@ -21,9 +21,13 @@
 
 #include "raw/RawModelRuntime.hpp"
 
-RawModelRuntime::RawModelRuntime(bool enabled, QString dcrawPath,
-                                 QString dcrawOptions)
+RawModelRuntime::RawModelRuntime(bool enabled, const QString &dcrawPath,
+                                 const QString &dcrawOptions)
     : RawModel(enabled, dcrawPath, dcrawOptions) {}
+
+RawModelRuntime::RawModelRuntime(const Settings::RawGroup &rawSettings)
+    : RawModel(rawSettings.enabled, rawSettings.dcrawPath,
+               rawSettings.dcrawOptions) {}
 
 bool RawModelRuntime::isPersistable() const
 {

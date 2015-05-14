@@ -137,10 +137,6 @@ void RawController::setDcrawPath(const QString &fileName)
 {
     view->dcrawLineEdit->setText(fileName);
 
-    // TODO: RawToolbox toolbox = RawToolbox(model);
-    Settings::RawGroup rawGroup;
-    rawGroup.dcrawPath = model->getDcrawPath();
-    rawGroup.enabled = model->isEnabled();
-    RawToolbox toolbox = RawToolbox(&rawGroup);
+    RawToolbox toolbox = RawToolbox(model);
     view->helpTextBrowser->setPlainText(toolbox.helpMessage());
 }

@@ -24,9 +24,9 @@
 #include <QProcess>
 
 
-RawPixmapLoader::RawPixmapLoader(Settings::RawGroup *rawSettings,
+RawPixmapLoader::RawPixmapLoader(RawModel *rawModel,
                                  const QString &filePath)
-    : RawLoader(rawSettings, filePath) {}
+    : RawLoader(rawModel, filePath) {}
 
 Pixmap *RawPixmapLoader::load()
 {

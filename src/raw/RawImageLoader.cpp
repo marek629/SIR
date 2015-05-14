@@ -23,10 +23,9 @@
 
 #include <QProcess>
 
-// TODO: use this class
-RawImageLoader::RawImageLoader(Settings::RawGroup *rawSettings,
-                               const QString &filePath)
-    : RawLoader(rawSettings, filePath) {}
+
+RawImageLoader::RawImageLoader(RawModel *rawModel, const QString &filePath)
+    : RawLoader(rawModel, filePath) {}
 
 Image *RawImageLoader::load()
 {

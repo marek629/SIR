@@ -29,6 +29,7 @@
 #include "NetworkUtils.hpp"
 #include "Selection.hpp"
 #include "Session.hpp"
+#include "raw/RawModelRuntime.hpp"
 #include "raw/RawToolbox.hpp"
 #include "Version.hpp"
 #include "widgets/AboutDialog.hpp"
@@ -342,7 +343,8 @@ void ConvertDialog::init() {
     csd->fileFilters = "*.";
     csd->fileFilters.append(list.join(" *.").toUpper());
 
-    RawToolbox rawToolbox = RawToolbox(&(Settings::instance()->raw));
+    RawModelRuntime rawModel = RawModelRuntime(Settings::instance()->raw);
+    RawToolbox rawToolbox = RawToolbox(&rawModel);
     rawFormats = rawToolbox.fileFilters();
 
     loadSettings();

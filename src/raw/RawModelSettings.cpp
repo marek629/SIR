@@ -22,8 +22,8 @@
 #include "raw/RawModelSettings.hpp"
 
 
-RawModelSettings::RawModelSettings(bool enabled, QString dcrawPath,
-                                   QString dcrawOptions)
+RawModelSettings::RawModelSettings(bool enabled, const QString &dcrawPath,
+                                   const QString &dcrawOptions)
     : RawModel(enabled, dcrawPath, dcrawOptions) {}
 
 bool RawModelSettings::isPersistable() const

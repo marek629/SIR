@@ -24,11 +24,14 @@
 
 #include "raw/RawModel.hpp"
 
+#include "Settings.hpp"
+
 
 class RawModelRuntime : public RawModel
 {
 public:
-    RawModelRuntime(bool enabled, QString dcrawPath, QString dcrawOptions);
+    RawModelRuntime(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
+    RawModelRuntime(const Settings::RawGroup &rawSettings);
 
     bool isPersistable() const;
 };

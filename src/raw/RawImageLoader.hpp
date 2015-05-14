@@ -30,7 +30,7 @@
 class RawImageLoader : public RawLoader
 {
 public:
-    RawImageLoader(Settings::RawGroup *rawSettings, const QString &filePath);
+    RawImageLoader(RawModel *rawModel, const QString &filePath);
     Image *load();
 
 protected:

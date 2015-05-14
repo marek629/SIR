@@ -28,7 +28,8 @@
 class RawModelSettings : public RawModel
 {
 public:
-    RawModelSettings(bool enabled, QString dcrawPath, QString dcrawOptions);
+    RawModelSettings(bool enabled, const QString &dcrawPath,
+                     const QString &dcrawOptions);
 
     bool isPersistable() const;
 
