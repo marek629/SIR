@@ -22,6 +22,8 @@
 #ifndef RAWMODEL_HPP
 #define RAWMODEL_HPP
 
+#include "Settings.hpp"
+
 #include <QString>
 
 
@@ -33,6 +35,7 @@ protected:
     QString dcrawOptions;
 
     RawModel(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
+    RawModel(const Settings::RawGroup &rawSettings);
 
 public:
     bool isValid() const;

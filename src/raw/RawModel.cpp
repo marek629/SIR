@@ -30,6 +30,13 @@ RawModel::RawModel(bool enabled, const QString &dcrawPath,
     this->dcrawOptions = dcrawOptions;
 }
 
+RawModel::RawModel(const Settings::RawGroup &rawSettings)
+{
+    this->enabled = rawSettings.enabled;
+    this->dcrawPath = rawSettings.dcrawPath;
+    this->dcrawOptions = rawSettings.dcrawOptions;
+}
+
 bool RawModel::isValid() const
 {
     if (enabled == false) {

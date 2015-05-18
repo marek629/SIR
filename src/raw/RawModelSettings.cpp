@@ -26,6 +26,9 @@ RawModelSettings::RawModelSettings(bool enabled, const QString &dcrawPath,
                                    const QString &dcrawOptions)
     : RawModel(enabled, dcrawPath, dcrawOptions) {}
 
+RawModelSettings::RawModelSettings(const Settings::RawGroup &rawSettings)
+    : RawModel(rawSettings) {}
+
 bool RawModelSettings::isPersistable() const
 {
     return true;

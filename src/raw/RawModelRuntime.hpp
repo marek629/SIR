@@ -24,8 +24,6 @@
 
 #include "raw/RawModel.hpp"
 
-#include "Settings.hpp"
-
 
 class RawModelRuntime : public RawModel
 {
