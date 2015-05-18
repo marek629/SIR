@@ -35,6 +35,7 @@ set( sir_SRCS
         raw/RawPixmapLoader.cpp
         raw/RawToolbox.cpp
         raw/RawView.cpp
+        raw/RawViewWidget.cpp
         shared/EffectsConfiguration.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp

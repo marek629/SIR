@@ -24,21 +24,9 @@
 #include "raw/RawController.hpp"
 
 
-RawView::RawView(QWidget *parent) : QWidget(parent)
-{
-    setupUi(this);
+RawView::RawView() {}
 
-#if QT_VERSION >= 0x050200
-    helpTextBrowser->setPlaceholderText(tr("dcraw Help"));
-#endif
-
-    helpTextBrowser->setFontFamily("monospace");
-
-    connect(dcrawPushButton, SIGNAL(clicked()),
-            this, SLOT(browseButtonClicked()));
-    connect(rawCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(rawEnabledStatusChanged(int)));
-}
+RawView::~RawView() {}
 
 void RawView::loadSettings()
 {
@@ -55,12 +43,7 @@ void RawView::setController(RawController *controller)
     this->controller = controller;
 }
 
-void RawView::browseButtonClicked()
+QWidget * RawView::qWidget()
 {
-    controller->browseDcraw();
-}
-
-void RawView::rawEnabledStatusChanged(int state)
-{
-    controller->setRawStatus(state);
+    return NULL;
 }

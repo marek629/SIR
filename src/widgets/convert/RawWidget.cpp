@@ -23,17 +23,17 @@
 
 #include "raw/RawController.hpp"
 #include "raw/RawModelRuntime.hpp"
-#include "raw/RawView.hpp"
+#include "raw/RawViewWidget.hpp"
 
 
 RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
 {
     model = new RawModelRuntime(true, "/usr/bin/dcraw", "");
-    view = new RawView(this);
+    view = new RawViewWidget(this);
     controller = new RawController(model, view, this);
     controller->loadSettings();
 
     QLayout *layout = new QHBoxLayout(this);
-    layout->addWidget(view);
+    layout->addWidget(view->qWidget());
     setLayout(layout);
 }

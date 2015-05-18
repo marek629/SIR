@@ -19,48 +19,46 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWVIEW_HPP
-#define RAWVIEW_HPP
+#ifndef RAWVIEWWIDGET_HPP
+#define RAWVIEWWIDGET_HPP
 
-#include <QString>
+#include "raw/RawView.hpp"
 
-class RawController;
+#include "ui_RawWidget.h"
 
-class QWidget;
+#include <QWidget>
 
 
-class RawView
+class RawViewWidget : public QWidget, public RawView, public Ui::RawWidget
 {
+    Q_OBJECT
+
 public:
-    RawView();
-    virtual ~RawView();
+    explicit RawViewWidget(QWidget *parent = 0);
+    ~RawViewWidget();
 
-    void loadSettings();
-    void saveSettings();
+    QWidget *qWidget();
 
-    void setController(RawController *controller);
+    bool isEnabledChecked() const;
+    void setEnabledChecked(bool enabled);
 
-    virtual QWidget *qWidget();
+    QString pathText() const;
+    void setPathText(const QString &text);
+    void setPathTextEnabledInput(bool inputEnabled);
 
-    virtual bool isEnabledChecked() const = 0;
-    virtual void setEnabledChecked(bool enabled) = 0;
+    QString optionsText() const;
+    void setOptionsText(const QString &text);
+    void setOptionsTextEnabledInput(bool inputEnabled);
 
-    virtual QString pathText() const = 0;
-    virtual void setPathText(const QString &text) = 0;
-    virtual void setPathTextEnabledInput(bool inputEnabled) = 0;
+    void setHelpTextPlain(const QString &text);
 
-    virtual QString optionsText() const = 0;
-    virtual void setOptionsText(const QString &text) = 0;
-    virtual void setOptionsTextEnabledInput(bool inputEnabled) = 0;
+    void setButtonEnabledInput(bool inputEnabled);
 
-    virtual void setHelpTextPlain(const QString &text) = 0;
+    bool closeWindow();
 
-    virtual void setButtonEnabledInput(bool inputEnabled) = 0;
-
-    virtual bool closeWindow() = 0;
-
-protected:
-    RawController *controller;
+private slots:
+    void browseButtonClicked();
+    void rawEnabledStatusChanged(int state);
 };
 
-#endif // RAWVIEW_HPP
+#endif // RAWVIEWWIDGET_HPP

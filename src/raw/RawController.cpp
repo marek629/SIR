@@ -40,11 +40,11 @@ RawController::RawController(RawModel *model, RawView *view, QObject *parent)
 
 void RawController::loadSettings()
 {
-    view->rawCheckBox->setChecked(model->isEnabled());
+    view->setEnabledChecked(model->isEnabled());
 
     setRawStatus(model->isEnabled());
 
-    view->dcrawOptions->setText(model->getDcrawOptions());
+    view->setOptionsText(model->getDcrawOptions());
 
     if (checkDcrawPath(model->getDcrawPath())) {
         setDcrawPath(model->getDcrawPath());
@@ -54,39 +54,39 @@ void RawController::loadSettings()
 void RawController::saveSettings()
 {
     bool dcrawOk = false;
-    bool firstState = view->rawCheckBox->isChecked();
+    bool firstState = view->isEnabledChecked();
 
     // check dcraw executable
-    if (view->rawCheckBox->isChecked()) {
-        if ((dcrawOk = checkDcrawPath(view->dcrawLineEdit->text()))) {
+    if (view->isEnabledChecked()) {
+        if ((dcrawOk = checkDcrawPath(view->pathText()))) {
             model->setEnabled(true);
-            model->setDcrawPath(view->dcrawLineEdit->text());
-            model->setDcrawOptions(view->dcrawOptions->text());
+            model->setDcrawPath(view->pathText());
+            model->setDcrawOptions(view->optionsText());
         } else {
-            view->rawCheckBox->setChecked(false);
+            view->setEnabledChecked(false);
 
             model->setEnabled(false);
-            model->setDcrawPath(view->dcrawLineEdit->text());
-            model->setDcrawOptions(view->dcrawOptions->text());
+            model->setDcrawPath(view->pathText());
+            model->setDcrawOptions(view->optionsText());
 
             setRawStatus(false);
         }
     } else {
         model->setEnabled(false);
-        model->setDcrawPath(view->dcrawLineEdit->text());
-        model->setDcrawOptions(view->dcrawOptions->text());
+        model->setDcrawPath(view->pathText());
+        model->setDcrawOptions(view->optionsText());
     }
 
     if (dcrawOk || !firstState) {
         emit ok();
-        view->window()->close();
+        view->closeWindow();
     }
 }
 
 void RawController::browseDcraw()
 {
     QString fileName = QFileDialog::getOpenFileName(
-                view, tr("Select dcraw executable"),
+                view->qWidget(), tr("Select dcraw executable"),
                 CommonOptions::instance()->targetDirPath());
 
     if (fileName.isEmpty())
@@ -101,9 +101,9 @@ void RawController::browseDcraw()
 
 void RawController::setRawStatus(int state)
 {
-    view->dcrawLineEdit->setEnabled(state);
-    view->dcrawPushButton->setEnabled(state);
-    view->dcrawOptions->setEnabled(state);
+    view->setPathTextEnabledInput(state);
+    view->setButtonEnabledInput(state);
+    view->setOptionsTextEnabledInput(state);
 }
 
 bool RawController::checkDcrawPath(const QString &fileName)
@@ -111,7 +111,7 @@ bool RawController::checkDcrawPath(const QString &fileName)
     if (fileName.isEmpty()) {
         QString message = tr("No dcraw executable chosen. "
                              "RAW support will not be enabled!");
-        MessageBox::warning(view, "SIR", message);
+        MessageBox::warning(view->qWidget(), "SIR", message);
         return false;
     }
 
@@ -123,20 +123,20 @@ bool RawController::checkDcrawPath(const QString &fileName)
     if (dcraw.exists()) {
         QString message = tr("The chosen file is not executable. "
                              "RAW support will not be enabled!");
-        MessageBox::warning(view, "SIR", message);
+        MessageBox::warning(view->qWidget(), "SIR", message);
         return false;
     } else {
         QString message = tr("dcraw executable not found. "
                              "RAW support will not be enabled!");
-        MessageBox::warning(view, "SIR", message);
+        MessageBox::warning(view->qWidget(), "SIR", message);
         return false;
     }
 }
 
 void RawController::setDcrawPath(const QString &fileName)
 {
-    view->dcrawLineEdit->setText(fileName);
+    view->setPathText(fileName);
 
     RawToolbox toolbox = RawToolbox(model);
-    view->helpTextBrowser->setPlainText(toolbox.helpMessage());
+    view->setHelpTextPlain(toolbox.helpMessage());
 }
