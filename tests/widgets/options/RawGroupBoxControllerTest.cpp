@@ -19,23 +19,26 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
+#include "tests/widgets/options/RawGroupBoxControllerTest.hpp"
+
+#include "raw/RawModelRuntime.hpp"
+#include "widgets/MessageBox.hpp"
+
 #include <QDir>
 
-#include "tests/widgets/options/RawGroupBoxControllerTest.hpp"
-#include "widgets/MessageBox.hpp"
-#include "Settings.hpp"
 
 RawGroupBoxControllerTest::RawGroupBoxControllerTest() {
     MessageBox::enableTesting(true);
 
-    Settings::RawGroup *model = &Settings::instance()->raw;
+    model = new RawModelRuntime(true, "/usr/bin/dcraw", "");
     view = new RawGroupBoxView();
     controller = new RawGroupBoxController(model, view, this);
 }
 
 RawGroupBoxControllerTest::~RawGroupBoxControllerTest() {
-    delete view;
     delete controller;
+    delete model;
+    delete view;
 }
 
 void RawGroupBoxControllerTest::initTestCase() {}

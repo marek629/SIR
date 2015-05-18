@@ -19,12 +19,10 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include <QDialogButtonBox>
-#include <QListWidget>
-#include <QScrollArea>
-#include <QMessageBox>
-
 #include "widgets/OptionsDialog.hpp"
+
+#include "optionsenums.h"
+#include "raw/RawModelSettings.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/options/GeneralGroupBoxController.hpp"
 #include "widgets/options/GeneralGroupBoxView.hpp"
@@ -42,10 +40,14 @@
 #include "widgets/options/SelectionGroupBoxView.hpp"
 #include "widgets/options/RawGroupBoxController.hpp"
 #include "widgets/options/RawGroupBoxView.hpp"
-#include "optionsenums.h"
 
-/** Default constructor.\n
-  * Sets up window, loads settings and creates connections.
+#include <QDialogButtonBox>
+#include <QMessageBox>
+#include <QListWidget>
+#include <QScrollArea>
+
+
+/** Sets up window, loads settings and creates connections.
   * \sa setupUi() loadSettings() createConnections()
   */
 OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {
@@ -202,12 +204,11 @@ void OptionsDialog::createGroupBoxes() {
 #endif // SIR_METADATA_SUPPORT
 
     selectionGroupBox = new SelectionGroupBoxView(scrollAreaWidgetContents);
-    selectionGroupBoxController = new SelectionGroupBoxController(&(model->selection),
-                                                                  selectionGroupBox,
-                                                                  this);
+    selectionGroupBoxController = new SelectionGroupBoxController(
+                &(model->selection), selectionGroupBox, this);
     rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
-    rawGroupBoxController = new RawGroupBoxController(&(model->raw),
-                                                      rawGroupBox,
+    RawModelSettings rawModel = RawModelSettings(model->raw);
+    rawGroupBoxController = new RawGroupBoxController(&rawModel, rawGroupBox,
                                                       this);
 
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
