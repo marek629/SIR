@@ -19,24 +19,41 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWMODELSETTINGS_HPP
-#define RAWMODELSETTINGS_HPP
+#ifndef RAWVIEWADAPTER_HPP
+#define RAWVIEWADAPTER_HPP
 
-#include "raw/RawModel.hpp"
+#include "raw/RawView.hpp"
+
+class RawGroupBoxView;
 
 
-class RawModelSettings : public RawModel
+class RawViewAdapter : public RawView
 {
 public:
-    RawModelSettings(bool enabled, const QString &dcrawPath,
-                     const QString &dcrawOptions);
-    RawModelSettings(const Settings::RawGroup &rawSettings);
-    ~RawModelSettings();
+    RawViewAdapter(RawGroupBoxView *groupBox);
+    ~RawViewAdapter();
 
-    bool isPersistable() const;
+    QWidget *qWidget();
 
-    // TODO: move here the code loading from settings
-    // RawModelSettings load(Settings)
+    bool isEnabledChecked() const;
+    void setEnabledChecked(bool enabled);
+
+    QString pathText() const;
+    void setPathText(const QString &text);
+    void setPathTextEnabledInput(bool inputEnabled);
+
+    QString optionsText() const;
+    void setOptionsText(const QString &text);
+    void setOptionsTextEnabledInput(bool inputEnabled);
+
+    void setHelpTextPlain(const QString &text);
+
+    void setButtonEnabledInput(bool inputEnabled);
+
+    bool closeWindow();
+
+private:
+    RawGroupBoxView *adaptedGroupBox;
 };
 
-#endif // RAWMODELSETTINGS_HPP
+#endif // RAWVIEWADAPTER_HPP

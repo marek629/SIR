@@ -23,8 +23,11 @@
 #define RAWGROUPBOXCONROLLERTEST_H
 
 #include <QtTest/QTest>
-#include "widgets/options/RawGroupBoxController.hpp"
-#include "widgets/options/RawGroupBoxView.hpp"
+
+class RawGroupBoxController;
+class RawGroupBoxView;
+class RawModel;
+
 
 class RawGroupBoxControllerTest : public QObject {
     Q_OBJECT
@@ -42,10 +45,9 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
 
-    void checkDcrawPath_emptyString();
-    void checkDcrawPath_fileNotExists();
-    void checkDcrawPath_fileNotExecutable();
-    void checkDcrawPath_fileExecutable();
+    void setRawStatus_true();
+    void setRawStatus_false();
+    void setRawStatus_notNull();
 };
 
 #endif // RAWGROUPBOXCONROLLERTEST_H

@@ -23,6 +23,8 @@
 
 #include "raw/RawModelRuntime.hpp"
 #include "widgets/MessageBox.hpp"
+#include "widgets/options/RawGroupBoxController.hpp"
+#include "widgets/options/RawGroupBoxView.hpp"
 
 #include <QDir>
 
@@ -45,63 +47,33 @@ void RawGroupBoxControllerTest::initTestCase() {}
 
 void RawGroupBoxControllerTest::cleanupTestCase() {}
 
-void RawGroupBoxControllerTest::checkDcrawPath_emptyString() {
-    QString input("");
+void RawGroupBoxControllerTest::setRawStatus_true()
+{
+    controller->setRawStatus(true);
 
-    bool expected = false;
-    bool result = controller->checkDcrawPath(input);
-
-    QCOMPARE(result, expected);
+    QVERIFY(view->dcrawLineEdit->isEnabled());
+    QVERIFY(view->dcrawPushButton->isEnabled());
+    QVERIFY(view->dcrawOptions->isEnabled());
 }
 
-void RawGroupBoxControllerTest::checkDcrawPath_fileNotExists() {
-    QString input("/test_dcraw.bin");
-    input.prepend(QDir::tempPath());
+void RawGroupBoxControllerTest::setRawStatus_false()
+{
+    controller->setRawStatus(false);
 
-    QFile file(input);
-    QVERIFY(!file.exists());
-
-    bool expected = false;
-    bool result = controller->checkDcrawPath(input);
-
-    QCOMPARE(result, expected);
+    QVERIFY(!view->dcrawLineEdit->isEnabled());
+    QVERIFY(!view->dcrawPushButton->isEnabled());
+    QVERIFY(!view->dcrawOptions->isEnabled());
 }
 
-void RawGroupBoxControllerTest::checkDcrawPath_fileNotExecutable() {
-    QString input("/test_dcraw.bin");
-    input.prepend(QDir::tempPath());
+void RawGroupBoxControllerTest::setRawStatus_notNull()
+{
+    controller->setRawStatus(10);
 
-    QFile file(input);
-    QVERIFY(!file.exists());
-    file.open(QFile::ReadWrite);
-    file.setPermissions(QFile::ReadOwner | QFile::WriteOwner);
-    QVERIFY(file.exists());
-
-    bool expected = false;
-    bool result = controller->checkDcrawPath(input);
-
-    QCOMPARE(result, expected);
-
-    QVERIFY(file.remove());
+    QVERIFY(view->dcrawLineEdit->isEnabled());
+    QVERIFY(view->dcrawPushButton->isEnabled());
+    QVERIFY(view->dcrawOptions->isEnabled());
 }
 
-void RawGroupBoxControllerTest::checkDcrawPath_fileExecutable() {
-    QString input("/test_dcraw.bin");
-    input.prepend(QDir::tempPath());
-
-    QFile file(input);
-    QVERIFY(!file.exists());
-    file.open(QFile::ReadWrite);
-    file.setPermissions(QFile::ExeOwner);
-    QVERIFY(file.exists());
-
-    bool expected = true;
-    bool result = controller->checkDcrawPath(input);
-
-    QCOMPARE(result, expected);
-
-    QVERIFY(file.remove());
-}
 
 QTEST_MAIN(RawGroupBoxControllerTest)
 #include "RawGroupBoxControllerTest.moc"

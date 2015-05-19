@@ -46,6 +46,8 @@ class SelectionGroupBoxController;
 class SelectionGroupBoxView;
 class RawGroupBoxController;
 class RawGroupBoxView;
+class RawModel;
+
 
 //! Settings wizard window.
 class OptionsDialog : public QDialog {
@@ -92,6 +94,7 @@ private:
     SelectionGroupBoxController *selectionGroupBoxController;
     RawGroupBoxView *rawGroupBox;
     RawGroupBoxController *rawGroupBoxController;
+    RawModel *rawModel;
 
     // methods
     void createConnections();

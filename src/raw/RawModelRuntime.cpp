@@ -28,6 +28,8 @@ RawModelRuntime::RawModelRuntime(bool enabled, const QString &dcrawPath,
 RawModelRuntime::RawModelRuntime(const Settings::RawGroup &rawSettings)
     : RawModel(rawSettings) {}
 
+RawModelRuntime::~RawModelRuntime() {}
+
 bool RawModelRuntime::isPersistable() const
 {
     return false;

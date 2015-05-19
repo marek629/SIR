@@ -37,6 +37,8 @@ RawModel::RawModel(const Settings::RawGroup &rawSettings)
     this->dcrawOptions = rawSettings.dcrawOptions;
 }
 
+RawModel::~RawModel() {}
+
 bool RawModel::isValid() const
 {
     if (enabled == false) {

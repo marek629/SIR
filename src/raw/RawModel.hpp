@@ -38,6 +38,8 @@ protected:
     RawModel(const Settings::RawGroup &rawSettings);
 
 public:
+    virtual ~RawModel();
+
     bool isValid() const;
 
     virtual bool isPersistable() const = 0;

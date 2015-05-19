@@ -30,6 +30,7 @@ class RawModelRuntime : public RawModel
 public:
     RawModelRuntime(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
     RawModelRuntime(const Settings::RawGroup &rawSettings);
+    ~RawModelRuntime();
 
     bool isPersistable() const;
 };
