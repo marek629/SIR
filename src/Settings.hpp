@@ -19,19 +19,24 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef SETTINGS_HPP
+#define SETTINGS_HPP
 
 #ifndef SIR_CMAKE
 #define SIR_METADATA_SUPPORT
 #endif // SIR_CMAKE
 
 #include <QSettings>
+
+#include "raw/RawModel.hpp"
+
 #include <QPoint>
 #include <QSize>
 
+
 typedef QMap<QString,QVariant>  HistoryMap;
 typedef QList<QVariant>         HistoryList;
+
 
 /** \brief Settings manipulation class implemented as singleton.
   *
@@ -163,12 +168,7 @@ public:
         HistoryList iptcEditStatusList;
     } selectionDialog;
 
-    // TODO: change usages to RawModel class usage and remove RawGroup struct
-    struct RawGroup {
-        bool enabled;
-        QString dcrawPath;
-        QString dcrawOptions;
-    } raw;
+    RawModel raw;
 
 private:
     // constructors
@@ -186,4 +186,4 @@ private:
     static bool testingEnabled;
 };
 
-#endif // SETTINGS_H
+#endif // SETTINGS_HPP

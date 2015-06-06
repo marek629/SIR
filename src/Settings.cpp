@@ -197,12 +197,7 @@ void Settings::readSettings() {
     sd.iptcEditStatusList           = value("iptcEditStatusList").toList();
     endGroup(); // SelectionDialog
 
-    // TODO: use RawModel::load() instead below code
-    beginGroup("Raw");
-    raw.enabled         = value("enabled",false).toBool();
-    raw.dcrawPath       = value("dcrawPath","/usr/bin/dcraw").toString();
-    raw.dcrawOptions    = value("dcrawOptions","").toString();
-    endGroup(); // Raw
+    raw.load(*this);
 }
 
 /** Writes settings data from public structs with \e Group suffix to settings
@@ -315,11 +310,8 @@ void Settings::writeSettings() {
     setValue("iptcEditStatusMap",           sd.iptcEditStatusMap);
     setValue("iptcEditStatusList",          sd.iptcEditStatusList);
     endGroup(); // SelectionDialog
-    beginGroup("Raw");
-    setValue("enabled",         raw.enabled);
-    setValue("dcrawPath",       raw.dcrawPath);
-    setValue("dcrawOptions",    raw.dcrawOptions);
-    endGroup(); // Raw
+
+    raw.save(this);
 }
 
 QVariant Settings::value(const QString &key, const QVariant &defaultValue) const {

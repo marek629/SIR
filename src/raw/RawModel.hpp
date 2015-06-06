@@ -22,9 +22,9 @@
 #ifndef RAWMODEL_HPP
 #define RAWMODEL_HPP
 
-#include "Settings.hpp"
-
 #include <QString>
+
+class Settings;
 
 
 class RawModel
@@ -32,7 +32,7 @@ class RawModel
 public:
     RawModel();
     RawModel(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
-    RawModel(const Settings::RawGroup &rawSettings);
+    RawModel(const RawModel &other);
     ~RawModel();
 
     // TODO: use isValid() method in a production code

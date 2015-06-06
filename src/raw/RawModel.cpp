@@ -21,6 +21,8 @@
 
 #include "raw/RawModel.hpp"
 
+#include "Settings.hpp"
+
 
 RawModel::RawModel() {}
 
@@ -32,11 +34,11 @@ RawModel::RawModel(bool enabled, const QString &dcrawPath,
     this->dcrawOptions = dcrawOptions;
 }
 
-RawModel::RawModel(const Settings::RawGroup &rawSettings)
+RawModel::RawModel(const RawModel &other)
 {
-    this->enabled = rawSettings.enabled;
-    this->dcrawPath = rawSettings.dcrawPath;
-    this->dcrawOptions = rawSettings.dcrawOptions;
+    this->enabled = other.enabled;
+    this->dcrawPath = other.dcrawPath;
+    this->dcrawOptions = other.dcrawOptions;
 }
 
 RawModel::~RawModel() {}

@@ -756,7 +756,7 @@ void ConvertDialog::loadSettings() {
     }
     sizeScrollArea->maintainCheckBox->setChecked(       s->size.keepAspectRatio);
     // raw
-    rawEnabled = s->raw.enabled;
+    rawEnabled = s->raw.isEnabled();
     if(rawEnabled) {
         foreach(QString ext, rawFormats) {
             if(!csd->fileFilters.contains(ext)) {
