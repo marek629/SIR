@@ -30,14 +30,15 @@
 class RawModel
 {
 public:
-    static RawModel load(const Settings &settings);
-
+    RawModel();
     RawModel(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
     RawModel(const Settings::RawGroup &rawSettings);
     ~RawModel();
 
     // TODO: use isValid() method in a production code
     bool isValid() const;
+
+    void load(const Settings &settings);
 
     bool isEnabled() const;
     void setEnabled(bool value);

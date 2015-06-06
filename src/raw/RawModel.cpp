@@ -22,14 +22,7 @@
 #include "raw/RawModel.hpp"
 
 
-RawModel RawModel::load(const Settings &settings)
-{
-    bool isEnabled = settings.value("Raw/enabled", false).toBool();
-    QString dcrawPath = settings.value("Raw/dcrawPath", "/usr/bin/dcraw").toString();
-    QString dcrawOptions = settings.value("Raw/dcrawOptions", "").toString();
-
-    return RawModel(isEnabled, dcrawPath, dcrawOptions);
-}
+RawModel::RawModel() {}
 
 RawModel::RawModel(bool enabled, const QString &dcrawPath,
                    const QString &dcrawOptions)
@@ -55,6 +48,13 @@ bool RawModel::isValid() const
     }
 
     return !(dcrawPath.isEmpty() || dcrawOptions.isEmpty());
+}
+
+void RawModel::load(const Settings &settings)
+{
+    enabled = settings.value("Raw/enabled", false).toBool();
+    dcrawPath = settings.value("Raw/dcrawPath", "/usr/bin/dcraw").toString();
+    dcrawOptions = settings.value("Raw/dcrawOptions", "").toString();
 }
 
 bool RawModel::isEnabled() const
