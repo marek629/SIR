@@ -22,7 +22,7 @@
 #include "widgets/OptionsDialog.hpp"
 
 #include "optionsenums.h"
-#include "raw/RawModelSettings.hpp"
+#include "raw/RawModel.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/options/GeneralGroupBoxController.hpp"
 #include "widgets/options/GeneralGroupBoxView.hpp"
@@ -208,7 +208,7 @@ void OptionsDialog::createGroupBoxes() {
     selectionGroupBoxController = new SelectionGroupBoxController(
                 &(model->selection), selectionGroupBox, this);
     rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
-    rawModel = new RawModelSettings(model->raw);
+    rawModel = new RawModel(model->raw);
     rawGroupBoxController = new RawGroupBoxController(rawModel, rawGroupBox,
                                                       this);
 

@@ -21,7 +21,7 @@
 
 #include "tests/widgets/options/RawGroupBoxControllerTest.hpp"
 
-#include "raw/RawModelRuntime.hpp"
+#include "raw/RawModel.hpp"
 #include "widgets/MessageBox.hpp"
 #include "widgets/options/RawGroupBoxController.hpp"
 #include "widgets/options/RawGroupBoxView.hpp"
@@ -32,7 +32,7 @@
 RawGroupBoxControllerTest::RawGroupBoxControllerTest() {
     MessageBox::enableTesting(true);
 
-    model = new RawModelRuntime(true, "/usr/bin/dcraw", "");
+    model = new RawModel(true, "/usr/bin/dcraw", "");
     view = new RawGroupBoxView();
     controller = new RawGroupBoxController(model, view, this);
 }

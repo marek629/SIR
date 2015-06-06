@@ -25,7 +25,7 @@
 #include "Settings.hpp"
 #include "SvgModifier.hpp"
 #include "raw/RawImageLoader.hpp"
-#include "raw/RawModelRuntime.hpp"
+#include "raw/RawModel.hpp"
 #include "widgets/MessageBox.hpp"
 
 #include <QDebug>
@@ -75,7 +75,7 @@ void ConvertThread::convertImage(const QString& name, const QString& extension,
   */
 void ConvertThread::run()
 {
-    RawModelRuntime rawModel = RawModelRuntime(Settings::instance()->raw);
+    RawModel rawModel = RawModel(Settings::instance()->raw);
     RawToolbox rawToolbox = RawToolbox(&rawModel);
     bool rawEnabled = rawToolbox.isRawSupportEnabled();
 

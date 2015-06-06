@@ -162,6 +162,8 @@ public:
         HistoryMap  iptcEditStatusMap;
         HistoryList iptcEditStatusList;
     } selectionDialog;
+
+    // TODO: change usages to RawModel class usage and remove RawGroup struct
     struct RawGroup {
         bool enabled;
         QString dcrawPath;

@@ -22,13 +22,13 @@
 #include "widgets/convert/RawWidget.hpp"
 
 #include "raw/RawController.hpp"
-#include "raw/RawModelRuntime.hpp"
+#include "raw/RawModel.hpp"
 #include "raw/RawViewWidget.hpp"
 
 
 RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
 {
-    model = new RawModelRuntime(true, "/usr/bin/dcraw", "");
+    model = new RawModel(true, "/usr/bin/dcraw", "");
     view = new RawViewWidget(this);
     controller = new RawController(model, view, this);
     controller->loadSettings();

@@ -21,7 +21,7 @@
 
 #include "widgets/PreviewDialog.hpp"
 
-#include "raw/RawModelRuntime.hpp"
+#include "raw/RawModel.hpp"
 #include "raw/RawPixmapLoader.hpp"
 
 #include <QDebug>
@@ -68,7 +68,7 @@ PreviewDialog::PreviewDialog(QWidget *parent, QStringList *images,
     this->setFocus();
     this->setModal(true);
 
-    RawModelRuntime rawModel = RawModelRuntime(Settings::instance()->raw);
+    RawModel rawModel = RawModel(Settings::instance()->raw);
     RawToolbox rawToolbox = RawToolbox(&rawModel);
     rawEnabled = rawToolbox.isRawSupportEnabled();
 #ifdef SIR_METADATA_SUPPORT
@@ -693,7 +693,7 @@ void PreviewDialog::loadPixmap() {
 
     // reading...
     if (rawEnabled) { // raw image
-        RawModelRuntime rawModel = RawModelRuntime((Settings::instance()->raw));
+        RawModel rawModel = RawModel(Settings::instance()->raw);
         RawPixmapLoader rawLoader = RawPixmapLoader(&rawModel, imagePath);
         image = rawLoader.load();
         readSuccess = (bool) image;

@@ -22,7 +22,7 @@
 #include "raw/RawControllerTest.hpp"
 
 #include "raw/RawController.hpp"
-#include "raw/RawModelRuntime.hpp"
+#include "raw/RawModel.hpp"
 #include "raw/RawViewWidget.hpp"
 #include "widgets/MessageBox.hpp"
 
@@ -33,7 +33,7 @@ RawControllerTest::RawControllerTest()
 {
     MessageBox::enableTesting(true);
 
-    RawModel *model = new RawModelRuntime(true, "/usr/bin/dcraw", "");
+    RawModel *model = new RawModel(true, "/usr/bin/dcraw", "");
     view = new RawViewWidget();
     controller = new RawController(model, view, this);
 }

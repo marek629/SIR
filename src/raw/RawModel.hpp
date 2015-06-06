@@ -29,20 +29,13 @@
 
 class RawModel
 {
-protected:
-    bool enabled;
-    QString dcrawPath;
-    QString dcrawOptions;
-
+public:
     RawModel(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
     RawModel(const Settings::RawGroup &rawSettings);
-
-public:
     virtual ~RawModel();
 
+    // TODO: use isValid() method in a production code
     bool isValid() const;
-
-    virtual bool isPersistable() const = 0;
 
     bool isEnabled() const;
     void setEnabled(bool value);
@@ -50,6 +43,13 @@ public:
     void setDcrawPath(const QString &value);
     QString getDcrawOptions() const;
     void setDcrawOptions(const QString &value);
+
+    // TODO: move here code loading RAW settings from Settings::loadSettings() method
+
+private:
+    bool enabled;
+    QString dcrawPath;
+    QString dcrawOptions;
 };
 
 #endif // RAWMODEL_HPP
