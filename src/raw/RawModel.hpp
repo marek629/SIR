@@ -30,9 +30,11 @@
 class RawModel
 {
 public:
+    static RawModel load(const Settings &settings);
+
     RawModel(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
     RawModel(const Settings::RawGroup &rawSettings);
-    virtual ~RawModel();
+    ~RawModel();
 
     // TODO: use isValid() method in a production code
     bool isValid() const;
@@ -43,8 +45,6 @@ public:
     void setDcrawPath(const QString &value);
     QString getDcrawOptions() const;
     void setDcrawOptions(const QString &value);
-
-    // TODO: move here code loading RAW settings from Settings::loadSettings() method
 
 private:
     bool enabled;

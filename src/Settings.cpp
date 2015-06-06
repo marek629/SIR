@@ -196,6 +196,8 @@ void Settings::readSettings() {
     sd.iptcEditStatusMap            = value("iptcEditStatusMap").toMap();
     sd.iptcEditStatusList           = value("iptcEditStatusList").toList();
     endGroup(); // SelectionDialog
+
+    // TODO: use RawModel::load() instead below code
     beginGroup("Raw");
     raw.enabled         = value("enabled",false).toBool();
     raw.dcrawPath       = value("dcrawPath","/usr/bin/dcraw").toString();
