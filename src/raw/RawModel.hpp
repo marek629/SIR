@@ -39,6 +39,7 @@ public:
     bool isValid() const;
 
     void load(const Settings &settings);
+    void save(Settings *settings);
 
     bool isEnabled() const;
     void setEnabled(bool value);

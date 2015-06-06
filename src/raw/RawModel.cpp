@@ -57,6 +57,17 @@ void RawModel::load(const Settings &settings)
     dcrawOptions = settings.value("Raw/dcrawOptions", "").toString();
 }
 
+void RawModel::save(Settings *settings)
+{
+    settings->beginGroup("Raw");
+
+    settings->setValue("enabled", enabled);
+    settings->setValue("dcrawPath", dcrawPath);
+    settings->setValue("dcrawOptions", dcrawOptions);
+
+    settings->endGroup();
+}
+
 bool RawModel::isEnabled() const
 {
     return enabled;
