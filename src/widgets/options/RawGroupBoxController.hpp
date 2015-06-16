@@ -47,12 +47,6 @@ public:
     void browseDcraw();
     void setRawStatus(int state);
 
-signals:
-    void ok(); /**< Indicates write settings success. */
-
-private slots:
-    void propagateOk();
-
 private:
     RawModel *model;
     RawGroupBoxView *view;

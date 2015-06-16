@@ -46,7 +46,6 @@ RawGroupBoxController::RawGroupBoxController(RawModel *model,
 
     this->adaptedController = new RawController(model, new RawViewAdapter(view),
                                                 parent);
-    connect(adaptedController, SIGNAL(ok()), this, SLOT(propagateOk()));
 }
 
 RawGroupBoxController::~RawGroupBoxController()
@@ -67,11 +66,6 @@ void RawGroupBoxController::browseDcraw()
 void RawGroupBoxController::setRawStatus(int state)
 {
     adaptedController->setRawStatus(state);
-}
-
-void RawGroupBoxController::propagateOk()
-{
-    emit ok();
 }
 
 /** Load settings and sets member widgets values.

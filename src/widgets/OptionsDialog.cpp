@@ -75,9 +75,6 @@ void OptionsDialog::createConnections() {
     // general
     connect(listWidget, SIGNAL(currentRowChanged(int)),
             this, SLOT(categoryChanged(int)));
-    // raw
-    connect(rawGroupBoxController, SIGNAL(ok()),
-            (ConvertDialog*)parent(), SLOT(loadSettings()));
     // ok button
     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(okButtonClicked()));
@@ -269,6 +266,7 @@ void OptionsDialog::okButtonClicked() {
         return;
     }
     saveSettings();
+    reinterpret_cast<ConvertDialog *>(parent())->loadSettings();
 }
 
 /** Setups user interface of options dialog. */
