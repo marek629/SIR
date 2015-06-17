@@ -30,6 +30,7 @@ set( sir_SRCS
         raw/RawImageLoader.cpp
         raw/RawLoader.cpp
         raw/RawModel.cpp
+        raw/RawModelValidator.cpp
         raw/RawPixmapLoader.cpp
         raw/RawToolbox.cpp
         raw/RawView.cpp

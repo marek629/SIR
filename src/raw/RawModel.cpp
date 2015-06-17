@@ -22,6 +22,7 @@
 #include "raw/RawModel.hpp"
 
 #include "Settings.hpp"
+#include "raw/RawModelValidator.hpp"
 
 
 RawModel::RawModel() {}
@@ -45,11 +46,7 @@ RawModel::~RawModel() {}
 
 bool RawModel::isValid() const
 {
-    if (enabled == false) {
-        return true;
-    }
-
-    return !(dcrawPath.isEmpty() || dcrawOptions.isEmpty());
+    return RawModelValidator().isValidModel(*this);
 }
 
 void RawModel::load(const Settings &settings)
