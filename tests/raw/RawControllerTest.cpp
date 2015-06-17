@@ -35,7 +35,7 @@ RawControllerTest::RawControllerTest()
 
     RawModel *model = new RawModel(true, "/usr/bin/dcraw", "");
     view = new RawViewWidget();
-    controller = new RawController(model, view, this);
+    controller = new RawController(model, view);
 }
 
 RawControllerTest::~RawControllerTest()

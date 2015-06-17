@@ -31,7 +31,7 @@ RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
 {
     model = &Settings::instance()->raw;
     view = new RawViewWidget(this);
-    controller = new RawController(model, view, this);
+    controller = new RawController(model, view);
     controller->loadSettings();
 
     QLayout *layout = new QHBoxLayout(this);

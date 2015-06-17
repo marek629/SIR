@@ -44,8 +44,7 @@ RawGroupBoxController::RawGroupBoxController(RawModel *model,
     this->view = view;
     this->view->setController(this);
 
-    this->adaptedController = new RawController(model, new RawViewAdapter(view),
-                                                parent);
+    this->adaptedController = new RawController(model, new RawViewAdapter(view));
 }
 
 RawGroupBoxController::~RawGroupBoxController()

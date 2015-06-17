@@ -22,20 +22,20 @@
 #ifndef RAWCONTROLLER_HPP
 #define RAWCONTROLLER_HPP
 
-#include <QObject>
+#include <QCoreApplication>
 
 class RawModel;
 class RawView;
 
 
-class RawController : public QObject
+class RawController
 {
-    Q_OBJECT
+    Q_DECLARE_TR_FUNCTIONS(RawController)
 
     friend class RawControllerTest;
 
 public:
-    RawController(RawModel *model, RawView *view, QObject *parent = 0);
+    RawController(RawModel *model, RawView *view);
     void loadSettings();
     void saveSettings();
     void browseDcraw();

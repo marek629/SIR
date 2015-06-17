@@ -30,8 +30,7 @@
 #include <QFileDialog>
 
 
-RawController::RawController(RawModel *model, RawView *view, QObject *parent)
-    : QObject(parent)
+RawController::RawController(RawModel *model, RawView *view)
 {
     this->model = model;
     this->view = view;
