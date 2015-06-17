@@ -78,7 +78,6 @@ void RawController::saveSettings()
     }
 
     if (dcrawOk || !firstState) {
-        emit ok();
         view->closeWindow();
     }
 }
