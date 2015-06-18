@@ -44,12 +44,12 @@ target_link_libraries( sir_rawcontroller_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "RawController_UT" COMMAND sir_rawcontroller_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
-set( sir_UT_rawmodel_SRCS
-        raw/RawModelTest.cpp
+set( sir_UT_rawmodelvalidator_SRCS
+        raw/RawModelValidatorTest.cpp
     )
-add_executable( sir_rawmodel_test ${sir_UT_rawmodel_SRCS} )
-target_link_libraries( sir_rawmodel_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "RawModel_UT" COMMAND sir_rawmodel_test )
+add_executable( sir_rawmodelvalidator_test ${sir_UT_rawmodelvalidator_SRCS} )
+target_link_libraries( sir_rawmodelvalidator_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "RawModelValidator_UT" COMMAND sir_rawmodelvalidator_test )
 
 
 set( sir_IT_convertdialog_SRCS

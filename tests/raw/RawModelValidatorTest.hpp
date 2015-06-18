@@ -19,33 +19,33 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWMODELTEST_HPP
-#define RAWMODELTEST_HPP
+#ifndef RAWMODELVALIDATORTEST_HPP
+#define RAWMODELVALIDATORTEST_HPP
 
 #include <QtTest/QTest>
 
 
-class RawModelTest : public QObject
+class RawModelValidatorTest : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit RawModelTest(QObject *parent = 0);
-    ~RawModelTest();
+    explicit RawModelValidatorTest(QObject *parent = 0);
+    ~RawModelValidatorTest();
 
 private slots:
     void initTestCase();
     void cleanupTestCase();
 
-    void testIsValid_disabled();
+    void test_isValidModel_disabled();
 
-    void testIsValid_enabled_emptyDcrawPath();
-    void testIsValid_enabled_nullDcrawPath();
-    void testIsValid_enabled_filledDcrawPath();
+    void test_isValidModel_enabled_emptyDcrawPath();
+    void test_isValidModel_enabled_nullDcrawPath();
+    void test_isValidModel_enabled_filledDcrawPath();
 
-    void testIsValid_enabled_emptyDcrawOptions();
-    void testIsValid_enabled_nullDcrawOptions();
-    void testIsValid_enabled_filledDcrawOptions();
+    void test_isValidModel_enabled_emptyDcrawOptions();
+    void test_isValidModel_enabled_nullDcrawOptions();
+    void test_isValidModel_enabled_filledDcrawOptions();
 };
 
-#endif // RAWMODELTEST_HPP
+#endif // RAWMODELVALIDATORTEST_HPP

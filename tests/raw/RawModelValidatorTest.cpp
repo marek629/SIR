@@ -19,20 +19,21 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "tests/raw/RawModelTest.hpp"
+#include "tests/raw/RawModelValidatorTest.hpp"
 
 #include "raw/RawModel.hpp"
+#include "raw/RawModelValidator.hpp"
 
 
-RawModelTest::RawModelTest(QObject *parent) : QObject(parent) {}
+RawModelValidatorTest::RawModelValidatorTest(QObject *parent) : QObject(parent) {}
 
-RawModelTest::~RawModelTest() {}
+RawModelValidatorTest::~RawModelValidatorTest() {}
 
-void RawModelTest::initTestCase() {}
+void RawModelValidatorTest::initTestCase() {}
 
-void RawModelTest::cleanupTestCase() {}
+void RawModelValidatorTest::cleanupTestCase() {}
 
-void RawModelTest::testIsValid_disabled()
+void RawModelValidatorTest::test_isValidModel_disabled()
 {
     bool isEnabled = false;
     QString dcrawPath = "nevermind";
@@ -43,7 +44,7 @@ void RawModelTest::testIsValid_disabled()
     QVERIFY(model.isValid() == true);
 }
 
-void RawModelTest::testIsValid_enabled_emptyDcrawPath()
+void RawModelValidatorTest::test_isValidModel_enabled_emptyDcrawPath()
 {
     bool isEnabled = true;
     QString dcrawPath = "";
@@ -54,7 +55,7 @@ void RawModelTest::testIsValid_enabled_emptyDcrawPath()
     QVERIFY(model.isValid() == false);
 }
 
-void RawModelTest::testIsValid_enabled_nullDcrawPath()
+void RawModelValidatorTest::test_isValidModel_enabled_nullDcrawPath()
 {
     bool isEnabled = true;
     QString dcrawPath;
@@ -65,7 +66,7 @@ void RawModelTest::testIsValid_enabled_nullDcrawPath()
     QVERIFY(model.isValid() == false);
 }
 
-void RawModelTest::testIsValid_enabled_filledDcrawPath()
+void RawModelValidatorTest::test_isValidModel_enabled_filledDcrawPath()
 {
     bool isEnabled = true;
     QString dcrawPath = "/test/path";
@@ -76,7 +77,7 @@ void RawModelTest::testIsValid_enabled_filledDcrawPath()
     QVERIFY(model.isValid() == true);
 }
 
-void RawModelTest::testIsValid_enabled_emptyDcrawOptions()
+void RawModelValidatorTest::test_isValidModel_enabled_emptyDcrawOptions()
 {
     bool isEnabled = true;
     QString dcrawPath = "nevermind";
@@ -87,7 +88,7 @@ void RawModelTest::testIsValid_enabled_emptyDcrawOptions()
     QVERIFY(model.isValid() == false);
 }
 
-void RawModelTest::testIsValid_enabled_nullDcrawOptions()
+void RawModelValidatorTest::test_isValidModel_enabled_nullDcrawOptions()
 {
     bool isEnabled = true;
     QString dcrawPath = "nevermind";
@@ -98,7 +99,7 @@ void RawModelTest::testIsValid_enabled_nullDcrawOptions()
     QVERIFY(model.isValid() == false);
 }
 
-void RawModelTest::testIsValid_enabled_filledDcrawOptions()
+void RawModelValidatorTest::test_isValidModel_enabled_filledDcrawOptions()
 {
     bool isEnabled = true;
     QString dcrawPath = "nevermind";
@@ -110,5 +111,5 @@ void RawModelTest::testIsValid_enabled_filledDcrawOptions()
 }
 
 
-QTEST_MAIN(RawModelTest)
-#include "RawModelTest.moc"
+QTEST_MAIN(RawModelValidatorTest)
+#include "RawModelValidatorTest.moc"
