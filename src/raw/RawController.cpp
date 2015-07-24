@@ -99,6 +99,7 @@ void RawController::browseDcraw()
 
 void RawController::setRawStatus(int state)
 {
+    model->setEnabled(state);
     view->setPathTextEnabledInput(state);
     view->setButtonEnabledInput(state);
     view->setOptionsTextEnabledInput(state);
