@@ -105,6 +105,11 @@ void RawController::setRawStatus(int state)
     view->setOptionsTextEnabledInput(state);
 }
 
+void RawController::setDcrawOptionsString(const QString &options)
+{
+    model->setDcrawOptions(options);
+}
+
 bool RawController::checkDcrawPath(const QString &fileName)
 {
     if (fileName.isEmpty()) {

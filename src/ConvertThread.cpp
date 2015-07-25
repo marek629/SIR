@@ -77,7 +77,6 @@ void ConvertThread::run()
 {
     RawModel rawModel = RawModel(Settings::instance()->raw);
     RawToolbox rawToolbox = RawToolbox(&rawModel);
-    bool rawEnabled = rawToolbox.isRawSupportEnabled();
 
     while(work) {
         pd.imgData = this->imageData; // imageData change protection by convertImage()
@@ -117,7 +116,7 @@ void ConvertThread::run()
         QImage *image = 0;
 
         // load image data
-        if (rawEnabled) {
+        if (rawToolbox.isRawSupportEnabled()) {
             RawImageLoader rawLoader = RawImageLoader(&rawModel, pd.imagePath);
             image = rawLoader.load();
         } else if (svgSource) {

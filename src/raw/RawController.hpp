@@ -40,6 +40,7 @@ public:
     void saveSettings();
     void browseDcraw();
     void setRawStatus(int state);
+    void setDcrawOptionsString(const QString &options);
 
 private:
     RawModel *model;

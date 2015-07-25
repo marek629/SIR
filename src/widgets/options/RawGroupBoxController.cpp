@@ -67,6 +67,11 @@ void RawGroupBoxController::setRawStatus(int state)
     adaptedController->setRawStatus(state);
 }
 
+void RawGroupBoxController::setDcrawOptionsString(const QString &options)
+{
+    adaptedController->setDcrawOptionsString(options);
+}
+
 /** Load settings and sets member widgets values.
   * \sa Settings saveSettings()
   */
