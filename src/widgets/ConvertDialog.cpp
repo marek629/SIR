@@ -29,8 +29,6 @@
 #include "NetworkUtils.hpp"
 #include "Selection.hpp"
 #include "Session.hpp"
-#include "raw/RawModel.hpp"
-#include "raw/RawToolbox.hpp"
 #include "Version.hpp"
 #include "widgets/AboutDialog.hpp"
 #include "widgets/convert/EffectsScrollAreaVisitor.hpp"
@@ -342,10 +340,6 @@ void ConvertDialog::init() {
     }
     csd->fileFilters = "*.";
     csd->fileFilters.append(list.join(" *.").toUpper());
-
-    RawModel rawModel = RawModel(Settings::instance()->raw);
-    RawToolbox rawToolbox = RawToolbox(&rawModel);
-    rawFormats = rawToolbox.fileFilters();
 
     loadSettings();
 
@@ -755,18 +749,6 @@ void ConvertDialog::loadSettings() {
         sizeScrollArea->heightDoubleSpinBox->setValue(  s->size.heightPx);
     }
     sizeScrollArea->maintainCheckBox->setChecked(       s->size.keepAspectRatio);
-    // raw
-    if(s->raw.isEnabled()) {
-        foreach(QString ext, rawFormats) {
-            if(!csd->fileFilters.contains(ext)) {
-                csd->fileFilters.append(ext);
-            }
-        }
-    } else {
-        foreach(QString ext, rawFormats) {
-            csd->fileFilters.remove(ext);
-        }
-    }
 #ifdef SIR_METADATA_SUPPORT
     // metadata
     using namespace MetadataUtils;

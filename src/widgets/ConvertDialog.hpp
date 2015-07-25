@@ -55,7 +55,6 @@ private:
     QList<ConvertThread*> convertThreads;
     QStringList args;
     QString targetFile;
-    QStringList rawFormats;
     quint8 numThreads;
     int convertedImages;
     int numImages;

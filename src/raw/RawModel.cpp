@@ -23,6 +23,7 @@
 
 #include "Settings.hpp"
 #include "raw/RawModelValidator.hpp"
+#include "raw/RawToolbox.hpp"
 
 
 RawModel::RawModel() {}
@@ -95,4 +96,17 @@ QString RawModel::getDcrawOptions() const
 void RawModel::setDcrawOptions(const QString &value)
 {
     dcrawOptions = value;
+}
+
+QString RawModel::fileFilterString()
+{
+    QString fileFilters;
+
+    if (isEnabled()) {
+        foreach (QString ext, RawToolbox(this).fileFilters()) {
+            fileFilters.append(ext);
+        }
+    }
+
+    return fileFilters;
 }

@@ -179,6 +179,7 @@ void TreeWidget::addFile() {
     const QString filterString = tr("Images") + "("
             + convertDialog->csd->fileFilters.toLower()
             + ' ' + convertDialog->csd->fileFilters.toUpper()
+            + ' ' + Settings::instance()->raw.fileFilterString()
             + ")";
 
     QStringList files = QFileDialog::getOpenFileNames(

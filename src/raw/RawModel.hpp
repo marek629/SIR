@@ -48,6 +48,8 @@ public:
     QString getDcrawOptions() const;
     void setDcrawOptions(const QString &value);
 
+    QString fileFilterString();
+
 private:
     bool enabled;
     QString dcrawPath;
