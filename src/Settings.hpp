@@ -175,8 +175,6 @@ private:
     explicit Settings(QObject *parent = 0);
     explicit Settings(const QString &organization,
                       const QString &application = QString(), QObject *parent = 0);
-    // destructor
-    ~Settings();
     // methods
     void migrateFrom_2_1();
     void migrateFrom_2_2();

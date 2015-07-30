@@ -562,6 +562,8 @@ void ConvertDialog::convert() {
 
     sharedInfo = configureSVG(sharedInfo, svgScrollArea);
 
+    sharedInfo = configureRaw(sharedInfo, rawScrollArea);
+
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
         convertThreads[i]->setAcceptWork( true );
@@ -592,9 +594,18 @@ SharedInformation *ConvertDialog::configureSVG(
         sharedInformation->svgRemoveText = QString();
     sharedInformation->svgRemoveEmptyGroup = svgScrollArea->removeGroupsCheckBox->isChecked();
     sharedInformation->svgSave = svgScrollArea->saveCheckBox->isChecked();
-    sharedInformation->svgModifiersEnabled = bool(sharedInformation->svgSave
-                                       || sharedInformation->svgRemoveEmptyGroup
-                                       || !sharedInformation->svgRemoveText.isNull());
+    sharedInformation->svgModifiersEnabled =
+            bool(sharedInformation->svgSave
+                 || sharedInformation->svgRemoveEmptyGroup
+                 || !sharedInformation->svgRemoveText.isNull());
+    return sharedInformation;
+}
+
+SharedInformation *ConvertDialog::configureRaw(
+        SharedInformation *sharedInformation, RawWidget *rawWidget)
+{
+    sharedInformation->rawModel = rawWidget->rawModel();
+
     return sharedInformation;
 }
 
@@ -780,6 +791,8 @@ void ConvertDialog::loadSettings() {
     if (exifOverwrite)
         Exif::setUserCommentString(sir::String( s->exif.userCommentMap.keys().first()));
 #endif // SIR_METADATA_SUPPORT
+    // raw
+    rawScrollArea->loadSettings(s->raw);
 }
 
 /** Save new window state and size in private fields.

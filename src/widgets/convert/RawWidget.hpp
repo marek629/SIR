@@ -36,6 +36,10 @@ class RawWidget : public QWidget
 public:
     RawWidget(QWidget *parent = 0);
 
+    void loadSettings(const RawModel &rawModel);
+
+    RawModel rawModel() const;
+
 private:
     RawController *controller;
     RawModel *model;

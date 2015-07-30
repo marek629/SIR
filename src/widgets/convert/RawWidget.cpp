@@ -29,7 +29,7 @@
 
 RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
 {
-    model = &Settings::instance()->raw;
+    model = new RawModel(Settings::instance()->raw);
     view = new RawViewWidget(this);
     controller = new RawController(model, view);
     controller->loadSettings();
@@ -38,3 +38,17 @@ RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
     layout->addWidget(view->qWidget());
     setLayout(layout);
 }
+
+void RawWidget::loadSettings(const RawModel &rawModel)
+{
+    model = new RawModel(rawModel);
+    controller->setModel(model);
+    controller->loadSettings();
+}
+
+RawModel RawWidget::rawModel() const
+{
+    return RawModel(*model);
+}
+
+// TODO: destructor

@@ -110,6 +110,11 @@ void RawController::setDcrawOptionsString(const QString &options)
     model->setDcrawOptions(options);
 }
 
+void RawController::setModel(RawModel *model)
+{
+    this->model = model;
+}
+
 bool RawController::checkDcrawPath(const QString &fileName)
 {
     if (fileName.isEmpty()) {

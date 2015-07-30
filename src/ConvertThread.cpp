@@ -75,8 +75,7 @@ void ConvertThread::convertImage(const QString& name, const QString& extension,
   */
 void ConvertThread::run()
 {
-    RawModel rawModel = RawModel(Settings::instance()->raw);
-    RawToolbox rawToolbox = RawToolbox(&rawModel);
+    RawToolbox rawToolbox = RawToolbox(&shared->rawModel);
 
     while(work) {
         pd.imgData = this->imageData; // imageData change protection by convertImage()
@@ -117,7 +116,8 @@ void ConvertThread::run()
 
         // load image data
         if (rawToolbox.isRawSupportEnabled()) {
-            RawImageLoader rawLoader = RawImageLoader(&rawModel, pd.imagePath);
+            RawImageLoader rawLoader = RawImageLoader(&shared->rawModel,
+                                                      pd.imagePath);
             image = rawLoader.load();
         } else if (svgSource) {
             image = loadSvgImage();

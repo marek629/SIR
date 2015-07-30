@@ -80,10 +80,14 @@ private:
     inline void writeWindowProperties();
     inline void resetAnswers();
     void convert();
+    // TODO: extract (or move to another) class
     SharedInformation *configureEffects(SharedInformation *sharedInformation,
                                         EffectsScrollArea *effectsScrollArea);
     SharedInformation *configureSVG(SharedInformation *sharedInformation,
                                     SvgScrollArea *svgScrollArea);
+    SharedInformation *configureRaw(SharedInformation *sharedInformation,
+                                    RawWidget *rawWidget);
+    // end TODO
     inline void clearTempDir();
 
 protected:

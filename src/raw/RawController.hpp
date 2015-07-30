@@ -41,6 +41,7 @@ public:
     void browseDcraw();
     void setRawStatus(int state);
     void setDcrawOptionsString(const QString &options);
+    void setModel(RawModel *model);
 
 private:
     RawModel *model;

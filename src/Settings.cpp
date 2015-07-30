@@ -62,13 +62,6 @@ Settings::Settings(const QString &organization, const QString &application,
     readSettings();
 }
 
-/** Destructor of Settings object. Writes settings to file.
-  * \sa writeSettings()
-  */
-Settings::~Settings() {
-    writeSettings();
-}
-
 /** Reads settings from settings file. Migrates old settings (i.e. from old SIR
   * releases) if it's necessary and load settings data to public structs with
   * \e Group suffix.

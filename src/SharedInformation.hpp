@@ -28,6 +28,7 @@
 #include <QColor>
 #include <QImage>
 
+#include "raw/RawModel.hpp"
 #include "shared/EffectsConfiguration.hpp"
 
 
@@ -104,6 +105,10 @@ private:
     QString svgRemoveText;
     bool svgRemoveEmptyGroup; /**< Enables removing all empty SVG \e g nodes. */
     bool svgSave; /**< Enables saving changed SVG file in SVG format also. */
+
+    // raw
+    RawModel rawModel;
+
 #ifdef SIR_METADATA_SUPPORT
     // metadata settings
     bool metadataEnabled; /**< Indicates that metadata support enabled. */
