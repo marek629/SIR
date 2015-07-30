@@ -59,6 +59,7 @@ public:
 private slots:
     void browseButtonClicked();
     void rawEnabledStatusChanged(int state);
+    void dcrawOptionsStringChanged();
 };
 
 #endif // RAWVIEWWIDGET_HPP

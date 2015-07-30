@@ -34,8 +34,6 @@ RawGroupBoxView::RawGroupBoxView(QWidget *parent)
             this, SLOT(browseButtonClicked()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(rawEnabledStatusChanged(int)));
-    connect(dcrawOptions, SIGNAL(editingFinished()),
-            this, SLOT(dcrawOptionsStringChanged()));
 }
 
 void RawGroupBoxView::loadSettings()
@@ -63,9 +61,4 @@ void RawGroupBoxView::browseButtonClicked()
 void RawGroupBoxView::rawEnabledStatusChanged(int state)
 {
     controller->setRawStatus(state);
-}
-
-void RawGroupBoxView::dcrawOptionsStringChanged()
-{
-    controller->setDcrawOptionsString(dcrawOptions->text());
 }

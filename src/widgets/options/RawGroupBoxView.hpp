@@ -44,7 +44,6 @@ public:
 private slots:
     void browseButtonClicked();
     void rawEnabledStatusChanged(int state);
-    void dcrawOptionsStringChanged();
 
 private:
     RawGroupBoxController *controller;

@@ -38,6 +38,8 @@ RawViewWidget::RawViewWidget(QWidget *parent) : QWidget(parent), RawView()
             this, SLOT(browseButtonClicked()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(rawEnabledStatusChanged(int)));
+    connect(dcrawOptions, SIGNAL(editingFinished()),
+            this, SLOT(dcrawOptionsStringChanged()));
 }
 
 RawViewWidget::~RawViewWidget() {}
@@ -110,4 +112,9 @@ void RawViewWidget::browseButtonClicked()
 void RawViewWidget::rawEnabledStatusChanged(int state)
 {
     controller->setRawStatus(state);
+}
+
+void RawViewWidget::dcrawOptionsStringChanged()
+{
+    controller->setDcrawOptionsString(dcrawOptions->text());
 }
