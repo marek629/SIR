@@ -31,16 +31,20 @@
 #include <QFileDialog>
 #include <QSvgRenderer>
 #include <QMimeData>
+
 #include "ConvertSharedData.hpp"
 #include "optionsenums.h"
+#include "raw/RawToolbox.hpp"
 #include "widgets/TreeWidget.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/PreviewDialog.hpp"
+
 #ifdef SIR_METADATA_SUPPORT
 #include "widgets/MetadataDialog.hpp"
 #endif // SIR_METADATA_SUPPORT
 
 using namespace sir;
+
 
 /** Default constructor. */
 TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent) {
@@ -176,10 +180,11 @@ void TreeWidget::addDir() {
   * \sa addDir() loadFiles(const QStringList&)
   */
 void TreeWidget::addFile() {
+    RawToolbox rawToolbox = RawToolbox(&Settings::instance()->raw);
     const QString filterString = tr("Images") + "("
             + convertDialog->csd->fileFilters.toLower()
             + ' ' + convertDialog->csd->fileFilters.toUpper()
-            + ' ' + Settings::instance()->raw.fileFilterString()
+            + ' ' + rawToolbox.fileFilterString()
             + ")";
 
     QStringList files = QFileDialog::getOpenFileNames(

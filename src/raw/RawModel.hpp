@@ -48,9 +48,6 @@ public:
     QString getDcrawOptions() const;
     void setDcrawOptions(const QString &value);
 
-    // TODO: move method to RawToolbox class
-    QString fileFilterString();
-
 private:
     bool enabled;
     QString dcrawPath;

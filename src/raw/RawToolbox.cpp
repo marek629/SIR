@@ -98,3 +98,16 @@ bool RawToolbox::isRawSupportEnabled() const
 {
     return rawModel->isEnabled();
 }
+
+QString RawToolbox::fileFilterString()
+{
+    QString result;
+
+    if (isRawSupportEnabled()) {
+        foreach (QString ext, fileFilters()) {
+            result.append(ext);
+        }
+    }
+
+    return result;
+}

@@ -39,6 +39,8 @@ public:
     QString dcrawPath() const;
     bool isRawSupportEnabled() const;
 
+    QString fileFilterString();
+
 private:
     RawModel *rawModel;
 };

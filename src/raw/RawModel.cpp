@@ -97,16 +97,3 @@ void RawModel::setDcrawOptions(const QString &value)
 {
     dcrawOptions = value;
 }
-
-QString RawModel::fileFilterString()
-{
-    QString fileFilters;
-
-    if (isEnabled()) {
-        foreach (QString ext, RawToolbox(this).fileFilters()) {
-            fileFilters.append(ext);
-        }
-    }
-
-    return fileFilters;
-}
