@@ -698,8 +698,8 @@ QImage * ConvertThread::loadSvgImage() {
     if (shared->svgModifiersEnabled) {
         SvgModifier modifier(pd.imagePath);
         // modify SVG file
-        if (!shared->svgRemoveText.isNull())
-            modifier.removeText(shared->svgRemoveText);
+        if (!shared->svgRemoveTextString.isNull())
+            modifier.removeText(shared->svgRemoveTextString);
         if (shared->svgRemoveEmptyGroup)
             modifier.removeEmptyGroups();
         // save SVG file

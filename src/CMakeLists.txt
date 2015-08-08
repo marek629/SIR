@@ -18,6 +18,7 @@ set( sir_SRCS
         Session.cpp
         Settings.cpp
         SharedInformation.cpp
+        SharedInformationBuilder.cpp
         sir_String.cpp
         SvgModifier.cpp
         Version.cpp

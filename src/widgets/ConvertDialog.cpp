@@ -29,9 +29,9 @@
 #include "NetworkUtils.hpp"
 #include "Selection.hpp"
 #include "Session.hpp"
+#include "SharedInformationBuilder.hpp"
 #include "Version.hpp"
 #include "widgets/AboutDialog.hpp"
-#include "widgets/convert/EffectsScrollAreaVisitor.hpp"
 #include "widgets/DetailsBrowserController.hpp"
 #include "widgets/MessageBox.hpp"
 #include "widgets/TreeWidget.hpp"
@@ -547,7 +547,13 @@ void ConvertDialog::convert() {
     else
         sharedInfo->backgroundColor = QColor();
 
-    sharedInfo = configureEffects(sharedInfo, effectsScrollArea);
+    SharedInformationBuilder sharedInfoBuilder = SharedInformationBuilder(*sharedInfo);
+    SharedInformationBuilder *sharedInfoConfigurator = &sharedInfoBuilder;
+    sharedInfo = sharedInfoConfigurator
+            ->withEffects(effectsScrollArea)
+            ->withSVG(svgScrollArea)
+            ->withRaw(rawScrollArea)
+            ->build();
 
     if (sharedInfo->effectsConfiguration().getImageLoadError()) {
         QMessageBox::StandardButton answer =
@@ -560,10 +566,6 @@ void ConvertDialog::convert() {
             return;
     }
 
-    sharedInfo = configureSVG(sharedInfo, svgScrollArea);
-
-    sharedInfo = configureRaw(sharedInfo, rawScrollArea);
-
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
         convertThreads[i]->setAcceptWork( true );
@@ -574,39 +576,6 @@ void ConvertDialog::convert() {
         convertedImages++;
     }
     emit convertTick(convertedImages);
-}
-
-SharedInformation *ConvertDialog::configureEffects(
-        SharedInformation *sharedInformation, EffectsScrollArea *effectsScrollArea) {
-    EffectsScrollAreaVisitor visitor;
-    effectsScrollArea->accept(&visitor);
-
-    sharedInformation->setEffectsConfiguration(visitor.effectsConfiguration());
-
-    return sharedInformation;
-}
-
-SharedInformation *ConvertDialog::configureSVG(
-        SharedInformation *sharedInformation, SvgScrollArea *svgScrollArea) {
-    if (svgScrollArea->removeTextCheckBox->isChecked())
-        sharedInformation->svgRemoveText = svgScrollArea->removeTextLineEdit->text();
-    else
-        sharedInformation->svgRemoveText = QString();
-    sharedInformation->svgRemoveEmptyGroup = svgScrollArea->removeGroupsCheckBox->isChecked();
-    sharedInformation->svgSave = svgScrollArea->saveCheckBox->isChecked();
-    sharedInformation->svgModifiersEnabled =
-            bool(sharedInformation->svgSave
-                 || sharedInformation->svgRemoveEmptyGroup
-                 || !sharedInformation->svgRemoveText.isNull());
-    return sharedInformation;
-}
-
-SharedInformation *ConvertDialog::configureRaw(
-        SharedInformation *sharedInformation, RawWidget *rawWidget)
-{
-    sharedInformation->rawModel = rawWidget->rawModel();
-
-    return sharedInformation;
 }
 
 /** Shows selection dialog.

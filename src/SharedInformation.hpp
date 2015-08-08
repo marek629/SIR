@@ -33,7 +33,8 @@
 
 
 //! ConvertThread threads shared information.
-class SharedInformation {
+class SharedInformation
+{
     friend class ConvertThread;
     friend class ConvertDialog;
     friend class ConvertDialogTest;
@@ -41,9 +42,11 @@ class SharedInformation {
     friend class ConvertEffectsTest;
 
 public:
-    // constructor
     SharedInformation();
-    // methods
+    SharedInformation(const SharedInformation &other);
+
+    SharedInformation &operator= (const SharedInformation &other);
+
     void setDesiredSize(int width, int height, bool percent = false,
                         bool widthSet = false, bool heightSet = false,
                         bool keepAspect = true);
@@ -56,6 +59,18 @@ public:
     void setDestSuffix(const QString& destSuffix);
     void setDestFolder(const QDir& destFolder);
     void setOverwriteAll(bool overwriteAll = false);
+
+    QString svgRemoveText() const;
+    void setSvgRemoveText(const QString &text);
+    bool isSvgRemoveEmptyGroupEnabled() const;
+    void setSvgRemoveEmptyGroup(bool enabled);
+    bool isSvgSaveEnabled() const;
+    void setSvgSave(bool enabled);
+    void setSvgModifiersEnabled(bool svgSave, bool svgRemoveEmptyGroup,
+                                const QString &svgRemoveText);
+
+    void setRawModel(const RawModel &rawModel);
+
 #ifdef SIR_METADATA_SUPPORT
     void setMetadataEnabled(bool value);
     void setSaveMetadata(bool value);
@@ -63,6 +78,7 @@ public:
     void setUpdateThumbnail(bool update);
     void setRotateThumbnail(bool rotate);
 #endif // SIR_METADATA_SUPPORT
+
     EffectsConfiguration effectsConfiguration() const;
     void setEffectsConfiguration(const EffectsConfiguration &conf);
 
@@ -102,7 +118,7 @@ private:
     /** Text value of SVG \e text nodes to delete. Plain text and regular
       * expression are supported.
       */
-    QString svgRemoveText;
+    QString svgRemoveTextString;
     bool svgRemoveEmptyGroup; /**< Enables removing all empty SVG \e g nodes. */
     bool svgSave; /**< Enables saving changed SVG file in SVG format also. */
 
@@ -118,10 +134,12 @@ private:
     bool updateThumbnail; /**< Update thumbnail of target image indicator. */
     bool rotateThumbnail; /**< Rotate thumbnail of target image indicator. */
 #endif // SIR_METADATA_SUPPORT
+
     // thread synchronization data
     // mutexes
     /** Mutual exclusion object using for worker threads synchronization. */
     QMutex mutex;
+
     // user conversation data
     // cancel
     bool abort; /**< Abort indicator. */

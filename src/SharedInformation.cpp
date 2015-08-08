@@ -20,6 +20,7 @@
  */
 
 #include "SharedInformation.hpp"
+
 #include "Settings.hpp"
 #include "metadata/MetadataUtils.hpp"
 
@@ -53,6 +54,102 @@ SharedInformation::SharedInformation() {
     updateThumbnail = true;
     rotateThumbnail = false;
 #endif // SIR_METADATA_SUPPORT
+}
+
+SharedInformation::SharedInformation(const SharedInformation &other)
+{
+    width = other.width;
+    height = other.height;
+    hasWidth = other.hasWidth;
+    hasHeight = other.hasHeight;
+    maintainAspect = other.maintainAspect;
+    sizeBytes = other.sizeBytes;
+    sizeUnit = other.sizeUnit;
+
+    destFolder = other.destFolder;
+    prefix = other.prefix;
+    suffix = other.suffix;
+    format = other.format;
+    quality = other.quality;
+
+    rotate = other.rotate;
+    angle = other.angle;
+    flip = other.flip;
+
+    backgroundColor = other.backgroundColor;
+    effectsConf = other.effectsConf;
+
+    svgModifiersEnabled = other.svgModifiersEnabled;
+    svgRemoveTextString = other.svgRemoveTextString;
+    svgRemoveEmptyGroup = other.svgRemoveEmptyGroup;
+    svgSave = other.svgSave;
+
+    rawModel = other.rawModel;
+
+#ifdef SIR_METADATA_SUPPORT
+    metadataEnabled = other.metadataEnabled;
+    saveMetadata = other.saveMetadata;
+    realRotate = other.realRotate;
+    updateThumbnail = other.updateThumbnail;
+    rotateThumbnail = other.rotateThumbnail;
+#endif // SIR_METADATA_SUPPORT
+
+    abort = other.abort;
+    overwriteAll = other.overwriteAll;
+    noOverwriteAll = other.noOverwriteAll;
+    overwriteResult = other.overwriteResult;
+    enlargeAll = other.enlargeAll;
+    noEnlargeAll = other.noEnlargeAll;
+    enlargeResult = other.enlargeResult;
+}
+
+SharedInformation &SharedInformation::operator=(const SharedInformation &other)
+{
+    width = other.width;
+    height = other.height;
+    hasWidth = other.hasWidth;
+    hasHeight = other.hasHeight;
+    maintainAspect = other.maintainAspect;
+    sizeBytes = other.sizeBytes;
+    sizeUnit = other.sizeUnit;
+
+    destFolder = other.destFolder;
+    prefix = other.prefix;
+    suffix = other.suffix;
+    format = other.format;
+    quality = other.quality;
+
+    rotate = other.rotate;
+    angle = other.angle;
+    flip = other.flip;
+
+    backgroundColor = other.backgroundColor;
+    effectsConf = other.effectsConf;
+
+    svgModifiersEnabled = other.svgModifiersEnabled;
+    svgRemoveTextString = other.svgRemoveTextString;
+    svgRemoveEmptyGroup = other.svgRemoveEmptyGroup;
+    svgSave = other.svgSave;
+
+    rawModel = other.rawModel;
+
+#ifdef SIR_METADATA_SUPPORT
+    metadataEnabled = other.metadataEnabled;
+    saveMetadata = other.saveMetadata;
+    realRotate = other.realRotate;
+    updateThumbnail = other.updateThumbnail;
+    rotateThumbnail = other.rotateThumbnail;
+#endif // SIR_METADATA_SUPPORT
+
+    abort = other.abort;
+    overwriteAll = other.overwriteAll;
+    noOverwriteAll = other.noOverwriteAll;
+    overwriteResult = other.overwriteResult;
+    enlargeAll = other.enlargeAll;
+    noEnlargeAll = other.noEnlargeAll;
+    enlargeResult = other.enlargeResult;
+
+    return *this;
 }
 
 /** Set desired size in pixels or percent, depend on \a percent value.
@@ -152,6 +249,47 @@ void SharedInformation::setDestFolder(const QDir& destFolder) {
 /** Allows overwrite all files. */
 void SharedInformation::setOverwriteAll(bool overwriteAll) {
     this->overwriteAll = overwriteAll;
+}
+
+QString SharedInformation::svgRemoveText() const
+{
+    return svgRemoveTextString;
+}
+
+void SharedInformation::setSvgRemoveText(const QString &text)
+{
+    svgRemoveTextString = text;
+}
+
+bool SharedInformation::isSvgRemoveEmptyGroupEnabled() const
+{
+    return svgRemoveEmptyGroup;
+}
+
+void SharedInformation::setSvgRemoveEmptyGroup(bool enabled)
+{
+    svgRemoveEmptyGroup = enabled;
+}
+
+bool SharedInformation::isSvgSaveEnabled() const
+{
+    return svgSave;
+}
+
+void SharedInformation::setSvgSave(bool enabled)
+{
+    svgSave = enabled;
+}
+
+void SharedInformation::setSvgModifiersEnabled(
+        bool svgSave, bool svgRemoveEmptyGroup, const QString &svgRemoveText)
+{
+    svgModifiersEnabled = svgSave || svgRemoveEmptyGroup || !svgRemoveText.isNull();
+}
+
+void SharedInformation::setRawModel(const RawModel &rawModel)
+{
+    this->rawModel = rawModel;
 }
 
 EffectsConfiguration SharedInformation::effectsConfiguration() const {
