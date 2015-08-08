@@ -25,10 +25,12 @@
 #include <QString>
 #include <QVector>
 
-#define VERSION "2.8"
+#define VERSION "3.0-dev"
+
 
 //! SIR version information class.
-class Version {
+class Version
+{
     friend class VersionTest;
 
 public:
@@ -37,7 +39,6 @@ public:
     bool isAtLeast(const QString &ver);
 
 private:
-    // fields
     /** Version string in format "M.m.p[-s]"
       *
       *     M - major version number
@@ -57,7 +58,7 @@ private:
       * \sa vector()
       */
     const QVector<int> versionVector;
-    // methods
+
     QVector<int> vector(const QString &ver);
 };
 
