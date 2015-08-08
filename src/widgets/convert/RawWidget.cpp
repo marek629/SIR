@@ -39,6 +39,13 @@ RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
     setLayout(layout);
 }
 
+RawWidget::~RawWidget()
+{
+    delete controller;
+    delete view;
+    delete model;
+}
+
 void RawWidget::loadSettings(const RawModel &rawModel)
 {
     model = new RawModel(rawModel);
@@ -50,5 +57,3 @@ RawModel RawWidget::rawModel() const
 {
     return RawModel(*model);
 }
-
-// TODO: destructor

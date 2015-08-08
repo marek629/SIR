@@ -89,17 +89,7 @@ QStringList RawToolbox::fileFilters() const
     return rawFormats;
 }
 
-QString RawToolbox::dcrawPath() const
-{
-    return rawModel->getDcrawPath();
-}
-
-bool RawToolbox::isRawSupportEnabled() const
-{
-    return rawModel->isEnabled();
-}
-
-QString RawToolbox::fileFilterString()
+QString RawToolbox::fileFilterString() const
 {
     QString result;
 
@@ -110,4 +100,14 @@ QString RawToolbox::fileFilterString()
     }
 
     return result;
+}
+
+QString RawToolbox::dcrawPath() const
+{
+    return rawModel->getDcrawPath();
+}
+
+bool RawToolbox::isRawSupportEnabled() const
+{
+    return rawModel->isEnabled();
 }

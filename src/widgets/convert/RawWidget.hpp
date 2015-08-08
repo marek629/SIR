@@ -35,6 +35,7 @@ class RawWidget : public QWidget
 
 public:
     RawWidget(QWidget *parent = 0);
+    ~RawWidget();
 
     void loadSettings(const RawModel &rawModel);
 

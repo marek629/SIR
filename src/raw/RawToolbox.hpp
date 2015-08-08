@@ -35,11 +35,10 @@ public:
     QString helpMessage();
 
     QStringList fileFilters() const;
+    QString fileFilterString() const;
 
     QString dcrawPath() const;
     bool isRawSupportEnabled() const;
-
-    QString fileFilterString();
 
 private:
     RawModel *rawModel;
