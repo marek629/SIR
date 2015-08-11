@@ -455,7 +455,8 @@ void ConvertDialog::convertSelected() {
 /** Reset answers, setups and starts convertion threads.
   * \sa resetAnswers() ConvertThread
   */
-void ConvertDialog::convert() {
+void ConvertDialog::convert()
+{
     resetAnswers();
     bool hasWidth = false;
     bool hasHeight = false;
@@ -541,6 +542,7 @@ void ConvertDialog::convert() {
     sharedInfo->setDestSuffix(destSuffixEdit->text());
     sharedInfo->setDestFolder(destFolder);
     sharedInfo->setOverwriteAll(false);
+
     // backgroud color
     if (optionsScrollArea->backgroundColorCheckBox->isChecked())
         sharedInfo->backgroundColor = optionsScrollArea->backgroundColorFrame->color();
@@ -549,11 +551,12 @@ void ConvertDialog::convert() {
 
     SharedInformationBuilder sharedInfoBuilder = SharedInformationBuilder(*sharedInfo);
     SharedInformationBuilder *sharedInfoConfigurator = &sharedInfoBuilder;
-    sharedInfo = sharedInfoConfigurator
+    delete sharedInfo;
+    sharedInfo = new SharedInformation(*sharedInfoConfigurator
             ->withEffects(effectsScrollArea)
             ->withSVG(svgScrollArea)
             ->withRaw(rawScrollArea)
-            ->build();
+            ->build());
 
     if (sharedInfo->effectsConfiguration().getImageLoadError()) {
         QMessageBox::StandardButton answer =

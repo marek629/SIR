@@ -24,10 +24,9 @@
 #include "Settings.hpp"
 #include "metadata/MetadataUtils.hpp"
 
-/** Default constructor.\n
-  * Sets default field values.
-  */
-SharedInformation::SharedInformation() {
+
+SharedInformation::SharedInformation()
+{
     // synchronization threads settings
     overwriteAll = false;
     noOverwriteAll = false;
@@ -36,6 +35,7 @@ SharedInformation::SharedInformation() {
     enlargeAll = false;
     noEnlargeAll = false;
     enlargeResult = 1;
+
     // image settings
     width = 0;
     height = 0;
@@ -47,6 +47,10 @@ SharedInformation::SharedInformation() {
     quality = 100;
     rotate = false;
     angle = 0.;
+
+    // file settings
+    format = "";
+
 #ifdef SIR_METADATA_SUPPORT
     // metadata settings
     saveMetadata = true;

@@ -20,14 +20,18 @@
  */
 
 #include "ConvertDialogTest.hpp"
+
 #include "fake/CommandLineAssistantFake.hpp"
 
-ConvertDialogTest::ConvertDialogTest() {
+
+ConvertDialogTest::ConvertDialogTest()
+{
     CommandLineAssistantFake cmd;
     convertDialog = new ConvertDialog(0, QStringList(), &cmd);
 }
 
-ConvertDialogTest::~ConvertDialogTest() {
+ConvertDialogTest::~ConvertDialogTest()
+{
     delete convertDialog;
 }
 
@@ -35,7 +39,8 @@ void ConvertDialogTest::initTestCase() {}
 
 void ConvertDialogTest::cleanupTestCase() {}
 
-void ConvertDialogTest::convert_defaultPath() {
+void ConvertDialogTest::convert_defaultPath()
+{
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
@@ -57,7 +62,8 @@ void ConvertDialogTest::convert_defaultPath() {
     QCOMPARE(convertDialog->numImages, 0);
 }
 
-void ConvertDialogTest::convert_histogram_stretch() {
+void ConvertDialogTest::convert_histogram_stretch()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *histogramGroupBox = effectsScrollArea->histogramGroupBox;
     histogramGroupBox->setChecked(true);
@@ -70,7 +76,8 @@ void ConvertDialogTest::convert_histogram_stretch() {
     QCOMPARE(conf.getHistogramOperation(), quint8(1));
 }
 
-void ConvertDialogTest::convert_histogram_equalize() {
+void ConvertDialogTest::convert_histogram_equalize()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *histogramGroupBox = effectsScrollArea->histogramGroupBox;
     histogramGroupBox->setChecked(true);
@@ -83,7 +90,8 @@ void ConvertDialogTest::convert_histogram_equalize() {
     QCOMPARE(conf.getHistogramOperation(), quint8(2));
 }
 
-void ConvertDialogTest::convert_histogram_no() {
+void ConvertDialogTest::convert_histogram_no()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *histogramGroupBox = effectsScrollArea->histogramGroupBox;
     histogramGroupBox->setChecked(false);
@@ -95,7 +103,8 @@ void ConvertDialogTest::convert_histogram_no() {
     QCOMPARE(conf.getHistogramOperation(), quint8(0));
 }
 
-void ConvertDialogTest::convert_filter_colorBlackAndWhite() {
+void ConvertDialogTest::convert_filter_colorBlackAndWhite()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
     filterGroupBox->setChecked(true);
@@ -115,7 +124,8 @@ void ConvertDialogTest::convert_filter_colorBlackAndWhite() {
     QCOMPARE(conf.getFilterBrush(), QBrush());
 }
 
-void ConvertDialogTest::convert_filter_colorSepia() {
+void ConvertDialogTest::convert_filter_colorSepia()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
     filterGroupBox->setChecked(true);
@@ -135,7 +145,8 @@ void ConvertDialogTest::convert_filter_colorSepia() {
     QCOMPARE(conf.getFilterBrush(), QBrush());
 }
 
-void ConvertDialogTest::convert_filter_colorCustom() {
+void ConvertDialogTest::convert_filter_colorCustom()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
     filterGroupBox->setChecked(true);
@@ -159,7 +170,8 @@ void ConvertDialogTest::convert_filter_colorCustom() {
     QCOMPARE(conf.getFilterBrush(), QBrush(color));
 }
 
-void ConvertDialogTest::convert_filter_gradient() {
+void ConvertDialogTest::convert_filter_gradient()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
     filterGroupBox->setChecked(true);
@@ -181,7 +193,8 @@ void ConvertDialogTest::convert_filter_gradient() {
     QCOMPARE(conf.getFilterBrush(), QBrush(gradient));
 }
 
-void ConvertDialogTest::convert_filter_no() {
+void ConvertDialogTest::convert_filter_no()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *filterGroupBox = effectsScrollArea->filterGroupBox;
     filterGroupBox->setChecked(false);
@@ -194,7 +207,8 @@ void ConvertDialogTest::convert_filter_no() {
     QCOMPARE(conf.getFilterBrush(), QBrush());
 }
 
-void ConvertDialogTest::convert_addFrame_withBorder() {
+void ConvertDialogTest::convert_addFrame_withBorder()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *frameGroupBox = effectsScrollArea->frameGroupBox;
     frameGroupBox->setChecked(true);
@@ -226,7 +240,8 @@ void ConvertDialogTest::convert_addFrame_withBorder() {
     QCOMPARE(conf.getBorderInsideColor(), QColor(Qt::blue));
 }
 
-void ConvertDialogTest::convert_addFrame_withoutBorder() {
+void ConvertDialogTest::convert_addFrame_withoutBorder()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *frameGroupBox = effectsScrollArea->frameGroupBox;
     frameGroupBox->setChecked(true);
@@ -254,7 +269,8 @@ void ConvertDialogTest::convert_addFrame_withoutBorder() {
     QCOMPARE(conf.getBorderInsideColor(), QColor());
 }
 
-void ConvertDialogTest::convert_addFrame_no() {
+void ConvertDialogTest::convert_addFrame_no()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *frameGroupBox = effectsScrollArea->frameGroupBox;
     frameGroupBox->setChecked(false);
@@ -272,7 +288,8 @@ void ConvertDialogTest::convert_addFrame_no() {
     QCOMPARE(conf.getBorderInsideColor(), QColor());
 }
 
-void ConvertDialogTest::convert_addText_fontPt() {
+void ConvertDialogTest::convert_addText_fontPt()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
     textGroupBox->setChecked(true);
@@ -322,7 +339,8 @@ void ConvertDialogTest::convert_addText_fontPt() {
     QCOMPARE(conf.getTextRotation(), 0);
 }
 
-void ConvertDialogTest::convert_addText_fontPx() {
+void ConvertDialogTest::convert_addText_fontPx()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
     textGroupBox->setChecked(true);
@@ -372,7 +390,8 @@ void ConvertDialogTest::convert_addText_fontPx() {
     QCOMPARE(conf.getTextRotation(), 0);
 }
 
-void ConvertDialogTest::convert_addText_textIsEmpty() {
+void ConvertDialogTest::convert_addText_textIsEmpty()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
     textGroupBox->setChecked(true);
@@ -393,7 +412,8 @@ void ConvertDialogTest::convert_addText_textIsEmpty() {
     QCOMPARE(conf.getTextRotation(), 0);
 }
 
-void ConvertDialogTest::convert_addText_no() {
+void ConvertDialogTest::convert_addText_no()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *textGroupBox = effectsScrollArea->textGroupBox;
     textGroupBox->setChecked(false);
@@ -412,7 +432,8 @@ void ConvertDialogTest::convert_addText_no() {
     QCOMPARE(conf.getTextRotation(), 0);
 }
 
-void ConvertDialogTest::convert_addImage_imageNotNull() {
+void ConvertDialogTest::convert_addImage_imageNotNull()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *imageGroupBox = effectsScrollArea->imageGroupBox;
     imageGroupBox->setChecked(true);
@@ -449,7 +470,8 @@ void ConvertDialogTest::convert_addImage_imageNotNull() {
     QCOMPARE(conf.getImageRotation(), 40);
 }
 
-void ConvertDialogTest::convert_addImage_no() {
+void ConvertDialogTest::convert_addImage_no()
+{
     EffectsScrollArea *effectsScrollArea = convertDialog->effectsScrollArea;
     QGroupBox *imageGroupBox = effectsScrollArea->imageGroupBox;
     imageGroupBox->setChecked(false);
@@ -466,7 +488,8 @@ void ConvertDialogTest::convert_addImage_no() {
     QCOMPARE(conf.getImageRotation(), 0);
 }
 
-void ConvertDialogTest::convert_svg_removeText() {
+void ConvertDialogTest::convert_svg_removeText()
+{
     SvgScrollArea *svgScrollArea = convertDialog->svgScrollArea;
     QString textToRemove = "text to remove";
     svgScrollArea->removeTextCheckBox->setChecked(true);
@@ -477,13 +500,14 @@ void ConvertDialogTest::convert_svg_removeText() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->svgRemoveText, textToRemove);
+    QCOMPARE(sharedInfo->svgRemoveText(), textToRemove);
     QCOMPARE(sharedInfo->svgRemoveEmptyGroup, false);
     QCOMPARE(sharedInfo->svgSave, false);
     QCOMPARE(sharedInfo->svgModifiersEnabled, true);
 }
 
-void ConvertDialogTest::convert_svg_doNotRemoveText() {
+void ConvertDialogTest::convert_svg_doNotRemoveText()
+{
     SvgScrollArea *svgScrollArea = convertDialog->svgScrollArea;
     QString textToRemove = "text to remove";
     svgScrollArea->removeTextCheckBox->setChecked(false);
@@ -494,7 +518,7 @@ void ConvertDialogTest::convert_svg_doNotRemoveText() {
     convertDialog->convert();
 
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
-    QCOMPARE(sharedInfo->svgRemoveText, QString());
+    QCOMPARE(sharedInfo->svgRemoveText(), QString());
     QCOMPARE(sharedInfo->svgRemoveEmptyGroup, false);
     QCOMPARE(sharedInfo->svgSave, false);
     QCOMPARE(sharedInfo->svgModifiersEnabled, false);
