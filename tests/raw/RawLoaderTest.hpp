@@ -24,6 +24,8 @@
 
 #include <QtTest/QTest>
 
+#include "raw/RawModel.hpp"
+
 
 class RawLoaderTest : public QObject
 {
@@ -31,6 +33,9 @@ class RawLoaderTest : public QObject
 
 public:
     explicit RawLoaderTest(QObject *parent = 0);
+
+private:
+    RawModel createModel();
 
 private slots:
     void initTestCase();

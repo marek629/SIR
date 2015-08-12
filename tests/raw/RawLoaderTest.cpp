@@ -21,11 +21,19 @@
 
 #include "tests/raw/RawLoaderTest.hpp"
 
-#include "raw/RawModel.hpp"
 #include "raw/RawImageLoader.hpp"
 
 
 RawLoaderTest::RawLoaderTest(QObject *parent) : QObject(parent) {}
+
+RawModel RawLoaderTest::createModel()
+{
+    bool isEnabled = true;
+    QString dcrawPath = "dcraw";
+    QString dcrawOptions = "-q 0 -a";
+
+    return RawModel(isEnabled, dcrawPath, dcrawOptions);
+}
 
 void RawLoaderTest::initTestCase() {}
 
@@ -33,11 +41,7 @@ void RawLoaderTest::cleanupTestCase() {}
 
 void RawLoaderTest::test_isRawImage_dcrawCommand()
 {
-    bool isEnabled = true;
-    QString dcrawPath = "dcraw";
-    QString dcrawOptions = "-q 0 -a";
-
-    RawModel model = RawModel(isEnabled, dcrawPath, dcrawOptions);
+    RawModel model = createModel();
 
     QString fileName = "test_file.raw";
     RawLoader *loader = new RawImageLoader(&model, fileName);
@@ -49,7 +53,7 @@ void RawLoaderTest::test_isRawImage_dcrawCommand()
     QVERIFY(loader->lastDcrawCommand().contains(" -i "));
 
     QString expectedCommand = QString("%1 %2 -i %3")
-            .arg(dcrawPath).arg(dcrawOptions).arg(fileName);
+            .arg(model.getDcrawPath()).arg(model.getDcrawOptions()).arg(fileName);
     QCOMPARE(loader->lastDcrawCommand(), expectedCommand);
 
     delete loader;
@@ -57,11 +61,7 @@ void RawLoaderTest::test_isRawImage_dcrawCommand()
 
 void RawLoaderTest::test_loadFromRawFile_dcrawCommand()
 {
-    bool isEnabled = true;
-    QString dcrawPath = "dcraw";
-    QString dcrawOptions = "-q 0 -a";
-
-    RawModel model = RawModel(isEnabled, dcrawPath, dcrawOptions);
+    RawModel model = createModel();
 
     QString fileName = "test_file.raw";
     RawLoader *loader = new RawImageLoader(&model, fileName);
@@ -72,8 +72,8 @@ void RawLoaderTest::test_loadFromRawFile_dcrawCommand()
     QVERIFY(loader->lastDcrawCommand().contains(model.getDcrawOptions()));
     QVERIFY(loader->lastDcrawCommand().contains(" -c "));
 
-    QString expectedCommand = QString("%1 %2 -c %3")
-            .arg(dcrawPath).arg(dcrawOptions).arg(fileName);
+    QString expectedCommand = QString("%1 %2 -i %3")
+            .arg(model.getDcrawPath()).arg(model.getDcrawOptions()).arg(fileName);
     QCOMPARE(loader->lastDcrawCommand(), expectedCommand);
 
     delete loader;
