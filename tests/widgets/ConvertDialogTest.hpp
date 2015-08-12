@@ -27,7 +27,8 @@
 #include "widgets/ConvertDialog.hpp"
 
 
-class ConvertDialogTest : public QObject {
+class ConvertDialogTest : public QObject
+{
     Q_OBJECT
 
 public:

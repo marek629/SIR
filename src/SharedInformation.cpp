@@ -62,52 +62,17 @@ SharedInformation::SharedInformation()
 
 SharedInformation::SharedInformation(const SharedInformation &other)
 {
-    width = other.width;
-    height = other.height;
-    hasWidth = other.hasWidth;
-    hasHeight = other.hasHeight;
-    maintainAspect = other.maintainAspect;
-    sizeBytes = other.sizeBytes;
-    sizeUnit = other.sizeUnit;
-
-    destFolder = other.destFolder;
-    prefix = other.prefix;
-    suffix = other.suffix;
-    format = other.format;
-    quality = other.quality;
-
-    rotate = other.rotate;
-    angle = other.angle;
-    flip = other.flip;
-
-    backgroundColor = other.backgroundColor;
-    effectsConf = other.effectsConf;
-
-    svgModifiersEnabled = other.svgModifiersEnabled;
-    svgRemoveTextString = other.svgRemoveTextString;
-    svgRemoveEmptyGroup = other.svgRemoveEmptyGroup;
-    svgSave = other.svgSave;
-
-    rawModel = other.rawModel;
-
-#ifdef SIR_METADATA_SUPPORT
-    metadataEnabled = other.metadataEnabled;
-    saveMetadata = other.saveMetadata;
-    realRotate = other.realRotate;
-    updateThumbnail = other.updateThumbnail;
-    rotateThumbnail = other.rotateThumbnail;
-#endif // SIR_METADATA_SUPPORT
-
-    abort = other.abort;
-    overwriteAll = other.overwriteAll;
-    noOverwriteAll = other.noOverwriteAll;
-    overwriteResult = other.overwriteResult;
-    enlargeAll = other.enlargeAll;
-    noEnlargeAll = other.noEnlargeAll;
-    enlargeResult = other.enlargeResult;
+    swap(other);
 }
 
 SharedInformation &SharedInformation::operator=(const SharedInformation &other)
+{
+    swap(other);
+
+    return *this;
+}
+
+void SharedInformation::swap(const SharedInformation &other)
 {
     width = other.width;
     height = other.height;
@@ -152,8 +117,6 @@ SharedInformation &SharedInformation::operator=(const SharedInformation &other)
     enlargeAll = other.enlargeAll;
     noEnlargeAll = other.noEnlargeAll;
     enlargeResult = other.enlargeResult;
-
-    return *this;
 }
 
 /** Set desired size in pixels or percent, depend on \a percent value.

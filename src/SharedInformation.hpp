@@ -47,6 +47,10 @@ public:
 
     SharedInformation &operator= (const SharedInformation &other);
 
+private:
+    void swap(const SharedInformation &other);
+
+public:
     void setDesiredSize(int width, int height, bool percent = false,
                         bool widthSet = false, bool heightSet = false,
                         bool keepAspect = true);
@@ -94,12 +98,14 @@ private:
     quint32 sizeBytes; /**< Size of target image in bytes. */
     /** Size unit code based on size unit combo box index into ConvertDialog. */
     char sizeUnit;
+
     // destinated image file parameters
     QDir destFolder; /**< Destination directory. */
     QString prefix; /**< Target file prefix. */
     QString suffix; /**< Target file suffix. */
     QString format; /**< Target file format. */
     int quality;  /**< Target image quality in range between 1 to 100. */
+
     // destinated orientation
     bool rotate; /**< Rotation indicator. */
     double angle; /**< Rotation angle. */
@@ -143,11 +149,13 @@ private:
     // user conversation data
     // cancel
     bool abort; /**< Abort indicator. */
+
     // overwrite
     bool overwriteAll; /**< Overwrite all conflicting files indicator. */
     bool noOverwriteAll; /**< No overwrite all conflicting files indicator. */
     /** Message box containing question about overwriting file result code. */
     int overwriteResult;
+
     // enlarge
     bool enlargeAll; /**< Enlarge all conflicting files indicator. */
     bool noEnlargeAll; /**< No enlarge all conflicting files indicator. */
