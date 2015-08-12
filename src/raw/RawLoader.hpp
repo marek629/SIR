@@ -32,18 +32,21 @@ class RawLoader : public RawToolbox
 public:
     RawLoader(RawModel *rawModel, const QString &filePath);
 
-    bool isRawImage() const;
+    bool isRawImage();
+
+    QString lastDcrawCommand() const;
 
 protected:
-    QString filePath;
-
     virtual PaintDevice *createPaintDevice() = 0;
     virtual PaintDevice *load();
+
+private:
+    QString filePath;
+    QString dcrawCommand;
 
     PaintDevice *loadFromRawFile();
     PaintDevice *loadFromNormalFile();
 
-private:
     QStringList regularImageFormatList() const;
     QString fileExtension() const;
 };

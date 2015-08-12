@@ -33,7 +33,7 @@ RawLoader::RawLoader(RawModel *rawModel, const QString &filePath)
     this->filePath = filePath;
 }
 
-bool RawLoader::isRawImage() const
+bool RawLoader::isRawImage()
 {
     QString extension = fileExtension();
     if (regularImageFormatList().contains(extension)) {
@@ -42,10 +42,17 @@ bool RawLoader::isRawImage() const
 
     QProcess dcrawProcess;
 
-    dcrawProcess.start(dcrawPath() + " -i " + filePath);
+    dcrawCommand = dcrawPath() + " -i " + filePath;
+    dcrawProcess.start(dcrawCommand);
+
     dcrawProcess.waitForFinished(-1);
 
     return dcrawProcess.exitCode() == 0;
+}
+
+QString RawLoader::lastDcrawCommand() const
+{
+    return dcrawCommand;
 }
 
 PaintDevice *RawLoader::load()
@@ -58,7 +65,8 @@ PaintDevice *RawLoader::loadFromRawFile()
     PaintDevice *paintDevice = createPaintDevice();
     QProcess process;
 
-    process.start(dcrawPath() + " -c " + filePath);
+    dcrawCommand = dcrawPath() + " -c " + filePath;
+    process.start(dcrawCommand);
 
     if (!process.waitForFinished(-1)) {
         return paintDevice;
