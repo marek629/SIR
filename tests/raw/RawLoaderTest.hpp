@@ -19,39 +19,25 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWLOADER_HPP
-#define RAWLOADER_HPP
+#ifndef RAWLOADERTEST_HPP
+#define RAWLOADERTEST_HPP
 
-#include "raw/RawToolbox.hpp"
-
-class PaintDevice;
+#include <QtTest/QTest>
 
 
-class RawLoader : public RawToolbox
+class RawLoaderTest : public QObject
 {
-    friend class RawLoaderTest;
+    Q_OBJECT
 
 public:
-    RawLoader(RawModel *rawModel, const QString &filePath);
-    virtual ~RawLoader();
+    explicit RawLoaderTest(QObject *parent = 0);
 
-    bool isRawImage();
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
 
-    QString lastDcrawCommand() const;
-
-protected:
-    virtual PaintDevice *createPaintDevice() = 0;
-    virtual PaintDevice *load();
-
-private:
-    QString filePath;
-    QString dcrawCommand;
-
-    PaintDevice *loadFromRawFile();
-    PaintDevice *loadFromNormalFile();
-
-    QStringList regularImageFormatList() const;
-    QString fileExtension() const;
+    void test_isRawImage_dcrawCommand();
+    void test_loadFromRawFile_dcrawCommand();
 };
 
-#endif // RAWLOADER_HPP
+#endif // RAWLOADERTEST_HPP

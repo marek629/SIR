@@ -33,6 +33,8 @@ RawLoader::RawLoader(RawModel *rawModel, const QString &filePath)
     this->filePath = filePath;
 }
 
+RawLoader::~RawLoader() {}
+
 bool RawLoader::isRawImage()
 {
     QString extension = fileExtension();
