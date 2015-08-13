@@ -85,7 +85,7 @@ void RawModelValidatorTest::test_isValidModel_enabled_emptyDcrawOptions()
 
     const RawModel &model = RawModel(isEnabled, dcrawPath, dcrawOptions);
 
-    QVERIFY(model.isValid() == false);
+    QVERIFY(model.isValid() == true);
 }
 
 void RawModelValidatorTest::test_isValidModel_enabled_nullDcrawOptions()
@@ -96,7 +96,7 @@ void RawModelValidatorTest::test_isValidModel_enabled_nullDcrawOptions()
 
     const RawModel &model = RawModel(isEnabled, dcrawPath, dcrawOptions);
 
-    QVERIFY(model.isValid() == false);
+    QVERIFY(model.isValid() == true);
 }
 
 void RawModelValidatorTest::test_isValidModel_enabled_filledDcrawOptions()

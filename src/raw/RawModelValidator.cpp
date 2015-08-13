@@ -32,5 +32,9 @@ bool RawModelValidator::isValidModel(const RawModel &model)
         return true;
     }
 
-    return !(model.getDcrawPath().isEmpty() || model.getDcrawOptions().isEmpty());
+    if (model.getDcrawPath().isEmpty()) {
+        return false;
+    }
+
+    return true;
 }
