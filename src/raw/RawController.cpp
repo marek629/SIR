@@ -55,25 +55,31 @@ void RawController::saveSettings()
     bool dcrawOk = false;
     bool firstState = view->isEnabledChecked();
 
+    RawModel temporaryModel;
+
     // check dcraw executable
     if (view->isEnabledChecked()) {
         if ((dcrawOk = checkDcrawPath(view->pathText()))) {
-            model->setEnabled(true);
-            model->setDcrawPath(view->pathText());
-            model->setDcrawOptions(view->optionsText());
+            temporaryModel.setEnabled(true);
+            temporaryModel.setDcrawPath(view->pathText());
+            temporaryModel.setDcrawOptions(view->optionsText());
         } else {
             view->setEnabledChecked(false);
 
-            model->setEnabled(false);
-            model->setDcrawPath(view->pathText());
-            model->setDcrawOptions(view->optionsText());
+            temporaryModel.setEnabled(false);
+            temporaryModel.setDcrawPath(view->pathText());
+            temporaryModel.setDcrawOptions(view->optionsText());
 
             setRawStatus(false);
         }
     } else {
-        model->setEnabled(false);
-        model->setDcrawPath(view->pathText());
-        model->setDcrawOptions(view->optionsText());
+        temporaryModel.setEnabled(false);
+        temporaryModel.setDcrawPath(view->pathText());
+        temporaryModel.setDcrawOptions(view->optionsText());
+    }
+
+    if (temporaryModel.isValid()) {
+        model->swap(temporaryModel);
     }
 
     if (dcrawOk || !firstState) {

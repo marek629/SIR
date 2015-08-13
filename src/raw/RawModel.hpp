@@ -35,6 +35,8 @@ public:
     RawModel(const RawModel &other);
     ~RawModel();
 
+    void swap(const RawModel &other);
+
     // TODO: use isValid() method in a production code
     bool isValid() const;
 

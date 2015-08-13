@@ -22,10 +22,13 @@
 #include "ConvertDialogTest.hpp"
 
 #include "fake/CommandLineAssistantFake.hpp"
+#include "widgets/MessageBox.hpp"
 
 
 ConvertDialogTest::ConvertDialogTest()
 {
+    MessageBox::enableTesting(true);
+
     CommandLineAssistantFake cmd;
     convertDialog = new ConvertDialog(0, QStringList(), &cmd);
 }

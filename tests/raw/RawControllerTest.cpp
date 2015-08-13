@@ -46,7 +46,17 @@ RawControllerTest::~RawControllerTest()
 
 void RawControllerTest::initTestCase() {}
 
-void RawControllerTest::cleanupTestCase() {}
+void RawControllerTest::cleanupTestCase()
+{
+    QString input("/test_dcraw.bin");
+    input.prepend(QDir::tempPath());
+
+    QFile file(input);
+
+    if (file.exists()) {
+        QVERIFY(file.remove());
+    }
+}
 
 void RawControllerTest::test_checkDcrawPath_emptyString()
 {

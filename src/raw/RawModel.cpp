@@ -26,7 +26,10 @@
 #include "raw/RawToolbox.hpp"
 
 
-RawModel::RawModel() {}
+RawModel::RawModel()
+{
+    this->enabled = false;
+}
 
 RawModel::RawModel(bool enabled, const QString &dcrawPath,
                    const QString &dcrawOptions)
@@ -38,12 +41,17 @@ RawModel::RawModel(bool enabled, const QString &dcrawPath,
 
 RawModel::RawModel(const RawModel &other)
 {
+    swap(other);
+}
+
+RawModel::~RawModel() {}
+
+void RawModel::swap(const RawModel &other)
+{
     this->enabled = other.enabled;
     this->dcrawPath = other.dcrawPath;
     this->dcrawOptions = other.dcrawOptions;
 }
-
-RawModel::~RawModel() {}
 
 bool RawModel::isValid() const
 {
