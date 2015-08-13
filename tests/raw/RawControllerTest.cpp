@@ -48,7 +48,7 @@ void RawControllerTest::initTestCase() {}
 
 void RawControllerTest::cleanupTestCase() {}
 
-void RawControllerTest::checkDcrawPath_emptyString()
+void RawControllerTest::test_checkDcrawPath_emptyString()
 {
     QString input("");
 
@@ -58,7 +58,7 @@ void RawControllerTest::checkDcrawPath_emptyString()
     QCOMPARE(result, expected);
 }
 
-void RawControllerTest::checkDcrawPath_fileNotExists()
+void RawControllerTest::test_checkDcrawPath_fileNotExists()
 {
     QString input("/test_dcraw.bin");
     input.prepend(QDir::tempPath());
@@ -72,7 +72,7 @@ void RawControllerTest::checkDcrawPath_fileNotExists()
     QCOMPARE(result, expected);
 }
 
-void RawControllerTest::checkDcrawPath_fileNotExecutable()
+void RawControllerTest::test_checkDcrawPath_fileNotExecutable()
 {
     QString input("/test_dcraw.bin");
     input.prepend(QDir::tempPath());
@@ -91,7 +91,7 @@ void RawControllerTest::checkDcrawPath_fileNotExecutable()
     QVERIFY(file.remove());
 }
 
-void RawControllerTest::checkDcrawPath_fileExecutable()
+void RawControllerTest::test_checkDcrawPath_fileExecutable()
 {
     QString input("/test_dcraw.bin");
     input.prepend(QDir::tempPath());
@@ -108,6 +108,58 @@ void RawControllerTest::checkDcrawPath_fileExecutable()
     QCOMPARE(result, expected);
 
     QVERIFY(file.remove());
+}
+
+void RawControllerTest::test_saveSettings_fileExecutable()
+{
+    QString input("/test_dcraw.bin");
+    input.prepend(QDir::tempPath());
+
+    QFile file(input);
+    QVERIFY(!file.exists());
+    file.open(QFile::ReadWrite);
+    file.setPermissions(QFile::ExeOwner);
+    QVERIFY(file.exists());
+
+    view->setEnabledChecked(true);
+    view->setPathText(file.fileName());
+    controller->saveSettings();
+
+    RawModel *model = controller->model;
+    QCOMPARE(model->isEnabled(), true);
+    QCOMPARE(model->getDcrawPath(), view->pathText());
+    QCOMPARE(model->getDcrawOptions(), view->optionsText());
+
+    QVERIFY(file.remove());
+}
+
+void RawControllerTest::test_saveSettings_fileNotExists()
+{
+    QString input("/test_dcraw.bin");
+    input.prepend(QDir::tempPath());
+
+    QFile file(input);
+    QVERIFY(!file.exists());
+
+    view->setEnabledChecked(true);
+    view->setPathText(file.fileName());
+    controller->saveSettings();
+
+    RawModel *model = controller->model;
+    QCOMPARE(model->isEnabled(), false);
+    QCOMPARE(model->getDcrawPath(), view->pathText());
+    QCOMPARE(model->getDcrawOptions(), view->optionsText());
+}
+
+void RawControllerTest::test_saveSettings_rawSupportDisabled()
+{
+    view->setEnabledChecked(false);
+    controller->saveSettings();
+
+    RawModel *model = controller->model;
+    QCOMPARE(model->isEnabled(), false);
+    QCOMPARE(model->getDcrawPath(), view->pathText());
+    QCOMPARE(model->getDcrawOptions(), view->optionsText());
 }
 
 

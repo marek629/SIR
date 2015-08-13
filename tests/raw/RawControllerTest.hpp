@@ -43,10 +43,14 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
 
-    void checkDcrawPath_emptyString();
-    void checkDcrawPath_fileNotExists();
-    void checkDcrawPath_fileNotExecutable();
-    void checkDcrawPath_fileExecutable();
+    void test_checkDcrawPath_emptyString();
+    void test_checkDcrawPath_fileNotExists();
+    void test_checkDcrawPath_fileNotExecutable();
+    void test_checkDcrawPath_fileExecutable();
+
+    void test_saveSettings_fileExecutable();
+    void test_saveSettings_fileNotExists();
+    void test_saveSettings_rawSupportDisabled();
 };
 
 #endif // RAWCONTROLLERTEST_HPP
