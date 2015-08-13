@@ -38,6 +38,7 @@ public:
     QString fileFilterString() const;
 
     QString dcrawPath() const;
+    QString dcrawOptions() const;
     bool isRawSupportEnabled() const;
 
 private:

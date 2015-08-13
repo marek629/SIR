@@ -44,7 +44,10 @@ bool RawLoader::isRawImage()
 
     QProcess dcrawProcess;
 
-    dcrawCommand = dcrawPath() + " -i " + filePath;
+    dcrawCommand = QString("%1 %2 -i %3")
+            .arg(dcrawPath())
+            .arg(dcrawOptions())
+            .arg(filePath);
     dcrawProcess.start(dcrawCommand);
 
     dcrawProcess.waitForFinished(-1);
@@ -67,7 +70,10 @@ PaintDevice *RawLoader::loadFromRawFile()
     PaintDevice *paintDevice = createPaintDevice();
     QProcess process;
 
-    dcrawCommand = dcrawPath() + " -c " + filePath;
+    dcrawCommand = QString("%1 %2 -c %3")
+            .arg(dcrawPath())
+            .arg(dcrawOptions())
+            .arg(filePath);
     process.start(dcrawCommand);
 
     if (!process.waitForFinished(-1)) {

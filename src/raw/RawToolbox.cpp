@@ -107,6 +107,11 @@ QString RawToolbox::dcrawPath() const
     return rawModel->getDcrawPath();
 }
 
+QString RawToolbox::dcrawOptions() const
+{
+    return rawModel->getDcrawOptions();
+}
+
 bool RawToolbox::isRawSupportEnabled() const
 {
     return rawModel->isEnabled();

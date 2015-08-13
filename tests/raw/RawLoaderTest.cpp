@@ -42,15 +42,10 @@ void RawLoaderTest::cleanupTestCase() {}
 void RawLoaderTest::test_isRawImage_dcrawCommand()
 {
     RawModel model = createModel();
-
     QString fileName = "test_file.raw";
     RawLoader *loader = new RawImageLoader(&model, fileName);
 
     loader->isRawImage();
-
-    QVERIFY(loader->lastDcrawCommand().contains(model.getDcrawPath()));
-    QVERIFY(loader->lastDcrawCommand().contains(model.getDcrawOptions()));
-    QVERIFY(loader->lastDcrawCommand().contains(" -i "));
 
     QString expectedCommand = QString("%1 %2 -i %3")
             .arg(model.getDcrawPath()).arg(model.getDcrawOptions()).arg(fileName);
@@ -62,17 +57,12 @@ void RawLoaderTest::test_isRawImage_dcrawCommand()
 void RawLoaderTest::test_loadFromRawFile_dcrawCommand()
 {
     RawModel model = createModel();
-
     QString fileName = "test_file.raw";
     RawLoader *loader = new RawImageLoader(&model, fileName);
 
     loader->loadFromRawFile();
 
-    QVERIFY(loader->lastDcrawCommand().contains(model.getDcrawPath()));
-    QVERIFY(loader->lastDcrawCommand().contains(model.getDcrawOptions()));
-    QVERIFY(loader->lastDcrawCommand().contains(" -c "));
-
-    QString expectedCommand = QString("%1 %2 -i %3")
+    QString expectedCommand = QString("%1 %2 -c %3")
             .arg(model.getDcrawPath()).arg(model.getDcrawOptions()).arg(fileName);
     QCOMPARE(loader->lastDcrawCommand(), expectedCommand);
 
