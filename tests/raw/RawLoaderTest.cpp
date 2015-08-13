@@ -47,8 +47,8 @@ void RawLoaderTest::test_isRawImage_dcrawCommand()
 
     loader->isRawImage();
 
-    QString expectedCommand = QString("%1 %2 -i %3")
-            .arg(model.getDcrawPath()).arg(model.getDcrawOptions()).arg(fileName);
+    QString expectedCommand = QString("%1 -i %2")
+            .arg(model.getDcrawPath()).arg(fileName);
     QCOMPARE(loader->lastDcrawCommand(), expectedCommand);
 
     delete loader;

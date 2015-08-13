@@ -44,10 +44,7 @@ bool RawLoader::isRawImage()
 
     QProcess dcrawProcess;
 
-    dcrawCommand = QString("%1 %2 -i %3")
-            .arg(dcrawPath())
-            .arg(dcrawOptions())
-            .arg(filePath);
+    dcrawCommand = QString("%1 -i %2").arg(dcrawPath()).arg(filePath);
     dcrawProcess.start(dcrawCommand);
 
     dcrawProcess.waitForFinished(-1);
