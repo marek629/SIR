@@ -43,10 +43,10 @@ void RawController::loadSettings()
 
     setRawStatus(model->isEnabled());
 
-    view->setOptionsText(model->getDcrawOptions());
+    view->setOptionsText(model->dcrawOptions());
 
-    if (checkDcrawPath(model->getDcrawPath())) {
-        setDcrawPath(model->getDcrawPath());
+    if (checkDcrawPath(model->dcrawPath())) {
+        setDcrawPath(model->dcrawPath());
     }
 }
 

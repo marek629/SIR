@@ -35,8 +35,8 @@ RawModel::RawModel(bool enabled, const QString &dcrawPath,
                    const QString &dcrawOptions)
 {
     this->enabled = enabled;
-    this->dcrawPath = dcrawPath;
-    this->dcrawOptions = dcrawOptions;
+    this->dcrawPathString = dcrawPath;
+    this->dcrawOptionsString = dcrawOptions;
 }
 
 RawModel::RawModel(const RawModel &other)
@@ -49,8 +49,8 @@ RawModel::~RawModel() {}
 void RawModel::swap(const RawModel &other)
 {
     this->enabled = other.enabled;
-    this->dcrawPath = other.dcrawPath;
-    this->dcrawOptions = other.dcrawOptions;
+    this->dcrawPathString = other.dcrawPathString;
+    this->dcrawOptionsString = other.dcrawOptionsString;
 }
 
 bool RawModel::isValid() const
@@ -61,8 +61,8 @@ bool RawModel::isValid() const
 void RawModel::load(const Settings &settings)
 {
     enabled = settings.value("Raw/enabled", false).toBool();
-    dcrawPath = settings.value("Raw/dcrawPath", "/usr/bin/dcraw").toString();
-    dcrawOptions = settings.value("Raw/dcrawOptions", "").toString();
+    dcrawPathString = settings.value("Raw/dcrawPath", "/usr/bin/dcraw").toString();
+    dcrawOptionsString = settings.value("Raw/dcrawOptions", "").toString();
 }
 
 void RawModel::save(Settings *settings)
@@ -70,8 +70,8 @@ void RawModel::save(Settings *settings)
     settings->beginGroup("Raw");
 
     settings->setValue("enabled", enabled);
-    settings->setValue("dcrawPath", dcrawPath);
-    settings->setValue("dcrawOptions", dcrawOptions);
+    settings->setValue("dcrawPath", dcrawPathString);
+    settings->setValue("dcrawOptions", dcrawOptionsString);
 
     settings->endGroup();
 }
@@ -86,22 +86,22 @@ void RawModel::setEnabled(bool value)
     enabled = value;
 }
 
-QString RawModel::getDcrawPath() const
+QString RawModel::dcrawPath() const
 {
-    return dcrawPath;
+    return dcrawPathString;
 }
 
 void RawModel::setDcrawPath(const QString &value)
 {
-    dcrawPath = value;
+    dcrawPathString = value;
 }
 
-QString RawModel::getDcrawOptions() const
+QString RawModel::dcrawOptions() const
 {
-    return dcrawOptions;
+    return dcrawOptionsString;
 }
 
 void RawModel::setDcrawOptions(const QString &value)
 {
-    dcrawOptions = value;
+    dcrawOptionsString = value;
 }

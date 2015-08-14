@@ -37,7 +37,6 @@ public:
 
     void swap(const RawModel &other);
 
-    // TODO: use isValid() method in a production code
     bool isValid() const;
 
     void load(const Settings &settings);
@@ -45,15 +44,15 @@ public:
 
     bool isEnabled() const;
     void setEnabled(bool value);
-    QString getDcrawPath() const;
+    QString dcrawPath() const;
     void setDcrawPath(const QString &value);
-    QString getDcrawOptions() const;
+    QString dcrawOptions() const;
     void setDcrawOptions(const QString &value);
 
 private:
     bool enabled;
-    QString dcrawPath;
-    QString dcrawOptions;
+    QString dcrawPathString;
+    QString dcrawOptionsString;
 };
 
 #endif // RAWMODEL_HPP

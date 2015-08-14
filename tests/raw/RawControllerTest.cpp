@@ -137,8 +137,8 @@ void RawControllerTest::test_saveSettings_fileExecutable()
 
     RawModel *model = controller->model;
     QCOMPARE(model->isEnabled(), true);
-    QCOMPARE(model->getDcrawPath(), view->pathText());
-    QCOMPARE(model->getDcrawOptions(), view->optionsText());
+    QCOMPARE(model->dcrawPath(), view->pathText());
+    QCOMPARE(model->dcrawOptions(), view->optionsText());
 
     QVERIFY(file.remove());
 }
@@ -157,8 +157,8 @@ void RawControllerTest::test_saveSettings_fileNotExists()
 
     RawModel *model = controller->model;
     QCOMPARE(model->isEnabled(), false);
-    QCOMPARE(model->getDcrawPath(), view->pathText());
-    QCOMPARE(model->getDcrawOptions(), view->optionsText());
+    QCOMPARE(model->dcrawPath(), view->pathText());
+    QCOMPARE(model->dcrawOptions(), view->optionsText());
 }
 
 void RawControllerTest::test_saveSettings_rawSupportDisabled()
@@ -168,8 +168,8 @@ void RawControllerTest::test_saveSettings_rawSupportDisabled()
 
     RawModel *model = controller->model;
     QCOMPARE(model->isEnabled(), false);
-    QCOMPARE(model->getDcrawPath(), view->pathText());
-    QCOMPARE(model->getDcrawOptions(), view->optionsText());
+    QCOMPARE(model->dcrawPath(), view->pathText());
+    QCOMPARE(model->dcrawOptions(), view->optionsText());
 }
 
 

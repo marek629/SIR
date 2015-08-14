@@ -34,7 +34,7 @@ RawToolbox::RawToolbox(RawModel *rawModel)
 QString RawToolbox::helpMessage()
 {
     QProcess dcraw;
-    dcraw.start(rawModel->getDcrawPath());
+    dcraw.start(rawModel->dcrawPath());
 
     if (!dcraw.waitForStarted())
         return QString();
@@ -104,12 +104,12 @@ QString RawToolbox::fileFilterString() const
 
 QString RawToolbox::dcrawPath() const
 {
-    return rawModel->getDcrawPath();
+    return rawModel->dcrawPath();
 }
 
 QString RawToolbox::dcrawOptions() const
 {
-    return rawModel->getDcrawOptions();
+    return rawModel->dcrawOptions();
 }
 
 bool RawToolbox::isRawSupportEnabled() const
