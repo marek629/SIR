@@ -48,6 +48,7 @@ RawWidget::~RawWidget()
 
 void RawWidget::loadSettings(const RawModel &rawModel)
 {
+    delete model;
     model = new RawModel(rawModel);
     controller->setModel(model);
     controller->loadSettings();
