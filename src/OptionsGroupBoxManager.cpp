@@ -107,3 +107,14 @@ void OptionsGroupBoxManager::addToLayout(QLayout *layout)
         layout->addWidget(groupBoxByIndex(index));
     }
 }
+
+void OptionsGroupBoxManager::onCategoryChange(int newIndex)
+{
+    if (newIndex == currentGroupBoxIndex) {
+        return;
+    }
+
+    currentGroupBox()->hide();
+    setCurrentGroupBoxIndex(newIndex);
+    currentGroupBox()->show();
+}

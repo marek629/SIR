@@ -51,7 +51,9 @@
 /** Sets up window, loads settings and creates connections.
   * \sa setupUi() loadSettings() createConnections()
   */
-OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f) {
+OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f)
+    : QDialog(parent, f)
+{
     setupUi();
     loadSettings();
     createConnections();
@@ -72,28 +74,13 @@ OptionsDialog::~OptionsDialog()
 }
 
 /** Connects signals to slots. */
-void OptionsDialog::createConnections() {
-    // general
+void OptionsDialog::createConnections()
+{
     connect(listWidget, SIGNAL(currentRowChanged(int)),
-            this, SLOT(categoryChanged(int)));
-    // ok button
+            groupBoxManager, SLOT(onCategoryChange(int)));
+
     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(okButtonClicked()));
-}
-
-/** Hides last choosed category (group box) and shows just selected category.
-  * \sa setupWindow
-  */
-// TODO: move method to OptionsGroupBoxManager class
-void OptionsDialog::categoryChanged(int current) {
-    if (current == currentListItem)
-        return;
-
-    groupBoxManager->currentGroupBox()->hide();
-    groupBoxManager->setCurrentGroupBoxIndex(current);
-    groupBoxManager->currentGroupBox()->show();
-
-    currentListItem = current;
 }
 
 /** Load settings for the user input wigets.

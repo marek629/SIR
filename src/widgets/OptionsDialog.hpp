@@ -111,7 +111,6 @@ private:
 
 private slots:
     void okButtonClicked();
-    void categoryChanged(int current);
 };
 
 #endif // OPTIONSDIALOG_H

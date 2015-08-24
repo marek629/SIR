@@ -22,15 +22,17 @@
 #ifndef OPTIONSGROUPBOXMANAGER_HPP
 #define OPTIONSGROUPBOXMANAGER_HPP
 
-#include <QList>
+#include <QObject>
 
 class AbstractOptionsGroupBox;
 
 class QLayout;
 
 
-class OptionsGroupBoxManager
+class OptionsGroupBoxManager : public QObject
 {
+    Q_OBJECT
+
     static const int emptyListIndex = -1;
 
 public:
@@ -49,6 +51,9 @@ public:
     void hideAll();
 
     void addToLayout(QLayout *layout);
+
+public slots:
+    void onCategoryChange(int newIndex);
 
 private:
     QList<AbstractOptionsGroupBox *> groupBoxList;
