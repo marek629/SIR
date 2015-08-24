@@ -63,6 +63,16 @@ AbstractOptionsGroupBox *OptionsGroupBoxManager::groupBoxByIndex(int index)
     return groupBoxList.value(index);
 }
 
+void OptionsGroupBoxManager::setCurrentGroupBoxByIndex(int index)
+{
+    if (currentGroupBox() && currentGroupBox()->isVisible()) {
+        currentGroupBox()->hide();
+    }
+
+    setCurrentGroupBoxIndex(index);
+    currentGroupBox()->show();
+}
+
 void OptionsGroupBoxManager::setCurrentGroupBoxIndex(int index)
 {
     Q_ASSERT(index >= 0);
@@ -114,7 +124,5 @@ void OptionsGroupBoxManager::onCategoryChange(int newIndex)
         return;
     }
 
-    currentGroupBox()->hide();
-    setCurrentGroupBoxIndex(newIndex);
-    currentGroupBox()->show();
+    setCurrentGroupBoxByIndex(newIndex);
 }

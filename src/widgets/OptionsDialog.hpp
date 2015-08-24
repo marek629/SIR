@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef OPTIONSDIALOG_H
-#define OPTIONSDIALOG_H
+#ifndef OPTIONSDIALOG_HPP
+#define OPTIONSDIALOG_HPP
 
 #include <QDialog>
 
@@ -60,15 +60,7 @@ public:
 
 private:
     // fields
-    quint8 currentListItem;
-
     OptionsGroupBoxManager *groupBoxManager;
-
-#ifdef SIR_METADATA_SUPPORT
-    static const quint8 categoriesCount = 6;
-#else
-    static const quint8 categoriesCount = 4;
-#endif // SIR_METADATA_SUPPORT
 
     // basic UI fields
     QVBoxLayout *verticalLayout;
@@ -105,7 +97,7 @@ private:
     QListWidget *createListWidget();
     void insertItems(QListWidget *listWidget);
     void createGroupBoxes();
-    void createGroupBoxesArray();
+    void createGroupBoxManager();
     void setupGroupBoxesLayout();
     void setupComboBoxesModels();
 
@@ -113,4 +105,4 @@ private slots:
     void okButtonClicked();
 };
 
-#endif // OPTIONSDIALOG_H
+#endif // OPTIONSDIALOG_HPP

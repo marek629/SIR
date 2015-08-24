@@ -43,7 +43,7 @@ public:
     AbstractOptionsGroupBox *currentGroupBox();
     AbstractOptionsGroupBox *groupBoxByIndex(int index);
 
-    void setCurrentGroupBoxIndex(int index);
+    void setCurrentGroupBoxByIndex(int index);
 
     void loadSettings();
     void saveSettings();
@@ -59,6 +59,8 @@ private:
     QList<AbstractOptionsGroupBox *> groupBoxList;
     int currentGroupBoxIndex;
     const int groupBoxListSize;
+
+    void setCurrentGroupBoxIndex(int index);
 };
 
 #endif // OPTIONSGROUPBOXMANAGER_HPP

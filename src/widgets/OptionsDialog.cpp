@@ -68,6 +68,7 @@ OptionsDialog::~OptionsDialog()
     delete generalGroupBoxController;
 #ifdef SIR_METADATA_SUPPORT
     delete metadataGroupBoxController;
+    delete detailsGroupBoxController;
 #endif // SIR_METADATA_SUPPORT
     delete selectionGroupBoxController;
     delete rawGroupBoxController;
@@ -81,6 +82,9 @@ void OptionsDialog::createConnections()
 
     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(okButtonClicked()));
+
+    connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
+            this, SLOT(reject()));
 }
 
 /** Load settings for the user input wigets.
@@ -201,9 +205,13 @@ void OptionsDialog::createGroupBoxes() {
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 }
 
-void OptionsDialog::createGroupBoxesArray()
+void OptionsDialog::createGroupBoxManager()
 {
-    groupBoxManager = new OptionsGroupBoxManager(categoriesCount);
+#ifdef SIR_METADATA_SUPPORT
+    groupBoxManager = new OptionsGroupBoxManager(6);
+#else
+    groupBoxManager = new OptionsGroupBoxManager(4);
+#endif // SIR_METADATA_SUPPORT
 
     groupBoxManager->append(generalGroupBox);
     groupBoxManager->append(fileListGroupBox);
@@ -280,13 +288,12 @@ void OptionsDialog::setupUi() {
     verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
 
     createGroupBoxes();
-    createGroupBoxesArray();
+    createGroupBoxManager();
     setupGroupBoxesLayout();
 
-    currentListItem = 0;
+    const int currentListItem = 0;
     listWidget->setCurrentRow(currentListItem);
-    groupBoxManager->setCurrentGroupBoxIndex(currentListItem);
-    groupBoxManager->currentGroupBox()->show();
+    groupBoxManager->setCurrentGroupBoxByIndex(currentListItem);
 
     scrollArea->setWidget(scrollAreaWidgetContents);
     horizontalLayout->addWidget(scrollArea);
@@ -299,7 +306,4 @@ void OptionsDialog::setupUi() {
                                      Qt::Horizontal, this);
     buttonBox->setObjectName("buttonBox");
     verticalLayout->addWidget(buttonBox);
-
-    connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
-            this, SLOT(reject()));
 }
