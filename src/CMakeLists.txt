@@ -12,6 +12,7 @@ set( sir_SRCS
         LanguageUtils.cpp
         main.cpp
         NetworkUtils.cpp
+        OptionsGroupBoxManager.cpp
         RegExpUtils.cpp
         Rgb.cpp
         Selection.cpp

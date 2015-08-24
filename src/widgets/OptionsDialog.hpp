@@ -42,6 +42,7 @@ class DetailsGroupBoxView;
 class MetadataGroupBoxController;
 class MetadataGroupBoxView;
 #endif // SIR_METADATA_SUPPORT
+class OptionsGroupBoxManager;
 class SelectionGroupBoxController;
 class SelectionGroupBoxView;
 class RawGroupBoxController;
@@ -59,8 +60,9 @@ public:
 
 private:
     // fields
-    AbstractOptionsGroupBox** groupBoxes;
     quint8 currentListItem;
+
+    OptionsGroupBoxManager *groupBoxManager;
 
 #ifdef SIR_METADATA_SUPPORT
     static const quint8 categoriesCount = 6;

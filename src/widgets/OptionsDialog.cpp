@@ -22,6 +22,7 @@
 #include "widgets/OptionsDialog.hpp"
 
 #include "optionsenums.h"
+#include "OptionsGroupBoxManager.hpp"
 #include "raw/RawModel.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/options/GeneralGroupBoxController.hpp"
@@ -57,8 +58,9 @@ OptionsDialog::OptionsDialog(QWidget * parent, Qt::WindowFlags f) : QDialog(pare
 }
 
 /** Destructor. */
-OptionsDialog::~OptionsDialog() {
-    delete groupBoxes;
+OptionsDialog::~OptionsDialog()
+{
+    delete groupBoxManager;
 
     delete fileListGroupBoxController;
     delete generalGroupBoxController;
@@ -82,31 +84,33 @@ void OptionsDialog::createConnections() {
 /** Hides last choosed category (group box) and shows just selected category.
   * \sa setupWindow
   */
+// TODO: move method to OptionsGroupBoxManager class
 void OptionsDialog::categoryChanged(int current) {
     if (current == currentListItem)
         return;
 
-    groupBoxes[currentListItem]->hide();
-    groupBoxes[current]->show();
+    groupBoxManager->currentGroupBox()->hide();
+    groupBoxManager->setCurrentGroupBoxIndex(current);
+    groupBoxManager->currentGroupBox()->show();
+
     currentListItem = current;
 }
 
 /** Load settings for the user input wigets.
   * \sa saveSettings()
   */
-void OptionsDialog::loadSettings() {
-    // load settings for eatch group box
-    for (quint8 i=0; i<categoriesCount; i++)
-        groupBoxes[i]->loadSettings();
+void OptionsDialog::loadSettings()
+{
+    groupBoxManager->loadSettings();
 }
 
 /** Writes settings based values of the user input wigets.
   * \sa loadSettings() okButtonClicked()
   */
-void OptionsDialog::saveSettings() {
-    // save settings for eatch group box
-    for (quint8 i=0; i<categoriesCount; i++)
-        groupBoxes[i]->saveSettings();
+void OptionsDialog::saveSettings()
+{
+    groupBoxManager->saveSettings();
+
     // Write file settings
     Settings::instance()->writeSettings();
 }
@@ -210,35 +214,31 @@ void OptionsDialog::createGroupBoxes() {
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 }
 
-void OptionsDialog::createGroupBoxesArray() {
-    groupBoxes = new AbstractOptionsGroupBox*[categoriesCount];
+void OptionsDialog::createGroupBoxesArray()
+{
+    groupBoxManager = new OptionsGroupBoxManager(categoriesCount);
 
-    quint8 i = 0;
-
-    groupBoxes[i++] = generalGroupBox;
-    groupBoxes[i++] = fileListGroupBox;
+    groupBoxManager->append(generalGroupBox);
+    groupBoxManager->append(fileListGroupBox);
 
 #ifdef SIR_METADATA_SUPPORT
-    groupBoxes[i++] = metadataGroupBox;
-    groupBoxes[i++] = detailsGroupBox;
+    groupBoxManager->append(metadataGroupBox);
+    groupBoxManager->append(detailsGroupBox);
 #endif // SIR_METADATA_SUPPORT
 
-    groupBoxes[i++] = selectionGroupBox;
-    groupBoxes[i] = rawGroupBox;
+    groupBoxManager->append(selectionGroupBox);
+    groupBoxManager->append(rawGroupBox);
 }
 
-void OptionsDialog::setupGroupBoxesLayout() {
-    quint8 i;
-
+void OptionsDialog::setupGroupBoxesLayout()
+{
     // adding group boxes to layout
-    for (i=0; i<categoriesCount; i++)
-        verticalLayout_2->addWidget(groupBoxes[i]);
+    groupBoxManager->addToLayout(verticalLayout_2);
     verticalLayout_2->addItem(verticalSpacer);
     scrollAreaWidgetContents->setLayout(verticalLayout_2);
 
     // hiding group boxes
-    for (i=0; i<categoriesCount; i++)
-        groupBoxes[i]->hide();
+    groupBoxManager->hideAll();
 }
 
 void OptionsDialog::setupComboBoxesModels() {
@@ -298,7 +298,8 @@ void OptionsDialog::setupUi() {
 
     currentListItem = 0;
     listWidget->setCurrentRow(currentListItem);
-    groupBoxes[currentListItem]->show();
+    groupBoxManager->setCurrentGroupBoxIndex(currentListItem);
+    groupBoxManager->currentGroupBox()->show();
 
     scrollArea->setWidget(scrollAreaWidgetContents);
     horizontalLayout->addWidget(scrollArea);
