@@ -40,8 +40,8 @@ GeneralGroupBoxView::GeneralGroupBoxView(QWidget *parent) : AbstractOptionsGroup
     QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
     QStringList list;
 
-    foreach(QByteArray format, imageFormats) {
-        list.append(*new QString(format));
+    foreach (QByteArray format, imageFormats) {
+        list.append(QString(format));
     }
 
     targetFormatComboBox->insertItems(0, list);
