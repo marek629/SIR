@@ -40,9 +40,8 @@ public:
     void write(XmlStreamWriter *writer);
 
 private:
-    // fields
     EffectsScrollArea *effectsArea;
-    // methods
+
     void readGradients(const QDomElement &parentElement);
     void readGradientStops(const QDomElement &parentElement);
     bool readHistogramEffect(const QDomElement &parentElement);

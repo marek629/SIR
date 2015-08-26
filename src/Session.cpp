@@ -19,29 +19,32 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include <QDomDocument>
-#include <QMessageBox>
 #include "Session.hpp"
-#include "widgets/ConvertDialog.hpp"
-#include "XmlStreamWriter.hpp"
-#include "Version.hpp"
-#include "sir_String.hpp"
+
 #include "ConvertSharedData.hpp"
 #include "EffectsCollector.hpp"
+#include "sir_String.hpp"
+#include "XmlStreamWriter.hpp"
+#include "Version.hpp"
+#include "widgets/ConvertDialog.hpp"
+
+#include <QDomDocument>
+#include <QMessageBox>
+
 
 using namespace sir;
 
 /** Creates the Session object.
   * \param parent Parent convert dialog.
   */
-Session::Session(ConvertDialog *parent) : XmlHelper(parent) {
+Session::Session(ConvertDialog *parent) : XmlHelper(parent)
+{
     if (convertDialog) {
         sizeArea = convertDialog->sizeScrollArea;
         optionsArea = convertDialog->optionsScrollArea;
         effectsArea = convertDialog->effectsScrollArea;
         svgArea = convertDialog->svgScrollArea;
-    }
-    else {
+    } else {
         sizeArea = 0;
         optionsArea = 0;
         effectsArea = 0;
@@ -50,7 +53,10 @@ Session::Session(ConvertDialog *parent) : XmlHelper(parent) {
     collector = new EffectsCollector(convertDialog);
 }
 
-Session::~Session() {}
+Session::~Session()
+{
+    delete collector;
+}
 
 /** Writes session to XML file in \a fileName path.
   * \sa restore()
