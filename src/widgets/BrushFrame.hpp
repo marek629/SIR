@@ -19,23 +19,27 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef BRUSHFRAME_H
-#define BRUSHFRAME_H
+#ifndef BRUSHFRAME_HPP
+#define BRUSHFRAME_HPP
 
 #include "widgets/ColorFrame.hpp"
 
-struct LinearGradientParams {
+
+struct LinearGradientParams
+{
     QPointF start;
     QPointF finalStop;
 };
 
-struct RadialGradientParams {
+struct RadialGradientParams
+{
     QPointF center;
     QPointF focalPoint;
     qreal radius;
 };
 
-struct ConicalGradientParams {
+struct ConicalGradientParams
+{
     qreal angle;
     QPointF center;
 };
@@ -52,12 +56,15 @@ struct ConicalGradientParams {
   *
   * \sa setBrushEditable()
   */
-class BrushFrame : public ColorFrame {
+class BrushFrame : public ColorFrame
+{
     friend class EffectsCollector;
     Q_OBJECT
 
 public:
     explicit BrushFrame(QWidget * parent = 0);
+    ~BrushFrame();
+
     bool isBrushEditable() const;
     void setBrushEditable(bool editable);
     const QColor &color() const;
@@ -80,7 +87,6 @@ protected:
     void paintEvent(QPaintEvent *);
 
 private:
-    // fields
     /** Allows gradient customization.
       * \sa isBrushEditable() setBrushEditable()
       */
@@ -97,11 +103,11 @@ private:
     LinearGradientParams linearGradientParams_;
     RadialGradientParams radialGradientParams_;
     ConicalGradientParams conicalGradientParams_;
-    // methods
+
     void updateGradientParams();
     void setupLinearGradient(LinearGradientParams *params);
     void setupRadialGradient(RadialGradientParams *params);
     void setupConicalGradient(ConicalGradientParams *params);
 };
 
-#endif // BRUSHFRAME_H
+#endif // BRUSHFRAME_HPP

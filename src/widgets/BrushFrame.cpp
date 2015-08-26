@@ -19,13 +19,16 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include <QMouseEvent>
-#include <QPainter>
 #include "widgets/BrushFrame.hpp"
+
 #include "widgets/GradientEditWidget.hpp"
 
-/** Creates BrushFrame object. */
-BrushFrame::BrushFrame(QWidget *parent) : ColorFrame(parent) {
+#include <QMouseEvent>
+#include <QPainter>
+
+
+BrushFrame::BrushFrame(QWidget *parent) : ColorFrame(parent)
+{
     brushEditable = true;
     mouseLeftButtonPressed = false;
     gradient = 0;
@@ -33,6 +36,11 @@ BrushFrame::BrushFrame(QWidget *parent) : ColorFrame(parent) {
     setupLinearGradient(&linearGradientParams_);
     setupRadialGradient(&radialGradientParams_);
     setupConicalGradient(&conicalGradientParams_);
+}
+
+BrushFrame::~BrushFrame()
+{
+    delete gradient;
 }
 
 /** Returns true if gradient edition is allowed, otherwise false.
