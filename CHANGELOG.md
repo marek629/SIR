@@ -1,3 +1,12 @@
+# v3.0
+
+## Marek Jędryka <jedryka89@gmail.com>
+
+### unreleased
+
+* Added Raw tab into main window
+
+
 # v2.8
 
 ## Marek Jędryka <jedryka89@gmail.com>

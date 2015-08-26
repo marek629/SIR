@@ -27,6 +27,7 @@
 class RawController;
 class RawModel;
 class RawGroupBoxView;
+class RawViewAdapter;
 
 
 //! Raw group box controller class used in OptionsDialog dialog.
@@ -51,6 +52,7 @@ public:
 private:
     RawModel *model;
     RawGroupBoxView *view;
+    RawViewAdapter *viewAdapter;
     RawController *adaptedController;
 };
 

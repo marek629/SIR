@@ -44,13 +44,14 @@ RawGroupBoxController::RawGroupBoxController(RawModel *model,
     this->view = view;
     this->view->setController(this);
 
-    this->adaptedController = new RawController(model, new RawViewAdapter(view));
+    this->viewAdapter = new RawViewAdapter(view);
+    this->adaptedController = new RawController(model, viewAdapter);
 }
 
 RawGroupBoxController::~RawGroupBoxController()
 {
-    // TODO: delete adaptedController.view (memory leak?)
     delete adaptedController;
+    delete viewAdapter;
 }
 
 /** Shows file name dialog and sets path of selected file as dcraw path line
