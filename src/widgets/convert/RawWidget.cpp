@@ -22,15 +22,15 @@
 #include "widgets/convert/RawWidget.hpp"
 
 #include "Settings.hpp"
+#include "raw/AdvancedRawViewWidget.hpp"
 #include "raw/RawController.hpp"
 #include "raw/RawModel.hpp"
-#include "raw/RawViewWidget.hpp"
 
 
 RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
 {
     model = new RawModel(Settings::instance()->raw);
-    view = new RawViewWidget(this);
+    view = new AdvancedRawViewWidget(this);
     controller = new RawController(model, view);
     controller->loadSettings();
 

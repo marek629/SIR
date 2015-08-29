@@ -25,6 +25,7 @@ set( sir_SRCS
         Version.cpp
         XmlHelper.cpp
         XmlStreamWriter.cpp
+        raw/AdvancedRawViewWidget.cpp
         raw/Image.cpp
         raw/PaintDevice.cpp
         raw/Pixmap.cpp
@@ -37,7 +38,6 @@ set( sir_SRCS
         raw/RawToolbox.cpp
         raw/RawView.cpp
         raw/RawViewAdapter.cpp
-        raw/RawViewWidget.cpp
         shared/EffectsConfiguration.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp

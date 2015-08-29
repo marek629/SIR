@@ -19,12 +19,12 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "raw/RawViewWidget.hpp"
+#include "raw/AdvancedRawViewWidget.hpp"
 
 #include "raw/RawController.hpp"
 
 
-RawViewWidget::RawViewWidget(QWidget *parent) : QWidget(parent), RawView()
+AdvancedRawViewWidget::AdvancedRawViewWidget(QWidget *parent) : QWidget(parent), RawView()
 {
     setupUi(this);
 
@@ -42,79 +42,79 @@ RawViewWidget::RawViewWidget(QWidget *parent) : QWidget(parent), RawView()
             this, SLOT(dcrawOptionsStringChanged()));
 }
 
-RawViewWidget::~RawViewWidget() {}
+AdvancedRawViewWidget::~AdvancedRawViewWidget() {}
 
-QWidget *RawViewWidget::qWidget()
+QWidget *AdvancedRawViewWidget::qWidget()
 {
     return this;
 }
 
-bool RawViewWidget::isEnabledChecked() const
+bool AdvancedRawViewWidget::isEnabledChecked() const
 {
     return rawCheckBox->isChecked();
 }
 
-void RawViewWidget::setEnabledChecked(bool enabled)
+void AdvancedRawViewWidget::setEnabledChecked(bool enabled)
 {
     rawCheckBox->setChecked(enabled);
 }
 
-QString RawViewWidget::pathText() const
+QString AdvancedRawViewWidget::pathText() const
 {
     return dcrawLineEdit->text();
 }
 
-void RawViewWidget::setPathText(const QString &text)
+void AdvancedRawViewWidget::setPathText(const QString &text)
 {
     dcrawLineEdit->setText(text);
 }
 
-void RawViewWidget::setPathTextEnabledInput(bool inputEnabled)
+void AdvancedRawViewWidget::setPathTextEnabledInput(bool inputEnabled)
 {
     dcrawLineEdit->setEnabled(inputEnabled);
 }
 
-QString RawViewWidget::optionsText() const
+QString AdvancedRawViewWidget::optionsText() const
 {
     return dcrawOptions->text();
 }
 
-void RawViewWidget::setOptionsText(const QString &text)
+void AdvancedRawViewWidget::setOptionsText(const QString &text)
 {
     dcrawOptions->setText(text);
 }
 
-void RawViewWidget::setOptionsTextEnabledInput(bool inputEnabled)
+void AdvancedRawViewWidget::setOptionsTextEnabledInput(bool inputEnabled)
 {
     dcrawOptions->setEnabled(inputEnabled);
 }
 
-void RawViewWidget::setHelpTextPlain(const QString &text)
+void AdvancedRawViewWidget::setHelpTextPlain(const QString &text)
 {
     helpTextBrowser->setPlainText(text);
 }
 
-void RawViewWidget::setButtonEnabledInput(bool inputEnabled)
+void AdvancedRawViewWidget::setButtonEnabledInput(bool inputEnabled)
 {
     dcrawPushButton->setEnabled(inputEnabled);
 }
 
-bool RawViewWidget::closeWindow()
+bool AdvancedRawViewWidget::closeWindow()
 {
     return window()->close();
 }
 
-void RawViewWidget::browseButtonClicked()
+void AdvancedRawViewWidget::browseButtonClicked()
 {
     controller->browseDcraw();
 }
 
-void RawViewWidget::rawEnabledStatusChanged(int state)
+void AdvancedRawViewWidget::rawEnabledStatusChanged(int state)
 {
     controller->setRawStatus(state);
 }
 
-void RawViewWidget::dcrawOptionsStringChanged()
+void AdvancedRawViewWidget::dcrawOptionsStringChanged()
 {
     controller->setDcrawOptionsString(dcrawOptions->text());
 }

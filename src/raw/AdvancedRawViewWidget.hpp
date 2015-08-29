@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWVIEWWIDGET_HPP
-#define RAWVIEWWIDGET_HPP
+#ifndef ADVANCEDRAWVIEWWIDGET_HPP
+#define ADVANCEDRAWVIEWWIDGET_HPP
 
 #include "raw/RawView.hpp"
 
@@ -29,13 +29,13 @@
 #include <QWidget>
 
 
-class RawViewWidget : public QWidget, public RawView, public Ui::RawWidget
+class AdvancedRawViewWidget : public QWidget, public RawView, public Ui::RawWidget
 {
     Q_OBJECT
 
 public:
-    explicit RawViewWidget(QWidget *parent = 0);
-    ~RawViewWidget();
+    explicit AdvancedRawViewWidget(QWidget *parent = 0);
+    ~AdvancedRawViewWidget();
 
     QWidget *qWidget();
 
@@ -62,4 +62,4 @@ private slots:
     void dcrawOptionsStringChanged();
 };
 
-#endif // RAWVIEWWIDGET_HPP
+#endif // ADVANCEDRAWVIEWWIDGET_HPP

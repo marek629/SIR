@@ -21,9 +21,9 @@
 
 #include "raw/RawControllerTest.hpp"
 
+#include "raw/AdvancedRawViewWidget.hpp"
 #include "raw/RawController.hpp"
 #include "raw/RawModel.hpp"
-#include "raw/RawViewWidget.hpp"
 #include "widgets/MessageBox.hpp"
 
 #include <QDir>
@@ -34,7 +34,7 @@ RawControllerTest::RawControllerTest()
     MessageBox::enableTesting(true);
 
     RawModel *model = new RawModel(true, "/usr/bin/dcraw", "");
-    view = new RawViewWidget();
+    view = new AdvancedRawViewWidget();
     controller = new RawController(model, view);
 }
 
