@@ -78,6 +78,7 @@ set( sir_SRCS
 
 # User interface files
 set( sir_UIS
+        raw/AdvancedRawWidget.ui
         widgets/AboutDialog.ui
         widgets/ConvertDialog.ui
         widgets/GradientEditWidget.ui
@@ -89,7 +90,6 @@ set( sir_UIS
         widgets/convert/SvgScrollArea.ui
         widgets/options/FileListGroupBoxView.ui
         widgets/options/GeneralGroupBoxView.ui
-        widgets/options/RawWidget.ui
         widgets/options/SelectionGroupBoxView.ui
         widgets/selection/DirWidget.ui
     )

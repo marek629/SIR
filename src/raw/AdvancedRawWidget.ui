@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RawWidget</class>
- <widget class="QWidget" name="RawWidget">
+ <class>AdvancedRawWidget</class>
+ <widget class="QWidget" name="AdvancedRawWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>369</width>
-    <height>170</height>
+    <height>189</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">

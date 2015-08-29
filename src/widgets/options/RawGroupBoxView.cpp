@@ -27,13 +27,18 @@
 RawGroupBoxView::RawGroupBoxView(QWidget *parent)
     : AbstractOptionsGroupBox(parent)
 {
-    setupUi(this);
+    ui.setupUi(this);
     setTitle(tr("Raw Options"));
 
-    connect(dcrawPushButton, SIGNAL(clicked()),
+    connect(ui.dcrawPushButton, SIGNAL(clicked()),
             this, SLOT(browseButtonClicked()));
-    connect(rawCheckBox, SIGNAL(stateChanged(int)),
+    connect(ui.rawCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(rawEnabledStatusChanged(int)));
+}
+
+Ui::AdvancedRawWidget *RawGroupBoxView::advancedRawWidget()
+{
+    return &ui;
 }
 
 void RawGroupBoxView::loadSettings()

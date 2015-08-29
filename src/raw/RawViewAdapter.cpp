@@ -24,69 +24,70 @@
 #include "widgets/options/RawGroupBoxView.hpp"
 
 
-RawViewAdapter::RawViewAdapter(RawGroupBoxView *groupBox) : RawView()
+RawViewAdapter::RawViewAdapter(RawGroupBoxView *view) : RawView()
 {
-    this->adaptedGroupBox = groupBox;
+    adaptedView = view;
+    adaptedUserInterface = view->advancedRawWidget();
 }
 
 RawViewAdapter::~RawViewAdapter() {}
 
 QWidget *RawViewAdapter::qWidget()
 {
-    return adaptedGroupBox;
+    return adaptedView;
 }
 
 bool RawViewAdapter::isEnabledChecked() const
 {
-    return adaptedGroupBox->rawCheckBox->isChecked();
+    return adaptedUserInterface->rawCheckBox->isChecked();
 }
 
 void RawViewAdapter::setEnabledChecked(bool enabled)
 {
-    adaptedGroupBox->rawCheckBox->setChecked(enabled);
+    adaptedUserInterface->rawCheckBox->setChecked(enabled);
 }
 
 QString RawViewAdapter::pathText() const
 {
-    return adaptedGroupBox->dcrawLineEdit->text();
+    return adaptedUserInterface->dcrawLineEdit->text();
 }
 
 void RawViewAdapter::setPathText(const QString &text)
 {
-    adaptedGroupBox->dcrawLineEdit->setText(text);
+    adaptedUserInterface->dcrawLineEdit->setText(text);
 }
 
 void RawViewAdapter::setPathTextEnabledInput(bool inputEnabled)
 {
-    adaptedGroupBox->dcrawLineEdit->setEnabled(inputEnabled);
+    adaptedUserInterface->dcrawLineEdit->setEnabled(inputEnabled);
 }
 
 QString RawViewAdapter::optionsText() const
 {
-    return adaptedGroupBox->dcrawOptions->text();
+    return adaptedUserInterface->dcrawOptions->text();
 }
 
 void RawViewAdapter::setOptionsText(const QString &text)
 {
-    adaptedGroupBox->dcrawOptions->setText(text);
+    adaptedUserInterface->dcrawOptions->setText(text);
 }
 
 void RawViewAdapter::setOptionsTextEnabledInput(bool inputEnabled)
 {
-    adaptedGroupBox->dcrawOptions->setEnabled(inputEnabled);
+    adaptedUserInterface->dcrawOptions->setEnabled(inputEnabled);
 }
 
 void RawViewAdapter::setHelpTextPlain(const QString &text)
 {
-    adaptedGroupBox->helpTextBrowser->setPlainText(text);
+    adaptedUserInterface->helpTextBrowser->setPlainText(text);
 }
 
 void RawViewAdapter::setButtonEnabledInput(bool inputEnabled)
 {
-    adaptedGroupBox->dcrawPushButton->setEnabled(inputEnabled);
+    adaptedUserInterface->dcrawPushButton->setEnabled(inputEnabled);
 }
 
 bool RawViewAdapter::closeWindow()
 {
-    return adaptedGroupBox->window()->close();
+    return adaptedView->window()->close();
 }

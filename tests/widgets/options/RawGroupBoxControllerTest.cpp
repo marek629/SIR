@@ -51,27 +51,27 @@ void RawGroupBoxControllerTest::setRawStatus_true()
 {
     controller->setRawStatus(true);
 
-    QVERIFY(view->dcrawLineEdit->isEnabled());
-    QVERIFY(view->dcrawPushButton->isEnabled());
-    QVERIFY(view->dcrawOptions->isEnabled());
+    QVERIFY(view->advancedRawWidget()->dcrawLineEdit->isEnabled());
+    QVERIFY(view->advancedRawWidget()->dcrawPushButton->isEnabled());
+    QVERIFY(view->advancedRawWidget()->dcrawOptions->isEnabled());
 }
 
 void RawGroupBoxControllerTest::setRawStatus_false()
 {
     controller->setRawStatus(false);
 
-    QVERIFY(!view->dcrawLineEdit->isEnabled());
-    QVERIFY(!view->dcrawPushButton->isEnabled());
-    QVERIFY(!view->dcrawOptions->isEnabled());
+    QVERIFY(!view->advancedRawWidget()->dcrawLineEdit->isEnabled());
+    QVERIFY(!view->advancedRawWidget()->dcrawPushButton->isEnabled());
+    QVERIFY(!view->advancedRawWidget()->dcrawOptions->isEnabled());
 }
 
 void RawGroupBoxControllerTest::setRawStatus_notNull()
 {
     controller->setRawStatus(10);
 
-    QVERIFY(view->dcrawLineEdit->isEnabled());
-    QVERIFY(view->dcrawPushButton->isEnabled());
-    QVERIFY(view->dcrawOptions->isEnabled());
+    QVERIFY(view->advancedRawWidget()->dcrawLineEdit->isEnabled());
+    QVERIFY(view->advancedRawWidget()->dcrawPushButton->isEnabled());
+    QVERIFY(view->advancedRawWidget()->dcrawOptions->isEnabled());
 }
 
 

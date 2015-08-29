@@ -24,12 +24,12 @@
 
 #include "raw/RawView.hpp"
 
-#include "ui_RawWidget.h"
+#include "ui_AdvancedRawWidget.h"
 
 #include <QWidget>
 
 
-class AdvancedRawViewWidget : public QWidget, public RawView, public Ui::RawWidget
+class AdvancedRawViewWidget : public QWidget, public RawView, public Ui::AdvancedRawWidget
 {
     Q_OBJECT
 

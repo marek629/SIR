@@ -24,13 +24,15 @@
 
 #include "raw/RawView.hpp"
 
+#include "ui_AdvancedRawWidget.h"
+
 class RawGroupBoxView;
 
 
 class RawViewAdapter : public RawView
 {
 public:
-    RawViewAdapter(RawGroupBoxView *groupBox);
+    RawViewAdapter(RawGroupBoxView *view);
     ~RawViewAdapter();
 
     QWidget *qWidget();
@@ -53,7 +55,8 @@ public:
     bool closeWindow();
 
 private:
-    RawGroupBoxView *adaptedGroupBox;
+    RawGroupBoxView *adaptedView;
+    Ui::AdvancedRawWidget *adaptedUserInterface;
 };
 
 #endif // RAWVIEWADAPTER_HPP

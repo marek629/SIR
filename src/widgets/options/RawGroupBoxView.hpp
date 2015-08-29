@@ -22,20 +22,25 @@
 #ifndef RAWGROUPBOXVIEW_H
 #define RAWGROUPBOXVIEW_H
 
+#include "raw/RawView.hpp"
 #include "widgets/options/AbstractOptionsGroupBox.hpp"
-#include "ui_RawWidget.h"
+
+#include "ui_AdvancedRawWidget.h"
 
 class RawGroupBoxController;
 
+
 //! Raw group box view class used in OptionsDialog dialog.
-class RawGroupBoxView
-        : public AbstractOptionsGroupBox, public Ui::RawWidget
+class RawGroupBoxView : public AbstractOptionsGroupBox
 {
     Q_OBJECT
 
 public:
     explicit RawGroupBoxView(QWidget *parent = 0);
 
+    Ui::AdvancedRawWidget *advancedRawWidget();
+
+    // AbstractOptionsGroupBox interface
     void loadSettings();
     void saveSettings();
 
@@ -47,6 +52,7 @@ private slots:
 
 private:
     RawGroupBoxController *controller;
+    Ui::AdvancedRawWidget ui;
 };
 
 #endif // RAWGROUPBOXVIEW_H
