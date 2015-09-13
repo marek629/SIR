@@ -26,6 +26,7 @@ set( sir_SRCS
         XmlHelper.cpp
         XmlStreamWriter.cpp
         raw/AdvancedRawViewWidget.cpp
+        raw/BasicRawViewScrollArea.cpp
         raw/Image.cpp
         raw/PaintDevice.cpp
         raw/Pixmap.cpp
