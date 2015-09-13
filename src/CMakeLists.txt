@@ -79,6 +79,7 @@ set( sir_SRCS
 # User interface files
 set( sir_UIS
         raw/AdvancedRawWidget.ui
+        raw/BasicRawScrollArea.ui
         widgets/AboutDialog.ui
         widgets/ConvertDialog.ui
         widgets/GradientEditWidget.ui

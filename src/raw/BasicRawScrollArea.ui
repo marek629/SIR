@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BasicRawScrollArea</class>
+ <widget class="QScrollArea" name="BasicRawScrollArea">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>569</width>
+    <height>264</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ScrollArea</string>
+  </property>
+  <property name="widgetResizable">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="scrollAreaWidgetContents">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>567</width>
+     <height>262</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="3">
+     <widget class="QCheckBox" name="rawCheckBox">
+      <property name="text">
+       <string>Enable RAW images support (needs dcraw)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="dcrawLineEdit">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="dcrawPushButton">
+      <property name="text">
+       <string>Browse</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="dcrawPathLabel">
+      <property name="text">
+       <string>dcraw Executable Path:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <widget class="QGroupBox" name="interpolationGroupBox">
+      <property name="title">
+       <string>Interpolation</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="interpolationQualityLabel">
+         <property name="text">
+          <string>Quality</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QCheckBox" name="interpolationPostProcessingCheckBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="toolTip">
+          <string>After interpolation, clean up color artifacts by repeatedly
+applying a 3x3 median filter to the R-G and B-G channels.</string>
+         </property>
+         <property name="text">
+          <string>Post-processing cycles</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QCheckBox" name="interpolation4ColorsCheckBox">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Interpolate RGB as four colors.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSpinBox" name="interpolationPostProcessingSpinBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>After interpolation, clean up color artifacts by repeatedly
+applying a 3x3 median filter to the R-G and B-G channels.</string>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QComboBox" name="interpolationQualityComboBox">
+         <item>
+          <property name="text">
+           <string>Use high-speed, low-quality bilinear interpolation.</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Use Variable Number of Gradients (VNG) interpolation.</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Use Patterned Pixel Grouping (PPG) interpolation.</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Use Adaptive Homogeneity-Directed (AHD) interpolation.</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>interpolationPostProcessingCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>interpolationPostProcessingSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
