@@ -1,7 +1,10 @@
 # ################################  SIR  exec  #################################
 
 # Source files
-set( sir_SRCS
+file( GLOB_RECURSE sir_SRCS
+       raw/*.cpp
+    )
+set( sir_SRCS ${sir_SRCS}
         CommandLineAssistant.cpp
         ConvertEffects.cpp
         ConvertSharedData.cpp
@@ -25,20 +28,6 @@ set( sir_SRCS
         Version.cpp
         XmlHelper.cpp
         XmlStreamWriter.cpp
-        raw/AdvancedRawViewWidget.cpp
-        raw/BasicRawViewScrollArea.cpp
-        raw/Image.cpp
-        raw/PaintDevice.cpp
-        raw/Pixmap.cpp
-        raw/RawController.cpp
-        raw/RawImageLoader.cpp
-        raw/RawLoader.cpp
-        raw/RawModel.cpp
-        raw/RawModelValidator.cpp
-        raw/RawPixmapLoader.cpp
-        raw/RawToolbox.cpp
-        raw/RawView.cpp
-        raw/RawViewAdapter.cpp
         shared/EffectsConfiguration.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
