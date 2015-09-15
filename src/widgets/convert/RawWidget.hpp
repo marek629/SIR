@@ -19,14 +19,16 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWSCROLLAREA_HPP
-#define RAWSCROLLAREA_HPP
+#ifndef RAWWIDGET_HPP
+#define RAWWIDGET_HPP
 
 #include <QWidget>
 
 class RawController;
 class RawModel;
 class RawView;
+
+class QTabWidget;
 
 
 class RawWidget : public QWidget
@@ -41,10 +43,18 @@ public:
 
     RawModel rawModel() const;
 
+private slots:
+    void onTabChange(int tabIndex);
+
 private:
     RawController *controller;
     RawModel *model;
-    RawView *view;
+    RawView *basicView;
+    RawView *advancedView;
+
+    QTabWidget *tabWidget;
+    QWidget *basicTab;
+    QWidget *advancedTab;
 };
 
-#endif // RAWSCROLLAREA_HPP
+#endif // RAWWIDGET_HPP

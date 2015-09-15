@@ -42,6 +42,7 @@ public:
     void setRawStatus(int state);
     void setDcrawOptionsString(const QString &options);
     void setModel(RawModel *model);
+    void setView(RawView *view);
 
 private:
     RawModel *model;

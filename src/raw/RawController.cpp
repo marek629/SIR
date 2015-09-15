@@ -121,6 +121,11 @@ void RawController::setModel(RawModel *model)
     this->model = model;
 }
 
+void RawController::setView(RawView *view)
+{
+    this->view = view;
+}
+
 bool RawController::checkDcrawPath(const QString &fileName)
 {
     if (fileName.isEmpty()) {

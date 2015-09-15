@@ -23,26 +23,57 @@
 
 #include "Settings.hpp"
 #include "raw/AdvancedRawViewWidget.hpp"
+#include "raw/BasicRawViewScrollArea.hpp"
 #include "raw/RawController.hpp"
 #include "raw/RawModel.hpp"
+
+#include <QTabWidget>
 
 
 RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
 {
     model = new RawModel(Settings::instance()->raw);
-    view = new AdvancedRawViewWidget(this);
-    controller = new RawController(model, view);
-    controller->loadSettings();
+
+    tabWidget = new QTabWidget(this);
+    tabWidget->setTabPosition(QTabWidget::South);
+
+    basicTab = new QWidget();
+    basicTab->setObjectName("basicTab");
+    basicView = new BasicRawViewScrollArea(basicTab);
+    QLayout *basicLayout = new QHBoxLayout(basicTab);
+    basicLayout->addWidget(basicView->qWidget());
+
+    tabWidget->addTab(basicTab, tr("Basic"));
+
+    advancedTab = new QWidget();
+    advancedTab->setObjectName("advancedTab");
+    advancedView = new AdvancedRawViewWidget(advancedTab);
+    QLayout *advancedLayout = new QHBoxLayout(advancedTab);
+    advancedLayout->addWidget(advancedView->qWidget());
+
+    tabWidget->addTab(advancedTab, tr("Advanced"));
 
     QLayout *layout = new QHBoxLayout(this);
-    layout->addWidget(view->qWidget());
+    layout->addWidget(tabWidget);
     setLayout(layout);
+
+    controller = new RawController(model, basicView);
+    controller->loadSettings();
+
+    connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(onTabChange(int)));
 }
 
 RawWidget::~RawWidget()
 {
     delete controller;
-    delete view;
+
+    delete basicTab;
+    delete basicView;
+    delete advancedTab;
+    delete advancedView;
+
+    delete tabWidget;
+
     delete model;
 }
 
@@ -57,4 +88,17 @@ void RawWidget::loadSettings(const RawModel &rawModel)
 RawModel RawWidget::rawModel() const
 {
     return RawModel(*model);
+}
+
+void RawWidget::onTabChange(int tabIndex)
+{
+    Q_UNUSED(tabIndex);
+
+    if (tabWidget->currentWidget() == basicTab) {
+        controller->setView(basicView);
+    } else {
+        controller->setView(advancedView);
+    }
+
+    controller->loadSettings();
 }
