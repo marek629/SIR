@@ -90,9 +90,11 @@ void RawWidget::onTabChange(int tabIndex)
     Q_UNUSED(tabIndex);
 
     if (tabWidget->currentWidget() == basicTab) {
+        model->setDcrawOptions(advancedView->optionsText());
         controller->setView(basicView);
         basicView->setController(controller);
     } else {
+        model->setDcrawOptions(basicView->optionsText());
         controller->setView(advancedView);
         advancedView->setController(controller);
     }

@@ -22,6 +22,7 @@
 #include "raw/BasicRawViewScrollArea.hpp"
 
 #include "raw/RawController.hpp"
+#include "raw/basic/InterpolationOptionsCollector.hpp"
 
 
 BasicRawViewScrollArea::BasicRawViewScrollArea(QWidget *parent)
@@ -67,8 +68,11 @@ void BasicRawViewScrollArea::setPathTextEnabledInput(bool inputEnabled)
 
 QString BasicRawViewScrollArea::optionsText() const
 {
-    // TODO: build result string from UI widgets
-    return QString();
+    Ui::BasicRawScrollArea *uiPointer = const_cast<Ui::BasicRawScrollArea*>(&ui);
+
+    DcrawOptionsCollector *collector = new DcrawOptionsCollector(uiPointer);
+    collector = new InterpolationOptionsCollector(collector, uiPointer);
+    return collector->optionsString();
 }
 
 void BasicRawViewScrollArea::setOptionsText(const QString &text)
