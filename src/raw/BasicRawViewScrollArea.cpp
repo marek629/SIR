@@ -77,7 +77,11 @@ QString BasicRawViewScrollArea::optionsText() const
 
 void BasicRawViewScrollArea::setOptionsText(const QString &text)
 {
-    // TODO: set UI widgets values from input text string
+    Ui::BasicRawScrollArea *uiPointer = const_cast<Ui::BasicRawScrollArea*>(&ui);
+
+    DcrawOptionsCollector *collector = new DcrawOptionsCollector(uiPointer);
+    collector = new InterpolationOptionsCollector(collector, uiPointer);
+    collector->setOptions(text);
 }
 
 void BasicRawViewScrollArea::setOptionsTextEnabledInput(bool inputEnabled)

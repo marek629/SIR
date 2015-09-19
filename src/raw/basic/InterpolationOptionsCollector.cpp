@@ -21,6 +21,7 @@
 
 #include "raw/basic/InterpolationOptionsCollector.hpp"
 
+
 InterpolationOptionsCollector::InterpolationOptionsCollector(
         BasicOptionsCollector *collector, Ui::BasicRawScrollArea *ui)
     : CollectorDecorator(collector, ui) {}
@@ -53,23 +54,18 @@ QString InterpolationOptionsCollector::optionsString() const
 
 void InterpolationOptionsCollector::setOptions(const QString &string)
 {
-    QRegExp qualityRegExp = QRegExp("-q [0-3]");
+    QRegExp qualityRegExp = QRegExp("(-q)(\\s+)([0-3])");
     if (string.contains(qualityRegExp)) {
-        int qualityIndex = string.section(qualityRegExp, 0, 0).toInt();
-        if (qualityIndex < 0) {
-            qualityIndex = 0;
-        } else if (qualityIndex > 3) {
-            qualityIndex = 3;
-        }
+        int qualityIndex = qualityRegExp.cap(3).toInt();
         ui->interpolationQualityComboBox->setCurrentIndex(qualityIndex);
     }
 
     ui->interpolation4ColorsCheckBox->setChecked(string.contains("-f"));
 
-    QRegExp postProcessingRegExp = QRegExp("-m \\d+");
+    QRegExp postProcessingRegExp = QRegExp("(-m)(\\s+)(\\d+)");
     bool isPostProcessingEnabled = string.contains(postProcessingRegExp);
     if (isPostProcessingEnabled) {
-        int postProcessingCycles = string.section(postProcessingRegExp, 0, 0).toInt();
+        int postProcessingCycles = postProcessingRegExp.cap(3).toInt();
         ui->interpolationPostProcessingSpinBox->setValue(postProcessingCycles);
     }
     ui->interpolationPostProcessingCheckBox->setChecked(isPostProcessingEnabled);
