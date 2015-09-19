@@ -96,8 +96,10 @@ void RawWidget::onTabChange(int tabIndex)
 
     if (tabWidget->currentWidget() == basicTab) {
         controller->setView(basicView);
+        basicView->setController(controller);
     } else {
         controller->setView(advancedView);
+        advancedView->setController(controller);
     }
 
     controller->loadSettings();
