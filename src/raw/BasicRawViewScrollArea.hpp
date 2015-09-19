@@ -57,6 +57,9 @@ public:
 
     bool closeWindow();
 
+private slots:
+    void onRawEnabledChange(int state);
+
 private:
     Ui::BasicRawScrollArea ui;
 };

@@ -28,6 +28,9 @@ BasicRawViewScrollArea::BasicRawViewScrollArea(QWidget *parent)
     : QScrollArea(parent), RawView()
 {
     ui.setupUi(this);
+
+    connect(ui.rawCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(onRawEnabledChange(int)));
 }
 
 BasicRawViewScrollArea::~BasicRawViewScrollArea() {}
@@ -96,4 +99,9 @@ void BasicRawViewScrollArea::setButtonEnabledInput(bool inputEnabled)
 bool BasicRawViewScrollArea::closeWindow()
 {
     return window()->close();
+}
+
+void BasicRawViewScrollArea::onRawEnabledChange(int state)
+{
+    controller->setRawStatus(state);
 }
