@@ -67,11 +67,6 @@ RawWidget::~RawWidget()
 {
     delete controller;
 
-    delete basicTab;
-    delete basicView;
-    delete advancedTab;
-    delete advancedView;
-
     delete tabWidget;
 
     delete model;
