@@ -82,6 +82,11 @@ void RawViewAdapter::setHelpTextPlain(const QString &text)
     adaptedUserInterface->helpTextBrowser->setPlainText(text);
 }
 
+void RawViewAdapter::setHelpWidgetEnabled(bool enabled)
+{
+    adaptedUserInterface->helpTextBrowser->setEnabled(enabled);
+}
+
 void RawViewAdapter::setButtonEnabledInput(bool inputEnabled)
 {
     adaptedUserInterface->dcrawPushButton->setEnabled(inputEnabled);

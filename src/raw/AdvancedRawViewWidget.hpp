@@ -51,6 +51,7 @@ public:
     void setOptionsTextEnabledInput(bool inputEnabled);
 
     void setHelpTextPlain(const QString &text);
+    void setHelpWidgetEnabled(bool enabled);
 
     void setButtonEnabledInput(bool inputEnabled);
 

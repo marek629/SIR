@@ -83,6 +83,11 @@ void BasicRawViewScrollArea::setHelpTextPlain(const QString &text)
     Q_UNUSED(text);
 }
 
+void BasicRawViewScrollArea::setHelpWidgetEnabled(bool enabled)
+{
+    Q_UNUSED(enabled);
+}
+
 void BasicRawViewScrollArea::setButtonEnabledInput(bool inputEnabled)
 {
     ui.dcrawPushButton->setEnabled(inputEnabled);

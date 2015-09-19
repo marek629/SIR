@@ -105,10 +105,14 @@ void RawController::browseDcraw()
 
 void RawController::setRawStatus(int state)
 {
-    model->setEnabled(state);
-    view->setPathTextEnabledInput(state);
-    view->setButtonEnabledInput(state);
-    view->setOptionsTextEnabledInput(state);
+    bool rawEnabled = bool(state);
+
+    model->setEnabled(rawEnabled);
+
+    view->setPathTextEnabledInput(rawEnabled);
+    view->setButtonEnabledInput(rawEnabled);
+    view->setOptionsTextEnabledInput(rawEnabled);
+    view->setHelpWidgetEnabled(rawEnabled);
 }
 
 void RawController::setDcrawOptionsString(const QString &options)

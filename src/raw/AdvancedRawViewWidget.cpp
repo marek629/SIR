@@ -94,6 +94,11 @@ void AdvancedRawViewWidget::setHelpTextPlain(const QString &text)
     helpTextBrowser->setPlainText(text);
 }
 
+void AdvancedRawViewWidget::setHelpWidgetEnabled(bool enabled)
+{
+    helpTextBrowser->setEnabled(enabled);
+}
+
 void AdvancedRawViewWidget::setButtonEnabledInput(bool inputEnabled)
 {
     dcrawPushButton->setEnabled(inputEnabled);
