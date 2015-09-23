@@ -30,10 +30,12 @@ BasicRawViewScrollArea::BasicRawViewScrollArea(QWidget *parent)
 {
     ui.setupUi(this);
 
-    connect(ui.rawCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(onRawEnabledChange(int)));
     connect(ui.dcrawPushButton, SIGNAL(clicked()),
             this, SLOT(onBrowseButtonClick()));
+    connect(ui.interpolationPostProcessingCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(onInterpolationPostProcessingToggle(bool)));
+    connect(ui.rawCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(onRawEnabledChange(int)));
 }
 
 BasicRawViewScrollArea::~BasicRawViewScrollArea() {}
@@ -114,6 +116,23 @@ bool BasicRawViewScrollArea::closeWindow()
 void BasicRawViewScrollArea::onBrowseButtonClick()
 {
     controller->browseDcraw();
+}
+
+void BasicRawViewScrollArea::onInterpolationPostProcessingToggle(bool toggled)
+{
+    static int spinBoxEnabledValue = 1;
+    QSpinBox *spinBox = ui.interpolationPostProcessingSpinBox;
+
+    if (toggled) {
+        spinBox->setMinimum(1);
+        spinBox->setValue(spinBoxEnabledValue);
+    } else {
+        spinBoxEnabledValue = spinBox->value();
+        spinBox->setMinimum(0);
+        spinBox->setValue(0);
+    }
+
+    spinBox->setEnabled(toggled);
 }
 
 void BasicRawViewScrollArea::onRawEnabledChange(int state)

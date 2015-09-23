@@ -114,10 +114,13 @@ applying a 3x3 median filter to the R-G and B-G channels.</string>
 applying a 3x3 median filter to the R-G and B-G channels.</string>
          </property>
          <property name="minimum">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="maximum">
           <number>100</number>
+         </property>
+         <property name="value">
+          <number>0</number>
          </property>
         </widget>
        </item>
@@ -152,22 +155,5 @@ applying a 3x3 median filter to the R-G and B-G channels.</string>
   </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>interpolationPostProcessingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>interpolationPostProcessingSpinBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>206</x>
-     <y>158</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>288</x>
-     <y>154</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

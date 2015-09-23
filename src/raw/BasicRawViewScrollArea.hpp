@@ -59,6 +59,7 @@ public:
 
 private slots:
     void onBrowseButtonClick();
+    void onInterpolationPostProcessingToggle(bool toggled);
     void onRawEnabledChange(int state);
 
 private:
