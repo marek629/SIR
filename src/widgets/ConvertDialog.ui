@@ -333,7 +333,7 @@
              <string notr="true">SVG</string>
             </attribute>
            </widget>
-           <widget class="RawWidget" name="rawScrollArea">
+           <widget class="RawTabWidget" name="rawTabWidget">
             <attribute name="title">
              <string>Raw</string>
             </attribute>
@@ -621,9 +621,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>RawWidget</class>
+   <class>RawTabWidget</class>
    <extends>QWidget</extends>
-   <header>widgets/convert/RawWidget.hpp</header>
+   <header>widgets/convert/RawTabWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

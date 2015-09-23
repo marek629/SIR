@@ -23,7 +23,7 @@
 
 #include "widgets/convert/EffectsScrollArea.hpp"
 #include "widgets/convert/EffectsScrollAreaVisitor.hpp"
-#include "widgets/convert/RawWidget.hpp"
+#include "widgets/convert/RawTabWidget.hpp"
 #include "widgets/convert/SvgScrollArea.hpp"
 
 
@@ -64,7 +64,7 @@ SharedInformationBuilder *SharedInformationBuilder::withSVG(
     return this;
 }
 
-SharedInformationBuilder *SharedInformationBuilder::withRaw(RawWidget *rawWidget)
+SharedInformationBuilder *SharedInformationBuilder::withRaw(RawTabWidget *rawWidget)
 {
     sharedInformation.setRawModel(rawWidget->rawModel());
 

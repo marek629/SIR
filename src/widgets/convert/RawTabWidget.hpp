@@ -19,25 +19,23 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWWIDGET_HPP
-#define RAWWIDGET_HPP
+#ifndef RAWTABWIDGET_HPP
+#define RAWTABWIDGET_HPP
 
-#include <QWidget>
+#include <QTabWidget>
 
 class RawController;
 class RawModel;
 class RawView;
 
-class QTabWidget;
 
-
-class RawWidget : public QWidget
+class RawTabWidget : public QTabWidget
 {
     Q_OBJECT
 
 public:
-    RawWidget(QWidget *parent = 0);
-    ~RawWidget();
+    RawTabWidget(QWidget *parent = 0);
+    ~RawTabWidget();
 
     void loadSettings(const RawModel &rawModel);
 
@@ -52,9 +50,8 @@ private:
     RawView *basicView;
     RawView *advancedView;
 
-    QTabWidget *tabWidget;
     QWidget *basicTab;
     QWidget *advancedTab;
 };
 
-#endif // RAWWIDGET_HPP
+#endif // RAWTABWIDGET_HPP

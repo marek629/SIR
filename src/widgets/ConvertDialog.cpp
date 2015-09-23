@@ -555,7 +555,7 @@ void ConvertDialog::convert()
     sharedInfo = new SharedInformation(*sharedInfoConfigurator
             ->withEffects(effectsScrollArea)
             ->withSVG(svgScrollArea)
-            ->withRaw(rawScrollArea)
+            ->withRaw(rawTabWidget)
             ->build());
 
     if (sharedInfo->effectsConfiguration().getImageLoadError()) {
@@ -764,7 +764,7 @@ void ConvertDialog::loadSettings() {
         Exif::setUserCommentString(sir::String( s->exif.userCommentMap.keys().first()));
 #endif // SIR_METADATA_SUPPORT
     // raw
-    rawScrollArea->loadSettings(s->raw);
+    rawTabWidget->loadSettings(s->raw);
 }
 
 /** Save new window state and size in private fields.

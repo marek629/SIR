@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "widgets/convert/RawWidget.hpp"
+#include "widgets/convert/RawTabWidget.hpp"
 
 #include "Settings.hpp"
 #include "raw/AdvancedRawViewWidget.hpp"
@@ -27,15 +27,10 @@
 #include "raw/RawController.hpp"
 #include "raw/RawModel.hpp"
 
-#include <QTabWidget>
 
-
-RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
+RawTabWidget::RawTabWidget(QWidget *parent) : QTabWidget(parent)
 {
-    model = new RawModel(Settings::instance()->raw);
-
-    tabWidget = new QTabWidget(this);
-    tabWidget->setTabPosition(QTabWidget::South);
+    setTabPosition(QTabWidget::South);
 
     basicTab = new QWidget();
     basicTab->setObjectName("basicTab");
@@ -43,7 +38,7 @@ RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
     QLayout *basicLayout = new QHBoxLayout(basicTab);
     basicLayout->addWidget(basicView->qWidget());
 
-    tabWidget->addTab(basicTab, tr("Basic"));
+    addTab(basicTab, tr("Basic"));
 
     advancedTab = new QWidget();
     advancedTab->setObjectName("advancedTab");
@@ -51,28 +46,23 @@ RawWidget::RawWidget(QWidget *parent) : QWidget(parent)
     QLayout *advancedLayout = new QHBoxLayout(advancedTab);
     advancedLayout->addWidget(advancedView->qWidget());
 
-    tabWidget->addTab(advancedTab, tr("Advanced"));
+    addTab(advancedTab, tr("Advanced"));
 
-    QLayout *layout = new QHBoxLayout(this);
-    layout->addWidget(tabWidget);
-    setLayout(layout);
+    model = new RawModel(Settings::instance()->raw);
 
     controller = new RawController(model, basicView);
     controller->loadSettings();
 
-    connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(onTabChange(int)));
+    connect(this, SIGNAL(currentChanged(int)), this, SLOT(onTabChange(int)));
 }
 
-RawWidget::~RawWidget()
+RawTabWidget::~RawTabWidget()
 {
     delete controller;
-
-    delete tabWidget;
-
     delete model;
 }
 
-void RawWidget::loadSettings(const RawModel &rawModel)
+void RawTabWidget::loadSettings(const RawModel &rawModel)
 {
     delete model;
     model = new RawModel(rawModel);
@@ -80,16 +70,16 @@ void RawWidget::loadSettings(const RawModel &rawModel)
     controller->loadSettings();
 }
 
-RawModel RawWidget::rawModel() const
+RawModel RawTabWidget::rawModel() const
 {
     return RawModel(*model);
 }
 
-void RawWidget::onTabChange(int tabIndex)
+void RawTabWidget::onTabChange(int tabIndex)
 {
     Q_UNUSED(tabIndex);
 
-    if (tabWidget->currentWidget() == basicTab) {
+    if (this->currentWidget() == basicTab) {
         model->setDcrawOptions(advancedView->optionsText());
         controller->setView(basicView);
         basicView->setController(controller);

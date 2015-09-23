@@ -26,7 +26,7 @@
 
 class EffectsScrollArea;
 class SvgScrollArea;
-class RawWidget;
+class RawTabWidget;
 
 
 class SharedInformationBuilder
@@ -36,7 +36,7 @@ public:
 
     SharedInformationBuilder *withEffects(EffectsScrollArea *effectsScrollArea);
     SharedInformationBuilder *withSVG(SvgScrollArea *svgScrollArea);
-    SharedInformationBuilder *withRaw(RawWidget *rawWidget);
+    SharedInformationBuilder *withRaw(RawTabWidget *rawWidget);
 
     SharedInformation *build();
 
