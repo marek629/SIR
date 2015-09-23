@@ -20,9 +20,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
-     <width>567</width>
-     <height>262</height>
+     <y>-4</y>
+     <width>553</width>
+     <height>266</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -33,7 +33,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -151,9 +151,102 @@ applying a 3x3 median filter to the R-G and B-G channels.</string>
       </layout>
      </widget>
     </item>
+    <item row="3" column="0" colspan="3">
+     <widget class="QGroupBox" name="repairGroupBox">
+      <property name="title">
+       <string>Repair</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="4">
+        <widget class="QRadioButton" name="repairHighlightRebuildRadioButton">
+         <property name="toolTip">
+          <string>
+    Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</string>
+         </property>
+         <property name="text">
+          <string>rebuild</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="repairHighlightLabel">
+         <property name="text">
+          <string>Highlight mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QRadioButton" name="repairHighlightBlendRadioButton">
+         <property name="toolTip">
+          <string>Blend clipped and unclipped values together for a gradual fade to white.</string>
+         </property>
+         <property name="text">
+          <string>blend</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QRadioButton" name="repairHighlightUnclipRadioButton">
+         <property name="toolTip">
+          <string>Leave highlights unclipped in various shades of pink.</string>
+         </property>
+         <property name="text">
+          <string>unclip</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QRadioButton" name="repairHighlightClipRadioButton">
+         <property name="toolTip">
+          <string>Clip all highlights to solid white (default).</string>
+         </property>
+         <property name="text">
+          <string>clip</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QSpinBox" name="repairHighlightRebuildSpinBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Rebuild level.</string>
+         </property>
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <number>9</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>repairHighlightRebuildRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>repairHighlightRebuildSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>419</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>480</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
