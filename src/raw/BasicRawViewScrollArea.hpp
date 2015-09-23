@@ -58,6 +58,7 @@ public:
     bool closeWindow();
 
 private slots:
+    void onBrowseButtonClick();
     void onRawEnabledChange(int state);
 
 private:

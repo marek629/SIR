@@ -35,11 +35,11 @@ AdvancedRawViewWidget::AdvancedRawViewWidget(QWidget *parent) : QWidget(parent),
     helpTextBrowser->setFontFamily("monospace");
 
     connect(dcrawPushButton, SIGNAL(clicked()),
-            this, SLOT(browseButtonClicked()));
+            this, SLOT(onBrowseButtonClick()));
     connect(rawCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(rawEnabledStatusChanged(int)));
+            this, SLOT(onRawEnabledChange(int)));
     connect(dcrawOptions, SIGNAL(editingFinished()),
-            this, SLOT(dcrawOptionsStringChanged()));
+            this, SLOT(onDcrawOptionsStringChange()));
 }
 
 AdvancedRawViewWidget::~AdvancedRawViewWidget() {}
@@ -109,17 +109,17 @@ bool AdvancedRawViewWidget::closeWindow()
     return window()->close();
 }
 
-void AdvancedRawViewWidget::browseButtonClicked()
+void AdvancedRawViewWidget::onBrowseButtonClick()
 {
     controller->browseDcraw();
 }
 
-void AdvancedRawViewWidget::rawEnabledStatusChanged(int state)
+void AdvancedRawViewWidget::onRawEnabledChange(int state)
 {
     controller->setRawStatus(state);
 }
 
-void AdvancedRawViewWidget::dcrawOptionsStringChanged()
+void AdvancedRawViewWidget::onDcrawOptionsStringChange()
 {
     controller->setDcrawOptionsString(dcrawOptions->text());
 }

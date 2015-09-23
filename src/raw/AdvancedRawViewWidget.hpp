@@ -58,9 +58,9 @@ public:
     bool closeWindow();
 
 private slots:
-    void browseButtonClicked();
-    void rawEnabledStatusChanged(int state);
-    void dcrawOptionsStringChanged();
+    void onBrowseButtonClick();
+    void onRawEnabledChange(int state);
+    void onDcrawOptionsStringChange();
 };
 
 #endif // ADVANCEDRAWVIEWWIDGET_HPP
