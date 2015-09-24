@@ -23,6 +23,7 @@
 
 #include "raw/RawController.hpp"
 #include "raw/basic/InterpolationOptionsCollector.hpp"
+#include "raw/basic/RepairOptionsCollector.hpp"
 
 
 BasicRawViewScrollArea::BasicRawViewScrollArea(QWidget *parent)
@@ -76,7 +77,8 @@ QString BasicRawViewScrollArea::optionsText() const
 
     DcrawOptionsCollector *collector = new DcrawOptionsCollector(uiPointer);
     collector = new InterpolationOptionsCollector(collector, uiPointer);
-    return collector->optionsString();
+    collector = new RepairOptionsCollector(collector, uiPointer);
+    return collector->optionsString().simplified();
 }
 
 void BasicRawViewScrollArea::setOptionsText(const QString &text)
@@ -85,6 +87,7 @@ void BasicRawViewScrollArea::setOptionsText(const QString &text)
 
     DcrawOptionsCollector *collector = new DcrawOptionsCollector(uiPointer);
     collector = new InterpolationOptionsCollector(collector, uiPointer);
+    collector = new RepairOptionsCollector(collector, uiPointer);
     collector->setOptions(text);
 }
 

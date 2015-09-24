@@ -49,7 +49,7 @@ QString InterpolationOptionsCollector::optionsString() const
         }
     }
 
-    return result.simplified();
+    return result;
 }
 
 void InterpolationOptionsCollector::setOptions(const QString &string)
