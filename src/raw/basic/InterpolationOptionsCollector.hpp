@@ -29,7 +29,7 @@ class InterpolationOptionsCollector : public CollectorDecorator
 {
 public:
     InterpolationOptionsCollector(BasicOptionsCollector *collector,
-                                  Ui::BasicRawScrollArea *ui);
+                                  BasicRawScrollAreaAdapter *view);
     ~InterpolationOptionsCollector();
 
     QString optionsString() const;

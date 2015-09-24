@@ -28,7 +28,7 @@
 class CollectorDecorator : public DcrawOptionsCollector
 {
 public:
-    CollectorDecorator(BasicOptionsCollector *collector, Ui::BasicRawScrollArea *ui);
+    CollectorDecorator(BasicOptionsCollector *collector, BasicRawScrollAreaAdapter *view);
     ~CollectorDecorator();
 
     QString optionsString() const;

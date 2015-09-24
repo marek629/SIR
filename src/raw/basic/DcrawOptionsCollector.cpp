@@ -21,10 +21,12 @@
 
 #include "raw/basic/DcrawOptionsCollector.hpp"
 
+#include "raw/basic/BasicRawScrollAreaAdapter.hpp"
 
-DcrawOptionsCollector::DcrawOptionsCollector(Ui::BasicRawScrollArea *ui)
+
+DcrawOptionsCollector::DcrawOptionsCollector(BasicRawScrollAreaAdapter *view)
 {
-    this->ui = ui;
+    this->view = view;
 }
 
 DcrawOptionsCollector::~DcrawOptionsCollector() {}

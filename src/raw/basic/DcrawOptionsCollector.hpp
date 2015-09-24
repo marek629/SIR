@@ -24,20 +24,20 @@
 
 #include "raw/basic/BasicOptionsCollector.hpp"
 
-#include "ui_BasicRawScrollArea.h"
+class BasicRawScrollAreaAdapter;
 
 
 class DcrawOptionsCollector : public BasicOptionsCollector
 {
 public:
-    DcrawOptionsCollector(Ui::BasicRawScrollArea *ui);
+    DcrawOptionsCollector(BasicRawScrollAreaAdapter *view);
     ~DcrawOptionsCollector();
 
     QString optionsString() const;
     void setOptions(const QString &string);
 
 protected:
-    Ui::BasicRawScrollArea *ui;
+    BasicRawScrollAreaAdapter *view;
 };
 
 #endif // DCRAWOPTIONSCOLLECTOR_HPP

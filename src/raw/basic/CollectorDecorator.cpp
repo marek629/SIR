@@ -21,9 +21,12 @@
 
 #include "raw/basic/CollectorDecorator.hpp"
 
+#include "raw/basic/BasicRawScrollAreaAdapter.hpp"
+
+
 CollectorDecorator::CollectorDecorator(BasicOptionsCollector *collector,
-                                       Ui::BasicRawScrollArea *ui)
-    : DcrawOptionsCollector(ui)
+                                       BasicRawScrollAreaAdapter *view)
+    : DcrawOptionsCollector(view)
 {
     this->decoratedCollector = collector;
 }

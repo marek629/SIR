@@ -21,9 +21,11 @@
 
 #include "raw/basic/RepairOptionsCollector.hpp"
 
+#include "raw/basic/BasicRawScrollAreaAdapter.hpp"
+
 
 RepairOptionsCollector::RepairOptionsCollector(BasicOptionsCollector *collector,
-                                               Ui::BasicRawScrollArea *ui)
+                                               BasicRawScrollAreaAdapter *ui)
     : CollectorDecorator(collector, ui) {}
 
 RepairOptionsCollector::~RepairOptionsCollector() {}
@@ -34,16 +36,24 @@ QString RepairOptionsCollector::optionsString() const
 
     int highlightLevel = -1;
 
-    if (ui->repairHighlightClipRadioButton->isChecked()) {
+    switch (view->repairHighlightOptionChecked()) {
+    case Clip:
         highlightLevel = 0;
-    } else if (ui->repairHighlightUnclipRadioButton->isChecked()) {
+        break;
+    case Unclip:
         highlightLevel = 1;
-    } else if (ui->repairHighlightBlendRadioButton->isChecked()) {
+        break;
+    case Blend:
         highlightLevel = 2;
-    } else if (ui->repairHighlightRebuildRadioButton->isChecked()) {
-        highlightLevel = ui->repairHighlightRebuildSpinBox->value();
+        break;
+    case Rebuild:
+        highlightLevel = view->repairHighlightRebuildLevel();
         Q_ASSERT(highlightLevel >= 3);
         Q_ASSERT(highlightLevel <= 9);
+        break;
+    case NoneRepair:
+    default:
+        break;
     }
 
     if (highlightLevel >= 0 && highlightLevel <= 9) {
@@ -59,14 +69,14 @@ void RepairOptionsCollector::setOptions(const QString &string)
     if (string.contains(highlightRegExp)) {
         int highlightLevel = highlightRegExp.cap(3).toInt();
         if (highlightLevel == 0) {
-            ui->repairHighlightClipRadioButton->setChecked(true);
+            view->setRepairHighlightOptionChecked(Clip);
         } else if (highlightLevel == 1) {
-            ui->repairHighlightUnclipRadioButton->setChecked(true);
+            view->setRepairHighlightOptionChecked(Unclip);
         } else if (highlightLevel == 2) {
-            ui->repairHighlightBlendRadioButton->setChecked(true);
+            view->setRepairHighlightOptionChecked(Blend);
         } else if (highlightLevel >= 3 && highlightLevel <= 9) {
-            ui->repairHighlightRebuildRadioButton->setChecked(true);
-            ui->repairHighlightRebuildSpinBox->setValue(highlightLevel);
+            view->setRepairHighlightOptionChecked(Rebuild);
+            view->setRepairHighlightRebuildLevel(highlightLevel);
         }
     }
 }

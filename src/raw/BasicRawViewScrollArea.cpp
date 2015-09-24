@@ -22,6 +22,7 @@
 #include "raw/BasicRawViewScrollArea.hpp"
 
 #include "raw/RawController.hpp"
+#include "raw/basic/BasicRawScrollAreaAdapter.hpp"
 #include "raw/basic/InterpolationOptionsCollector.hpp"
 #include "raw/basic/RepairOptionsCollector.hpp"
 
@@ -74,20 +75,22 @@ void BasicRawViewScrollArea::setPathTextEnabledInput(bool inputEnabled)
 QString BasicRawViewScrollArea::optionsText() const
 {
     Ui::BasicRawScrollArea *uiPointer = const_cast<Ui::BasicRawScrollArea*>(&ui);
+    BasicRawScrollAreaAdapter uiAdapter = BasicRawScrollAreaAdapter(uiPointer);
 
-    DcrawOptionsCollector *collector = new DcrawOptionsCollector(uiPointer);
-    collector = new InterpolationOptionsCollector(collector, uiPointer);
-    collector = new RepairOptionsCollector(collector, uiPointer);
+    DcrawOptionsCollector *collector = new DcrawOptionsCollector(&uiAdapter);
+    collector = new InterpolationOptionsCollector(collector, &uiAdapter);
+    collector = new RepairOptionsCollector(collector, &uiAdapter);
     return collector->optionsString().simplified();
 }
 
 void BasicRawViewScrollArea::setOptionsText(const QString &text)
 {
     Ui::BasicRawScrollArea *uiPointer = const_cast<Ui::BasicRawScrollArea*>(&ui);
+    BasicRawScrollAreaAdapter uiAdapter = BasicRawScrollAreaAdapter(uiPointer);
 
-    DcrawOptionsCollector *collector = new DcrawOptionsCollector(uiPointer);
-    collector = new InterpolationOptionsCollector(collector, uiPointer);
-    collector = new RepairOptionsCollector(collector, uiPointer);
+    DcrawOptionsCollector *collector = new DcrawOptionsCollector(&uiAdapter);
+    collector = new InterpolationOptionsCollector(collector, &uiAdapter);
+    collector = new RepairOptionsCollector(collector, &uiAdapter);
     collector->setOptions(text);
 }
 

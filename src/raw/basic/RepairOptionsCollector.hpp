@@ -29,7 +29,7 @@ class RepairOptionsCollector : public CollectorDecorator
 {
 public:
     RepairOptionsCollector(BasicOptionsCollector *collector,
-                           Ui::BasicRawScrollArea *ui);
+                           BasicRawScrollAreaAdapter *view);
     ~RepairOptionsCollector();
 
     QString optionsString() const;
