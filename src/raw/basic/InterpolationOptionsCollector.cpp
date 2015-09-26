@@ -54,6 +54,8 @@ QString InterpolationOptionsCollector::optionsString() const
 
 void InterpolationOptionsCollector::setOptions(const QString &string)
 {
+    decoratedCollector->setOptions(string);
+
     QRegExp qualityRegExp = QRegExp("(-q)(\\s+)([0-3])");
     if (string.contains(qualityRegExp)) {
         int qualityIndex = qualityRegExp.cap(3).toInt();

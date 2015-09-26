@@ -41,6 +41,15 @@ public:
     BasicRawScrollAreaAdapter(Ui::BasicRawScrollArea *ui);
     ~BasicRawScrollAreaAdapter();
 
+    bool isWhiteBalanceFromCameraChecked() const;
+    void setWhiteBalanceFromCameraChecked(bool checked);
+
+    bool isWhiteBalanceFromWholeImageChecked() const;
+    void setWhiteBalanceFromWholeImageChecked(bool checked);
+
+    bool isColorMatrixFromCameraChecked() const;
+    void setColorMatrixFromCameraChecked(bool checked);
+
     int interpolationQualityIndex() const;
     void setInterpolationQualityIndex(int index);
 

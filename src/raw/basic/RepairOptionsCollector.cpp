@@ -65,6 +65,8 @@ QString RepairOptionsCollector::optionsString() const
 
 void RepairOptionsCollector::setOptions(const QString &string)
 {
+    decoratedCollector->setOptions(string);
+
     QRegExp highlightRegExp = QRegExp("(-H)(\\s+)([0-9])");
     if (string.contains(highlightRegExp)) {
         int highlightLevel = highlightRegExp.cap(3).toInt();

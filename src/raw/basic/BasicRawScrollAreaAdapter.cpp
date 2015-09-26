@@ -29,6 +29,36 @@ BasicRawScrollAreaAdapter::BasicRawScrollAreaAdapter(Ui::BasicRawScrollArea *ui)
 
 BasicRawScrollAreaAdapter::~BasicRawScrollAreaAdapter() {}
 
+bool BasicRawScrollAreaAdapter::isWhiteBalanceFromCameraChecked() const
+{
+    return ui->whiteBalanceFromCameraCheckBox->isChecked();
+}
+
+void BasicRawScrollAreaAdapter::setWhiteBalanceFromCameraChecked(bool checked)
+{
+    ui->whiteBalanceFromCameraCheckBox->setChecked(checked);
+}
+
+bool BasicRawScrollAreaAdapter::isWhiteBalanceFromWholeImageChecked() const
+{
+    return ui->whiteBalanceFromWholeImageCheckBox->isChecked();
+}
+
+void BasicRawScrollAreaAdapter::setWhiteBalanceFromWholeImageChecked(bool checked)
+{
+    ui->whiteBalanceFromWholeImageCheckBox->setChecked(checked);
+}
+
+bool BasicRawScrollAreaAdapter::isColorMatrixFromCameraChecked() const
+{
+    return ui->colorMatrixFromCameraCheckBox->isChecked();
+}
+
+void BasicRawScrollAreaAdapter::setColorMatrixFromCameraChecked(bool checked)
+{
+    ui->colorMatrixFromCameraCheckBox->setChecked(checked);
+}
+
 int BasicRawScrollAreaAdapter::interpolationQualityIndex() const
 {
     return ui->interpolationQualityComboBox->currentIndex();
