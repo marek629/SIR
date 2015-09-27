@@ -20,9 +20,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>-4</y>
+     <y>-149</y>
      <width>553</width>
-     <height>385</height>
+     <height>414</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -221,6 +221,29 @@ applying a 3x3 median filter to the R-G and B-G channels.</string>
          </property>
          <property name="maximum">
           <number>9</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QCheckBox" name="eraseNoiseCheckBox">
+         <property name="toolTip">
+          <string>The best threshold should be somewhere between 100 and 1000.</string>
+         </property>
+         <property name="text">
+          <string>Use wavelets to erase noise while preserving real detail.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QSpinBox" name="eraseNoiseSpinBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>The best threshold should be somewhere between 100 and 1000.</string>
+         </property>
+         <property name="maximum">
+          <number>100000</number>
          </property>
         </widget>
        </item>

@@ -35,7 +35,6 @@ QString RepairOptionsCollector::optionsString() const
     QString result = decoratedCollector->optionsString();
 
     int highlightLevel = -1;
-
     switch (view->repairHighlightOptionChecked()) {
     case Clip:
         highlightLevel = 0;
@@ -55,9 +54,13 @@ QString RepairOptionsCollector::optionsString() const
     default:
         break;
     }
-
     if (highlightLevel >= 0 && highlightLevel <= 9) {
         result = QString("%1 -H %2").arg(result).arg(highlightLevel);
+    }
+
+    if (view->isEraseNoiseChecked()) {
+        int eraseNoiseThreshold = view->eraseNoiseThreshold();
+        result = QString("%1 -n %2").arg(result).arg(eraseNoiseThreshold);
     }
 
     return result;
@@ -80,5 +83,13 @@ void RepairOptionsCollector::setOptions(const QString &string)
             view->setRepairHighlightOptionChecked(Rebuild);
             view->setRepairHighlightRebuildLevel(highlightLevel);
         }
+    }
+
+    QRegExp eraseNoiseRegExp = QRegExp("(-n)(\\s+)([0-9]+)");
+    bool isEraseNoiseEnabled = string.contains(eraseNoiseRegExp);
+    view->setEraseNoiseChecked(isEraseNoiseEnabled);
+    if (isEraseNoiseEnabled) {
+        int eraseNoiseThreshold = eraseNoiseRegExp.cap(3).toInt();
+        view->setEraseNoiseThreshold(eraseNoiseThreshold);
     }
 }

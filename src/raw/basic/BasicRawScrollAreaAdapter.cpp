@@ -144,3 +144,23 @@ void BasicRawScrollAreaAdapter::setRepairHighlightRebuildLevel(int level)
 {
     ui->repairHighlightRebuildSpinBox->setValue(level);
 }
+
+bool BasicRawScrollAreaAdapter::isEraseNoiseChecked() const
+{
+    return ui->eraseNoiseCheckBox->isChecked();
+}
+
+void BasicRawScrollAreaAdapter::setEraseNoiseChecked(bool checked)
+{
+    ui->eraseNoiseCheckBox->setChecked(checked);
+}
+
+int BasicRawScrollAreaAdapter::eraseNoiseThreshold() const
+{
+    return ui->eraseNoiseSpinBox->value();
+}
+
+void BasicRawScrollAreaAdapter::setEraseNoiseThreshold(int threshold)
+{
+    ui->eraseNoiseSpinBox->setValue(threshold);
+}

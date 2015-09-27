@@ -68,6 +68,12 @@ public:
     int repairHighlightRebuildLevel() const;
     void setRepairHighlightRebuildLevel(int level);
 
+    bool isEraseNoiseChecked() const;
+    void setEraseNoiseChecked(bool checked);
+
+    int eraseNoiseThreshold() const;
+    void setEraseNoiseThreshold(int threshold);
+
 private:
     Ui::BasicRawScrollArea *ui;
 };
