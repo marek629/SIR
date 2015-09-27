@@ -35,6 +35,8 @@ BasicRawViewScrollArea::BasicRawViewScrollArea(QWidget *parent)
 
     connect(ui.dcrawPushButton, SIGNAL(clicked()),
             this, SLOT(onBrowseButtonClick()));
+    connect(ui.eraseNoiseCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(onEraseNoiseToggle(bool)));
     connect(ui.interpolationPostProcessingCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(onInterpolationPostProcessingToggle(bool)));
     connect(ui.rawCheckBox, SIGNAL(stateChanged(int)),
@@ -83,6 +85,8 @@ QString BasicRawViewScrollArea::optionsText() const
     collector = new InterpolationOptionsCollector(collector, &uiAdapter);
     collector = new RepairOptionsCollector(collector, &uiAdapter);
     return collector->optionsString().simplified();
+    // TODO: delete collector (memory leak)
+    // TODO: refactor to factory
 }
 
 void BasicRawViewScrollArea::setOptionsText(const QString &text)
@@ -95,6 +99,8 @@ void BasicRawViewScrollArea::setOptionsText(const QString &text)
     collector = new InterpolationOptionsCollector(collector, &uiAdapter);
     collector = new RepairOptionsCollector(collector, &uiAdapter);
     collector->setOptions(text);
+    // TODO: delete collector (memory leak)
+    // TODO: refactor to factory
 }
 
 void BasicRawViewScrollArea::setOptionsTextEnabledInput(bool inputEnabled)
@@ -127,11 +133,30 @@ void BasicRawViewScrollArea::onBrowseButtonClick()
     controller->browseDcraw();
 }
 
+void BasicRawViewScrollArea::onEraseNoiseToggle(bool toggled)
+{
+    static int spinBoxEnabledValue = 100;
+    QSpinBox *spinBox = ui.eraseNoiseSpinBox;
+
+    // TODO: ectract method from below code
+    if (toggled) {
+        spinBox->setMinimum(1);
+        spinBox->setValue(spinBoxEnabledValue);
+    } else {
+        spinBoxEnabledValue = spinBox->value();
+        spinBox->setMinimum(0);
+        spinBox->setValue(0);
+    }
+
+    spinBox->setEnabled(toggled);
+}
+
 void BasicRawViewScrollArea::onInterpolationPostProcessingToggle(bool toggled)
 {
     static int spinBoxEnabledValue = 1;
     QSpinBox *spinBox = ui.interpolationPostProcessingSpinBox;
 
+    // TODO: ectract method from below code
     if (toggled) {
         spinBox->setMinimum(1);
         spinBox->setValue(spinBoxEnabledValue);
