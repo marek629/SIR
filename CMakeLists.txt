@@ -7,7 +7,7 @@
 project( sir )
 
 # SIR_CMAKE preprocessor define added for code parsing and highlighting QtCreator editor
-add_definitions( -Wall -DSIR_CMAKE )
+add_definitions( -Wall -DSIR_CMAKE -std=c++11 )
 
 include_directories(
         ${CMAKE_SOURCE_DIR}

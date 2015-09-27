@@ -5,6 +5,8 @@
 ### unreleased
 
 * Added Raw tab into main window
+* Added Basic view tab for user frendly Raw configuration
+* Changed required C++ version to C++11
 
 
 # v2.8

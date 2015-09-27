@@ -23,9 +23,8 @@
 
 #include "raw/RawController.hpp"
 #include "raw/basic/BasicRawScrollAreaAdapter.hpp"
-#include "raw/basic/ColorOptionsCollector.hpp"
-#include "raw/basic/InterpolationOptionsCollector.hpp"
-#include "raw/basic/RepairOptionsCollector.hpp"
+#include "raw/basic/DcrawOptionsCollector.hpp"
+#include "raw/basic/OptionsCollectorFactory.hpp"
 
 
 BasicRawViewScrollArea::BasicRawViewScrollArea(QWidget *parent)
@@ -80,13 +79,11 @@ QString BasicRawViewScrollArea::optionsText() const
     Ui::BasicRawScrollArea *uiPointer = const_cast<Ui::BasicRawScrollArea*>(&ui);
     BasicRawScrollAreaAdapter uiAdapter = BasicRawScrollAreaAdapter(uiPointer);
 
-    DcrawOptionsCollector *collector = new DcrawOptionsCollector(&uiAdapter);
-    collector = new ColorOptionsCollector(collector, &uiAdapter);
-    collector = new InterpolationOptionsCollector(collector, &uiAdapter);
-    collector = new RepairOptionsCollector(collector, &uiAdapter);
+    OptionsCollectorFactory factory;
+    std::unique_ptr<DcrawOptionsCollector> collector =
+            factory.dcrawFullDecoratedCollector(&uiAdapter);
+
     return collector->optionsString().simplified();
-    // TODO: delete collector (memory leak)
-    // TODO: refactor to factory
 }
 
 void BasicRawViewScrollArea::setOptionsText(const QString &text)
@@ -94,13 +91,11 @@ void BasicRawViewScrollArea::setOptionsText(const QString &text)
     Ui::BasicRawScrollArea *uiPointer = const_cast<Ui::BasicRawScrollArea*>(&ui);
     BasicRawScrollAreaAdapter uiAdapter = BasicRawScrollAreaAdapter(uiPointer);
 
-    DcrawOptionsCollector *collector = new DcrawOptionsCollector(&uiAdapter);
-    collector = new ColorOptionsCollector(collector, &uiAdapter);
-    collector = new InterpolationOptionsCollector(collector, &uiAdapter);
-    collector = new RepairOptionsCollector(collector, &uiAdapter);
+    OptionsCollectorFactory factory;
+    std::unique_ptr<DcrawOptionsCollector> collector =
+            factory.dcrawFullDecoratedCollector(&uiAdapter);
+
     collector->setOptions(text);
-    // TODO: delete collector (memory leak)
-    // TODO: refactor to factory
 }
 
 void BasicRawViewScrollArea::setOptionsTextEnabledInput(bool inputEnabled)
