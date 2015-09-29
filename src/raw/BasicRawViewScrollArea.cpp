@@ -131,28 +131,30 @@ void BasicRawViewScrollArea::onBrowseButtonClick()
 void BasicRawViewScrollArea::onEraseNoiseToggle(bool toggled)
 {
     static int spinBoxEnabledValue = 100;
-    QSpinBox *spinBox = ui.eraseNoiseSpinBox;
 
-    // TODO: ectract method from below code
-    if (toggled) {
-        spinBox->setMinimum(1);
-        spinBox->setValue(spinBoxEnabledValue);
-    } else {
-        spinBoxEnabledValue = spinBox->value();
-        spinBox->setMinimum(0);
-        spinBox->setValue(0);
-    }
-
-    spinBox->setEnabled(toggled);
+    spinBoxEnabledValue = toggleSpinBox(toggled,
+                                        ui.eraseNoiseSpinBox,
+                                        spinBoxEnabledValue);
 }
 
 void BasicRawViewScrollArea::onInterpolationPostProcessingToggle(bool toggled)
 {
     static int spinBoxEnabledValue = 1;
-    QSpinBox *spinBox = ui.interpolationPostProcessingSpinBox;
 
-    // TODO: ectract method from below code
-    if (toggled) {
+    spinBoxEnabledValue = toggleSpinBox(toggled,
+                                        ui.interpolationPostProcessingSpinBox,
+                                        spinBoxEnabledValue);
+}
+
+void BasicRawViewScrollArea::onRawEnabledChange(int state)
+{
+    controller->setRawStatus(state);
+}
+
+int BasicRawViewScrollArea::toggleSpinBox(bool enabled, QSpinBox *spinBox,
+                                          int spinBoxEnabledValue)
+{
+    if (enabled) {
         spinBox->setMinimum(1);
         spinBox->setValue(spinBoxEnabledValue);
     } else {
@@ -161,10 +163,7 @@ void BasicRawViewScrollArea::onInterpolationPostProcessingToggle(bool toggled)
         spinBox->setValue(0);
     }
 
-    spinBox->setEnabled(toggled);
-}
+    spinBox->setEnabled(enabled);
 
-void BasicRawViewScrollArea::onRawEnabledChange(int state)
-{
-    controller->setRawStatus(state);
+    return spinBoxEnabledValue;
 }

@@ -65,6 +65,8 @@ private slots:
 
 private:
     Ui::BasicRawScrollArea ui;
+
+    int toggleSpinBox(bool enabled, QSpinBox *spinBox, int spinBoxEnabledValue);
 };
 
 #endif // BASICRAWVIEWSCROLLAREA_HPP
