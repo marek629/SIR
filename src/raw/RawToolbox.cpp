@@ -21,9 +21,9 @@
 
 #include "raw/RawToolbox.hpp"
 
-#include "raw/RawModel.hpp"
-
 #include <QProcess>
+
+#include "raw/RawModel.hpp"
 
 
 RawToolbox::RawToolbox(RawModel *rawModel)

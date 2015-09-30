@@ -21,13 +21,13 @@
 
 #include "raw/RawController.hpp"
 
+#include <QFileDialog>
+
 #include "raw/RawModel.hpp"
 #include "raw/RawToolbox.hpp"
 #include "raw/RawView.hpp"
 #include "widgets/MessageBox.hpp"
 #include "widgets/options/CommonOptions.hpp"
-
-#include <QFileDialog>
 
 
 RawController::RawController(RawModel *model, RawView *view)
@@ -105,7 +105,7 @@ void RawController::browseDcraw()
 
 void RawController::setRawStatus(int state)
 {
-    bool rawEnabled = bool(state);
+    bool rawEnabled = static_cast<bool>(state);
 
     model->setEnabled(rawEnabled);
 

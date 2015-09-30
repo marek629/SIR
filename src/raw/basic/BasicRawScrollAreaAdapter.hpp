@@ -38,7 +38,7 @@ enum RepairHighlightOption
 class BasicRawScrollAreaAdapter
 {
 public:
-    BasicRawScrollAreaAdapter(Ui::BasicRawScrollArea *ui);
+    explicit BasicRawScrollAreaAdapter(Ui::BasicRawScrollArea *ui);
     ~BasicRawScrollAreaAdapter();
 
     bool isWhiteBalanceFromCameraChecked() const;

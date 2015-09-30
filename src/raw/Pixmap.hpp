@@ -22,8 +22,8 @@
 #ifndef PIXMAP_HPP
 #define PIXMAP_HPP
 
-#include "raw/PaintDevice.hpp"
 #include <QPixmap>
+#include "raw/PaintDevice.hpp"
 
 
 class Pixmap : public PaintDevice, public QPixmap

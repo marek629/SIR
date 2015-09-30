@@ -21,10 +21,10 @@
 
 #include "raw/RawLoader.hpp"
 
-#include "raw/PaintDevice.hpp"
-
 #include <QImageReader>
 #include <QProcess>
+
+#include "raw/PaintDevice.hpp"
 
 
 RawLoader::RawLoader(RawModel *rawModel, const QString &filePath)

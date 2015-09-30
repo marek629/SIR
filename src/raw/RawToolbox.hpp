@@ -30,7 +30,7 @@ class RawModel;
 class RawToolbox
 {
 public:
-    RawToolbox(RawModel *rawModel);
+    explicit RawToolbox(RawModel *rawModel);
 
     QString helpMessage();
 

@@ -22,8 +22,8 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 
-#include "raw/PaintDevice.hpp"
 #include <QImage>
+#include "raw/PaintDevice.hpp"
 
 
 class Image : public PaintDevice, public QImage

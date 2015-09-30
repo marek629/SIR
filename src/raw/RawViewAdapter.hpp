@@ -32,7 +32,7 @@ class RawGroupBoxView;
 class RawViewAdapter : public RawView
 {
 public:
-    RawViewAdapter(RawGroupBoxView *view);
+    explicit RawViewAdapter(RawGroupBoxView *view);
     ~RawViewAdapter();
 
     QWidget *qWidget();

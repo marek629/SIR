@@ -22,11 +22,10 @@
 #ifndef BASICRAWVIEWSCROLLAREA_HPP
 #define BASICRAWVIEWSCROLLAREA_HPP
 
+#include <QScrollArea>
 #include "raw/RawView.hpp"
 
 #include "ui_BasicRawScrollArea.h"
-
-#include <QScrollArea>
 
 
 class BasicRawViewScrollArea : public QScrollArea, public RawView

@@ -30,7 +30,7 @@ class BasicRawScrollAreaAdapter;
 class DcrawOptionsCollector : public BasicOptionsCollector
 {
 public:
-    DcrawOptionsCollector(BasicRawScrollAreaAdapter *view);
+    explicit DcrawOptionsCollector(BasicRawScrollAreaAdapter *view);
     ~DcrawOptionsCollector();
 
     QString optionsString() const;

@@ -22,11 +22,9 @@
 #ifndef ADVANCEDRAWVIEWWIDGET_HPP
 #define ADVANCEDRAWVIEWWIDGET_HPP
 
-#include "raw/RawView.hpp"
-
-#include "ui_AdvancedRawWidget.h"
-
 #include <QWidget>
+#include "raw/RawView.hpp"
+#include "ui_AdvancedRawWidget.h"
 
 
 class AdvancedRawViewWidget : public QWidget, public RawView, public Ui::AdvancedRawWidget
