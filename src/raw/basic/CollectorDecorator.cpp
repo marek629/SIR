@@ -31,7 +31,10 @@ CollectorDecorator::CollectorDecorator(BasicOptionsCollector *collector,
     this->decoratedCollector = collector;
 }
 
-CollectorDecorator::~CollectorDecorator() {}
+CollectorDecorator::~CollectorDecorator()
+{
+    delete decoratedCollector;
+}
 
 QString CollectorDecorator::optionsString() const
 {
