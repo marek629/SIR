@@ -60,6 +60,7 @@ public:
     void printError();
 #endif // SIR_METADATA_SUPPORT
     static SharedInformation *sharedInfo();
+    static void setSharedInfo(const SharedInformation &info);
 
     //! Enumerator for ConvertThread::question() signal.
     enum Question {
@@ -87,7 +88,7 @@ protected:
 
 private:
     // fields
-    static SharedInformation *shared; /**< The theads shared information. */
+    static SharedInformation shared; /**< The theads shared information. */
     bool work; /**< True means this thread still working. */
     QStringList imageData; /**< List of strings: file name, extension and path. */
     int tid; /**< The thread ID. */

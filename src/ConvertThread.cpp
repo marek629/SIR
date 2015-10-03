@@ -40,13 +40,18 @@
 using namespace sir;
 
 
-// setup static fields
-SharedInformation * ConvertThread::shared = new SharedInformation();
+SharedInformation ConvertThread::shared = SharedInformation();
+
 
 // access method to static fields
 /** Returns pointer to static SharedInformation object. */
 SharedInformation * ConvertThread::sharedInfo() {
-    return shared;
+    return &shared;
+}
+
+void ConvertThread::setSharedInfo(const SharedInformation &info)
+{
+    shared = SharedInformation(info);
 }
 
 /** Default constructor.
@@ -75,20 +80,20 @@ void ConvertThread::convertImage(const QString& name, const QString& extension,
   */
 void ConvertThread::run()
 {
-    RawToolbox rawToolbox = RawToolbox(&shared->rawModel);
+    RawToolbox rawToolbox = RawToolbox(&shared.rawModel);
 
     while(work) {
         pd.imgData = this->imageData; // imageData change protection by convertImage()
         sizeComputed = 0;
-        width = shared->width;
-        height = shared->height;
-        hasWidth = shared->hasWidth;
-        hasHeight = shared->hasHeight;
-        bool maintainAspect = shared->maintainAspect;
-        rotate = shared->rotate;
-        angle = shared->angle;
+        width = shared.width;
+        height = shared.height;
+        hasWidth = shared.hasWidth;
+        hasHeight = shared.hasHeight;
+        bool maintainAspect = shared.maintainAspect;
+        rotate = shared.rotate;
+        angle = shared.angle;
 
-        if (shared->abort) {
+        if (shared.abort) {
             emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
             getNextOrStop();
             continue;
@@ -99,13 +104,13 @@ void ConvertThread::run()
         QString imageName = pd.imgData.at(0);
         QString originalFormat = pd.imgData.at(1);
 
-        targetFilePath = shared->destFolder.absolutePath() + QDir::separator();
-        if (!shared->prefix.isEmpty())
-            targetFilePath += shared->prefix + "_";
+        targetFilePath = shared.destFolder.absolutePath() + QDir::separator();
+        if (!shared.prefix.isEmpty())
+            targetFilePath += shared.prefix + "_";
         targetFilePath += imageName;
-        if (!shared->suffix.isEmpty())
-            targetFilePath += "_" + shared->suffix;
-        targetFilePath += "." + shared->format;
+        if (!shared.suffix.isEmpty())
+            targetFilePath += "_" + shared.suffix;
+        targetFilePath += "." + shared.format;
 
         pd.imagePath = pd.imgData.at(2) + QDir::separator() + pd.imgData.at(0)
                      + "." + originalFormat;
@@ -116,7 +121,7 @@ void ConvertThread::run()
 
         // load image data
         if (rawToolbox.isRawSupportEnabled()) {
-            RawImageLoader rawLoader = RawImageLoader(&shared->rawModel,
+            RawImageLoader rawLoader = RawImageLoader(&shared.rawModel,
                                                       pd.imagePath);
             image = rawLoader.load();
         } else if (svgSource) {
@@ -142,14 +147,14 @@ void ConvertThread::run()
 #ifdef SIR_METADATA_SUPPORT
         // read metadata
         saveMetadata = false;
-        if (shared->metadataEnabled) {
+        if (shared.metadataEnabled) {
             saveMetadata = metadata.read(pd.imagePath, true, svgSource);
             int beta = MetadataUtils::Exif::rotationAngle(
                         metadata.exifStruct()->orientation);
             if (!saveMetadata)
                 printError();
             // flip-flap width-height (px only)
-            else if (angle == 0 && shared->sizeUnit != 1 && beta%90 == 0 && beta%180 != 0) {
+            else if (angle == 0 && shared.sizeUnit != 1 && beta%90 == 0 && beta%180 != 0) {
                 int temp = width;
                 width = height;
                 height = temp;
@@ -158,7 +163,7 @@ void ConvertThread::run()
                 hasHeight = tmp;
             }
             if (saveMetadata)
-                saveMetadata = shared->saveMetadata;
+                saveMetadata = shared.saveMetadata;
         }
 #endif // SIR_METADATA_SUPPORT
         // compute dest size in px
@@ -202,15 +207,15 @@ void ConvertThread::run()
 #endif // SIR_METADATA_SUPPORT
         // ask overwrite
         if ( QFile::exists( targetFilePath ) &&
-             !(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
-            if (!(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
-                shared->mutex.lock();
+             !(shared.overwriteAll || shared.abort || shared.noOverwriteAll)) {
+            if (!(shared.overwriteAll || shared.abort || shared.noOverwriteAll)) {
+                shared.mutex.lock();
                 emit question(targetFilePath, Overwrite);
-                shared->mutex.unlock();
+                shared.mutex.unlock();
             }
-            if(shared->overwriteResult == QMessageBox::Yes ||
-                    shared->overwriteResult == QMessageBox::YesToAll) {
-                if (destImg.save(targetFilePath, 0, shared->quality)) {
+            if(shared.overwriteResult == QMessageBox::Yes ||
+                    shared.overwriteResult == QMessageBox::YesToAll) {
+                if (destImg.save(targetFilePath, 0, shared.quality)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata && !metadata.write(targetFilePath, destImg))
                         printError();
@@ -220,17 +225,17 @@ void ConvertThread::run()
                 else
                     emit imageStatus(pd.imgData, tr("Failed to convert"), Failed);
             }
-            else if (shared->overwriteResult == QMessageBox::Cancel)
+            else if (shared.overwriteResult == QMessageBox::Cancel)
                 emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
             else
                 emit imageStatus(pd.imgData, tr("Skipped"), Skipped);
         }
-        else if (shared->noOverwriteAll)
+        else if (shared.noOverwriteAll)
             emit imageStatus(pd.imgData, tr("Skipped"), Skipped);
-        else if (shared->abort)
+        else if (shared.abort)
             emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
         else { // when overwriteAll is true or file not exists
-            if (destImg.save(targetFilePath, 0, shared->quality)) {
+            if (destImg.save(targetFilePath, 0, shared.quality)) {
 #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata && !metadata.write(targetFilePath, destImg))
                     printError();
@@ -274,7 +279,7 @@ QImage ConvertThread::rotateImage(const QImage &image) {
     int alpha = (int)angle;
     bool saveExifOrientation = false;
 #ifdef SIR_METADATA_SUPPORT
-    saveExifOrientation = !shared->realRotate;
+    saveExifOrientation = !shared.realRotate;
 #endif // SIR_METADATA_SUPPORT
     // rotate image
     if ((rotate && angle != 0.0) || saveExifOrientation) {
@@ -291,7 +296,7 @@ QImage ConvertThread::rotateImage(const QImage &image) {
                 flip = MetadataUtils::None;
             }
 
-            flip ^= shared->flip;
+            flip ^= shared.flip;
 
             // normalization of values alpha and flip
             if (alpha == -270)
@@ -318,7 +323,7 @@ QImage ConvertThread::rotateImage(const QImage &image) {
     }
     // really rotate without saving Exif orientation tag
 #ifdef SIR_METADATA_SUPPORT
-    if (!saveExifOrientation || shared->realRotate) {
+    if (!saveExifOrientation || shared.realRotate) {
 #endif // SIR_METADATA_SUPPORT
         // flip dimension variables
         if (alpha%90 == 0 && alpha%180 != 0) {
@@ -362,7 +367,7 @@ QImage ConvertThread::rotateImage(const QImage &image) {
   */
 void ConvertThread::updateThumbnail(const QImage &image) {
     // update thumbnail
-    if (saveMetadata && shared->updateThumbnail) {
+    if (saveMetadata && shared.updateThumbnail) {
         MetadataUtils::ExifStruct *exifStruct = metadata.exifStruct();
         int w = exifStruct->thumbnailWidth.split(' ').first().toInt();
         int h = exifStruct->thumbnailHeight.split(' ').first().toInt();
@@ -376,8 +381,8 @@ void ConvertThread::updateThumbnail(const QImage &image) {
             *thumbnail = tmpImg;
         }
         else {
-            if (shared->backgroundColor.isValid())
-                thumbnail->fill(shared->backgroundColor.rgb());
+            if (shared.backgroundColor.isValid())
+                thumbnail->fill(shared.backgroundColor.rgb());
             else
                 thumbnail->fill(Qt::black);
             QPoint begin ( (w-tmpImg.width())/2, (h-tmpImg.height())/2 );
@@ -387,7 +392,7 @@ void ConvertThread::updateThumbnail(const QImage &image) {
             }
         }
         // rotate thumbnail
-        if (shared->rotateThumbnail && !specialRotate) {
+        if (shared.rotateThumbnail && !specialRotate) {
             QTransform transform;
             int flip;
             transform.rotate(MetadataUtils::Exif::rotationAngle(
@@ -412,18 +417,18 @@ void ConvertThread::updateThumbnail(const QImage &image) {
   * \return 1 when success (for 2 (\e bytes) value of SharedInformation::sizeUnit only)
   */
 char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
-    if (shared->sizeUnit == 0) ; // px
+    if (shared.sizeUnit == 0) ; // px
     // compute size when it wasn't typed in pixels
-    else if (shared->sizeUnit == 1) { // %
+    else if (shared.sizeUnit == 1) { // %
         width *= image->width() / 100.;
         height *= image->height() / 100.;
     }
-    else if (shared->sizeUnit == 2) { // bytes
+    else if (shared.sizeUnit == 2) { // bytes
         width = image->width();
         height = image->height();
         hasWidth = true;
         hasHeight = true;
-        double destSize = shared->sizeBytes;
+        double destSize = shared.sizeBytes;
         if (isLinearFileSizeFormat(&destSize)) {
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
@@ -434,11 +439,11 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
         }
         else { // non-linear size relationship
             QString tempFilePath = QDir::tempPath() + QDir::separator() +
-                    "sir_temp" + QString::number(tid) + "." + shared->format;
+                    "sir_temp" + QString::number(tid) + "." + shared.format;
             QImage tempImage;
             qint64 fileSize = QFile(imagePath).size();
             QSize size = image->size();
-            double fileSizeRatio = (double) fileSize / shared->sizeBytes;
+            double fileSizeRatio = (double) fileSize / shared.sizeBytes;
             fileSizeRatio = sqrt(fileSizeRatio);
             QFile tempFile(tempFilePath);
             for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
@@ -453,7 +458,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (tempImage.save(&tempFile, 0, shared->quality)) {
+                if (tempImage.save(&tempFile, 0, shared.quality)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -470,7 +475,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                 tempFile.close();
                 fileSize = tempFile.size();
                 size = tempImage.size();
-                fileSizeRatio = (double) fileSize / shared->sizeBytes;
+                fileSizeRatio = (double) fileSize / shared.sizeBytes;
                 fileSizeRatio = sqrt(fileSizeRatio);
             }
             // ask enlarge
@@ -495,20 +500,20 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
   */
 char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath) {
     QSize defaultSize = renderer->defaultSize();
-    if (shared->sizeUnit == 0) // px
+    if (shared.sizeUnit == 0) // px
     // compute size when it wasn't typed in pixels
         return 1;
-    else if (shared->sizeUnit == 1) { // %
+    else if (shared.sizeUnit == 1) { // %
         width *= defaultSize.width() / 100.;
         height *= defaultSize.height() / 100.;
         return 1;
     }
-    else if (shared->sizeUnit == 2) { // bytes
+    else if (shared.sizeUnit == 2) { // bytes
         width = defaultSize.width();
         height = defaultSize.height();
         hasWidth = true;
         hasHeight = true;
-        double destSize = shared->sizeBytes;
+        double destSize = shared.sizeBytes;
         if (isLinearFileSizeFormat(&destSize)) {
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
@@ -519,10 +524,10 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
         }
         else { // non-linear size relationship
             QString tempFilePath = QDir::tempPath() + QDir::separator() +
-                    "sir_temp" + QString::number(tid) + "." + shared->format;
+                    "sir_temp" + QString::number(tid) + "." + shared.format;
             qint64 fileSize = QFile(imagePath).size();
             QSize size = defaultSize;
-            double fileSizeRatio = (double) fileSize / shared->sizeBytes;
+            double fileSizeRatio = (double) fileSize / shared.sizeBytes;
             fileSizeRatio = sqrt(fileSizeRatio);
             QFile tempFile(tempFilePath);
             QPainter painter;
@@ -541,7 +546,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (tempImage.save(&tempFile, 0, shared->quality)) {
+                if (tempImage.save(&tempFile, 0, shared.quality)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -559,7 +564,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                 tempFile.close();
                 fileSize = tempFile.size();
                 size = tempImage.size();
-                fileSizeRatio = (double) fileSize / shared->sizeBytes;
+                fileSizeRatio = (double) fileSize / shared.sizeBytes;
                 fileSizeRatio = sqrt(fileSizeRatio);
             }
             // ask overwrite
@@ -578,27 +583,27 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
   */
 bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
     bool linearSize = false;
-    if (shared->format == "bmp") {
+    if (shared.format == "bmp") {
         *destSize -= 54;
         *destSize /= 3;
         linearSize = true;
     }
-    else if (shared->format == "ppm") {
+    else if (shared.format == "ppm") {
         *destSize -= 17;
         *destSize /= 3;
         linearSize = true;
     }
-    else if (shared->format == "ico") {
+    else if (shared.format == "ico") {
         *destSize -= 1422;
         *destSize /= 4;
         linearSize = true;
     }
-    else if (shared->format == "tif" || shared->format == "tiff") {
+    else if (shared.format == "tif" || shared.format == "tiff") {
         *destSize -= 14308;
         *destSize /= 4;
         linearSize = true;
     }
-    else if (shared->format == "xbm") {
+    else if (shared.format == "xbm") {
         *destSize -= 60;
         *destSize /= 0.65;
         linearSize = true;
@@ -615,14 +620,14 @@ bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
 char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
     if ( (image.width()<width && image.width()>=image.height()) ||
          (image.height()<height && image.width()<=image.height()) ) {
-        if (!(shared->enlargeAll || shared->noEnlargeAll || shared->abort)) {
-            shared->mutex.lock();
+        if (!(shared.enlargeAll || shared.noEnlargeAll || shared.abort)) {
+            shared.mutex.lock();
             emit question(imagePath, Enlarge);
-            shared->mutex.unlock();
+            shared.mutex.unlock();
         }
-        if (shared->enlargeResult != QMessageBox::Yes &&
-                shared->enlargeResult != QMessageBox::YesToAll) {
-            if (shared->enlargeResult == QMessageBox::Cancel)
+        if (shared.enlargeResult != QMessageBox::Yes &&
+                shared.enlargeResult != QMessageBox::YesToAll) {
+            if (shared.enlargeResult == QMessageBox::Cancel)
                 emit imageStatus(imageData, tr("Cancelled"), Cancelled);
             else
                 emit imageStatus(imageData, tr("Skipped"), Skipped);
@@ -640,14 +645,14 @@ char ConvertThread::askEnlarge(const QImage &image, const QString &imagePath) {
   */
 char ConvertThread::askOverwrite(QFile *tempFile) {
     if ( QFile::exists( targetFilePath ) &&
-         !(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
-        if (!(shared->overwriteAll || shared->abort || shared->noOverwriteAll)) {
-            shared->mutex.lock();
+         !(shared.overwriteAll || shared.abort || shared.noOverwriteAll)) {
+        if (!(shared.overwriteAll || shared.abort || shared.noOverwriteAll)) {
+            shared.mutex.lock();
             emit question(targetFilePath, Overwrite);
-            shared->mutex.unlock();
+            shared.mutex.unlock();
         }
-        if(shared->overwriteResult == QMessageBox::Yes ||
-                shared->overwriteResult == QMessageBox::YesToAll) {
+        if(shared.overwriteResult == QMessageBox::Yes ||
+                shared.overwriteResult == QMessageBox::YesToAll) {
             QFile::remove(targetFilePath);
             if (tempFile->copy(targetFilePath))
                 emit imageStatus(imageData, tr("Converted"), Converted);
@@ -656,14 +661,14 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
                 return -1;
             }
         }
-        else if (shared->overwriteResult == QMessageBox::Cancel)
+        else if (shared.overwriteResult == QMessageBox::Cancel)
             emit imageStatus(imageData, tr("Cancelled"), Cancelled);
         else
             emit imageStatus(imageData, tr("Skipped"), Skipped);
     }
-    else if (shared->noOverwriteAll)
+    else if (shared.noOverwriteAll)
         emit imageStatus(imageData, tr("Skipped"), Skipped);
-    else if (shared->abort)
+    else if (shared.abort)
         emit imageStatus(imageData, tr("Cancelled"), Cancelled);
     else { // when overwriteAll is true or file not exists
         QFile::remove(targetFilePath);
@@ -682,9 +687,9 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
   * \sa SharedInformation::backgroundColor SharedInformation::format
   */
 void ConvertThread::fillImage(QImage *img) {
-    if (shared->backgroundColor.isValid())
-        img->fill(shared->backgroundColor.rgb());
-    else if (shared->format == "gif" || shared->format == "png")
+    if (shared.backgroundColor.isValid())
+        img->fill(shared.backgroundColor.rgb());
+    else if (shared.format == "gif" || shared.format == "png")
         img->fill(Qt::transparent);
     else // in other formats tranparency isn't supported
         img->fill(Qt::white);
@@ -695,26 +700,26 @@ void ConvertThread::fillImage(QImage *img) {
   */
 QImage * ConvertThread::loadSvgImage() {
     QSvgRenderer renderer;
-    if (shared->svgModifiersEnabled) {
+    if (shared.svgModifiersEnabled) {
         SvgModifier modifier(pd.imagePath);
         // modify SVG file
-        if (!shared->svgRemoveTextString.isNull())
-            modifier.removeText(shared->svgRemoveTextString);
-        if (shared->svgRemoveEmptyGroup)
+        if (!shared.svgRemoveTextString.isNull())
+            modifier.removeText(shared.svgRemoveTextString);
+        if (shared.svgRemoveEmptyGroup)
             modifier.removeEmptyGroups();
         // save SVG file
-        if (shared->svgSave) {
+        if (shared.svgSave) {
             QString svgTargetFileName =
                     targetFilePath.left(targetFilePath.lastIndexOf('.')+1) + "svg";
             QFile file(svgTargetFileName);
             // ask overwrite
             if (file.exists()) {
-                shared->mutex.lock();
+                shared.mutex.lock();
                 emit question(svgTargetFileName, Overwrite);
-                shared->mutex.unlock();
+                shared.mutex.unlock();
             }
-            if (shared->overwriteResult == QMessageBox::Yes ||
-                    shared->overwriteResult == QMessageBox::YesToAll) {
+            if (shared.overwriteResult == QMessageBox::Yes ||
+                    shared.overwriteResult == QMessageBox::YesToAll) {
                 if (!file.open(QIODevice::WriteOnly)) {
                     emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
                                      Failed);
@@ -738,7 +743,7 @@ QImage * ConvertThread::loadSvgImage() {
     if (sizeComputed == 2)
         return NULL;
     // keep aspect ratio
-    if (shared->maintainAspect) {
+    if (shared.maintainAspect) {
         qreal w = width;
         qreal h = height;
         qreal targetRatio = w / h;
@@ -771,19 +776,19 @@ QImage * ConvertThread::loadSvgImage() {
   */
 QImage ConvertThread::paintEffects(QImage *image) {
     QImage destImg(*image);
-    ConvertEffects effectPainter(&destImg, shared);
-    if (shared->effectsConfiguration().getHistogramOperation() > 0)
+    ConvertEffects effectPainter(&destImg, &shared);
+    if (shared.effectsConfiguration().getHistogramOperation() > 0)
         effectPainter.modifyHistogram();
-    if (shared->effectsConfiguration().getFilterType() != NoFilter)
+    if (shared.effectsConfiguration().getFilterType() != NoFilter)
         effectPainter.filtrate();
-    if (shared->effectsConfiguration().getFrameWidth() > 0
-            && shared->effectsConfiguration().getFrameColor().isValid()) {
+    if (shared.effectsConfiguration().getFrameWidth() > 0
+            && shared.effectsConfiguration().getFrameColor().isValid()) {
         destImg = effectPainter.framedImage();
         effectPainter.setImage(&destImg);
     }
-    if (!shared->effectsConfiguration().getImage().isNull())
+    if (!shared.effectsConfiguration().getImage().isNull())
         effectPainter.addImage();
-    if (!shared->effectsConfiguration().getTextString().isEmpty())
+    if (!shared.effectsConfiguration().getTextString().isEmpty())
         effectPainter.addText();
     return destImg;
 }

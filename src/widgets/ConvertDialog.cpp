@@ -520,45 +520,48 @@ void ConvertDialog::convert()
 
     enableConvertButtons(false);
 
+    SharedInformation shared = SharedInformation(*sharedInfo);
+
     if (sizeScrollArea->sizeUnitComboBox->currentIndex() == 2) {
         int multiplier = 1024;
-        if (sizeScrollArea->fileSizeComboBox->currentIndex() == 1) // MiB
+        if (sizeScrollArea->fileSizeComboBox->currentIndex() == 1) {
+            // MiB
             multiplier *= 1024;
-        sharedInfo->setDesiredSize( sizeScrollArea->fileSizeSpinBox->value()
-                                    * multiplier );
+        }
+        int size = sizeScrollArea->fileSizeSpinBox->value() * multiplier;
+        shared.setDesiredSize(size);
+    } else {
+        bool isPercent = (sizeScrollArea->sizeUnitComboBox->currentIndex() == 1);
+        shared.setDesiredSize(w, h, isPercent, hasWidth, hasHeight,
+                                   sizeScrollArea->maintainCheckBox->isChecked());
     }
-    else
-        sharedInfo->setDesiredSize( w, h,
-                                    (sizeScrollArea->sizeUnitComboBox->currentIndex() == 1),
-                                    hasWidth, hasHeight,
-                                    sizeScrollArea->maintainCheckBox->isChecked() );
     QString desiredFormat = targetFormatComboBox->currentText().toLower();
-    sharedInfo->setDesiredFormat( desiredFormat );
-    sharedInfo->setDesiredFlip(optionsScrollArea->flipComboBox->currentIndex());
-    sharedInfo->setDesiredRotation( optionsScrollArea->rotateCheckBox->isChecked(),
-                                    optionsScrollArea->rotateLineEdit->text().toDouble() );
-    sharedInfo->setQuality(optionsScrollArea->qualitySpinBox->value());
-    sharedInfo->setDestPrefix(destPrefixEdit->text());
-    sharedInfo->setDestSuffix(destSuffixEdit->text());
-    sharedInfo->setDestFolder(destFolder);
-    sharedInfo->setOverwriteAll(false);
+    shared.setDesiredFormat(desiredFormat);
+    shared.setDesiredFlip(optionsScrollArea->flipComboBox->currentIndex());
+    shared.setDesiredRotation(optionsScrollArea->rotateCheckBox->isChecked(),
+                              optionsScrollArea->rotateLineEdit->text().toDouble());
+    shared.setQuality(optionsScrollArea->qualitySpinBox->value());
+    shared.setDestPrefix(destPrefixEdit->text());
+    shared.setDestSuffix(destSuffixEdit->text());
+    shared.setDestFolder(destFolder);
+    shared.setOverwriteAll(false);
 
     // backgroud color
-    if (optionsScrollArea->backgroundColorCheckBox->isChecked())
-        sharedInfo->backgroundColor = optionsScrollArea->backgroundColorFrame->color();
-    else
-        sharedInfo->backgroundColor = QColor();
+    if (optionsScrollArea->backgroundColorCheckBox->isChecked()) {
+        shared.backgroundColor = optionsScrollArea->backgroundColorFrame->color();
+    } else {
+        shared.backgroundColor = QColor();
+    }
 
-    SharedInformationBuilder sharedInfoBuilder = SharedInformationBuilder(*sharedInfo);
+    SharedInformationBuilder sharedInfoBuilder = SharedInformationBuilder(shared);
     SharedInformationBuilder *sharedInfoConfigurator = &sharedInfoBuilder;
-    delete sharedInfo;
-    sharedInfo = new SharedInformation(*sharedInfoConfigurator
+    shared = SharedInformation(*sharedInfoConfigurator
             ->withEffects(effectsScrollArea)
             ->withSVG(svgScrollArea)
             ->withRaw(rawTabWidget)
             ->build());
 
-    if (sharedInfo->effectsConfiguration().getImageLoadError()) {
+    if (shared.effectsConfiguration().getImageLoadError()) {
         QMessageBox::StandardButton answer =
                 QMessageBox::warning(this, tr("Load image failed"),
                                      tr("Load image to add failed.\n"
@@ -568,6 +571,9 @@ void ConvertDialog::convert()
         if (answer != QMessageBox::Ignore)
             return;
     }
+
+    ConvertThread::setSharedInfo(shared);
+    sharedInfo = ConvertThread::sharedInfo();
 
     //Gives a image to each thread convert
     for(int i = 0; i < nt; i++) {
