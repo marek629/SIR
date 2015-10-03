@@ -72,6 +72,8 @@ void RawTabWidget::loadSettings(const RawModel &rawModel)
 
 RawModel RawTabWidget::rawModel() const
 {
+    RawView *view = (currentWidget() == basicTab) ? basicView : advancedView;
+    model->setDcrawOptions(view->optionsText());
     return RawModel(*model);
 }
 
