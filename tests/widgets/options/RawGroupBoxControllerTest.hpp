@@ -29,6 +29,7 @@ class RawGroupBoxView;
 class RawModel;
 
 
+// TODO: merge to RawControllerTest class
 class RawGroupBoxControllerTest : public QObject {
     Q_OBJECT
 

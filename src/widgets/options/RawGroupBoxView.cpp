@@ -19,51 +19,43 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include <typeinfo>
-
 #include "widgets/options/RawGroupBoxView.hpp"
-#include "widgets/options/RawGroupBoxController.hpp"
 
-RawGroupBoxView::RawGroupBoxView(QWidget *parent)
+#include <exception>
+
+#include "raw/RawController.hpp"
+//#include "widgets/options/RawGroupBoxController.hpp"
+
+RawGroupBoxView::RawGroupBoxView(RawTabWidget *tabWidget, QWidget *parent)
     : AbstractOptionsGroupBox(parent)
 {
-    ui.setupUi(this);
+    this->rawTabWidget = tabWidget;
+
     setTitle(tr("Raw Options"));
-
-    connect(ui.dcrawPushButton, SIGNAL(clicked()),
-            this, SLOT(browseButtonClicked()));
-    connect(ui.rawCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(rawEnabledStatusChanged(int)));
-}
-
-Ui::AdvancedRawWidget *RawGroupBoxView::advancedRawWidget()
-{
-    return &ui;
 }
 
 void RawGroupBoxView::loadSettings()
 {
-    controller->loadSettings();
+    rawTabWidget->rawContoller()->loadSettings();
 }
 
 void RawGroupBoxView::saveSettings()
 {
-    controller->saveSettings();
+    rawTabWidget->rawContoller()->saveSettings();
 }
 
 void RawGroupBoxView::setController(AbstractOptionsController *controller)
 {
-    Q_ASSERT(typeid(*controller) == typeid(RawGroupBoxController));
-
-    this->controller = (RawGroupBoxController *)controller;
+    // TODO: throw DeprecatedException object
+    //throw std::exception()
 }
 
 void RawGroupBoxView::browseButtonClicked()
 {
-    controller->browseDcraw();
+    rawTabWidget->rawContoller()->browseDcraw();
 }
 
 void RawGroupBoxView::rawEnabledStatusChanged(int state)
 {
-    controller->setRawStatus(state);
+    rawTabWidget->rawContoller()->setRawStatus(state);
 }

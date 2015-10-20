@@ -41,6 +41,8 @@ public:
 
     RawModel rawModel() const;
 
+    RawController *rawContoller();
+
 private slots:
     void onTabChange(int tabIndex);
 

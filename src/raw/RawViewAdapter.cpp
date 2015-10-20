@@ -27,7 +27,6 @@
 RawViewAdapter::RawViewAdapter(RawGroupBoxView *view) : RawView()
 {
     adaptedView = view;
-    adaptedUserInterface = view->advancedRawWidget();
 }
 
 RawViewAdapter::~RawViewAdapter() {}

@@ -77,6 +77,11 @@ RawModel RawTabWidget::rawModel() const
     return RawModel(*model);
 }
 
+RawController *RawTabWidget::rawContoller()
+{
+    return controller;
+}
+
 void RawTabWidget::onTabChange(int tabIndex)
 {
     Q_UNUSED(tabIndex);

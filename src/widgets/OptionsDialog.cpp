@@ -198,7 +198,9 @@ void OptionsDialog::createGroupBoxes() {
     selectionGroupBox = new SelectionGroupBoxView(scrollAreaWidgetContents);
     selectionGroupBoxController = new SelectionGroupBoxController(
                 &(model->selection), selectionGroupBox, this);
-    rawGroupBox = new RawGroupBoxView(scrollAreaWidgetContents);
+
+    RawTabWidget *rawTabWidget = new RawTabWidget(scrollAreaWidgetContents);
+    rawGroupBox = new RawGroupBoxView(rawTabWidget, scrollAreaWidgetContents);
     rawGroupBoxController = new RawGroupBoxController(&model->raw, rawGroupBox,
                                                       this);
 
