@@ -28,14 +28,6 @@ target_link_libraries( sir_generalgroupbox_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "GeneralGroupBox_IT" COMMAND sir_generalgroupbox_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
-set( sir_IT_rawgroupboxcontroller_SRCS
-        widgets/options/RawGroupBoxControllerTest.cpp
-    )
-add_executable( sir_rawgroupboxcontroller_test ${sir_IT_rawgroupboxcontroller_SRCS} )
-target_link_libraries( sir_rawgroupboxcontroller_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "RawGroupBoxController_IT" COMMAND sir_rawgroupboxcontroller_test )
-
-include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_UT_rawcontroller_SRCS
         raw/RawControllerTest.cpp
     )

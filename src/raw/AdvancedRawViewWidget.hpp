@@ -42,15 +42,18 @@ public:
 
     QString pathText() const;
     void setPathText(const QString &text);
+    bool isPathTextEnabledInput() const;
     void setPathTextEnabledInput(bool inputEnabled);
 
     QString optionsText() const;
     void setOptionsText(const QString &text);
+    bool isOptionsTextEnabledInput() const;
     void setOptionsTextEnabledInput(bool inputEnabled);
 
     void setHelpTextPlain(const QString &text);
     void setHelpWidgetEnabled(bool enabled);
 
+    bool isButtonEnabledInput() const;
     void setButtonEnabledInput(bool inputEnabled);
 
     bool closeWindow();

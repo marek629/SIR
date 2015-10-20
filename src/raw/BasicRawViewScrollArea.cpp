@@ -69,6 +69,11 @@ void BasicRawViewScrollArea::setPathText(const QString &text)
     ui.dcrawLineEdit->setText(text);
 }
 
+bool BasicRawViewScrollArea::isPathTextEnabledInput() const
+{
+    return ui.dcrawLineEdit->isEnabled();
+}
+
 void BasicRawViewScrollArea::setPathTextEnabledInput(bool inputEnabled)
 {
     ui.dcrawLineEdit->setEnabled(inputEnabled);
@@ -98,6 +103,11 @@ void BasicRawViewScrollArea::setOptionsText(const QString &text)
     collector->setOptions(text);
 }
 
+bool BasicRawViewScrollArea::isOptionsTextEnabledInput() const
+{
+    return ui.interpolationGroupBox->isEnabled();
+}
+
 void BasicRawViewScrollArea::setOptionsTextEnabledInput(bool inputEnabled)
 {
     ui.interpolationGroupBox->setEnabled(inputEnabled);
@@ -111,6 +121,11 @@ void BasicRawViewScrollArea::setHelpTextPlain(const QString &text)
 void BasicRawViewScrollArea::setHelpWidgetEnabled(bool enabled)
 {
     Q_UNUSED(enabled);
+}
+
+bool BasicRawViewScrollArea::isButtonEnabledInput() const
+{
+    return ui.dcrawPushButton->isEnabled();
 }
 
 void BasicRawViewScrollArea::setButtonEnabledInput(bool inputEnabled)

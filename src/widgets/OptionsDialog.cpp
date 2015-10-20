@@ -39,7 +39,6 @@
 
 #include "widgets/options/SelectionGroupBoxController.hpp"
 #include "widgets/options/SelectionGroupBoxView.hpp"
-#include "widgets/options/RawGroupBoxController.hpp"
 #include "widgets/options/RawGroupBoxView.hpp"
 
 #include <QDialogButtonBox>

@@ -58,6 +58,33 @@ void RawControllerTest::cleanupTestCase()
     }
 }
 
+void RawControllerTest::test_setRawStatus_true()
+{
+    controller->setRawStatus(true);
+
+    QVERIFY(view->isPathTextEnabledInput());
+    QVERIFY(view->isButtonEnabledInput());
+    QVERIFY(view->isOptionsTextEnabledInput());
+}
+
+void RawControllerTest::test_setRawStatus_false()
+{
+    controller->setRawStatus(false);
+
+    QVERIFY(!view->isPathTextEnabledInput());
+    QVERIFY(!view->isButtonEnabledInput());
+    QVERIFY(!view->isOptionsTextEnabledInput());
+}
+
+void RawControllerTest::test_setRawStatus_notNull()
+{
+    controller->setRawStatus(10);
+
+    QVERIFY(view->isPathTextEnabledInput());
+    QVERIFY(view->isButtonEnabledInput());
+    QVERIFY(view->isOptionsTextEnabledInput());
+}
+
 void RawControllerTest::test_checkDcrawPath_emptyString()
 {
     QString input("");

@@ -60,7 +60,6 @@ set( sir_SRCS ${sir_SRCS}
         widgets/options/FileListGroupBoxView.cpp
         widgets/options/GeneralGroupBoxController.cpp
         widgets/options/GeneralGroupBoxView.cpp
-        widgets/options/RawGroupBoxController.cpp
         widgets/options/RawGroupBoxView.cpp
         widgets/options/SelectionGroupBoxController.cpp
         widgets/options/SelectionGroupBoxView.cpp

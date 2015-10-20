@@ -69,6 +69,11 @@ void AdvancedRawViewWidget::setPathText(const QString &text)
     dcrawLineEdit->setText(text);
 }
 
+bool AdvancedRawViewWidget::isPathTextEnabledInput() const
+{
+    return dcrawLineEdit->isEnabled();
+}
+
 void AdvancedRawViewWidget::setPathTextEnabledInput(bool inputEnabled)
 {
     dcrawLineEdit->setEnabled(inputEnabled);
@@ -84,6 +89,11 @@ void AdvancedRawViewWidget::setOptionsText(const QString &text)
     dcrawOptions->setText(text);
 }
 
+bool AdvancedRawViewWidget::isOptionsTextEnabledInput() const
+{
+    return dcrawOptions->isEnabled();
+}
+
 void AdvancedRawViewWidget::setOptionsTextEnabledInput(bool inputEnabled)
 {
     dcrawOptions->setEnabled(inputEnabled);
@@ -97,6 +107,11 @@ void AdvancedRawViewWidget::setHelpTextPlain(const QString &text)
 void AdvancedRawViewWidget::setHelpWidgetEnabled(bool enabled)
 {
     helpTextBrowser->setEnabled(enabled);
+}
+
+bool AdvancedRawViewWidget::isButtonEnabledInput() const
+{
+    return dcrawPushButton->isEnabled();
 }
 
 void AdvancedRawViewWidget::setButtonEnabledInput(bool inputEnabled)

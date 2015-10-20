@@ -43,6 +43,10 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
 
+    void test_setRawStatus_true();
+    void test_setRawStatus_false();
+    void test_setRawStatus_notNull();
+
     void test_checkDcrawPath_emptyString();
     void test_checkDcrawPath_fileNotExists();
     void test_checkDcrawPath_fileNotExecutable();

@@ -47,15 +47,18 @@ public:
 
     virtual QString pathText() const = 0;
     virtual void setPathText(const QString &text) = 0;
+    virtual bool isPathTextEnabledInput() const = 0;
     virtual void setPathTextEnabledInput(bool inputEnabled) = 0;
 
     virtual QString optionsText() const = 0;
     virtual void setOptionsText(const QString &text) = 0;
+    virtual bool isOptionsTextEnabledInput() const = 0;
     virtual void setOptionsTextEnabledInput(bool inputEnabled) = 0;
 
     virtual void setHelpTextPlain(const QString &text) = 0;
     virtual void setHelpWidgetEnabled(bool enabled) = 0;
 
+    virtual bool isButtonEnabledInput() const = 0;
     virtual void setButtonEnabledInput(bool inputEnabled) = 0;
 
     virtual bool closeWindow() = 0;
