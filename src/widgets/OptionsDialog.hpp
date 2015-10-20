@@ -87,7 +87,6 @@ private:
     SelectionGroupBoxView *selectionGroupBox;
     SelectionGroupBoxController *selectionGroupBoxController;
     RawGroupBoxView *rawGroupBox;
-    RawGroupBoxController *rawGroupBoxController;
 
     // methods
     void createConnections();

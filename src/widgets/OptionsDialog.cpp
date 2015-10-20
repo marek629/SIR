@@ -71,7 +71,6 @@ OptionsDialog::~OptionsDialog()
     delete detailsGroupBoxController;
 #endif // SIR_METADATA_SUPPORT
     delete selectionGroupBoxController;
-    delete rawGroupBoxController;
 }
 
 /** Connects signals to slots. */
@@ -201,8 +200,6 @@ void OptionsDialog::createGroupBoxes() {
 
     RawTabWidget *rawTabWidget = new RawTabWidget(scrollAreaWidgetContents);
     rawGroupBox = new RawGroupBoxView(rawTabWidget, scrollAreaWidgetContents);
-    rawGroupBoxController = new RawGroupBoxController(&model->raw, rawGroupBox,
-                                                      this);
 
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 }
