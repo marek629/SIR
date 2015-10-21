@@ -46,7 +46,7 @@ BasicRawViewScrollArea::~BasicRawViewScrollArea() {}
 
 QWidget *BasicRawViewScrollArea::qWidget()
 {
-    return ui.scrollAreaWidgetContents;
+    return this;
 }
 
 bool BasicRawViewScrollArea::isEnabledChecked() const
