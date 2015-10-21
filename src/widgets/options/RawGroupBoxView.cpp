@@ -31,6 +31,10 @@ RawGroupBoxView::RawGroupBoxView(RawTabWidget *tabWidget, QWidget *parent)
 {
     this->rawTabWidget = tabWidget;
 
+    QLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(tabWidget);
+    setLayout(layout);
+
     setTitle(tr("Raw Options"));
 }
 
