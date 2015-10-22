@@ -30,6 +30,9 @@ OptionsGroupBoxManager::OptionsGroupBoxManager(int groupBoxListSize)
     : groupBoxListSize(groupBoxListSize)
 {
     currentGroupBoxIndex = emptyListIndex;
+
+    verticalSpacer = new QSpacerItem(20, 2, QSizePolicy::Minimum,
+                                     QSizePolicy::Expanding);
 }
 
 OptionsGroupBoxManager::~OptionsGroupBoxManager() {}
@@ -70,6 +73,17 @@ void OptionsGroupBoxManager::setCurrentGroupBoxByIndex(int index)
     }
 
     setCurrentGroupBoxIndex(index);
+
+    if (groupBoxListSize == 6 && currentGroupBoxIndex == 5) {
+        QSize prefferedSize = verticalSpacer->sizeHint();
+        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
+                                   QSizePolicy::Minimum, QSizePolicy::Minimum);
+    } else {
+        QSize prefferedSize = verticalSpacer->sizeHint();
+        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
+                                   QSizePolicy::Minimum, QSizePolicy::Expanding);
+    }
+
     currentGroupBox()->show();
 }
 
@@ -116,6 +130,8 @@ void OptionsGroupBoxManager::addToLayout(QLayout *layout)
     for (int index = 0; index < groupBoxListSize; index++) {
         layout->addWidget(groupBoxByIndex(index));
     }
+
+    layout->addItem(verticalSpacer);
 }
 
 void OptionsGroupBoxManager::onCategoryChange(int newIndex)

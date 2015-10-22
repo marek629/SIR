@@ -68,7 +68,6 @@ private:
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QVBoxLayout *verticalLayout_2;
-    QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout;
     QDialogButtonBox *buttonBox;
     // group boxes

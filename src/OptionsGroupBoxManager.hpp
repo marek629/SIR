@@ -27,6 +27,7 @@
 class AbstractOptionsGroupBox;
 
 class QLayout;
+class QSpacerItem;
 
 
 class OptionsGroupBoxManager : public QObject
@@ -59,6 +60,8 @@ private:
     QList<AbstractOptionsGroupBox *> groupBoxList;
     int currentGroupBoxIndex;
     const int groupBoxListSize;
+
+    QSpacerItem *verticalSpacer;
 
     void setCurrentGroupBoxIndex(int index);
 };

@@ -199,8 +199,6 @@ void OptionsDialog::createGroupBoxes() {
 
     RawTabWidget *rawTabWidget = new RawTabWidget(scrollAreaWidgetContents);
     rawGroupBox = new RawGroupBoxView(rawTabWidget, scrollAreaWidgetContents);
-
-    verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 }
 
 void OptionsDialog::createGroupBoxManager()
@@ -225,12 +223,9 @@ void OptionsDialog::createGroupBoxManager()
 
 void OptionsDialog::setupGroupBoxesLayout()
 {
-    // adding group boxes to layout
     groupBoxManager->addToLayout(verticalLayout_2);
-    verticalLayout_2->addItem(verticalSpacer);
     scrollAreaWidgetContents->setLayout(verticalLayout_2);
 
-    // hiding group boxes
     groupBoxManager->hideAll();
 }
 
