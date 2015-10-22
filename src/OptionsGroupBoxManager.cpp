@@ -73,17 +73,7 @@ void OptionsGroupBoxManager::setCurrentGroupBoxByIndex(int index)
     }
 
     setCurrentGroupBoxIndex(index);
-
-    if (groupBoxListSize == 6 && currentGroupBoxIndex == 5) {
-        QSize prefferedSize = verticalSpacer->sizeHint();
-        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
-                                   QSizePolicy::Minimum, QSizePolicy::Minimum);
-    } else {
-        QSize prefferedSize = verticalSpacer->sizeHint();
-        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
-                                   QSizePolicy::Minimum, QSizePolicy::Expanding);
-    }
-
+    resizeVerticalSpacer();
     currentGroupBox()->show();
 }
 
@@ -94,6 +84,19 @@ void OptionsGroupBoxManager::setCurrentGroupBoxIndex(int index)
     Q_ASSERT(index < groupBoxListSize);
 
     currentGroupBoxIndex = index;
+}
+
+void OptionsGroupBoxManager::resizeVerticalSpacer()
+{
+    QSize prefferedSize = verticalSpacer->sizeHint();
+
+    if (groupBoxListSize == 6 && currentGroupBoxIndex == 5) {
+        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
+                                   QSizePolicy::Minimum, QSizePolicy::Minimum);
+    } else {
+        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
+                                   QSizePolicy::Minimum, QSizePolicy::Expanding);
+    }
 }
 
 void OptionsGroupBoxManager::loadSettings()

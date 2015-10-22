@@ -64,6 +64,8 @@ private:
     QSpacerItem *verticalSpacer;
 
     void setCurrentGroupBoxIndex(int index);
+
+    void resizeVerticalSpacer();
 };
 
 #endif // OPTIONSGROUPBOXMANAGER_HPP
