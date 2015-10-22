@@ -66,6 +66,7 @@ private:
     void setCurrentGroupBoxIndex(int index);
 
     void resizeVerticalSpacer();
+    bool isRawCategorySelected();
 };
 
 #endif // OPTIONSGROUPBOXMANAGER_HPP

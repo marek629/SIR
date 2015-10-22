@@ -90,13 +90,20 @@ void OptionsGroupBoxManager::resizeVerticalSpacer()
 {
     QSize prefferedSize = verticalSpacer->sizeHint();
 
-    if (groupBoxListSize == 6 && currentGroupBoxIndex == 5) {
-        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
-                                   QSizePolicy::Minimum, QSizePolicy::Minimum);
+    QSizePolicy::Policy verticalPolicy = QSizePolicy::Fixed;
+    if (isRawCategorySelected()) {
+        verticalPolicy = QSizePolicy::Minimum;
     } else {
-        verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
-                                   QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalPolicy = QSizePolicy::Expanding;
     }
+
+    verticalSpacer->changeSize(prefferedSize.width(), prefferedSize.height(),
+                               QSizePolicy::Minimum, verticalPolicy);
+}
+
+bool OptionsGroupBoxManager::isRawCategorySelected()
+{
+    return groupBoxListSize == 6 && currentGroupBoxIndex == 5;
 }
 
 void OptionsGroupBoxManager::loadSettings()
