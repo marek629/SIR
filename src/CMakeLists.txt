@@ -2,7 +2,8 @@
 
 # Source files
 file( GLOB_RECURSE sir_SRCS
-       raw/*.cpp
+        exceptions/*.cpp
+        raw/*.cpp
     )
 set( sir_SRCS ${sir_SRCS}
         CommandLineAssistant.cpp

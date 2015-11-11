@@ -19,46 +19,14 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "widgets/options/RawGroupBoxView.hpp"
-
 #include "exceptions/DeprecatedException.hpp"
-#include "raw/RawController.hpp"
 
+DeprecatedException::DeprecatedException() noexcept
+    : message("Called operation is deprecated.") {}
 
-RawGroupBoxView::RawGroupBoxView(RawTabWidget *tabWidget, QWidget *parent)
-    : AbstractOptionsGroupBox(parent)
+DeprecatedException::~DeprecatedException() {}
+
+const char *DeprecatedException::what() const noexcept
 {
-    this->rawTabWidget = tabWidget;
-
-    QLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(tabWidget);
-    setLayout(layout);
-
-    setTitle(tr("Raw Options"));
-}
-
-void RawGroupBoxView::loadSettings()
-{
-    rawTabWidget->rawContoller()->loadSettings();
-}
-
-void RawGroupBoxView::saveSettings()
-{
-    rawTabWidget->rawContoller()->saveSettings();
-}
-
-void RawGroupBoxView::setController(AbstractOptionsController *controller)
-{
-    Q_UNUSED(controller);
-    throw DeprecatedException();
-}
-
-void RawGroupBoxView::browseButtonClicked()
-{
-    rawTabWidget->rawContoller()->browseDcraw();
-}
-
-void RawGroupBoxView::rawEnabledStatusChanged(int state)
-{
-    rawTabWidget->rawContoller()->setRawStatus(state);
+    return message.toLocal8Bit().constData();
 }
