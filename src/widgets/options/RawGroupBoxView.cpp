@@ -23,6 +23,7 @@
 
 #include "exceptions/DeprecatedException.hpp"
 #include "raw/RawController.hpp"
+#include "Settings.hpp"
 
 
 RawGroupBoxView::RawGroupBoxView(RawTabWidget *tabWidget, QWidget *parent)
@@ -45,6 +46,7 @@ void RawGroupBoxView::loadSettings()
 void RawGroupBoxView::saveSettings()
 {
     rawTabWidget->rawContoller()->saveSettings();
+    Settings::instance()->raw = rawTabWidget->rawModel();
 }
 
 void RawGroupBoxView::setController(AbstractOptionsController *controller)
