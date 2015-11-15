@@ -57,6 +57,11 @@ void RawController::saveSettings()
 
     RawModel temporaryModel;
 
+    RawModel::RawTab tab = view->qWidget()->objectName().contains("Advanced")
+            ? RawModel::AdvancedTab
+            : RawModel::BasicTab;
+    temporaryModel.setRawTab(tab);
+
     // check dcraw executable
     if (view->isEnabledChecked()) {
         if ((dcrawOk = checkDcrawPath(view->pathText()))) {

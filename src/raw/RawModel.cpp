@@ -29,6 +29,7 @@
 RawModel::RawModel()
 {
     this->enabled = false;
+    this->tab = BasicTab;
 }
 
 RawModel::RawModel(bool enabled, const QString &dcrawPath,
@@ -37,6 +38,8 @@ RawModel::RawModel(bool enabled, const QString &dcrawPath,
     this->enabled = enabled;
     this->dcrawPathString = dcrawPath;
     this->dcrawOptionsString = dcrawOptions;
+
+    this->tab = BasicTab;
 }
 
 RawModel::RawModel(const RawModel &other)
@@ -51,6 +54,7 @@ void RawModel::swap(const RawModel &other)
     this->enabled = other.enabled;
     this->dcrawPathString = other.dcrawPathString;
     this->dcrawOptionsString = other.dcrawOptionsString;
+    this->tab = other.tab;
 }
 
 bool RawModel::isValid() const
@@ -63,6 +67,13 @@ void RawModel::load(const Settings &settings)
     enabled = settings.value("Raw/enabled", false).toBool();
     dcrawPathString = settings.value("Raw/dcrawPath", "/usr/bin/dcraw").toString();
     dcrawOptionsString = settings.value("Raw/dcrawOptions", "").toString();
+
+    QString tabString = settings.value("Raw/tab", "basic").toString();
+    if (tabString.toLower() == "advanced") {
+        tab = AdvancedTab;
+    } else {
+        tab = BasicTab;
+    }
 }
 
 void RawModel::save(Settings *settings)
@@ -72,6 +83,9 @@ void RawModel::save(Settings *settings)
     settings->setValue("enabled", enabled);
     settings->setValue("dcrawPath", dcrawPathString);
     settings->setValue("dcrawOptions", dcrawOptionsString);
+
+    QString tabString = (tab == AdvancedTab) ? "advanced" : "basic";
+    settings->setValue("tab", tabString);
 
     settings->endGroup();
 }
@@ -104,4 +118,14 @@ QString RawModel::dcrawOptions() const
 void RawModel::setDcrawOptions(const QString &value)
 {
     dcrawOptionsString = value;
+}
+
+RawModel::RawTab RawModel::rawTab() const
+{
+    return tab;
+}
+
+void RawModel::setRawTab(RawModel::RawTab value)
+{
+    tab = value;
 }

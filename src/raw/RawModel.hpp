@@ -30,6 +30,12 @@ class Settings;
 class RawModel
 {
 public:
+    enum RawTab
+    {
+        BasicTab,
+        AdvancedTab
+    };
+
     RawModel();
     RawModel(bool enabled, const QString &dcrawPath, const QString &dcrawOptions);
     RawModel(const RawModel &other);
@@ -48,11 +54,14 @@ public:
     void setDcrawPath(const QString &value);
     QString dcrawOptions() const;
     void setDcrawOptions(const QString &value);
+    RawTab rawTab() const;
+    void setRawTab(RawTab value);
 
 private:
     bool enabled;
     QString dcrawPathString;
     QString dcrawOptionsString;
+    RawTab tab;
 };
 
 #endif // RAWMODEL_HPP

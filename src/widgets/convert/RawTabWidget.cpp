@@ -50,7 +50,15 @@ RawTabWidget::RawTabWidget(QWidget *parent) : QTabWidget(parent)
 
     model = new RawModel(Settings::instance()->raw);
 
-    controller = new RawController(model, basicView);
+    RawView *defaultView;
+    if (model->rawTab() == RawModel::BasicTab) {
+        defaultView = basicView;
+    } else {
+        defaultView = advancedView;
+        setCurrentWidget(advancedTab);
+    }
+
+    controller = new RawController(model, defaultView);
     controller->loadSettings();
 
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(onTabChange(int)));
@@ -88,10 +96,12 @@ void RawTabWidget::onTabChange(int tabIndex)
 
     if (this->currentWidget() == basicTab) {
         model->setDcrawOptions(advancedView->optionsText());
+        model->setRawTab(RawModel::BasicTab);
         controller->setView(basicView);
         basicView->setController(controller);
     } else {
         model->setDcrawOptions(basicView->optionsText());
+        model->setRawTab(RawModel::AdvancedTab);
         controller->setView(advancedView);
         advancedView->setController(controller);
     }
