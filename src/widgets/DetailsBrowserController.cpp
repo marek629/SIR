@@ -100,6 +100,8 @@ void DetailsBrowserController::showDetails() {
     view->clear();
     htmlContent.clear();
 
+    view->window()->setCursor(Qt::WaitCursor);
+
     selectedFiles = convertDialog->filesTreeWidget->selectedItems();
 
     if (selectedFiles.length() <= 0) {
@@ -123,6 +125,8 @@ void DetailsBrowserController::showDetails() {
 
     view->setHtml(RichTextVisitor::htmlOrigin + htmlContent
                   + RichTextVisitor::htmlEnd);
+
+    view->window()->unsetCursor();
 }
 
 #ifdef SIR_METADATA_SUPPORT
