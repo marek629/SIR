@@ -78,8 +78,6 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
     effectsDir = QDir::home();
     sessionDir = QDir::home();
 
-    init();
-
     session = new Session(this);
 
     cmdAssistant->setTreeWidget(filesTreeWidget);
@@ -91,6 +89,8 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
     detailsBrowserController = new DetailsBrowserController(filesTreeWidget,
                                                             detailsBrowser,
                                                             this);
+
+    init();
 }
 
 /** Destructor.\n
@@ -127,9 +127,16 @@ void ConvertDialog::createConnections() {
             filesTreeWidget, SLOT(removeAll()));
 
     // status bar
-    connect(filesTreeWidget, SIGNAL(loadingFilesStart(int)), statusWidget, SLOT(onFilesLoadingStart(int)));
-    connect(filesTreeWidget, SIGNAL(loadingFilesTick(int)), statusWidget, SLOT(onFilesLoadingTick(int)));
-    connect(filesTreeWidget, SIGNAL(loadingFilesStop()), statusWidget, SLOT(onFilesLoadingStop()));
+    connect(filesTreeWidget, SIGNAL(loadingFilesStart(int)),
+            statusWidget, SLOT(onFilesLoadingStart(int)));
+    connect(filesTreeWidget, SIGNAL(loadingFilesTick(int)),
+            statusWidget, SLOT(onFilesLoadingTick(int)));
+    connect(filesTreeWidget, SIGNAL(loadingFilesStop()),
+            statusWidget, SLOT(onFilesLoadingStop()));
+    connect(detailsBrowserController, SIGNAL(loadingDetailsStart()),
+            statusWidget, SLOT(onDetailsLoadingStart()));
+    connect(detailsBrowserController, SIGNAL(loadingDetailsStop()),
+            statusWidget, SLOT(onDetailsLoadingStop()));
     connect(this, SIGNAL(convertStart(int)), statusWidget, SLOT(onConvetionStart(int)));
     connect(this, SIGNAL(convertTick(int)), statusWidget, SLOT(onConvetionTick(int)));
     connect(this, SIGNAL(convertStop()), statusWidget, SLOT(onConvetionStop()));

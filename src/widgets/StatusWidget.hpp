@@ -30,6 +30,7 @@
 enum StatusWidgetState {
     StatusReady,
     StatusFilesLoading,
+    StatusDetailsLoading,
     StatusConvertionProgress,
     StatusConvertionSummary
 };
@@ -50,6 +51,9 @@ public slots:
     void onFilesLoadingStart(int totalQuantity);
     void onFilesLoadingTick(int partQuantity);
     void onFilesLoadingStop();
+
+    void onDetailsLoadingStart();
+    void onDetailsLoadingStop();
 
     void onConvetionStart(int totalQuantity);
     void onConvetionTick(int partQuantity);

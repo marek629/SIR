@@ -76,6 +76,18 @@ void StatusWidget::onFilesLoadingStop() {
     QCoreApplication::processEvents();
 }
 
+void StatusWidget::onDetailsLoadingStart()
+{
+    setStatus(StatusDetailsLoading);
+    QCoreApplication::processEvents();
+}
+
+void StatusWidget::onDetailsLoadingStop()
+{
+    setStatus(StatusReady);
+    QCoreApplication::processEvents();
+}
+
 void StatusWidget::onConvetionStart(int totalQuantity) {
     setStatus(StatusConvertionProgress, 0, totalQuantity);
 
@@ -107,6 +119,9 @@ void StatusWidget::setTextMessageLabel(StatusWidgetState statusWidgetState) {
     case StatusReady:
         messageLabel->setText(tr("Ready"));
         break;
+    case StatusDetailsLoading:
+        messageLabel->setText(tr("Loading image details..."));
+        break;
     case StatusFilesLoading:
         messageLabel->setText(tr("Loading files..."));
         break;
@@ -120,11 +135,13 @@ void StatusWidget::setTextMessageLabel(StatusWidgetState statusWidgetState) {
         messageLabel->setText(summaryMessage);
         break;
     }
+    messageLabel->update();
 }
 
 void StatusWidget::setTextOfLabel(StatusWidgetState statusWidgetState) {
     switch (statusWidgetState) {
     case StatusReady:
+    case StatusDetailsLoading:
     case StatusConvertionSummary:
         ofLabel->setText("");
         break;

@@ -50,6 +50,10 @@ public:
 public slots:
     void showDetails();
 
+signals:
+    void loadingDetailsStart();
+    void loadingDetailsStop();
+
 private:
     TreeWidget *model;
     DetailsBrowserView *view;
