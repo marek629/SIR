@@ -67,15 +67,13 @@ void EffectsScrollAreaVisitor::configureFilter(EffectsScrollArea *area) {
                 break;
             case 2:
                 conf.setFilterType(CustomColor);
-                conf.setFilterBrush(
-                            QBrush(area->filterBrushFrame->color()));
+                conf.setFilterBrush(QBrush(area->filterBrushFrame->color()));
                 break;
             default:
                 break;
             }
         } else {
             conf.setFilterType(Gradient);
-            // TODO: strange entries count in code coverage
             conf.setFilterBrush(area->filterBrushFrame->brush());
         }
     } else {

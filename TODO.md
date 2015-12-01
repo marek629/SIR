@@ -5,8 +5,6 @@
 
 * Describe release procedure
 * Remove timer from files loading
-* Graphical dcraw options, for example as checkboxes
-    * Help message in dialog from dcraw command
 * Support for animated graphics files (QMovie?)
 * Wait currsor while image preview is loading (for large raw files)
 
