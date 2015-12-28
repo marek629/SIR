@@ -1,3 +1,10 @@
+/*body {
+    background-image: url("img/page-background.png");
+    background-repeat: no-repeat;
+    background-position: 10px 100px;
+    background-attachment: fixed;
+}*/
+
 #forkongithub a {
     background: rgb(255, 142, 46);
     color: #fff;
