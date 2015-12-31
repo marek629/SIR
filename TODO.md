@@ -4,8 +4,6 @@
 ## Nearest Release
 
 * Describe release procedure
-* Remove timer from files loading
-* Support for animated graphics files (QMovie?)
 * Wait currsor while image preview is loading (for large raw files)
     * and loading many files too
 
@@ -16,9 +14,16 @@
 * Search refactorizationable code
 * Add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
 * Integrate tests within TravisCI
+* Remove timer from files loading
+* Support for animated graphics files (QMovie?)
 
 
-## 3.0 Roadmap
+## 3.x Roadmap
+
+* Extract Raw module to plugin
+
+
+## 4.0 Roadmap
 
 * SVG & metadata & effects as plugins
 * dynamically add effects to effect list (empty initially)
