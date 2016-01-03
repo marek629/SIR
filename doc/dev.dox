@@ -14,4 +14,65 @@ Don't use friend class declaration for both production classes friendship.
 Do public class interface instead.\n
 It's needed to remove consecutively existing production classes fiendships.
 
+
+\section release Release Procedure
+
+<ol>
+<li>Run all tests and make sure that everything it's OK
+    <ul>
+    <li>call 'make all' and 'cd' to build directory
+    <li>call 'make test'
+    </ul>
+<li>Update version number in files:
+    <ul>
+    <li>src/Version.hpp
+    <li>Doxyfile
+    <li>web/check-updates.php
+    </ul>
+<li>Build the SIR executable file
+    <ul>
+    <li>call 'make sir'
+    <li>check it works fine
+    </ul>
+<li>Make a tag
+    <ul>
+    <li>call 'git tag v3.0' (v3.0 is an example)
+    </ul>
+<li>Make and upload source package
+    <ul>
+    <li>call 'git archive --prefix=sir/ -o sir_3.0.tar.gz v3.0' (3.0 is an example)
+    <li>upload given tarball to GDrive, SIR directory
+    </ul>
+<li>Make and upload documentation package
+    <ul>
+    <li>call 'doxygen'
+    <li>call 'tar -cvzf sir_3.0_doc.tar.gz sir/doc'
+    <li>upload given tarball to GDrive, SIR directory
+    </ul>
+<li>Make test build of AUR package (Arch Linux)
+    <ul>
+    <li>edit PKGBUILD file
+        <ul>
+        <li>update pkgver variable
+        <li>update sha1sums variable
+        </ul>
+    <li>call 'makepkg'
+    <li>install locally package by call 'sudo pacman -U sir-3.0-1-x86_64.pkg.tar.xz'
+    <li>check if SIR works fine
+    <li>commit changes and push to AUR repository
+    </ul>
+<li>Push a tag
+    <ul>
+    <li>call 'git push origin v3.0' (v3.0 is an example)
+    </ul>
+<li>Push check-updates.php file to web server
+    <ul>
+    <li>call script web/upload.py
+    </ul>
+<li>Add release message to SIR project website
+    <ul>
+    <li>for GitHub pages remenber both: dynamic (default) and static version (for search engine robots)
+    </ul>
+</ol>
+
 */

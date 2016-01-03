@@ -3,7 +3,6 @@
 
 ## Nearest Release
 
-* Describe release procedure
 * Wait currsor while image preview is loading (for large raw files)
     * and loading many files too
 
@@ -21,6 +20,7 @@
 ## 3.x Roadmap
 
 * Extract Raw module to plugin
+* Add more features to Raw basic settings view
 
 
 ## 4.0 Roadmap
