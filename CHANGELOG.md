@@ -2,7 +2,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-### unreleased
+### Wed Jan 06 2015
 
 * Added Raw tab into main window
 * Added Basic view tab for user frendly Raw configuration

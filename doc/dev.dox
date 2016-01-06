@@ -29,6 +29,7 @@ It's needed to remove consecutively existing production classes fiendships.
     <li>Doxyfile
     <li>web/check-updates.php
     </ul>
+<li>Update changes listing in CHANGELOG.md file
 <li>Build the SIR executable file
     <ul>
     <li>call <code>make sir</code>
