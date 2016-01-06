@@ -20,8 +20,8 @@ It's needed to remove consecutively existing production classes fiendships.
 <ol>
 <li>Run all tests and make sure that everything it's OK
     <ul>
-    <li>call 'make all' and 'cd' to build directory
-    <li>call 'make test'
+    <li>call <code>make all</code> and <code>cd</code> to build directory
+    <li>call <code>make test</code>
     </ul>
 <li>Update version number in files:
     <ul>
@@ -31,22 +31,22 @@ It's needed to remove consecutively existing production classes fiendships.
     </ul>
 <li>Build the SIR executable file
     <ul>
-    <li>call 'make sir'
+    <li>call <code>make sir</code>
     <li>check it works fine
     </ul>
 <li>Make a tag
     <ul>
-    <li>call 'git tag v3.0' (v3.0 is an example)
+    <li>call <code>git tag v3.0</code> (v3.0 is an example)
     </ul>
 <li>Make and upload source package
     <ul>
-    <li>call 'git archive --prefix=sir/ -o sir_3.0.tar.gz v3.0' (3.0 is an example)
+    <li>call <code>git archive `--prefix=sir/` -o sir_3.0.tar.gz v3.0</code> (3.0 is an example)
     <li>upload given tarball to GDrive, SIR directory
     </ul>
 <li>Make and upload documentation package
     <ul>
-    <li>call 'doxygen'
-    <li>call 'tar -cvzf sir_3.0_doc.tar.gz sir/doc'
+    <li>call <code>doxygen</code>
+    <li>call <code>tar -cvzf sir_3.0_doc.tar.gz sir/doc</code>
     <li>upload given tarball to GDrive, SIR directory
     </ul>
 <li>Make test build of AUR package (Arch Linux)
@@ -56,14 +56,14 @@ It's needed to remove consecutively existing production classes fiendships.
         <li>update pkgver variable
         <li>update sha1sums variable
         </ul>
-    <li>call 'makepkg'
-    <li>install locally package by call 'sudo pacman -U sir-3.0-1-x86_64.pkg.tar.xz'
+    <li>call <code>makepkg</code>
+    <li>install locally package by call <code>sudo pacman -U sir-3.0-1-x86_64.pkg.tar.xz</code>
     <li>check if SIR works fine
     <li>commit changes and push to AUR repository
     </ul>
 <li>Push a tag
     <ul>
-    <li>call 'git push origin v3.0' (v3.0 is an example)
+    <li>call <code>git push origin v3.0</code> (v3.0 is an example)
     </ul>
 <li>Push check-updates.php file to web server
     <ul>
