@@ -1,0 +1,17 @@
+language: cpp
+sudo: required
+os:
+- linux
+
+compiler:
+- gcc
+
+
+before_script:
+- mkdir build
+- cd build
+- cmake ..
+
+script:
+- make all
+- make test
