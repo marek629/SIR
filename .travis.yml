@@ -10,12 +10,12 @@ compiler:
 addons:
     apt:
         sources: ['kalakris-cmake']
-        packages: ['cmake', 'libqt4-dev', 'libqt4-dbg', 'libqt4-core', 'libqt4-gui', 'libexiv2']
+        packages: ['cmake', 'libqt4-dev', 'libqt4-dbg', 'libqt4-core', 'libqt4-gui']
 
 before_script:
 - mkdir build
 - cd build
-- cmake .. -DCMAKE_BUILD_TYPE=debug -Dqt5=OFF
+- cmake .. -DCMAKE_BUILD_TYPE=debug -Dqt5=OFF -Dmetadata=OFF
 
 script:
 - make all
