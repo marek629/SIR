@@ -4,8 +4,8 @@ os:
 - linux
 
 compiler:
-- gcc
-- clang
+- g++
+#- clang
 
 addons:
     apt:
@@ -20,6 +20,8 @@ addons:
             - ['libqt4-dev', 'libqt4-dbg', 'libqt4-core', 'libqt4-gui']
 
 before_script:
+- if [ "$CC" = "gcc" ]; then export CC="gcc-4.8"; fi
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
 - mkdir build
 - cd build
 - cmake .. -DCMAKE_BUILD_TYPE=debug -Dqt5=OFF -Dmetadata=OFF
