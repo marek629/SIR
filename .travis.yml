@@ -28,4 +28,5 @@ before_script:
 
 script:
 - make all
+- tests/sir_generalgroupbox_test
 - make test
