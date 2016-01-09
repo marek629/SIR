@@ -3,22 +3,6 @@ include_directories( ${sir_SOURCE_DIR} )
 set( sir_UT_LINKING_LIBS sir_library ${sir_UT_LINKING_LIBS} )
 
 
-set( sir_UT_metadatautils_SRCS
-        metadata/MetadataUtilsTest.cpp
-    )
-add_executable( sir_metadatautils_test ${sir_UT_metadatautils_SRCS} )
-target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "MetadataUtils_UT" COMMAND sir_metadatautils_test )
-
-
-include_directories( ${CMAKE_BINARY_DIR}/src )
-set( sir_IT_detailsgroupbox_SRCS
-        widgets/options/DetailsGroupBoxTest.cpp
-    )
-add_executable( sir_detailsgroupbox_test ${sir_IT_detailsgroupbox_SRCS} )
-target_link_libraries( sir_detailsgroupbox_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "DetailsGroupBox_IT" COMMAND sir_detailsgroupbox_test )
-
 include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_IT_generalgroupbox_SRCS
         widgets/options/GeneralGroupBoxTest.cpp
@@ -81,3 +65,23 @@ set( sir_UT_version_SRCS
 add_executable( sir_version_test ${sir_UT_version_SRCS} )
 target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "Version_UT" COMMAND sir_version_test )
+
+
+if( metadata )
+
+    set( sir_UT_metadatautils_SRCS
+            metadata/MetadataUtilsTest.cpp
+        )
+    add_executable( sir_metadatautils_test ${sir_UT_metadatautils_SRCS} )
+    target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
+    add_test( NAME "MetadataUtils_UT" COMMAND sir_metadatautils_test )
+
+    include_directories( ${CMAKE_BINARY_DIR}/src )
+    set( sir_IT_detailsgroupbox_SRCS
+            widgets/options/DetailsGroupBoxTest.cpp
+        )
+    add_executable( sir_detailsgroupbox_test ${sir_IT_detailsgroupbox_SRCS} )
+    target_link_libraries( sir_detailsgroupbox_test ${sir_UT_LINKING_LIBS} )
+    add_test( NAME "DetailsGroupBox_IT" COMMAND sir_detailsgroupbox_test )
+
+endif( metadata )
