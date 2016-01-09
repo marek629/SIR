@@ -1,11 +1,10 @@
 language: cpp
 sudo: required
 os:
-- linux
+    - linux
 
 compiler:
-- g++
-#- clang
+    - g++
 
 addons:
     apt:
@@ -15,18 +14,23 @@ addons:
         packages:
             - gcc-4.8
             - g++-4.8
-            - clang
             - cmake
             - ['libqt4-dev', 'libqt4-dbg', 'libqt4-core', 'libqt4-gui']
 
 before_script:
-- if [ "$CC" = "gcc" ]; then export CC="gcc-4.8"; fi
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
-- mkdir build
-- cd build
-- cmake .. -DCMAKE_BUILD_TYPE=debug -Dqt5=OFF -Dmetadata=OFF
+# set newer GCC version
+    - if [ "$CC" = "gcc" ]; then export CC="gcc-4.8"; fi
+    - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
+# run virtual screen
+    - "export DISPLAY=:99.0"
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3 # give xvfb some time to start
+# setup build
+    - mkdir build
+    - cd build
+    - cmake .. -DCMAKE_BUILD_TYPE=debug -Dqt5=OFF -Dmetadata=OFF
 
 script:
-- make all
-- tests/sir_generalgroupbox_test
-- make test
+    - make all
+    - tests/sir_generalgroupbox_test
+    - make test
