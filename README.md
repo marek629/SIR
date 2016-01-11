@@ -17,7 +17,7 @@ your multiple core CPU!
 ## Licence
 
 This is free software distributed under GNU GPL v2 license.
-Read LICENSE file for details.
+Read [LICENSE](LICENSE) file for details.
 
 
 
@@ -50,6 +50,12 @@ Read LICENSE file for details.
 * Exif (edition supported)
 * IPTC (edition supported)
 * XMP
+
+
+
+## Installation
+
+Installation instruction was stored in [INSTALL](INSTALL.md) file.
 
 
 
