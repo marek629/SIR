@@ -11,6 +11,9 @@ Finally you can do this all activities on many images at the same time using
 your multiple core CPU!
 
 
+[![Build Status](https://travis-ci.org/marek629/SIR.svg)](https://travis-ci.org/marek629/SIR)
+
+
 ## Licence
 
 This is free software distributed under GNU GPL v2 license.
