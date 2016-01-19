@@ -29,6 +29,7 @@ set( sir_SRCS ${sir_SRCS}
         Version.cpp
         XmlHelper.cpp
         XmlStreamWriter.cpp
+        file/FileInfo.cpp
         shared/EffectsConfiguration.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
