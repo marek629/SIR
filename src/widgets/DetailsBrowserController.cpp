@@ -24,6 +24,7 @@
 #include "ConvertSharedData.hpp"
 #include "DetailsThumbnail.hpp"
 #include "optionsenums.h"
+#include "file/TreeWidgetFileInfo.hpp"
 #include "widgets/ConvertDialog.hpp"
 #include "widgets/DetailsBrowserView.hpp"
 #include "visitors/RichTextVisitor.hpp"
@@ -58,7 +59,8 @@ DetailsBrowserController::DetailsBrowserController(TreeWidget *model,
   * \sa addMetadataToContent()
   */
 void DetailsBrowserController::addItem(QTreeWidgetItem *item, int index) {
-    DetailsThumbnail thumb(item, index, view->usableWidth());
+    DetailsThumbnail thumb(Settings::instance());
+    thumb.writeThumbnail(TreeWidgetFileInfo(*item), index, view->usableWidth());
 
     htmlContent += "<center><img src=\"" + thumb.filePath() + "\"";
     if (thumb.size().width() > view->usableWidth())

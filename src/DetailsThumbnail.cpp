@@ -23,7 +23,7 @@
 
 #include "optionsenums.h"
 #include "Settings.hpp"
-#include "file/TreeWidgetFileInfo.hpp"
+#include "file/FileInfo.hpp"
 #include "metadata/Metadata.hpp"
 #include "widgets/ConvertDialog.hpp"
 
@@ -36,15 +36,13 @@
 using namespace sir;
 
 
-DetailsThumbnail::DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidth) {
+DetailsThumbnail::DetailsThumbnail(Settings *settings)
+{
     isSvg = false;
 
 #ifdef SIR_METADATA_SUPPORT
-    Settings *s = Settings::instance();
-    metadataEnabled = bool(s->metadata.enabled);
+    metadataEnabled = bool(settings->metadata.enabled);
 #endif // SIR_METADATA_SUPPORT
-
-    writeThumbnail(TreeWidgetFileInfo(*item), index, maxWidth);
 }
 
 bool DetailsThumbnail::isRenderedFromSVG() const {

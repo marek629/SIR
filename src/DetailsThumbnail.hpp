@@ -31,20 +31,22 @@
 #include <QString>
 
 class FileInfo;
-
-class QTreeWidgetItem;
+class Settings;
 
 
 /*! Class used in DetailsBrowserController for generate and write image thumbnail. */
 class DetailsThumbnail {
 public:
-    DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidth);
+    DetailsThumbnail(Settings *settings);
+
     bool isRenderedFromSVG() const;
     QSize size() const;
     QString filePath() const;
     QSize sourceImageSize() const;
     QString sourceFilePath() const;
     qint64 sourceFileSize() const;
+
+    void writeThumbnail(const FileInfo &fileInfo, int index, int maxWidth);
 
 #ifdef SIR_METADATA_SUPPORT
     bool isReadFromMetadataThumbnail() const;
@@ -65,7 +67,6 @@ private:
     MetadataUtils::IptcStruct iptcStruct_;
 #endif // SIR_METADATA_SUPPORT
 
-    void writeThumbnail(const FileInfo &fileInfo, int index, int maxWidth);
     bool writeThumbnailFromMetadata();
     void writeThumbnailFromImageData(int maxWidth);
     void writeThumbnailFromSVG(int maxWidth);
