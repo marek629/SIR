@@ -30,6 +30,7 @@ set( sir_SRCS ${sir_SRCS}
         XmlHelper.cpp
         XmlStreamWriter.cpp
         file/FileInfo.cpp
+        file/TreeWidgetFileInfo.cpp
         shared/EffectsConfiguration.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
