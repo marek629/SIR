@@ -19,19 +19,22 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
+#include "DetailsThumbnail.hpp"
+
+#include "optionsenums.h"
+#include "Settings.hpp"
+#include "file/TreeWidgetFileInfo.hpp"
+#include "metadata/Metadata.hpp"
+#include "widgets/ConvertDialog.hpp"
+
 #include <QTreeWidgetItem>
 #include <QSvgRenderer>
 #include <QGraphicsSvgItem>
 #include <QPainter>
 #include <QDir>
 
-#include "DetailsThumbnail.hpp"
-#include "optionsenums.h"
-#include "Settings.hpp"
-#include "metadata/Metadata.hpp"
-#include "widgets/ConvertDialog.hpp"
-
 using namespace sir;
+
 
 DetailsThumbnail::DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidth) {
     isSvg = false;
@@ -41,7 +44,7 @@ DetailsThumbnail::DetailsThumbnail(QTreeWidgetItem *item, int index, int maxWidt
     metadataEnabled = bool(s->metadata.enabled);
 #endif // SIR_METADATA_SUPPORT
 
-    writeThumbnail(item, index, maxWidth);
+    writeThumbnail(TreeWidgetFileInfo(*item), index, maxWidth);
 }
 
 bool DetailsThumbnail::isRenderedFromSVG() const {
@@ -83,11 +86,12 @@ MetadataUtils::IptcStruct *DetailsThumbnail::iptcStruct() {
 }
 #endif // SIR_METADATA_SUPPORT
 
-void DetailsThumbnail::writeThumbnail(QTreeWidgetItem *item, int index, int maxWidth) {
-    QString ext = item->text(ExtColumn);
+void DetailsThumbnail::writeThumbnail(const FileInfo &fileInfo, int index,
+                                      int maxWidth)
+{
+    QString ext = fileInfo.extension();
 
-    imagePath = item->text(PathColumn) + QDir::separator()
-            + item->text(NameColumn) + '.' + ext;
+    imagePath = fileInfo.fullPath();
 
     thumbPath = QDir::tempPath() + QDir::separator() + "sir_thumb_"
             + QString::number(index);

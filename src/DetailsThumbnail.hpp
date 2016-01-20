@@ -22,14 +22,18 @@
 #ifndef DETAILSTHUMBNAIL_H
 #define DETAILSTHUMBNAIL_H
 
-#include <QString>
-#include <QSize>
 #include "metadata/Exif.hpp"
 #include "metadata/Iptc.hpp"
 #include "metadata/structs/ExifStruct.hpp"
 #include "metadata/structs/IptcStruct.hpp"
 
+#include <QSize>
+#include <QString>
+
+class FileInfo;
+
 class QTreeWidgetItem;
+
 
 /*! Class used in DetailsBrowserController for generate and write image thumbnail. */
 class DetailsThumbnail {
@@ -61,7 +65,7 @@ private:
     MetadataUtils::IptcStruct iptcStruct_;
 #endif // SIR_METADATA_SUPPORT
 
-    void writeThumbnail(QTreeWidgetItem *item, int index, int maxWidth);
+    void writeThumbnail(const FileInfo &fileInfo, int index, int maxWidth);
     bool writeThumbnailFromMetadata();
     void writeThumbnailFromImageData(int maxWidth);
     void writeThumbnailFromSVG(int maxWidth);
