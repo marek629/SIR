@@ -61,6 +61,9 @@ private:
     QSize imageSize;
     QSize thumbSize;
 
+    const char *thumbnailFileExtension = ".jpg";
+    const char *thumbnailFileFormat = "JPEG";
+
 #ifdef SIR_METADATA_SUPPORT
     bool metadataEnabled;
     MetadataUtils::ExifStruct exifStruct_;

@@ -144,24 +144,26 @@ bool DetailsThumbnail::writeThumbnailFromMetadata() {
     return false;
 }
 
-void DetailsThumbnail::writeThumbnailFromImageData(int maxWidth) {
+void DetailsThumbnail::writeThumbnailFromImageData(int maxWidth)
+{
     QImage img(imagePath);
 
     if (!imageSize.isValid())
         imageSize = img.size();
-    thumbPath += ".tif";
+    thumbPath += thumbnailFileExtension;
 
     QImage thumbnail;
     if (img.width() > maxWidth)
         thumbnail = img.scaledToWidth(maxWidth, Qt::SmoothTransformation);
     else
         thumbnail = img;
-    thumbnail.save(thumbPath, "TIFF");
+    thumbnail.save(thumbPath, thumbnailFileFormat);
 
     thumbSize = thumbnail.size();
 }
 
-void DetailsThumbnail::writeThumbnailFromSVG(int maxWidth) {
+void DetailsThumbnail::writeThumbnailFromSVG(int maxWidth)
+{
     QGraphicsSvgItem svg(imagePath);
     QSvgRenderer *renderer = svg.renderer();
     QSize size = renderer->defaultSize();
@@ -175,6 +177,6 @@ void DetailsThumbnail::writeThumbnailFromSVG(int maxWidth) {
     QPainter painter (&thumbnail);
     renderer->render(&painter);
 
-    thumbPath += ".tif";
-    thumbnail.save(thumbPath, "TIFF");
+    thumbPath += thumbnailFileExtension;
+    thumbnail.save(thumbPath, thumbnailFileFormat);
 }
