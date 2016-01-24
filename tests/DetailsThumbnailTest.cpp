@@ -92,6 +92,13 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_inval
 void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataDisabled()
 {
     bool expectedResult = false;
+
+    Settings *settings = Settings::instance();
+    settings->metadata.enabled = false;
+
+    DetailsThumbnail thumbnail = DetailsThumbnail(settings);
+
+    QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
 }
 
 QTEST_MAIN(DetailsThumbnailTest)
