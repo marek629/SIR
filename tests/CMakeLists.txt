@@ -36,28 +36,12 @@ target_link_libraries( sir_rawmodelvalidator_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "RawModelValidator_UT" COMMAND sir_rawmodelvalidator_test )
 
 
-set( sir_IT_convertdialog_SRCS
-        widgets/ConvertDialogTest.cpp
-        fake/CommandLineAssistantFake.cpp
-    )
-add_executable( sir_convertdialog_test ${sir_IT_convertdialog_SRCS} )
-target_link_libraries( sir_convertdialog_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "ConvertDialog_IT" COMMAND sir_convertdialog_test )
-
-
 set( sir_UT_converteffects_SRCS
         ConvertEffectsTest.cpp
     )
 add_executable( sir_converteffects_test ${sir_UT_converteffects_SRCS} )
 target_link_libraries( sir_converteffects_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertEffects_UT" COMMAND sir_converteffects_test )
-
-set( sir_UT_detailsthumbnail_SRCS
-        DetailsThumbnailTest.cpp
-    )
-add_executable( sir_detailsthumbnail_test ${sir_UT_detailsthumbnail_SRCS} )
-target_link_libraries( sir_detailsthumbnail_test ${sir_UT_LINKING_LIBS} )
-add_test( NAME "DetailsThumbnail_UT" COMMAND sir_detailsthumbnail_test )
 
 set( sir_UT_languageutils_SRCS
         LanguageUtilsTest.cpp
@@ -74,6 +58,22 @@ target_link_libraries( sir_version_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "Version_UT" COMMAND sir_version_test )
 
 
+set( sir_IT_convertdialog_SRCS
+        widgets/ConvertDialogTest.cpp
+        fake/CommandLineAssistantFake.cpp
+    )
+add_executable( sir_convertdialog_test ${sir_IT_convertdialog_SRCS} )
+target_link_libraries( sir_convertdialog_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "ConvertDialog_IT" COMMAND sir_convertdialog_test )
+
+set( sir_IT_detailsthumbnail_SRCS
+        DetailsThumbnailTest.cpp
+    )
+add_executable( sir_detailsthumbnail_test ${sir_IT_detailsthumbnail_SRCS} )
+target_link_libraries( sir_detailsthumbnail_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "DetailsThumbnail_IT" COMMAND sir_detailsthumbnail_test )
+
+
 if( metadata )
 
     set( sir_UT_metadatautils_SRCS
@@ -82,6 +82,7 @@ if( metadata )
     add_executable( sir_metadatautils_test ${sir_UT_metadatautils_SRCS} )
     target_link_libraries( sir_metadatautils_test ${sir_UT_LINKING_LIBS} )
     add_test( NAME "MetadataUtils_UT" COMMAND sir_metadatautils_test )
+
 
     include_directories( ${CMAKE_BINARY_DIR}/src )
     set( sir_IT_detailsgroupbox_SRCS
