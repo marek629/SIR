@@ -1,8 +1,18 @@
+# v3.1
+
+## Marek Jędryka <jedryka89@gmail.com>
+
+### unreleased
+
+* Changed format of generated thumbnails from TIFF to JPEG
+* Integrated tests with TravisCI platform
+
+
 # v3.0
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-### Wed Jan 06 2015
+### Wed Jan 06 2016
 
 * Added Raw tab into main window
 * Added Basic view tab for user frendly Raw configuration
