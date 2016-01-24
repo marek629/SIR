@@ -35,7 +35,10 @@ class Settings;
 
 
 /*! Class used in DetailsBrowserController for generate and write image thumbnail. */
-class DetailsThumbnail {
+class DetailsThumbnail
+{
+    friend class DetailsThumbnailTest;
+
 public:
     DetailsThumbnail(Settings *settings);
 

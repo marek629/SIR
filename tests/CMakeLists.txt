@@ -52,6 +52,13 @@ add_executable( sir_converteffects_test ${sir_UT_converteffects_SRCS} )
 target_link_libraries( sir_converteffects_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertEffects_UT" COMMAND sir_converteffects_test )
 
+set( sir_UT_detailsthumbnail_SRCS
+        DetailsThumbnailTest.cpp
+    )
+add_executable( sir_detailsthumbnail_test ${sir_UT_detailsthumbnail_SRCS} )
+target_link_libraries( sir_detailsthumbnail_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "DetailsThumbnail_UT" COMMAND sir_detailsthumbnail_test )
+
 set( sir_UT_languageutils_SRCS
         LanguageUtilsTest.cpp
     )
