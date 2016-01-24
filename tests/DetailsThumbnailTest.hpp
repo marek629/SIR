@@ -33,6 +33,12 @@ public:
     DetailsThumbnailTest();
     ~DetailsThumbnailTest();
 
+private:
+    const QString temporaryPath;
+    const QString fileNamePrefix;
+
+    QFileInfoList existingTestFileInfoList();
+
 private slots:
     void initTestCase();
     void cleanupTestCase();

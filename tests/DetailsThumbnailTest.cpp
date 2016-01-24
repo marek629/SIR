@@ -26,23 +26,39 @@
 
 
 DetailsThumbnailTest::DetailsThumbnailTest()
+    : temporaryPath(QDir::tempPath() + QDir::separator())
+    , fileNamePrefix("sir_DetailsThumbnailTest")
+{}
+
+DetailsThumbnailTest::~DetailsThumbnailTest() {}
+
+QFileInfoList DetailsThumbnailTest::existingTestFileInfoList()
 {
+    QStringList fileFilters;
+    fileFilters << QString("%1*").arg(fileNamePrefix);
 
-}
+    QDir tempDir = QDir(temporaryPath);
+    tempDir.setNameFilters(fileFilters);
 
-DetailsThumbnailTest::~DetailsThumbnailTest()
-{
-
+    return tempDir.entryInfoList();
 }
 
 void DetailsThumbnailTest::initTestCase()
 {
+    QString errorMessage = temporaryPath +
+            " directory is not clear. Please remove files within prefix " +
+            fileNamePrefix;
 
+    QVERIFY2(existingTestFileInfoList().empty(),
+             errorMessage.toLatin1().constData());
 }
 
 void DetailsThumbnailTest::cleanupTestCase()
 {
-
+    foreach (QFileInfo fileInfo, existingTestFileInfoList()) {
+        QFile file(fileInfo.absoluteFilePath());
+        QVERIFY(file.remove());
+    }
 }
 
 #ifdef SIR_METADATA_SUPPORT
@@ -55,7 +71,7 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_empty
 
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
     thumbnail.imagePath = "/mnt/sda7/Zdjęcia/sir_test/metadata/test_metadata_nopreview.jpg";
-    thumbnail.thumbPath = QDir::tempPath() + QDir::separator() + "sir_DetailsThumbnailTest";
+    thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
 }
@@ -69,7 +85,7 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_metad
 
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
     thumbnail.imagePath = "/mnt/sda7/Zdjęcia/sir_test/metadata/test_metadata_preview.jpg";
-    thumbnail.thumbPath = QDir::tempPath() + QDir::separator() + "sir_DetailsThumbnailTest";
+    thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
 }
@@ -83,7 +99,7 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_inval
 
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
     thumbnail.imagePath = "/mnt/sda7/Zdjęcia/sir_test/metadata/test_metadata_invalid.bmp";
-    thumbnail.thumbPath = QDir::tempPath() + QDir::separator() + "sir_DetailsThumbnailTest";
+    thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
 }
