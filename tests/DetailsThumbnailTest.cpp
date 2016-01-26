@@ -43,6 +43,19 @@ QFileInfoList DetailsThumbnailTest::existingTestFileInfoList()
     return tempDir.entryInfoList();
 }
 
+bool DetailsThumbnailTest::writeFile(const QString &filePath,
+                                     const QByteArray &bytes)
+{
+    QFile file(filePath);
+
+    if (file.open(QIODevice::WriteOnly))
+    {
+        return file.write(bytes);
+    }
+
+    return false;
+}
+
 void DetailsThumbnailTest::initTestCase()
 {
     QString errorMessage = temporaryPath +
@@ -69,8 +82,14 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_empty
     Settings *settings = Settings::instance();
     settings->metadata.enabled = true;
 
+    QString testImagePath = temporaryPath + fileNamePrefix + "_test_metadata_nopreview.jpg";
+
+    QByteArray imageData = QByteArray::fromBase64(metadataNoPreviewImageData);
+    QVERIFY2(writeFile(testImagePath, imageData),
+             "Write image file for test was failed.");
+
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
-    thumbnail.imagePath = "/mnt/sda7/Zdjęcia/sir_test/metadata/test_metadata_nopreview.jpg";
+    thumbnail.imagePath = testImagePath;
     thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
@@ -83,8 +102,14 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_metad
     Settings *settings = Settings::instance();
     settings->metadata.enabled = true;
 
+    QString testImagePath = temporaryPath + fileNamePrefix + "_test_metadata_preview.jpg";
+
+    QByteArray imageData = QByteArray::fromBase64(metadataPreviewImageData);
+    QVERIFY2(writeFile(testImagePath, imageData),
+             "Write image file for test was failed.");
+
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
-    thumbnail.imagePath = "/mnt/sda7/Zdjęcia/sir_test/metadata/test_metadata_preview.jpg";
+    thumbnail.imagePath = testImagePath;
     thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
@@ -97,8 +122,11 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_inval
     Settings *settings = Settings::instance();
     settings->metadata.enabled = true;
 
+    // test image file should not exist and it's fine
+    QString testImagePath = temporaryPath + fileNamePrefix + "_test_metadata_invalid.bmp";
+
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
-    thumbnail.imagePath = "/mnt/sda7/Zdjęcia/sir_test/metadata/test_metadata_invalid.bmp";
+    thumbnail.imagePath = testImagePath;
     thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
