@@ -140,10 +140,7 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataDisabled()
 {
     bool expectedResult = false;
 
-    Settings *settings = Settings::instance();
-    settings->metadata.enabled = false;
-
-    DetailsThumbnail thumbnail = DetailsThumbnail(settings);
+    DetailsThumbnail thumbnail = DetailsThumbnail(Settings::instance());
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
 }
