@@ -24,6 +24,9 @@
 
 #include <QtTest/QTest>
 
+// includes required by Qt4 build
+#include <QFileInfoList>
+
 
 class DetailsThumbnailTest : public QObject
 {

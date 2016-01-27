@@ -24,6 +24,9 @@
 #include "DetailsThumbnail.hpp"
 #include "Settings.hpp"
 
+// includes required by Qt4 build
+#include <QDir>
+
 
 DetailsThumbnailTest::DetailsThumbnailTest()
     : temporaryPath(QDir::tempPath() + QDir::separator())
