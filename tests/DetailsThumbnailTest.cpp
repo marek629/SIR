@@ -59,6 +59,24 @@ bool DetailsThumbnailTest::writeFile(const QString &filePath,
     return false;
 }
 
+bool DetailsThumbnailTest::isThumbnailSaved(const DetailsThumbnail &thumbnail,
+                                            bool shouldSaved)
+{
+    bool result = false;
+
+    QString testOutputFilePath = thumbnail.thumbPath + ".jpg";
+    QFileInfo outputFileInfo = QFileInfo(testOutputFilePath);
+
+    result = outputFileInfo.exists() == shouldSaved;
+
+    if(shouldSaved && result)
+    {
+        result = result && outputFileInfo.size() > 0;
+    }
+
+    return result;
+}
+
 void DetailsThumbnailTest::initTestCase()
 {
     QString errorMessage = temporaryPath +
@@ -80,12 +98,15 @@ void DetailsThumbnailTest::cleanupTestCase()
 #ifdef SIR_METADATA_SUPPORT
 void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_emptyPreviewList()
 {
+    cleanupTestCase();
+
     bool expectedResult = false;
 
     Settings *settings = Settings::instance();
     settings->metadata.enabled = true;
 
-    QString testImagePath = temporaryPath + fileNamePrefix + "_test_metadata_nopreview.jpg";
+    QString testImagePath = temporaryPath + fileNamePrefix;
+    testImagePath += "_test_metadata_nopreview.jpg";
 
     QByteArray imageData = QByteArray::fromBase64(metadataNoPreviewImageData);
     QVERIFY2(writeFile(testImagePath, imageData),
@@ -96,16 +117,26 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_empty
     thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
+
+    // flush of thumbnail file needs destroy old DetailsThumbnail instance
+    thumbnail = DetailsThumbnail(settings);
+    thumbnail.imagePath = testImagePath;
+    thumbnail.thumbPath = temporaryPath + fileNamePrefix;
+
+    QVERIFY(isThumbnailSaved(thumbnail, expectedResult));
 }
 
 void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_metadataThumbnail()
 {
+    cleanupTestCase();
+
     bool expectedResult = true;
 
     Settings *settings = Settings::instance();
     settings->metadata.enabled = true;
 
-    QString testImagePath = temporaryPath + fileNamePrefix + "_test_metadata_preview.jpg";
+    QString testImagePath = temporaryPath + fileNamePrefix;
+    testImagePath += "_test_metadata_preview.jpg";
 
     QByteArray imageData = QByteArray::fromBase64(metadataPreviewImageData);
     QVERIFY2(writeFile(testImagePath, imageData),
@@ -116,33 +147,54 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_metad
     thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
+
+    // flush of thumbnail file needs destroy old DetailsThumbnail instance
+    thumbnail = DetailsThumbnail(settings);
+    thumbnail.imagePath = testImagePath;
+    thumbnail.thumbPath = temporaryPath + fileNamePrefix;
+
+    QVERIFY(isThumbnailSaved(thumbnail, expectedResult));
 }
 
 void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_invalidMetadata()
 {
+    cleanupTestCase();
+
     bool expectedResult = false;
 
     Settings *settings = Settings::instance();
     settings->metadata.enabled = true;
 
     // test image file should not exist and it's fine
-    QString testImagePath = temporaryPath + fileNamePrefix + "_test_metadata_invalid.bmp";
+    QString testImagePath = temporaryPath + fileNamePrefix;
+    testImagePath += "_test_metadata_invalid.bmp";
 
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
     thumbnail.imagePath = testImagePath;
     thumbnail.thumbPath = temporaryPath + fileNamePrefix;
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
+
+    // flush of thumbnail file needs destroy old DetailsThumbnail instance
+    thumbnail = DetailsThumbnail(settings);
+    thumbnail.imagePath = testImagePath;
+    thumbnail.thumbPath = temporaryPath + fileNamePrefix;
+
+    QVERIFY(isThumbnailSaved(thumbnail, expectedResult));
 }
 #endif // SIR_METADATA_SUPPORT
 
 void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataDisabled()
 {
+    cleanupTestCase();
+
     bool expectedResult = false;
 
     DetailsThumbnail thumbnail = DetailsThumbnail(Settings::instance());
 
     QCOMPARE(thumbnail.writeThumbnailFromMetadata(), expectedResult);
+
+    QVERIFY(isThumbnailSaved(thumbnail, expectedResult));
 }
 
 QTEST_MAIN(DetailsThumbnailTest)

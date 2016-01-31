@@ -27,6 +27,8 @@
 // includes required by Qt4 build
 #include <QFileInfoList>
 
+class DetailsThumbnail;
+
 
 class DetailsThumbnailTest : public QObject
 {
@@ -42,6 +44,7 @@ private:
 
     QFileInfoList existingTestFileInfoList();
     bool writeFile(const QString &filePath, const QByteArray &bytes);
+    bool isThumbnailSaved(const DetailsThumbnail &thumbnail, bool shouldSaved);
 
 private slots:
     void initTestCase();
