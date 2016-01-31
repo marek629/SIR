@@ -30,7 +30,7 @@ Read [LICENSE](LICENSE) file for details.
 * JPEG - Joint Photographic Experts Group
 * PNG  - Portable Network Graphics
 * PPM  - Portable Pixmap
-* TIFF - Tagged Image File Format
+* TIFF - Tagged Image File Format (Qt Image Formats Plugin required)
 * XBM  - X11 Bitmap
 * XPM  - X11 Pixmap
 
@@ -38,11 +38,11 @@ Read [LICENSE](LICENSE) file for details.
 ### Read only supported image formats
 
 * GIF  - Graphic Interchange Format (optional)
-* MNG  - Multiple-image Network Graphics
+* MNG  - Multiple-image Network Graphics (Qt Image Formats Plugin required)
 * PBM  - Portable Bitmap
 * PGM  - Portable Graymap
 * SVG  - Scalable Vector Graphics
-* TGA  - Targa Image Format
+* TGA  - Targa Image Format (Qt Image Formats Plugin and 3rd party TGA library required)
 
 
 ### Supported metadata standards using exiv2
