@@ -111,7 +111,9 @@ void DetailsThumbnail::writeThumbnail(const FileInfo &fileInfo, int index,
     }
 }
 
-bool DetailsThumbnail::writeThumbnailFromMetadata() {
+bool DetailsThumbnail::writeThumbnailFromMetadata()
+{
+    // TODO: extract this #ifdef block to a decorator class
 #ifdef SIR_METADATA_SUPPORT
     Settings *s = Settings::instance();
     if (s->metadata.enabled) {

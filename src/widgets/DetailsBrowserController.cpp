@@ -102,15 +102,15 @@ void DetailsBrowserController::showDetails() {
     view->clear();
     htmlContent.clear();
 
-    emit loadingDetailsStart();
-    view->window()->setCursor(Qt::WaitCursor);
-
     selectedFiles = convertDialog->filesTreeWidget->selectedItems();
 
     if (selectedFiles.length() <= 0) {
         view->setText(tr("Select image to show this one details."));
         return;
     }
+
+    emit loadingDetailsStart();
+    view->window()->setCursor(Qt::WaitCursor);
 
     if (selectedFiles.length() == 1) {
         addItem(selectedFiles.first());
