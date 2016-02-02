@@ -41,7 +41,9 @@ DetailsThumbnail::DetailsThumbnail(Settings *settings)
     isSvg = false;
 
 #ifdef SIR_METADATA_SUPPORT
-    metadataEnabled = bool(settings->metadata.enabled);
+    metadataThumbnail = MetadataThumbnail(settings->metadata.enabled);
+#else
+    metadataThumbnail = MetadataThumbnail(false);
 #endif // SIR_METADATA_SUPPORT
 }
 
@@ -71,18 +73,26 @@ qint64 DetailsThumbnail::sourceFileSize() const {
 }
 
 #ifdef SIR_METADATA_SUPPORT
-bool DetailsThumbnail::isReadFromMetadataThumbnail() const {
-    return metadataEnabled;
+bool DetailsThumbnail::isReadFromMetadataThumbnail() const
+{
+    return metadataThumbnail.isThumbnailSaved();
 }
 
-MetadataUtils::ExifStruct *DetailsThumbnail::exifStruct() {
-    return &exifStruct_;
+MetadataUtils::ExifStruct *DetailsThumbnail::exifStruct()
+{
+    return metadataThumbnail.exifStruct();
 }
 
-MetadataUtils::IptcStruct *DetailsThumbnail::iptcStruct() {
-    return &iptcStruct_;
+MetadataUtils::IptcStruct *DetailsThumbnail::iptcStruct()
+{
+    return metadataThumbnail.iptcStruct();
 }
 #endif // SIR_METADATA_SUPPORT
+
+bool DetailsThumbnail::writeThumbnailFromMetadata()
+{
+    return metadataThumbnail.writeThumbnail(imagePath, thumbPath);
+}
 
 void DetailsThumbnail::writeThumbnail(const FileInfo &fileInfo, int index,
                                       int maxWidth)
@@ -98,52 +108,20 @@ void DetailsThumbnail::writeThumbnail(const FileInfo &fileInfo, int index,
 
     // thumbnail generation
     if (ext != "SVG" && ext != "SVGZ") {
-        bool isThumbSaved = writeThumbnailFromMetadata();
-        if (!isThumbSaved)
+        bool isThumbSaved = metadataThumbnail.writeThumbnail(imagePath, thumbPath);
+        if (isThumbSaved) {
+            imageSize = metadataThumbnail.sourceImageSize();
+            thumbPath = metadataThumbnail.filePath();
+            thumbSize = metadataThumbnail.size();
+        }
+        else {
             writeThumbnailFromImageData(maxWidth);
+        }
     }
     else { // render from SVG file
         isSvg = true;
-#ifdef SIR_METADATA_SUPPORT
-        metadataEnabled = false;
-#endif // SIR_METADATA_SUPPORT
         writeThumbnailFromSVG(maxWidth);
     }
-}
-
-bool DetailsThumbnail::writeThumbnailFromMetadata()
-{
-    // TODO: extract this #ifdef block to a decorator class
-#ifdef SIR_METADATA_SUPPORT
-    Settings *s = Settings::instance();
-    if (s->metadata.enabled) {
-        MetadataUtils::Metadata metadata;
-        if (metadata.read(imagePath, true)) {
-            exifStruct_ = metadata.exifStruct()->copy();
-            iptcStruct_ = metadata.iptcStruct()->copy();
-            Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
-            imageSize = QSize(image->pixelWidth(), image->pixelHeight());
-            Exiv2::PreviewManager previewManager (*image);
-            Exiv2::PreviewPropertiesList previewList = previewManager.
-                    getPreviewProperties();
-            if (previewList.empty())
-                return false;
-            else { // read from metadata thumnail
-                Exiv2::PreviewImage preview = previewManager.getPreviewImage(
-                            previewList[0]);
-                preview.writeFile(thumbPath.toStdString());
-                thumbPath += preview.extension().c_str();
-                thumbSize.setWidth(preview.width());
-                thumbSize.setHeight(preview.height());
-            }
-            return true;
-        }
-        else
-            return false;
-    }
-#endif // SIR_METADATA_SUPPORT
-
-    return false;
 }
 
 void DetailsThumbnail::writeThumbnailFromImageData(int maxWidth)

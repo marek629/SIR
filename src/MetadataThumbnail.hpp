@@ -19,60 +19,38 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef DETAILSTHUMBNAIL_HPPPP
-#define DETAILSTHUMBNAIL_HPP
+#ifndef METADATATHUMBNAIL_HPP
+#define METADATATHUMBNAIL_HPP
 
-#include "MetadataThumbnail.hpp"
-#include "metadata/Exif.hpp"
-#include "metadata/Iptc.hpp"
 #include "metadata/structs/ExifStruct.hpp"
 #include "metadata/structs/IptcStruct.hpp"
 
-#include <QSize>
-#include <QString>
 
-class FileInfo;
-class Settings;
-
-
-/*! Class used in DetailsBrowserController for generate and write image thumbnail. */
-class DetailsThumbnail
+class MetadataThumbnail
 {
-    friend class DetailsThumbnailTest;
-
 public:
-    DetailsThumbnail(Settings *settings);
+    MetadataThumbnail();
+    MetadataThumbnail(bool metadataEnabled);
 
-    bool isRenderedFromSVG() const;
+    bool writeThumbnail(const QString &imagePath, const QString &thumbPath);
+    bool isThumbnailSaved() const;
+
+    MetadataUtils::ExifStruct *exifStruct();
+    MetadataUtils::IptcStruct *iptcStruct();
+
     QSize size() const;
     QString filePath() const;
     QSize sourceImageSize() const;
-    QString sourceFilePath() const;
-    qint64 sourceFileSize() const;
-
-    void writeThumbnail(const FileInfo &fileInfo, int index, int maxWidth);
-
-#ifdef SIR_METADATA_SUPPORT
-    bool isReadFromMetadataThumbnail() const;
-    MetadataUtils::ExifStruct *exifStruct();
-    MetadataUtils::IptcStruct *iptcStruct();
-#endif // SIR_METADATA_SUPPORT
 
 private:
-    bool isSvg;
-    QString thumbPath;
-    QString imagePath;
+    bool metadataEnabled;
+    bool isThumbnailSavedSuccessfully;
+    MetadataUtils::ExifStruct exifStruct_;
+    MetadataUtils::IptcStruct iptcStruct_;
+
     QSize imageSize;
+    QString thumbPath;
     QSize thumbSize;
-
-    const char *thumbnailFileExtension = ".jpg";
-    const char *thumbnailFileFormat = "JPEG";
-
-    MetadataThumbnail metadataThumbnail;
-
-    bool writeThumbnailFromMetadata();
-    void writeThumbnailFromImageData(int maxWidth);
-    void writeThumbnailFromSVG(int maxWidth);
 };
 
-#endif // DETAILSTHUMBNAIL_HPP
+#endif // METADATATHUMBNAIL_HPP

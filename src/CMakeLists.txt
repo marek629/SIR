@@ -15,6 +15,7 @@ set( sir_SRCS ${sir_SRCS}
         ExpressionTree.cpp
         LanguageUtils.cpp
         main.cpp
+        MetadataThumbnail.cpp
         NetworkUtils.cpp
         OptionsGroupBoxManager.cpp
         RegExpUtils.cpp
