@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef DETAILSTHUMBNAIL_HPPPP
+#ifndef DETAILSTHUMBNAIL_HPP
 #define DETAILSTHUMBNAIL_HPP
 
 #include "MetadataThumbnail.hpp"

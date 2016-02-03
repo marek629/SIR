@@ -59,7 +59,7 @@ bool MetadataThumbnail::writeThumbnail(const QString &imagePath, const QString &
                 Exiv2::PreviewImage preview = previewManager.getPreviewImage(
                             previewList[0]);
                 preview.writeFile(thumbPath.toStdString());
-                this->thumbPath += preview.extension().c_str();
+                this->thumbPath = thumbPath + preview.extension().c_str();
                 thumbSize.setWidth(preview.width());
                 thumbSize.setHeight(preview.height());
             }
