@@ -23,10 +23,6 @@
 #define DETAILSTHUMBNAIL_HPP
 
 #include "MetadataThumbnail.hpp"
-#include "metadata/Exif.hpp"
-#include "metadata/Iptc.hpp"
-#include "metadata/structs/ExifStruct.hpp"
-#include "metadata/structs/IptcStruct.hpp"
 
 #include <QSize>
 #include <QString>

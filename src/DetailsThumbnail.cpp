@@ -24,7 +24,6 @@
 #include "optionsenums.h"
 #include "Settings.hpp"
 #include "file/FileInfo.hpp"
-#include "metadata/Metadata.hpp"
 #include "widgets/ConvertDialog.hpp"
 
 #include <QTreeWidgetItem>

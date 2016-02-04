@@ -39,8 +39,10 @@ public:
     bool writeThumbnail(bool isMetadataEnabled);
     bool isThumbnailSaved() const;
 
+#ifdef SIR_METADATA_SUPPORT
     MetadataUtils::ExifStruct *exifStruct();
     MetadataUtils::IptcStruct *iptcStruct();
+#endif // SIR_METADATA_SUPPORT
 
     QSize size() const;
     QString filePath() const;
@@ -48,8 +50,10 @@ public:
 
 private:
     bool isThumbnailSavedSuccessfully;
+#ifdef SIR_METADATA_SUPPORT
     MetadataUtils::ExifStruct exifStruct_;
     MetadataUtils::IptcStruct iptcStruct_;
+#endif // SIR_METADATA_SUPPORT
 
     QString imagePath;
     QSize imageSize;

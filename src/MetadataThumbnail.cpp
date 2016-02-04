@@ -77,6 +77,7 @@ bool MetadataThumbnail::isThumbnailSaved() const
     return isThumbnailSavedSuccessfully;
 }
 
+#ifdef SIR_METADATA_SUPPORT
 MetadataUtils::ExifStruct *MetadataThumbnail::exifStruct()
 {
     return &exifStruct_;
@@ -86,6 +87,7 @@ MetadataUtils::IptcStruct *MetadataThumbnail::iptcStruct()
 {
     return &iptcStruct_;
 }
+#endif // SIR_METADATA_SUPPORT
 
 QSize MetadataThumbnail::size() const
 {
