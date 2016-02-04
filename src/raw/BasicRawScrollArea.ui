@@ -20,9 +20,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>-149</y>
-     <width>553</width>
-     <height>414</height>
+     <y>-155</y>
+     <width>550</width>
+     <height>415</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -97,7 +97,7 @@ applying a 3x3 median filter to the R-G and B-G channels.</string>
        <item row="1" column="0" colspan="3">
         <widget class="QCheckBox" name="interpolation4ColorsCheckBox">
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.</string>
          </property>
          <property name="text">
           <string>Interpolate RGB as four colors.</string>
@@ -160,8 +160,7 @@ applying a 3x3 median filter to the R-G and B-G channels.</string>
        <item row="0" column="4">
         <widget class="QRadioButton" name="repairHighlightRebuildRadioButton">
          <property name="toolTip">
-          <string>
-    Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</string>
+          <string>Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</string>
          </property>
          <property name="text">
           <string>rebuild</string>
