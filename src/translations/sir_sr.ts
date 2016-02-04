@@ -30,120 +30,152 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="51"/>
+        <location filename="../widgets/AboutDialog.cpp" line="54"/>
         <source>Status</source>
         <translation type="unfinished">Статус</translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="51"/>
-        <location filename="../widgets/AboutDialog.cpp" line="53"/>
+        <location filename="../widgets/AboutDialog.cpp" line="54"/>
+        <location filename="../widgets/AboutDialog.cpp" line="56"/>
         <source>Developer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="51"/>
+        <location filename="../widgets/AboutDialog.cpp" line="54"/>
         <source>E-mail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="52"/>
+        <location filename="../widgets/AboutDialog.cpp" line="55"/>
         <source>Main developer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="54"/>
+        <location filename="../widgets/AboutDialog.cpp" line="57"/>
         <source>Code contributor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="56"/>
+        <location filename="../widgets/AboutDialog.cpp" line="59"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="56"/>
+        <location filename="../widgets/AboutDialog.cpp" line="59"/>
         <source>Translators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="57"/>
+        <location filename="../widgets/AboutDialog.cpp" line="60"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="58"/>
+        <location filename="../widgets/AboutDialog.cpp" line="61"/>
         <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="59"/>
+        <location filename="../widgets/AboutDialog.cpp" line="62"/>
         <source>Slovak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="60"/>
+        <location filename="../widgets/AboutDialog.cpp" line="63"/>
         <source>Spanish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="61"/>
+        <location filename="../widgets/AboutDialog.cpp" line="64"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="62"/>
+        <location filename="../widgets/AboutDialog.cpp" line="65"/>
         <source>Hungarian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="63"/>
+        <location filename="../widgets/AboutDialog.cpp" line="66"/>
         <source>Polish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="64"/>
+        <location filename="../widgets/AboutDialog.cpp" line="67"/>
         <source>Dutch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="65"/>
+        <location filename="../widgets/AboutDialog.cpp" line="68"/>
         <source>Romanian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="66"/>
+        <location filename="../widgets/AboutDialog.cpp" line="69"/>
         <source>French</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="67"/>
+        <location filename="../widgets/AboutDialog.cpp" line="70"/>
         <source>Greek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="68"/>
+        <location filename="../widgets/AboutDialog.cpp" line="71"/>
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="69"/>
+        <location filename="../widgets/AboutDialog.cpp" line="72"/>
         <source>Serbian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="72"/>
+        <location filename="../widgets/AboutDialog.cpp" line="75"/>
         <source>To enable dcraw visit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="74"/>
+        <location filename="../widgets/AboutDialog.cpp" line="77"/>
         <source>or do a sudo apt-get install dcraw on Debian based systems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/AboutDialog.cpp" line="79"/>
+        <location filename="../widgets/AboutDialog.cpp" line="82"/>
+        <location filename="../widgets/AboutDialog.cpp" line="157"/>
         <source>Donate</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedRawViewWidget</name>
+    <message>
+        <location filename="../raw/AdvancedRawViewWidget.cpp" line="32"/>
+        <source>dcraw Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedRawWidget</name>
+    <message>
+        <location filename="../raw/AdvancedRawWidget.ui" line="17"/>
+        <source>Enable RAW images support (needs dcraw)</source>
+        <translation type="unfinished">Омогући RAW подршку за слике (потребан је dcraw)</translation>
+    </message>
+    <message>
+        <location filename="../raw/AdvancedRawWidget.ui" line="24"/>
+        <source>dcraw options:</source>
+        <translation type="unfinished">dcraw опције:</translation>
+    </message>
+    <message>
+        <location filename="../raw/AdvancedRawWidget.ui" line="34"/>
+        <source>dcraw Executable Path:</source>
+        <translation type="unfinished">dcraw путања извршног фајла:</translation>
+    </message>
+    <message>
+        <location filename="../raw/AdvancedRawWidget.ui" line="41"/>
+        <source>Browse</source>
+        <translation type="unfinished">Претражи</translation>
     </message>
 </context>
 <context>
@@ -187,6 +219,178 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>BasicRawScrollArea</name>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="14"/>
+        <source>ScrollArea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="32"/>
+        <source>Enable RAW images support (needs dcraw)</source>
+        <translation type="unfinished">Омогући RAW подршку за слике (потребан је dcraw)</translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="59"/>
+        <source>Browse</source>
+        <translation type="unfinished">Претражи</translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="66"/>
+        <source>dcraw Executable Path:</source>
+        <translation type="unfinished">dcraw путања извршног фајла:</translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="73"/>
+        <source>Interpolation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="79"/>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="89"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="113"/>
+        <source>After interpolation, clean up color artifacts by repeatedly
+applying a 3x3 median filter to the R-G and B-G channels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="93"/>
+        <source>Post-processing cycles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="100"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="103"/>
+        <source>Interpolate RGB as four colors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="131"/>
+        <source>Use high-speed, low-quality bilinear interpolation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="136"/>
+        <source>Use Variable Number of Gradients (VNG) interpolation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="141"/>
+        <source>Use Patterned Pixel Grouping (PPG) interpolation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="146"/>
+        <source>Use Adaptive Homogeneity-Directed (AHD) interpolation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="157"/>
+        <source>Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="163"/>
+        <source>
+    Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="167"/>
+        <source>rebuild</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="174"/>
+        <source>Highlight mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="181"/>
+        <source>Blend clipped and unclipped values together for a gradual fade to white.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="184"/>
+        <source>blend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="191"/>
+        <source>Leave highlights unclipped in various shades of pink.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="194"/>
+        <source>unclip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="201"/>
+        <source>Clip all highlights to solid white (default).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="204"/>
+        <source>clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="217"/>
+        <source>Rebuild level.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="230"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="243"/>
+        <source>The best threshold should be somewhere between 100 and 1000.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="233"/>
+        <source>Use wavelets to erase noise while preserving real detail.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="256"/>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="262"/>
+        <source>If this is not found, use another method.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="265"/>
+        <source>Use the white balance specified by the camera.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="272"/>
+        <source>Calculate the white balance by averaging the entire image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="279"/>
+        <source>Besides DNG, this option only affects Olympus, Leaf, and Phase One cameras.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="282"/>
+        <source>Use any color matrix from the camera metadata.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ColorFrame</name>
     <message>
         <location filename="../widgets/ColorFrame.cpp" line="59"/>
@@ -218,118 +422,118 @@ both print help message in Polish language and quit.
 <context>
     <name>ConvertDialog</name>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="195"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="205"/>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
         <translation>Већ сте послали информације о вашој SIR инсталацији.Пуно Вам хвала!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="203"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="213"/>
         <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
         <translation>ВАЖНО:ова акција неће послати било које личне податке о Вама или вашем рачунару SIR развојном тиму. Једино ће ажурирати бројач инсталација на SIR-u.</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="245"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="255"/>
         <source>Thank you for let us know that you are using SIR! You are the user number %1 of this month!</source>
         <translation>Хвала Вам што сте допустили да сазнамо да користите SIR! Ви сте %1 корисник овог месеца!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="267"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="277"/>
         <source>You have the lastest version of SIR!</source>
         <translation>Ви имате последњу верзију SIR-а!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="276"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="286"/>
         <source>Go to SIR website!</source>
         <translation>Иди на SIR веб страницу!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="385"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="394"/>
         <source>Choose a directory</source>
         <translation>Изаберите директоријум</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="478"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="488"/>
         <source>Create Folder? -- SIR</source>
         <translation>Креирај фолдер? -- SIR</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="479"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="489"/>
         <source>The folder %1 do not exists.Do you want to create it?</source>
         <translation>Фолдер %1 не постоји. Да ли хоћете да га креирате?</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="482"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="492"/>
         <source>&amp;Yes</source>
         <translation>&amp;Да</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="482"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="492"/>
         <source>&amp;No</source>
         <translation>&amp;Не</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="487"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="497"/>
         <source>Unable to create target folder.</source>
         <translation>Није могуће направити циљни фолдер.</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="504"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="514"/>
         <source>Cancel</source>
         <translation>Откажи</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="552"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="573"/>
         <source>Load image failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="553"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="574"/>
         <source>Load image to add failed.
 Do you want continue anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="615"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="630"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="613"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="628"/>
         <source>Choose session file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="617"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="632"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="647"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="662"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="615"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="630"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="645"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="660"/>
         <source>XML Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="645"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="660"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="643"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="658"/>
         <source>Choose effects file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="674"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="672"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="861"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="847"/>
         <source>Enlarge File? - SIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="862"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="848"/>
         <source>A file called %1 is smaller than the requested size. Enlargement can cause deterioration of picture quality. Do you want enlarge it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="884"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="870"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Препиши преко фајла? -- SIR</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="885"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="871"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Фајл са именом %1 већ постоји. Да ли хоћете да препишет преко њега?</translation>
     </message>
@@ -342,12 +546,12 @@ Do you want continue anyway?</source>
         <translation type="vanished">Конвертовање</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="970"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="958"/>
         <source>Cancelled</source>
         <translation>Отказано</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="432"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="441"/>
         <source>Please add at least one image file.</source>
         <translation>Молим додајте бар један фајл са сликом.</translation>
     </message>
@@ -392,32 +596,32 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <location filename="../widgets/ConvertDialog.ui" line="170"/>
-        <location filename="../widgets/ConvertDialog.ui" line="531"/>
+        <location filename="../widgets/ConvertDialog.ui" line="533"/>
         <source>Remove All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="410"/>
+        <location filename="../widgets/ConvertDialog.ui" line="412"/>
         <source>&amp;Quit</source>
         <translation>&amp;Напусти</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="400"/>
+        <location filename="../widgets/ConvertDialog.ui" line="402"/>
         <source>&amp;Convert Selected</source>
         <translation>&amp;Конвертуј одабрано</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="403"/>
+        <location filename="../widgets/ConvertDialog.ui" line="405"/>
         <source>Alt+C</source>
         <translation>Alt+C</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="387"/>
+        <location filename="../widgets/ConvertDialog.ui" line="389"/>
         <source>Convert &amp;All</source>
         <translation>Конвертуј &amp;Све</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="390"/>
+        <location filename="../widgets/ConvertDialog.ui" line="392"/>
         <source>Alt+A</source>
         <translation>Alt+A</translation>
     </message>
@@ -427,7 +631,7 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <location filename="../widgets/ConvertDialog.ui" line="110"/>
-        <location filename="../widgets/ConvertDialog.ui" line="516"/>
+        <location filename="../widgets/ConvertDialog.ui" line="518"/>
         <source>Add &amp;Dir...</source>
         <translation>Додај &amp;Дир...</translation>
     </message>
@@ -469,12 +673,12 @@ Do you want continue anyway?</source>
     </message>
     <message>
         <location filename="../widgets/ConvertDialog.ui" line="88"/>
-        <location filename="../widgets/ConvertDialog.ui" line="511"/>
+        <location filename="../widgets/ConvertDialog.ui" line="513"/>
         <source>Add &amp;File...</source>
         <translation>Додај &amp;фајл...</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="320"/>
+        <location filename="../widgets/ConvertDialog.ui" line="317"/>
         <source>Options</source>
         <translation>Опције</translation>
     </message>
@@ -495,32 +699,32 @@ Do you want continue anyway?</source>
         <translation type="vanished">Квалитет:</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="521"/>
+        <location filename="../widgets/ConvertDialog.ui" line="523"/>
         <source>Check for updates...</source>
         <translation>Провери за надоградњу...</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="526"/>
+        <location filename="../widgets/ConvertDialog.ui" line="528"/>
         <source>Let us know that you are using SIR...</source>
         <translation>Допустите нам да знамо да ли користите SIR...</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="534"/>
+        <location filename="../widgets/ConvertDialog.ui" line="536"/>
         <source>Remove all filles the files list</source>
         <translation>Уклони све фајлове, листу фајлова</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="450"/>
+        <location filename="../widgets/ConvertDialog.ui" line="452"/>
         <source>Edit</source>
         <translation>Уреди</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="441"/>
+        <location filename="../widgets/ConvertDialog.ui" line="443"/>
         <source>About</source>
         <translation>О програму</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="429"/>
+        <location filename="../widgets/ConvertDialog.ui" line="431"/>
         <source>Actions</source>
         <translation>Акције</translation>
     </message>
@@ -545,93 +749,98 @@ Do you want continue anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="312"/>
+        <location filename="../widgets/ConvertDialog.ui" line="309"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="328"/>
-        <location filename="../widgets/ConvertDialog.ui" line="461"/>
+        <location filename="../widgets/ConvertDialog.ui" line="325"/>
+        <location filename="../widgets/ConvertDialog.ui" line="463"/>
         <source>Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="454"/>
+        <location filename="../widgets/ConvertDialog.ui" line="338"/>
+        <source>Raw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="456"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="479"/>
-        <location filename="../widgets/ConvertDialog.ui" line="482"/>
-        <location filename="../widgets/ConvertDialog.ui" line="485"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="963"/>
+        <location filename="../widgets/ConvertDialog.ui" line="481"/>
+        <location filename="../widgets/ConvertDialog.ui" line="484"/>
+        <location filename="../widgets/ConvertDialog.ui" line="487"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="951"/>
         <source>Quit</source>
         <translation>Напусти</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="493"/>
+        <location filename="../widgets/ConvertDialog.ui" line="495"/>
         <source>&amp;Options</source>
         <translation>&amp;Опције</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="496"/>
+        <location filename="../widgets/ConvertDialog.ui" line="498"/>
         <source>Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="501"/>
+        <location filename="../widgets/ConvertDialog.ui" line="503"/>
         <source>About Sir...</source>
         <translation>О програму SIR...</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="506"/>
+        <location filename="../widgets/ConvertDialog.ui" line="508"/>
         <source>About Qt...</source>
         <translation>О Qt-u...</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="537"/>
+        <location filename="../widgets/ConvertDialog.ui" line="539"/>
         <source>Ctrl+Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="542"/>
+        <location filename="../widgets/ConvertDialog.ui" line="544"/>
         <source>&amp;Select...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="545"/>
+        <location filename="../widgets/ConvertDialog.ui" line="547"/>
         <source>Do advanced selection of images on list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="548"/>
+        <location filename="../widgets/ConvertDialog.ui" line="550"/>
         <source>Alt+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="553"/>
+        <location filename="../widgets/ConvertDialog.ui" line="555"/>
         <source>&amp;Import files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="556"/>
+        <location filename="../widgets/ConvertDialog.ui" line="558"/>
         <source>Alt+I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="561"/>
-        <location filename="../widgets/ConvertDialog.ui" line="571"/>
+        <location filename="../widgets/ConvertDialog.ui" line="563"/>
+        <location filename="../widgets/ConvertDialog.ui" line="573"/>
         <source>Restore...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="566"/>
-        <location filename="../widgets/ConvertDialog.ui" line="576"/>
+        <location filename="../widgets/ConvertDialog.ui" line="568"/>
+        <location filename="../widgets/ConvertDialog.ui" line="578"/>
         <source>Save...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="971"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="959"/>
         <source>Converted</source>
         <translation>Конвертовано</translation>
     </message>
@@ -644,52 +853,52 @@ Do you want continue anyway?</source>
         <translation type="vanished">Није још конвертовано</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="194"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="202"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="237"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="244"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="204"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="212"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="247"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="254"/>
         <source>Let us know!</source>
         <translation>Дозволите нам да знамо!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="209"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="219"/>
         <source>Go for it!</source>
         <translation>Уради то!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="212"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="222"/>
         <source>No thanks!</source>
         <translation>Не хвала!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="238"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="248"/>
         <source>There was an error while trying to connect with SIR website! Check your internet connection and try again later!</source>
         <translation>Догодила се грешка при покушају конекције на SIR интернет страницу. Проверите Вашу интернет конекцију и покушајте поново!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="259"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="266"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="271"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="269"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="276"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="281"/>
         <source>SIR Updates</source>
         <translation>SIR надоградња</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="260"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="270"/>
         <source>There was an error while trying to connect with SIR update website! Check your internet connection and try again later!</source>
         <translation>Догодила се грешка при покушају конекције на SIR веб страницу за надоградњу. Проверите Вашу интернет конекцију и покушајте поново!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="272"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="282"/>
         <source>There is a new version of SIR available for download!</source>
         <translation>Ово је нова верзија SIR-a доступна за преузимање!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="279"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="289"/>
         <source>I will check later!</source>
         <translation>Проверићу касније!</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="447"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="456"/>
         <source>Please select at least one image file.</source>
         <translation>Молим одаберите бар један фајл са сликом.</translation>
     </message>
@@ -717,77 +926,77 @@ Do you want continue anyway?</source>
 <context>
     <name>ConvertThread</name>
     <message>
-        <location filename="../ConvertThread.cpp" line="86"/>
-        <location filename="../ConvertThread.cpp" line="222"/>
+        <location filename="../ConvertThread.cpp" line="97"/>
         <location filename="../ConvertThread.cpp" line="229"/>
-        <location filename="../ConvertThread.cpp" line="624"/>
-        <location filename="../ConvertThread.cpp" line="658"/>
+        <location filename="../ConvertThread.cpp" line="236"/>
+        <location filename="../ConvertThread.cpp" line="631"/>
         <location filename="../ConvertThread.cpp" line="665"/>
+        <location filename="../ConvertThread.cpp" line="672"/>
         <source>Cancelled</source>
         <translation type="unfinished">Отказано</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="91"/>
+        <location filename="../ConvertThread.cpp" line="102"/>
         <source>Converting</source>
         <translation>Конвертовање</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="133"/>
+        <location filename="../ConvertThread.cpp" line="140"/>
         <source>Failed to open original image</source>
         <translation>Грешка при отварању оригиналне слике</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="216"/>
-        <location filename="../ConvertThread.cpp" line="236"/>
-        <location filename="../ConvertThread.cpp" line="651"/>
-        <location filename="../ConvertThread.cpp" line="669"/>
+        <location filename="../ConvertThread.cpp" line="223"/>
+        <location filename="../ConvertThread.cpp" line="243"/>
+        <location filename="../ConvertThread.cpp" line="658"/>
+        <location filename="../ConvertThread.cpp" line="676"/>
         <source>Converted</source>
         <translation>Конвертовано</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="219"/>
-        <location filename="../ConvertThread.cpp" line="239"/>
+        <location filename="../ConvertThread.cpp" line="226"/>
+        <location filename="../ConvertThread.cpp" line="246"/>
         <source>Failed to convert</source>
         <translation>Грешка при конверзији</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="261"/>
+        <location filename="../ConvertThread.cpp" line="268"/>
         <source>Error code:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="464"/>
-        <location filename="../ConvertThread.cpp" line="553"/>
+        <location filename="../ConvertThread.cpp" line="471"/>
+        <location filename="../ConvertThread.cpp" line="560"/>
         <source>Failed to compute image size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="653"/>
-        <location filename="../ConvertThread.cpp" line="671"/>
+        <location filename="../ConvertThread.cpp" line="660"/>
+        <location filename="../ConvertThread.cpp" line="678"/>
         <source>Failed to save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="717"/>
+        <location filename="../ConvertThread.cpp" line="724"/>
         <source>Failed to save new SVG file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="726"/>
+        <location filename="../ConvertThread.cpp" line="733"/>
         <source>Failed to open changed SVG file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="732"/>
+        <location filename="../ConvertThread.cpp" line="739"/>
         <source>Failed to open SVG file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="224"/>
-        <location filename="../ConvertThread.cpp" line="227"/>
-        <location filename="../ConvertThread.cpp" line="626"/>
-        <location filename="../ConvertThread.cpp" line="660"/>
-        <location filename="../ConvertThread.cpp" line="663"/>
+        <location filename="../ConvertThread.cpp" line="231"/>
+        <location filename="../ConvertThread.cpp" line="234"/>
+        <location filename="../ConvertThread.cpp" line="633"/>
+        <location filename="../ConvertThread.cpp" line="667"/>
+        <location filename="../ConvertThread.cpp" line="670"/>
         <source>Skipped</source>
         <translation>Прескочено</translation>
     </message>
@@ -795,22 +1004,22 @@ Do you want continue anyway?</source>
 <context>
     <name>DetailsBrowserController</name>
     <message>
-        <location filename="../widgets/DetailsBrowserController.cpp" line="69"/>
+        <location filename="../widgets/DetailsBrowserController.cpp" line="73"/>
         <source>Default image size: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DetailsBrowserController.cpp" line="71"/>
+        <location filename="../widgets/DetailsBrowserController.cpp" line="75"/>
         <source>Image size: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DetailsBrowserController.cpp" line="77"/>
+        <location filename="../widgets/DetailsBrowserController.cpp" line="81"/>
         <source>File size: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DetailsBrowserController.cpp" line="104"/>
+        <location filename="../widgets/DetailsBrowserController.cpp" line="108"/>
         <source>Select image to show this one details.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1379,97 +1588,97 @@ Invalid file format.</source>
 <context>
     <name>ExifRichTextVisitor</name>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="65"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="71"/>
         <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="67"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="73"/>
         <source>Copyright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="69"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="75"/>
         <source>User Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="78"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="84"/>
         <source>Camera manufacturer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="81"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="87"/>
         <source>Camera model: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="90"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="96"/>
         <source>Exif Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="92"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="98"/>
         <source>Processing Software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="96"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="102"/>
         <source>Orientation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="101"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="107"/>
         <source>Generated Date and Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="107"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="113"/>
         <source>Digitized Date and Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="120"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="126"/>
         <source>Focal lenght</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="123"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="129"/>
         <source>Aperture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="132"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="138"/>
         <source>Exposure time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="140"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="146"/>
         <source>Shutter Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="143"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="149"/>
         <source>Exposure bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="151"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="157"/>
         <source>ISO Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="155"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="161"/>
         <source>Exposure program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="159"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="165"/>
         <source>Light metering mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="164"/>
+        <location filename="../metadata/visitors/ExifRichTextVisitor.cpp" line="170"/>
         <source>Flash mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1815,67 +2024,67 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
 <context>
     <name>IptcRichTextVisitor</name>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="41"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="47"/>
         <source>Model version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="45"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="51"/>
         <source>Created date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="48"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="54"/>
         <source>Created time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="52"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="58"/>
         <source>Digitized date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="55"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="61"/>
         <source>Digitized time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="59"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="65"/>
         <source>Author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="61"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="67"/>
         <source>Copyright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="64"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="70"/>
         <source>Object name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="66"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="72"/>
         <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="68"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="74"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="71"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="77"/>
         <source>Country</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="73"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="79"/>
         <source>City</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="76"/>
+        <location filename="../metadata/visitors/IptcRichTextVisitor.cpp" line="82"/>
         <source>Edit status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2764,47 +2973,47 @@ Error message: %2</source>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="145"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="137"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="151"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="143"/>
         <source>File list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="158"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="150"/>
         <source>Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="164"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="156"/>
         <source>File details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="171"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="163"/>
         <source>Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="177"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="169"/>
         <source>Raw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="263"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="248"/>
         <source>Select a column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="264"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="249"/>
         <source>Select at least 1 column to show in file list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/OptionsDialog.cpp" line="276"/>
+        <location filename="../widgets/OptionsDialog.cpp" line="262"/>
         <source>Sir - Configure Options</source>
         <translation>SIR - Опције Подешавања</translation>
     </message>
@@ -2939,37 +3148,37 @@ Error message: %2</source>
         <translation>Акције</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="180"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="188"/>
         <source>Zoom image</source>
         <translation>Увећај слику</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="141"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="149"/>
         <source>Back to previous image</source>
         <translation>Назад на предходну слику</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="147"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="155"/>
         <source>Go to next image</source>
         <translation>Иди на следећу слику</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="153"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="161"/>
         <source>Rotate counter clockwise</source>
         <translation>Ротирај супротно смеру часовника</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="158"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="166"/>
         <source>Rotate clockwise</source>
         <translation>Ротирај у смеру часовника</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="188"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="196"/>
         <source>Save image</source>
         <translation>Сачувај слику</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="194"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="202"/>
         <source>Save image as...</source>
         <translation>Сачувај слику као...</translation>
     </message>
@@ -2979,102 +3188,102 @@ Error message: %2</source>
         <translation>Напусти</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="55"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="61"/>
         <source>SIR - Preview Images</source>
         <translation>SIR - Преглед слика</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="206"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="214"/>
         <source>Quit preview</source>
         <translation>Заврши преглед</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="182"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="190"/>
         <source>Fullscreen</source>
         <translation>Преко целог екрана</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="178"/>
-        <location filename="../widgets/PreviewDialog.cpp" line="223"/>
-        <location filename="../widgets/PreviewDialog.cpp" line="788"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="186"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="231"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="794"/>
         <source>Fit to window size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="200"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="208"/>
         <source>Print current image...</source>
         <translation>Штампај тренутну слику...</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="254"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="262"/>
         <source>Please enter a valid zoom factor.</source>
         <translation>Молим унесите одговарајући фактор величине.</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="455"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="463"/>
         <source>Overwrite File? -- SIR</source>
         <translation>Препиши преко фајла? -- SIR</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="456"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="464"/>
         <source>A file called %1 already exists.Do you want to overwrite it?</source>
         <translation>Фајл са именом %1 већ постоји. Да ли хоћете да препишет преко њега?</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="458"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="466"/>
         <source>&amp;Yes</source>
         <translation>&amp;Да</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="458"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="466"/>
         <source>&amp;No</source>
         <translation>&amp;Не</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="485"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="493"/>
         <source>Save File</source>
         <translation>Сачувај фајл</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="492"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="500"/>
         <source>Unsupported file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="494"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="502"/>
         <source>Write into %1 file is unsupported.
 Choose supported file extension:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="628"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="636"/>
         <source>File saved</source>
         <translation>Фајл је сачуван</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="632"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="640"/>
         <source>Failed to save image</source>
         <translation>Грешка при снимању слике</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="756"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="762"/>
         <source>Image file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="757"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="763"/>
         <source>Load image %1 failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="764"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="770"/>
         <source>
 Error code: %1
 Error message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="766"/>
+        <location filename="../widgets/PreviewDialog.cpp" line="772"/>
         <source>Metadata error!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3087,6 +3296,29 @@ Error message: %2</source>
         <location filename="../widgets/PreviewDialog.ui" line="507"/>
         <source>TextLabel</source>
         <translation>Текстуални опис</translation>
+    </message>
+</context>
+<context>
+    <name>RawController</name>
+    <message>
+        <location filename="../raw/RawController.cpp" line="98"/>
+        <source>Select dcraw executable</source>
+        <translation type="unfinished">Одаберите dcraw извршни фајл</translation>
+    </message>
+    <message>
+        <location filename="../raw/RawController.cpp" line="141"/>
+        <source>No dcraw executable chosen. RAW support will not be enabled!</source>
+        <translation type="unfinished">Изабрани dcraw није извршни. RAW подршка неће бити омогућена!</translation>
+    </message>
+    <message>
+        <location filename="../raw/RawController.cpp" line="153"/>
+        <source>The chosen file is not executable. RAW support will not be enabled!</source>
+        <translation type="unfinished">Изабрани фајл није извршни. RAW подршка неће бити омогућена!</translation>
+    </message>
+    <message>
+        <location filename="../raw/RawController.cpp" line="158"/>
+        <source>dcraw executable not found. RAW support will not be enabled!</source>
+        <translation type="unfinished">dcraw извршни фајл није пронађен. RAW подршка неће бити омогућена!</translation>
     </message>
 </context>
 <context>
@@ -3127,52 +3359,57 @@ Error message: %2</source>
 <context>
     <name>RawGroupBoxController</name>
     <message>
-        <location filename="../widgets/options/RawGroupBoxController.cpp" line="45"/>
         <source>Select dcraw executable</source>
-        <translation type="unfinished">Одаберите dcraw извршни фајл</translation>
+        <translation type="obsolete">Одаберите dcraw извршни фајл</translation>
     </message>
     <message>
-        <location filename="../widgets/options/RawGroupBoxController.cpp" line="111"/>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
-        <translation type="unfinished">Изабрани dcraw није извршни. RAW подршка неће бити омогућена!</translation>
+        <translation type="obsolete">Изабрани dcraw није извршни. RAW подршка неће бити омогућена!</translation>
     </message>
     <message>
-        <location filename="../widgets/options/RawGroupBoxController.cpp" line="122"/>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
-        <translation type="unfinished">Изабрани фајл није извршни. RAW подршка неће бити омогућена!</translation>
+        <translation type="obsolete">Изабрани фајл није извршни. RAW подршка неће бити омогућена!</translation>
     </message>
     <message>
-        <location filename="../widgets/options/RawGroupBoxController.cpp" line="129"/>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
-        <translation type="unfinished">dcraw извршни фајл није пронађен. RAW подршка неће бити омогућена!</translation>
+        <translation type="obsolete">dcraw извршни фајл није пронађен. RAW подршка неће бити омогућена!</translation>
     </message>
 </context>
 <context>
     <name>RawGroupBoxView</name>
     <message>
-        <location filename="../widgets/options/RawGroupBoxView.ui" line="14"/>
+        <location filename="../widgets/options/RawGroupBoxView.cpp" line="38"/>
         <source>Raw Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/options/RawGroupBoxView.ui" line="20"/>
         <source>Enable RAW images support (needs dcraw)</source>
-        <translation type="unfinished">Омогући RAW подршку за слике (потребан је dcraw)</translation>
+        <translation type="obsolete">Омогући RAW подршку за слике (потребан је dcraw)</translation>
     </message>
     <message>
-        <location filename="../widgets/options/RawGroupBoxView.ui" line="27"/>
         <source>Browse</source>
-        <translation type="unfinished">Претражи</translation>
+        <translation type="obsolete">Претражи</translation>
     </message>
     <message>
-        <location filename="../widgets/options/RawGroupBoxView.ui" line="34"/>
         <source>dcraw Executable Path:</source>
-        <translation type="unfinished">dcraw путања извршног фајла:</translation>
+        <translation type="obsolete">dcraw путања извршног фајла:</translation>
     </message>
     <message>
-        <location filename="../widgets/options/RawGroupBoxView.ui" line="41"/>
         <source>dcraw options:</source>
-        <translation type="unfinished">dcraw опције:</translation>
+        <translation type="obsolete">dcraw опције:</translation>
+    </message>
+</context>
+<context>
+    <name>RawTabWidget</name>
+    <message>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="41"/>
+        <source>Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="49"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3295,37 +3532,37 @@ Error message: %2</source>
 <context>
     <name>Session</name>
     <message>
-        <location filename="../Session.cpp" line="61"/>
+        <location filename="../Session.cpp" line="67"/>
         <source>Session write error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Session.cpp" line="62"/>
+        <location filename="../Session.cpp" line="68"/>
         <source>Session saving to %1 file failed.
 Can&apos;t open the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Session.cpp" line="183"/>
-        <location filename="../Session.cpp" line="190"/>
-        <location filename="../Session.cpp" line="203"/>
+        <location filename="../Session.cpp" line="189"/>
+        <location filename="../Session.cpp" line="196"/>
+        <location filename="../Session.cpp" line="209"/>
         <source>Session read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Session.cpp" line="184"/>
+        <location filename="../Session.cpp" line="190"/>
         <source>Session restoring from %1 file failed.
 Can&apos;t open the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Session.cpp" line="191"/>
+        <location filename="../Session.cpp" line="197"/>
         <source>Session restoring from %1 file failed.
 Can&apos;t parse the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Session.cpp" line="204"/>
+        <location filename="../Session.cpp" line="210"/>
         <source>Session restoring from %1 file failed.
 Invalid file format.</source>
         <translation type="unfinished"></translation>
@@ -3398,43 +3635,48 @@ Invalid file format.</source>
 <context>
     <name>StatusWidget</name>
     <message>
-        <location filename="../widgets/StatusWidget.ui" line="35"/>
+        <location filename="../widgets/StatusWidget.ui" line="41"/>
         <source>Message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/StatusWidget.ui" line="48"/>
+        <location filename="../widgets/StatusWidget.ui" line="54"/>
         <source>part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/StatusWidget.ui" line="61"/>
-        <location filename="../widgets/StatusWidget.cpp" line="28"/>
+        <location filename="../widgets/StatusWidget.ui" line="67"/>
+        <location filename="../widgets/StatusWidget.cpp" line="150"/>
         <source>of</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/StatusWidget.ui" line="74"/>
+        <location filename="../widgets/StatusWidget.ui" line="80"/>
         <source>total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/StatusWidget.cpp" line="27"/>
+        <location filename="../widgets/StatusWidget.cpp" line="120"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/StatusWidget.cpp" line="55"/>
+        <location filename="../widgets/StatusWidget.cpp" line="123"/>
+        <source>Loading image details...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/StatusWidget.cpp" line="126"/>
         <source>Loading files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/StatusWidget.cpp" line="83"/>
+        <location filename="../widgets/StatusWidget.cpp" line="129"/>
         <source>Converting images...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/StatusWidget.cpp" line="106"/>
+        <location filename="../widgets/StatusWidget.cpp" line="132"/>
         <source>%1 images converted in %2 seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3460,118 +3702,118 @@ Invalid file format.</source>
 <context>
     <name>TreeWidget</name>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="157"/>
+        <location filename="../widgets/TreeWidget.cpp" line="161"/>
         <source>Choose a directory</source>
         <translation type="unfinished">Изаберите директоријум</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="179"/>
+        <location filename="../widgets/TreeWidget.cpp" line="184"/>
         <source>Images</source>
         <translation type="unfinished">Слике</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="186"/>
+        <location filename="../widgets/TreeWidget.cpp" line="192"/>
         <source>Select one or more files to open</source>
         <translation type="unfinished">Изаберите један или више фајлова за отварање</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="397"/>
+        <location filename="../widgets/TreeWidget.cpp" line="403"/>
         <source>Converted</source>
         <translation type="unfinished">Конвертовано</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="400"/>
+        <location filename="../widgets/TreeWidget.cpp" line="406"/>
         <source>Skipped</source>
         <translation type="unfinished">Прескочено</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="403"/>
+        <location filename="../widgets/TreeWidget.cpp" line="409"/>
         <source>Failed to convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="406"/>
-        <location filename="../widgets/TreeWidget.cpp" line="476"/>
+        <location filename="../widgets/TreeWidget.cpp" line="412"/>
+        <location filename="../widgets/TreeWidget.cpp" line="482"/>
         <source>Not converted yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="409"/>
+        <location filename="../widgets/TreeWidget.cpp" line="415"/>
         <source>Converting</source>
         <translation type="unfinished">Конвертовање</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="412"/>
+        <location filename="../widgets/TreeWidget.cpp" line="418"/>
         <source>Cancelled</source>
         <translation type="unfinished">Отказано</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="485"/>
+        <location filename="../widgets/TreeWidget.cpp" line="491"/>
         <source>Name</source>
         <translation type="unfinished">Име</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="485"/>
+        <location filename="../widgets/TreeWidget.cpp" line="491"/>
         <source>Ext</source>
         <translation type="unfinished">Екстензија</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="485"/>
+        <location filename="../widgets/TreeWidget.cpp" line="491"/>
         <source>Path</source>
         <translation type="unfinished">Путања</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="485"/>
+        <location filename="../widgets/TreeWidget.cpp" line="491"/>
         <source>Image size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="486"/>
+        <location filename="../widgets/TreeWidget.cpp" line="492"/>
         <source>File size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="486"/>
+        <location filename="../widgets/TreeWidget.cpp" line="492"/>
         <source>Status</source>
         <translation type="unfinished">Статус</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="580"/>
+        <location filename="../widgets/TreeWidget.cpp" line="586"/>
         <source>Remove Selected</source>
         <translation type="unfinished">Уклони одабрано</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="581"/>
+        <location filename="../widgets/TreeWidget.cpp" line="587"/>
         <source>Remove selected images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="585"/>
+        <location filename="../widgets/TreeWidget.cpp" line="591"/>
         <source>Convert Selected</source>
         <translation type="unfinished">Конвертуј одабрано</translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="586"/>
+        <location filename="../widgets/TreeWidget.cpp" line="592"/>
         <source>Convert selected images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="590"/>
+        <location filename="../widgets/TreeWidget.cpp" line="596"/>
         <source>Show Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="591"/>
+        <location filename="../widgets/TreeWidget.cpp" line="597"/>
         <source>Show preview selected image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="595"/>
+        <location filename="../widgets/TreeWidget.cpp" line="601"/>
         <source>Show Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/TreeWidget.cpp" line="596"/>
+        <location filename="../widgets/TreeWidget.cpp" line="602"/>
         <source>Show metadata of selected image</source>
         <translation type="unfinished"></translation>
     </message>

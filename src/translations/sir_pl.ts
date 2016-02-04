@@ -112,6 +112,32 @@
     </message>
 </context>
 <context>
+    <name>AdvancedRawViewWidget</name>
+    <message>
+        <source>dcraw Help</source>
+        <translation>Pomoc dcraw</translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedRawWidget</name>
+    <message>
+        <source>Enable RAW images support (needs dcraw)</source>
+        <translation>Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
+    </message>
+    <message>
+        <source>dcraw options:</source>
+        <translation>Opcje dcraw:</translation>
+    </message>
+    <message>
+        <source>dcraw Executable Path:</source>
+        <translation>Plik wykonywalny dcraw:</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation>Przeglądaj</translation>
+    </message>
+</context>
+<context>
     <name>AnyMetadataGroupBox</name>
     <message>
         <source>Check any metadata</source>
@@ -140,6 +166,144 @@
     <message>
         <source>Digitized between</source>
         <translation>Cyfryzowane między</translation>
+    </message>
+</context>
+<context>
+    <name>BasicRawScrollArea</name>
+    <message>
+        <source>ScrollArea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable RAW images support (needs dcraw)</source>
+        <translation>Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation>Przeglądaj</translation>
+    </message>
+    <message>
+        <source>dcraw Executable Path:</source>
+        <translation>Plik wykonywalny dcraw:</translation>
+    </message>
+    <message>
+        <source>Interpolation</source>
+        <translation>Interpolacja</translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation>Jakość</translation>
+    </message>
+    <message>
+        <source>After interpolation, clean up color artifacts by repeatedly
+applying a 3x3 median filter to the R-G and B-G channels.</source>
+        <translation>Po dokonaniu interpolacji usuń zniekształcenia kolorystyczne poprzez wielokrotne zastosowanie
+filtra medianowego (3x3 piksele) do wartości R-G oraz B-G (różnic składowych).</translation>
+    </message>
+    <message>
+        <source>Post-processing cycles</source>
+        <translation>Cykle przetwarzania końcowego</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Użyj tej opcji, jeżeli na wynikowym obrazie widać niewłaściwe obszary 2x2 (interpolacja VNG) lub mazy (AHD).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Interpolate RGB as four colors.</source>
+        <translation>Interpoluj RGB jako cztery kolory.</translation>
+    </message>
+    <message>
+        <source>Use high-speed, low-quality bilinear interpolation.</source>
+        <translation>Użyj szybkiej, lecz niskiej jakości interpolacji dwuliniowej.</translation>
+    </message>
+    <message>
+        <source>Use Variable Number of Gradients (VNG) interpolation.</source>
+        <translation>Użyj interpolacji VNG (Variable Number of Gradients).</translation>
+    </message>
+    <message>
+        <source>Use Patterned Pixel Grouping (PPG) interpolation.</source>
+        <translation>Użyj interpolacji PPG (Patterned Pixel Grouping).</translation>
+    </message>
+    <message>
+        <source>Use Adaptive Homogeneity-Directed (AHD) interpolation.</source>
+        <translation>Użyj interpolacji AHD (Adaptive Homogeneity-Directed, najwyższa jakość).</translation>
+    </message>
+    <message>
+        <source>Repair</source>
+        <translation>Naprawa</translation>
+    </message>
+    <message>
+        <source>
+    Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rebuild</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlight mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blend clipped and unclipped values together for a gradual fade to white.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leave highlights unclipped in various shades of pink.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unclip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clip all highlights to solid white (default).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rebuild level.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The best threshold should be somewhere between 100 and 1000.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use wavelets to erase noise while preserving real detail.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Kolor</translation>
+    </message>
+    <message>
+        <source>If this is not found, use another method.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the white balance specified by the camera.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate the white balance by averaging the entire image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Besides DNG, this option only affects Olympus, Leaf, and Phase One cameras.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use any color matrix from the camera metadata.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -580,6 +744,10 @@ Chcesz kontynuować mimo to?</translation>
     <message>
         <source>Ctrl+Del</source>
         <translation>Ctrl+Delete</translation>
+    </message>
+    <message>
+        <source>Raw</source>
+        <translation type="unfinished">Raw</translation>
     </message>
 </context>
 <context>
@@ -2826,6 +2994,25 @@ Informacja: %2</translation>
     </message>
 </context>
 <context>
+    <name>RawController</name>
+    <message>
+        <source>Select dcraw executable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No dcraw executable chosen. RAW support will not be enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The chosen file is not executable. RAW support will not be enabled!</source>
+        <translation type="unfinished">Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+    </message>
+    <message>
+        <source>dcraw executable not found. RAW support will not be enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RawGroupBox</name>
     <message>
         <source>Raw Options</source>
@@ -2868,19 +3055,19 @@ Informacja: %2</translation>
     <name>RawGroupBoxController</name>
     <message>
         <source>Select dcraw executable</source>
-        <translation>Wybierz plik wykonywalny dcraw</translation>
+        <translation type="vanished">Wybierz plik wykonywalny dcraw</translation>
     </message>
     <message>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
-        <translation>Nie wybrano pliku wykonywalnego dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+        <translation type="vanished">Nie wybrano pliku wykonywalnego dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
-        <translation>Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+        <translation type="vanished">Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
-        <translation>Nie odnaleziono pliku wykonywalnego dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+        <translation type="vanished">Nie odnaleziono pliku wykonywalnego dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
 </context>
 <context>
@@ -2891,19 +3078,30 @@ Informacja: %2</translation>
     </message>
     <message>
         <source>Enable RAW images support (needs dcraw)</source>
-        <translation>Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
+        <translation type="vanished">Włącz wsparcie dla obrazów RAW (wymagany dcraw)</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Przeglądaj</translation>
+        <translation type="vanished">Przeglądaj</translation>
     </message>
     <message>
         <source>dcraw Executable Path:</source>
-        <translation>Ścieżka dcraw:</translation>
+        <translation type="vanished">Ścieżka dcraw:</translation>
     </message>
     <message>
         <source>dcraw options:</source>
-        <translation>Opcje dcraw:</translation>
+        <translation type="vanished">Opcje dcraw:</translation>
+    </message>
+</context>
+<context>
+    <name>RawTabWidget</name>
+    <message>
+        <source>Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3145,6 +3343,10 @@ Nieprawidłowy format pliku.</translation>
     <message>
         <source>%1 images converted in %2 seconds</source>
         <translation>%1 obrazów skonwertowano w %2 sekund</translation>
+    </message>
+    <message>
+        <source>Loading image details...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
