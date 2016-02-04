@@ -1,17 +1,23 @@
 # To Do in SIR Project
 
 
-## Nearest Release
+## The Release
 
 * Translate Raw basic tab to Polish
+
+
+## Nearest Release
+
 * Add saturation support to Raw basic tab
 * Check add background color effect for transparent PNG images
+* CMake optiomalization for Travis CI system - not needed build sir binary, sir_library only is sufficient
 
 
 ## Next Release
 
 * Restore "Let us know that you using SIR" option
 * Search refactorizationable code
+* Add Coveralls integration (see https://coveralls.zendesk.com/hc/en-us/articles/201342799-C-C-)
 * Add traceback catching (see http://libcsdbg.sourceforge.net/index.html)
 * Remove timer from files loading
 * Support for animated graphics files (QMovie?)
