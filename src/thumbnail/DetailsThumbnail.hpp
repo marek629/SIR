@@ -22,7 +22,7 @@
 #ifndef DETAILSTHUMBNAIL_HPP
 #define DETAILSTHUMBNAIL_HPP
 
-#include "MetadataThumbnail.hpp"
+#include "thumbnail/MetadataThumbnail.hpp"
 
 #include <QSize>
 #include <QString>

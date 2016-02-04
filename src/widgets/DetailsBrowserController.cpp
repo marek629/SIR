@@ -22,7 +22,7 @@
 #include "widgets/DetailsBrowserController.hpp"
 
 #include "ConvertSharedData.hpp"
-#include "DetailsThumbnail.hpp"
+#include "thumbnail/DetailsThumbnail.hpp"
 #include "optionsenums.h"
 #include "file/TreeWidgetFileInfo.hpp"
 #include "widgets/ConvertDialog.hpp"

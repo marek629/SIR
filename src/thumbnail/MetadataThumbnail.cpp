@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "MetadataThumbnail.hpp"
+#include "thumbnail/MetadataThumbnail.hpp"
 
 #include "metadata/Metadata.hpp"
 #include "Settings.hpp"

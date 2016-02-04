@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "DetailsThumbnail.hpp"
+#include "thumbnail/DetailsThumbnail.hpp"
 
 #include "optionsenums.h"
 #include "Settings.hpp"

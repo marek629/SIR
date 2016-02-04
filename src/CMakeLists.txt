@@ -10,12 +10,10 @@ set( sir_SRCS ${sir_SRCS}
         ConvertEffects.cpp
         ConvertSharedData.cpp
         ConvertThread.cpp
-        DetailsThumbnail.cpp
         EffectsCollector.cpp
         ExpressionTree.cpp
         LanguageUtils.cpp
         main.cpp
-        MetadataThumbnail.cpp
         NetworkUtils.cpp
         OptionsGroupBoxManager.cpp
         RegExpUtils.cpp
@@ -33,6 +31,8 @@ set( sir_SRCS ${sir_SRCS}
         file/FileInfo.cpp
         file/TreeWidgetFileInfo.cpp
         shared/EffectsConfiguration.cpp
+        thumbnail/DetailsThumbnail.cpp
+        thumbnail/MetadataThumbnail.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
         widgets/ConvertDialog.cpp

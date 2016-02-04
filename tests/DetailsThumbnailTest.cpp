@@ -21,7 +21,7 @@
 
 #include "tests/DetailsThumbnailTest.hpp"
 
-#include "DetailsThumbnail.hpp"
+#include "thumbnail/DetailsThumbnail.hpp"
 #include "Settings.hpp"
 
 // includes required by Qt4 build
