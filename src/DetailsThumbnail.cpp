@@ -39,12 +39,6 @@ using namespace sir;
 DetailsThumbnail::DetailsThumbnail(Settings *settings)
 {
     isSvg = false;
-
-#ifdef SIR_METADATA_SUPPORT
-    metadataThumbnail = MetadataThumbnail(settings->metadata.enabled);
-#else
-    metadataThumbnail = MetadataThumbnail(false);
-#endif // SIR_METADATA_SUPPORT
 }
 
 bool DetailsThumbnail::isRenderedFromSVG() const {
@@ -91,7 +85,14 @@ MetadataUtils::IptcStruct *DetailsThumbnail::iptcStruct()
 
 bool DetailsThumbnail::writeThumbnailFromMetadata()
 {
-    return metadataThumbnail.writeThumbnail(imagePath, thumbPath);
+    metadataThumbnail = MetadataThumbnail(imagePath, thumbPath);
+#ifdef SIR_METADATA_SUPPORT
+    Settings *settings = Settings::instance();
+    bool isMetadataEnabled = settings->metadata.enabled;
+#else
+    bool isMetadataEnabled = false;
+#endif // SIR_METADATA_SUPPORT
+    return metadataThumbnail.writeThumbnail(isMetadataEnabled);
 }
 
 void DetailsThumbnail::writeThumbnail(const FileInfo &fileInfo, int index,
@@ -108,7 +109,7 @@ void DetailsThumbnail::writeThumbnail(const FileInfo &fileInfo, int index,
 
     // thumbnail generation
     if (ext != "SVG" && ext != "SVGZ") {
-        bool isThumbSaved = metadataThumbnail.writeThumbnail(imagePath, thumbPath);
+        bool isThumbSaved = writeThumbnailFromMetadata();
         if (isThumbSaved) {
             imageSize = metadataThumbnail.sourceImageSize();
             thumbPath = metadataThumbnail.filePath();

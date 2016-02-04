@@ -26,13 +26,17 @@
 #include "metadata/structs/IptcStruct.hpp"
 
 
+/**
+  * \brief
+  * Thumbnail generator from image metadata using by DetailsThumbnail class.
+  */
 class MetadataThumbnail
 {
 public:
     MetadataThumbnail();
-    MetadataThumbnail(bool metadataEnabled);
+    MetadataThumbnail(const QString &imagePath, const QString &thumbPath);
 
-    bool writeThumbnail(const QString &imagePath, const QString &thumbPath);
+    bool writeThumbnail(bool isMetadataEnabled);
     bool isThumbnailSaved() const;
 
     MetadataUtils::ExifStruct *exifStruct();
@@ -43,11 +47,11 @@ public:
     QSize sourceImageSize() const;
 
 private:
-    bool metadataEnabled;
     bool isThumbnailSavedSuccessfully;
     MetadataUtils::ExifStruct exifStruct_;
     MetadataUtils::IptcStruct iptcStruct_;
 
+    QString imagePath;
     QSize imageSize;
     QString thumbPath;
     QSize thumbSize;

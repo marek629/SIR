@@ -25,24 +25,21 @@
 #include "Settings.hpp"
 
 
-MetadataThumbnail::MetadataThumbnail()
+MetadataThumbnail::MetadataThumbnail() {}
+
+MetadataThumbnail::MetadataThumbnail(const QString &imagePath,
+                                     const QString &thumbPath)
 {
-    metadataEnabled = false;
+    this->imagePath = imagePath;
+    this->thumbPath = thumbPath;
 }
 
-MetadataThumbnail::MetadataThumbnail(bool metadataEnabled)
-{
-    this->metadataEnabled = metadataEnabled;
-}
-
-bool MetadataThumbnail::writeThumbnail(const QString &imagePath, const QString &thumbPath)
+bool MetadataThumbnail::writeThumbnail(bool isMetadataEnabled)
 {
     isThumbnailSavedSuccessfully = false;
 
 #ifdef SIR_METADATA_SUPPORT
-    Settings *s = Settings::instance();
-
-    if (s->metadata.enabled) {
+    if (isMetadataEnabled) {
         MetadataUtils::Metadata metadata;
         if (metadata.read(imagePath, true)) {
             exifStruct_ = metadata.exifStruct()->copy();
@@ -59,7 +56,7 @@ bool MetadataThumbnail::writeThumbnail(const QString &imagePath, const QString &
                 Exiv2::PreviewImage preview = previewManager.getPreviewImage(
                             previewList[0]);
                 preview.writeFile(thumbPath.toStdString());
-                this->thumbPath = thumbPath + preview.extension().c_str();
+                thumbPath += preview.extension().c_str();
                 thumbSize.setWidth(preview.width());
                 thumbSize.setHeight(preview.height());
             }
