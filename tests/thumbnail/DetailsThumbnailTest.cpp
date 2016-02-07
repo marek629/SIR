@@ -46,19 +46,6 @@ QFileInfoList DetailsThumbnailTest::existingTestFileInfoList()
     return tempDir.entryInfoList();
 }
 
-bool DetailsThumbnailTest::writeFile(const QString &filePath,
-                                     const QByteArray &bytes)
-{
-    QFile file(filePath);
-
-    if (file.open(QIODevice::WriteOnly))
-    {
-        return file.write(bytes);
-    }
-
-    return false;
-}
-
 bool DetailsThumbnailTest::isThumbnailSaved(const DetailsThumbnail &thumbnail,
                                             bool shouldSaved)
 {
@@ -108,8 +95,7 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_empty
     QString testImagePath = temporaryPath + fileNamePrefix;
     testImagePath += "_test_metadata_nopreview.jpg";
 
-    QByteArray imageData = QByteArray::fromBase64(metadataNoPreviewImageData);
-    QVERIFY2(writeFile(testImagePath, imageData),
+    QVERIFY2(thumbnailImage.writeFile(testImagePath, MetadataNoPreviewImage),
              "Write image file for test was failed.");
 
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);
@@ -138,8 +124,7 @@ void DetailsThumbnailTest::test_writeThumbnailFromMetadata_metadataEnabled_metad
     QString testImagePath = temporaryPath + fileNamePrefix;
     testImagePath += "_test_metadata_preview.jpg";
 
-    QByteArray imageData = QByteArray::fromBase64(metadataPreviewImageData);
-    QVERIFY2(writeFile(testImagePath, imageData),
+    QVERIFY2(thumbnailImage.writeFile(testImagePath, MetadataPreviewImage),
              "Write image file for test was failed.");
 
     DetailsThumbnail thumbnail = DetailsThumbnail(settings);

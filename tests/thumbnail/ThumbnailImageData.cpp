@@ -19,46 +19,31 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef DETAILSTHUMBNAILTEST_HPP
-#define DETAILSTHUMBNAILTEST_HPP
-
-#include <QtTest/QTest>
-
 #include "tests/thumbnail/ThumbnailImageData.hpp"
 
-// includes required by Qt4 build
-#include <QFileInfoList>
-
-class DetailsThumbnail;
+#include <QFile>
 
 
-class DetailsThumbnailTest : public QObject
+ThumbnailImageData::ThumbnailImageData() {}
+
+bool ThumbnailImageData::writeFile(const QString &filePath,
+                                   ThumbnailImageType imageType)
 {
-    Q_OBJECT
+    QFile file(filePath);
 
-public:
-    DetailsThumbnailTest();
-    ~DetailsThumbnailTest();
+    if (file.open(QIODevice::WriteOnly)) {
+        const char *data = NULL;
+        switch (imageType) {
+        case MetadataNoPreviewImage:
+            data = metadataNoPreviewImageData;
+            break;
+        case MetadataPreviewImage:
+            data = metadataPreviewImageData;
+            break;
+        }
 
-private:
-    const QString temporaryPath;
-    const QString fileNamePrefix;
+        return file.write(QByteArray::fromBase64(data));
+    }
 
-    ThumbnailImageData thumbnailImage;
-
-    QFileInfoList existingTestFileInfoList();
-    bool isThumbnailSaved(const DetailsThumbnail &thumbnail, bool shouldSaved);
-
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-
-#ifdef SIR_METADATA_SUPPORT
-    void test_writeThumbnailFromMetadata_metadataEnabled_emptyPreviewList();
-    void test_writeThumbnailFromMetadata_metadataEnabled_metadataThumbnail();
-    void test_writeThumbnailFromMetadata_metadataEnabled_invalidMetadata();
-#endif // SIR_METADATA_SUPPORT
-    void test_writeThumbnailFromMetadata_metadataDisabled();
-};
-
-#endif // DETAILSTHUMBNAILTEST_HPP
+    return false;
+}
