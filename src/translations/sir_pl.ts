@@ -234,79 +234,79 @@ filtra medianowego (3x3 piksele) do wartości R-G oraz B-G (różnic składowych
     </message>
     <message>
         <source>rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>rekonstruuj</translation>
     </message>
     <message>
         <source>Highlight mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tryb przetwarzania świateł</translation>
     </message>
     <message>
         <source>Blend clipped and unclipped values together for a gradual fade to white.</source>
-        <translation type="unfinished"></translation>
+        <translation>Połącz przycięte i nieprzycięte wartości ze sobą aby uzyskać wygładzone przejście do bieli.</translation>
     </message>
     <message>
         <source>blend</source>
-        <translation type="unfinished"></translation>
+        <translation>mieszaj</translation>
     </message>
     <message>
         <source>Leave highlights unclipped in various shades of pink.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie przycinaj świateł (pozostaw w różnych odcieniach różu).</translation>
     </message>
     <message>
         <source>unclip</source>
-        <translation type="unfinished"></translation>
+        <translation>nie obcinaj</translation>
     </message>
     <message>
         <source>Clip all highlights to solid white (default).</source>
-        <translation type="unfinished"></translation>
+        <translation>Przytnij wszystkie światła do koloru białego (domyślne).</translation>
     </message>
     <message>
         <source>clip</source>
-        <translation type="unfinished"></translation>
+        <translation>obetnij</translation>
     </message>
     <message>
         <source>Rebuild level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poziom rekonstrukcji.</translation>
     </message>
     <message>
         <source>The best threshold should be somewhere between 100 and 1000.</source>
-        <translation type="unfinished"></translation>
+        <translation>Najlepszy efekt dają wartości poziomu z przedziału między 100 a 1000.</translation>
     </message>
     <message>
         <source>Use wavelets to erase noise while preserving real detail.</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj falkowej redukcji szumów, pozostawiając jak najwięcej detali.</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished">Kolor</translation>
+        <translation>Kolor</translation>
     </message>
     <message>
         <source>If this is not found, use another method.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeżeli wartość ta nie zostanie odnaleziona, zostanie użyta inna metoda jego określenia.</translation>
     </message>
     <message>
         <source>Use the white balance specified by the camera.</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj wartości balansu bieli zapisanej przez aparat.</translation>
     </message>
     <message>
         <source>Calculate the white balance by averaging the entire image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblicz balans bieli na podstawie średniej z zawartości całego obrazu.</translation>
     </message>
     <message>
         <source>Besides DNG, this option only affects Olympus, Leaf, and Phase One cameras.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta opcja dotyczy jedynie aparatów Olympus, Leaf oraz Phase One.</translation>
     </message>
     <message>
         <source>Use any color matrix from the camera metadata.</source>
-        <translation type="unfinished"></translation>
+        <translation>Używaj jakichkolwiek macierzy kolorów z metadanych aparatu.</translation>
     </message>
     <message>
         <source>Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj tej opcji, jeżeli na wynikowym obrazie widać niewłaściwe obszary 2x2 (interpolacja VNG) lub mazy (AHD).</translation>
     </message>
     <message>
         <source>Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekonstruuj światła. Niskie wartości preferują biel, wyższe preferują kolory.</translation>
     </message>
 </context>
 <context>
@@ -750,7 +750,7 @@ Chcesz kontynuować mimo to?</translation>
     </message>
     <message>
         <source>Raw</source>
-        <translation type="unfinished">Raw</translation>
+        <translation>Raw</translation>
     </message>
 </context>
 <context>
@@ -3000,19 +3000,19 @@ Informacja: %2</translation>
     <name>RawController</name>
     <message>
         <source>Select dcraw executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz plik wykonywalny dcraw</translation>
     </message>
     <message>
         <source>No dcraw executable chosen. RAW support will not be enabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie wybrano pliku wykonywalnego dcraw. Wpsarcie dla formatów RAW nie będzie dostępne!</translation>
     </message>
     <message>
         <source>The chosen file is not executable. RAW support will not be enabled!</source>
-        <translation type="unfinished">Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
+        <translation>Wybrany plik nie jest wykonywalny! Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
     <message>
         <source>dcraw executable not found. RAW support will not be enabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie odnaleziono pliku wykonywalnego dla dcraw. Wsparcie dla formatów RAW nie zostanie włączone!</translation>
     </message>
 </context>
 <context>
@@ -3100,11 +3100,11 @@ Informacja: %2</translation>
     <name>RawTabWidget</name>
     <message>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>Proste</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaawansowane</translation>
     </message>
 </context>
 <context>
@@ -3349,7 +3349,7 @@ Nieprawidłowy format pliku.</translation>
     </message>
     <message>
         <source>Loading image details...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wczytywanie szczegółów obrazu...</translation>
     </message>
 </context>
 <context>

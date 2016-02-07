@@ -7,6 +7,7 @@
 * Changed format of generated thumbnails from TIFF to JPEG
 * Fixed wait currsor after unselect files issue
 * Integrated tests with TravisCI platform
+* Updated Polish translation (Raw basic tab)
 
 
 # v3.0

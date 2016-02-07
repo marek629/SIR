@@ -1,11 +1,6 @@
 # To Do in SIR Project
 
 
-## The Release
-
-* Translate Raw basic tab to Polish
-
-
 ## Nearest Release
 
 * Add saturation support to Raw basic tab
