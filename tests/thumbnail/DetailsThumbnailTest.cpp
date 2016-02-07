@@ -19,7 +19,7 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "tests/DetailsThumbnailTest.hpp"
+#include "tests/thumbnail/DetailsThumbnailTest.hpp"
 
 #include "thumbnail/DetailsThumbnail.hpp"
 #include "Settings.hpp"

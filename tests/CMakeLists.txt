@@ -67,7 +67,7 @@ target_link_libraries( sir_convertdialog_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertDialog_IT" COMMAND sir_convertdialog_test )
 
 set( sir_IT_detailsthumbnail_SRCS
-        DetailsThumbnailTest.cpp
+        thumbnail/DetailsThumbnailTest.cpp
     )
 add_executable( sir_detailsthumbnail_test ${sir_IT_detailsthumbnail_SRCS} )
 target_link_libraries( sir_detailsthumbnail_test ${sir_UT_LINKING_LIBS} )
