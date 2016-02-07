@@ -206,7 +206,7 @@ filtra medianowego (3x3 piksele) do wartości R-G oraz B-G (różnic składowych
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Użyj tej opcji, jeżeli na wynikowym obrazie widać niewłaściwe obszary 2x2 (interpolacja VNG) lub mazy (AHD).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Użyj tej opcji, jeżeli na wynikowym obrazie widać niewłaściwe obszary 2x2 (interpolacja VNG) lub mazy (AHD).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Interpolate RGB as four colors.</source>
@@ -231,11 +231,6 @@ filtra medianowego (3x3 piksele) do wartości R-G oraz B-G (różnic składowych
     <message>
         <source>Repair</source>
         <translation>Naprawa</translation>
-    </message>
-    <message>
-        <source>
-    Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rebuild</source>
@@ -303,6 +298,14 @@ filtra medianowego (3x3 piksele) do wartości R-G oraz B-G (różnic składowych
     </message>
     <message>
         <source>Use any color matrix from the camera metadata.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

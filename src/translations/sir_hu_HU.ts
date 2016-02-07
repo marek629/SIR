@@ -271,11 +271,6 @@ applying a 3x3 median filter to the R-G and B-G channels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="100"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../raw/BasicRawScrollArea.ui" line="103"/>
         <source>Interpolate RGB as four colors.</source>
         <translation type="unfinished"></translation>
@@ -306,94 +301,98 @@ applying a 3x3 median filter to the R-G and B-G channels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="163"/>
-        <source>
-    Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</source>
+        <location filename="../raw/BasicRawScrollArea.ui" line="100"/>
+        <source>Use this if the output shows false 2x2 meshes with VNG or mazes with AHD.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="167"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="163"/>
+        <source>Reconstruct highlights. Low numbers favor whites; high numbers favor colors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../raw/BasicRawScrollArea.ui" line="166"/>
         <source>rebuild</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="174"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="173"/>
         <source>Highlight mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="181"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="180"/>
         <source>Blend clipped and unclipped values together for a gradual fade to white.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="184"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="183"/>
         <source>blend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="191"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="190"/>
         <source>Leave highlights unclipped in various shades of pink.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="194"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="193"/>
         <source>unclip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="201"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="200"/>
         <source>Clip all highlights to solid white (default).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="204"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="203"/>
         <source>clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="217"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="216"/>
         <source>Rebuild level.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="230"/>
-        <location filename="../raw/BasicRawScrollArea.ui" line="243"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="229"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="242"/>
         <source>The best threshold should be somewhere between 100 and 1000.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="233"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="232"/>
         <source>Use wavelets to erase noise while preserving real detail.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="256"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="255"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="262"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="261"/>
         <source>If this is not found, use another method.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="265"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="264"/>
         <source>Use the white balance specified by the camera.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="272"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="271"/>
         <source>Calculate the white balance by averaging the entire image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="279"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="278"/>
         <source>Besides DNG, this option only affects Olympus, Leaf, and Phase One cameras.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../raw/BasicRawScrollArea.ui" line="282"/>
+        <location filename="../raw/BasicRawScrollArea.ui" line="281"/>
         <source>Use any color matrix from the camera metadata.</source>
         <translation type="unfinished"></translation>
     </message>
