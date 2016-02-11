@@ -896,6 +896,7 @@ void ConvertDialog::retranslateStrings() {
     optionsScrollArea->retranslateStrings();
     effectsScrollArea->retranslateStrings();
     svgScrollArea->retranslateStrings();
+    rawTabWidget->retranslateStrings();
 
     statusWidget->retranslateStrings();
 }

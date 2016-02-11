@@ -90,6 +90,15 @@ RawController *RawTabWidget::rawContoller()
     return controller;
 }
 
+void RawTabWidget::retranslateStrings()
+{
+    advancedView->retranslateStrings();
+    basicView->retranslateStrings();
+
+    tabBar()->setTabText(0, tr("Basic"));
+    tabBar()->setTabText(1, tr("Advanced"));
+}
+
 void RawTabWidget::onTabChange(int tabIndex)
 {
     Q_UNUSED(tabIndex);

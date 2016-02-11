@@ -43,6 +43,8 @@ public:
 
     RawController *rawContoller();
 
+    void retranslateStrings();
+
 private slots:
     void onTabChange(int tabIndex);
 

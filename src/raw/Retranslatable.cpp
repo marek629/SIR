@@ -19,31 +19,9 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "raw/RawView.hpp"
-
-#include "raw/RawController.hpp"
+#include "raw/Retranslatable.hpp"
 
 
-RawView::RawView() : Retranslatable() {}
+Retranslatable::Retranslatable() {}
 
-RawView::~RawView() {}
-
-void RawView::loadSettings()
-{
-    controller->loadSettings();
-}
-
-void RawView::saveSettings()
-{
-    controller->saveSettings();
-}
-
-void RawView::setController(RawController *controller)
-{
-    this->controller = controller;
-}
-
-QWidget * RawView::qWidget()
-{
-    return NULL;
-}
+Retranslatable::~Retranslatable() {}

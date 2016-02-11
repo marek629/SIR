@@ -22,6 +22,8 @@
 #ifndef RAWVIEW_HPP
 #define RAWVIEW_HPP
 
+#include "raw/Retranslatable.hpp"
+
 #include <QString>
 
 class RawController;
@@ -29,7 +31,7 @@ class RawController;
 class QWidget;
 
 
-class RawView
+class RawView : public Retranslatable
 {
 public:
     RawView();

@@ -58,6 +58,8 @@ public:
 
     bool closeWindow();
 
+    void retranslateStrings();
+
 private slots:
     void onBrowseButtonClick();
     void onRawEnabledChange(int state);

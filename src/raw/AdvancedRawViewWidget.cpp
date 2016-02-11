@@ -124,6 +124,11 @@ bool AdvancedRawViewWidget::closeWindow()
     return window()->close();
 }
 
+void AdvancedRawViewWidget::retranslateStrings()
+{
+    retranslateUi(this);
+}
+
 void AdvancedRawViewWidget::onBrowseButtonClick()
 {
     controller->browseDcraw();

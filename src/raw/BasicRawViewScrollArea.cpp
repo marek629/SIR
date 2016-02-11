@@ -138,6 +138,11 @@ bool BasicRawViewScrollArea::closeWindow()
     return window()->close();
 }
 
+void BasicRawViewScrollArea::retranslateStrings()
+{
+    ui.retranslateUi(this);
+}
+
 void BasicRawViewScrollArea::onBrowseButtonClick()
 {
     controller->browseDcraw();

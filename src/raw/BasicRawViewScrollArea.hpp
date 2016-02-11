@@ -59,6 +59,8 @@ public:
 
     bool closeWindow();
 
+    void retranslateStrings();
+
 private slots:
     void onBrowseButtonClick();
     void onEraseNoiseToggle(bool toggled);
