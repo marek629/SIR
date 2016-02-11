@@ -2,7 +2,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-### unreleased
+### Thu Feb 11 2016
 
 * Changed format of generated thumbnails from TIFF to JPEG
 * Fixed wait currsor after unselect files issue
