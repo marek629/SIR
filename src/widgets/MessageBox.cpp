@@ -48,7 +48,6 @@ int MessageBox::warning(QWidget *parent, const QString &title, const QString &te
 int MessageBox::question(QWidget *parent, const QString &title, const QString &text)
 {
     StandardButtons buttons = Yes | No | YesToAll | NoToAll | Cancel;
-//    MessageBox messageBox = QMessageBox::question(parent, title, text, buttons, No);
     MessageBox messageBox(Question, title, text, buttons, parent);
 
     messageBox.button(Yes)->setText(tr("&Yes"));
