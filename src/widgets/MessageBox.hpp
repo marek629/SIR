@@ -32,6 +32,9 @@ class MessageBox : public QMessageBox {
     Q_OBJECT
 
 public:
+    MessageBox(Icon icon, const QString &title, const QString &text,
+               StandardButtons buttons = NoButton, QWidget * parent = 0);
+
     static void enableTesting(bool enabled);
     static int warning(QWidget *parent, const QString &title, const QString &text);
     static int question(QWidget *parent, const QString &title, const QString &text);

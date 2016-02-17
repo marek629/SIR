@@ -1,3 +1,12 @@
+# v3.2
+
+## Marek Jędryka <jedryka89@gmail.com>
+
+### unreleased
+
+* Fixed translations of standard dialog buttons
+
+
 # v3.1
 
 ## Marek Jędryka <jedryka89@gmail.com>

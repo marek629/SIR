@@ -21,9 +21,17 @@
 
 #include "widgets/MessageBox.hpp"
 
+#include <QAbstractButton>
+
+
 bool MessageBox::testingEnabled = false;
 int MessageBox::warningStandardButton = QMessageBox::Ok;
 
+
+MessageBox::MessageBox(QMessageBox::Icon icon, const QString &title,
+                       const QString &text, QMessageBox::StandardButtons buttons,
+                       QWidget *parent)
+    : QMessageBox(icon, title, text, buttons, parent) {}
 
 void MessageBox::enableTesting(bool enabled) {
     MessageBox::testingEnabled = enabled;
@@ -37,7 +45,17 @@ int MessageBox::warning(QWidget *parent, const QString &title, const QString &te
 }
 
 /** Shows question message containing \a text message and \a title titled window. */
-int MessageBox::question(QWidget *parent, const QString &title, const QString &text) {
-    return QMessageBox::question(parent, title, text,
-                                 Yes | No | YesToAll | NoToAll | Cancel, No);
+int MessageBox::question(QWidget *parent, const QString &title, const QString &text)
+{
+    StandardButtons buttons = Yes | No | YesToAll | NoToAll | Cancel;
+//    MessageBox messageBox = QMessageBox::question(parent, title, text, buttons, No);
+    MessageBox messageBox(Question, title, text, buttons, parent);
+
+    messageBox.button(Yes)->setText(tr("&Yes"));
+    messageBox.button(No)->setText(tr("&No"));
+    messageBox.button(YesToAll)->setText(tr("Yes to &All"));
+    messageBox.button(NoToAll)->setText(tr("N&o to All"));
+    messageBox.button(Cancel)->setText(tr("&Cancel"));
+
+    return messageBox.exec();
 }

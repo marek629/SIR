@@ -400,7 +400,7 @@ applying a 3x3 median filter to the R-G and B-G channels.</source>
 <context>
     <name>CommandLineAssistant</name>
     <message>
-        <location filename="../CommandLineAssistant.cpp" line="117"/>
+        <location filename="../CommandLineAssistant.cpp" line="96"/>
         <source>Usage: sir [options] [files]
 Typed files will load to files list in main window.
 
@@ -2075,16 +2075,29 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
 <context>
     <name>MessageBox</name>
     <message>
+        <location filename="../widgets/MessageBox.cpp" line="54"/>
         <source>&amp;Yes</source>
-        <translation type="obsolete">&amp;Ja</translation>
+        <translation type="unfinished">&amp;Ja</translation>
     </message>
     <message>
+        <location filename="../widgets/MessageBox.cpp" line="55"/>
         <source>&amp;No</source>
-        <translation type="obsolete">&amp;Nein</translation>
+        <translation type="unfinished">&amp;Nein</translation>
     </message>
     <message>
+        <location filename="../widgets/MessageBox.cpp" line="56"/>
         <source>Yes to &amp;All</source>
-        <translation type="obsolete">Ja zu &amp;allem</translation>
+        <translation type="unfinished">Ja zu &amp;allem</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MessageBox.cpp" line="57"/>
+        <source>N&amp;o to All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MessageBox.cpp" line="58"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

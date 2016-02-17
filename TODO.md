@@ -3,7 +3,6 @@
 
 ## Nearest Release
 
-* Translate Ok and Cancel buttons in Options dialog
 * Add saturation support to Raw basic tab
 * Check add background color effect for transparent PNG images
 * CMake optiomalization for Travis CI system - not needed build sir binary, sir_library only is sufficient
