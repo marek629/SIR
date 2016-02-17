@@ -88,15 +88,7 @@ int CommandLineAssistant::parse(const QStringList &args) {
     else if (!shortArgs.filter("s").isEmpty())
         sessionFile_ = args[args.indexOf(shortArgs.filter("s")[0])+1];
 
-    LanguageUtils *languages = LanguageUtils::instance();
-    QString qmFile = languages->fileName(lang);
-    languages->appTranslator->load(qmFile,
-                                   QCoreApplication::applicationDirPath()
-                                   +QString("../share/sir/translations") );
-    languages->qtTranslator->load("qt_"+qmFile.split('_').at(1).split('.').first(),
-                                  QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    qApp->installTranslator(languages->qtTranslator);
-    qApp->installTranslator(languages->appTranslator);
+    LanguageUtils *languages = installTranslations(lang);
 
     // print help
     if (!shortArgs.filter("h").isEmpty() || !longArgs.filter("help").isEmpty()) {
@@ -120,6 +112,7 @@ int CommandLineAssistant::parse(const QStringList &args) {
         // set language
         if (!lang.isEmpty()) {
             Settings *s = Settings::instance();
+            QString qmFile = languages->fileName(lang);
             s->settings.languageFileName = qmFile;
             s->settings.languageNiceName = languages->languageInfo(qmFile).niceName;
             result += 2;
@@ -171,4 +164,27 @@ void CommandLineAssistant::timerEvent(QTimerEvent *event) {
         int timerId = event->timerId();
         killTimer(timerId);
     }
+}
+
+LanguageUtils * CommandLineAssistant::installTranslations(const QString &lang)
+{
+    LanguageUtils *languages = LanguageUtils::instance();
+    QString qmFile = languages->fileName(lang);
+
+    QString translationsPath;
+    QString translationFileName;
+
+    translationFileName = qmFile;
+    translationsPath = QCoreApplication::applicationDirPath()
+            + QString("../share/sir/translations");
+    languages->appTranslator->load(translationFileName, translationsPath);
+
+    translationFileName = "qt_" + qmFile.split('_').at(1).split('.').first();
+    translationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    languages->qtTranslator->load(translationFileName, translationsPath);
+
+    qApp->installTranslator(languages->qtTranslator);
+    qApp->installTranslator(languages->appTranslator);
+
+    return languages;
 }

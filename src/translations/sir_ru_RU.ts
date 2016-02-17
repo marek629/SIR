@@ -434,7 +434,7 @@ applying a 3x3 median filter to the R-G and B-G channels.</source>
 <context>
     <name>CommandLineAssistant</name>
     <message>
-        <location filename="../CommandLineAssistant.cpp" line="104"/>
+        <location filename="../CommandLineAssistant.cpp" line="117"/>
         <source>Usage: sir [options] [files]
 Typed files will load to files list in main window.
 
@@ -579,7 +579,7 @@ Do you want continue anyway?</source>
         <translation type="vanished">Конвертирование</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="958"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="959"/>
         <source>Cancelled</source>
         <translation>Отменен</translation>
     </message>
@@ -822,7 +822,7 @@ Do you want continue anyway?</source>
         <location filename="../widgets/ConvertDialog.ui" line="481"/>
         <location filename="../widgets/ConvertDialog.ui" line="484"/>
         <location filename="../widgets/ConvertDialog.ui" line="487"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="951"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="952"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
@@ -889,7 +889,7 @@ Do you want continue anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="959"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="960"/>
         <source>Converted</source>
         <translation>Skonvertovane</translation>
     </message>
@@ -3071,6 +3071,11 @@ Error message: %2</source>
         <translation>Sir - Настройки</translation>
     </message>
     <message>
+        <location filename="../widgets/OptionsDialog.cpp" line="301"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>SIR - Options</source>
         <translation type="obsolete">SIR - Настройки</translation>
     </message>
@@ -3083,8 +3088,9 @@ Error message: %2</source>
         <translation type="vanished">OK</translation>
     </message>
     <message>
+        <location filename="../widgets/OptionsDialog.cpp" line="302"/>
         <source>Cancel</source>
-        <translation type="vanished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Sir - Options</source>
@@ -3460,11 +3466,13 @@ Error message: %2</source>
     <name>RawTabWidget</name>
     <message>
         <location filename="../widgets/convert/RawTabWidget.cpp" line="41"/>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="98"/>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/convert/RawTabWidget.cpp" line="49"/>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="99"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>

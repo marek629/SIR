@@ -26,7 +26,9 @@
 #include <QCoreApplication>
 #include <QSharedMemory>
 
+class LanguageUtils;
 class TreeWidget;
+
 
 /** \brief Command line arguments parser class.
   *
@@ -66,6 +68,8 @@ private:
     QString sessionFile_;
     QSharedMemory memory;
     TreeWidget *treeWidget;
+
+    LanguageUtils *installTranslations(const QString &lang);
 };
 
 #endif // COMMANDLINEASSISTANT_HPP

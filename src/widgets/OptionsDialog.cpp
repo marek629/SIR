@@ -298,5 +298,7 @@ void OptionsDialog::setupUi() {
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                                      Qt::Horizontal, this);
     buttonBox->setObjectName("buttonBox");
+    buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
     verticalLayout->addWidget(buttonBox);
 }

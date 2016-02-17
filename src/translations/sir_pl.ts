@@ -2835,6 +2835,14 @@ Informacja: %2</translation>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Anuluj</translation>
+    </message>
 </context>
 <context>
     <name>OptionsScrollArea</name>

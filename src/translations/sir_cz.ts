@@ -557,7 +557,7 @@ applying a 3x3 median filter to the R-G and B-G channels.</source>
 <context>
     <name>CommandLineAssistant</name>
     <message>
-        <location filename="../CommandLineAssistant.cpp" line="104"/>
+        <location filename="../CommandLineAssistant.cpp" line="117"/>
         <source>Usage: sir [options] [files]
 Typed files will load to files list in main window.
 
@@ -692,7 +692,7 @@ Do you want continue anyway?</source>
         <translation type="vanished">Převádí se</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="958"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="959"/>
         <source>Cancelled</source>
         <translation>Zrušeno</translation>
     </message>
@@ -1021,7 +1021,7 @@ Do you want continue anyway?</source>
         <location filename="../widgets/ConvertDialog.ui" line="481"/>
         <location filename="../widgets/ConvertDialog.ui" line="484"/>
         <location filename="../widgets/ConvertDialog.ui" line="487"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="951"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="952"/>
         <source>Quit</source>
         <translation>Ukončit</translation>
     </message>
@@ -1046,7 +1046,7 @@ Do you want continue anyway?</source>
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="959"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="960"/>
         <source>Converted</source>
         <translation>Převedeno</translation>
     </message>
@@ -3790,8 +3790,9 @@ Hlášení o chybě: %2</translation>
         <translation type="vanished">OK</translation>
     </message>
     <message>
+        <location filename="../widgets/OptionsDialog.cpp" line="302"/>
         <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Sir - Options</source>
@@ -3843,6 +3844,11 @@ Hlášení o chybě: %2</translation>
     <message>
         <location filename="../widgets/OptionsDialog.cpp" line="249"/>
         <source>Select at least 1 column to show in file list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/OptionsDialog.cpp" line="301"/>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4322,11 +4328,13 @@ Hlášení o chybě: %2</translation>
     <name>RawTabWidget</name>
     <message>
         <location filename="../widgets/convert/RawTabWidget.cpp" line="41"/>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="98"/>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/convert/RawTabWidget.cpp" line="49"/>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="99"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>

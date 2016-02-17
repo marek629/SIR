@@ -3,9 +3,11 @@
 
 ## Nearest Release
 
+* Translate Ok and Cancel buttons in Options dialog
 * Add saturation support to Raw basic tab
 * Check add background color effect for transparent PNG images
 * CMake optiomalization for Travis CI system - not needed build sir binary, sir_library only is sufficient
+* More JPEG compression options
 
 
 ## Next Release
@@ -48,6 +50,5 @@
     * scripts with exiv2 support
     * graphical flow diagram editor for scripts substitution
 * Add color filters - colormaps (dog's view, jet); see also: http://www.mathworks.com/help/matlab/ref/colormap.html
-* More JPEG compression options
 * Run SIR as web service
 * Crop images
