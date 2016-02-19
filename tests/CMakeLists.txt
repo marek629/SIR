@@ -43,6 +43,13 @@ add_executable( sir_converteffects_test ${sir_UT_converteffects_SRCS} )
 target_link_libraries( sir_converteffects_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertEffects_UT" COMMAND sir_converteffects_test )
 
+set( sir_UT_convertthread_SRCS
+        ConvertThreadTest.cpp
+    )
+add_executable( sir_convertthread_test ${sir_UT_convertthread_SRCS} )
+target_link_libraries( sir_convertthread_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "ConvertThread_UT" COMMAND sir_convertthread_test )
+
 set( sir_UT_languageutils_SRCS
         LanguageUtilsTest.cpp
     )

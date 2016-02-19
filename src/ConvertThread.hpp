@@ -49,6 +49,7 @@ class QImage;
 class ConvertThread : public QThread {
     Q_OBJECT
     friend class ConvertDialog;
+    friend class ConvertThreadTest;
 
 public:
     ConvertThread(QObject *parent, int tid);

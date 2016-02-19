@@ -36,6 +36,7 @@
 class SharedInformation
 {
     friend class ConvertThread;
+    friend class ConvertThreadTest;
     friend class ConvertDialog;
     friend class ConvertDialogTest;
     friend class ConvertEffects;
