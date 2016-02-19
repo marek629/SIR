@@ -61,7 +61,7 @@ void ConvertThreadTest::test_fillImage()
 
     thread.fillImage(&testImage);
 
-    QCOMPARE(testImage.pixel(1,1), expected.rgb());
+    QCOMPARE(testImage.pixel(1,1), expected.rgba());
 }
 
 QTEST_MAIN(ConvertThreadTest)
