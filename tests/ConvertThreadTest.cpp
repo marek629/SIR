@@ -31,10 +31,16 @@ void ConvertThreadTest::initTestCase() {}
 
 void ConvertThreadTest::cleanupTestCase()
 {
+    QFileInfoList removedFileInfoList;
+
     foreach (QFileInfo fileInfo, createdFileInfoList) {
         QFile file(fileInfo.absoluteFilePath());
-        QVERIFY(file.remove());
+        if (file.remove()) {
+            removedFileInfoList << fileInfo;
+        }
     }
+
+//    QCOMPARE(removedFileInfoList.length(), createdFileInfoList.length());
 }
 
 void ConvertThreadTest::test_fillImage_data()
@@ -75,12 +81,6 @@ void ConvertThreadTest::test_fillImage()
 
 void ConvertThreadTest::test_loadImage_data()
 {
-    QTest::addColumn<bool>("isRawImage");
-    QTest::addColumn<bool>("isSvgImage");
-    QTest::addColumn<QString>("imagePath");
-    QTest::addColumn<QColor>("customBackgroundColor");
-    QTest::addColumn<QColor>("expectedBackgroundColor");
-
     QImage testImage(10, 20, QImage::Format_ARGB32);
     testImage.fill(Qt::transparent);
     QPainter painter;
@@ -92,20 +92,38 @@ void ConvertThreadTest::test_loadImage_data()
     QString tempFileNamePattern("%1%2%3");
     tempFileNamePattern = tempFileNamePattern.arg(QDir::tempPath(),
                                                   QDir::separator());
-    QTemporaryFile tempFile(tempFileNamePattern.arg("sir-XXXXXX.png"));
-    tempFile.setAutoRemove(false);
-    testImage.save(&tempFile, "PNG");
-    QFileInfo tempFileInfo(tempFile);
-    createdFileInfoList << tempFileInfo;
+
+    QTemporaryFile pngTempFile(tempFileNamePattern.arg("sir-XXXXXX.png"));
+    pngTempFile.setAutoRemove(false);
+    testImage.save(&pngTempFile, "PNG");
+    QFileInfo pngTempFileInfo(pngTempFile);
+    createdFileInfoList << pngTempFileInfo;
+
+    QTemporaryFile gifTempFile(tempFileNamePattern.arg("sir-XXXXXX.gif"));
+    gifTempFile.setAutoRemove(false);
+    testImage.save(&gifTempFile, "GIF");
+    QFileInfo gifTempFileInfo(gifTempFile);
+    createdFileInfoList << gifTempFileInfo;
+
+    QTemporaryFile regularTempFile(tempFileNamePattern.arg("sir-XXXXXX.bmp"));
+    regularTempFile.setAutoRemove(false);
+    testImage.save(&regularTempFile);
+    QFileInfo regularTempFileInfo(regularTempFile);
+    createdFileInfoList << regularTempFileInfo;
+
+    QTest::addColumn<bool>("isRawImage");
+    QTest::addColumn<bool>("isSvgImage");
+    QTest::addColumn<QString>("imagePath");
+    QTest::addColumn<QString>("targetFormat");
+    QTest::addColumn<QColor>("customBackgroundColor");
+    QTest::addColumn<QColor>("expectedBackgroundColor");
 
     QTest::newRow("load regular image")
-            << false << false << tempFileInfo.absoluteFilePath()
-            << QColor() << QColor(Qt::transparent);
-
-    // Custom background color should add to result image after load image data.
+            << false << false << regularTempFileInfo.absoluteFilePath()
+            << "png" << QColor() << QColor(Qt::black);
     QTest::newRow("load regular image with custom background color")
-            << false << false << tempFileInfo.absoluteFilePath()
-            << QColor(Qt::red) << QColor(Qt::transparent);
+            << false << false << regularTempFileInfo.absoluteFilePath()
+            << "png" << QColor(Qt::red) << QColor(Qt::black);
 }
 
 void ConvertThreadTest::test_loadImage()
@@ -113,11 +131,13 @@ void ConvertThreadTest::test_loadImage()
     QFETCH(bool, isRawImage);
     QFETCH(bool, isSvgImage);
     QFETCH(QString, imagePath);
+    QFETCH(QString, targetFormat);
     QFETCH(QColor, customBackgroundColor);
     QFETCH(QColor, expectedBackgroundColor);
 
     SharedInformation sharedInfo;
     sharedInfo.backgroundColor = customBackgroundColor;
+    sharedInfo.format = targetFormat;
     ConvertThread::setSharedInfo(sharedInfo);
 
     ConvertThread thread(this, 1);
