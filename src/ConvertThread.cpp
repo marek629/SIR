@@ -80,8 +80,6 @@ void ConvertThread::convertImage(const QString& name, const QString& extension,
   */
 void ConvertThread::run()
 {
-    RawToolbox rawToolbox = RawToolbox(&shared.rawModel);
-
     while(work) {
         pd.imgData = this->imageData; // imageData change protection by convertImage()
         sizeComputed = 0;
@@ -117,24 +115,12 @@ void ConvertThread::run()
         originalFormat = originalFormat.toLower();
         bool svgSource(originalFormat == "svg" || originalFormat == "svgz");
 
-        QImage *image = 0;
+        QImage *image = loadImage(pd.imagePath, &shared.rawModel, svgSource);
 
-        // load image data
-        if (rawToolbox.isRawSupportEnabled()) {
-            RawImageLoader rawLoader = RawImageLoader(&shared.rawModel,
-                                                      pd.imagePath);
-            image = rawLoader.load();
-        } else if (svgSource) {
-            image = loadSvgImage();
-            if (!image) {
-                getNextOrStop();
-                continue;
-            }
-        } else {
-            image = new QImage();
-            image->load(pd.imagePath);
+        if (!image) {
+            getNextOrStop();
+            continue;
         }
-
         if(image->isNull()) {
             //For some reason we where not able to open the image file
             emit imageStatus(pd.imgData, tr("Failed to open original image"),
@@ -680,6 +666,25 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
         }
     }
     return 0;
+}
+
+QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel, bool isSvgSource)
+{
+    RawToolbox rawToolbox(rawModel);
+
+    QImage *image = 0;
+
+    if (rawToolbox.isRawSupportEnabled()) {
+        RawImageLoader rawLoader = RawImageLoader(rawModel, imagePath);
+        image = rawLoader.load();
+    } else if (isSvgSource) {
+        image = loadSvgImage();
+    } else {
+        image = new QImage();
+        image->load(imagePath);
+    }
+
+    return image;
 }
 
 /** Fills image with custom background color if is valid or transparent
