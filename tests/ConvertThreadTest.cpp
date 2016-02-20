@@ -21,6 +21,7 @@
 
 #include "ConvertThreadTest.hpp"
 
+#include <QImageWriter>
 #include <QPainter>
 #include <QTemporaryFile>
 
@@ -40,7 +41,7 @@ void ConvertThreadTest::cleanupTestCase()
         }
     }
 
-//    QCOMPARE(removedFileInfoList.length(), createdFileInfoList.length());
+    QCOMPARE(removedFileInfoList.length(), createdFileInfoList.length());
 }
 
 void ConvertThreadTest::test_fillImage_data()
@@ -99,12 +100,6 @@ void ConvertThreadTest::test_loadImage_data()
     QFileInfo pngTempFileInfo(pngTempFile);
     createdFileInfoList << pngTempFileInfo;
 
-    QTemporaryFile gifTempFile(tempFileNamePattern.arg("sir-XXXXXX.gif"));
-    gifTempFile.setAutoRemove(false);
-    testImage.save(&gifTempFile, "GIF");
-    QFileInfo gifTempFileInfo(gifTempFile);
-    createdFileInfoList << gifTempFileInfo;
-
     QTemporaryFile regularTempFile(tempFileNamePattern.arg("sir-XXXXXX.bmp"));
     regularTempFile.setAutoRemove(false);
     testImage.save(&regularTempFile);
@@ -124,6 +119,14 @@ void ConvertThreadTest::test_loadImage_data()
     QTest::newRow("load regular image with custom background color")
             << false << false << regularTempFileInfo.absoluteFilePath()
             << "png" << QColor(Qt::red) << QColor(Qt::black);
+
+    if (QImageWriter::supportedImageFormats().contains("gif")) {
+        QTemporaryFile gifTempFile(tempFileNamePattern.arg("sir-XXXXXX.gif"));
+        gifTempFile.setAutoRemove(false);
+        testImage.save(&gifTempFile, "GIF");
+        QFileInfo gifTempFileInfo(gifTempFile);
+        createdFileInfoList << gifTempFileInfo;
+    }
 }
 
 void ConvertThreadTest::test_loadImage()
