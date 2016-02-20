@@ -668,7 +668,8 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
     return 0;
 }
 
-QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel, bool isSvgSource)
+QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
+                                 bool isSvgSource)
 {
     RawToolbox rawToolbox(rawModel);
 

@@ -134,7 +134,8 @@ private:
     bool isLinearFileSizeFormat(double *destSize);
     char askEnlarge(const QImage &image, const QString &imagePath);
     char askOverwrite(QFile *tempFile);
-    QImage *loadImage(const QString &imagePath, RawModel *rawModel, bool isSvgSource);
+    QImage *loadImage(const QString &imagePath, RawModel *rawModel,
+                      bool isSvgSource);
     void fillImage(QImage *img);
     QImage *loadSvgImage();
     QImage paintEffects(QImage *image);
