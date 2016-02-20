@@ -21,6 +21,9 @@
 
 #include "ConvertThreadTest.hpp"
 
+#include <QPainter>
+#include <QTemporaryFile>
+
 
 ConvertThreadTest::ConvertThreadTest() {}
 
@@ -62,6 +65,60 @@ void ConvertThreadTest::test_fillImage()
     thread.fillImage(&testImage);
 
     QCOMPARE(testImage.pixel(1,1), expected.rgba());
+}
+
+void ConvertThreadTest::test_loadImage_data()
+{
+    QTest::addColumn<bool>("isRawImage");
+    QTest::addColumn<bool>("isSvgImage");
+    QTest::addColumn<QString>("imagePath");
+    QTest::addColumn<QColor>("customBackgroundColor");
+    QTest::addColumn<QColor>("expectedBackgroundColor");
+
+    QImage testImage(10, 20, QImage::Format_ARGB32);
+    testImage.fill(Qt::transparent);
+    QPainter painter;
+    painter.begin(&testImage);
+    painter.setPen(Qt::black);
+    painter.setBrush(Qt::SolidPattern);
+    painter.fillRect(5, 10, 5, 10, Qt::black);
+    painter.end();
+    QTemporaryFile tempFile("sir-XXXXXX.png");
+    tempFile.setAutoRemove(false);
+    testImage.save(&tempFile, "PNG");
+    QFileInfo tempFileInfo(tempFile);
+
+    QTest::newRow("load regular image")
+            << false << false << tempFileInfo.absoluteFilePath()
+            << QColor() << QColor(Qt::transparent);
+
+    // Custom background color should add to result image after load image data.
+    QTest::newRow("load regular image with custom background color")
+            << false << false << tempFileInfo.absoluteFilePath()
+            << QColor(Qt::red) << QColor(Qt::transparent);
+}
+
+void ConvertThreadTest::test_loadImage()
+{
+    QFETCH(bool, isRawImage);
+    QFETCH(bool, isSvgImage);
+    QFETCH(QString, imagePath);
+    QFETCH(QColor, customBackgroundColor);
+    QFETCH(QColor, expectedBackgroundColor);
+
+    SharedInformation sharedInfo;
+    sharedInfo.backgroundColor = customBackgroundColor;
+    ConvertThread::setSharedInfo(sharedInfo);
+
+    ConvertThread thread(this, 1);
+
+    RawModel rawModel(isRawImage, "", "");
+
+    QImage *image = thread.loadImage(imagePath, &rawModel, isSvgImage);
+
+    QCOMPARE(image->pixel(1, 1), expectedBackgroundColor.rgba());
+
+    delete image;
 }
 
 QTEST_MAIN(ConvertThreadTest)

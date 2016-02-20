@@ -40,6 +40,8 @@ private slots:
 
     void test_fillImage_data();
     void test_fillImage();
+    void test_loadImage_data();
+    void test_loadImage();
 };
 
 #endif // CONVERTTHREADTEST_HPP
