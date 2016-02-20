@@ -34,6 +34,9 @@ class ConvertThreadTest : public QObject
 public:
     ConvertThreadTest();
 
+private:
+    QFileInfoList createdFileInfoList;
+
 private slots:
     void initTestCase();
     void cleanupTestCase();

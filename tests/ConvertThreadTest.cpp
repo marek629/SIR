@@ -29,7 +29,13 @@ ConvertThreadTest::ConvertThreadTest() {}
 
 void ConvertThreadTest::initTestCase() {}
 
-void ConvertThreadTest::cleanupTestCase() {}
+void ConvertThreadTest::cleanupTestCase()
+{
+    foreach (QFileInfo fileInfo, createdFileInfoList) {
+        QFile file(fileInfo.absoluteFilePath());
+        QVERIFY(file.remove());
+    }
+}
 
 void ConvertThreadTest::test_fillImage_data()
 {
@@ -83,10 +89,14 @@ void ConvertThreadTest::test_loadImage_data()
     painter.setBrush(Qt::SolidPattern);
     painter.fillRect(5, 10, 5, 10, Qt::black);
     painter.end();
-    QTemporaryFile tempFile("sir-XXXXXX.png");
+    QString tempFileNamePattern("%1%2%3");
+    tempFileNamePattern = tempFileNamePattern.arg(QDir::tempPath(),
+                                                  QDir::separator());
+    QTemporaryFile tempFile(tempFileNamePattern.arg("sir-XXXXXX.png"));
     tempFile.setAutoRemove(false);
     testImage.save(&tempFile, "PNG");
     QFileInfo tempFileInfo(tempFile);
+    createdFileInfoList << tempFileInfo;
 
     QTest::newRow("load regular image")
             << false << false << tempFileInfo.absoluteFilePath()
