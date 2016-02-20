@@ -119,6 +119,15 @@ void ConvertThreadTest::test_loadImage_data()
     QTest::newRow("load regular image with custom background color")
             << false << false << regularTempFileInfo.absoluteFilePath()
             << "png" << QColor(Qt::red) << QColor(Qt::black);
+    QTest::newRow("load transparent PNG image")
+            << false << false << regularTempFileInfo.absoluteFilePath()
+            << "png" << QColor() << QColor(Qt::black);
+    QTest::newRow("load transparent PNG image with custom background color, target PNG format")
+            << false << false << pngTempFileInfo.absoluteFilePath()
+            << "png" << QColor(Qt::red) << QColor(Qt::transparent);
+    QTest::newRow("load transparent PNG image with custom background color, target BMP format")
+            << false << false << pngTempFileInfo.absoluteFilePath()
+            << "bmp" << QColor(Qt::red) << QColor(Qt::red);
 
     if (QImageWriter::supportedImageFormats().contains("gif")) {
         QTemporaryFile gifTempFile(tempFileNamePattern.arg("sir-XXXXXX.gif"));
@@ -126,6 +135,22 @@ void ConvertThreadTest::test_loadImage_data()
         testImage.save(&gifTempFile, "GIF");
         QFileInfo gifTempFileInfo(gifTempFile);
         createdFileInfoList << gifTempFileInfo;
+
+        QTest::newRow("load transparent PNG image with custom background color, target GIF format")
+                << false << false << pngTempFileInfo.absoluteFilePath()
+                << "gif" << QColor(Qt::red) << QColor(Qt::transparent);
+        QTest::newRow("load transparent GIF image")
+                << false << false << gifTempFileInfo.absoluteFilePath()
+                << "gif" << QColor() << QColor(Qt::black);
+        QTest::newRow("load transparent GIF image with custom background color, target PNG format")
+                << false << false << gifTempFileInfo.absoluteFilePath()
+                << "png" << QColor(Qt::red) << QColor(Qt::transparent);
+        QTest::newRow("load transparent GIF image with custom background color, target GIF format")
+                << false << false << gifTempFileInfo.absoluteFilePath()
+                << "gif" << QColor(Qt::red) << QColor(Qt::transparent);
+        QTest::newRow("load transparent GIF image with custom background color, target BMP format")
+                << false << false << gifTempFileInfo.absoluteFilePath()
+                << "gif" << QColor(Qt::red) << QColor(Qt::red);
     }
 }
 
