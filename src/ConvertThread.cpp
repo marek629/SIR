@@ -681,8 +681,20 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
     } else if (isSvgSource) {
         image = loadSvgImage();
     } else {
-        image = new QImage();
-        image->load(imagePath);
+        QFileInfo imageFileInfo(imagePath);
+        QString fileExtension = imageFileInfo.fileName().split('.').last();
+        fileExtension = fileExtension.toLower();
+        if (fileExtension == "png" || fileExtension == "gif") {
+            QImage loadedImage;
+            loadedImage.load(imagePath);
+            image = new QImage(loadedImage.size(), loadedImage.format());
+            fillImage(image);
+            QPainter painter(image);
+            painter.drawImage(image->rect(), loadedImage);
+        } else {
+            image = new QImage();
+            image->load(imagePath);
+        }
     }
 
     return image;
@@ -693,12 +705,14 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
   * \sa SharedInformation::backgroundColor SharedInformation::format
   */
 void ConvertThread::fillImage(QImage *img) {
-    if (shared.backgroundColor.isValid())
-        img->fill(shared.backgroundColor.rgb());
-    else if (shared.format == "gif" || shared.format == "png")
+    if (shared.format == "gif" || shared.format == "png") {
         img->fill(Qt::transparent);
-    else // in other formats tranparency isn't supported
+    } else if (shared.backgroundColor.isValid()) {
+        img->fill(shared.backgroundColor.rgb());
+    } else {
+        // in other formats tranparency isn't supported
         img->fill(Qt::white);
+    }
 }
 
 /** Loads and modifies SVG file if needed. Renders SVG data to \a image object.
