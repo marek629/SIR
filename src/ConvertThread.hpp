@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef CONVERTTHREAD_H
-#define CONVERTTHREAD_H
+#ifndef CONVERTTHREAD_HPP
+#define CONVERTTHREAD_HPP
 
 #ifndef SIR_CMAKE
 #define SIR_METADATA_SUPPORT
@@ -141,4 +141,4 @@ private:
     QImage paintEffects(QImage *image);
 };
 
-#endif // CONVERTTHREAD_H
+#endif // CONVERTTHREAD_HPP
