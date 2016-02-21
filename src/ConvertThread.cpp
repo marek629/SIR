@@ -700,18 +700,16 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
     return image;
 }
 
-/** Fills image with custom background color if is valid or transparent
-  * (if target file format supports transparency); otherwise with white.
-  * \sa SharedInformation::backgroundColor SharedInformation::format
-  */
 void ConvertThread::fillImage(QImage *img) {
-    if (shared.format == "gif" || shared.format == "png") {
-        img->fill(Qt::transparent);
-    } else if (shared.backgroundColor.isValid()) {
+    if (shared.backgroundColor.isValid()) {
         img->fill(shared.backgroundColor.rgb());
     } else {
-        // in other formats tranparency isn't supported
-        img->fill(Qt::white);
+        if (shared.format == "gif" || shared.format == "png") {
+            img->fill(Qt::transparent);
+        } else {
+            // in other formats tranparency isn't supported
+            img->fill(Qt::white);
+        }
     }
 }
 
