@@ -128,6 +128,9 @@ void ConvertThreadTest::test_loadImage_data()
     QTest::newRow("load transparent PNG image with custom background color, target BMP format")
             << false << false << pngTempFileInfo.absoluteFilePath()
             << "bmp" << QColor(Qt::red) << QColor(Qt::red);
+    QTest::newRow("load transparent PNG image with custom background color, target BMP format, RAW support enabled")
+            << true << false << pngTempFileInfo.absoluteFilePath()
+            << "bmp" << QColor(Qt::red) << QColor(Qt::red);
 }
 
 void ConvertThreadTest::test_loadImage()
