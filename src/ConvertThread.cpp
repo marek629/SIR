@@ -34,6 +34,8 @@
 #include <QPainter>
 #include <QtSvg/QSvgRenderer>
 
+#include <QImageReader>
+
 #include <cmath>
 
 
@@ -671,52 +673,58 @@ char ConvertThread::askOverwrite(QFile *tempFile) {
 QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
                                  bool isSvgSource)
 {
-    RawToolbox rawToolbox(rawModel);
+    QImage *image = NULL;
 
-    QImage *image = 0;
-
-    if (rawToolbox.isRawSupportEnabled()) {
-        RawImageLoader rawLoader = RawImageLoader(rawModel, imagePath);
-        image = rawLoader.load();
+    if (isRegularImageToLoad(imagePath)) {
+        image = loadRegularImage(imagePath);
     } else if (isSvgSource) {
-        image = loadSvgImage();
+        image = loadSvgImage(imagePath);
     } else {
-        QFileInfo imageFileInfo(imagePath);
-        QString fileExtension = imageFileInfo.fileName().split('.').last();
-        fileExtension = fileExtension.toLower();
-        if (fileExtension == "png" || fileExtension == "gif") {
-            QImage loadedImage;
-            loadedImage.load(imagePath);
-            image = new QImage(loadedImage.size(), loadedImage.format());
-            fillImage(image);
-            QPainter painter(image);
-            painter.drawImage(image->rect(), loadedImage);
-        } else {
-            image = new QImage();
-            image->load(imagePath);
-        }
+        image = loadRawImage(imagePath, rawModel);
     }
 
     return image;
 }
 
-void ConvertThread::fillImage(QImage *img) {
-    if (shared.backgroundColor.isValid()) {
-        img->fill(shared.backgroundColor.rgb());
-    } else {
-        if (shared.format == "gif" || shared.format == "png") {
-            img->fill(Qt::transparent);
-        } else {
-            // in other formats tranparency isn't supported
-            img->fill(Qt::white);
-        }
+bool ConvertThread::isRegularImageToLoad(const QString &imagePath)
+{
+    QFileInfo imageFileInfo(imagePath);
+    QString fileExtension = imageFileInfo.fileName().split('.').last();
+    fileExtension = fileExtension.toLower();
+
+    if (fileExtension == "svg" || fileExtension == "svgz") {
+        return false;
     }
+
+    QByteArray format = fileExtension.toLatin1();
+    return QImageReader::supportedImageFormats().contains(format);
 }
 
-/** Loads and modifies SVG file if needed. Renders SVG data to \a image object.
-  * \return Pointer to rendered image if succeed. Otherwise null pointer.
-  */
-QImage * ConvertThread::loadSvgImage() {
+QImage *ConvertThread::loadRegularImage(const QString &imagePath)
+{
+    QImage *image = NULL;
+
+    QFileInfo imageFileInfo(imagePath);
+    QString fileExtension = imageFileInfo.fileName().split('.').last();
+    fileExtension = fileExtension.toLower();
+
+    if (fileExtension == "png" || fileExtension == "gif") {
+        QImage loadedImage;
+        loadedImage.load(imagePath);
+        image = new QImage(loadedImage.size(), loadedImage.format());
+        fillImage(image);
+        QPainter painter(image);
+        painter.drawImage(image->rect(), loadedImage);
+    } else {
+        image = new QImage();
+        image->load(imagePath);
+    }
+
+    return image;
+}
+
+QImage *ConvertThread::loadSvgImage(const QString &imagePath)
+{
     QSvgRenderer renderer;
     if (shared.svgModifiersEnabled) {
         SvgModifier modifier(pd.imagePath);
@@ -787,6 +795,32 @@ QImage * ConvertThread::loadSvgImage() {
     hasHeight = false;
     // finaly return the image pointer
     return img;
+}
+
+QImage *ConvertThread::loadRawImage(const QString &imagePath, RawModel *rawModel)
+{
+    RawToolbox rawToolbox(rawModel);
+
+    if (rawToolbox.isRawSupportEnabled()) {
+        RawImageLoader rawLoader = RawImageLoader(rawModel, imagePath);
+        return rawLoader.load();
+    }
+
+    return NULL;
+}
+
+void ConvertThread::fillImage(QImage *img)
+{
+    if (shared.backgroundColor.isValid()) {
+        img->fill(shared.backgroundColor.rgb());
+    } else {
+        if (shared.format == "gif" || shared.format == "png") {
+            img->fill(Qt::transparent);
+        } else {
+            // in other formats tranparency isn't supported
+            img->fill(Qt::white);
+        }
+    }
 }
 
 /** Draws effects into new image.
