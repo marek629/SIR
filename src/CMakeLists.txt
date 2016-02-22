@@ -3,6 +3,7 @@
 # Source files
 file( GLOB_RECURSE sir_SRCS
         exceptions/*.cpp
+        image/*.cpp
         raw/*.cpp
     )
 set( sir_SRCS ${sir_SRCS}

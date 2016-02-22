@@ -24,13 +24,11 @@
 #include "ConvertEffects.hpp"
 #include "Settings.hpp"
 #include "SvgModifier.hpp"
-#include "raw/RawImageLoader.hpp"
-#include "raw/RawModel.hpp"
+#include "image/QImageLoader.hpp"
 #include "widgets/MessageBox.hpp"
 
 #include <QDebug>
 #include <QDir>
-#include <QImage>
 #include <QPainter>
 #include <QtSvg/QSvgRenderer>
 
@@ -799,14 +797,8 @@ QImage *ConvertThread::loadSvgImage(const QString &imagePath)
 
 QImage *ConvertThread::loadRawImage(const QString &imagePath, RawModel *rawModel)
 {
-    RawToolbox rawToolbox(rawModel);
-
-    if (rawToolbox.isRawSupportEnabled()) {
-        RawImageLoader rawLoader = RawImageLoader(rawModel, imagePath);
-        return rawLoader.load();
-    }
-
-    return NULL;
+    QImageLoader loader(rawModel);
+    return loader.loadRawImage(imagePath);
 }
 
 void ConvertThread::fillImage(QImage *img)
