@@ -673,12 +673,14 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
 {
     QImage *image = NULL;
 
+    QImageLoader loader(rawModel, this);
+
     if (isRegularImageToLoad(imagePath)) {
-        image = loadRegularImage(imagePath);
+        image = loader.loadRegularImage(imagePath);
     } else if (isSvgSource) {
         image = loadSvgImage(imagePath);
     } else {
-        image = loadRawImage(imagePath, rawModel);
+        image = loader.loadRawImage(imagePath);
     }
 
     return image;
@@ -696,29 +698,6 @@ bool ConvertThread::isRegularImageToLoad(const QString &imagePath)
 
     QByteArray format = fileExtension.toLatin1();
     return QImageReader::supportedImageFormats().contains(format);
-}
-
-QImage *ConvertThread::loadRegularImage(const QString &imagePath)
-{
-    QImage *image = NULL;
-
-    QFileInfo imageFileInfo(imagePath);
-    QString fileExtension = imageFileInfo.fileName().split('.').last();
-    fileExtension = fileExtension.toLower();
-
-    if (fileExtension == "png" || fileExtension == "gif") {
-        QImage loadedImage;
-        loadedImage.load(imagePath);
-        image = new QImage(loadedImage.size(), loadedImage.format());
-        fillImage(image);
-        QPainter painter(image);
-        painter.drawImage(image->rect(), loadedImage);
-    } else {
-        image = new QImage();
-        image->load(imagePath);
-    }
-
-    return image;
 }
 
 QImage *ConvertThread::loadSvgImage(const QString &imagePath)
@@ -793,12 +772,6 @@ QImage *ConvertThread::loadSvgImage(const QString &imagePath)
     hasHeight = false;
     // finaly return the image pointer
     return img;
-}
-
-QImage *ConvertThread::loadRawImage(const QString &imagePath, RawModel *rawModel)
-{
-    QImageLoader loader(rawModel);
-    return loader.loadRawImage(imagePath);
 }
 
 void ConvertThread::fillImage(QImage *img)

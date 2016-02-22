@@ -21,10 +21,13 @@
 
 #include "image/QImageLoader.hpp"
 
+#include "ConvertThread.hpp"
 #include "raw/RawImageLoader.hpp"
 
+#include <QPainter>
 
-QImageLoader::QImageLoader(RawModel *rawModel)
+
+QImageLoader::QImageLoader(RawModel *rawModel, ConvertThread *thread)
 {
     this->rawModel = rawModel;
 }
@@ -39,4 +42,27 @@ QImage *QImageLoader::loadRawImage(const QString &imagePath)
     }
 
     return NULL;
+}
+
+QImage *QImageLoader::loadRegularImage(const QString &imagePath)
+{
+    QImage *image = NULL;
+
+    QFileInfo imageFileInfo(imagePath);
+    QString fileExtension = imageFileInfo.fileName().split('.').last();
+    fileExtension = fileExtension.toLower();
+
+    if (fileExtension == "png" || fileExtension == "gif") {
+        QImage loadedImage;
+        loadedImage.load(imagePath);
+        image = new QImage(loadedImage.size(), loadedImage.format());
+        convertThread->fillImage(image);
+        QPainter painter(image);
+        painter.drawImage(image->rect(), loadedImage);
+    } else {
+        image = new QImage();
+        image->load(imagePath);
+    }
+
+    return image;
 }

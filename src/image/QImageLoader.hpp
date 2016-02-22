@@ -24,6 +24,7 @@
 
 #include <QImage>
 
+class ConvertThread;
 class RawModel;
 
 
@@ -35,11 +36,13 @@ class RawModel;
 class QImageLoader
 {
 public:
-    QImageLoader(RawModel *rawModel);
+    QImageLoader(RawModel *rawModel, ConvertThread *thread);
 
     QImage *loadRawImage(const QString &imagePath);
+    QImage *loadRegularImage(const QString &imagePath);
 
 private:
+    ConvertThread *convertThread;
     RawModel *rawModel;
 };
 

@@ -57,6 +57,8 @@ public:
                       const QString& path);
     void setAcceptWork(bool work);
     void getNextOrStop();
+
+    void fillImage(QImage *img);
 #ifdef SIR_METADATA_SUPPORT
     void printError();
 #endif // SIR_METADATA_SUPPORT
@@ -138,11 +140,8 @@ private:
     QImage *loadImage(const QString &imagePath, RawModel *rawModel,
                       bool isSvgSource);
     bool isRegularImageToLoad(const QString &imagePath);
-    QImage *loadRegularImage(const QString &imagePath);
     QImage *loadSvgImage(const QString &imagePath);
-    QImage *loadRawImage(const QString &imagePath, RawModel *rawModel);
 
-    void fillImage(QImage *img);
     QImage paintEffects(QImage *image);
 };
 
