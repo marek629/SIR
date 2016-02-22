@@ -727,7 +727,7 @@ QImage *ConvertThread::loadSvgImage(const QString &imagePath)
 {
     QSvgRenderer renderer;
     if (shared.svgModifiersEnabled) {
-        SvgModifier modifier(pd.imagePath);
+        SvgModifier modifier(imagePath);
         // modify SVG file
         if (!shared.svgRemoveTextString.isNull())
             modifier.removeText(shared.svgRemoveTextString);
@@ -761,11 +761,11 @@ QImage *ConvertThread::loadSvgImage(const QString &imagePath)
             return NULL;
         }
     }
-    else if (!renderer.load(pd.imagePath)) {
+    else if (!renderer.load(imagePath)) {
         emit imageStatus(pd.imgData, tr("Failed to open SVG file"), Failed);
         return NULL;
     }
-    sizeComputed = computeSize(&renderer, pd.imagePath);
+    sizeComputed = computeSize(&renderer, imagePath);
     if (sizeComputed == 2)
         return NULL;
     // keep aspect ratio
