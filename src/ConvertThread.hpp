@@ -52,19 +52,6 @@ class ConvertThread : public QThread {
     friend class ConvertThreadTest;
 
 public:
-    ConvertThread(QObject *parent, int tid);
-    void convertImage(const QString& name, const QString& extension,
-                      const QString& path);
-    void setAcceptWork(bool work);
-    void getNextOrStop();
-
-    void fillImage(QImage *img);
-#ifdef SIR_METADATA_SUPPORT
-    void printError();
-#endif // SIR_METADATA_SUPPORT
-    static SharedInformation *sharedInfo();
-    static void setSharedInfo(const SharedInformation &info);
-
     //! Enumerator for ConvertThread::question() signal.
     enum Question {
         Overwrite,
@@ -80,6 +67,23 @@ public:
         Converting,
         Cancelled
     };
+
+    ConvertThread(QObject *parent, int tid);
+    void convertImage(const QString& name, const QString& extension,
+                      const QString& path);
+    void setAcceptWork(bool work);
+    void getNextOrStop();
+
+    void setImageStatus(const QStringList &imageData, const QString &message,
+                        Status status);
+
+    void fillImage(QImage *img);
+    char computeSize(QSvgRenderer *renderer, const QString &imagePath);
+#ifdef SIR_METADATA_SUPPORT
+    void printError();
+#endif // SIR_METADATA_SUPPORT
+    static SharedInformation *sharedInfo();
+    static void setSharedInfo(const SharedInformation &info);
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
@@ -132,14 +136,12 @@ private:
     void updateThumbnail(const QImage &image);
 #endif // SIR_METADATA_SUPPORT
     char computeSize(const QImage *image, const QString &imagePath);
-    char computeSize(QSvgRenderer *renderer, const QString &imagePath);
     bool isLinearFileSizeFormat(double *destSize);
     char askEnlarge(const QImage &image, const QString &imagePath);
     char askOverwrite(QFile *tempFile);
 
     QImage *loadImage(const QString &imagePath, RawModel *rawModel,
                       bool isSvgSource);
-    QImage *loadSvgImage(const QString &imagePath);
 
     QImage paintEffects(QImage *image);
 };

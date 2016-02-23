@@ -23,7 +23,6 @@
 
 #include "ConvertEffects.hpp"
 #include "Settings.hpp"
-#include "SvgModifier.hpp"
 #include "image/QImageLoader.hpp"
 #include "widgets/MessageBox.hpp"
 
@@ -239,6 +238,13 @@ void ConvertThread::getNextOrStop() {
     static QMutex m;
     QMutexLocker locker(&m);
     emit getNextImage(this->tid);
+}
+
+void ConvertThread::setImageStatus(const QStringList &imageData,
+                                   const QString &message,
+                                   ConvertThread::Status status)
+{
+    emit imageStatus(imageData, message, status);
 }
 
 #ifdef SIR_METADATA_SUPPORT
@@ -676,86 +682,29 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
     if (loader.isRegularImage(imagePath)) {
         image = loader.loadRegularImage(imagePath);
     } else if (isSvgSource) {
-        image = loadSvgImage(imagePath);
+        SvgParameters svgParams;
+        svgParams.setSvgModifiersEnabled(shared.svgModifiersEnabled);
+        svgParams.setSvgRemoveEmptyGroup(shared.svgRemoveEmptyGroup);
+        svgParams.setSvgRemoveTextString(shared.svgRemoveTextString);
+        svgParams.setMaintainAspect(shared.maintainAspect);
+        svgParams.setImageData(pd.imgData);
+        svgParams.setHeight(height);
+        svgParams.setWidth(width);
+        loader.setSvgParameters(svgParams);
+
+        image = loader.loadSvgImage(imagePath);
+
+        svgParams = loader.getSvgParameters();
+        height = svgParams.getHeight();
+        width = svgParams.getWidth();
+        hasHeight = svgParams.getHasHeight();
+        hasWidth = svgParams.getHasWidth();
+        sizeComputed = svgParams.getSizeComputed();
     } else {
         image = loader.loadRawImage(imagePath);
     }
 
     return image;
-}
-
-QImage *ConvertThread::loadSvgImage(const QString &imagePath)
-{
-    QSvgRenderer renderer;
-    if (shared.svgModifiersEnabled) {
-        SvgModifier modifier(imagePath);
-        // modify SVG file
-        if (!shared.svgRemoveTextString.isNull())
-            modifier.removeText(shared.svgRemoveTextString);
-        if (shared.svgRemoveEmptyGroup)
-            modifier.removeEmptyGroups();
-        // save SVG file
-        if (shared.svgSave) {
-            QString svgTargetFileName =
-                    targetFilePath.left(targetFilePath.lastIndexOf('.')+1) + "svg";
-            QFile file(svgTargetFileName);
-            // ask overwrite
-            if (file.exists()) {
-                shared.mutex.lock();
-                emit question(svgTargetFileName, Overwrite);
-                shared.mutex.unlock();
-            }
-            if (shared.overwriteResult == QMessageBox::Yes ||
-                    shared.overwriteResult == QMessageBox::YesToAll) {
-                if (!file.open(QIODevice::WriteOnly)) {
-                    emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
-                                     Failed);
-                    return NULL;
-                }
-                file.write(modifier.content());
-            }
-        }
-        // and load QByteArray buffer to renderer
-        if (!renderer.load(modifier.content())) {
-            emit imageStatus(pd.imgData, tr("Failed to open changed SVG file"),
-                             Failed);
-            return NULL;
-        }
-    }
-    else if (!renderer.load(imagePath)) {
-        emit imageStatus(pd.imgData, tr("Failed to open SVG file"), Failed);
-        return NULL;
-    }
-    sizeComputed = computeSize(&renderer, imagePath);
-    if (sizeComputed == 2)
-        return NULL;
-    // keep aspect ratio
-    if (shared.maintainAspect) {
-        qreal w = width;
-        qreal h = height;
-        qreal targetRatio = w / h;
-        QSizeF svgSize = renderer.defaultSize();
-        qreal currentRatio = svgSize.width() / svgSize.height();
-        if (currentRatio != targetRatio) {
-            qreal diffRatio;
-            if (currentRatio > targetRatio)
-                diffRatio = w / svgSize.width();
-            else
-                diffRatio = h / svgSize.height();
-            width = diffRatio * svgSize.width();
-            height = diffRatio * svgSize.height();
-        }
-    }
-    // create image
-    QImage *img = new QImage(width, height, QImage::Format_ARGB32);
-    fillImage(img);
-    QPainter painter(img);
-    renderer.render(&painter);
-    // don't scale rendered image
-    hasWidth = false;
-    hasHeight = false;
-    // finaly return the image pointer
-    return img;
 }
 
 void ConvertThread::fillImage(QImage *img)

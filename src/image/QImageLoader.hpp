@@ -22,6 +22,8 @@
 #ifndef QIMAGELOADER_HPP
 #define QIMAGELOADER_HPP
 
+#include "image/SvgParameters.hpp"
+
 #include <QImage>
 
 class ConvertThread;
@@ -33,18 +35,26 @@ class RawModel;
  *
  * This class was extracted from ConvertThread class.
  */
-class QImageLoader
+class QImageLoader : public QObject
 {
+    Q_OBJECT
+
 public:
     QImageLoader(RawModel *rawModel, ConvertThread *thread);
 
     QImage *loadRawImage(const QString &imagePath);
+
     QImage *loadRegularImage(const QString &imagePath);
     bool isRegularImage(const QString &imagePath);
+
+    QImage *loadSvgImage(const QString &imagePath);
+    SvgParameters getSvgParameters() const;
+    void setSvgParameters(const SvgParameters &params);
 
 private:
     ConvertThread *convertThread;
     RawModel *rawModel;
+    SvgParameters svgParameters;
 };
 
 #endif // QIMAGELOADER_HPP

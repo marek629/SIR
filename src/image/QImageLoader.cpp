@@ -22,15 +22,19 @@
 #include "image/QImageLoader.hpp"
 
 #include "ConvertThread.hpp"
+#include "SvgModifier.hpp"
 #include "raw/RawImageLoader.hpp"
 
 #include <QImageReader>
 #include <QPainter>
+#include <QtSvg/QSvgRenderer>
 
 
 QImageLoader::QImageLoader(RawModel *rawModel, ConvertThread *thread)
+    : QObject(thread)
 {
     this->rawModel = rawModel;
+    this->convertThread = thread;
 }
 
 QImage *QImageLoader::loadRawImage(const QString &imagePath)
@@ -80,4 +84,92 @@ bool QImageLoader::isRegularImage(const QString &imagePath)
 
     QByteArray format = fileExtension.toLatin1();
     return QImageReader::supportedImageFormats().contains(format);
+}
+
+QImage *QImageLoader::loadSvgImage(const QString &imagePath)
+{
+    QSvgRenderer renderer;
+    if (svgParameters.isSvgModifiersEnabled()) {
+        SvgModifier modifier(imagePath);
+        // modify SVG file
+        if (!svgParameters.getSvgRemoveTextString().isNull())
+            modifier.removeText(svgParameters.getSvgRemoveTextString());
+        if (svgParameters.isSvgRemoveEmptyGroup())
+            modifier.removeEmptyGroups();
+        // TODO: finish extraction of SvgParameters class and uncomment below code
+//        // save SVG file
+//        if (shared.svgSave) {
+//            QString svgTargetFileName =
+//                    targetFilePath.left(targetFilePath.lastIndexOf('.')+1) + "svg";
+//            QFile file(svgTargetFileName);
+//            // ask overwrite
+//            if (file.exists()) {
+//                shared.mutex.lock();
+//                emit question(svgTargetFileName, Overwrite);
+//                shared.mutex.unlock();
+//            }
+//            if (shared.overwriteResult == QMessageBox::Yes ||
+//                    shared.overwriteResult == QMessageBox::YesToAll) {
+//                if (!file.open(QIODevice::WriteOnly)) {
+//                    emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
+//                                     Failed);
+//                    return NULL;
+//                }
+//                file.write(modifier.content());
+//            }
+//        }
+//        // and load QByteArray buffer to renderer
+//        if (!renderer.load(modifier.content())) {
+//            emit imageStatus(pd.imgData, tr("Failed to open changed SVG file"),
+//                             Failed);
+//            return NULL;
+//        }
+    }
+    else if (!renderer.load(imagePath)) {
+        convertThread->setImageStatus(svgParameters.getImageData(),
+                                      tr("Failed to open SVG file"),
+                                      ConvertThread::Failed);
+        return NULL;
+    }
+    svgParameters.setSizeComputed(convertThread->computeSize(&renderer, imagePath));
+    if (svgParameters.getSizeComputed() == 2)
+        return NULL;
+    // keep aspect ratio
+    if (svgParameters.isMaintainAspect()) {
+        qreal w = svgParameters.getWidth();
+        qreal h = svgParameters.getHeight();
+        qreal targetRatio = w / h;
+        QSizeF svgSize = renderer.defaultSize();
+        qreal currentRatio = svgSize.width() / svgSize.height();
+        if (currentRatio != targetRatio) {
+            qreal diffRatio;
+            if (currentRatio > targetRatio)
+                diffRatio = w / svgSize.width();
+            else
+                diffRatio = h / svgSize.height();
+            svgParameters.setWidth(diffRatio * svgSize.width());
+            svgParameters.setHeight(diffRatio * svgSize.height());
+        }
+    }
+    // create image
+    QImage *img = new QImage(svgParameters.getWidth(), svgParameters.getHeight(),
+                             QImage::Format_ARGB32);
+    convertThread->fillImage(img);
+    QPainter painter(img);
+    renderer.render(&painter);
+    // don't scale rendered image
+    svgParameters.setHasWidth(false);
+    svgParameters.setHasHeight(false);
+    // finaly return the image pointer
+    return img;
+}
+
+SvgParameters QImageLoader::getSvgParameters() const
+{
+    return svgParameters;
+}
+
+void QImageLoader::setSvgParameters(const SvgParameters &params)
+{
+    svgParameters = params;
 }
