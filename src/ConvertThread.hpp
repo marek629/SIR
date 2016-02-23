@@ -139,7 +139,6 @@ private:
 
     QImage *loadImage(const QString &imagePath, RawModel *rawModel,
                       bool isSvgSource);
-    bool isRegularImageToLoad(const QString &imagePath);
     QImage *loadSvgImage(const QString &imagePath);
 
     QImage paintEffects(QImage *image);

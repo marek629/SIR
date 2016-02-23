@@ -32,8 +32,6 @@
 #include <QPainter>
 #include <QtSvg/QSvgRenderer>
 
-#include <QImageReader>
-
 #include <cmath>
 
 
@@ -675,7 +673,7 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
 
     QImageLoader loader(rawModel, this);
 
-    if (isRegularImageToLoad(imagePath)) {
+    if (loader.isRegularImage(imagePath)) {
         image = loader.loadRegularImage(imagePath);
     } else if (isSvgSource) {
         image = loadSvgImage(imagePath);
@@ -684,20 +682,6 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
     }
 
     return image;
-}
-
-bool ConvertThread::isRegularImageToLoad(const QString &imagePath)
-{
-    QFileInfo imageFileInfo(imagePath);
-    QString fileExtension = imageFileInfo.fileName().split('.').last();
-    fileExtension = fileExtension.toLower();
-
-    if (fileExtension == "svg" || fileExtension == "svgz") {
-        return false;
-    }
-
-    QByteArray format = fileExtension.toLatin1();
-    return QImageReader::supportedImageFormats().contains(format);
 }
 
 QImage *ConvertThread::loadSvgImage(const QString &imagePath)

@@ -24,6 +24,7 @@
 #include "ConvertThread.hpp"
 #include "raw/RawImageLoader.hpp"
 
+#include <QImageReader>
 #include <QPainter>
 
 
@@ -65,4 +66,18 @@ QImage *QImageLoader::loadRegularImage(const QString &imagePath)
     }
 
     return image;
+}
+
+bool QImageLoader::isRegularImage(const QString &imagePath)
+{
+    QFileInfo imageFileInfo(imagePath);
+    QString fileExtension = imageFileInfo.fileName().split('.').last();
+    fileExtension = fileExtension.toLower();
+
+    if (fileExtension == "svg" || fileExtension == "svgz") {
+        return false;
+    }
+
+    QByteArray format = fileExtension.toLatin1();
+    return QImageReader::supportedImageFormats().contains(format);
 }

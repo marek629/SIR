@@ -40,6 +40,7 @@ public:
 
     QImage *loadRawImage(const QString &imagePath);
     QImage *loadRegularImage(const QString &imagePath);
+    bool isRegularImage(const QString &imagePath);
 
 private:
     ConvertThread *convertThread;
