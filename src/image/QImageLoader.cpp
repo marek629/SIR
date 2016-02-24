@@ -32,7 +32,7 @@
 
 
 QImageLoader::QImageLoader(RawModel *rawModel, ConvertThread *thread)
-    : QObject(thread)
+    : QObject()
 {
     this->rawModel = rawModel;
     this->convertThread = thread;
