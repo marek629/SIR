@@ -36,6 +36,8 @@ public:
     void setSvgRemoveTextString(const QString &value);
     bool isSvgRemoveEmptyGroup() const;
     void setSvgRemoveEmptyGroup(bool value);
+    bool isSvgSave() const;
+    void setSvgSave(bool value);
 
     bool isMaintainAspect() const;
     void setMaintainAspect(bool value);
@@ -55,10 +57,14 @@ public:
     qint8 getSizeComputed() const;
     void setSizeComputed(const qint8 &value);
 
+    QString getTargetFilePath() const;
+    void setTargetFilePath(const QString &value);
+
 private:
     bool svgModifiersEnabled;
     QString svgRemoveTextString;
     bool svgRemoveEmptyGroup;
+    bool svgSave;
 
     bool maintainAspect;
 
@@ -70,6 +76,8 @@ private:
     bool hasHeight;
 
     qint8 sizeComputed;
+
+    QString targetFilePath;
 };
 
 #endif // SVGPARAMETERS_HPP

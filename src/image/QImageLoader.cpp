@@ -26,6 +26,7 @@
 #include "raw/RawImageLoader.hpp"
 
 #include <QImageReader>
+#include <QMessageBox>
 #include <QPainter>
 #include <QtSvg/QSvgRenderer>
 
@@ -96,34 +97,38 @@ QImage *QImageLoader::loadSvgImage(const QString &imagePath)
             modifier.removeText(svgParameters.getSvgRemoveTextString());
         if (svgParameters.isSvgRemoveEmptyGroup())
             modifier.removeEmptyGroups();
-        // TODO: finish extraction of SvgParameters class and uncomment below code
-//        // save SVG file
-//        if (shared.svgSave) {
-//            QString svgTargetFileName =
-//                    targetFilePath.left(targetFilePath.lastIndexOf('.')+1) + "svg";
-//            QFile file(svgTargetFileName);
-//            // ask overwrite
-//            if (file.exists()) {
-//                shared.mutex.lock();
-//                emit question(svgTargetFileName, Overwrite);
-//                shared.mutex.unlock();
-//            }
-//            if (shared.overwriteResult == QMessageBox::Yes ||
-//                    shared.overwriteResult == QMessageBox::YesToAll) {
-//                if (!file.open(QIODevice::WriteOnly)) {
-//                    emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
-//                                     Failed);
-//                    return NULL;
-//                }
-//                file.write(modifier.content());
-//            }
-//        }
-//        // and load QByteArray buffer to renderer
-//        if (!renderer.load(modifier.content())) {
-//            emit imageStatus(pd.imgData, tr("Failed to open changed SVG file"),
-//                             Failed);
-//            return NULL;
-//        }
+        // save SVG file
+        if (svgParameters.isSvgSave()) {
+            QString targetFilePath = svgParameters.getTargetFilePath();
+            QString svgTargetFileName = targetFilePath.left(
+                        targetFilePath.lastIndexOf('.') + 1);
+            svgTargetFileName += "svg";
+            QFile file(svgTargetFileName);
+            // ask overwrite
+            if (file.exists()) {
+                convertThread->askUser(svgTargetFileName,
+                                       ConvertThread::Overwrite);
+            }
+            int overwriteDecision = convertThread->getUserAnswer(
+                        ConvertThread::Overwrite);
+            if (overwriteDecision == QMessageBox::Yes ||
+                    overwriteDecision == QMessageBox::YesToAll) {
+                if (!file.open(QIODevice::WriteOnly)) {
+                    convertThread->setImageStatus(svgParameters.getImageData(),
+                                                  tr("Failed to save new SVG file"),
+                                                  ConvertThread::Failed);
+                    return NULL;
+                }
+                file.write(modifier.content());
+            }
+        }
+        // and load QByteArray buffer to renderer
+        if (!renderer.load(modifier.content())) {
+            convertThread->setImageStatus(svgParameters.getImageData(),
+                                          tr("Failed to open changed SVG file"),
+                                          ConvertThread::Failed);
+            return NULL;
+        }
     }
     else if (!renderer.load(imagePath)) {
         convertThread->setImageStatus(svgParameters.getImageData(),

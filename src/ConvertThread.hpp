@@ -76,6 +76,8 @@ public:
 
     void setImageStatus(const QStringList &imageData, const QString &message,
                         Status status);
+    void askUser(const QString &targetFilePath, Question question);
+    int getUserAnswer(Question question) const;
 
     void fillImage(QImage *img);
     char computeSize(QSvgRenderer *renderer, const QString &imagePath);

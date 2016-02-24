@@ -247,6 +247,29 @@ void ConvertThread::setImageStatus(const QStringList &imageData,
     emit imageStatus(imageData, message, status);
 }
 
+void ConvertThread::askUser(const QString &targetFilePath,
+                            ConvertThread::Question question)
+{
+    shared.mutex.lock();
+    emit this->question(targetFilePath, question);
+    shared.mutex.unlock();
+}
+
+int ConvertThread::getUserAnswer(ConvertThread::Question question) const
+{
+    switch (question) {
+    case Overwrite:
+        return shared.overwriteResult;
+        break;
+    case Enlarge:
+        return shared.enlargeResult;
+        break;
+    default:
+        return -1;
+        break;
+    }
+}
+
 #ifdef SIR_METADATA_SUPPORT
 /** Prints metadata error message on standard error output. This function is
   * available if SIR_METADATA_SUPPORT is defined only.
@@ -481,6 +504,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     return 0;
 }
 
+// TODO: move to QImageLoader class
 /** This is overloaded function. It's version for SVG vector image.
   *
   * Sets required image size.
@@ -686,10 +710,12 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
         svgParams.setSvgModifiersEnabled(shared.svgModifiersEnabled);
         svgParams.setSvgRemoveEmptyGroup(shared.svgRemoveEmptyGroup);
         svgParams.setSvgRemoveTextString(shared.svgRemoveTextString);
+        svgParams.setSvgSave(shared.svgSave);
         svgParams.setMaintainAspect(shared.maintainAspect);
         svgParams.setImageData(pd.imgData);
         svgParams.setHeight(height);
         svgParams.setWidth(width);
+        svgParams.setTargetFilePath(targetFilePath);
         loader.setSvgParameters(svgParams);
 
         image = loader.loadSvgImage(imagePath);

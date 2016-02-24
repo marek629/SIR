@@ -54,6 +54,16 @@ void SvgParameters::setSvgRemoveEmptyGroup(bool value)
     svgRemoveEmptyGroup = value;
 }
 
+bool SvgParameters::isSvgSave() const
+{
+    return svgSave;
+}
+
+void SvgParameters::setSvgSave(bool value)
+{
+    svgSave = value;
+}
+
 bool SvgParameters::isMaintainAspect() const
 {
     return maintainAspect;
@@ -122,4 +132,14 @@ qint8 SvgParameters::getSizeComputed() const
 void SvgParameters::setSizeComputed(const qint8 &value)
 {
     sizeComputed = value;
+}
+
+QString SvgParameters::getTargetFilePath() const
+{
+    return targetFilePath;
+}
+
+void SvgParameters::setTargetFilePath(const QString &value)
+{
+    targetFilePath = value;
 }
