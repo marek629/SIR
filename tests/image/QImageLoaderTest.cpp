@@ -67,6 +67,18 @@ void QImageLoaderTest::test_loadSvgImage_keepAspectRatio_data()
             << false << svg100x100FileName << false
             << svg100x100Width << svg100x100Height
             << svg100x100Width << svg100x100Height;
+    QTest::newRow("enabled keeping aspect ratio, same shape")
+            << false << svg100x100FileName << true
+            << svg100x100Width << svg100x100Height
+            << svg100x100Width << svg100x100Height;
+    QTest::newRow("enabled keeping aspect ratio, diffrent shape, more height")
+            << false << svg100x100FileName << true
+            << svg100x100Width + 200 << svg100x100Height + 500
+            << svg100x100Width + 200 << svg100x100Height + 200;
+    QTest::newRow("enabled keeping aspect ratio, diffrent shape, more width")
+            << false << svg100x100FileName << true
+            << svg100x100Width + 500 << svg100x100Height + 200
+            << svg100x100Width + 200 << svg100x100Height + 200;
 }
 
 void QImageLoaderTest::test_loadSvgImage_keepAspectRatio()
