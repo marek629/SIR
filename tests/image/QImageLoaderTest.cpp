@@ -26,6 +26,9 @@
 
 #include "tests/fake/ConvertThreadFake.hpp"
 
+// includes for Qt4
+#include <QTextStream>
+
 
 QImageLoaderTest::QImageLoaderTest(QObject *parent) : QObject(parent) {}
 
