@@ -50,6 +50,14 @@ add_executable( sir_convertthread_test ${sir_UT_convertthread_SRCS} )
 target_link_libraries( sir_convertthread_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertThread_UT" COMMAND sir_convertthread_test )
 
+set( sir_IT_qimageloader_SRCS
+        image/QImageLoaderTest.cpp
+        fake/ConvertThreadFake.cpp
+    )
+add_executable( sir_qimageloader_test ${sir_IT_qimageloader_SRCS} )
+target_link_libraries( sir_qimageloader_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "QImageLoader_IT" COMMAND sir_qimageloader_test )
+
 set( sir_UT_languageutils_SRCS
         LanguageUtilsTest.cpp
     )
