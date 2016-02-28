@@ -5,6 +5,7 @@
 ### unreleased
 
 * Fixed translations of standard dialog buttons
+* Fixed adding custom background color effect for transparent PNG images
 
 
 # v3.1

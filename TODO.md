@@ -4,7 +4,6 @@
 ## Nearest Release
 
 * Add saturation support to Raw basic tab
-* Check add background color effect for transparent PNG images
 * Check store last localization of added images to SIR
 * CMake optiomalization for Travis CI system - not needed build sir binary, sir_library only is sufficient
 * More JPEG compression options

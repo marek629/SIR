@@ -21,6 +21,7 @@
 
 #include "ConvertDialogTest.hpp"
 
+#include "Settings.hpp"
 #include "fake/CommandLineAssistantFake.hpp"
 #include "widgets/MessageBox.hpp"
 
@@ -31,11 +32,19 @@ ConvertDialogTest::ConvertDialogTest()
 
     CommandLineAssistantFake cmd;
     convertDialog = new ConvertDialog(0, QStringList(), &cmd);
+
+    Settings *settings = Settings::instance();
+    settings->readSettings();
+    backupLastDir = settings->settings.lastDir;
 }
 
 ConvertDialogTest::~ConvertDialogTest()
 {
     delete convertDialog;
+
+    Settings *settings = Settings::instance();
+    settings->settings.lastDir = backupLastDir;
+    settings->writeSettings();
 }
 
 void ConvertDialogTest::initTestCase() {}
@@ -525,6 +534,37 @@ void ConvertDialogTest::convert_svg_doNotRemoveText()
     QCOMPARE(sharedInfo->svgRemoveEmptyGroup, false);
     QCOMPARE(sharedInfo->svgSave, false);
     QCOMPARE(sharedInfo->svgModifiersEnabled, false);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_data()
+{
+    QString lastDirPattern = QDir::homePath() + QDir::separator()
+            + "%1" + QDir::separator();
+
+    QTest::addColumn<QString>("loadLastDir");
+    QTest::addColumn<QString>("writeLastDir");
+
+    QTest::newRow("same old and new last directory")
+            << lastDirPattern.arg("dir1") << lastDirPattern.arg("dir1");
+    QTest::newRow("diffrent old and new last directory")
+            << lastDirPattern.arg("dir1") << lastDirPattern.arg("dir2");
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings()
+{
+    QFETCH(QString, loadLastDir);
+    QFETCH(QString, writeLastDir);
+
+    Settings *settings = Settings::instance();
+
+    settings->settings.lastDir = loadLastDir;
+    settings->writeSettings();
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->settings.lastDir, writeLastDir);
 }
 
 QTEST_MAIN(ConvertDialogTest)
