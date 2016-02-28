@@ -560,6 +560,8 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings()
     settings->settings.lastDir = loadLastDir;
     settings->writeSettings();
 
+    settings->settings.lastDir = writeLastDir;
+
     convertDialog->converting = false;
     convertDialog->closeOrCancel();
 
