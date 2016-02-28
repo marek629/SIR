@@ -932,8 +932,16 @@ void ConvertDialog::closeOrCancel() {
         updateInterface();
         setCanceled();
     }
-    else
+    else {
         close();
+
+        // write last loaded directory
+        Settings *settings = Settings::instance();
+        QString toWriteLastDir = settings->settings.lastDir;
+        settings->readSettings();
+        settings->settings.lastDir = toWriteLastDir;
+        settings->writeSettings();
+    }
 }
 
 /** Terminates all worker threads. */
