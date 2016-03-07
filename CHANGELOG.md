@@ -6,6 +6,7 @@
 
 * Fixed translations of standard dialog buttons
 * Fixed adding custom background color effect for transparent PNG images
+* Fixed storing last localization of added images to SIR
 
 
 # v3.1

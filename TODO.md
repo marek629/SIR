@@ -4,7 +4,7 @@
 ## Nearest Release
 
 * Add saturation support to Raw basic tab
-* Check store last localization of added images to SIR
+* Store main window size and splitters
 * CMake optiomalization for Travis CI system - not needed build sir binary, sir_library only is sufficient
 * More JPEG compression options
 

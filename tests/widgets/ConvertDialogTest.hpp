@@ -64,8 +64,10 @@ private slots:
     void convert_svg_removeText();
     void convert_svg_doNotRemoveText();
 
-    void test_closeOrCancel_close_saveSettings_data();
-    void test_closeOrCancel_close_saveSettings();
+    void test_closeOrCancel_close_saveSettings_lastDir_data();
+    void test_closeOrCancel_close_saveSettings_lastDir();
+    void test_closeOrCancel_close_saveSettings_mainWindow_data();
+    void test_closeOrCancel_close_saveSettings_mainWindow();
 };
 
 #endif // CONVERTDIALOGTEST_HPP
