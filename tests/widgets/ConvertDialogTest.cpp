@@ -629,7 +629,12 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindow()
     settings->mainWindow.maximized = loadMaximized;
     settings->writeSettings();
 
-    settings->mainWindow.maximized = writeMaximized;
+    if (writeMaximized) {
+        convertDialog->window()->showMaximized();
+    }
+    else {
+        convertDialog->window()->showNormal();
+    }
 
     convertDialog->converting = false;
     convertDialog->closeOrCancel();
