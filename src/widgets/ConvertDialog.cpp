@@ -933,14 +933,15 @@ void ConvertDialog::closeOrCancel() {
         setCanceled();
     }
     else {
-        close();
-
         // write last loaded directory
         Settings *settings = Settings::instance();
         QString toWriteLastDir = settings->settings.lastDir;
         settings->readSettings();
+        settings->mainWindow.maximized = window()->isMaximized();
         settings->settings.lastDir = toWriteLastDir;
         settings->writeSettings();
+
+        close();
     }
 }
 
