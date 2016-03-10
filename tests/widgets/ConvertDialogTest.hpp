@@ -70,6 +70,8 @@ private slots:
     void test_closeOrCancel_close_saveSettings_isMainWindowMaximized();
     void test_closeOrCancel_close_saveSettings_mainWindowPosition_data();
     void test_closeOrCancel_close_saveSettings_mainWindowPosition();
+    void test_closeOrCancel_close_saveSettings_mainWindowSplitters_data();
+    void test_closeOrCancel_close_saveSettings_mainWindowSplitters();
 };
 
 #endif // CONVERTDIALOGTEST_HPP

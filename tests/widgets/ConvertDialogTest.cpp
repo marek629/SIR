@@ -575,10 +575,6 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximi
     QTest::addColumn<bool>("writeMaximized");
 //    QTest::addColumn<QSize>("loadSize");
 //    QTest::addColumn<QSize>("writeSize");
-//    QTest::addColumn<int>("loadHorizontalSplitterFirstWidth");
-//    QTest::addColumn<int>("writeHorizontalSplitterFirstWidth");
-//    QTest::addColumn<int>("loadVericalSplitterFirstWidth");
-//    QTest::addColumn<int>("writeVerticalSplitterFirstWidth");
 
     QTest::newRow("is not maximized at all")
             << false << false;
@@ -594,14 +590,8 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximi
 {
     QFETCH(bool, loadMaximized);
     QFETCH(bool, writeMaximized);
-//    QFETCH(QPoint, loadPosition);
-//    QFETCH(QPoint, writePosition);
 //    QFETCH(QSize, loadSize);
 //    QFETCH(QSize, writeSize);
-//    QFETCH(int, loadHorizontalSplitterFirstWidth);
-//    QFETCH(int, writeHorizontalSplitterFirstWidth);
-//    QFETCH(int, loadVericalSplitterFirstWidth);
-//    QFETCH(int, writeVerticalSplitterFirstWidth);
 
     Settings *settings = Settings::instance();
 
@@ -662,6 +652,62 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowPosition
 
     settings->readSettings();
     QCOMPARE(settings->mainWindow.possition, writePosition);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSplitters_data()
+{
+    QTest::addColumn<int>("loadHorizontalSplitterFirstWidth");
+    QTest::addColumn<int>("writeHorizontalSplitterFirstWidth");
+    QTest::addColumn<int>("loadVericalSplitterFirstWidth");
+    QTest::addColumn<int>("writeVerticalSplitterFirstWidth");
+
+    QTest::newRow("no move")
+            << 100 << 100 << 100 << 100;
+    QTest::newRow("horizontal splitter was moved")
+            << 100 << 120 << 100 << 100;
+    QTest::newRow("vertical splitter was moved")
+            << 100 << 100 << 100 << 120;
+    QTest::newRow("horizontal and vertical splitters was moved")
+            << 100 << 120 << 100 << 120;
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSplitters()
+{
+    QFETCH(int, loadHorizontalSplitterFirstWidth);
+    QFETCH(int, writeHorizontalSplitterFirstWidth);
+    QFETCH(int, loadVericalSplitterFirstWidth);
+    QFETCH(int, writeVerticalSplitterFirstWidth);
+
+    Settings *settings = Settings::instance();
+
+    QList<int> horizontalSizes;
+    horizontalSizes << loadHorizontalSplitterFirstWidth;
+    QSplitter *horizontalSplitter = convertDialog->horizontalSplitter;
+    horizontalSplitter->setSizes(horizontalSizes);
+
+    QList<int> verticalSizes;
+    verticalSizes << loadVericalSplitterFirstWidth;
+    QSplitter *verticalSplitter = convertDialog->verticalSplitter;
+    verticalSplitter->setSizes(verticalSizes);
+
+    settings->mainWindow.horizontalSplitter = horizontalSplitter->saveState();
+    settings->mainWindow.verticalSplitter = verticalSplitter->saveState();
+    settings->writeSettings();
+
+    horizontalSizes.clear();
+    horizontalSizes << writeHorizontalSplitterFirstWidth;
+    horizontalSplitter->setSizes(horizontalSizes);
+
+    verticalSizes.clear();
+    verticalSizes << writeVerticalSplitterFirstWidth;
+    verticalSplitter->setSizes(verticalSizes);
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->mainWindow.horizontalSplitter, horizontalSplitter->saveState());
+    QCOMPARE(settings->mainWindow.verticalSplitter, verticalSplitter->saveState());
 }
 
 QTEST_MAIN(ConvertDialogTest)
