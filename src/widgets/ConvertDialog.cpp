@@ -939,6 +939,8 @@ void ConvertDialog::closeOrCancel() {
         settings->readSettings();
         settings->mainWindow.maximized = window()->isMaximized();
         settings->mainWindow.possition = window()->pos();
+        settings->mainWindow.horizontalSplitter = horizontalSplitter->saveState();
+        settings->mainWindow.verticalSplitter = verticalSplitter->saveState();
         settings->settings.lastDir = toWriteLastDir;
         settings->writeSettings();
 
