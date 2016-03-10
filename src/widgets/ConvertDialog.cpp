@@ -938,6 +938,7 @@ void ConvertDialog::closeOrCancel() {
         QString toWriteLastDir = settings->settings.lastDir;
         settings->readSettings();
         settings->mainWindow.maximized = window()->isMaximized();
+        settings->mainWindow.possition = window()->pos();
         settings->settings.lastDir = toWriteLastDir;
         settings->writeSettings();
 
