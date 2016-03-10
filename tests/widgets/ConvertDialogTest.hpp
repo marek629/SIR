@@ -66,8 +66,10 @@ private slots:
 
     void test_closeOrCancel_close_saveSettings_lastDir_data();
     void test_closeOrCancel_close_saveSettings_lastDir();
-    void test_closeOrCancel_close_saveSettings_mainWindow_data();
-    void test_closeOrCancel_close_saveSettings_mainWindow();
+    void test_closeOrCancel_close_saveSettings_isMainWindowMaximized_data();
+    void test_closeOrCancel_close_saveSettings_isMainWindowMaximized();
+    void test_closeOrCancel_close_saveSettings_mainWindowPosition_data();
+    void test_closeOrCancel_close_saveSettings_mainWindowPosition();
 };
 
 #endif // CONVERTDIALOGTEST_HPP

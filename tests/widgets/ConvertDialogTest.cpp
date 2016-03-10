@@ -569,60 +569,39 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_lastDir()
     QCOMPARE(settings->settings.lastDir, writeLastDir);
 }
 
-void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindow_data()
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximized_data()
 {
-    QPoint topLeftCornerPosition(0, 0);
-    QSize windowSize(600, 800);
-
     QTest::addColumn<bool>("loadMaximized");
     QTest::addColumn<bool>("writeMaximized");
-    QTest::addColumn<QPoint>("loadPosition");
-    QTest::addColumn<QPoint>("writePosition");
-    QTest::addColumn<QSize>("loadSize");
-    QTest::addColumn<QSize>("writeSize");
-    QTest::addColumn<int>("loadHorizontalSplitterFirstWidth");
-    QTest::addColumn<int>("writeHorizontalSplitterFirstWidth");
-    QTest::addColumn<int>("loadVericalSplitterFirstWidth");
-    QTest::addColumn<int>("writeVerticalSplitterFirstWidth");
+//    QTest::addColumn<QSize>("loadSize");
+//    QTest::addColumn<QSize>("writeSize");
+//    QTest::addColumn<int>("loadHorizontalSplitterFirstWidth");
+//    QTest::addColumn<int>("writeHorizontalSplitterFirstWidth");
+//    QTest::addColumn<int>("loadVericalSplitterFirstWidth");
+//    QTest::addColumn<int>("writeVerticalSplitterFirstWidth");
 
     QTest::newRow("is not maximized at all")
-            << false << false
-            << topLeftCornerPosition << topLeftCornerPosition
-            << windowSize << windowSize
-            << 100 << 100
-            << 100 << 100;
+            << false << false;
     QTest::newRow("is not maximized on start, is maximized on close")
-            << false << true
-            << topLeftCornerPosition << topLeftCornerPosition
-            << windowSize << windowSize
-            << 100 << 100
-            << 100 << 100;
+            << false << true;
     QTest::newRow("is maximized at all")
-            << true << true
-            << topLeftCornerPosition << topLeftCornerPosition
-            << windowSize << windowSize
-            << 100 << 100
-            << 100 << 100;
+            << true << true;
     QTest::newRow("is maximized on start, is not maximized on close")
-            << true << false
-            << topLeftCornerPosition << topLeftCornerPosition
-            << windowSize << windowSize
-            << 100 << 100
-            << 100 << 100;
+            << true << false;
 }
 
-void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindow()
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximized()
 {
     QFETCH(bool, loadMaximized);
     QFETCH(bool, writeMaximized);
-    QFETCH(QPoint, loadPosition);
-    QFETCH(QPoint, writePosition);
-    QFETCH(QSize, loadSize);
-    QFETCH(QSize, writeSize);
-    QFETCH(int, loadHorizontalSplitterFirstWidth);
-    QFETCH(int, writeHorizontalSplitterFirstWidth);
-    QFETCH(int, loadVericalSplitterFirstWidth);
-    QFETCH(int, writeVerticalSplitterFirstWidth);
+//    QFETCH(QPoint, loadPosition);
+//    QFETCH(QPoint, writePosition);
+//    QFETCH(QSize, loadSize);
+//    QFETCH(QSize, writeSize);
+//    QFETCH(int, loadHorizontalSplitterFirstWidth);
+//    QFETCH(int, writeHorizontalSplitterFirstWidth);
+//    QFETCH(int, loadVericalSplitterFirstWidth);
+//    QFETCH(int, writeVerticalSplitterFirstWidth);
 
     Settings *settings = Settings::instance();
 
@@ -641,6 +620,48 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindow()
 
     settings->readSettings();
     QCOMPARE(settings->mainWindow.maximized, writeMaximized);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowPosition_data()
+{
+    QPoint topLeftCornerPosition(0, 0);
+    QPoint testPosition1(20, 30);
+    QPoint testPosition2(35, 100);
+
+    QTest::addColumn<QPoint>("loadPosition");
+    QTest::addColumn<QPoint>("writePosition");
+
+    QTest::newRow("top left corner at all")
+            << topLeftCornerPosition << topLeftCornerPosition;
+    QTest::newRow("top left corner was moved bottom-right")
+            << topLeftCornerPosition << testPosition1;
+    QTest::newRow("initial position was moved to top-left")
+            << testPosition2 << testPosition1;
+    QTest::newRow("initial position was moved to bottom-right")
+            << testPosition1 << testPosition2;
+    QTest::newRow("initial position was not changed")
+            << testPosition1 << testPosition1;
+    QTest::newRow("initial position was changed top left corner")
+            << testPosition1 << topLeftCornerPosition;
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowPosition()
+{
+    QFETCH(QPoint, loadPosition);
+    QFETCH(QPoint, writePosition);
+
+    Settings *settings = Settings::instance();
+
+    settings->mainWindow.possition = loadPosition;
+    settings->writeSettings();
+
+    convertDialog->move(writePosition);
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->mainWindow.possition, writePosition);
 }
 
 QTEST_MAIN(ConvertDialogTest)
