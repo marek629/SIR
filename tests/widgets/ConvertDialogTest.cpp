@@ -716,7 +716,7 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSize_dat
     QTest::newRow("is resized up")
             << QSize(800, 600) << QSize(1000, 700);
     QTest::newRow("is resized down")
-            << QSize(800, 600) << QSize(500, 400);
+            << QSize(800, 700) << QSize(650, 600);
     QTest::newRow("is resized width down")
             << QSize(800, 600) << QSize(700, 600);
 }
