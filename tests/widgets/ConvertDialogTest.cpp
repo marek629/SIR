@@ -573,8 +573,6 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximi
 {
     QTest::addColumn<bool>("loadMaximized");
     QTest::addColumn<bool>("writeMaximized");
-//    QTest::addColumn<QSize>("loadSize");
-//    QTest::addColumn<QSize>("writeSize");
 
     QTest::newRow("is not maximized at all")
             << false << false;
@@ -590,8 +588,6 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximi
 {
     QFETCH(bool, loadMaximized);
     QFETCH(bool, writeMaximized);
-//    QFETCH(QSize, loadSize);
-//    QFETCH(QSize, writeSize);
 
     Settings *settings = Settings::instance();
 
@@ -708,6 +704,40 @@ void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSplitter
     settings->readSettings();
     QCOMPARE(settings->mainWindow.horizontalSplitter, horizontalSplitter->saveState());
     QCOMPARE(settings->mainWindow.verticalSplitter, verticalSplitter->saveState());
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSize_data()
+{
+    QTest::addColumn<QSize>("loadSize");
+    QTest::addColumn<QSize>("writeSize");
+
+    QTest::newRow("is not changed")
+            << QSize(800, 600) << QSize(800, 600);
+    QTest::newRow("is resized up")
+            << QSize(800, 600) << QSize(1000, 700);
+    QTest::newRow("is resized down")
+            << QSize(800, 600) << QSize(500, 400);
+    QTest::newRow("is resized width down")
+            << QSize(800, 600) << QSize(700, 600);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSize()
+{
+    QFETCH(QSize, loadSize);
+    QFETCH(QSize, writeSize);
+
+    Settings *settings = Settings::instance();
+
+    settings->mainWindow.size = loadSize;
+    settings->writeSettings();
+
+    convertDialog->resize(writeSize);
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->mainWindow.size, writeSize);
 }
 
 QTEST_MAIN(ConvertDialogTest)

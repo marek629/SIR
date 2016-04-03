@@ -72,6 +72,8 @@ private slots:
     void test_closeOrCancel_close_saveSettings_mainWindowPosition();
     void test_closeOrCancel_close_saveSettings_mainWindowSplitters_data();
     void test_closeOrCancel_close_saveSettings_mainWindowSplitters();
+    void test_closeOrCancel_close_saveSettings_mainWindowSize_data();
+    void test_closeOrCancel_close_saveSettings_mainWindowSize();
 };
 
 #endif // CONVERTDIALOGTEST_HPP
