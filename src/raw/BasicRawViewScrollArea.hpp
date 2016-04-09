@@ -65,6 +65,7 @@ private slots:
     void onBrowseButtonClick();
     void onEraseNoiseToggle(bool toggled);
     void onInterpolationPostProcessingToggle(bool toggled);
+    void onSaturationToggle(bool toggled);
     void onRawEnabledChange(int state);
 
 private:
