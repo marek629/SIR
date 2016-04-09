@@ -19,22 +19,20 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWIMAGELOADER_HPP
-#define RAWIMAGELOADER_HPP
+#include "raw/core/graphics/RawImageLoader.hpp"
 
-#include "raw/RawLoader.hpp"
-
-#include "raw/Image.hpp"
+#include <QProcess>
 
 
-class RawImageLoader : public RawLoader
+RawImageLoader::RawImageLoader(RawModel *rawModel, const QString &filePath)
+    : RawLoader(rawModel, filePath) {}
+
+Image *RawImageLoader::load()
 {
-public:
-    RawImageLoader(RawModel *rawModel, const QString &filePath);
-    Image *load();
+    return static_cast<Image *>(RawLoader::load());
+}
 
-protected:
-    Image *createPaintDevice();
-};
-
-#endif // RAWIMAGELOADER_HPP
+Image *RawImageLoader::createPaintDevice()
+{
+    return new Image();
+}

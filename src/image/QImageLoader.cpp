@@ -23,7 +23,7 @@
 
 #include "ConvertThread.hpp"
 #include "SvgModifier.hpp"
-#include "raw/RawImageLoader.hpp"
+#include "raw/core/graphics/RawImageLoader.hpp"
 
 #include <QImageReader>
 #include <QMessageBox>

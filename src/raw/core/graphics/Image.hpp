@@ -19,19 +19,20 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "Pixmap.hpp"
+#ifndef IMAGE_HPP
+#define IMAGE_HPP
+
+#include <QImage>
+#include "raw/core/graphics/PaintDevice.hpp"
 
 
-Pixmap::Pixmap() : PaintDevice(), QPixmap() {}
-
-Pixmap::~Pixmap() {}
-
-bool Pixmap::load(const QString &fileName)
+class Image : public PaintDevice, public QImage
 {
-    return QPixmap::load(fileName);
-}
+public:
+    Image();
+    ~Image();
+    bool load(const QString &fileName);
+    bool loadFromData(const QByteArray &data, const char *format);
+};
 
-bool Pixmap::loadFromData(const QByteArray &data, const char *format)
-{
-    return QPixmap::loadFromData(data, format);
-}
+#endif // IMAGE_HPP

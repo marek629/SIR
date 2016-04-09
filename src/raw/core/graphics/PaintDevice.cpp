@@ -19,19 +19,9 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "Image.hpp"
+#include "raw/core/graphics/PaintDevice.hpp"
 
 
-Image::Image() : PaintDevice(), QImage() {}
+PaintDevice::PaintDevice() {}
 
-Image::~Image() {}
-
-bool Image::load(const QString &fileName)
-{
-    return QImage::load(fileName);
-}
-
-bool Image::loadFromData(const QByteArray &data, const char *format)
-{
-    return QImage::loadFromData(data, format);
-}
+PaintDevice::~PaintDevice() {}

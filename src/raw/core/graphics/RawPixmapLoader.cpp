@@ -19,20 +19,21 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "raw/RawImageLoader.hpp"
+#include "raw/core/graphics/RawPixmapLoader.hpp"
 
 #include <QProcess>
 
 
-RawImageLoader::RawImageLoader(RawModel *rawModel, const QString &filePath)
+RawPixmapLoader::RawPixmapLoader(RawModel *rawModel,
+                                 const QString &filePath)
     : RawLoader(rawModel, filePath) {}
 
-Image *RawImageLoader::load()
+Pixmap *RawPixmapLoader::load()
 {
-    return static_cast<Image *>(RawLoader::load());
+    return static_cast<Pixmap *>(RawLoader::load());
 }
 
-Image *RawImageLoader::createPaintDevice()
+Pixmap *RawPixmapLoader::createPaintDevice()
 {
-    return new Image();
+    return new Pixmap();
 }

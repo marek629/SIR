@@ -19,12 +19,12 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "raw/RawLoader.hpp"
+#include "raw/core/graphics/RawLoader.hpp"
 
 #include <QImageReader>
 #include <QProcess>
 
-#include "raw/PaintDevice.hpp"
+#include "raw/core/graphics/PaintDevice.hpp"
 
 
 RawLoader::RawLoader(RawModel *rawModel, const QString &filePath)

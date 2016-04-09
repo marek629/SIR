@@ -4,6 +4,7 @@
 
 ### unreleased
 
+* Added saturation support to Raw basic tab
 * Added storing main window size, position and splitters
 * Fixed translations of standard dialog buttons
 * Fixed adding custom background color effect for transparent PNG images

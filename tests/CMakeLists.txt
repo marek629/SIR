@@ -21,7 +21,7 @@ add_test( NAME "RawController_UT" COMMAND sir_rawcontroller_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_UT_rawloader_SRCS
-        raw/RawLoaderTest.cpp
+        raw/core/graphics/RawLoaderTest.cpp
     )
 add_executable( sir_rawloader_test ${sir_UT_rawloader_SRCS} )
 target_link_libraries( sir_rawloader_test ${sir_UT_LINKING_LIBS} )
