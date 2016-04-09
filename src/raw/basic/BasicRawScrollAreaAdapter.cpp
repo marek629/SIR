@@ -164,3 +164,23 @@ void BasicRawScrollAreaAdapter::setEraseNoiseThreshold(int threshold)
 {
     ui->eraseNoiseSpinBox->setValue(threshold);
 }
+
+bool BasicRawScrollAreaAdapter::isSaturationChecked() const
+{
+    return ui->saturationCheckBox->isChecked();
+}
+
+void BasicRawScrollAreaAdapter::setSaturationChecked(bool checked)
+{
+    ui->saturationCheckBox->setChecked(checked);
+}
+
+int BasicRawScrollAreaAdapter::saturationLevel() const
+{
+    return ui->saturationSpinBox->value();
+}
+
+void BasicRawScrollAreaAdapter::setSaturationLevel(int value)
+{
+    ui->saturationSpinBox->setValue(value);
+}
