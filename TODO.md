@@ -3,7 +3,6 @@
 
 ## Nearest Release
 
-* CMake optiomalization for Travis CI system - not needed build sir binary, sir_library only is sufficient
 * More JPEG compression options
 
 

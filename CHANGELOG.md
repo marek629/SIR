@@ -9,6 +9,7 @@
 * Fixed translations of standard dialog buttons
 * Fixed adding custom background color effect for transparent PNG images
 * Fixed storing last localization of added images to SIR
+* Optimalized time of tests build for Travis CI system
 
 
 # v3.1
