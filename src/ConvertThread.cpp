@@ -23,6 +23,7 @@
 
 #include "ConvertEffects.hpp"
 #include "Settings.hpp"
+#include "image/ImageWriter.hpp"
 #include "image/QImageLoader.hpp"
 #include "widgets/MessageBox.hpp"
 
@@ -198,7 +199,9 @@ void ConvertThread::run()
             }
             if(shared.overwriteResult == QMessageBox::Yes ||
                     shared.overwriteResult == QMessageBox::YesToAll) {
-                if (destImg.save(targetFilePath, 0, shared.quality)) {
+                ImageWriter writer(targetFilePath);
+                writer.setQuality(shared.quality);
+                if (writer.write(destImg)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata && !metadata.write(targetFilePath, destImg))
                         printError();
@@ -218,7 +221,9 @@ void ConvertThread::run()
         else if (shared.abort)
             emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
         else { // when overwriteAll is true or file not exists
-            if (destImg.save(targetFilePath, 0, shared.quality)) {
+            ImageWriter writer(targetFilePath);
+            writer.setQuality(shared.quality);
+            if (writer.write(destImg)) {
 #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata && !metadata.write(targetFilePath, destImg))
                     printError();
@@ -460,8 +465,6 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             fileSizeRatio = sqrt(fileSizeRatio);
             QFile tempFile(tempFilePath);
             for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
-                tempFile.open(QIODevice::WriteOnly);
-                tempFile.seek(0);
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
                 tempImage = image->scaled(width, height, Qt::IgnoreAspectRatio,
@@ -471,7 +474,9 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (tempImage.save(&tempFile, 0, shared.quality)) {
+                ImageWriter writer(tempFilePath);
+                writer.setQuality(shared.quality);
+                if (writer.write(tempImage)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -485,7 +490,6 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                                      Failed);
                     return -4;
                 }
-                tempFile.close();
                 fileSize = tempFile.size();
                 size = tempImage.size();
                 fileSizeRatio = (double) fileSize / shared.sizeBytes;
@@ -546,8 +550,6 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
             QFile tempFile(tempFilePath);
             QPainter painter;
             for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
-                tempFile.open(QIODevice::WriteOnly);
-                tempFile.seek(0);
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
                 QImage tempImage(width, height, QImage::Format_ARGB32);
@@ -560,7 +562,9 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (tempImage.save(&tempFile, 0, shared.quality)) {
+                ImageWriter writer(tempFilePath);
+                writer.setQuality(shared.quality);
+                if (writer.write(tempImage)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -575,7 +579,6 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                                      Failed);
                     return -4;
                 }
-                tempFile.close();
                 fileSize = tempFile.size();
                 size = tempImage.size();
                 fileSizeRatio = (double) fileSize / shared.sizeBytes;

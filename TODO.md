@@ -3,7 +3,7 @@
 
 ## Nearest Release
 
-* More JPEG compression options
+* More write options for JPEG and PNG
 
 
 ## Next Release
