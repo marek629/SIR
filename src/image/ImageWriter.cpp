@@ -36,9 +36,9 @@ void ImageWriter::enableProgressiveScanWrite()
     writer.setProgressiveScanWrite(true);
 }
 
-void ImageWriter::disableProgressiveScanWrite()
+void ImageWriter::enableOptimizedWrite()
 {
-    writer.setProgressiveScanWrite(false);
+    writer.setOptimizedWrite(true);
 }
 
 bool ImageWriter::write(const QImage &image)

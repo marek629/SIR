@@ -33,7 +33,7 @@ public:
 
     void setQuality(int quality);
     void enableProgressiveScanWrite();
-    void disableProgressiveScanWrite();
+    void enableOptimizedWrite();
 
     bool write(const QImage &image);
 

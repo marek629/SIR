@@ -733,6 +733,7 @@ bool ConvertThread::writeImage(const QImage &image, const QString &filePath)
     ImageWriter writer(filePath);
     writer.setQuality(shared.quality);
     writer.enableProgressiveScanWrite();
+    writer.enableOptimizedWrite();
     return writer.write(image);
 }
 
