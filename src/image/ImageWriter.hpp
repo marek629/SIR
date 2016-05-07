@@ -32,6 +32,8 @@ public:
     ImageWriter(const QString &fileName);
 
     void setQuality(int quality);
+    void enableProgressiveScanWrite();
+    void disableProgressiveScanWrite();
 
     bool write(const QImage &image);
 

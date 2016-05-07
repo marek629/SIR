@@ -31,6 +31,16 @@ void ImageWriter::setQuality(int quality)
     writer.setQuality(quality);
 }
 
+void ImageWriter::enableProgressiveScanWrite()
+{
+    writer.setProgressiveScanWrite(true);
+}
+
+void ImageWriter::disableProgressiveScanWrite()
+{
+    writer.setProgressiveScanWrite(false);
+}
+
 bool ImageWriter::write(const QImage &image)
 {
     return writer.write(image);
