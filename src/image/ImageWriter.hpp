@@ -34,6 +34,7 @@ public:
     void setQuality(int quality);
     void enableProgressiveScanWrite();
     void enableOptimizedWrite();
+    void setCompression(int compression);
 
     bool write(const QImage &image);
 

@@ -41,6 +41,11 @@ void ImageWriter::enableOptimizedWrite()
     writer.setOptimizedWrite(true);
 }
 
+void ImageWriter::setCompression(int compression)
+{
+    writer.setCompression(compression);
+}
+
 bool ImageWriter::write(const QImage &image)
 {
     return writer.write(image);
