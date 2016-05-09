@@ -546,7 +546,7 @@ void ConvertDialog::convert()
     shared.setDesiredFormat(desiredFormat);
     shared.setDesiredFlip(optionsScrollArea->flipComboBox->currentIndex());
     shared.setDesiredRotation(optionsScrollArea->rotateCheckBox->isChecked(),
-                              optionsScrollArea->rotateLineEdit->text().toDouble());
+                              optionsScrollArea->rotateDoubleSpinBox->value());
     shared.setQuality(optionsScrollArea->qualitySpinBox->value());
     shared.setDestPrefix(destPrefixEdit->text());
     shared.setDestSuffix(destSuffixEdit->text());

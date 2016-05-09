@@ -34,6 +34,11 @@ public:
 
 private slots:
     void verifyRotate(int status);
+    void onRotateSliderValueChanged(int value);
+    void onRotateSplitterValueChanged(double value);
+
+private:
+    void createConnections();
 };
 
 #endif // OPTIONSSCROLLAREA_HPP

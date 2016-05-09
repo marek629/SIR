@@ -150,7 +150,7 @@ void Session::save(const QString &fileName) {
     writer.writeEndElement(); // background
     writer.writeStartElement("rotation");
     writer.writeAttribute("enabled", optionsArea->rotateCheckBox->isChecked());
-    writer.writeCharacters(optionsArea->rotateLineEdit->text());
+    writer.writeCharacters(QString::number(optionsArea->rotateDoubleSpinBox->value(), 'f', 1));
     writer.writeEndElement(); // rotation
     writer.writeStartElement("flip");
     writer.writeValue(optionsArea->flipComboBox->currentIndex());
@@ -284,7 +284,7 @@ void Session::restore(const QString &fileName) {
         if (!el.isNull()) {
             str = el.attribute("enabled", falseString);
             optionsArea->rotateCheckBox->setChecked(str.toBool());
-            optionsArea->rotateLineEdit->setText(el.text());
+            optionsArea->rotateDoubleSpinBox->setValue(el.text().toDouble());
         }
         el = elem.firstChildElement("flip");
         if (!el.isNull())
