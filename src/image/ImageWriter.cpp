@@ -33,12 +33,16 @@ void ImageWriter::setQuality(int quality)
 
 void ImageWriter::enableProgressiveScanWrite()
 {
+#if QT_VERSION >= 0x050500
     writer.setProgressiveScanWrite(true);
+#endif
 }
 
 void ImageWriter::enableOptimizedWrite()
 {
+#if QT_VERSION >= 0x050500
     writer.setOptimizedWrite(true);
+#endif
 }
 
 void ImageWriter::setCompression(int compression)
