@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef OPTIONSSCROLLAREA_H
-#define OPTIONSSCROLLAREA_H
+#ifndef OPTIONSSCROLLAREA_HPP
+#define OPTIONSSCROLLAREA_HPP
 
 #include "ui_OptionsScrollArea.h"
 
@@ -36,4 +36,4 @@ private slots:
     void verifyRotate(int status);
 };
 
-#endif // OPTIONSSCROLLAREA_H
+#endif // OPTIONSSCROLLAREA_HPP
