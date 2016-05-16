@@ -280,6 +280,16 @@ void Session::restore(const QString &fileName) {
         el = elem.firstChildElement("quality");
         if (!el.isNull())
             optionsArea->qualitySpinBox->setValue(el.text().toInt());
+        el = elem.firstChildElement("progressiveWrite");
+        if (el.isElement()) {
+            str = el.attribute("enabled", falseString);
+            optionsArea->progressiveWriteCheckBox->setChecked(str.toBool());
+        }
+        el = elem.firstChildElement("optimizedWrite");
+        if (el.isElement()) {
+            str = el.attribute("enabled", falseString);
+            optionsArea->optimizedWriteCheckBox->setChecked(str.toBool());
+        }
         el = elem.firstChildElement("background");
         if (!el.isNull()) {
             str = el.attribute("enabled", falseString);
