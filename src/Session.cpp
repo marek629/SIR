@@ -144,6 +144,12 @@ void Session::save(const QString &fileName) {
     writer.writeStartElement("quality");
     writer.writeValue(optionsArea->qualitySpinBox->value());
     writer.writeEndElement(); // quality
+    writer.writeStartElement("progressiveWrite");
+    writer.writeAttribute("enabled", optionsArea->progressiveWriteCheckBox->isChecked());
+    writer.writeEndElement(); // progressiveWrite
+    writer.writeStartElement("optimizedWrite");
+    writer.writeAttribute("enabled", optionsArea->optimizedWriteCheckBox->isChecked());
+    writer.writeEndElement(); // optimizedWrite
     writer.writeStartElement("background");
     writer.writeAttribute("enabled", optionsArea->backgroundColorCheckBox->isChecked());
     writer.writeColorElement(optionsArea->backgroundColorFrame->color());
