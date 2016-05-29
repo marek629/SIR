@@ -547,7 +547,7 @@ void ConvertDialog::convert()
     shared.setDesiredFlip(optionsScrollArea->flipComboBox->currentIndex());
     shared.setDesiredRotation(optionsScrollArea->rotateCheckBox->isChecked(),
                               optionsScrollArea->rotateDoubleSpinBox->value());
-    shared.setQuality(optionsScrollArea->qualitySpinBox->value());
+    shared.setQuality(optionsScrollArea->qualitySliderBox->value());
     shared.setDestPrefix(destPrefixEdit->text());
     shared.setDestSuffix(destSuffixEdit->text());
     shared.setDestFolder(destFolder);
@@ -703,8 +703,7 @@ void ConvertDialog::loadSettings() {
     destPrefixEdit->setText(                    s->settings.targetPrefix);
     destSuffixEdit->setText(                    s->settings.targetSuffix);
     int quality =                               s->settings.quality;
-    optionsScrollArea->qualitySpinBox->setValue(quality);
-    optionsScrollArea->qualitySlider->setValue(quality);
+    optionsScrollArea->qualitySliderBox->setValue(quality);
     numThreads =                                s->settings.cores;
     if (numThreads == 0)
         numThreads = GeneralGroupBoxController::detectCoresCount();

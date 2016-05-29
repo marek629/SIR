@@ -142,7 +142,7 @@ void Session::save(const QString &fileName) {
 
     writer.writeStartElement("options");
     writer.writeStartElement("quality");
-    writer.writeValue(optionsArea->qualitySpinBox->value());
+    writer.writeValue(optionsArea->qualitySliderBox->value());
     writer.writeEndElement(); // quality
     writer.writeStartElement("progressiveWrite");
     writer.writeAttribute("enabled", optionsArea->progressiveWriteCheckBox->isChecked());
@@ -279,7 +279,7 @@ void Session::restore(const QString &fileName) {
     if (!elem.isNull()) {
         el = elem.firstChildElement("quality");
         if (!el.isNull())
-            optionsArea->qualitySpinBox->setValue(el.text().toInt());
+            optionsArea->qualitySliderBox->setValue(el.text().toInt());
         el = elem.firstChildElement("progressiveWrite");
         if (el.isElement()) {
             str = el.attribute("enabled", falseString);

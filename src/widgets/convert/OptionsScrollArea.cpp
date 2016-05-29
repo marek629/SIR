@@ -63,9 +63,4 @@ void OptionsScrollArea::createConnections()
             this, SLOT(onRotateSplitterValueChanged(double)));
     connect(rotateHorizontalSlider, SIGNAL(valueChanged(int)),
             this, SLOT(onRotateSliderValueChanged(int)));
-
-    connect(qualitySpinBox, SIGNAL(valueChanged(int)),
-            qualitySlider, SLOT(setValue(int)));
-    connect(qualitySlider, SIGNAL(valueChanged(int)),
-            qualitySpinBox, SLOT(setValue(int)));
 }

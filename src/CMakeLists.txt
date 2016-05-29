@@ -5,6 +5,7 @@ file( GLOB_RECURSE sir_SRCS
         exceptions/*.cpp
         image/*.cpp
         raw/*.cpp
+        widgets/convert/options/*.cpp
     )
 set( sir_SRCS ${sir_SRCS}
         CommandLineAssistant.cpp
