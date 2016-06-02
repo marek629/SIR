@@ -64,7 +64,7 @@ void ConvertDialogTest::convert_defaultPath()
              convertDialog->optionsScrollArea->flipComboBox->currentIndex());
 //    QCOMPARE(sharedInfo->rotate)
     QCOMPARE(sharedInfo->quality,
-             convertDialog->optionsScrollArea->qualitySpinBox->value());
+             convertDialog->optionsScrollArea->qualitySliderBox->value());
     QCOMPARE(sharedInfo->prefix, convertDialog->destPrefixEdit->text());
     QCOMPARE(sharedInfo->suffix, convertDialog->destSuffixEdit->text());
     QCOMPARE(sharedInfo->overwriteAll, false);
