@@ -32,6 +32,9 @@ public:
     explicit OptionsScrollArea(QWidget *parent = 0);
     void retranslateStrings();
 
+public slots:
+    void onTargetFormatChanged(const QString &format);
+
 private slots:
     void verifyRotate(int status);
     void onRotateSliderValueChanged(int value);
@@ -39,6 +42,10 @@ private slots:
 
 private:
     void createConnections();
+
+    void hideSpecialFormatInputs();
+    void showJpegFormatInputs();
+    void showPngFormatInputs();
 };
 
 #endif // OPTIONSSCROLLAREA_HPP

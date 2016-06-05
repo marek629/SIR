@@ -33,6 +33,20 @@ void OptionsScrollArea::retranslateStrings()
     retranslateUi(this);
 }
 
+void OptionsScrollArea::onTargetFormatChanged(const QString &format)
+{
+    hideSpecialFormatInputs();
+    if (format == "jpg" || format == "jpeg") {
+        showJpegFormatInputs();
+    }
+    else if (format == "png") {
+        showPngFormatInputs();
+    }
+//    else {
+//        showGeneralFormatInputs();
+//    }
+}
+
 /** Rotate checkbox slot.
   *
   * Disables/enables rotation angle line edit.
@@ -63,4 +77,21 @@ void OptionsScrollArea::createConnections()
             this, SLOT(onRotateSplitterValueChanged(double)));
     connect(rotateHorizontalSlider, SIGNAL(valueChanged(int)),
             this, SLOT(onRotateSliderValueChanged(int)));
+}
+
+void OptionsScrollArea::hideSpecialFormatInputs()
+{
+    progressiveWriteCheckBox->hide();
+    optimizedWriteCheckBox->hide();
+}
+
+void OptionsScrollArea::showJpegFormatInputs()
+{
+    progressiveWriteCheckBox->show();
+    optimizedWriteCheckBox->show();
+}
+
+void OptionsScrollArea::showPngFormatInputs()
+{
+    progressiveWriteCheckBox->show();
 }

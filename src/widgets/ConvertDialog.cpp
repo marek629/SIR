@@ -110,6 +110,7 @@ ConvertDialog::~ConvertDialog() {
 
 /** Connects UI signals to corresponding slots. */
 void ConvertDialog::createConnections() {
+    // TODO: extract separated methods for connect listed elements
     // tree view's list menagement buttons
     connect(addFilepushButton, SIGNAL(clicked()),
             filesTreeWidget, SLOT(addFile()));
@@ -125,6 +126,10 @@ void ConvertDialog::createConnections() {
     connect(actionImport_files, SIGNAL(triggered()), SLOT(showSelectionDialog()));
     connect(actionRemoveAll, SIGNAL(triggered()),
             filesTreeWidget, SLOT(removeAll()));
+
+    // convert options
+    connect(targetFormatComboBox, SIGNAL(currentIndexChanged(QString)),
+            optionsScrollArea, SLOT(onTargetFormatChanged(QString)));
 
     // status bar
     connect(filesTreeWidget, SIGNAL(loadingFilesStart(int)),
