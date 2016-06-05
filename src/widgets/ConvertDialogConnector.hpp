@@ -35,6 +35,13 @@ public:
 
 private:
     ConvertDialog *dialog;
+
+    void createConnectionsForTreeView();
+    void createConnectionsForOptionsTab();
+    void createConnectionsForStatusBar();
+    void createConnectionsForMenu();
+    void createConnectionsForBrowseButton();
+    void createConnectionsForDialogButtons();
 };
 
 #endif // CONVERTDIALOGCONNECTOR_HPP

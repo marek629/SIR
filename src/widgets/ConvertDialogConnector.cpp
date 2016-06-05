@@ -33,8 +33,16 @@ ConvertDialogConnector::ConvertDialogConnector(ConvertDialog *dialog)
 
 void ConvertDialogConnector::createConnections()
 {
-    // TODO: extract separated methods for connect listed elements
-    // tree view's list menagement buttons
+    createConnectionsForTreeView();
+    createConnectionsForOptionsTab();
+    createConnectionsForStatusBar();
+    createConnectionsForMenu();
+    createConnectionsForBrowseButton();
+    createConnectionsForDialogButtons();
+}
+
+void ConvertDialogConnector::createConnectionsForTreeView()
+{
     connect(dialog->addFilepushButton, SIGNAL(clicked()),
             dialog->filesTreeWidget, SLOT(addFile()));
     connect(dialog->addDirpushButton, SIGNAL(clicked()),
@@ -43,7 +51,7 @@ void ConvertDialogConnector::createConnections()
             dialog->filesTreeWidget, SLOT(removeSelectedFromList()));
     connect(dialog->removeAllPushButton, SIGNAL(clicked()),
             dialog->filesTreeWidget, SLOT(removeAll()));
-    // and actions
+
     connect(dialog->actionAdd_File, SIGNAL(triggered()),
             dialog->filesTreeWidget, SLOT(addFile()));
     connect(dialog->actionAdd_Dir, SIGNAL(triggered()),
@@ -54,12 +62,16 @@ void ConvertDialogConnector::createConnections()
             dialog, SLOT(showSelectionDialog()));
     connect(dialog->actionRemoveAll, SIGNAL(triggered()),
             dialog->filesTreeWidget, SLOT(removeAll()));
+}
 
-    // convert options
+void ConvertDialogConnector::createConnectionsForOptionsTab()
+{
     connect(dialog->targetFormatComboBox, SIGNAL(currentIndexChanged(QString)),
             dialog->optionsScrollArea, SLOT(onTargetFormatChanged(QString)));
+}
 
-    // status bar
+void ConvertDialogConnector::createConnectionsForStatusBar()
+{
     connect(dialog->filesTreeWidget, SIGNAL(loadingFilesStart(int)),
             dialog->statusWidget, SLOT(onFilesLoadingStart(int)));
     connect(dialog->filesTreeWidget, SIGNAL(loadingFilesTick(int)),
@@ -76,8 +88,10 @@ void ConvertDialogConnector::createConnections()
             dialog->statusWidget, SLOT(onConvetionTick(int)));
     connect(dialog, SIGNAL(convertStop()),
             dialog->statusWidget, SLOT(onConvetionStop()));
+}
 
-    // menu actions
+void ConvertDialogConnector::createConnectionsForMenu()
+{
     connect(dialog->actionExit, SIGNAL(triggered()),
             dialog, SLOT(close()));
     connect(dialog->actionAbout_Qt, SIGNAL(triggered()),
@@ -98,12 +112,16 @@ void ConvertDialogConnector::createConnections()
             dialog, SLOT(saveEffects()));
     connect(dialog->actionSendInstall, SIGNAL(triggered()),
             dialog, SLOT(sendInstall()));
+}
 
-    // browse button
+void ConvertDialogConnector::createConnectionsForBrowseButton()
+{
     connect(dialog->browseDestButton, SIGNAL(clicked()),
             dialog, SLOT(browseDestination()));
+}
 
-    // convert... & stop/exit buttons
+void ConvertDialogConnector::createConnectionsForDialogButtons()
+{
     connect(dialog->convertButton, SIGNAL(clicked()),
             dialog, SLOT(convertAll()));
     connect(dialog->convertSelectedButton, SIGNAL(clicked()),
