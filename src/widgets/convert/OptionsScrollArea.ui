@@ -25,7 +25,7 @@
      <x>0</x>
      <y>0</y>
      <width>607</width>
-     <height>217</height>
+     <height>238</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -38,13 +38,6 @@
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="3" column="0" colspan="2">
-        <widget class="QCheckBox" name="optimizedWriteCheckBox">
-         <property name="text">
-          <string>Optimized write</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="qualityLabel">
          <property name="text">
@@ -55,10 +48,27 @@
        <item row="0" column="1">
         <widget class="HorizontalSliderBox" name="qualitySliderBox" native="true"/>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="1" column="0">
+        <widget class="QLabel" name="compressionLabel">
+         <property name="text">
+          <string>Compression level:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="HorizontalSliderBox" name="compressionSliderBox" native="true"/>
+       </item>
+       <item row="2" column="0" colspan="2">
         <widget class="QCheckBox" name="progressiveWriteCheckBox">
          <property name="text">
           <string>Progressive write</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QCheckBox" name="optimizedWriteCheckBox">
+         <property name="text">
+          <string>Optimized write</string>
          </property>
         </widget>
        </item>

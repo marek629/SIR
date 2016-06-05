@@ -46,6 +46,7 @@ private:
     void hideSpecialFormatInputs();
     void showJpegFormatInputs();
     void showPngFormatInputs();
+    void showGeneralFormatInputs();
 };
 
 #endif // OPTIONSSCROLLAREA_HPP

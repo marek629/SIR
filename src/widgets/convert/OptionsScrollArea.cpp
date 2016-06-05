@@ -26,6 +26,8 @@ OptionsScrollArea::OptionsScrollArea(QWidget *parent) : QScrollArea(parent)
 {
     setupUi(this);
     createConnections();
+    qualitySliderBox->setRange(0, 100);
+    compressionSliderBox->setRange(0, 9);
 }
 
 void OptionsScrollArea::retranslateStrings()
@@ -42,9 +44,9 @@ void OptionsScrollArea::onTargetFormatChanged(const QString &format)
     else if (format == "png") {
         showPngFormatInputs();
     }
-//    else {
-//        showGeneralFormatInputs();
-//    }
+    else {
+        showGeneralFormatInputs();
+    }
 }
 
 /** Rotate checkbox slot.
@@ -81,17 +83,30 @@ void OptionsScrollArea::createConnections()
 
 void OptionsScrollArea::hideSpecialFormatInputs()
 {
+    qualityLabel->hide();
+    qualitySliderBox->hide();
+    compressionLabel->hide();
+    compressionSliderBox->hide();
     progressiveWriteCheckBox->hide();
     optimizedWriteCheckBox->hide();
 }
 
 void OptionsScrollArea::showJpegFormatInputs()
 {
+    showGeneralFormatInputs();
     progressiveWriteCheckBox->show();
     optimizedWriteCheckBox->show();
 }
 
 void OptionsScrollArea::showPngFormatInputs()
 {
+    compressionLabel->show();
+    compressionSliderBox->show();
     progressiveWriteCheckBox->show();
+}
+
+void OptionsScrollArea::showGeneralFormatInputs()
+{
+    qualityLabel->show();
+    qualitySliderBox->show();
 }
