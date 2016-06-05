@@ -37,8 +37,9 @@ set( sir_SRCS ${sir_SRCS}
         thumbnail/MetadataThumbnail.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
-        widgets/ConvertDialog.cpp
         widgets/BrushFrame.cpp
+        widgets/ConvertDialog.cpp
+        widgets/ConvertDialogConnector.cpp
         widgets/ColorFrame.cpp
         widgets/DetailsBrowserController.cpp
         widgets/DetailsBrowserView.cpp

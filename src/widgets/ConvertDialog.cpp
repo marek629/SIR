@@ -32,6 +32,7 @@
 #include "SharedInformationBuilder.hpp"
 #include "Version.hpp"
 #include "widgets/AboutDialog.hpp"
+#include "widgets/ConvertDialogConnector.hpp"
 #include "widgets/DetailsBrowserController.hpp"
 #include "widgets/MessageBox.hpp"
 #include "widgets/TreeWidget.hpp"
@@ -86,7 +87,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
 
     effectsCollector = new EffectsCollector(this);
 
-    detailsBrowserController = new DetailsBrowserController(filesTreeWidget,
+    _detailsBrowserController = new DetailsBrowserController(filesTreeWidget,
                                                             detailsBrowser,
                                                             this);
 
@@ -105,66 +106,14 @@ ConvertDialog::~ConvertDialog() {
     clearTempDir();
     delete session;
     delete effectsCollector;
-    delete detailsBrowserController;
+    delete _detailsBrowserController;
 }
 
 /** Connects UI signals to corresponding slots. */
-void ConvertDialog::createConnections() {
-    // TODO: extract separated methods for connect listed elements
-    // tree view's list menagement buttons
-    connect(addFilepushButton, SIGNAL(clicked()),
-            filesTreeWidget, SLOT(addFile()));
-    connect(addDirpushButton, SIGNAL(clicked()), filesTreeWidget, SLOT(addDir()));
-    connect(removePushButton, SIGNAL(clicked()),
-            filesTreeWidget, SLOT(removeSelectedFromList()));
-    connect(removeAllPushButton, SIGNAL(clicked()),
-            filesTreeWidget, SLOT(removeAll()));
-    // and actions
-    connect(actionAdd_File, SIGNAL(triggered()), filesTreeWidget, SLOT(addFile()));
-    connect(actionAdd_Dir, SIGNAL(triggered()), filesTreeWidget, SLOT(addDir()));
-    connect(actionSelect, SIGNAL(triggered()), SLOT(showSelectionDialog()));
-    connect(actionImport_files, SIGNAL(triggered()), SLOT(showSelectionDialog()));
-    connect(actionRemoveAll, SIGNAL(triggered()),
-            filesTreeWidget, SLOT(removeAll()));
-
-    // convert options
-    connect(targetFormatComboBox, SIGNAL(currentIndexChanged(QString)),
-            optionsScrollArea, SLOT(onTargetFormatChanged(QString)));
-
-    // status bar
-    connect(filesTreeWidget, SIGNAL(loadingFilesStart(int)),
-            statusWidget, SLOT(onFilesLoadingStart(int)));
-    connect(filesTreeWidget, SIGNAL(loadingFilesTick(int)),
-            statusWidget, SLOT(onFilesLoadingTick(int)));
-    connect(filesTreeWidget, SIGNAL(loadingFilesStop()),
-            statusWidget, SLOT(onFilesLoadingStop()));
-    connect(detailsBrowserController, SIGNAL(loadingDetailsStart()),
-            statusWidget, SLOT(onDetailsLoadingStart()));
-    connect(detailsBrowserController, SIGNAL(loadingDetailsStop()),
-            statusWidget, SLOT(onDetailsLoadingStop()));
-    connect(this, SIGNAL(convertStart(int)), statusWidget, SLOT(onConvetionStart(int)));
-    connect(this, SIGNAL(convertTick(int)), statusWidget, SLOT(onConvetionTick(int)));
-    connect(this, SIGNAL(convertStop()), statusWidget, SLOT(onConvetionStop()));
-
-    // menu actions
-    connect(actionExit, SIGNAL(triggered()), SLOT(close()));
-    connect(actionAbout_Qt, SIGNAL(triggered()),qApp, SLOT(aboutQt()));
-    connect(actionAbout_Sir, SIGNAL(triggered()), this, SLOT(about()));
-    connect(actionOptions, SIGNAL(triggered()), this, SLOT(setOptions()));
-    connect(actionCheckforUpdates, SIGNAL(triggered()), SLOT(checkUpdates()));
-    connect(actionRestoreSession, SIGNAL(triggered()), SLOT(restoreSession()));
-    connect(actionSaveSession, SIGNAL(triggered()), SLOT(saveSession()));
-    connect(actionRestoreEffects, SIGNAL(triggered()), SLOT(restoreEffects()));
-    connect(actionSaveEffects, SIGNAL(triggered()), SLOT(saveEffects()));
-    connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
-
-    // browse button
-    connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
-
-    // convert... & stop/exit buttons
-    connect(convertButton, SIGNAL(clicked()), this, SLOT(convertAll()));
-    connect(convertSelectedButton, SIGNAL(clicked()), SLOT(convertSelected()));
-    connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
+void ConvertDialog::createConnections()
+{
+    ConvertDialogConnector connector(this);
+    connector.createConnections();
 }
 
 /** Sets icons from system theme. */
@@ -379,6 +328,8 @@ void ConvertDialog::init() {
 
     createConnections();
     setIcons();
+
+    optionsScrollArea->onTargetFormatChanged(targetFormatComboBox->currentText());
 }
 
 /** Browse destination directory button slot.
@@ -927,6 +878,11 @@ void ConvertDialog::checkSVGTab() {
 
 const ConvertSharedData &ConvertDialog::convertSharedData() const {
     return *csd;
+}
+
+DetailsBrowserController *ConvertDialog::detailsBrowserController()
+{
+    return _detailsBrowserController;
 }
 
 /** Cancels converting if converting runs; otherwise close window. */

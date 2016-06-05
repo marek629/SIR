@@ -50,6 +50,8 @@ public:
     void checkSVGTab();
     const ConvertSharedData &convertSharedData() const;
 
+    DetailsBrowserController *detailsBrowserController();
+
 private:
     SharedInformation *sharedInfo;
     QList<ConvertThread*> convertThreads;
@@ -71,7 +73,7 @@ private:
     QDir effectsDir;
     QDir sessionDir;
     CommandLineAssistant *cmd;
-    DetailsBrowserController *detailsBrowserController;
+    DetailsBrowserController *_detailsBrowserController;
 
     void init();
     void createConnections();
