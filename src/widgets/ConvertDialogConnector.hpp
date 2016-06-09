@@ -25,16 +25,19 @@
 #include <QObject>
 
 class ConvertDialog;
+class DetailsBrowserController;
 
 
 class ConvertDialogConnector : public QObject
 {
 public:
-    ConvertDialogConnector(ConvertDialog *dialog);
+    ConvertDialogConnector(ConvertDialog *dialog,
+                           DetailsBrowserController *detailsBrowserController);
     void createConnections();
 
 private:
     ConvertDialog *dialog;
+    DetailsBrowserController *detailsBrowserController;
 
     void createConnectionsForTreeView();
     void createConnectionsForOptionsTab();

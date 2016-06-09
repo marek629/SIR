@@ -87,7 +87,7 @@ ConvertDialog::ConvertDialog(QWidget *parent, const QStringList &args,
 
     effectsCollector = new EffectsCollector(this);
 
-    _detailsBrowserController = new DetailsBrowserController(filesTreeWidget,
+    detailsBrowserController = new DetailsBrowserController(filesTreeWidget,
                                                             detailsBrowser,
                                                             this);
 
@@ -106,13 +106,13 @@ ConvertDialog::~ConvertDialog() {
     clearTempDir();
     delete session;
     delete effectsCollector;
-    delete _detailsBrowserController;
+    delete detailsBrowserController;
 }
 
 /** Connects UI signals to corresponding slots. */
 void ConvertDialog::createConnections()
 {
-    ConvertDialogConnector connector(this);
+    ConvertDialogConnector connector(this, detailsBrowserController);
     connector.createConnections();
 }
 
@@ -878,11 +878,6 @@ void ConvertDialog::checkSVGTab() {
 
 const ConvertSharedData &ConvertDialog::convertSharedData() const {
     return *csd;
-}
-
-DetailsBrowserController *ConvertDialog::detailsBrowserController()
-{
-    return _detailsBrowserController;
 }
 
 /** Cancels converting if converting runs; otherwise close window. */

@@ -25,10 +25,12 @@
 #include "widgets/DetailsBrowserController.hpp"
 
 
-ConvertDialogConnector::ConvertDialogConnector(ConvertDialog *dialog)
+ConvertDialogConnector::ConvertDialogConnector(ConvertDialog *dialog,
+        DetailsBrowserController *detailsBrowserController)
     : QObject(dialog)
 {
     this->dialog = dialog;
+    this->detailsBrowserController = detailsBrowserController;
 }
 
 void ConvertDialogConnector::createConnections()
@@ -78,9 +80,9 @@ void ConvertDialogConnector::createConnectionsForStatusBar()
             dialog->statusWidget, SLOT(onFilesLoadingTick(int)));
     connect(dialog->filesTreeWidget, SIGNAL(loadingFilesStop()),
             dialog->statusWidget, SLOT(onFilesLoadingStop()));
-    connect(dialog->detailsBrowserController(), SIGNAL(loadingDetailsStart()),
+    connect(detailsBrowserController, SIGNAL(loadingDetailsStart()),
             dialog->statusWidget, SLOT(onDetailsLoadingStart()));
-    connect(dialog->detailsBrowserController(), SIGNAL(loadingDetailsStop()),
+    connect(detailsBrowserController, SIGNAL(loadingDetailsStop()),
             dialog->statusWidget, SLOT(onDetailsLoadingStop()));
     connect(dialog, SIGNAL(convertStart(int)),
             dialog->statusWidget, SLOT(onConvetionStart(int)));
