@@ -19,38 +19,52 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef OPTIONSSCROLLAREA_HPP
-#define OPTIONSSCROLLAREA_HPP
-
-#include "ui_OptionsScrollArea.h"
-
-class ImageFormat;
+#include "convert/model/TargetImage.hpp"
 
 
-//! Image options scroll area used in ConvertDialog
-class OptionsScrollArea : public QScrollArea, public Ui::OptionsScrollArea {
-    Q_OBJECT
+TargetImage::TargetImage(const ImageFormat &imageFormat) : format(imageFormat) {}
 
-public:
-    explicit OptionsScrollArea(QWidget *parent = 0);
-    void retranslateStrings();
+ImageFormat TargetImage::imageFormat() const
+{
+    return format;
+}
 
-public slots:
-    void onTargetFormatChanged(const QString &format);
+bool TargetImage::isProgressiveWriteEnabled() const
+{
+    return progressiveWriteEnabled;
+}
 
-private slots:
-    void verifyRotate(int status);
-    void onRotateSliderValueChanged(int value);
-    void onRotateSplitterValueChanged(double value);
+void TargetImage::setProgressiveWriteEnabled(bool value)
+{
+    progressiveWriteEnabled = value;
+}
 
-private:
-    void createConnections();
+bool TargetImage::isOptimizedWriteEnabled() const
+{
+    return optimizedWriteEnabled;
+}
 
-    void showFormatControls(const ImageFormat &format);
-    void hideSpecialFormatInputs();
-    void showJpegFormatInputs();
-    void showPngFormatInputs();
-    void showGeneralFormatInputs();
-};
+void TargetImage::setOptimizedWriteEnabled(bool value)
+{
+    optimizedWriteEnabled = value;
+}
 
-#endif // OPTIONSSCROLLAREA_HPP
+int TargetImage::compression() const
+{
+    return compressionLevel;
+}
+
+void TargetImage::setCompression(int value)
+{
+    compressionLevel = value;
+}
+
+int TargetImage::quality() const
+{
+    return qualityLevel;
+}
+
+void TargetImage::setQuality(int value)
+{
+    qualityLevel = value;
+}

@@ -2,6 +2,7 @@
 
 # Source files
 file( GLOB_RECURSE sir_SRCS
+        convert/*.cpp
         exceptions/*.cpp
         image/*.cpp
         raw/*.cpp

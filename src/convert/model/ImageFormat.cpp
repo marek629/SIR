@@ -19,38 +19,19 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef OPTIONSSCROLLAREA_HPP
-#define OPTIONSSCROLLAREA_HPP
+#include "convert/model/ImageFormat.hpp"
 
-#include "ui_OptionsScrollArea.h"
+ImageFormat::ImageFormat(const QString &format)
+{
+    this->format = format.toLower();
+}
 
-class ImageFormat;
+bool ImageFormat::isPng() const
+{
+    return format == "png";
+}
 
-
-//! Image options scroll area used in ConvertDialog
-class OptionsScrollArea : public QScrollArea, public Ui::OptionsScrollArea {
-    Q_OBJECT
-
-public:
-    explicit OptionsScrollArea(QWidget *parent = 0);
-    void retranslateStrings();
-
-public slots:
-    void onTargetFormatChanged(const QString &format);
-
-private slots:
-    void verifyRotate(int status);
-    void onRotateSliderValueChanged(int value);
-    void onRotateSplitterValueChanged(double value);
-
-private:
-    void createConnections();
-
-    void showFormatControls(const ImageFormat &format);
-    void hideSpecialFormatInputs();
-    void showJpegFormatInputs();
-    void showPngFormatInputs();
-    void showGeneralFormatInputs();
-};
-
-#endif // OPTIONSSCROLLAREA_HPP
+bool ImageFormat::isJpeg() const
+{
+    return format == "jpg" || format == "jpeg";
+}

@@ -21,6 +21,9 @@
 
 #include "widgets/convert/OptionsScrollArea.hpp"
 
+#include "convert/model/ImageFormat.hpp"
+
+
 /** Creates the OptionsScrollArea object. Sets up GUI and creates connections. */
 OptionsScrollArea::OptionsScrollArea(QWidget *parent) : QScrollArea(parent)
 {
@@ -37,16 +40,7 @@ void OptionsScrollArea::retranslateStrings()
 
 void OptionsScrollArea::onTargetFormatChanged(const QString &format)
 {
-    hideSpecialFormatInputs();
-    if (format == "jpg" || format == "jpeg") {
-        showJpegFormatInputs();
-    }
-    else if (format == "png") {
-        showPngFormatInputs();
-    }
-    else {
-        showGeneralFormatInputs();
-    }
+    showFormatControls(ImageFormat(format));
 }
 
 /** Rotate checkbox slot.
@@ -79,6 +73,20 @@ void OptionsScrollArea::createConnections()
             this, SLOT(onRotateSplitterValueChanged(double)));
     connect(rotateHorizontalSlider, SIGNAL(valueChanged(int)),
             this, SLOT(onRotateSliderValueChanged(int)));
+}
+
+void OptionsScrollArea::showFormatControls(const ImageFormat &format)
+{
+    hideSpecialFormatInputs();
+    if (format.isJpeg()) {
+        showJpegFormatInputs();
+    }
+    else if (format.isPng()) {
+        showPngFormatInputs();
+    }
+    else {
+        showGeneralFormatInputs();
+    }
 }
 
 void OptionsScrollArea::hideSpecialFormatInputs()
