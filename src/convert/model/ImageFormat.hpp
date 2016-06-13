@@ -28,6 +28,7 @@
 class ImageFormat
 {
 public:
+    ImageFormat();
     explicit ImageFormat(const QString &format);
 
     bool isPng() const;

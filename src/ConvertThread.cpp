@@ -731,7 +731,7 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
 bool ConvertThread::writeImage(const QImage &image, const QString &filePath)
 {
     ImageWriter writer(filePath);
-    writer.setQuality(shared.quality);
+    writer.setQuality(shared.targetImage.quality());
     writer.enableProgressiveScanWrite();
     writer.enableOptimizedWrite();
     writer.setCompression(0);

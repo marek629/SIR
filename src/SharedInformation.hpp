@@ -19,8 +19,8 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef SHAREDINFORMATION_H
-#define SHAREDINFORMATION_H
+#ifndef SHAREDINFORMATION_HPP
+#define SHAREDINFORMATION_HPP
 
 #include <QMutex>
 #include <QString>
@@ -28,6 +28,7 @@
 #include <QColor>
 #include <QImage>
 
+#include "convert/model/TargetImage.hpp"
 #include "raw/RawModel.hpp"
 #include "shared/EffectsConfiguration.hpp"
 
@@ -105,7 +106,7 @@ private:
     QString prefix; /**< Target file prefix. */
     QString suffix; /**< Target file suffix. */
     QString format; /**< Target file format. */
-    int quality;  /**< Target image quality in range between 1 to 100. */
+    TargetImage targetImage;
 
     // destinated orientation
     bool rotate; /**< Rotation indicator. */
@@ -164,4 +165,4 @@ private:
     int enlargeResult;
 };
 
-#endif // SHAREDINFORMATION_H
+#endif // SHAREDINFORMATION_HPP

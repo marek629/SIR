@@ -22,6 +22,8 @@
 #include "convert/model/TargetImage.hpp"
 
 
+TargetImage::TargetImage() {}
+
 TargetImage::TargetImage(const ImageFormat &imageFormat) : format(imageFormat) {}
 
 ImageFormat TargetImage::imageFormat() const

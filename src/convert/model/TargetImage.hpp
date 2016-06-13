@@ -28,6 +28,7 @@
 class TargetImage
 {
 public:
+    TargetImage();
     explicit TargetImage(const ImageFormat &imageFormat);
 
     ImageFormat imageFormat() const;
