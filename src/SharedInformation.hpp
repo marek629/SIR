@@ -105,6 +105,7 @@ private:
     QDir destFolder; /**< Destination directory. */
     QString prefix; /**< Target file prefix. */
     QString suffix; /**< Target file suffix. */
+    // TODO: replace format to targetImage usage
     QString format; /**< Target file format. */
     TargetImage targetImage;
 

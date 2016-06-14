@@ -34,6 +34,8 @@ public:
     bool isPng() const;
     bool isJpeg() const;
 
+    bool isTransparentSupportFormat() const;
+
 private:
     QString format;
 };

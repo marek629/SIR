@@ -37,3 +37,8 @@ bool ImageFormat::isJpeg() const
 {
     return format == "jpg" || format == "jpeg";
 }
+
+bool ImageFormat::isTransparentSupportFormat() const
+{
+    return format == "gif" || isPng();
+}

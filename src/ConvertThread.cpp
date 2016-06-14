@@ -743,7 +743,7 @@ void ConvertThread::fillImage(QImage *img)
     if (shared.backgroundColor.isValid()) {
         img->fill(shared.backgroundColor.rgb());
     } else {
-        if (shared.format == "gif" || shared.format == "png") {
+        if (shared.targetImage.imageFormat().isTransparentSupportFormat()) {
             img->fill(Qt::transparent);
         } else {
             // in other formats tranparency isn't supported
