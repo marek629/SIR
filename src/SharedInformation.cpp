@@ -156,6 +156,8 @@ void SharedInformation::setDesiredSize(quint32 bytes) {
   */
 void SharedInformation::setDesiredFormat(const QString &format) {
     this->format = format;
+    targetImage.setImageFormat(ImageFormat(format));
+
 #ifdef SIR_METADATA_SUPPORT
     if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
         saveMetadata = false;

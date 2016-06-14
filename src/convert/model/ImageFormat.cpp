@@ -21,6 +21,7 @@
 
 #include "convert/model/ImageFormat.hpp"
 
+
 ImageFormat::ImageFormat() {}
 
 ImageFormat::ImageFormat(const QString &format)

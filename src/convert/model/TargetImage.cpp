@@ -31,6 +31,11 @@ ImageFormat TargetImage::imageFormat() const
     return format;
 }
 
+void TargetImage::setImageFormat(const ImageFormat &value)
+{
+    format = value;
+}
+
 bool TargetImage::isProgressiveWriteEnabled() const
 {
     return progressiveWriteEnabled;

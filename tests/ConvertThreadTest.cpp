@@ -71,6 +71,7 @@ void ConvertThreadTest::test_fillImage()
     SharedInformation sharedInfo;
     sharedInfo.backgroundColor = color;
     sharedInfo.format = format;
+    sharedInfo.targetImage = TargetImage(ImageFormat(format));
     ConvertThread::setSharedInfo(sharedInfo);
 
     ConvertThread thread(this, 1);

@@ -32,6 +32,7 @@ public:
     explicit TargetImage(const ImageFormat &imageFormat);
 
     ImageFormat imageFormat() const;
+    void setImageFormat(const ImageFormat &value);
 
     bool isProgressiveWriteEnabled() const;
     void setProgressiveWriteEnabled(bool value);
