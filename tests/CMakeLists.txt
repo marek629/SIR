@@ -89,6 +89,14 @@ add_executable( sir_detailsthumbnail_test ${sir_IT_detailsthumbnail_SRCS} )
 target_link_libraries( sir_detailsthumbnail_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "DetailsThumbnail_IT" COMMAND sir_detailsthumbnail_test )
 
+include_directories( ${CMAKE_BINARY_DIR}/src )
+set( sir_UT_imageformat_SRCS
+        convert/model/ImageFormatLinearSizeTest.cpp
+    )
+add_executable( ImageFormatLinearSizeTest ${sir_UT_imageformat_SRCS} )
+target_link_libraries( ImageFormatLinearSizeTest ${sir_UT_LINKING_LIBS} )
+add_test( NAME "ImageFormatLinearSizeTest" COMMAND ImageFormatLinearSizeTest )
+
 
 if( metadata )
 

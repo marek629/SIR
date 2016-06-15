@@ -42,6 +42,7 @@ class SharedInformation
     friend class ConvertDialogTest;
     friend class ConvertEffects;
     friend class ConvertEffectsTest;
+    friend class ImageFormatLinearSizeTest;
 
 public:
     SharedInformation();
