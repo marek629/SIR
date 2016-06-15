@@ -33,6 +33,11 @@ public:
 
     bool isPng() const;
     bool isJpeg() const;
+    bool isPpm() const;
+    bool isBmp() const;
+    bool isIco() const;
+    bool isTiff() const;
+    bool isXbm() const;
 
     bool isTransparentSupportFormat() const;
 

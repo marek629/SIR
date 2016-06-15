@@ -39,6 +39,31 @@ bool ImageFormat::isJpeg() const
     return format == "jpg" || format == "jpeg";
 }
 
+bool ImageFormat::isPpm() const
+{
+    return format == "ppm";
+}
+
+bool ImageFormat::isBmp() const
+{
+    return format == "bmp";
+}
+
+bool ImageFormat::isIco() const
+{
+    return format == "ico";
+}
+
+bool ImageFormat::isTiff() const
+{
+    return format == "tif" || format == "tiff";
+}
+
+bool ImageFormat::isXbm() const
+{
+    return format == "xbm";
+}
+
 bool ImageFormat::isTransparentSupportFormat() const
 {
     return format == "gif" || isPng();

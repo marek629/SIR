@@ -590,29 +590,31 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
   * as linear function, otherwise returns false.\n
   * Following file formats are linear size: BMP, PPM, ICO, TIFF and XBM.
   */
+// TODO: extract count destSize to another method
 bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
     bool linearSize = false;
-    if (shared.format == "bmp") {
+    ImageFormat imageFormat = shared.targetImage.imageFormat();
+    if (imageFormat.isBmp()) {
         *destSize -= 54;
         *destSize /= 3;
         linearSize = true;
     }
-    else if (shared.format == "ppm") {
+    else if (imageFormat.isPpm()) {
         *destSize -= 17;
         *destSize /= 3;
         linearSize = true;
     }
-    else if (shared.format == "ico") {
+    else if (imageFormat.isIco()) {
         *destSize -= 1422;
         *destSize /= 4;
         linearSize = true;
     }
-    else if (shared.format == "tif" || shared.format == "tiff") {
+    else if (imageFormat.isTiff()) {
         *destSize -= 14308;
         *destSize /= 4;
         linearSize = true;
     }
-    else if (shared.format == "xbm") {
+    else if (imageFormat.isXbm()) {
         *destSize -= 60;
         *destSize /= 0.65;
         linearSize = true;
