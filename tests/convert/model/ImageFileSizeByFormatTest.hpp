@@ -19,21 +19,21 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef IMAGEFORMATTARGETFILESIZETEST_HPP
-#define IMAGEFORMATTARGETFILESIZETEST_HPP
+#ifndef IMAGEFILESIZEBYFORMATTEST_HPP
+#define IMAGEFILESIZEBYFORMATTEST_HPP
 
 #include <QtTest/QTest>
 
 
-class ImageFormatTargetFileSizeTest : public QObject
+class ImageFileSizeByFormatTest : public QObject
 {
     Q_OBJECT
 public:
-    ImageFormatTargetFileSizeTest();
+    ImageFileSizeByFormatTest();
 
 private slots:
-    void test_countDestinationSize_data();
-    void test_countDestinationSize();
+    void test_bytesByFormat_data();
+    void test_bytesByFormat();
 };
 
-#endif // IMAGEFORMATTARGETFILESIZETEST_HPP
+#endif // IMAGEFILESIZEBYFORMATTEST_HPP

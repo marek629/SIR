@@ -19,15 +19,15 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "tests/convert/model/ImageFormatTargetFileSizeTest.hpp"
+#include "tests/convert/model/ImageFileSizeByFormatTest.hpp"
 
 #include "convert/model/ImageFileSize.hpp"
 #include "convert/model/ImageFormat.hpp"
 
 
-ImageFormatTargetFileSizeTest::ImageFormatTargetFileSizeTest() : QObject() {}
+ImageFileSizeByFormatTest::ImageFileSizeByFormatTest() : QObject() {}
 
-void ImageFormatTargetFileSizeTest::test_countDestinationSize_data()
+void ImageFileSizeByFormatTest::test_bytesByFormat_data()
 {
     QTest::addColumn<QString>("format");
     QTest::addColumn<double>("fileSize");
@@ -43,7 +43,7 @@ void ImageFormatTargetFileSizeTest::test_countDestinationSize_data()
     QTest::newRow("JPEG") << "jpeg" << 400. << 400.;
 }
 
-void ImageFormatTargetFileSizeTest::test_countDestinationSize()
+void ImageFileSizeByFormatTest::test_bytesByFormat()
 {
     QFETCH(QString, format);
     QFETCH(double, fileSize);
@@ -54,5 +54,5 @@ void ImageFormatTargetFileSizeTest::test_countDestinationSize()
     QCOMPARE(imageFileSize.bytesByFormat(ImageFormat(format)), expected);
 }
 
-QTEST_APPLESS_MAIN(ImageFormatTargetFileSizeTest)
-#include "ImageFormatTargetFileSizeTest.moc"
+QTEST_APPLESS_MAIN(ImageFileSizeByFormatTest)
+#include "ImageFileSizeByFormatTest.moc"
