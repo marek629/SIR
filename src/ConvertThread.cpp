@@ -23,6 +23,7 @@
 
 #include "ConvertEffects.hpp"
 #include "Settings.hpp"
+#include "convert/model/ImageFileSize.hpp"
 #include "image/ImageWriter.hpp"
 #include "image/QImageLoader.hpp"
 #include "widgets/MessageBox.hpp"
@@ -608,28 +609,8 @@ bool ConvertThread::isLinearFileSizeFormat()
 
 double ConvertThread::countTargetFileSize(double fileSize)
 {
-    ImageFormat imageFormat = shared.targetImage.imageFormat();
-    if (imageFormat.isBmp()) {
-        fileSize -= 54;
-        fileSize /= 3;
-    }
-    else if (imageFormat.isPpm()) {
-        fileSize -= 17;
-        fileSize /= 3;
-    }
-    else if (imageFormat.isIco()) {
-        fileSize -= 1422;
-        fileSize /= 4;
-    }
-    else if (imageFormat.isTiff()) {
-        fileSize -= 14308;
-        fileSize /= 4;
-    }
-    else if (imageFormat.isXbm()) {
-        fileSize -= 60;
-        fileSize /= 0.65;
-    }
-    return fileSize;
+    ImageFileSize imageFileSize(fileSize);
+    return imageFileSize.bytesByFormat(shared.targetImage.imageFormat());
 }
 
 QString ConvertThread::temporaryFilePath(int threadId)
