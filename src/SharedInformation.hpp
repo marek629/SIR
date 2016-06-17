@@ -43,6 +43,7 @@ class SharedInformation
     friend class ConvertEffects;
     friend class ConvertEffectsTest;
     friend class ImageFormatLinearSizeTest;
+    friend class ImageFormatTargetFileSizeTest;
 
 public:
     SharedInformation();

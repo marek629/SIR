@@ -51,6 +51,7 @@ class ConvertThread : public QThread {
     friend class ConvertDialog;
     friend class ConvertThreadTest;
     friend class ImageFormatLinearSizeTest;
+    friend class ImageFormatTargetFileSizeTest;
 
 public:
     //! Enumerator for ConvertThread::question() signal.

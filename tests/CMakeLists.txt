@@ -89,13 +89,17 @@ add_executable( sir_detailsthumbnail_test ${sir_IT_detailsthumbnail_SRCS} )
 target_link_libraries( sir_detailsthumbnail_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "DetailsThumbnail_IT" COMMAND sir_detailsthumbnail_test )
 
-include_directories( ${CMAKE_BINARY_DIR}/src )
-set( sir_UT_imageformat_SRCS
-        convert/model/ImageFormatLinearSizeTest.cpp
-    )
-add_executable( ImageFormatLinearSizeTest ${sir_UT_imageformat_SRCS} )
-target_link_libraries( ImageFormatLinearSizeTest ${sir_UT_LINKING_LIBS} )
-add_test( NAME "ImageFormatLinearSizeTest" COMMAND ImageFormatLinearSizeTest )
+#include_directories( ${CMAKE_BINARY_DIR}/src )
+file( GLOB imageformat_test_file_list "convert/model/*Test.cpp" )
+foreach( test_file ${imageformat_test_file_list} )
+    set( sir_UT_imageformat_SRCS
+            ${test_file}
+        )
+    get_filename_component( test_name ${test_file} NAME_WE )
+    add_executable( ${test_name} ${sir_UT_imageformat_SRCS} )
+    target_link_libraries( ${test_name} ${sir_UT_LINKING_LIBS} )
+    add_test( NAME "${test_name}" COMMAND ImageFormatLinearSizeTest )
+endforeach( )
 
 
 if( metadata )
