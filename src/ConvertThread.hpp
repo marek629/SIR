@@ -141,6 +141,7 @@ private:
 #endif // SIR_METADATA_SUPPORT
     char computeSize(const QImage *image, const QString &imagePath);
     bool isLinearFileSizeFormat(double *destSize);
+    QString temporaryFilePath(int threadId);
     char askEnlarge(const QImage &image, const QString &imagePath);
     char askOverwrite(QFile *tempFile);
 

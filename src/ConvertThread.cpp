@@ -106,7 +106,7 @@ void ConvertThread::run()
         targetFilePath += imageName;
         if (!shared.suffix.isEmpty())
             targetFilePath += "_" + shared.suffix;
-        targetFilePath += "." + shared.format;
+        targetFilePath += "." + shared.targetImage.imageFormat().qString();
 
         pd.imagePath = pd.imgData.at(2) + QDir::separator() + pd.imgData.at(0)
                      + "." + originalFormat;
@@ -452,8 +452,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             height = sourceHeightRatio * destSize;
         }
         else { // non-linear size relationship
-            QString tempFilePath = QDir::tempPath() + QDir::separator() +
-                    "sir_temp" + QString::number(tid) + "." + shared.format;
+            QString tempFilePath = temporaryFilePath(tid);
             QImage tempImage;
             qint64 fileSize = QFile(imagePath).size();
             QSize size = image->size();
@@ -535,8 +534,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
             height = sourceHeightRatio * destSize;
         }
         else { // non-linear size relationship
-            QString tempFilePath = QDir::tempPath() + QDir::separator() +
-                    "sir_temp" + QString::number(tid) + "." + shared.format;
+            QString tempFilePath = temporaryFilePath(tid);
             qint64 fileSize = QFile(imagePath).size();
             QSize size = defaultSize;
             double fileSizeRatio = (double) fileSize / shared.sizeBytes;
@@ -620,6 +618,13 @@ bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
         linearSize = true;
     }
     return linearSize;
+}
+
+QString ConvertThread::temporaryFilePath(int threadId)
+{
+    return QDir::tempPath() + QDir::separator() +
+            "sir_temp" + QString::number(threadId) +
+            "." + shared.targetImage.imageFormat().qString();
 }
 
 /** Asks the user in message box if enlarge image by emiting question() signal.\n
