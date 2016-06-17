@@ -21,7 +21,8 @@
 
 #include "tests/convert/model/ImageFormatTargetFileSizeTest.hpp"
 
-#include "ConvertThread.hpp"
+#include "convert/model/ImageFileSize.hpp"
+#include "convert/model/ImageFormat.hpp"
 
 
 ImageFormatTargetFileSizeTest::ImageFormatTargetFileSizeTest() : QObject() {}
@@ -48,10 +49,9 @@ void ImageFormatTargetFileSizeTest::test_countDestinationSize()
     QFETCH(double, fileSize);
     QFETCH(double, expected);
 
-    ConvertThread thread(this, 1);
-    thread.shared.targetImage = TargetImage(ImageFormat(format));
+    ImageFileSize imageFileSize(fileSize);
 
-    QCOMPARE(thread.countTargetFileSize(fileSize), expected);
+    QCOMPARE(imageFileSize.bytesByFormat(ImageFormat(format)), expected);
 }
 
 QTEST_APPLESS_MAIN(ImageFormatTargetFileSizeTest)
