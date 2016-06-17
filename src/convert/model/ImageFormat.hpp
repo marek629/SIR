@@ -41,6 +41,8 @@ public:
 
     bool isTransparentSupportFormat() const;
 
+    QString qString() const;
+
 private:
     QString format;
 };

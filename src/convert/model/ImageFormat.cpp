@@ -68,3 +68,8 @@ bool ImageFormat::isTransparentSupportFormat() const
 {
     return format == "gif" || isPng();
 }
+
+QString ImageFormat::qString() const
+{
+    return format;
+}

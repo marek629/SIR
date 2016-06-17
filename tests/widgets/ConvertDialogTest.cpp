@@ -58,7 +58,7 @@ void ConvertDialogTest::convert_defaultPath()
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
 
     QCOMPARE(convertDialog->convertedImages, 0);
-    QCOMPARE(sharedInfo->format,
+    QCOMPARE(sharedInfo->targetImage.imageFormat().qString(),
              convertDialog->targetFormatComboBox->currentText().toLower());
     QCOMPARE(sharedInfo->flip,
              convertDialog->optionsScrollArea->flipComboBox->currentIndex());
