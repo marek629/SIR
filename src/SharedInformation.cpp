@@ -47,9 +47,6 @@ SharedInformation::SharedInformation()
     rotate = false;
     angle = 0.;
 
-    // file settings
-    format = "";
-
 #ifdef SIR_METADATA_SUPPORT
     // metadata settings
     saveMetadata = true;
@@ -84,7 +81,6 @@ void SharedInformation::swap(const SharedInformation &other)
     destFolder = other.destFolder;
     prefix = other.prefix;
     suffix = other.suffix;
-    format = other.format;
     targetImage = other.targetImage;
 
     rotate = other.rotate;
@@ -155,7 +151,6 @@ void SharedInformation::setDesiredSize(quint32 bytes) {
   * \note Call this function after calling #setSaveMetadata.
   */
 void SharedInformation::setDesiredFormat(const QString &format) {
-    this->format = format;
     targetImage.setImageFormat(ImageFormat(format));
 
 #ifdef SIR_METADATA_SUPPORT
