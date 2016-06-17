@@ -442,8 +442,8 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
         height = image->height();
         hasWidth = true;
         hasHeight = true;
-        double destSize = shared.sizeBytes;
-        if (isLinearFileSizeFormat(&destSize)) {
+        if (isLinearFileSizeFormat()) {
+            double destSize = countTargetFileSize(shared.sizeBytes);
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
             double sourceHeightRatio = height / sourceSizeSqrt;
@@ -524,8 +524,8 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
         height = defaultSize.height();
         hasWidth = true;
         hasHeight = true;
-        double destSize = shared.sizeBytes;
-        if (isLinearFileSizeFormat(&destSize)) {
+        if (isLinearFileSizeFormat()) {
+            double destSize = countTargetFileSize(shared.sizeBytes);
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
             double sourceHeightRatio = height / sourceSizeSqrt;
@@ -584,40 +584,52 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
     return 0;
 }
 
-/** Returns true if desired file format is corresponding file size to image size
-  * as linear function, otherwise returns false.\n
-  * Following file formats are linear size: BMP, PPM, ICO, TIFF and XBM.
-  */
-// TODO: extract count destSize to another method
-bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
+bool ConvertThread::isLinearFileSizeFormat()
+{
     bool linearSize = false;
     ImageFormat imageFormat = shared.targetImage.imageFormat();
     if (imageFormat.isBmp()) {
-        *destSize -= 54;
-        *destSize /= 3;
         linearSize = true;
     }
     else if (imageFormat.isPpm()) {
-        *destSize -= 17;
-        *destSize /= 3;
         linearSize = true;
     }
     else if (imageFormat.isIco()) {
-        *destSize -= 1422;
-        *destSize /= 4;
         linearSize = true;
     }
     else if (imageFormat.isTiff()) {
-        *destSize -= 14308;
-        *destSize /= 4;
         linearSize = true;
     }
     else if (imageFormat.isXbm()) {
-        *destSize -= 60;
-        *destSize /= 0.65;
         linearSize = true;
     }
     return linearSize;
+}
+
+double ConvertThread::countTargetFileSize(double fileSize)
+{
+    ImageFormat imageFormat = shared.targetImage.imageFormat();
+    if (imageFormat.isBmp()) {
+        fileSize -= 54;
+        fileSize /= 3;
+    }
+    else if (imageFormat.isPpm()) {
+        fileSize -= 17;
+        fileSize /= 3;
+    }
+    else if (imageFormat.isIco()) {
+        fileSize -= 1422;
+        fileSize /= 4;
+    }
+    else if (imageFormat.isTiff()) {
+        fileSize -= 14308;
+        fileSize /= 4;
+    }
+    else if (imageFormat.isXbm()) {
+        fileSize -= 60;
+        fileSize /= 0.65;
+    }
+    return fileSize;
 }
 
 QString ConvertThread::temporaryFilePath(int threadId)

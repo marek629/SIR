@@ -50,9 +50,8 @@ void ImageFormatTargetFileSizeTest::test_countDestinationSize()
 
     ConvertThread thread(this, 1);
     thread.shared.targetImage = TargetImage(ImageFormat(format));
-    thread.isLinearFileSizeFormat(&fileSize);
 
-    QCOMPARE(fileSize, expected);
+    QCOMPARE(thread.countTargetFileSize(fileSize), expected);
 }
 
 QTEST_APPLESS_MAIN(ImageFormatTargetFileSizeTest)

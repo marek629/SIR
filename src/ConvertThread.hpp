@@ -140,7 +140,11 @@ private:
     void updateThumbnail(const QImage &image);
 #endif // SIR_METADATA_SUPPORT
     char computeSize(const QImage *image, const QString &imagePath);
-    bool isLinearFileSizeFormat(double *destSize);
+
+    // TODO: move to ImageFormat class
+    bool isLinearFileSizeFormat();
+    double countTargetFileSize(double fileSize);
+
     QString temporaryFilePath(int threadId);
     char askEnlarge(const QImage &image, const QString &imagePath);
     char askOverwrite(QFile *tempFile);
