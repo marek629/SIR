@@ -40,6 +40,7 @@ public:
     bool isXbm() const;
 
     bool isTransparentSupportFormat() const;
+    bool isLinearFileSizeFormat() const;
 
     QString qString() const;
 

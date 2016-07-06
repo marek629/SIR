@@ -69,6 +69,26 @@ bool ImageFormat::isTransparentSupportFormat() const
     return format == "gif" || isPng();
 }
 
+bool ImageFormat::isLinearFileSizeFormat() const
+{
+    if (isBmp()) {
+        return true;
+    }
+    else if (isPpm()) {
+        return true;
+    }
+    else if (isIco()) {
+        return true;
+    }
+    else if (isTiff()) {
+        return true;
+    }
+    else if (isXbm()) {
+        return true;
+    }
+    return false;
+}
+
 QString ImageFormat::qString() const
 {
     return format;

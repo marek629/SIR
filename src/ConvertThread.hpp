@@ -141,8 +141,6 @@ private:
 #endif // SIR_METADATA_SUPPORT
     char computeSize(const QImage *image, const QString &imagePath);
 
-    // TODO: move to ImageFormat class
-    bool isLinearFileSizeFormat();
     double countTargetFileSize(double fileSize);
 
     QString temporaryFilePath(int threadId);

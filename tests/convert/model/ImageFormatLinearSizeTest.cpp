@@ -21,7 +21,7 @@
 
 #include "tests/convert/model/ImageFormatLinearSizeTest.hpp"
 
-#include "ConvertThread.hpp"
+#include "convert/model/ImageFormat.hpp"
 
 
 ImageFormatLinearSizeTest::ImageFormatLinearSizeTest() : QObject() {}
@@ -46,10 +46,9 @@ void ImageFormatLinearSizeTest::test_isLinearFileSizeFormat()
     QFETCH(QString, format);
     QFETCH(bool, expected);
 
-    ConvertThread thread(this, 1);
-    thread.shared.targetImage = TargetImage(ImageFormat(format));
+    ImageFormat imageFormat(format);
 
-    QCOMPARE(thread.isLinearFileSizeFormat(), expected);
+    QCOMPARE(imageFormat.isLinearFileSizeFormat(), expected);
 }
 
 QTEST_APPLESS_MAIN(ImageFormatLinearSizeTest)

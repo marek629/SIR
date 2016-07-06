@@ -443,7 +443,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
         height = image->height();
         hasWidth = true;
         hasHeight = true;
-        if (isLinearFileSizeFormat()) {
+        if (shared.targetImage.imageFormat().isLinearFileSizeFormat()) {
             double destSize = countTargetFileSize(shared.sizeBytes);
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
@@ -525,7 +525,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
         height = defaultSize.height();
         hasWidth = true;
         hasHeight = true;
-        if (isLinearFileSizeFormat()) {
+        if (shared.targetImage.imageFormat().isLinearFileSizeFormat()) {
             double destSize = countTargetFileSize(shared.sizeBytes);
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
@@ -583,28 +583,6 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
         return 2;
     }
     return 0;
-}
-
-bool ConvertThread::isLinearFileSizeFormat()
-{
-    bool linearSize = false;
-    ImageFormat imageFormat = shared.targetImage.imageFormat();
-    if (imageFormat.isBmp()) {
-        linearSize = true;
-    }
-    else if (imageFormat.isPpm()) {
-        linearSize = true;
-    }
-    else if (imageFormat.isIco()) {
-        linearSize = true;
-    }
-    else if (imageFormat.isTiff()) {
-        linearSize = true;
-    }
-    else if (imageFormat.isXbm()) {
-        linearSize = true;
-    }
-    return linearSize;
 }
 
 double ConvertThread::countTargetFileSize(double fileSize)
