@@ -77,6 +77,7 @@ void OptionsScrollArea::createConnections()
 
 void OptionsScrollArea::showFormatControls(const ImageFormat &format)
 {
+    // TODO: replace WriteImageFormat instead of show*FormatInputs() methods
     hideSpecialFormatInputs();
     if (format.isJpeg()) {
         showJpegFormatInputs();
