@@ -36,12 +36,20 @@ bool WriteImageFormat::supportsQuality() const
 
 bool WriteImageFormat::supportsProgressiveScanWrite() const
 {
+#if QT_VERSION >= 0x050500
     return writer.supportsOption(QImageIOHandler::ProgressiveScanWrite);
+#else
+    return false;
+#endif
 }
 
 bool WriteImageFormat::supportsOptimizedWrite() const
 {
+#if QT_VERSION >= 0x050500
     return writer.supportsOption(QImageIOHandler::OptimizedWrite);
+#else
+    return false;
+#endif
 }
 
 bool WriteImageFormat::supportsCompression() const
