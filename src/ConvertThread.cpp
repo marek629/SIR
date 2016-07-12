@@ -24,6 +24,7 @@
 #include "ConvertEffects.hpp"
 #include "Settings.hpp"
 #include "convert/model/ImageFileSize.hpp"
+#include "convert/model/WriteImageFormat.hpp"
 #include "image/ImageWriter.hpp"
 #include "image/QImageLoader.hpp"
 #include "widgets/MessageBox.hpp"
@@ -709,10 +710,20 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
 bool ConvertThread::writeImage(const QImage &image, const QString &filePath)
 {
     ImageWriter writer(filePath);
-    writer.setQuality(shared.targetImage.quality());
-    writer.enableProgressiveScanWrite();
-    writer.enableOptimizedWrite();
-    writer.setCompression(0);
+    WriteImageFormat format(filePath.split('.').last());
+    if (format.supportsQuality()) {
+        writer.setQuality(shared.targetImage.quality());
+    }
+    // TODO: use data from user forms input
+    if (format.supportsProgressiveScanWrite()) {
+        writer.enableProgressiveScanWrite();
+    }
+    if (format.supportsOptimizedWrite()) {
+        writer.enableOptimizedWrite();
+    }
+    if (format.supportsCompression()) {
+        writer.setCompression(0);
+    }
     return writer.write(image);
 }
 
