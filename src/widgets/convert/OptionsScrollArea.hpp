@@ -24,7 +24,7 @@
 
 #include "ui_OptionsScrollArea.h"
 
-class ImageFormat;
+class WriteImageFormat;
 
 
 //! Image options scroll area used in ConvertDialog
@@ -46,11 +46,9 @@ private slots:
 private:
     void createConnections();
 
-    void showFormatControls(const ImageFormat &format);
-    void hideSpecialFormatInputs();
-    void showJpegFormatInputs();
-    void showPngFormatInputs();
-    void showGeneralFormatInputs();
+    void showFormatControls(const WriteImageFormat &format);
+    void setQualityVisible(bool visible);
+    void setCompressionVisible(bool visible);
 };
 
 #endif // OPTIONSSCROLLAREA_HPP

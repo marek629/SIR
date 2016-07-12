@@ -21,7 +21,7 @@
 
 #include "widgets/convert/OptionsScrollArea.hpp"
 
-#include "convert/model/ImageFormat.hpp"
+#include "convert/model/WriteImageFormat.hpp"
 
 
 /** Creates the OptionsScrollArea object. Sets up GUI and creates connections. */
@@ -40,7 +40,7 @@ void OptionsScrollArea::retranslateStrings()
 
 void OptionsScrollArea::onTargetFormatChanged(const QString &format)
 {
-    showFormatControls(ImageFormat(format));
+    showFormatControls(WriteImageFormat(format));
 }
 
 /** Rotate checkbox slot.
@@ -75,47 +75,24 @@ void OptionsScrollArea::createConnections()
             this, SLOT(onRotateSliderValueChanged(int)));
 }
 
-void OptionsScrollArea::showFormatControls(const ImageFormat &format)
+void OptionsScrollArea::showFormatControls(const WriteImageFormat &format)
 {
-    // TODO: replace WriteImageFormat instead of show*FormatInputs() methods
-    hideSpecialFormatInputs();
-    if (format.isJpeg()) {
-        showJpegFormatInputs();
-    }
-    else if (format.isPng()) {
-        showPngFormatInputs();
-    }
-    else {
-        showGeneralFormatInputs();
-    }
+    setQualityVisible(format.supportsQuality());
+    // TODO: why compression is visible for TIFF and not for PNG ?
+    setCompressionVisible(format.supportsCompression());
+
+    progressiveWriteCheckBox->setVisible(format.supportsProgressiveScanWrite());
+    optimizedWriteCheckBox->setVisible(format.supportsOptimizedWrite());
 }
 
-void OptionsScrollArea::hideSpecialFormatInputs()
+void OptionsScrollArea::setQualityVisible(bool visible)
 {
-    qualityLabel->hide();
-    qualitySliderBox->hide();
-    compressionLabel->hide();
-    compressionSliderBox->hide();
-    progressiveWriteCheckBox->hide();
-    optimizedWriteCheckBox->hide();
+    qualityLabel->setVisible(visible);
+    qualitySliderBox->setVisible(visible);
 }
 
-void OptionsScrollArea::showJpegFormatInputs()
+void OptionsScrollArea::setCompressionVisible(bool visible)
 {
-    showGeneralFormatInputs();
-    progressiveWriteCheckBox->show();
-    optimizedWriteCheckBox->show();
-}
-
-void OptionsScrollArea::showPngFormatInputs()
-{
-    compressionLabel->show();
-    compressionSliderBox->show();
-    progressiveWriteCheckBox->show();
-}
-
-void OptionsScrollArea::showGeneralFormatInputs()
-{
-    qualityLabel->show();
-    qualitySliderBox->show();
+    compressionLabel->setVisible(visible);
+    compressionSliderBox->setVisible(visible);
 }
