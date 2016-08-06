@@ -24,11 +24,20 @@
 
 #include "convert/algorithm/ImageSizeStrategy.hpp"
 
+#include "convert/model/ImageFormat.hpp"
+
 
 class BytesImageSizeStrategy : public ImageSizeStrategy
 {
 public:
     BytesImageSizeStrategy();
+    void calculate(QSvgRenderer *renderer);
+
+private:
+    ImageFormat targetFormat;
+
+    double countTargetFileSize(double fileSize);
+    QString temporaryFilePath(int threadId);
 };
 
 #endif // BYTESIMAGESIZESTRATEGY_HPP
