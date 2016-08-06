@@ -27,8 +27,8 @@ class ImageSizeComputeResultState
 public:
     ImageSizeComputeResultState();
 
-    void setComputedFromGenericFile();
-    void setComputedFromSvgFile();
+    void setComputedForFixedSize();
+    void setComputedForBytesSize();
 
     void setNegativeEnlargeAnswer();
     void setNegativeOverwriteAnswer(int answerCode);
@@ -45,8 +45,8 @@ private:
     enum InternalState
     {
         InitialState = 0,
-        ImageSizeComputedFromGenericFileSuccessState = 1,
-        ImageSizeComputedFromSvgFileSuccessState = 2,
+        ImageSizeComputedForFixedSizeSuccessState = 1,
+        ImageSizeComputedForBytesSizeSuccessState = 2,
         NegativeOverwriteAnswerFailState = -1,
         NegativeEnlargeAnswerFailState = -3,
         CanNotWriteTemporaryImageFileFailState = -4,

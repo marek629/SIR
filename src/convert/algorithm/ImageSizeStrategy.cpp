@@ -21,7 +21,22 @@
 
 #include "convert/algorithm/ImageSizeStrategy.hpp"
 
-ImageSizeStrategy::ImageSizeStrategy()
-{
 
+ImageSizeStrategy::ImageSizeStrategy() {}
+
+ImageSizeStrategy::~ImageSizeStrategy() {}
+
+void ImageSizeStrategy::setFilePath(const QString &filePath)
+{
+    path = filePath;
+}
+
+QSize ImageSizeStrategy::size() const
+{
+    return imageSize;
+}
+
+ImageSizeComputeResultState ImageSizeStrategy::state() const
+{
+    return resultState;
 }

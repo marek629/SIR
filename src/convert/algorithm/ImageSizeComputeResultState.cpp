@@ -28,14 +28,14 @@ ImageSizeComputeResultState::ImageSizeComputeResultState()
     overwriteAnswer = 0;
 }
 
-void ImageSizeComputeResultState::setComputedFromGenericFile()
+void ImageSizeComputeResultState::setComputedForFixedSize()
 {
-    internalState = ImageSizeComputedFromGenericFileSuccessState;
+    internalState = ImageSizeComputedForFixedSizeSuccessState;
 }
 
-void ImageSizeComputeResultState::setComputedFromSvgFile()
+void ImageSizeComputeResultState::setComputedForBytesSize()
 {
-    internalState = ImageSizeComputedFromSvgFileSuccessState;
+    internalState = ImageSizeComputedForBytesSizeSuccessState;
 }
 
 void ImageSizeComputeResultState::setNegativeEnlargeAnswer()

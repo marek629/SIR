@@ -22,7 +22,12 @@
 #include "convert/algorithm/PixelsImageSizeStrategy.hpp"
 
 
-PixelsImageSizeStrategy::PixelsImageSizeStrategy()
-{
+PixelsImageSizeStrategy::PixelsImageSizeStrategy() : ImageSizeStrategy() {}
 
+void PixelsImageSizeStrategy::calculate(QSvgRenderer *renderer)
+{
+    Q_UNUSED(renderer);
+
+    // don't re-calculate size for pixels
+    resultState.setComputedForFixedSize();
 }
