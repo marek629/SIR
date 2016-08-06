@@ -22,10 +22,26 @@
 #ifndef IMAGESIZECOMPUTER_HPP
 #define IMAGESIZECOMPUTER_HPP
 
+#include <QString>
+
+#include "convert/algorithm/ImageSizeComputeResult.hpp"
+#include "convert/algorithm/ImageSizeStrategy.hpp"
+
+
+class QSvgRenderer;
+
+
 class ImageSizeComputer
 {
 public:
-    ImageSizeComputer();
+    explicit ImageSizeComputer(const QString &imagePath);
+
+    ImageSizeComputeResult calculate(QSvgRenderer *renderer, char sizeUnit);
+
+private:
+    QString path;
+
+    ImageSizeStrategy createSizeStrategy(char sizeUnit);
 };
 
 #endif // IMAGESIZECOMPUTER_HPP

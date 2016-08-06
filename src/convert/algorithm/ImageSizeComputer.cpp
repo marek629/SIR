@@ -21,8 +21,42 @@
 
 #include "convert/algorithm/ImageSizeComputer.hpp"
 
+#include <QSvgRenderer>
 
-ImageSizeComputer::ImageSizeComputer()
+#include "convert/algorithm/BytesImageSizeStrategy.hpp"
+#include "convert/algorithm/PercentImageSizeStrategy.hpp"
+#include "convert/algorithm/PixelsImageSizeStrategy.hpp"
+
+
+ImageSizeComputer::ImageSizeComputer(const QString &imagePath)
 {
+    path = imagePath;
+}
 
+ImageSizeComputeResult ImageSizeComputer::calculate(QSvgRenderer *renderer, char sizeUnit)
+{
+    ImageSizeStrategy sizeStrategy = createSizeStrategy(sizeUnit);
+    sizeStrategy.setFilePath(path);
+    sizeStrategy.calculate(renderer);
+
+    ImageSizeComputeResult result;
+    result.setSize(sizeStrategy.size());
+    result.setState(sizeStrategy.state());
+    return result;
+}
+
+ImageSizeStrategy ImageSizeComputer::createSizeStrategy(char sizeUnit)
+{
+    switch (sizeUnit) {
+        case 1:
+            return PercentImageSizeStrategy();
+        break;
+        case 2:
+            return BytesImageSizeStrategy();
+        break;
+        case 0:
+        default:
+            return PixelsImageSizeStrategy();
+        break;
+    }
 }
