@@ -149,7 +149,6 @@ private:
 
     QImage *loadImage(const QString &imagePath, RawModel *rawModel,
                       bool isSvgSource);
-    bool writeImage(const QImage &image, const QString &filePath);
 
     QImage paintEffects(QImage *image);
 };

@@ -25,7 +25,7 @@
 #include "Settings.hpp"
 #include "convert/model/ImageFileSize.hpp"
 #include "convert/model/WriteImageFormat.hpp"
-#include "image/ImageWriter.hpp"
+#include "convert/service/ImageFileService.hpp"
 #include "image/QImageLoader.hpp"
 #include "widgets/MessageBox.hpp"
 
@@ -201,7 +201,8 @@ void ConvertThread::run()
             }
             if(shared.overwriteResult == QMessageBox::Yes ||
                     shared.overwriteResult == QMessageBox::YesToAll) {
-                if (writeImage(destImg, targetFilePath)) {
+                ImageFileService imageFileService;
+                if (imageFileService.writeImage(destImg, targetFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata && !metadata.write(targetFilePath, destImg))
                         printError();
@@ -221,7 +222,8 @@ void ConvertThread::run()
         else if (shared.abort)
             emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
         else { // when overwriteAll is true or file not exists
-            if (writeImage(destImg, targetFilePath)) {
+            ImageFileService imageFileService;
+            if (imageFileService.writeImage(destImg, targetFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata && !metadata.write(targetFilePath, destImg))
                     printError();
@@ -471,7 +473,9 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (writeImage(tempImage, tempFilePath)) {
+
+                ImageFileService imageFileService;
+                if (imageFileService.writeImage(tempImage, tempFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -556,7 +560,9 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (writeImage(tempImage, tempFilePath)) {
+
+                ImageFileService imageFileService;
+                if (imageFileService.writeImage(tempImage, tempFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -705,26 +711,6 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
     }
 
     return image;
-}
-
-bool ConvertThread::writeImage(const QImage &image, const QString &filePath)
-{
-    ImageWriter writer(filePath);
-    WriteImageFormat format(filePath.split('.').last());
-    if (format.supportsQuality()) {
-        writer.setQuality(shared.targetImage.quality());
-    }
-    // TODO: use data from user forms input
-    if (format.supportsProgressiveScanWrite()) {
-        writer.enableProgressiveScanWrite();
-    }
-    if (format.supportsOptimizedWrite()) {
-        writer.enableOptimizedWrite();
-    }
-    if (format.supportsCompression()) {
-        writer.setCompression(0);
-    }
-    return writer.write(image);
 }
 
 void ConvertThread::fillImage(QImage *img)

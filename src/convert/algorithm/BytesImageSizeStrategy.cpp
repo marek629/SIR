@@ -26,6 +26,7 @@
 
 #include "sir_String.hpp"
 #include "convert/model/ImageFileSize.hpp"
+#include "convert/service/ImageFileService.hpp"
 
 
 BytesImageSizeStrategy::BytesImageSizeStrategy() : ImageSizeStrategy() {}
@@ -70,8 +71,9 @@ void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
     #ifdef SIR_METADATA_SUPPORT
             updateThumbnail(tempImage);
     #endif // SIR_METADATA_SUPPORT
-            // TODO: extract writeImage() from ConvertThread class to somewhere else
-            if (writeImage(tempImage, tempFilePath)) {
+
+            ImageFileService imageFileService;
+            if (imageFileService.writeImage(tempImage, tempFilePath)) {
     #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata)
                     // TODO: missing field metadata
