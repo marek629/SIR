@@ -22,6 +22,8 @@
 #ifndef IMAGESIZECOMPUTER_HPP
 #define IMAGESIZECOMPUTER_HPP
 
+#include <memory>
+
 #include <QString>
 
 #include "convert/algorithm/ImageSizeComputeResult.hpp"
@@ -41,7 +43,7 @@ public:
 private:
     QString path;
 
-    ImageSizeStrategy createSizeStrategy(char sizeUnit);
+    std::unique_ptr<ImageSizeStrategy> createSizeStrategy(char sizeUnit);
 };
 
 #endif // IMAGESIZECOMPUTER_HPP

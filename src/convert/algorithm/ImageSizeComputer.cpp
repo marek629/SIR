@@ -35,28 +35,28 @@ ImageSizeComputer::ImageSizeComputer(const QString &imagePath)
 
 ImageSizeComputeResult ImageSizeComputer::calculate(QSvgRenderer *renderer, char sizeUnit)
 {
-    ImageSizeStrategy sizeStrategy = createSizeStrategy(sizeUnit);
-    sizeStrategy.setFilePath(path);
-    sizeStrategy.calculate(renderer);
+    std::unique_ptr<ImageSizeStrategy> sizeStrategy = createSizeStrategy(sizeUnit);
+    sizeStrategy->setFilePath(path);
+    sizeStrategy->calculate(renderer);
 
     ImageSizeComputeResult result;
-    result.setSize(sizeStrategy.size());
-    result.setState(sizeStrategy.state());
+    result.setSize(sizeStrategy->size());
+    result.setState(sizeStrategy->state());
     return result;
 }
 
-ImageSizeStrategy ImageSizeComputer::createSizeStrategy(char sizeUnit)
+std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createSizeStrategy(char sizeUnit)
 {
     switch (sizeUnit) {
         case 1:
-            return PercentImageSizeStrategy();
+            return std::unique_ptr(new PercentImageSizeStrategy());
         break;
         case 2:
-            return BytesImageSizeStrategy();
+            return std::unique_ptr(new BytesImageSizeStrategy());
         break;
         case 0:
         default:
-            return PixelsImageSizeStrategy();
+            return std::unique_ptr(new PixelsImageSizeStrategy());
         break;
     }
 }
