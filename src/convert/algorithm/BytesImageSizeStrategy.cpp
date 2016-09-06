@@ -26,6 +26,7 @@
 
 #include "sir_String.hpp"
 #include "convert/model/ImageFileSize.hpp"
+#include "convert/service/ImageChangeService.hpp"
 #include "convert/service/ImageFileService.hpp"
 
 
@@ -66,8 +67,11 @@ void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             renderer->render(&painter);
             painter.end();
             // TODO: extract paintEffects(), rotateImage(), updateThumbnail() from ConvertThread class to somewhere else
+            ImageChangeService imageChangeService(tempImage);
             tempImage = paintEffects(&tempImage);
-            tempImage = rotateImage(tempImage);
+//            tempImage = rotateImage(tempImage);
+            angle = imageChangeService.rotateImage(angle);
+            tempImage = imageChangeService.image();
     #ifdef SIR_METADATA_SUPPORT
             updateThumbnail(tempImage);
     #endif // SIR_METADATA_SUPPORT

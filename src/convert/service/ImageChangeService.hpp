@@ -19,20 +19,23 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "convert/algorithm/PercentImageSizeStrategy.hpp"
+#ifndef IMAGECHANGESERVICE_HPP
+#define IMAGECHANGESERVICE_HPP
 
-#include <QSvgRenderer>
+#include <QImage>
 
 
-PercentImageSizeStrategy::PercentImageSizeStrategy() : ImageSizeStrategy() {}
-
-void PercentImageSizeStrategy::calculate(QSvgRenderer *renderer)
+class ImageChangeService
 {
-    QSize defaultSize = renderer->defaultSize();
+public:
+    explicit ImageChangeService(const QImage &image);
 
-    // TODO: set initialized imageSize from ConvertThread::width and ConvertThread::height
-    imageSize.setWidth(imageSize.width() * (defaultSize.width() / 100.));
-    imageSize.setHeight(imageSize.height() * (defaultSize.height() / 100.));
+    QImage image() const;
 
-    resultState.setComputedForFixedSize();
-}
+    double rotateImage(double angle);
+
+private:
+    QImage changingImage;
+};
+
+#endif // IMAGECHANGESERVICE_HPP
