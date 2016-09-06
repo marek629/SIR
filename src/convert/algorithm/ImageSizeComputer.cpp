@@ -49,14 +49,14 @@ std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createSizeStrategy(char si
 {
     switch (sizeUnit) {
         case 1:
-            return std::unique_ptr(new PercentImageSizeStrategy());
+            return std::unique_ptr<ImageSizeStrategy>(new PercentImageSizeStrategy());
         break;
         case 2:
-            return std::unique_ptr(new BytesImageSizeStrategy());
+            return std::unique_ptr<ImageSizeStrategy>(new BytesImageSizeStrategy());
         break;
         case 0:
         default:
-            return std::unique_ptr(new PixelsImageSizeStrategy());
+            return std::unique_ptr<ImageSizeStrategy>(new PixelsImageSizeStrategy());
         break;
     }
 }

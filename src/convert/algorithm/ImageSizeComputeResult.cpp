@@ -24,3 +24,13 @@
 ImageSizeComputeResult::ImageSizeComputeResult()
 {
 }
+
+void ImageSizeComputeResult::setSize(const QSize &size)
+{
+    imageSize = size;
+}
+
+void ImageSizeComputeResult::setState(const ImageSizeComputeResultState &state)
+{
+    resultState = state;
+}

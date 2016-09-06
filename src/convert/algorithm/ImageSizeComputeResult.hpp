@@ -22,11 +22,23 @@
 #ifndef IMAGESIZECOMPUTERESULT_HPP
 #define IMAGESIZECOMPUTERESULT_HPP
 
+#include <QSize>
+
+#include "convert/algorithm/ImageSizeComputeResultState.hpp"
+
 
 class ImageSizeComputeResult
 {
 public:
     ImageSizeComputeResult();
+
+
+    void setSize(const QSize &size);
+    void setState(const ImageSizeComputeResultState &state);
+
+private:
+    QSize imageSize;
+    ImageSizeComputeResultState resultState;
 };
 
 #endif // IMAGESIZECOMPUTERESULT_HPP
