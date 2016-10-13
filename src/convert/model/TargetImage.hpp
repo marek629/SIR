@@ -22,6 +22,8 @@
 #ifndef TARGETIMAGE_HPP
 #define TARGETIMAGE_HPP
 
+#include <QSize>
+
 #include "convert/model/ImageFormat.hpp"
 
 
@@ -49,6 +51,9 @@ public:
     unsigned int bytes() const;
     void setBytes(unsigned int value);
 
+    QSize size() const;
+    void setSize(const QSize &value);
+
 private:
     ImageFormat format;
     bool progressiveWriteEnabled;
@@ -56,6 +61,7 @@ private:
     int compressionLevel;
     int qualityLevel;
     unsigned int sizeBytes;
+    QSize sizePixels;
 };
 
 #endif // TARGETIMAGE_HPP

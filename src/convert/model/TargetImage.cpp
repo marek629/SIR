@@ -85,3 +85,13 @@ void TargetImage::setBytes(unsigned int value)
 {
     sizeBytes = value;
 }
+
+QSize TargetImage::size() const
+{
+    return sizePixels;
+}
+
+void TargetImage::setSize(const QSize &value)
+{
+    sizePixels = value;
+}
