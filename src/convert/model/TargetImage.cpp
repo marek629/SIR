@@ -75,3 +75,13 @@ void TargetImage::setQuality(int value)
 {
     qualityLevel = value;
 }
+
+unsigned int TargetImage::bytes() const
+{
+    return sizeBytes;
+}
+
+void TargetImage::setBytes(unsigned int value)
+{
+    sizeBytes = value;
+}

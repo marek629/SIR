@@ -46,12 +46,16 @@ public:
     int quality() const;
     void setQuality(int value);
 
+    unsigned int bytes() const;
+    void setBytes(unsigned int value);
+
 private:
     ImageFormat format;
     bool progressiveWriteEnabled;
     bool optimizedWriteEnabled;
     int compressionLevel;
     int qualityLevel;
+    unsigned int sizeBytes;
 };
 
 #endif // TARGETIMAGE_HPP

@@ -39,9 +39,9 @@ void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
     // TODO: set to true ConvertThread::hasWidth and ConvertThread::hasHeight
 
     // TODO: set ConvertThread::shared.targetImage to targetImage field
-    if (targetFormat.isLinearFileSizeFormat()) {
-        // TODO: set SharedInformation::sizeBytes field to TargetImage class
-        double destSize = countTargetFileSize(shared.sizeBytes);
+    if (targetImage.imageFormat().isLinearFileSizeFormat()) {
+        double destSize = countTargetFileSize(targetImage.bytes());
+        // TODO: extract width and height to size (QSize) field of targetImage field
         double sourceSizeSqrt = sqrt(width * height);
         double sourceWidthRatio = width / sourceSizeSqrt;
         double sourceHeightRatio = height / sourceSizeSqrt;
