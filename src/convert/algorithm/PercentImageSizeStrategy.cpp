@@ -31,8 +31,8 @@ void PercentImageSizeStrategy::calculate(QSvgRenderer *renderer)
     QSize defaultSize = renderer->defaultSize();
 
     // TODO: set initialized imageSize from ConvertThread::width and ConvertThread::height
-    imageSize.setWidth(imageSize.width() * (defaultSize.width() / 100.));
-    imageSize.setHeight(imageSize.height() * (defaultSize.height() / 100.));
+    imageModel.size().setWidth(imageModel.size().width() * (defaultSize.width() / 100.));
+    imageModel.size().setHeight(imageModel.size().height() * (defaultSize.height() / 100.));
 
     resultState.setComputedForFixedSize();
 }

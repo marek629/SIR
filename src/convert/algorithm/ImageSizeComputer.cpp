@@ -40,7 +40,7 @@ ImageSizeComputeResult ImageSizeComputer::calculate(QSvgRenderer *renderer, char
     sizeStrategy->calculate(renderer);
 
     ImageSizeComputeResult result;
-    result.setSize(sizeStrategy->size());
+    result.setSize(sizeStrategy->targetImage().size());
     result.setState(sizeStrategy->state());
     return result;
 }

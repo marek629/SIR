@@ -22,10 +22,10 @@
 #ifndef IMAGESIZESTRATEGY_HPP
 #define IMAGESIZESTRATEGY_HPP
 
-#include <QSize>
 #include <QString>
 
 #include "convert/algorithm/ImageSizeComputeResultState.hpp"
+#include "convert/model/TargetImage.hpp"
 
 
 class QSvgRenderer;
@@ -41,12 +41,14 @@ public:
 
     void setFilePath(const QString &filePath);
 
-    QSize size() const;
+    void setTargetImage(const TargetImage &value);
+    TargetImage targetImage() const;
+
     ImageSizeComputeResultState state() const;
 
 protected:
     QString path;
-    QSize imageSize;
+    TargetImage imageModel;
     ImageSizeComputeResultState resultState;
 };
 

@@ -24,8 +24,6 @@
 
 #include "convert/algorithm/ImageSizeStrategy.hpp"
 
-#include "convert/model/TargetImage.hpp"
-
 
 class BytesImageSizeStrategy : public ImageSizeStrategy
 {
@@ -34,8 +32,6 @@ public:
     void calculate(QSvgRenderer *renderer);
 
 private:
-    TargetImage targetImage;
-
     double countTargetFileSize(double fileSize);
     QString temporaryFilePath(int threadId);
 };

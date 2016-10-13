@@ -36,21 +36,20 @@ BytesImageSizeStrategy::BytesImageSizeStrategy() : ImageSizeStrategy() {}
 
 void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
 {
-    imageSize = renderer->defaultSize();
+    imageModel.setSize(renderer->defaultSize());
 
     // TODO: set to true ConvertThread::hasWidth and ConvertThread::hasHeight
 
     // TODO: set ConvertThread::shared.targetImage to targetImage field
-    if (targetImage.imageFormat().isLinearFileSizeFormat()) {
+    if (imageModel.imageFormat().isLinearFileSizeFormat()) {
         // TODO: set bytes value of targetImage field
-        double destSize = countTargetFileSize(targetImage.bytes());
+        double destSize = countTargetFileSize(imageModel.bytes());
         // TODO: set size value of targetImage field
-        double sourceSizeSqrt = sqrt(targetImage.size().width() * targetImage.size().height());
-        double sourceWidthRatio = targetImage.size().width() / sourceSizeSqrt;
-        double sourceHeightRatio = targetImage.size().height() / sourceSizeSqrt;
+        double sourceSizeSqrt = sqrt(imageModel.size().width() * imageModel.size().height());
+        double sourceWidthRatio = imageModel.size().width() / sourceSizeSqrt;
+        double sourceHeightRatio = imageModel.size().height() / sourceSizeSqrt;
         destSize = sqrt(destSize);
-        imageSize.setWidth(sourceWidthRatio * destSize);
-        imageSize.setHeight(sourceHeightRatio * destSize);
+        imageModel.setSize(QSize(sourceWidthRatio * destSize, sourceHeightRatio * destSize));
     }
     else {
         // TODO: missing tid field

@@ -31,9 +31,14 @@ void ImageSizeStrategy::setFilePath(const QString &filePath)
     path = filePath;
 }
 
-QSize ImageSizeStrategy::size() const
+void ImageSizeStrategy::setTargetImage(const TargetImage &value)
 {
-    return imageSize;
+    imageModel = value;
+}
+
+TargetImage ImageSizeStrategy::targetImage() const
+{
+    return imageModel;
 }
 
 ImageSizeComputeResultState ImageSizeStrategy::state() const
