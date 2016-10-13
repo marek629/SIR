@@ -21,6 +21,8 @@
 
 #include "convert/algorithm/BytesImageSizeStrategy.hpp"
 
+#include <cmath>
+
 #include <QDir>
 #include <QSvgRenderer>
 

@@ -34,6 +34,7 @@
 #include <QPainter>
 #include <QtSvg/QSvgRenderer>
 
+// TODO: remove cmath header after ImageSizeStrategy class extraction
 #include <cmath>
 
 
