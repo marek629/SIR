@@ -28,12 +28,14 @@
 class BytesImageSizeStrategy : public ImageSizeStrategy
 {
 public:
-    BytesImageSizeStrategy();
+    explicit BytesImageSizeStrategy(int threadId);
     void calculate(QSvgRenderer *renderer);
 
 private:
+    int threadId;
+
     double countTargetFileSize(double fileSize);
-    QString temporaryFilePath(int threadId);
+    QString temporaryFilePath();
 };
 
 #endif // BYTESIMAGESIZESTRATEGY_HPP

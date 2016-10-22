@@ -28,9 +28,10 @@
 #include "convert/algorithm/PixelsImageSizeStrategy.hpp"
 
 
-ImageSizeComputer::ImageSizeComputer(const QString &imagePath)
+ImageSizeComputer::ImageSizeComputer(const QString &imagePath, int tid)
 {
     path = imagePath;
+    threadId = tid;
 }
 
 ImageSizeComputeResult ImageSizeComputer::calculate(QSvgRenderer *renderer, char sizeUnit)
@@ -52,7 +53,7 @@ std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createSizeStrategy(char si
             return std::unique_ptr<ImageSizeStrategy>(new PercentImageSizeStrategy());
         break;
         case 2:
-            return std::unique_ptr<ImageSizeStrategy>(new BytesImageSizeStrategy());
+            return std::unique_ptr<ImageSizeStrategy>(new BytesImageSizeStrategy(threadId));
         break;
         case 0:
         default:

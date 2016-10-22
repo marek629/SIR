@@ -32,7 +32,10 @@
 #include "convert/service/ImageFileService.hpp"
 
 
-BytesImageSizeStrategy::BytesImageSizeStrategy() : ImageSizeStrategy() {}
+BytesImageSizeStrategy::BytesImageSizeStrategy(int threadId) : ImageSizeStrategy()
+{
+    this->threadId = threadId;
+}
 
 void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
 {
@@ -52,8 +55,7 @@ void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
         imageModel.setSize(QSize(sourceWidthRatio * destSize, sourceHeightRatio * destSize));
     }
     else {
-        // TODO: missing tid field
-        QString tempFilePath = temporaryFilePath(tid);
+        QString tempFilePath = temporaryFilePath();
         qint64 fileSize = QFile(path).size();
         QSize size = defaultSize;
         double fileSizeRatio = (double) fileSize / shared.sizeBytes;
@@ -88,7 +90,7 @@ void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             }
             else {
                 qWarning("tid %d: Save temporary image file "
-                         "into %s failed", tid,
+                         "into %s failed", threadId,
                          String(targetFilePath).
                             toNativeStdString().data());
                 // TODO: emit to nowhere
@@ -114,15 +116,13 @@ void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
     resultState.setComputedForBytesSize();
 }
 
-// TODO: remove ConvertThread::countTargetFileSize() method after support for QImage calculation to this class
 double BytesImageSizeStrategy::countTargetFileSize(double fileSize)
 {
     ImageFileSize imageFileSize(fileSize);
     return imageFileSize.bytesByFormat(shared.targetImage.imageFormat());
 }
 
-// TODO: remove ConvertThread::temporaryFilePath() method after support for QImage calculation to this class
-QString BytesImageSizeStrategy::temporaryFilePath(int threadId)
+QString BytesImageSizeStrategy::temporaryFilePath()
 {
     return QDir::tempPath() + QDir::separator() +
             "sir_temp" + QString::number(threadId) +

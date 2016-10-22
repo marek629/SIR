@@ -36,12 +36,13 @@ class QSvgRenderer;
 class ImageSizeComputer
 {
 public:
-    explicit ImageSizeComputer(const QString &imagePath);
+    ImageSizeComputer(const QString &imagePath, int tid);
 
     ImageSizeComputeResult calculate(QSvgRenderer *renderer, char sizeUnit);
 
 private:
     QString path;
+    int threadId;
 
     std::unique_ptr<ImageSizeStrategy> createSizeStrategy(char sizeUnit);
 };
