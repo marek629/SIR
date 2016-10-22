@@ -24,6 +24,7 @@
 #include <cmath>
 
 #include <QDir>
+#include <QPainter>
 #include <QSvgRenderer>
 
 #include "sir_String.hpp"
