@@ -57,7 +57,7 @@ void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
     else {
         QString tempFilePath = temporaryFilePath();
         qint64 fileSize = QFile(path).size();
-        QSize size = defaultSize;
+        QSize size = imageModel.size();
         double fileSizeRatio = (double) fileSize / shared.sizeBytes;
         fileSizeRatio = sqrt(fileSizeRatio);
         QFile tempFile(tempFilePath);
