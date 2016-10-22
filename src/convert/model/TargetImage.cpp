@@ -83,6 +83,7 @@ unsigned int TargetImage::bytes() const
 
 void TargetImage::setBytes(unsigned int value)
 {
+    // TODO: set value from shared.sizeBytes
     sizeBytes = value;
 }
 
