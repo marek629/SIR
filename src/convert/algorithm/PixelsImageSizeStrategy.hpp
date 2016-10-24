@@ -29,7 +29,7 @@ class PixelsImageSizeStrategy : public ImageSizeStrategy
 {
 public:
     PixelsImageSizeStrategy();
-    void calculate(QSvgRenderer *renderer);
+    ImageSizeComputeResult calculate(QSvgRenderer *renderer);
 };
 
 #endif // PIXELSIMAGESIZESTRATEGY_HPP

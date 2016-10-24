@@ -29,7 +29,7 @@ class PercentImageSizeStrategy : public ImageSizeStrategy
 {
 public:
     PercentImageSizeStrategy();
-    void calculate(QSvgRenderer *renderer);
+    ImageSizeComputeResult calculate(QSvgRenderer *renderer);
 };
 
 #endif // PERCENTIMAGESIZESTRATEGY_HPP

@@ -38,12 +38,7 @@ ImageSizeComputeResult ImageSizeComputer::calculate(QSvgRenderer *renderer, char
 {
     std::unique_ptr<ImageSizeStrategy> sizeStrategy = createSizeStrategy(sizeUnit);
     sizeStrategy->setFilePath(path);
-    sizeStrategy->calculate(renderer);
-
-    ImageSizeComputeResult result;
-    result.setSize(sizeStrategy->targetImage().size());
-    result.setState(sizeStrategy->state());
-    return result;
+    return sizeStrategy->calculate(renderer);
 }
 
 std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createSizeStrategy(char sizeUnit)

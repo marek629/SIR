@@ -24,10 +24,13 @@
 
 PixelsImageSizeStrategy::PixelsImageSizeStrategy() : ImageSizeStrategy() {}
 
-void PixelsImageSizeStrategy::calculate(QSvgRenderer *renderer)
+ImageSizeComputeResult PixelsImageSizeStrategy::calculate(QSvgRenderer *renderer)
 {
     Q_UNUSED(renderer);
 
     // don't re-calculate size for pixels
+    resultSize = targetImageModel.size();
     resultState.setComputedForFixedSize();
+
+    return createResult();
 }

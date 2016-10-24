@@ -29,7 +29,7 @@ class BytesImageSizeStrategy : public ImageSizeStrategy
 {
 public:
     explicit BytesImageSizeStrategy(int threadId);
-    void calculate(QSvgRenderer *renderer);
+    ImageSizeComputeResult calculate(QSvgRenderer *renderer);
 
 private:
     int threadId;

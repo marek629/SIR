@@ -26,13 +26,15 @@
 
 PercentImageSizeStrategy::PercentImageSizeStrategy() : ImageSizeStrategy() {}
 
-void PercentImageSizeStrategy::calculate(QSvgRenderer *renderer)
+ImageSizeComputeResult PercentImageSizeStrategy::calculate(QSvgRenderer *renderer)
 {
     QSize defaultSize = renderer->defaultSize();
 
     // TODO: set initialized imageSize from ConvertThread::width and ConvertThread::height
-    imageModel.size().setWidth(imageModel.size().width() * (defaultSize.width() / 100.));
-    imageModel.size().setHeight(imageModel.size().height() * (defaultSize.height() / 100.));
+    resultSize.setWidth(targetImageModel.size().width() * (defaultSize.width() / 100.));
+    resultSize.setHeight(targetImageModel.size().height() * (defaultSize.height() / 100.));
 
     resultState.setComputedForFixedSize();
+
+    return createResult();
 }

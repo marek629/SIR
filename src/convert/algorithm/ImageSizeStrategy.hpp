@@ -24,6 +24,7 @@
 
 #include <QString>
 
+#include "convert/algorithm/ImageSizeComputeResult.hpp"
 #include "convert/algorithm/ImageSizeComputeResultState.hpp"
 #include "convert/model/TargetImage.hpp"
 
@@ -37,19 +38,20 @@ public:
     ImageSizeStrategy();
     virtual ~ImageSizeStrategy();
 
-    virtual void calculate(QSvgRenderer *renderer) = 0;
+    virtual ImageSizeComputeResult calculate(QSvgRenderer *renderer) = 0;
 
     void setFilePath(const QString &filePath);
 
     void setTargetImage(const TargetImage &value);
-    TargetImage targetImage() const;
-
-    ImageSizeComputeResultState state() const;
 
 protected:
     QString path;
-    TargetImage imageModel;
+    TargetImage targetImageModel;
+
+    QSize resultSize;
     ImageSizeComputeResultState resultState;
+
+    ImageSizeComputeResult createResult() const;
 };
 
 #endif // IMAGESIZESTRATEGY_HPP

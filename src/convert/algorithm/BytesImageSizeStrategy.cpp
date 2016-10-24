@@ -38,35 +38,35 @@ BytesImageSizeStrategy::BytesImageSizeStrategy(int threadId) : ImageSizeStrategy
     this->threadId = threadId;
 }
 
-void BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
+ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
 {
-    imageModel.setSize(renderer->defaultSize());
+    targetImageModel.setSize(renderer->defaultSize());
 
     // TODO: set to true ConvertThread::hasWidth and ConvertThread::hasHeight
 
     // TODO: set ConvertThread::shared.targetImage to targetImage field
-    if (imageModel.imageFormat().isLinearFileSizeFormat()) {
+    if (targetImageModel.imageFormat().isLinearFileSizeFormat()) {
         // TODO: set bytes value of targetImage field
-        double destSize = countTargetFileSize(imageModel.bytes());
+        double destSize = countTargetFileSize(targetImageModel.bytes());
         // TODO: set size value of targetImage field
-        double sourceSizeSqrt = sqrt(imageModel.size().width() * imageModel.size().height());
-        double sourceWidthRatio = imageModel.size().width() / sourceSizeSqrt;
-        double sourceHeightRatio = imageModel.size().height() / sourceSizeSqrt;
+        double sourceSizeSqrt = sqrt(targetImageModel.size().width() * targetImageModel.size().height());
+        double sourceWidthRatio = targetImageModel.size().width() / sourceSizeSqrt;
+        double sourceHeightRatio = targetImageModel.size().height() / sourceSizeSqrt;
         destSize = sqrt(destSize);
-        imageModel.setSize(QSize(sourceWidthRatio * destSize, sourceHeightRatio * destSize));
+        targetImageModel.setSize(QSize(sourceWidthRatio * destSize, sourceHeightRatio * destSize));
     }
     else {
         QString tempFilePath = temporaryFilePath();
         qint64 fileSize = QFile(path).size();
-        QSize size = imageModel.size();
-        double fileSizeRatio = (double) fileSize / imageModel.bytes();
+        QSize size = targetImageModel.size();
+        double fileSizeRatio = (double) fileSize / targetImageModel.bytes();
         fileSizeRatio = sqrt(fileSizeRatio);
         QFile tempFile(tempFilePath);
         QPainter painter;
         for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
-            width = size.width() / fileSizeRatio;
-            height = size.height() / fileSizeRatio;
-            QImage tempImage(width, height, QImage::Format_ARGB32);
+            resultSize.setWidth(size.width() / fileSizeRatio);
+            resultSize.setHeight(size.height() / fileSizeRatio);
+            QImage tempImage(resultSize, QImage::Format_ARGB32);
             fillImage(&tempImage);
             painter.begin(&tempImage);
             renderer->render(&painter);
