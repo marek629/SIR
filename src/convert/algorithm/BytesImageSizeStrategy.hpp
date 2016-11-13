@@ -24,6 +24,8 @@
 
 #include "convert/algorithm/ImageSizeStrategy.hpp"
 
+class QImage;
+
 
 class BytesImageSizeStrategy : public ImageSizeStrategy
 {
@@ -36,6 +38,9 @@ private:
 
     double countTargetFileSize(double fileSize);
     QString temporaryFilePath();
+
+    // TODO: move fillImage() method to an external class
+    void fillImage(QImage *img);
 };
 
 #endif // BYTESIMAGESIZESTRATEGY_HPP

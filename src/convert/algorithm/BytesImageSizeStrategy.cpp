@@ -129,3 +129,17 @@ QString BytesImageSizeStrategy::temporaryFilePath()
             "sir_temp" + QString::number(threadId) +
             "." + shared.targetImage.imageFormat().qString();
 }
+
+void BytesImageSizeStrategy::fillImage(QImage *img)
+{
+    if (targetImageModel.backgroundColor().isValid()) {
+        img->fill(targetImageModel.backgroundColor().rgb());
+    } else {
+        if (targetImageModel.imageFormat().isTransparentSupportFormat()) {
+            img->fill(Qt::transparent);
+        } else {
+            // in other formats tranparency isn't supported
+            img->fill(Qt::white);
+        }
+    }
+}

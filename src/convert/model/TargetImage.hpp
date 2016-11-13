@@ -22,6 +22,7 @@
 #ifndef TARGETIMAGE_HPP
 #define TARGETIMAGE_HPP
 
+#include <QColor>
 #include <QSize>
 
 #include "convert/model/ImageFormat.hpp"
@@ -54,6 +55,9 @@ public:
     QSize size() const;
     void setSize(const QSize &value);
 
+    QColor backgroundColor() const;
+    void setBackgroundColor(const QColor &value);
+
 private:
     ImageFormat format;
     bool progressiveWriteEnabled;
@@ -62,6 +66,7 @@ private:
     int qualityLevel;
     unsigned int sizeBytes;
     QSize sizePixels;
+    QColor bgColor;
 };
 
 #endif // TARGETIMAGE_HPP

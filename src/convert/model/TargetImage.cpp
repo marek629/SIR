@@ -96,3 +96,13 @@ void TargetImage::setSize(const QSize &value)
 {
     sizePixels = value;
 }
+
+QColor TargetImage::backgroundColor() const
+{
+    return bgColor;
+}
+
+void TargetImage::setBackgroundColor(const QColor &value)
+{
+    bgColor = value;
+}

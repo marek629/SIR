@@ -714,6 +714,10 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
     return image;
 }
 
+/**
+ * \deprecated Moved to BytesImageSizeStrategy class.
+ * \todo Safe delete.
+ */
 void ConvertThread::fillImage(QImage *img)
 {
     if (shared.backgroundColor.isValid()) {
