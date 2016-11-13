@@ -25,12 +25,15 @@
 #include "image/ImageWriter.hpp"
 
 
-ImageFileService::ImageFileService() {}
+ImageFileService::ImageFileService(const QString &filePath)
+{
+    this->targetFilePath = filePath;
+}
 
-bool ImageFileService::writeImage(const QImage &image, const QString &filePath)
+bool ImageFileService::writeImage(const QImage &image)
 {
     ImageWriter writer(filePath);
-    WriteImageFormat format(filePath.split('.').last());
+    WriteImageFormat format(targetFilePath.split('.').last());
 
     if (format.supportsQuality()) {
         writer.setQuality(shared.targetImage.quality());
@@ -47,4 +50,68 @@ bool ImageFileService::writeImage(const QImage &image, const QString &filePath)
     }
 
     return writer.write(image);
+}
+
+void ImageFileService::updateThumbnail(bool isUpdateAllowed,
+                                       bool isRotateThumbnailAllowed, // = shared.rotateThumbnail
+                                       int rotationAngle)
+{
+    if (!isUpdateAllowed) {
+        return;
+    }
+
+    MetadataUtils::ExifStruct *exifStruct = metadata.exifStruct();
+    int w = exifStruct->thumbnailWidth.split(' ').first().toInt();
+    int h = exifStruct->thumbnailHeight.split(' ').first().toInt();
+    QImage tmpImg = image.scaled(w,h, Qt::KeepAspectRatio,
+                                  Qt::SmoothTransformation);
+    bool specialRotate = (rotate && rotationAngle%90 != 0);
+    QImage *thumbnail = &exifStruct->thumbnailImage;
+    if (specialRotate) {
+        w = tmpImg.width();
+        h = tmpImg.height();
+        *thumbnail = tmpImg;
+    } else {
+        if (shared.backgroundColor.isValid()) {
+            thumbnail->fill(shared.backgroundColor.rgb());
+        } else {
+            thumbnail->fill(Qt::black);
+        }
+        QPoint begin ( (w-tmpImg.width())/2, (h-tmpImg.height())/2 );
+        for (int i=0, y=begin.y(); i<tmpImg.height(); i++, y++) {
+            for (int j=0, x=begin.x(); j<tmpImg.width(); j++, x++) {
+                thumbnail->setPixel(x, y, tmpImg.pixel(j,i));
+            }
+        }
+    }
+
+    // rotate thumbnail
+    if (isRotateThumbnailAllowed && !specialRotate) {
+        QTransform transform;
+        int flip;
+        transform.rotate(MetadataUtils::Exif::rotationAngle(
+                             exifStruct->orientation, &flip));
+        if (flip == MetadataUtils::Vertical) {
+            transform.scale(1.0, -1.0);
+        } else if (flip == MetadataUtils::Horizontal) {
+            transform.scale(-1.0, 1.0);
+        }
+        *thumbnail = thumbnail->transformed(transform);
+    }
+
+    if (!metadata.setExifThumbnail(thumbnail, tid)) {
+        printError();
+    }
+}
+
+void ImageFileService::printError()
+{
+#ifdef SIR_METADATA_SUPPORT
+    MetadataUtils::Error *error = metadata.lastError();
+    qWarning() << "Metadata error within thread" << tid << '\n'
+               << "    " << error->message() << '\n'
+               << "    " << tr("Error code:") << error->code() << '\n'
+               << "    " << error->what();
+    delete error;
+#endif // SIR_METADATA_SUPPORT
 }

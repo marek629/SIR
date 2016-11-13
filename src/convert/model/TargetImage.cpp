@@ -127,3 +127,24 @@ void TargetImage::setRotationAngle(double value)
 {
     angle = value;
 }
+
+bool TargetImage::isUpdateThumbnailAllowed() const
+{
+    // TODO: set value from expression "saveMetadata && shared.updateThumbnail"
+    return updateThumbnailAllowed;
+}
+
+void TargetImage::setUpdateThumbnailAllowed(bool value)
+{
+    updateThumbnailAllowed = value;
+}
+
+bool TargetImage::isRotateThumbnailAllowed() const
+{
+    return rotateThumbnailAllowed;
+}
+
+void TargetImage::setRotateThumbnailAllowed(bool value)
+{
+    rotateThumbnailAllowed = value;
+}

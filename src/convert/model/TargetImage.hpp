@@ -65,6 +65,12 @@ public:
     double rotationAngle() const;
     void setRotationAngle(double value);
 
+    bool isUpdateThumbnailAllowed() const;
+    void setUpdateThumbnailAllowed(bool value);
+
+    bool isRotateThumbnailAllowed() const;
+    void setRotateThumbnailAllowed(bool value);
+
 private:
     ImageFormat format;
     bool progressiveWriteEnabled;
@@ -76,6 +82,9 @@ private:
     QColor bgColor;
     EffectsConfiguration effectsConfig;
     double angle;
+
+    bool updateThumbnailAllowed;
+    bool rotateThumbnailAllowed;
 };
 
 #endif // TARGETIMAGE_HPP

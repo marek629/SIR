@@ -22,6 +22,8 @@
 #ifndef IMAGEFILESERVICE_HPP
 #define IMAGEFILESERVICE_HPP
 
+#include "metadata/Metadata.hpp"
+
 class QImage;
 class QString;
 
@@ -29,9 +31,21 @@ class QString;
 class ImageFileService
 {
 public:
-    ImageFileService();
+    explicit ImageFileService(const QString &filePath);
 
-    bool writeImage(const QImage &image, const QString &filePath);
+    bool writeImage(const QImage &image);
+    void updateThumbnail(bool isUpdateAllowed = false,
+                         bool isRotateThumbnailAllowed =false,
+                         int rotationAngle = 0);
+
+private:
+    QString targetFilePath;
+
+#ifdef SIR_METADATA_SUPPORT
+    MetadataUtils::Metadata metadata;
+#endif // SIR_METADATA_SUPPORT
+
+    void printError();
 };
 
 #endif // IMAGEFILESERVICE_HPP

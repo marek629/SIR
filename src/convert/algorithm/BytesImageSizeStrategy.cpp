@@ -72,22 +72,22 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             painter.begin(&tempImage);
             renderer->render(&painter);
             painter.end();
-            // TODO: extract paintEffects(), rotateImage(), updateThumbnail() from ConvertThread class to somewhere else
+
             ImageChangeService imageChangeService(tempImage);
             tempImage = paintEffects(&tempImage);
-//            tempImage = rotateImage(tempImage);
-            double angle = imageChangeService.rotateImage(targetImageModel.rotationAngle());
+            double rotationAngle = imageChangeService.rotateImage(targetImageModel.rotationAngle());
             tempImage = imageChangeService.image();
-    #ifdef SIR_METADATA_SUPPORT
-            updateThumbnail(tempImage);
-    #endif // SIR_METADATA_SUPPORT
 
-            ImageFileService imageFileService;
-            if (imageFileService.writeImage(tempImage, tempFilePath)) {
+            ImageFileService imageFileService(tempFilePath);
+            if (imageFileService.writeImage(tempImage)) {
     #ifdef SIR_METADATA_SUPPORT
-                if (saveMetadata)
+                if (saveMetadata) {
                     // TODO: missing field metadata
                     metadata.write(tempFilePath, tempImage);
+                    imageFileService.updateThumbnail(targetImageModel.isUpdateThumbnailAllowed(),
+                                                     targetImageModel.isRotateThumbnailAllowed(),
+                                                     rotationAngle);
+                }
     #endif // SIR_METADATA_SUPPORT
             }
             else {

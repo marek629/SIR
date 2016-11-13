@@ -24,6 +24,8 @@
 
 #include <QImage>
 
+#include "metadata/Metadata.hpp"
+
 
 class ImageChangeService
 {
@@ -36,6 +38,10 @@ public:
 
 private:
     QImage changingImage;
+
+#ifdef SIR_METADATA_SUPPORT
+    MetadataUtils::Metadata metadata;
+#endif // SIR_METADATA_SUPPORT
 };
 
 #endif // IMAGECHANGESERVICE_HPP
