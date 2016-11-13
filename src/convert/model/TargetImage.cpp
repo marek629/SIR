@@ -116,3 +116,14 @@ void TargetImage::setEffectsConfiguration(const EffectsConfiguration &value)
 {
     effectsConfig = value;
 }
+
+double TargetImage::rotationAngle() const
+{
+    // TODO: set from shared.angle value
+    return angle;
+}
+
+void TargetImage::setRotationAngle(double value)
+{
+    angle = value;
+}

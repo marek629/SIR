@@ -76,7 +76,7 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             ImageChangeService imageChangeService(tempImage);
             tempImage = paintEffects(&tempImage);
 //            tempImage = rotateImage(tempImage);
-            angle = imageChangeService.rotateImage(angle);
+            double angle = imageChangeService.rotateImage(targetImageModel.rotationAngle());
             tempImage = imageChangeService.image();
     #ifdef SIR_METADATA_SUPPORT
             updateThumbnail(tempImage);

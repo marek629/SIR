@@ -62,6 +62,9 @@ public:
     EffectsConfiguration effectsConfiguration() const;
     void setEffectsConfiguration(const EffectsConfiguration &value);
 
+    double rotationAngle() const;
+    void setRotationAngle(double value);
+
 private:
     ImageFormat format;
     bool progressiveWriteEnabled;
@@ -72,6 +75,7 @@ private:
     QSize sizePixels;
     QColor bgColor;
     EffectsConfiguration effectsConfig;
+    double angle;
 };
 
 #endif // TARGETIMAGE_HPP
