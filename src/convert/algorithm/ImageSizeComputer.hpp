@@ -40,11 +40,17 @@ public:
 
     ImageSizeComputeResult calculate(QSvgRenderer *renderer, char sizeUnit);
 
+    bool isSaveMetadataAllowed() const;
+    void setSaveMetadataAllowed(bool value);
+
 private:
     QString path;
     int threadId;
 
+    bool saveMetadataAllowed;
+
     std::unique_ptr<ImageSizeStrategy> createSizeStrategy(char sizeUnit);
+    std::unique_ptr<ImageSizeStrategy> createBytesSizeStrategy();
 };
 
 #endif // IMAGESIZECOMPUTER_HPP

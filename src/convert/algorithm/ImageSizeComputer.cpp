@@ -41,18 +41,35 @@ ImageSizeComputeResult ImageSizeComputer::calculate(QSvgRenderer *renderer, char
     return sizeStrategy->calculate(renderer);
 }
 
+bool ImageSizeComputer::isSaveMetadataAllowed() const
+{
+    return saveMetadataAllowed;
+}
+
+void ImageSizeComputer::setSaveMetadataAllowed(bool value)
+{
+    saveMetadataAllowed = value;
+}
+
 std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createSizeStrategy(char sizeUnit)
 {
     switch (sizeUnit) {
         case 1:
             return std::unique_ptr<ImageSizeStrategy>(new PercentImageSizeStrategy());
-        break;
+            break;
         case 2:
-            return std::unique_ptr<ImageSizeStrategy>(new BytesImageSizeStrategy(threadId));
-        break;
+            return createBytesSizeStrategy();
+            break;
         case 0:
         default:
             return std::unique_ptr<ImageSizeStrategy>(new PixelsImageSizeStrategy());
-        break;
+            break;
     }
+}
+
+std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createBytesSizeStrategy()
+{
+    BytesImageSizeStrategy *strategy = new BytesImageSizeStrategy(
+                threadId, saveMetadataAllowed);
+    return std::unique_ptr<ImageSizeStrategy>(strategy);
 }

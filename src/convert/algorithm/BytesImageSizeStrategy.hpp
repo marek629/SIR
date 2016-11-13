@@ -30,11 +30,12 @@ class QImage;
 class BytesImageSizeStrategy : public ImageSizeStrategy
 {
 public:
-    explicit BytesImageSizeStrategy(int threadId);
+    BytesImageSizeStrategy(int threadId, bool saveMetadataAllowed = false);
     ImageSizeComputeResult calculate(QSvgRenderer *renderer);
 
 private:
     int threadId;
+    bool saveMetadataAllowed;
 
     double countTargetFileSize(double fileSize);
     QString temporaryFilePath();

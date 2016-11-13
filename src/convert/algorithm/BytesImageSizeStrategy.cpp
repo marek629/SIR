@@ -34,9 +34,11 @@
 #include "convert/service/ImageFileService.hpp"
 
 
-BytesImageSizeStrategy::BytesImageSizeStrategy(int threadId) : ImageSizeStrategy()
+BytesImageSizeStrategy::BytesImageSizeStrategy(int threadId, bool saveMetadataAllowed)
+    : ImageSizeStrategy()
 {
     this->threadId = threadId;
+    this->saveMetadataAllowed = saveMetadataAllowed;
 }
 
 ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
@@ -81,7 +83,7 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             ImageFileService imageFileService(tempFilePath);
             if (imageFileService.writeImage(tempImage)) {
     #ifdef SIR_METADATA_SUPPORT
-                if (saveMetadata) {
+                if (saveMetadataAllowed) {
                     // TODO: missing field metadata
                     metadata.write(tempFilePath, tempImage);
                     imageFileService.updateThumbnail(targetImageModel.isUpdateThumbnailAllowed(),
