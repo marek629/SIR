@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QSvgRenderer>
 
+#include "ConvertEffects.hpp"
 #include "sir_String.hpp"
 #include "convert/model/ImageFileSize.hpp"
 #include "convert/service/ImageChangeService.hpp"
@@ -142,4 +143,32 @@ void BytesImageSizeStrategy::fillImage(QImage *img)
             img->fill(Qt::white);
         }
     }
+}
+
+QImage BytesImageSizeStrategy::paintEffects(QImage *image)
+{
+    QImage destImg(*image);
+
+    EffectsConfiguration effectsConfiguration = targetImageModel.effectsConfiguration();
+    ConvertEffects effectPainter(&destImg, effectsConfiguration);
+
+    if (effectsConfiguration.getHistogramOperation() > 0) {
+        effectPainter.modifyHistogram();
+    }
+    if (effectsConfiguration.getFilterType() != NoFilter) {
+        effectPainter.filtrate();
+    }
+    if (effectsConfiguration.getFrameWidth() > 0
+            && effectsConfiguration.getFrameColor().isValid()) {
+        destImg = effectPainter.framedImage();
+        effectPainter.setImage(&destImg);
+    }
+    if (!effectsConfiguration.getImage().isNull()) {
+        effectPainter.addImage();
+    }
+    if (!effectsConfiguration.getTextString().isEmpty()) {
+        effectPainter.addText();
+    }
+
+    return destImg;
 }

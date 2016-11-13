@@ -106,3 +106,13 @@ void TargetImage::setBackgroundColor(const QColor &value)
 {
     bgColor = value;
 }
+
+EffectsConfiguration TargetImage::effectsConfiguration() const
+{
+    return effectsConfig;
+}
+
+void TargetImage::setEffectsConfiguration(const EffectsConfiguration &value)
+{
+    effectsConfig = value;
+}

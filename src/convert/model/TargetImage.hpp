@@ -26,6 +26,7 @@
 #include <QSize>
 
 #include "convert/model/ImageFormat.hpp"
+#include "shared/EffectsConfiguration.hpp"
 
 
 class TargetImage
@@ -58,6 +59,9 @@ public:
     QColor backgroundColor() const;
     void setBackgroundColor(const QColor &value);
 
+    EffectsConfiguration effectsConfiguration() const;
+    void setEffectsConfiguration(const EffectsConfiguration &value);
+
 private:
     ImageFormat format;
     bool progressiveWriteEnabled;
@@ -67,6 +71,7 @@ private:
     unsigned int sizeBytes;
     QSize sizePixels;
     QColor bgColor;
+    EffectsConfiguration effectsConfig;
 };
 
 #endif // TARGETIMAGE_HPP

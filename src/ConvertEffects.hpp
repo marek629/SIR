@@ -43,6 +43,7 @@ class ConvertEffects {
 public:
     ConvertEffects(SharedInformation *shared = 0);
     ConvertEffects(QImage *image, SharedInformation *shared = 0);
+    ConvertEffects(QImage *image, const EffectsConfiguration &effectsConfiguration);
     ~ConvertEffects();
     void setSharedInfo(SharedInformation *shared);
     SharedInformation *sharedInfo() const;
@@ -55,7 +56,6 @@ public:
     void addImage();
 
 private:
-    // fields
     /** Image for drawing effects.
       * \sa image() setImage()
       */
@@ -64,7 +64,8 @@ private:
       * \sa sharedInfo() setSharedInfo()
       */
     SharedInformation *shared;
-    // methods
+    EffectsConfiguration effectsConfiguration;
+
     void rotate(QPainter *painter, const QPoint &originPoint, int angle);
     QPoint getTransformOriginPoint(const QPoint &position, const PosUnitPair &units);
     QRect getEffectBoundingRect(const QRect &rect, const QPoint &pos,

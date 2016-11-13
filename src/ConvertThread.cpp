@@ -734,6 +734,9 @@ void ConvertThread::fillImage(QImage *img)
 
 /** Draws effects into new image.
   * \return New image object.
+  *
+  * \deprecated Moved to BytesImageSizeStrategy class.
+  * \todo Safe delete.
   */
 QImage ConvertThread::paintEffects(QImage *image) {
     QImage destImg(*image);

@@ -39,8 +39,9 @@ private:
     double countTargetFileSize(double fileSize);
     QString temporaryFilePath();
 
-    // TODO: move fillImage() method to an external class
+    // TODO: move these methods to an external class
     void fillImage(QImage *img);
+    QImage paintEffects(QImage *image);
 };
 
 #endif // BYTESIMAGESIZESTRATEGY_HPP
