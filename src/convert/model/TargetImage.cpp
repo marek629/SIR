@@ -148,3 +148,13 @@ void TargetImage::setRotateThumbnailAllowed(bool value)
 {
     rotateThumbnailAllowed = value;
 }
+
+QString TargetImage::filePath() const
+{
+    return path;
+}
+
+void TargetImage::setFilePath(const QString &value)
+{
+    path = value;
+}

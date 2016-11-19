@@ -34,6 +34,9 @@
 #include "convert/service/ImageFileService.hpp"
 
 
+using namespace sir;
+
+
 BytesImageSizeStrategy::BytesImageSizeStrategy(int threadId, bool saveMetadataAllowed)
     : ImageSizeStrategy()
 {
@@ -91,12 +94,11 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
                                                      rotationAngle);
                 }
     #endif // SIR_METADATA_SUPPORT
-            }
-            else {
-                qWarning("tid %d: Save temporary image file "
-                         "into %s failed", threadId,
-                         String(targetFilePath).
-                            toNativeStdString().data());
+            } else {
+                const char *filePathData = String(targetImageModel.filePath()).
+                        toNativeStdString().data();
+                qWarning("tid %d: Save temporary image file into %s failed",
+                         threadId, filePathData);
                 // TODO: emit to nowhere
                 emit imageStatus(imageData, tr("Failed to compute image size"),
                                  Failed);

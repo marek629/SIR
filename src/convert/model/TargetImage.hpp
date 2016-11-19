@@ -71,8 +71,12 @@ public:
     bool isRotateThumbnailAllowed() const;
     void setRotateThumbnailAllowed(bool value);
 
+    QString filePath() const;
+    void setFilePath(const QString &value);
+
 private:
     ImageFormat format;
+    QString path;
     bool progressiveWriteEnabled;
     bool optimizedWriteEnabled;
     int compressionLevel;
