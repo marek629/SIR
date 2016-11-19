@@ -23,6 +23,7 @@
 #define BYTESIMAGESIZESTRATEGY_HPP
 
 #include "convert/algorithm/ImageSizeStrategy.hpp"
+#include "metadata/Metadata.hpp"
 
 class QImage;
 
@@ -33,9 +34,12 @@ public:
     BytesImageSizeStrategy(int threadId, bool saveMetadataAllowed = false);
     ImageSizeComputeResult calculate(QSvgRenderer *renderer);
 
+    void setMetadata(MetadataUtils::Metadata *value);
+
 private:
     int threadId;
     bool saveMetadataAllowed;
+    MetadataUtils::Metadata *metadata;
 
     double countTargetFileSize(double fileSize);
     QString temporaryFilePath();

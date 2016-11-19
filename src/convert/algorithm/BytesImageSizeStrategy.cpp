@@ -85,7 +85,7 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
     #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadataAllowed) {
                     // TODO: missing field metadata
-                    metadata.write(tempFilePath, tempImage);
+                    metadata->write(tempFilePath, tempImage);
                     imageFileService.updateThumbnail(targetImageModel.isUpdateThumbnailAllowed(),
                                                      targetImageModel.isRotateThumbnailAllowed(),
                                                      rotationAngle);
@@ -118,6 +118,11 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
         }
     }
     resultState.setComputedForBytesSize();
+}
+
+void BytesImageSizeStrategy::setMetadata(MetadataUtils::Metadata *value)
+{
+    metadata = value;
 }
 
 double BytesImageSizeStrategy::countTargetFileSize(double fileSize)
