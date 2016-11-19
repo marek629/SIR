@@ -28,6 +28,7 @@
 
 #include "convert/algorithm/ImageSizeComputeResult.hpp"
 #include "convert/algorithm/ImageSizeStrategy.hpp"
+#include "metadata/Metadata.hpp"
 
 
 class QSvgRenderer;
@@ -43,11 +44,15 @@ public:
     bool isSaveMetadataAllowed() const;
     void setSaveMetadataAllowed(bool value);
 
+    MetadataUtils::Metadata *metadata() const;
+    void setMetadata(MetadataUtils::Metadata *value);
+
 private:
     QString path;
     int threadId;
 
     bool saveMetadataAllowed;
+    MetadataUtils::Metadata *metadataPointer;
 
     std::unique_ptr<ImageSizeStrategy> createSizeStrategy(char sizeUnit);
     std::unique_ptr<ImageSizeStrategy> createBytesSizeStrategy();

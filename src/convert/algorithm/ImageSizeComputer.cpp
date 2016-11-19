@@ -51,6 +51,16 @@ void ImageSizeComputer::setSaveMetadataAllowed(bool value)
     saveMetadataAllowed = value;
 }
 
+MetadataUtils::Metadata *ImageSizeComputer::metadata() const
+{
+    return metadataPointer;
+}
+
+void ImageSizeComputer::setMetadata(MetadataUtils::Metadata *value)
+{
+    metadataPointer = value;
+}
+
 std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createSizeStrategy(char sizeUnit)
 {
     switch (sizeUnit) {
@@ -71,5 +81,6 @@ std::unique_ptr<ImageSizeStrategy> ImageSizeComputer::createBytesSizeStrategy()
 {
     BytesImageSizeStrategy *strategy = new BytesImageSizeStrategy(
                 threadId, saveMetadataAllowed);
+    strategy->setMetadata(metadataPointer);
     return std::unique_ptr<ImageSizeStrategy>(strategy);
 }
