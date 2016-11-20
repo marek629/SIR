@@ -30,6 +30,8 @@ class QImage;
 
 class BytesImageSizeStrategy : public ImageSizeStrategy
 {
+    Q_DECLARE_TR_FUNCTIONS(BytesImageSizeStrategy)
+
 public:
     BytesImageSizeStrategy(int threadId, bool saveMetadataAllowed = false);
     ImageSizeComputeResult calculate(QSvgRenderer *renderer);
