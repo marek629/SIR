@@ -138,14 +138,14 @@ void BytesImageSizeStrategy::setQuestionManager(ConvertThread *value)
 double BytesImageSizeStrategy::countTargetFileSize(double fileSize)
 {
     ImageFileSize imageFileSize(fileSize);
-    return imageFileSize.bytesByFormat(shared.targetImage.imageFormat());
+    return imageFileSize.bytesByFormat(targetImageModel.imageFormat());
 }
 
 QString BytesImageSizeStrategy::temporaryFilePath()
 {
     return QDir::tempPath() + QDir::separator() +
             "sir_temp" + QString::number(threadId) +
-            "." + shared.targetImage.imageFormat().qString();
+            "." + targetImageModel.imageFormat().qString();
 }
 
 void BytesImageSizeStrategy::fillImage(QImage *img)
