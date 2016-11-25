@@ -28,9 +28,9 @@
 class QImage;
 
 
-class BytesImageSizeStrategy : public ImageSizeStrategy
+class BytesImageSizeStrategy : public QObject, ImageSizeStrategy
 {
-    Q_DECLARE_TR_FUNCTIONS(BytesImageSizeStrategy)
+    Q_OBJECT
 
 public:
     BytesImageSizeStrategy(int threadId, bool saveMetadataAllowed = false);
@@ -49,6 +49,9 @@ private:
     // TODO: move these methods to an external class
     void fillImage(QImage *img);
     QImage paintEffects(QImage *image);
+
+signals:
+    void imageStatus(QStringList imageData, QString status, int statusNum);
 };
 
 #endif // BYTESIMAGESIZESTRATEGY_HPP

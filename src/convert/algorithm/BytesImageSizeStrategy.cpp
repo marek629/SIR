@@ -28,6 +28,7 @@
 #include <QSvgRenderer>
 
 #include "ConvertEffects.hpp"
+#include "ConvertThread.hpp"
 #include "sir_String.hpp"
 #include "convert/model/ImageFileSize.hpp"
 #include "convert/service/ImageChangeService.hpp"
@@ -101,9 +102,9 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
                          threadId, filePathData);
 
                 QStringList imageData = targetImageModel.imageDataStringList();
-                // TODO: emit to nowhere
+                // TODO: connect to the same slots as ConvertThread::imageStatus() signal or remove this signal
                 emit imageStatus(imageData, tr("Failed to compute image size"),
-                                 Failed);
+                                 ConvertThread::Failed);
                 resultState.setCanNotWriteTemporaryImageFile();
                 return;// -4;
             }
