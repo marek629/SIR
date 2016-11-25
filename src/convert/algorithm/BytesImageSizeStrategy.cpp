@@ -110,7 +110,7 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             }
             fileSize = tempFile.size();
             size = tempImage.size();
-            fileSizeRatio = (double) fileSize / shared.sizeBytes;
+            fileSizeRatio = (double) fileSize / targetImageModel.bytes();
             fileSizeRatio = sqrt(fileSizeRatio);
         }
 
