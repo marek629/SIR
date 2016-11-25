@@ -106,7 +106,7 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
                 emit imageStatus(imageData, tr("Failed to compute image size"),
                                  ConvertThread::Failed);
                 resultState.setCanNotWriteTemporaryImageFile();
-                return;// -4;
+                return createResult();
             }
             fileSize = tempFile.size();
             size = tempImage.size();
@@ -119,10 +119,11 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
         char answer = askOverwrite(&tempFile);
         if (answer < 0) {
             resultState.setNegativeOverwriteAnswer(answer);
-            return;
+            return createResult();
         }
     }
     resultState.setComputedForBytesSize();
+    return createResult();
 }
 
 void BytesImageSizeStrategy::setMetadata(MetadataUtils::Metadata *value)
