@@ -21,6 +21,8 @@
 
 #include "convert/model/TargetImage.hpp"
 
+#include <QFileInfo>
+
 
 TargetImage::TargetImage() {}
 
@@ -157,4 +159,14 @@ QString TargetImage::filePath() const
 void TargetImage::setFilePath(const QString &value)
 {
     path = value;
+}
+
+QStringList TargetImage::imageDataStringList() const
+{
+    QFileInfo fileInfo(filePath());
+
+    QStringList result;
+    result << fileInfo.baseName() << fileInfo.suffix() << fileInfo.absolutePath();
+
+    return result;
 }

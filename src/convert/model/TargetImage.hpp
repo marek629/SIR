@@ -74,6 +74,8 @@ public:
     QString filePath() const;
     void setFilePath(const QString &value);
 
+    QStringList imageDataStringList() const;
+
 private:
     ImageFormat format;
     QString path;

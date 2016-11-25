@@ -99,6 +99,8 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
                         toNativeStdString().data();
                 qWarning("tid %d: Save temporary image file into %s failed",
                          threadId, filePathData);
+
+                QStringList imageData = targetImageModel.imageDataStringList();
                 // TODO: emit to nowhere
                 emit imageStatus(imageData, tr("Failed to compute image size"),
                                  Failed);
