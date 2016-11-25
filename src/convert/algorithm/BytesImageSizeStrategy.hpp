@@ -27,6 +27,8 @@
 
 class QImage;
 
+class ConvertThread;
+
 
 class BytesImageSizeStrategy : public QObject, ImageSizeStrategy
 {
@@ -37,11 +39,13 @@ public:
     ImageSizeComputeResult calculate(QSvgRenderer *renderer);
 
     void setMetadata(MetadataUtils::Metadata *value);
+    void setQuestionManager(ConvertThread *value);
 
 private:
     int threadId;
     bool saveMetadataAllowed;
     MetadataUtils::Metadata *metadata;
+    ConvertThread *questionManager;
 
     double countTargetFileSize(double fileSize);
     QString temporaryFilePath();

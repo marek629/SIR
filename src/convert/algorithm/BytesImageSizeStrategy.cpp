@@ -114,9 +114,8 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             fileSizeRatio = sqrt(fileSizeRatio);
         }
 
-        // TODO: call ConvertThread::askOverwrite() method
         // ask overwrite
-        char answer = askOverwrite(&tempFile);
+        char answer = questionManager->askOverwrite(&tempFile);
         if (answer < 0) {
             resultState.setNegativeOverwriteAnswer(answer);
             return createResult();
@@ -129,6 +128,11 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
 void BytesImageSizeStrategy::setMetadata(MetadataUtils::Metadata *value)
 {
     metadata = value;
+}
+
+void BytesImageSizeStrategy::setQuestionManager(ConvertThread *value)
+{
+    questionManager = value;
 }
 
 double BytesImageSizeStrategy::countTargetFileSize(double fileSize)

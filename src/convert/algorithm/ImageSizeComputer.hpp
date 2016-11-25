@@ -33,6 +33,8 @@
 
 class QSvgRenderer;
 
+class ConvertThread;
+
 
 class ImageSizeComputer
 {
@@ -41,18 +43,17 @@ public:
 
     ImageSizeComputeResult calculate(QSvgRenderer *renderer, char sizeUnit);
 
-    bool isSaveMetadataAllowed() const;
     void setSaveMetadataAllowed(bool value);
-
-    MetadataUtils::Metadata *metadata() const;
     void setMetadata(MetadataUtils::Metadata *value);
+    void setConvertThread(ConvertThread *value);
 
 private:
     QString path;
     int threadId;
 
     bool saveMetadataAllowed;
-    MetadataUtils::Metadata *metadataPointer;
+    MetadataUtils::Metadata *metadata;
+    ConvertThread *convertThread;
 
     std::unique_ptr<ImageSizeStrategy> createSizeStrategy(char sizeUnit);
     std::unique_ptr<ImageSizeStrategy> createBytesSizeStrategy();

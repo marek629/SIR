@@ -80,6 +80,7 @@ public:
                         Status status);
     void askUser(const QString &targetFilePath, Question question);
     int getUserAnswer(Question question) const;
+    char askOverwrite(QFile *tempFile);
 
     void fillImage(QImage *img);
     char computeSize(QSvgRenderer *renderer, const QString &imagePath);
@@ -145,7 +146,6 @@ private:
 
     QString temporaryFilePath(int threadId);
     char askEnlarge(const QImage &image, const QString &imagePath);
-    char askOverwrite(QFile *tempFile);
 
     QImage *loadImage(const QString &imagePath, RawModel *rawModel,
                       bool isSvgSource);
