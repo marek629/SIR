@@ -32,7 +32,7 @@ ImageFileService::ImageFileService(const QString &filePath)
 
 bool ImageFileService::writeImage(const QImage &image)
 {
-    ImageWriter writer(filePath);
+    ImageWriter writer(targetFilePath);
     WriteImageFormat format(targetFilePath.split('.').last());
 
     if (format.supportsQuality()) {
