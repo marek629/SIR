@@ -30,7 +30,7 @@ class QImage;
 class ConvertThread;
 
 
-class BytesImageSizeStrategy : public QObject, ImageSizeStrategy
+class BytesImageSizeStrategy : public QObject, public ImageSizeStrategy
 {
     Q_OBJECT
 
