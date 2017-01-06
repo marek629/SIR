@@ -25,8 +25,9 @@
 #include "image/ImageWriter.hpp"
 
 
-ImageFileService::ImageFileService(const TargetImage &targetImage)
+ImageFileService::ImageFileService(const QImage &image, const TargetImage &targetImage)
 {
+    this->image = image;
     this->targetImageModel = targetImage;
 }
 
@@ -54,7 +55,7 @@ bool ImageFileService::writeImage(const QImage &image)
 }
 
 void ImageFileService::updateThumbnail(bool isUpdateAllowed,
-                                       bool isRotateThumbnailAllowed, // = shared.rotateThumbnail
+                                       bool isRotateThumbnailAllowed, // TODO: = shared.rotateThumbnail
                                        int rotationAngle)
 {
     if (!isUpdateAllowed) {

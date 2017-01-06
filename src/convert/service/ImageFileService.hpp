@@ -32,7 +32,7 @@ class QString;
 class ImageFileService
 {
 public:
-    explicit ImageFileService(const TargetImage &targetImage);
+    ImageFileService(const QImage &image, const TargetImage &targetImage);
 
     bool writeImage(const QImage &image);
     void updateThumbnail(bool isUpdateAllowed = false,
@@ -40,6 +40,7 @@ public:
                          int rotationAngle = 0);
 
 private:
+    QImage image;
     TargetImage targetImageModel;
 
 #ifdef SIR_METADATA_SUPPORT
