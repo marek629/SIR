@@ -25,18 +25,19 @@
 #include "image/ImageWriter.hpp"
 
 
-ImageFileService::ImageFileService(const QString &filePath)
+ImageFileService::ImageFileService(const TargetImage &targetImage)
 {
-    this->targetFilePath = filePath;
+    this->targetImageModel = targetImage;
 }
 
 bool ImageFileService::writeImage(const QImage &image)
 {
+    QString targetFilePath = targetImageModel.filePath();
     ImageWriter writer(targetFilePath);
     WriteImageFormat format(targetFilePath.split('.').last());
 
     if (format.supportsQuality()) {
-        writer.setQuality(shared.targetImage.quality());
+        writer.setQuality(targetImageModel.quality());
     }
     // TODO: use data from user forms input
     if (format.supportsProgressiveScanWrite()) {
