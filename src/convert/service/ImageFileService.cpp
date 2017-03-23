@@ -65,15 +65,15 @@ void ImageFileService::updateThumbnail(int rotationAngle)
     int h = exifStruct->thumbnailHeight.split(' ').first().toInt();
     QImage tmpImg = image.scaled(w,h, Qt::KeepAspectRatio,
                                   Qt::SmoothTransformation);
-    bool specialRotate = (rotate && rotationAngle%90 != 0);
+    bool specialRotate = targetImageModel.isRotateThumbnailAllowed() && rotationAngle%90 != 0;
     QImage *thumbnail = &exifStruct->thumbnailImage;
     if (specialRotate) {
         w = tmpImg.width();
         h = tmpImg.height();
         *thumbnail = tmpImg;
     } else {
-        if (shared.backgroundColor.isValid()) {
-            thumbnail->fill(shared.backgroundColor.rgb());
+        if (targetImageModel.backgroundColor().isValid()) {
+            thumbnail->fill(targetImageModel.backgroundColor().rgb());
         } else {
             thumbnail->fill(Qt::black);
         }
