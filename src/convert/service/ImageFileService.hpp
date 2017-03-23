@@ -35,9 +35,7 @@ public:
     ImageFileService(const QImage &image, const TargetImage &targetImage);
 
     bool writeImage(const QImage &image);
-    void updateThumbnail(bool isUpdateAllowed = false,
-                         bool isRotateThumbnailAllowed = false,
-                         int rotationAngle = 0);
+    void updateThumbnail(int rotationAngle = 0);
 
 private:
     QImage image;

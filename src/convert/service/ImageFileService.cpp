@@ -54,11 +54,9 @@ bool ImageFileService::writeImage(const QImage &image)
     return writer.write(image);
 }
 
-void ImageFileService::updateThumbnail(bool isUpdateAllowed,
-                                       bool isRotateThumbnailAllowed, // TODO: = shared.rotateThumbnail
-                                       int rotationAngle)
+void ImageFileService::updateThumbnail(int rotationAngle)
 {
-    if (!isUpdateAllowed) {
+    if (!targetImageModel.isUpdateThumbnailAllowed()) {
         return;
     }
 
@@ -88,7 +86,8 @@ void ImageFileService::updateThumbnail(bool isUpdateAllowed,
     }
 
     // rotate thumbnail
-    if (isRotateThumbnailAllowed && !specialRotate) {
+    // TODO: check if set isRotateThumbnailAllowed value from shared.rotateThumbnail
+    if (targetImageModel.isRotateThumbnailAllowed() && !specialRotate) {
         QTransform transform;
         int flip;
         transform.rotate(MetadataUtils::Exif::rotationAngle(

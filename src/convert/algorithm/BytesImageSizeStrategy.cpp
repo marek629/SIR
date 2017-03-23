@@ -84,15 +84,13 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
             double rotationAngle = imageChangeService.rotateImage(targetImageModel.rotationAngle());
             tempImage = imageChangeService.image();
 
-            ImageFileService imageFileService(tempFilePath);
+            ImageFileService imageFileService(tempImage, targetImageModel);
             if (imageFileService.writeImage(tempImage)) {
     #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadataAllowed) {
                     // TODO: missing field metadata
                     metadata->write(tempFilePath, tempImage);
-                    imageFileService.updateThumbnail(targetImageModel.isUpdateThumbnailAllowed(),
-                                                     targetImageModel.isRotateThumbnailAllowed(),
-                                                     rotationAngle);
+                    imageFileService.updateThumbnail(rotationAngle);
                 }
     #endif // SIR_METADATA_SUPPORT
             } else {
