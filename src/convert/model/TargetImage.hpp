@@ -71,6 +71,12 @@ public:
     bool isRotateThumbnailAllowed() const;
     void setRotateThumbnailAllowed(bool value);
 
+    bool isRotateImageAllowed() const;
+    void setRotateImageAllowed(bool value);
+
+    bool isRotateEnabled() const;
+    void setRotateEnabled(bool value);
+
     QString filePath() const;
     void setFilePath(const QString &value);
 
@@ -91,6 +97,8 @@ private:
 
     bool updateThumbnailAllowed;
     bool rotateThumbnailAllowed;
+    bool rotateImageAllowed; // see SharedInformation.realRotate
+    bool rotateEnabled; // see SharedInformation.rotate
 };
 
 #endif // TARGETIMAGE_HPP

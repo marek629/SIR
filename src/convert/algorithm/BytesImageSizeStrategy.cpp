@@ -81,7 +81,10 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
 
             ImageChangeService imageChangeService(tempImage);
             tempImage = paintEffects(&tempImage);
-            double rotationAngle = imageChangeService.rotateImage(targetImageModel.rotationAngle());
+            double rotationAngle = imageChangeService.rotateImage(
+                        targetImageModel.rotationAngle(),
+                        targetImageModel.isRotateEnabled(),
+                        targetImageModel.isRotateImageAllowed());
             tempImage = imageChangeService.image();
 
             ImageFileService imageFileService(tempImage, targetImageModel);

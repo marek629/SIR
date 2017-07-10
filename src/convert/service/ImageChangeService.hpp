@@ -34,7 +34,7 @@ public:
 
     QImage image() const;
 
-    double rotateImage(double angle);
+    double rotateImage(double angle, bool isRotateEnabled, bool isRotateImageAllowed);
 
 private:
     QImage changingImage;

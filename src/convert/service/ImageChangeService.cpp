@@ -34,15 +34,16 @@ QImage ImageChangeService::image() const
     return changingImage;
 }
 
-double ImageChangeService::rotateImage(double angle)
+// TODO: change parameters list to TargetImage use
+double ImageChangeService::rotateImage(double angle, bool isRotateEnabled, bool isRotateImageAllowed)
 {
     int alpha = (int)angle;
     bool saveExifOrientation = false;
 #ifdef SIR_METADATA_SUPPORT
-    saveExifOrientation = !shared.realRotate;
+    saveExifOrientation = !isRotateImageAllowed;
 #endif // SIR_METADATA_SUPPORT
     // rotate image
-    if ((rotate && angle != 0.0) || saveExifOrientation) {
+    if ((isRotateEnabled && angle != 0.0) || saveExifOrientation) {
 #ifdef SIR_METADATA_SUPPORT
         if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
             saveExifOrientation = false;
