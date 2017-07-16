@@ -130,6 +130,11 @@ void TargetImage::setRotationAngle(double value)
     angle = value;
 }
 
+void TargetImage::incrementRotationAngle(double value)
+{
+    angle += value;
+}
+
 bool TargetImage::isUpdateThumbnailAllowed() const
 {
     // TODO: set value from expression "saveMetadata && shared.updateThumbnail"
@@ -189,4 +194,24 @@ QStringList TargetImage::imageDataStringList() const
     result << fileInfo.baseName() << fileInfo.suffix() << fileInfo.absolutePath();
 
     return result;
+}
+
+bool TargetImage::isSaveMetadataAllowed() const
+{
+    return saveMetadataAllowed;
+}
+
+void TargetImage::setSaveMetadataAllowed(bool value)
+{
+    saveMetadataAllowed = value;
+}
+
+bool TargetImage::isSaveExifOrientationAllowed() const
+{
+    return isSaveMetadataAllowed() && saveExifOrientationAllowed;
+}
+
+void TargetImage::setSaveExifOrientationAllowed(bool value)
+{
+    saveExifOrientationAllowed = value;
 }

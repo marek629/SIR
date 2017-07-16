@@ -64,6 +64,7 @@ public:
 
     double rotationAngle() const;
     void setRotationAngle(double value);
+    void incrementRotationAngle(double value);
 
     bool isUpdateThumbnailAllowed() const;
     void setUpdateThumbnailAllowed(bool value);
@@ -82,6 +83,12 @@ public:
 
     QStringList imageDataStringList() const;
 
+    bool isSaveMetadataAllowed() const;
+    void setSaveMetadataAllowed(bool value);
+
+    bool isSaveExifOrientationAllowed() const;
+    void setSaveExifOrientationAllowed(bool value);
+
 private:
     ImageFormat format;
     QString path;
@@ -99,6 +106,9 @@ private:
     bool rotateThumbnailAllowed;
     bool rotateImageAllowed; // see SharedInformation.realRotate
     bool rotateEnabled; // see SharedInformation.rotate
+
+    bool saveMetadataAllowed; // see SharedInformation.saveMetadata
+    bool saveExifOrientationAllowed; // see SharedInformation.saveExifOrientation
 };
 
 #endif // TARGETIMAGE_HPP
