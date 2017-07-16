@@ -245,6 +245,12 @@ void TargetImage::setSaveMetadataAllowed(bool value)
 bool TargetImage::isSaveExifOrientationAllowed() const
 {
 #ifdef SIR_METADATA_SUPPORT
+    if (!isRotateEnabled()) {
+        return false;
+    }
+    if (rotationAngle() == 0.0) {
+        return false;
+    }
     bool isAllowed = !this->isRotateImageAllowed();
     if (isAllowed && this->rotationAngle() % 90 != 0) {
         isAllowed = false;

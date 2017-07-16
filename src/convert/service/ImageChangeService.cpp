@@ -27,6 +27,7 @@
 ImageChangeService::ImageChangeService(const QImage &image)
 {
     changingImage = image;
+    saveExifOrientationFailed = false;
 }
 
 QImage ImageChangeService::image() const
@@ -37,47 +38,12 @@ QImage ImageChangeService::image() const
 double ImageChangeService::rotateImage(TargetImage *targetImage)
 {
     int alpha = (int)targetImage->rotationAngle();
-    // rotate image
-    if (targetImage->isRotateEnabled() && targetImage->rotationAngle() != 0.0) {
-#ifdef SIR_METADATA_SUPPORT
-        // don't rotate but save Exif orientation tag
-        if (targetImage->isSaveExifOrientationAllowed()) {
-            int flip;
-            alpha += MetadataUtils::Exif::rotationAngle(
-                        metadata.exifStruct()->orientation, &flip );
-            if (alpha == -360) {
-                alpha = 0;
-                flip = MetadataUtils::None;
-            }
-
-            flip ^= targetImage->flip();
-
-            // normalization of values alpha and flip
-            if (alpha == -270)
-                alpha = 90;
-            else if (alpha == 270)
-                alpha = -90;
-            else if (alpha == -180)
-                alpha = 180;
-            if (flip != MetadataUtils::None && (int)targetImage->rotationAngle()%180 != 0)
-                flip ^= MetadataUtils::VerticalAndHorizontal;
-
-            char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
-            if (orientation < 1) { // really rotate when getOrientation() failed
-                metadata.setExifDatum("Exif.Image.Orientation", 1);
-                metadata.exifStruct()->orientation = 1;
-            }
-            else {
-                metadata.setExifDatum("Exif.Image.Orientation", orientation);
-                metadata.exifStruct()->orientation = orientation;
-            }
-        }
-#endif // SIR_METADATA_SUPPORT
+    if (targetImage->isSaveExifOrientationAllowed()) {
+        alpha = saveExifOrientation(alpha, *targetImage);
     }
-    // really rotate without saving Exif orientation tag
-    if (!targetImage->isSaveExifOrientationAllowed() || targetImage->isRotateImageAllowed()) {
-        // flip dimension variables
+    if (saveExifOrientationFailed || targetImage->isRotateImageAllowed()) {
         if (alpha%90 == 0 && alpha%180 != 0) {
+            // flip dimension variables
             QSize size = targetImage->size();
             size.transpose();
             targetImage->setSize(size);
@@ -107,4 +73,50 @@ double ImageChangeService::rotateImage(TargetImage *targetImage)
     }
 #endif // SIR_METADATA_SUPPORT
     return targetImage->rotationAngle();
+}
+
+/**
+ * @brief Don't rotate but save orientation tag in Exif metadata only.
+ * @param alpha Working rotation angle
+ * @param targetImage Target image model
+ * @return Modified alpha angle
+ */
+int ImageChangeService::saveExifOrientation(int alpha, const TargetImage &targetImage)
+{
+    saveExifOrientationFailed = false;
+
+#ifdef SIR_METADATA_SUPPORT
+    int flip;
+    alpha += MetadataUtils::Exif::rotationAngle(
+                metadata.exifStruct()->orientation, &flip );
+    if (alpha == -360) {
+        alpha = 0;
+        flip = MetadataUtils::None;
+    }
+
+    flip ^= targetImage.flip();
+
+    // normalization of values alpha and flip
+    if (alpha == -270) {
+        alpha = 90;
+    } else if (alpha == 270) {
+        alpha = -90;
+    } else if (alpha == -180) {
+        alpha = 180;
+    }
+    if (flip != MetadataUtils::None && (int)targetImage.rotationAngle()%180 != 0) {
+        flip ^= MetadataUtils::VerticalAndHorizontal;
+    }
+
+    char orientation = MetadataUtils::Exif::getOrientation(alpha, flip);
+    if (orientation < 1) { // really rotate when getOrientation() failed
+        metadata.setExifDatum("Exif.Image.Orientation", 1);
+        metadata.exifStruct()->orientation = 1;
+        saveExifOrientationFailed = true;
+    } else {
+        metadata.setExifDatum("Exif.Image.Orientation", orientation);
+        metadata.exifStruct()->orientation = orientation;
+    }
+#endif // SIR_METADATA_SUPPORT
+    return alpha;
 }

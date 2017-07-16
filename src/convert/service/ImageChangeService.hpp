@@ -38,8 +38,11 @@ public:
     double rotateImage(TargetImage *targetImage);
 
 private:
+    int saveExifOrientation(int alpha, const TargetImage &targetImage);
+
     QImage changingImage;
 
+    bool saveExifOrientationFailed;
 #ifdef SIR_METADATA_SUPPORT
     MetadataUtils::Metadata metadata;
 #endif // SIR_METADATA_SUPPORT
