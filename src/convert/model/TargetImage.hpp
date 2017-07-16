@@ -55,6 +55,10 @@ public:
 
     QSize size() const;
     void setSize(const QSize &value);
+    int width() const;
+    int height() const;
+    bool hasWidth() const;
+    bool hasHeight() const;
 
     QColor backgroundColor() const;
     void setBackgroundColor(const QColor &value);

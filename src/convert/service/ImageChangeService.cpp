@@ -85,12 +85,9 @@ double ImageChangeService::rotateImage(TargetImage *targetImage)
     if (!targetImage->isSaveExifOrientationAllowed() || targetImage->isRotateImageAllowed()) {
         // flip dimension variables
         if (alpha%90 == 0 && alpha%180 != 0) {
-            int tmp = width;
-            width = height;
-            height = tmp;
-            bool temp = hasWidth;
-            hasWidth = hasHeight;
-            hasHeight = temp;
+            QSize size = targetImage->size();
+            size.transpose();
+            targetImage->setSize(size);
         }
         // image tranformation matrix
         QTransform transform;

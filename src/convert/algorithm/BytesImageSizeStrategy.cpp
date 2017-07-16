@@ -49,7 +49,9 @@ ImageSizeComputeResult BytesImageSizeStrategy::calculate(QSvgRenderer *renderer)
 {
     targetImageModel.setSize(renderer->defaultSize());
 
-    // TODO: set to true ConvertThread::hasWidth and ConvertThread::hasHeight
+    /* TODO: set to true ConvertThread::hasWidth and ConvertThread::hasHeight
+     *       or modify TargetImage::hasWidth() and TargetImage::hasHeight() methods bodies
+     */
 
     // TODO: set ConvertThread::shared.targetImage to targetImage field
     if (targetImageModel.imageFormat().isLinearFileSizeFormat()) {
