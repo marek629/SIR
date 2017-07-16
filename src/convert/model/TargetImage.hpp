@@ -94,7 +94,6 @@ public:
     void setSaveMetadataAllowed(bool value);
 
     bool isSaveExifOrientationAllowed() const;
-    void setSaveExifOrientationAllowed(bool value);
 
 private:
     ImageFormat format;
@@ -117,7 +116,6 @@ private:
 
 #ifdef SIR_METADATA_SUPPORT
     bool saveMetadataAllowed; // see SharedInformation.saveMetadata
-    bool saveExifOrientationAllowed; // see SharedInformation.saveExifOrientation
 #endif // SIR_METADATA_SUPPORT
 };
 

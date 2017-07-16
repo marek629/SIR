@@ -37,15 +37,9 @@ QImage ImageChangeService::image() const
 double ImageChangeService::rotateImage(TargetImage *targetImage)
 {
     int alpha = (int)targetImage->rotationAngle();
-    bool saveExifOrientation = false;
-#ifdef SIR_METADATA_SUPPORT
-    saveExifOrientation = !targetImage->isRotateImageAllowed();
-#endif // SIR_METADATA_SUPPORT
     // rotate image
-    if ((targetImage->isRotateEnabled() && targetImage->rotationAngle() != 0.0) || saveExifOrientation) {
+    if (targetImage->isRotateEnabled() && targetImage->rotationAngle() != 0.0) {
 #ifdef SIR_METADATA_SUPPORT
-        if (saveExifOrientation && (alpha != targetImage->rotationAngle() || alpha%90!=0))
-            saveExifOrientation = false;
         // don't rotate but save Exif orientation tag
         if (targetImage->isSaveExifOrientationAllowed()) {
             int flip;
@@ -72,7 +66,6 @@ double ImageChangeService::rotateImage(TargetImage *targetImage)
             if (orientation < 1) { // really rotate when getOrientation() failed
                 metadata.setExifDatum("Exif.Image.Orientation", 1);
                 metadata.exifStruct()->orientation = 1;
-                saveExifOrientation = false;
             }
             else {
                 metadata.setExifDatum("Exif.Image.Orientation", orientation);
