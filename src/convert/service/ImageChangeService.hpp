@@ -24,6 +24,7 @@
 
 #include <QImage>
 
+#include "convert/model/TargetImage.hpp"
 #include "metadata/Metadata.hpp"
 
 
@@ -34,7 +35,7 @@ public:
 
     QImage image() const;
 
-    double rotateImage(double angle, bool isRotateEnabled, bool isRotateImageAllowed);
+    double rotateImage(TargetImage *targetImage);
 
 private:
     QImage changingImage;

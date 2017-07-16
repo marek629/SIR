@@ -34,18 +34,17 @@ QImage ImageChangeService::image() const
     return changingImage;
 }
 
-// TODO: change parameters list to TargetImage use
-double ImageChangeService::rotateImage(double angle, bool isRotateEnabled, bool isRotateImageAllowed)
+double ImageChangeService::rotateImage(TargetImage *targetImage)
 {
-    int alpha = (int)angle;
+    int alpha = (int)targetImage->rotationAngle();
     bool saveExifOrientation = false;
 #ifdef SIR_METADATA_SUPPORT
-    saveExifOrientation = !isRotateImageAllowed;
+    saveExifOrientation = !targetImage->isRotateImageAllowed();
 #endif // SIR_METADATA_SUPPORT
     // rotate image
-    if ((isRotateEnabled && angle != 0.0) || saveExifOrientation) {
+    if ((targetImage->isRotateEnabled() && targetImage->rotationAngle() != 0.0) || saveExifOrientation) {
 #ifdef SIR_METADATA_SUPPORT
-        if (saveExifOrientation && (alpha!=angle || alpha%90!=0))
+        if (saveExifOrientation && (alpha != targetImage->rotationAngle() || alpha%90!=0))
             saveExifOrientation = false;
         // don't rotate but save Exif orientation tag
         if (saveMetadata && saveExifOrientation) {
@@ -66,7 +65,7 @@ double ImageChangeService::rotateImage(double angle, bool isRotateEnabled, bool 
                 alpha = -90;
             else if (alpha == -180)
                 alpha = 180;
-            if (flip != MetadataUtils::None && (int)angle%180 != 0)
+            if (flip != MetadataUtils::None && (int)targetImage->rotationAngle()%180 != 0)
                 flip ^= MetadataUtils::VerticalAndHorizontal;
 
             char orientation = MetadataUtils::Exif::getOrientation(alpha,flip);
@@ -101,21 +100,24 @@ double ImageChangeService::rotateImage(double angle, bool isRotateEnabled, bool 
         if (saveMetadata) {
             metadata.setExifDatum("Exif.Image.Orientation",1);
             int flip;
-            angle += MetadataUtils::Exif::rotationAngle(
-                        metadata.exifStruct()->orientation, &flip );
+            targetImage->setRotationAngle(
+                        targetImage->rotationAngle() +
+                        MetadataUtils::Exif::rotationAngle(
+                            metadata.exifStruct()->orientation, &flip)
+                        );
             if (flip == MetadataUtils::Vertical)
                 transform.scale(1.0,-1.0);
             else if (flip == MetadataUtils::Horizontal)
                 transform.scale(-1.0,1.0);
             else if (flip == MetadataUtils::VerticalAndHorizontal)
-                angle += 360;
+                targetImage->setRotationAngle(targetImage->rotationAngle() + 360);
         }
 #endif // SIR_METADATA_SUPPORT
-        transform.rotate(angle);
+        transform.rotate(targetImage->rotationAngle());
         changingImage = image.transformed(transform, Qt::SmoothTransformation);
-        return angle;
+        return targetImage->rotationAngle();
 #ifdef SIR_METADATA_SUPPORT
     }
 #endif // SIR_METADATA_SUPPORT
-    return angle;
+    return targetImage->rotationAngle();
 }
