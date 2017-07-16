@@ -56,7 +56,7 @@ double ImageChangeService::rotateImage(TargetImage *targetImage)
                 flip = MetadataUtils::None;
             }
 
-            flip ^= shared.flip;
+            flip ^= targetImage->flip();
 
             // normalization of values alpha and flip
             if (alpha == -270)

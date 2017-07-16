@@ -176,6 +176,16 @@ void TargetImage::setRotateEnabled(bool value)
     rotateEnabled = value;
 }
 
+int TargetImage::flip() const
+{
+    return flipCode;
+}
+
+void TargetImage::setFlip(int value)
+{
+    flipCode = value;
+}
+
 QString TargetImage::filePath() const
 {
     return path;

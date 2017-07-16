@@ -78,6 +78,9 @@ public:
     bool isRotateEnabled() const;
     void setRotateEnabled(bool value);
 
+    int flip() const;
+    void setFlip(int value);
+
     QString filePath() const;
     void setFilePath(const QString &value);
 
@@ -106,6 +109,7 @@ private:
     bool rotateThumbnailAllowed;
     bool rotateImageAllowed; // see SharedInformation.realRotate
     bool rotateEnabled; // see SharedInformation.rotate
+    int flipCode; // see SharedInformation.flip
 
     bool saveMetadataAllowed; // see SharedInformation.saveMetadata
     bool saveExifOrientationAllowed; // see SharedInformation.saveExifOrientation
