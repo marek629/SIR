@@ -39,6 +39,7 @@ public:
 
 private:
     int saveExifOrientation(int alpha, const TargetImage &targetImage);
+    QTransform getTransformationMatrix(TargetImage *targetImage);
 
     QImage changingImage;
 

@@ -48,30 +48,10 @@ double ImageChangeService::rotateImage(TargetImage *targetImage)
             size.transpose();
             targetImage->setSize(size);
         }
-        // image tranformation matrix
-        QTransform transform;
-#ifdef SIR_METADATA_SUPPORT
-        if (targetImage->isSaveMetadataAllowed()) {
-            metadata.setExifDatum("Exif.Image.Orientation",1);
-            int flip;
-            targetImage->incrementRotationAngle(
-                        MetadataUtils::Exif::rotationAngle(
-                            metadata.exifStruct()->orientation, &flip)
-                        );
-            if (flip == MetadataUtils::Vertical)
-                transform.scale(1.0,-1.0);
-            else if (flip == MetadataUtils::Horizontal)
-                transform.scale(-1.0,1.0);
-            else if (flip == MetadataUtils::VerticalAndHorizontal)
-                targetImage->incrementRotationAngle(360);
-        }
-#endif // SIR_METADATA_SUPPORT
-        transform.rotate(targetImage->rotationAngle());
-        this->changingImage = this->changingImage.transformed(transform, Qt::SmoothTransformation);
-        return targetImage->rotationAngle();
-#ifdef SIR_METADATA_SUPPORT
+        this->changingImage = this->changingImage.transformed(
+                    this->getTransformationMatrix(targetImage),
+                    Qt::SmoothTransformation);
     }
-#endif // SIR_METADATA_SUPPORT
     return targetImage->rotationAngle();
 }
 
@@ -119,4 +99,29 @@ int ImageChangeService::saveExifOrientation(int alpha, const TargetImage &target
     }
 #endif // SIR_METADATA_SUPPORT
     return alpha;
+}
+
+QTransform ImageChangeService::getTransformationMatrix(TargetImage *targetImage)
+{
+    QTransform transform;
+
+#ifdef SIR_METADATA_SUPPORT
+    if (targetImage->isSaveMetadataAllowed()) {
+        metadata.setExifDatum("Exif.Image.Orientation",1);
+        int flip;
+        targetImage->incrementRotationAngle(
+                    MetadataUtils::Exif::rotationAngle(
+                        metadata.exifStruct()->orientation, &flip)
+                    );
+        if (flip == MetadataUtils::Vertical)
+            transform.scale(1.0,-1.0);
+        else if (flip == MetadataUtils::Horizontal)
+            transform.scale(-1.0,1.0);
+        else if (flip == MetadataUtils::VerticalAndHorizontal)
+            targetImage->incrementRotationAngle(360);
+    }
+#endif // SIR_METADATA_SUPPORT
+
+    transform.rotate(targetImage->rotationAngle());
+    return transform;
 }
