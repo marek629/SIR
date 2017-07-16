@@ -108,7 +108,7 @@ double ImageChangeService::rotateImage(TargetImage *targetImage)
         }
 #endif // SIR_METADATA_SUPPORT
         transform.rotate(targetImage->rotationAngle());
-        changingImage = image.transformed(transform, Qt::SmoothTransformation);
+        this->changingImage = this->changingImage.transformed(transform, Qt::SmoothTransformation);
         return targetImage->rotationAngle();
 #ifdef SIR_METADATA_SUPPORT
     }
