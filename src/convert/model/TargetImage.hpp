@@ -111,8 +111,10 @@ private:
     bool rotateEnabled; // see SharedInformation.rotate
     int flipCode; // see SharedInformation.flip
 
+#ifdef SIR_METADATA_SUPPORT
     bool saveMetadataAllowed; // see SharedInformation.saveMetadata
     bool saveExifOrientationAllowed; // see SharedInformation.saveExifOrientation
+#endif // SIR_METADATA_SUPPORT
 };
 
 #endif // TARGETIMAGE_HPP

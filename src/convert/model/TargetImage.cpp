@@ -208,20 +208,32 @@ QStringList TargetImage::imageDataStringList() const
 
 bool TargetImage::isSaveMetadataAllowed() const
 {
+#ifdef SIR_METADATA_SUPPORT
     return saveMetadataAllowed;
+#else
+    return false;
+#endif // SIR_METADATA_SUPPORT
 }
 
 void TargetImage::setSaveMetadataAllowed(bool value)
 {
+#ifdef SIR_METADATA_SUPPORT
     saveMetadataAllowed = value;
+#endif // SIR_METADATA_SUPPORT
 }
 
 bool TargetImage::isSaveExifOrientationAllowed() const
 {
+#ifdef SIR_METADATA_SUPPORT
     return isSaveMetadataAllowed() && saveExifOrientationAllowed;
+#else
+    return false;
+#endif // SIR_METADATA_SUPPORT
 }
 
 void TargetImage::setSaveExifOrientationAllowed(bool value)
 {
+#ifdef SIR_METADATA_SUPPORT
     saveExifOrientationAllowed = value;
+#endif // SIR_METADATA_SUPPORT
 }

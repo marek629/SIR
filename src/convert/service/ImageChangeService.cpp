@@ -82,9 +82,7 @@ double ImageChangeService::rotateImage(TargetImage *targetImage)
 #endif // SIR_METADATA_SUPPORT
     }
     // really rotate without saving Exif orientation tag
-#ifdef SIR_METADATA_SUPPORT
-    if (!saveExifOrientation || shared.realRotate) {
-#endif // SIR_METADATA_SUPPORT
+    if (!targetImage->isSaveExifOrientationAllowed() || targetImage->isRotateImageAllowed()) {
         // flip dimension variables
         if (alpha%90 == 0 && alpha%180 != 0) {
             int tmp = width;
