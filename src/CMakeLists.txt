@@ -2,8 +2,11 @@
 
 # Source files
 file( GLOB_RECURSE sir_SRCS
+        convert/*.cpp
         exceptions/*.cpp
+        image/*.cpp
         raw/*.cpp
+        widgets/convert/options/*.cpp
     )
 set( sir_SRCS ${sir_SRCS}
         CommandLineAssistant.cpp
@@ -35,8 +38,9 @@ set( sir_SRCS ${sir_SRCS}
         thumbnail/MetadataThumbnail.cpp
         visitors/RichTextVisitor.cpp
         widgets/AboutDialog.cpp
-        widgets/ConvertDialog.cpp
         widgets/BrushFrame.cpp
+        widgets/ConvertDialog.cpp
+        widgets/ConvertDialogConnector.cpp
         widgets/ColorFrame.cpp
         widgets/DetailsBrowserController.cpp
         widgets/DetailsBrowserView.cpp

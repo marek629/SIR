@@ -22,7 +22,7 @@
 #include "widgets/PreviewDialog.hpp"
 
 #include "raw/RawModel.hpp"
-#include "raw/RawPixmapLoader.hpp"
+#include "raw/core/graphics/RawPixmapLoader.hpp"
 
 #include <QDebug>
 #include <QDesktopWidget>

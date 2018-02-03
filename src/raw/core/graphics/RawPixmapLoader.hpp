@@ -19,22 +19,22 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef RAWIMAGELOADER_HPP
-#define RAWIMAGELOADER_HPP
+#ifndef RAWPIXMAPLOADER_HPP
+#define RAWPIXMAPLOADER_HPP
 
-#include "raw/RawLoader.hpp"
+#include "raw/core/graphics/RawLoader.hpp"
 
-#include "raw/Image.hpp"
+#include "raw/core/graphics/Pixmap.hpp"
 
 
-class RawImageLoader : public RawLoader
+class RawPixmapLoader : public RawLoader
 {
 public:
-    RawImageLoader(RawModel *rawModel, const QString &filePath);
-    Image *load();
+    RawPixmapLoader(RawModel *rawModel, const QString &filePath);
+    Pixmap *load();
 
 protected:
-    Image *createPaintDevice();
+    Pixmap *createPaintDevice();
 };
 
-#endif // RAWIMAGELOADER_HPP
+#endif // RAWPIXMAPLOADER_HPP

@@ -63,6 +63,11 @@ QString RepairOptionsCollector::optionsString() const
         result = QString("%1 -n %2").arg(result).arg(eraseNoiseThreshold);
     }
 
+    if (view->isSaturationChecked()) {
+        int saturation = view->saturationLevel();
+        result = QString("%1 -S %2").arg(result).arg(saturation);
+    }
+
     return result;
 }
 
@@ -91,5 +96,13 @@ void RepairOptionsCollector::setOptions(const QString &string)
     if (isEraseNoiseEnabled) {
         int eraseNoiseThreshold = eraseNoiseRegExp.cap(3).toInt();
         view->setEraseNoiseThreshold(eraseNoiseThreshold);
+    }
+
+    QRegExp saturationRegExp = QRegExp("(-S)(\\s+)([0-9]+)");
+    bool isSaturationEnabled = string.contains(saturationRegExp);
+    view->setSaturationChecked(isSaturationEnabled);
+    if (isSaturationEnabled) {
+        int saturation = saturationRegExp.cap(3).toInt();
+        view->setSaturationLevel(saturation);
     }
 }

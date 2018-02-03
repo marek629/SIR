@@ -50,19 +50,10 @@ class ConvertThread : public QThread {
     Q_OBJECT
     friend class ConvertDialog;
     friend class ConvertThreadTest;
+    friend class ImageFormatLinearSizeTest;
+    friend class ImageFormatTargetFileSizeTest;
 
 public:
-    ConvertThread(QObject *parent, int tid);
-    void convertImage(const QString& name, const QString& extension,
-                      const QString& path);
-    void setAcceptWork(bool work);
-    void getNextOrStop();
-#ifdef SIR_METADATA_SUPPORT
-    void printError();
-#endif // SIR_METADATA_SUPPORT
-    static SharedInformation *sharedInfo();
-    static void setSharedInfo(const SharedInformation &info);
-
     //! Enumerator for ConvertThread::question() signal.
     enum Question {
         Overwrite,
@@ -78,6 +69,26 @@ public:
         Converting,
         Cancelled
     };
+
+    ConvertThread(QObject *parent, int tid);
+    void convertImage(const QString& name, const QString& extension,
+                      const QString& path);
+    void setAcceptWork(bool work);
+    void getNextOrStop();
+
+    void setImageStatus(const QStringList &imageData, const QString &message,
+                        Status status);
+    void askUser(const QString &targetFilePath, Question question);
+    int getUserAnswer(Question question) const;
+    char askOverwrite(QFile *tempFile);
+
+    void fillImage(QImage *img);
+    char computeSize(QSvgRenderer *renderer, const QString &imagePath);
+#ifdef SIR_METADATA_SUPPORT
+    void printError();
+#endif // SIR_METADATA_SUPPORT
+    static SharedInformation *sharedInfo();
+    static void setSharedInfo(const SharedInformation &info);
 
 signals:
     void imageStatus(QStringList imageData, QString status, int statusNum);
@@ -130,19 +141,15 @@ private:
     void updateThumbnail(const QImage &image);
 #endif // SIR_METADATA_SUPPORT
     char computeSize(const QImage *image, const QString &imagePath);
-    char computeSize(QSvgRenderer *renderer, const QString &imagePath);
-    bool isLinearFileSizeFormat(double *destSize);
+
+    double countTargetFileSize(double fileSize);
+
+    QString temporaryFilePath(int threadId);
     char askEnlarge(const QImage &image, const QString &imagePath);
-    char askOverwrite(QFile *tempFile);
 
     QImage *loadImage(const QString &imagePath, RawModel *rawModel,
                       bool isSvgSource);
-    bool isRegularImageToLoad(const QString &imagePath);
-    QImage *loadRegularImage(const QString &imagePath);
-    QImage *loadSvgImage(const QString &imagePath);
-    QImage *loadRawImage(const QString &imagePath, RawModel *rawModel);
 
-    void fillImage(QImage *img);
     QImage paintEffects(QImage *image);
 };
 

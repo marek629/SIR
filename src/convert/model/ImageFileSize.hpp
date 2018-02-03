@@ -19,21 +19,20 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "RawPixmapLoader.hpp"
+#ifndef IMAGEFILESIZE_HPP
+#define IMAGEFILESIZE_HPP
 
-#include <QProcess>
+class ImageFormat;
 
 
-RawPixmapLoader::RawPixmapLoader(RawModel *rawModel,
-                                 const QString &filePath)
-    : RawLoader(rawModel, filePath) {}
-
-Pixmap *RawPixmapLoader::load()
+class ImageFileSize
 {
-    return static_cast<Pixmap *>(RawLoader::load());
-}
+public:
+    explicit ImageFileSize(double bytes);
+    double bytesByFormat(const ImageFormat &imageFormat) const;
 
-Pixmap *RawPixmapLoader::createPaintDevice()
-{
-    return new Pixmap();
-}
+private:
+    double bytes;
+};
+
+#endif // IMAGEFILESIZE_HPP

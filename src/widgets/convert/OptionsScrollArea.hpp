@@ -19,10 +19,13 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef OPTIONSSCROLLAREA_H
-#define OPTIONSSCROLLAREA_H
+#ifndef OPTIONSSCROLLAREA_HPP
+#define OPTIONSSCROLLAREA_HPP
 
 #include "ui_OptionsScrollArea.h"
+
+class WriteImageFormat;
+
 
 //! Image options scroll area used in ConvertDialog
 class OptionsScrollArea : public QScrollArea, public Ui::OptionsScrollArea {
@@ -32,8 +35,20 @@ public:
     explicit OptionsScrollArea(QWidget *parent = 0);
     void retranslateStrings();
 
+public slots:
+    void onTargetFormatChanged(const QString &format);
+
 private slots:
     void verifyRotate(int status);
+    void onRotateSliderValueChanged(int value);
+    void onRotateSplitterValueChanged(double value);
+
+private:
+    void createConnections();
+
+    void showFormatControls(const WriteImageFormat &format);
+    void setQualityVisible(bool visible);
+    void setCompressionVisible(bool visible);
 };
 
-#endif // OPTIONSSCROLLAREA_H
+#endif // OPTIONSSCROLLAREA_HPP

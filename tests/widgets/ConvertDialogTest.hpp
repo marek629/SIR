@@ -37,6 +37,7 @@ public:
 
 private:
     ConvertDialog *convertDialog;
+    QString backupLastDir;
 
 private slots:
     void initTestCase();
@@ -62,6 +63,17 @@ private slots:
     void convert_addImage_no();
     void convert_svg_removeText();
     void convert_svg_doNotRemoveText();
+
+    void test_closeOrCancel_close_saveSettings_lastDir_data();
+    void test_closeOrCancel_close_saveSettings_lastDir();
+    void test_closeOrCancel_close_saveSettings_isMainWindowMaximized_data();
+    void test_closeOrCancel_close_saveSettings_isMainWindowMaximized();
+    void test_closeOrCancel_close_saveSettings_mainWindowPosition_data();
+    void test_closeOrCancel_close_saveSettings_mainWindowPosition();
+    void test_closeOrCancel_close_saveSettings_mainWindowSplitters_data();
+    void test_closeOrCancel_close_saveSettings_mainWindowSplitters();
+    void test_closeOrCancel_close_saveSettings_mainWindowSize_data();
+    void test_closeOrCancel_close_saveSettings_mainWindowSize();
 };
 
 #endif // CONVERTDIALOGTEST_HPP

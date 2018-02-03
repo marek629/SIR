@@ -32,6 +32,7 @@
 #include "SharedInformationBuilder.hpp"
 #include "Version.hpp"
 #include "widgets/AboutDialog.hpp"
+#include "widgets/ConvertDialogConnector.hpp"
 #include "widgets/DetailsBrowserController.hpp"
 #include "widgets/MessageBox.hpp"
 #include "widgets/TreeWidget.hpp"
@@ -109,57 +110,10 @@ ConvertDialog::~ConvertDialog() {
 }
 
 /** Connects UI signals to corresponding slots. */
-void ConvertDialog::createConnections() {
-    // tree view's list menagement buttons
-    connect(addFilepushButton, SIGNAL(clicked()),
-            filesTreeWidget, SLOT(addFile()));
-    connect(addDirpushButton, SIGNAL(clicked()), filesTreeWidget, SLOT(addDir()));
-    connect(removePushButton, SIGNAL(clicked()),
-            filesTreeWidget, SLOT(removeSelectedFromList()));
-    connect(removeAllPushButton, SIGNAL(clicked()),
-            filesTreeWidget, SLOT(removeAll()));
-    // and actions
-    connect(actionAdd_File, SIGNAL(triggered()), filesTreeWidget, SLOT(addFile()));
-    connect(actionAdd_Dir, SIGNAL(triggered()), filesTreeWidget, SLOT(addDir()));
-    connect(actionSelect, SIGNAL(triggered()), SLOT(showSelectionDialog()));
-    connect(actionImport_files, SIGNAL(triggered()), SLOT(showSelectionDialog()));
-    connect(actionRemoveAll, SIGNAL(triggered()),
-            filesTreeWidget, SLOT(removeAll()));
-
-    // status bar
-    connect(filesTreeWidget, SIGNAL(loadingFilesStart(int)),
-            statusWidget, SLOT(onFilesLoadingStart(int)));
-    connect(filesTreeWidget, SIGNAL(loadingFilesTick(int)),
-            statusWidget, SLOT(onFilesLoadingTick(int)));
-    connect(filesTreeWidget, SIGNAL(loadingFilesStop()),
-            statusWidget, SLOT(onFilesLoadingStop()));
-    connect(detailsBrowserController, SIGNAL(loadingDetailsStart()),
-            statusWidget, SLOT(onDetailsLoadingStart()));
-    connect(detailsBrowserController, SIGNAL(loadingDetailsStop()),
-            statusWidget, SLOT(onDetailsLoadingStop()));
-    connect(this, SIGNAL(convertStart(int)), statusWidget, SLOT(onConvetionStart(int)));
-    connect(this, SIGNAL(convertTick(int)), statusWidget, SLOT(onConvetionTick(int)));
-    connect(this, SIGNAL(convertStop()), statusWidget, SLOT(onConvetionStop()));
-
-    // menu actions
-    connect(actionExit, SIGNAL(triggered()), SLOT(close()));
-    connect(actionAbout_Qt, SIGNAL(triggered()),qApp, SLOT(aboutQt()));
-    connect(actionAbout_Sir, SIGNAL(triggered()), this, SLOT(about()));
-    connect(actionOptions, SIGNAL(triggered()), this, SLOT(setOptions()));
-    connect(actionCheckforUpdates, SIGNAL(triggered()), SLOT(checkUpdates()));
-    connect(actionRestoreSession, SIGNAL(triggered()), SLOT(restoreSession()));
-    connect(actionSaveSession, SIGNAL(triggered()), SLOT(saveSession()));
-    connect(actionRestoreEffects, SIGNAL(triggered()), SLOT(restoreEffects()));
-    connect(actionSaveEffects, SIGNAL(triggered()), SLOT(saveEffects()));
-    connect(actionSendInstall, SIGNAL(triggered()), SLOT(sendInstall()));
-
-    // browse button
-    connect(browseDestButton, SIGNAL(clicked()), SLOT(browseDestination()));
-
-    // convert... & stop/exit buttons
-    connect(convertButton, SIGNAL(clicked()), this, SLOT(convertAll()));
-    connect(convertSelectedButton, SIGNAL(clicked()), SLOT(convertSelected()));
-    connect(quitButton, SIGNAL(clicked()), SLOT(closeOrCancel()));
+void ConvertDialog::createConnections()
+{
+    ConvertDialogConnector connector(this, detailsBrowserController);
+    connector.createConnections();
 }
 
 /** Sets icons from system theme. */
@@ -374,6 +328,8 @@ void ConvertDialog::init() {
 
     createConnections();
     setIcons();
+
+    optionsScrollArea->onTargetFormatChanged(targetFormatComboBox->currentText());
 }
 
 /** Browse destination directory button slot.
@@ -546,8 +502,8 @@ void ConvertDialog::convert()
     shared.setDesiredFormat(desiredFormat);
     shared.setDesiredFlip(optionsScrollArea->flipComboBox->currentIndex());
     shared.setDesiredRotation(optionsScrollArea->rotateCheckBox->isChecked(),
-                              optionsScrollArea->rotateLineEdit->text().toDouble());
-    shared.setQuality(optionsScrollArea->qualitySpinBox->value());
+                              optionsScrollArea->rotateDoubleSpinBox->value());
+    shared.setQuality(optionsScrollArea->qualitySliderBox->value());
     shared.setDestPrefix(destPrefixEdit->text());
     shared.setDestSuffix(destSuffixEdit->text());
     shared.setDestFolder(destFolder);
@@ -703,8 +659,7 @@ void ConvertDialog::loadSettings() {
     destPrefixEdit->setText(                    s->settings.targetPrefix);
     destSuffixEdit->setText(                    s->settings.targetSuffix);
     int quality =                               s->settings.quality;
-    optionsScrollArea->qualitySpinBox->setValue(quality);
-    optionsScrollArea->qualitySlider->setValue(quality);
+    optionsScrollArea->qualitySliderBox->setValue(quality);
     numThreads =                                s->settings.cores;
     if (numThreads == 0)
         numThreads = GeneralGroupBoxController::detectCoresCount();
@@ -932,8 +887,21 @@ void ConvertDialog::closeOrCancel() {
         updateInterface();
         setCanceled();
     }
-    else
+    else {
+        // write last loaded directory
+        Settings *settings = Settings::instance();
+        QString toWriteLastDir = settings->settings.lastDir;
+        settings->readSettings();
+        settings->mainWindow.size = window()->size();
+        settings->mainWindow.maximized = window()->isMaximized();
+        settings->mainWindow.possition = window()->pos();
+        settings->mainWindow.horizontalSplitter = horizontalSplitter->saveState();
+        settings->mainWindow.verticalSplitter = verticalSplitter->saveState();
+        settings->settings.lastDir = toWriteLastDir;
+        settings->writeSettings();
+
         close();
+    }
 }
 
 /** Terminates all worker threads. */

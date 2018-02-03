@@ -23,19 +23,18 @@
 
 #include "ConvertEffects.hpp"
 #include "Settings.hpp"
-#include "SvgModifier.hpp"
-#include "raw/RawImageLoader.hpp"
-#include "raw/RawModel.hpp"
+#include "convert/model/ImageFileSize.hpp"
+#include "convert/model/WriteImageFormat.hpp"
+#include "convert/service/ImageFileService.hpp"
+#include "image/QImageLoader.hpp"
 #include "widgets/MessageBox.hpp"
 
 #include <QDebug>
 #include <QDir>
-#include <QImage>
 #include <QPainter>
 #include <QtSvg/QSvgRenderer>
 
-#include <QImageReader>
-
+// TODO: remove cmath header after ImageSizeStrategy class extraction
 #include <cmath>
 
 
@@ -110,7 +109,7 @@ void ConvertThread::run()
         targetFilePath += imageName;
         if (!shared.suffix.isEmpty())
             targetFilePath += "_" + shared.suffix;
-        targetFilePath += "." + shared.format;
+        targetFilePath += "." + shared.targetImage.imageFormat().qString();
 
         pd.imagePath = pd.imgData.at(2) + QDir::separator() + pd.imgData.at(0)
                      + "." + originalFormat;
@@ -203,7 +202,8 @@ void ConvertThread::run()
             }
             if(shared.overwriteResult == QMessageBox::Yes ||
                     shared.overwriteResult == QMessageBox::YesToAll) {
-                if (destImg.save(targetFilePath, 0, shared.quality)) {
+                ImageFileService imageFileService;
+                if (imageFileService.writeImage(destImg, targetFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata && !metadata.write(targetFilePath, destImg))
                         printError();
@@ -223,7 +223,8 @@ void ConvertThread::run()
         else if (shared.abort)
             emit imageStatus(pd.imgData, tr("Cancelled"), Cancelled);
         else { // when overwriteAll is true or file not exists
-            if (destImg.save(targetFilePath, 0, shared.quality)) {
+            ImageFileService imageFileService;
+            if (imageFileService.writeImage(destImg, targetFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                 if (saveMetadata && !metadata.write(targetFilePath, destImg))
                     printError();
@@ -243,6 +244,36 @@ void ConvertThread::getNextOrStop() {
     static QMutex m;
     QMutexLocker locker(&m);
     emit getNextImage(this->tid);
+}
+
+void ConvertThread::setImageStatus(const QStringList &imageData,
+                                   const QString &message,
+                                   ConvertThread::Status status)
+{
+    emit imageStatus(imageData, message, status);
+}
+
+void ConvertThread::askUser(const QString &targetFilePath,
+                            ConvertThread::Question question)
+{
+    shared.mutex.lock();
+    emit this->question(targetFilePath, question);
+    shared.mutex.unlock();
+}
+
+int ConvertThread::getUserAnswer(ConvertThread::Question question) const
+{
+    switch (question) {
+    case Overwrite:
+        return shared.overwriteResult;
+        break;
+    case Enlarge:
+        return shared.enlargeResult;
+        break;
+    default:
+        return -1;
+        break;
+    }
 }
 
 #ifdef SIR_METADATA_SUPPORT
@@ -416,8 +447,8 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
         height = image->height();
         hasWidth = true;
         hasHeight = true;
-        double destSize = shared.sizeBytes;
-        if (isLinearFileSizeFormat(&destSize)) {
+        if (shared.targetImage.imageFormat().isLinearFileSizeFormat()) {
+            double destSize = countTargetFileSize(shared.sizeBytes);
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
             double sourceHeightRatio = height / sourceSizeSqrt;
@@ -426,8 +457,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             height = sourceHeightRatio * destSize;
         }
         else { // non-linear size relationship
-            QString tempFilePath = QDir::tempPath() + QDir::separator() +
-                    "sir_temp" + QString::number(tid) + "." + shared.format;
+            QString tempFilePath = temporaryFilePath(tid);
             QImage tempImage;
             qint64 fileSize = QFile(imagePath).size();
             QSize size = image->size();
@@ -435,8 +465,6 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
             fileSizeRatio = sqrt(fileSizeRatio);
             QFile tempFile(tempFilePath);
             for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
-                tempFile.open(QIODevice::WriteOnly);
-                tempFile.seek(0);
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
                 tempImage = image->scaled(width, height, Qt::IgnoreAspectRatio,
@@ -446,7 +474,9 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (tempImage.save(&tempFile, 0, shared.quality)) {
+
+                ImageFileService imageFileService;
+                if (imageFileService.writeImage(tempImage, tempFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -460,7 +490,6 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
                                      Failed);
                     return -4;
                 }
-                tempFile.close();
                 fileSize = tempFile.size();
                 size = tempImage.size();
                 fileSizeRatio = (double) fileSize / shared.sizeBytes;
@@ -479,6 +508,7 @@ char ConvertThread::computeSize(const QImage *image, const QString &imagePath) {
     return 0;
 }
 
+// TODO: move to QImageLoader class
 /** This is overloaded function. It's version for SVG vector image.
   *
   * Sets required image size.
@@ -501,8 +531,8 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
         height = defaultSize.height();
         hasWidth = true;
         hasHeight = true;
-        double destSize = shared.sizeBytes;
-        if (isLinearFileSizeFormat(&destSize)) {
+        if (shared.targetImage.imageFormat().isLinearFileSizeFormat()) {
+            double destSize = countTargetFileSize(shared.sizeBytes);
             double sourceSizeSqrt = sqrt(width * height);
             double sourceWidthRatio = width / sourceSizeSqrt;
             double sourceHeightRatio = height / sourceSizeSqrt;
@@ -511,8 +541,7 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
             height = sourceHeightRatio * destSize;
         }
         else { // non-linear size relationship
-            QString tempFilePath = QDir::tempPath() + QDir::separator() +
-                    "sir_temp" + QString::number(tid) + "." + shared.format;
+            QString tempFilePath = temporaryFilePath(tid);
             qint64 fileSize = QFile(imagePath).size();
             QSize size = defaultSize;
             double fileSizeRatio = (double) fileSize / shared.sizeBytes;
@@ -520,8 +549,6 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
             QFile tempFile(tempFilePath);
             QPainter painter;
             for (uchar i=0; i<10 && (fileSizeRatio<0.97412 || fileSizeRatio>1.); i++) {
-                tempFile.open(QIODevice::WriteOnly);
-                tempFile.seek(0);
                 width = size.width() / fileSizeRatio;
                 height = size.height() / fileSizeRatio;
                 QImage tempImage(width, height, QImage::Format_ARGB32);
@@ -534,7 +561,9 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
 #ifdef SIR_METADATA_SUPPORT
                 updateThumbnail(tempImage);
 #endif // SIR_METADATA_SUPPORT
-                if (tempImage.save(&tempFile, 0, shared.quality)) {
+
+                ImageFileService imageFileService;
+                if (imageFileService.writeImage(tempImage, tempFilePath)) {
 #ifdef SIR_METADATA_SUPPORT
                     if (saveMetadata)
                         metadata.write(tempFilePath, tempImage);
@@ -549,7 +578,6 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
                                      Failed);
                     return -4;
                 }
-                tempFile.close();
                 fileSize = tempFile.size();
                 size = tempImage.size();
                 fileSizeRatio = (double) fileSize / shared.sizeBytes;
@@ -565,38 +593,17 @@ char ConvertThread::computeSize(QSvgRenderer *renderer, const QString &imagePath
     return 0;
 }
 
-/** Returns true if desired file format is corresponding file size to image size
-  * as linear function, otherwise returns false.\n
-  * Following file formats are linear size: BMP, PPM, ICO, TIFF and XBM.
-  */
-bool ConvertThread::isLinearFileSizeFormat(double *destSize) {
-    bool linearSize = false;
-    if (shared.format == "bmp") {
-        *destSize -= 54;
-        *destSize /= 3;
-        linearSize = true;
-    }
-    else if (shared.format == "ppm") {
-        *destSize -= 17;
-        *destSize /= 3;
-        linearSize = true;
-    }
-    else if (shared.format == "ico") {
-        *destSize -= 1422;
-        *destSize /= 4;
-        linearSize = true;
-    }
-    else if (shared.format == "tif" || shared.format == "tiff") {
-        *destSize -= 14308;
-        *destSize /= 4;
-        linearSize = true;
-    }
-    else if (shared.format == "xbm") {
-        *destSize -= 60;
-        *destSize /= 0.65;
-        linearSize = true;
-    }
-    return linearSize;
+double ConvertThread::countTargetFileSize(double fileSize)
+{
+    ImageFileSize imageFileSize(fileSize);
+    return imageFileSize.bytesByFormat(shared.targetImage.imageFormat());
+}
+
+QString ConvertThread::temporaryFilePath(int threadId)
+{
+    return QDir::tempPath() + QDir::separator() +
+            "sir_temp" + QString::number(threadId) +
+            "." + shared.targetImage.imageFormat().qString();
 }
 
 /** Asks the user in message box if enlarge image by emiting question() signal.\n
@@ -675,146 +682,48 @@ QImage *ConvertThread::loadImage(const QString &imagePath, RawModel *rawModel,
 {
     QImage *image = NULL;
 
-    if (isRegularImageToLoad(imagePath)) {
-        image = loadRegularImage(imagePath);
+    QImageLoader loader(rawModel, this);
+
+    if (loader.isRegularImage(imagePath)) {
+        image = loader.loadRegularImage(imagePath);
     } else if (isSvgSource) {
-        image = loadSvgImage(imagePath);
+        SvgParameters svgParams;
+        svgParams.setSvgModifiersEnabled(shared.svgModifiersEnabled);
+        svgParams.setSvgRemoveEmptyGroup(shared.svgRemoveEmptyGroup);
+        svgParams.setSvgRemoveTextString(shared.svgRemoveTextString);
+        svgParams.setSvgSave(shared.svgSave);
+        svgParams.setMaintainAspect(shared.maintainAspect);
+        svgParams.setImageData(pd.imgData);
+        svgParams.setHeight(height);
+        svgParams.setWidth(width);
+        svgParams.setTargetFilePath(targetFilePath);
+        loader.setSvgParameters(svgParams);
+
+        image = loader.loadSvgImage(imagePath);
+
+        svgParams = loader.getSvgParameters();
+        height = svgParams.getHeight();
+        width = svgParams.getWidth();
+        hasHeight = svgParams.getHasHeight();
+        hasWidth = svgParams.getHasWidth();
+        sizeComputed = svgParams.getSizeComputed();
     } else {
-        image = loadRawImage(imagePath, rawModel);
+        image = loader.loadRawImage(imagePath);
     }
 
     return image;
 }
 
-bool ConvertThread::isRegularImageToLoad(const QString &imagePath)
-{
-    QFileInfo imageFileInfo(imagePath);
-    QString fileExtension = imageFileInfo.fileName().split('.').last();
-    fileExtension = fileExtension.toLower();
-
-    if (fileExtension == "svg" || fileExtension == "svgz") {
-        return false;
-    }
-
-    QByteArray format = fileExtension.toLatin1();
-    return QImageReader::supportedImageFormats().contains(format);
-}
-
-QImage *ConvertThread::loadRegularImage(const QString &imagePath)
-{
-    QImage *image = NULL;
-
-    QFileInfo imageFileInfo(imagePath);
-    QString fileExtension = imageFileInfo.fileName().split('.').last();
-    fileExtension = fileExtension.toLower();
-
-    if (fileExtension == "png" || fileExtension == "gif") {
-        QImage loadedImage;
-        loadedImage.load(imagePath);
-        image = new QImage(loadedImage.size(), loadedImage.format());
-        fillImage(image);
-        QPainter painter(image);
-        painter.drawImage(image->rect(), loadedImage);
-    } else {
-        image = new QImage();
-        image->load(imagePath);
-    }
-
-    return image;
-}
-
-QImage *ConvertThread::loadSvgImage(const QString &imagePath)
-{
-    QSvgRenderer renderer;
-    if (shared.svgModifiersEnabled) {
-        SvgModifier modifier(pd.imagePath);
-        // modify SVG file
-        if (!shared.svgRemoveTextString.isNull())
-            modifier.removeText(shared.svgRemoveTextString);
-        if (shared.svgRemoveEmptyGroup)
-            modifier.removeEmptyGroups();
-        // save SVG file
-        if (shared.svgSave) {
-            QString svgTargetFileName =
-                    targetFilePath.left(targetFilePath.lastIndexOf('.')+1) + "svg";
-            QFile file(svgTargetFileName);
-            // ask overwrite
-            if (file.exists()) {
-                shared.mutex.lock();
-                emit question(svgTargetFileName, Overwrite);
-                shared.mutex.unlock();
-            }
-            if (shared.overwriteResult == QMessageBox::Yes ||
-                    shared.overwriteResult == QMessageBox::YesToAll) {
-                if (!file.open(QIODevice::WriteOnly)) {
-                    emit imageStatus(pd.imgData, tr("Failed to save new SVG file"),
-                                     Failed);
-                    return NULL;
-                }
-                file.write(modifier.content());
-            }
-        }
-        // and load QByteArray buffer to renderer
-        if (!renderer.load(modifier.content())) {
-            emit imageStatus(pd.imgData, tr("Failed to open changed SVG file"),
-                             Failed);
-            return NULL;
-        }
-    }
-    else if (!renderer.load(pd.imagePath)) {
-        emit imageStatus(pd.imgData, tr("Failed to open SVG file"), Failed);
-        return NULL;
-    }
-    sizeComputed = computeSize(&renderer, pd.imagePath);
-    if (sizeComputed == 2)
-        return NULL;
-    // keep aspect ratio
-    if (shared.maintainAspect) {
-        qreal w = width;
-        qreal h = height;
-        qreal targetRatio = w / h;
-        QSizeF svgSize = renderer.defaultSize();
-        qreal currentRatio = svgSize.width() / svgSize.height();
-        if (currentRatio != targetRatio) {
-            qreal diffRatio;
-            if (currentRatio > targetRatio)
-                diffRatio = w / svgSize.width();
-            else
-                diffRatio = h / svgSize.height();
-            width = diffRatio * svgSize.width();
-            height = diffRatio * svgSize.height();
-        }
-    }
-    // create image
-    QImage *img = new QImage(width, height, QImage::Format_ARGB32);
-    fillImage(img);
-    QPainter painter(img);
-    renderer.render(&painter);
-    // don't scale rendered image
-    hasWidth = false;
-    hasHeight = false;
-    // finaly return the image pointer
-    return img;
-}
-
-QImage *ConvertThread::loadRawImage(const QString &imagePath, RawModel *rawModel)
-{
-    RawToolbox rawToolbox(rawModel);
-
-    if (rawToolbox.isRawSupportEnabled()) {
-        RawImageLoader rawLoader = RawImageLoader(rawModel, imagePath);
-        return rawLoader.load();
-    }
-
-    return NULL;
-}
-
+/**
+ * \deprecated Moved to BytesImageSizeStrategy class.
+ * \todo Safe delete.
+ */
 void ConvertThread::fillImage(QImage *img)
 {
     if (shared.backgroundColor.isValid()) {
         img->fill(shared.backgroundColor.rgb());
     } else {
-        if (shared.format == "gif" || shared.format == "png") {
+        if (shared.targetImage.imageFormat().isTransparentSupportFormat()) {
             img->fill(Qt::transparent);
         } else {
             // in other formats tranparency isn't supported
@@ -825,6 +734,9 @@ void ConvertThread::fillImage(QImage *img)
 
 /** Draws effects into new image.
   * \return New image object.
+  *
+  * \deprecated Moved to BytesImageSizeStrategy class.
+  * \todo Safe delete.
   */
 QImage ConvertThread::paintEffects(QImage *image) {
     QImage destImg(*image);

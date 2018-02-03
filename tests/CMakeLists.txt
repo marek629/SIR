@@ -21,7 +21,7 @@ add_test( NAME "RawController_UT" COMMAND sir_rawcontroller_test )
 
 include_directories( ${CMAKE_BINARY_DIR}/src )
 set( sir_UT_rawloader_SRCS
-        raw/RawLoaderTest.cpp
+        raw/core/graphics/RawLoaderTest.cpp
     )
 add_executable( sir_rawloader_test ${sir_UT_rawloader_SRCS} )
 target_link_libraries( sir_rawloader_test ${sir_UT_LINKING_LIBS} )
@@ -49,6 +49,14 @@ set( sir_UT_convertthread_SRCS
 add_executable( sir_convertthread_test ${sir_UT_convertthread_SRCS} )
 target_link_libraries( sir_convertthread_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "ConvertThread_UT" COMMAND sir_convertthread_test )
+
+set( sir_IT_qimageloader_SRCS
+        image/QImageLoaderTest.cpp
+        fake/ConvertThreadFake.cpp
+    )
+add_executable( sir_qimageloader_test ${sir_IT_qimageloader_SRCS} )
+target_link_libraries( sir_qimageloader_test ${sir_UT_LINKING_LIBS} )
+add_test( NAME "QImageLoader_IT" COMMAND sir_qimageloader_test )
 
 set( sir_UT_languageutils_SRCS
         LanguageUtilsTest.cpp
@@ -80,6 +88,18 @@ set( sir_IT_detailsthumbnail_SRCS
 add_executable( sir_detailsthumbnail_test ${sir_IT_detailsthumbnail_SRCS} )
 target_link_libraries( sir_detailsthumbnail_test ${sir_UT_LINKING_LIBS} )
 add_test( NAME "DetailsThumbnail_IT" COMMAND sir_detailsthumbnail_test )
+
+#include_directories( ${CMAKE_BINARY_DIR}/src )
+file( GLOB imageformat_test_file_list "convert/model/*Test.cpp" )
+foreach( test_file ${imageformat_test_file_list} )
+    set( sir_UT_imageformat_SRCS
+            ${test_file}
+        )
+    get_filename_component( test_name ${test_file} NAME_WE )
+    add_executable( ${test_name} ${sir_UT_imageformat_SRCS} )
+    target_link_libraries( ${test_name} ${sir_UT_LINKING_LIBS} )
+    add_test( NAME "${test_name}" COMMAND ImageFormatLinearSizeTest )
+endforeach( )
 
 
 if( metadata )

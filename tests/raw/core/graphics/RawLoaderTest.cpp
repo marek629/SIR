@@ -19,9 +19,9 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "tests/raw/RawLoaderTest.hpp"
+#include "tests/raw/core/graphics/RawLoaderTest.hpp"
 
-#include "raw/RawImageLoader.hpp"
+#include "raw/core/graphics/RawImageLoader.hpp"
 
 
 RawLoaderTest::RawLoaderTest(QObject *parent) : QObject(parent) {}

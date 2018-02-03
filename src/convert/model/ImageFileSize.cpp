@@ -19,20 +19,38 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef PIXMAP_HPP
-#define PIXMAP_HPP
+#include "convert/model/ImageFileSize.hpp"
 
-#include <QPixmap>
-#include "raw/PaintDevice.hpp"
+#include "convert/model/ImageFormat.hpp"
 
 
-class Pixmap : public PaintDevice, public QPixmap
+ImageFileSize::ImageFileSize(double bytes)
 {
-public:
-    Pixmap();
-    ~Pixmap();
-    bool load(const QString &fileName);
-    bool loadFromData(const QByteArray &data, const char *format);
-};
+    this->bytes = bytes;
+}
 
-#endif // PIXMAP_HPP
+double ImageFileSize::bytesByFormat(const ImageFormat &imageFormat) const
+{
+    double fileSize = bytes;
+    if (imageFormat.isBmp()) {
+        fileSize -= 54;
+        fileSize /= 3;
+    }
+    else if (imageFormat.isPpm()) {
+        fileSize -= 17;
+        fileSize /= 3;
+    }
+    else if (imageFormat.isIco()) {
+        fileSize -= 1422;
+        fileSize /= 4;
+    }
+    else if (imageFormat.isTiff()) {
+        fileSize -= 14308;
+        fileSize /= 4;
+    }
+    else if (imageFormat.isXbm()) {
+        fileSize -= 60;
+        fileSize /= 0.65;
+    }
+    return fileSize;
+}

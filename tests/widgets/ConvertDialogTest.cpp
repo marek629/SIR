@@ -21,6 +21,7 @@
 
 #include "ConvertDialogTest.hpp"
 
+#include "Settings.hpp"
 #include "fake/CommandLineAssistantFake.hpp"
 #include "widgets/MessageBox.hpp"
 
@@ -31,11 +32,19 @@ ConvertDialogTest::ConvertDialogTest()
 
     CommandLineAssistantFake cmd;
     convertDialog = new ConvertDialog(0, QStringList(), &cmd);
+
+    Settings *settings = Settings::instance();
+    settings->readSettings();
+    backupLastDir = settings->settings.lastDir;
 }
 
 ConvertDialogTest::~ConvertDialogTest()
 {
     delete convertDialog;
+
+    Settings *settings = Settings::instance();
+    settings->settings.lastDir = backupLastDir;
+    settings->writeSettings();
 }
 
 void ConvertDialogTest::initTestCase() {}
@@ -49,13 +58,13 @@ void ConvertDialogTest::convert_defaultPath()
     SharedInformation *sharedInfo = convertDialog->sharedInfo;
 
     QCOMPARE(convertDialog->convertedImages, 0);
-    QCOMPARE(sharedInfo->format,
+    QCOMPARE(sharedInfo->targetImage.imageFormat().qString(),
              convertDialog->targetFormatComboBox->currentText().toLower());
     QCOMPARE(sharedInfo->flip,
              convertDialog->optionsScrollArea->flipComboBox->currentIndex());
 //    QCOMPARE(sharedInfo->rotate)
-    QCOMPARE(sharedInfo->quality,
-             convertDialog->optionsScrollArea->qualitySpinBox->value());
+    QCOMPARE(sharedInfo->targetImage.quality(),
+             convertDialog->optionsScrollArea->qualitySliderBox->value());
     QCOMPARE(sharedInfo->prefix, convertDialog->destPrefixEdit->text());
     QCOMPARE(sharedInfo->suffix, convertDialog->destSuffixEdit->text());
     QCOMPARE(sharedInfo->overwriteAll, false);
@@ -525,6 +534,210 @@ void ConvertDialogTest::convert_svg_doNotRemoveText()
     QCOMPARE(sharedInfo->svgRemoveEmptyGroup, false);
     QCOMPARE(sharedInfo->svgSave, false);
     QCOMPARE(sharedInfo->svgModifiersEnabled, false);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_lastDir_data()
+{
+    QString lastDirPattern = QDir::homePath() + QDir::separator()
+            + "%1" + QDir::separator();
+
+    QTest::addColumn<QString>("loadLastDir");
+    QTest::addColumn<QString>("writeLastDir");
+
+    QTest::newRow("same old and new last directory")
+            << lastDirPattern.arg("dir1") << lastDirPattern.arg("dir1");
+    QTest::newRow("diffrent old and new last directory")
+            << lastDirPattern.arg("dir1") << lastDirPattern.arg("dir2");
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_lastDir()
+{
+    QFETCH(QString, loadLastDir);
+    QFETCH(QString, writeLastDir);
+
+    Settings *settings = Settings::instance();
+
+    settings->settings.lastDir = loadLastDir;
+    settings->writeSettings();
+
+    settings->settings.lastDir = writeLastDir;
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->settings.lastDir, writeLastDir);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximized_data()
+{
+    QTest::addColumn<bool>("loadMaximized");
+    QTest::addColumn<bool>("writeMaximized");
+
+    QTest::newRow("is not maximized at all")
+            << false << false;
+    QTest::newRow("is not maximized on start, is maximized on close")
+            << false << true;
+    QTest::newRow("is maximized at all")
+            << true << true;
+    QTest::newRow("is maximized on start, is not maximized on close")
+            << true << false;
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_isMainWindowMaximized()
+{
+    QFETCH(bool, loadMaximized);
+    QFETCH(bool, writeMaximized);
+
+    Settings *settings = Settings::instance();
+
+    settings->mainWindow.maximized = loadMaximized;
+    settings->writeSettings();
+
+    if (writeMaximized) {
+        convertDialog->window()->showMaximized();
+    }
+    else {
+        convertDialog->window()->showNormal();
+    }
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->mainWindow.maximized, writeMaximized);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowPosition_data()
+{
+    QPoint topLeftCornerPosition(0, 0);
+    QPoint testPosition1(20, 30);
+    QPoint testPosition2(35, 100);
+
+    QTest::addColumn<QPoint>("loadPosition");
+    QTest::addColumn<QPoint>("writePosition");
+
+    QTest::newRow("top left corner at all")
+            << topLeftCornerPosition << topLeftCornerPosition;
+    QTest::newRow("top left corner was moved bottom-right")
+            << topLeftCornerPosition << testPosition1;
+    QTest::newRow("initial position was moved to top-left")
+            << testPosition2 << testPosition1;
+    QTest::newRow("initial position was moved to bottom-right")
+            << testPosition1 << testPosition2;
+    QTest::newRow("initial position was not changed")
+            << testPosition1 << testPosition1;
+    QTest::newRow("initial position was changed top left corner")
+            << testPosition1 << topLeftCornerPosition;
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowPosition()
+{
+    QFETCH(QPoint, loadPosition);
+    QFETCH(QPoint, writePosition);
+
+    Settings *settings = Settings::instance();
+
+    settings->mainWindow.possition = loadPosition;
+    settings->writeSettings();
+
+    convertDialog->move(writePosition);
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->mainWindow.possition, writePosition);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSplitters_data()
+{
+    QTest::addColumn<int>("loadHorizontalSplitterFirstWidth");
+    QTest::addColumn<int>("writeHorizontalSplitterFirstWidth");
+    QTest::addColumn<int>("loadVericalSplitterFirstWidth");
+    QTest::addColumn<int>("writeVerticalSplitterFirstWidth");
+
+    QTest::newRow("no move")
+            << 100 << 100 << 100 << 100;
+    QTest::newRow("horizontal splitter was moved")
+            << 100 << 120 << 100 << 100;
+    QTest::newRow("vertical splitter was moved")
+            << 100 << 100 << 100 << 120;
+    QTest::newRow("horizontal and vertical splitters was moved")
+            << 100 << 120 << 100 << 120;
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSplitters()
+{
+    QFETCH(int, loadHorizontalSplitterFirstWidth);
+    QFETCH(int, writeHorizontalSplitterFirstWidth);
+    QFETCH(int, loadVericalSplitterFirstWidth);
+    QFETCH(int, writeVerticalSplitterFirstWidth);
+
+    Settings *settings = Settings::instance();
+
+    QList<int> horizontalSizes;
+    horizontalSizes << loadHorizontalSplitterFirstWidth;
+    QSplitter *horizontalSplitter = convertDialog->horizontalSplitter;
+    horizontalSplitter->setSizes(horizontalSizes);
+
+    QList<int> verticalSizes;
+    verticalSizes << loadVericalSplitterFirstWidth;
+    QSplitter *verticalSplitter = convertDialog->verticalSplitter;
+    verticalSplitter->setSizes(verticalSizes);
+
+    settings->mainWindow.horizontalSplitter = horizontalSplitter->saveState();
+    settings->mainWindow.verticalSplitter = verticalSplitter->saveState();
+    settings->writeSettings();
+
+    horizontalSizes.clear();
+    horizontalSizes << writeHorizontalSplitterFirstWidth;
+    horizontalSplitter->setSizes(horizontalSizes);
+
+    verticalSizes.clear();
+    verticalSizes << writeVerticalSplitterFirstWidth;
+    verticalSplitter->setSizes(verticalSizes);
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->mainWindow.horizontalSplitter, horizontalSplitter->saveState());
+    QCOMPARE(settings->mainWindow.verticalSplitter, verticalSplitter->saveState());
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSize_data()
+{
+    QTest::addColumn<QSize>("loadSize");
+    QTest::addColumn<QSize>("writeSize");
+
+    QTest::newRow("is not changed")
+            << QSize(800, 600) << QSize(800, 600);
+    QTest::newRow("is resized up")
+            << QSize(800, 600) << QSize(1000, 700);
+    QTest::newRow("is resized down")
+            << QSize(800, 700) << QSize(650, 600);
+    QTest::newRow("is resized width down")
+            << QSize(800, 600) << QSize(700, 600);
+}
+
+void ConvertDialogTest::test_closeOrCancel_close_saveSettings_mainWindowSize()
+{
+    QFETCH(QSize, loadSize);
+    QFETCH(QSize, writeSize);
+
+    Settings *settings = Settings::instance();
+
+    settings->mainWindow.size = loadSize;
+    settings->writeSettings();
+
+    convertDialog->resize(writeSize);
+
+    convertDialog->converting = false;
+    convertDialog->closeOrCancel();
+
+    settings->readSettings();
+    QCOMPARE(settings->mainWindow.size, writeSize);
 }
 
 QTEST_MAIN(ConvertDialogTest)

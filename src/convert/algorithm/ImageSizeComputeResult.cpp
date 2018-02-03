@@ -19,19 +19,18 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "Image.hpp"
+#include "convert/algorithm/ImageSizeComputeResult.hpp"
 
-
-Image::Image() : PaintDevice(), QImage() {}
-
-Image::~Image() {}
-
-bool Image::load(const QString &fileName)
+ImageSizeComputeResult::ImageSizeComputeResult()
 {
-    return QImage::load(fileName);
 }
 
-bool Image::loadFromData(const QByteArray &data, const char *format)
+void ImageSizeComputeResult::setSize(const QSize &size)
 {
-    return QImage::loadFromData(data, format);
+    imageSize = size;
+}
+
+void ImageSizeComputeResult::setState(const ImageSizeComputeResultState &state)
+{
+    resultState = state;
 }

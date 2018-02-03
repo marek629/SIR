@@ -38,6 +38,8 @@ BasicRawViewScrollArea::BasicRawViewScrollArea(QWidget *parent)
             this, SLOT(onEraseNoiseToggle(bool)));
     connect(ui.interpolationPostProcessingCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(onInterpolationPostProcessingToggle(bool)));
+    connect(ui.saturationCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(onSaturationToggle(bool)));
     connect(ui.rawCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(onRawEnabledChange(int)));
 }
@@ -163,6 +165,15 @@ void BasicRawViewScrollArea::onInterpolationPostProcessingToggle(bool toggled)
 
     spinBoxEnabledValue = toggleSpinBox(toggled,
                                         ui.interpolationPostProcessingSpinBox,
+                                        spinBoxEnabledValue);
+}
+
+void BasicRawViewScrollArea::onSaturationToggle(bool toggled)
+{
+    static int spinBoxEnabledValue = 14000;
+
+    spinBoxEnabledValue = toggleSpinBox(toggled,
+                                        ui.saturationSpinBox,
                                         spinBoxEnabledValue);
 }
 

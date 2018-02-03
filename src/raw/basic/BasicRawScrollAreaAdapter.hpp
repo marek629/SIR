@@ -74,6 +74,12 @@ public:
     int eraseNoiseThreshold() const;
     void setEraseNoiseThreshold(int threshold);
 
+    bool isSaturationChecked() const;
+    void setSaturationChecked(bool checked);
+
+    int saturationLevel() const;
+    void setSaturationLevel(int value);
+
 private:
     Ui::BasicRawScrollArea *ui;
 };

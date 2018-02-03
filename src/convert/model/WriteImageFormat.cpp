@@ -19,19 +19,40 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "Pixmap.hpp"
+#include "convert/model/WriteImageFormat.hpp"
 
 
-Pixmap::Pixmap() : PaintDevice(), QPixmap() {}
+WriteImageFormat::WriteImageFormat() : ImageFormat() {}
 
-Pixmap::~Pixmap() {}
-
-bool Pixmap::load(const QString &fileName)
+WriteImageFormat::WriteImageFormat(const QString &format) : ImageFormat(format)
 {
-    return QPixmap::load(fileName);
+    writer.setFormat(format.toLatin1());
 }
 
-bool Pixmap::loadFromData(const QByteArray &data, const char *format)
+bool WriteImageFormat::supportsQuality() const
 {
-    return QPixmap::loadFromData(data, format);
+    return writer.supportsOption(QImageIOHandler::Quality);
+}
+
+bool WriteImageFormat::supportsProgressiveScanWrite() const
+{
+#if QT_VERSION >= 0x050500
+    return writer.supportsOption(QImageIOHandler::ProgressiveScanWrite);
+#else
+    return false;
+#endif
+}
+
+bool WriteImageFormat::supportsOptimizedWrite() const
+{
+#if QT_VERSION >= 0x050500
+    return writer.supportsOption(QImageIOHandler::OptimizedWrite);
+#else
+    return false;
+#endif
+}
+
+bool WriteImageFormat::supportsCompression() const
+{
+    return writer.supportsOption(QImageIOHandler::CompressionRatio);
 }

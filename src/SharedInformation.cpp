@@ -44,12 +44,8 @@ SharedInformation::SharedInformation()
     maintainAspect = true;
     sizeBytes = 0;
     sizeUnit = 0;
-    quality = 100;
     rotate = false;
     angle = 0.;
-
-    // file settings
-    format = "";
 
 #ifdef SIR_METADATA_SUPPORT
     // metadata settings
@@ -85,8 +81,7 @@ void SharedInformation::swap(const SharedInformation &other)
     destFolder = other.destFolder;
     prefix = other.prefix;
     suffix = other.suffix;
-    format = other.format;
-    quality = other.quality;
+    targetImage = other.targetImage;
 
     rotate = other.rotate;
     angle = other.angle;
@@ -156,7 +151,8 @@ void SharedInformation::setDesiredSize(quint32 bytes) {
   * \note Call this function after calling #setSaveMetadata.
   */
 void SharedInformation::setDesiredFormat(const QString &format) {
-    this->format = format;
+    targetImage.setImageFormat(ImageFormat(format));
+
 #ifdef SIR_METADATA_SUPPORT
     if (!MetadataUtils::Metadata::isWriteSupportedFormat(format)) {
         saveMetadata = false;
@@ -194,8 +190,9 @@ void SharedInformation::setDesiredFlip(int flip) {
 /** Sets desired image quality.
   * \param quality Integer factor in range 0 to 100.
   */
-void SharedInformation::setQuality(int quality) {
-    this->quality = quality;
+void SharedInformation::setQuality(int quality)
+{
+    targetImage.setQuality(quality);
 }
 
 /** Sets destination file name prefix. */

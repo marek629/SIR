@@ -142,15 +142,21 @@ void Session::save(const QString &fileName) {
 
     writer.writeStartElement("options");
     writer.writeStartElement("quality");
-    writer.writeValue(optionsArea->qualitySpinBox->value());
+    writer.writeValue(optionsArea->qualitySliderBox->value());
     writer.writeEndElement(); // quality
+    writer.writeStartElement("progressiveWrite");
+    writer.writeAttribute("enabled", optionsArea->progressiveWriteCheckBox->isChecked());
+    writer.writeEndElement(); // progressiveWrite
+    writer.writeStartElement("optimizedWrite");
+    writer.writeAttribute("enabled", optionsArea->optimizedWriteCheckBox->isChecked());
+    writer.writeEndElement(); // optimizedWrite
     writer.writeStartElement("background");
     writer.writeAttribute("enabled", optionsArea->backgroundColorCheckBox->isChecked());
     writer.writeColorElement(optionsArea->backgroundColorFrame->color());
     writer.writeEndElement(); // background
     writer.writeStartElement("rotation");
     writer.writeAttribute("enabled", optionsArea->rotateCheckBox->isChecked());
-    writer.writeCharacters(optionsArea->rotateLineEdit->text());
+    writer.writeCharacters(QString::number(optionsArea->rotateDoubleSpinBox->value(), 'f', 1));
     writer.writeEndElement(); // rotation
     writer.writeStartElement("flip");
     writer.writeValue(optionsArea->flipComboBox->currentIndex());
@@ -273,7 +279,17 @@ void Session::restore(const QString &fileName) {
     if (!elem.isNull()) {
         el = elem.firstChildElement("quality");
         if (!el.isNull())
-            optionsArea->qualitySpinBox->setValue(el.text().toInt());
+            optionsArea->qualitySliderBox->setValue(el.text().toInt());
+        el = elem.firstChildElement("progressiveWrite");
+        if (el.isElement()) {
+            str = el.attribute("enabled", falseString);
+            optionsArea->progressiveWriteCheckBox->setChecked(str.toBool());
+        }
+        el = elem.firstChildElement("optimizedWrite");
+        if (el.isElement()) {
+            str = el.attribute("enabled", falseString);
+            optionsArea->optimizedWriteCheckBox->setChecked(str.toBool());
+        }
         el = elem.firstChildElement("background");
         if (!el.isNull()) {
             str = el.attribute("enabled", falseString);
@@ -284,7 +300,7 @@ void Session::restore(const QString &fileName) {
         if (!el.isNull()) {
             str = el.attribute("enabled", falseString);
             optionsArea->rotateCheckBox->setChecked(str.toBool());
-            optionsArea->rotateLineEdit->setText(el.text());
+            optionsArea->rotateDoubleSpinBox->setValue(el.text().toDouble());
         }
         el = elem.firstChildElement("flip");
         if (!el.isNull())

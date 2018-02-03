@@ -20,9 +20,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>-155</y>
+     <y>-181</y>
      <width>550</width>
-     <height>415</height>
+     <height>446</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -243,6 +243,26 @@ applying a 3x3 median filter to the R-G and B-G channels.</string>
          </property>
          <property name="maximum">
           <number>100000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="5">
+        <widget class="QCheckBox" name="saturationCheckBox">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When highlights appear pink, you need to lower the saturation level. To measure this, take a picture of something shiny and do &lt;span style=&quot; font-weight:600;&quot;&gt;dcraw -D -4 -j -c&lt;/span&gt; photo.raw &lt;span style=&quot; font-weight:600;&quot;&gt;| pamsumm -max&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The default darkness and saturation are usually correct.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Custom saturation level</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="5">
+        <widget class="QSpinBox" name="saturationSpinBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <number>65535</number>
          </property>
         </widget>
        </item>

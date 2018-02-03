@@ -19,20 +19,26 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#ifndef IMAGE_HPP
-#define IMAGE_HPP
+#ifndef IMAGESIZECOMPUTERESULT_HPP
+#define IMAGESIZECOMPUTERESULT_HPP
 
-#include <QImage>
-#include "raw/PaintDevice.hpp"
+#include <QSize>
+
+#include "convert/algorithm/ImageSizeComputeResultState.hpp"
 
 
-class Image : public PaintDevice, public QImage
+class ImageSizeComputeResult
 {
 public:
-    Image();
-    ~Image();
-    bool load(const QString &fileName);
-    bool loadFromData(const QByteArray &data, const char *format);
+    ImageSizeComputeResult();
+
+
+    void setSize(const QSize &size);
+    void setState(const ImageSizeComputeResultState &state);
+
+private:
+    QSize imageSize;
+    ImageSizeComputeResultState resultState;
 };
 
-#endif // IMAGE_HPP
+#endif // IMAGESIZECOMPUTERESULT_HPP

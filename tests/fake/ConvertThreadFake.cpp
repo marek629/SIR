@@ -19,9 +19,14 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "PaintDevice.hpp"
+#include "tests/fake/ConvertThreadFake.hpp"
 
 
-PaintDevice::PaintDevice() {}
+ConvertThreadFake::ConvertThreadFake(QObject *parent, int tid)
+    : ConvertThread(parent, tid) {}
 
-PaintDevice::~PaintDevice() {}
+qint8 ConvertThreadFake::computeSize(QSvgRenderer *renderer,
+                                     const QString &imagePath)
+{
+    return 1;
+}

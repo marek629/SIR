@@ -19,20 +19,43 @@
  * Program URL: http://marek629.github.io/SIR/
  */
 
-#include "raw/RawImageLoader.hpp"
+#ifndef HORIZONTALSLIDERBOX_HPP
+#define HORIZONTALSLIDERBOX_HPP
 
-#include <QProcess>
+#include <QWidget>
+
+class QSlider;
+class QSpinBox;
 
 
-RawImageLoader::RawImageLoader(RawModel *rawModel, const QString &filePath)
-    : RawLoader(rawModel, filePath) {}
-
-Image *RawImageLoader::load()
+/**
+ * @brief The HorizontalSliderBox widget class
+ *
+ * Widget aggregated horizontal slider and integer-value spin box.
+ */
+class HorizontalSliderBox : public QWidget
 {
-    return static_cast<Image *>(RawLoader::load());
-}
+public:
+    explicit HorizontalSliderBox(QWidget *parent = NULL);
+    ~HorizontalSliderBox();
 
-Image *RawImageLoader::createPaintDevice()
-{
-    return new Image();
-}
+    int minimum() const;
+    int maximum() const;
+    int value() const;
+
+public slots:
+    void setRange(int min, int max);
+    void setValue(int value);
+
+private:
+    QSlider *createSlider();
+    QSpinBox *createSpinBox();
+    QLayout *createLayout(QSlider *slider, QSpinBox *spinBox);
+    void connectSliderAndSpinBox();
+
+    QSlider *slider;
+    QSpinBox *spinBox;
+    QLayout *layout;
+};
+
+#endif // HORIZONTALSLIDERBOX_HPP
