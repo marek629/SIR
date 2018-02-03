@@ -197,7 +197,7 @@ void MetadataDialog::readFile() {
     Exiv2::Image::AutoPtr image = metadata->imageAutoPtr();
     if (image.get() == 0) {
         QMessageBox::critical(this, errorTitle,
-                              tr("Unexpected metadata read error occured."));
+                              tr("Unexpected metadata read error occurred."));
         return;
     }
     QString message;

@@ -2045,23 +2045,23 @@ SIR can&apos;t automatically remove favorite item. Do it manually.</source>
     <name>MessageBox</name>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Tak</translation>
+        <translation>&amp;Tak</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Nie</translation>
+        <translation>&amp;Nie</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tak dla &amp;wszystkich</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation type="unfinished"></translation>
+        <translation>Ni&amp;e dla wszystkich</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anuluj</translation>
     </message>
 </context>
 <context>
@@ -2499,7 +2499,7 @@ Kod błędu %1
 Informacja: %2</translation>
     </message>
     <message>
-        <source>Unexpected metadata read error occured.</source>
+        <source>Unexpected metadata read error occurred.</source>
         <translation>Wystąpił nieoczekiwany błąd odczytu metadanych.</translation>
     </message>
     <message>
@@ -2860,11 +2860,11 @@ Informacja: %2</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>

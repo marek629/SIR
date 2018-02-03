@@ -8,6 +8,7 @@
 * Fixed GIF presence at output file formats list
 * Fixed translations of standard dialog buttons
 * Updated Spanish translation thanks José M. Ciordia
+* Updated Polish translation
 
 
 # v3.1

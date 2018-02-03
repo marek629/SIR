@@ -202,7 +202,7 @@ void ConvertDialog::sendInstall() {
 
     if(alreadySent) {
         QMessageBox::information(this, tr("Let us know!"),
-                                 tr("You alread sent information about your " \
+                                 tr("You already sent information about your " \
                                     "SIR installation. Thank you very much!")
                                  );
 

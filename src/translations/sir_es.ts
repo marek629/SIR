@@ -2686,7 +2686,7 @@ Mensaje de error: %2</translation>
     </message>
     <message>
         <location filename="../widgets/MetadataDialog.cpp" line="200"/>
-        <source>Unexpected metadata read error occured.</source>
+        <source>Unexpected metadata read error occurred.</source>
         <translation>Ha ocurrido un error inesperado de lectura de metadatos.</translation>
     </message>
     <message>

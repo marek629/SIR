@@ -166,6 +166,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="toolTip">
+              <string>Remove all files from the list</string>
+             </property>
              <property name="text">
               <string>Remove All</string>
              </property>
@@ -423,7 +426,7 @@
      <x>0</x>
      <y>0</y>
      <width>843</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -533,7 +536,7 @@
     <string>Remove All</string>
    </property>
    <property name="toolTip">
-    <string>Remove all filles the files list</string>
+    <string>Remove all files from the list</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Del</string>
@@ -631,6 +634,7 @@
   <tabstop>destFileEdit</tabstop>
  </tabstops>
  <resources>
+  <include location="../sir.qrc"/>
   <include location="../sir.qrc"/>
  </resources>
  <connections/>
