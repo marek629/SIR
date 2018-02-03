@@ -5,6 +5,7 @@
 ### unreleased
 
 * Fixed translations of standard dialog buttons
+* Updated Spanish translation thanks José M. Ciordia
 
 
 # v3.1

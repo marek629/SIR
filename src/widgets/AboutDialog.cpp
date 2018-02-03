@@ -60,7 +60,7 @@ void AboutDialog::setAboutText() {
             + htmlTableRow(tr("German"), "Michael Kruger")
             + htmlTableRow(tr("Portuguese"), "Rafael Sachetto")
             + htmlTableRow(tr("Slovak"), "Jozef Riha")
-            + htmlTableRow(tr("Spanish"), "Víctor Fernández Martínez, Garbage Collector")
+            + htmlTableRow(tr("Spanish"), "Víctor Fernández Martínez, Garbage Collector, José M.&nbsp;Ciordia")
             + htmlTableRow(tr("Russian"), "Renat Gar, касьянъ, Timur Antipin")
             + htmlTableRow(tr("Hungarian"), "Kopiás Csaba")
             + htmlTableRow(tr("Polish"), "zoteek, Marek Jędryka")
