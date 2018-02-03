@@ -4,6 +4,8 @@
 
 ### unreleased
 
+* Fixed loading transparent image with custom background colour
+* Fixed GIF presence at output file formats list
 * Fixed translations of standard dialog buttons
 * Updated Spanish translation thanks José M. Ciordia
 
