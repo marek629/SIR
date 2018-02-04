@@ -409,7 +409,7 @@ repetidamente un filtro medio de 3x3 a los canales R-G y B-G.</translation>
 <context>
     <name>CommandLineAssistant</name>
     <message>
-        <location filename="../CommandLineAssistant.cpp" line="104"/>
+        <location filename="../CommandLineAssistant.cpp" line="96"/>
         <source>Usage: sir [options] [files]
 Typed files will load to files list in main window.
 
@@ -647,7 +647,7 @@ Do you want continue anyway?</source>
         <translation type="obsolete">Sí a &amp;todo</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="958"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="959"/>
         <source>Cancelled</source>
         <translation>Cancelado</translation>
     </message>
@@ -661,10 +661,8 @@ Do you want continue anyway?</source>
         <translation type="vanished">&amp;Eliminar archivo(s)</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="110"/>
-        <location filename="../widgets/ConvertDialog.ui" line="518"/>
         <source>Add &amp;Dir…</source>
-        <translation>Añadir &amp;directorio…</translation>
+        <translation type="vanished">Añadir &amp;directorio…</translation>
     </message>
     <message>
         <source>&amp;Target Format:</source>
@@ -675,12 +673,12 @@ Do you want continue anyway?</source>
         <translation type="vanished">E&amp;liminar todas</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="273"/>
+        <location filename="../widgets/ConvertDialog.ui" line="276"/>
         <source>Target Folder:</source>
         <translation>Carpeta destino:</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="244"/>
+        <location filename="../widgets/ConvertDialog.ui" line="247"/>
         <source>Target Prefix:</source>
         <translation>Prefijo de destino:</translation>
     </message>
@@ -689,12 +687,12 @@ Do you want continue anyway?</source>
         <translation type="vanished">Altura:</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="257"/>
+        <location filename="../widgets/ConvertDialog.ui" line="260"/>
         <source>&amp;Browse</source>
         <translation>&amp;Examinar</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="260"/>
+        <location filename="../widgets/ConvertDialog.ui" line="263"/>
         <source>Alt+B</source>
         <translation>Alt+E</translation>
     </message>
@@ -703,10 +701,8 @@ Do you want continue anyway?</source>
         <translation type="vanished">Anchura:</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="88"/>
-        <location filename="../widgets/ConvertDialog.ui" line="513"/>
         <source>Add &amp;File…</source>
-        <translation>Añadir &amp;archivo…</translation>
+        <translation type="vanished">Añadir &amp;archivo…</translation>
     </message>
     <message>
         <location filename="../widgets/ConvertDialog.ui" line="148"/>
@@ -719,18 +715,18 @@ Do you want continue anyway?</source>
         <translation>Del</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="170"/>
-        <location filename="../widgets/ConvertDialog.ui" line="533"/>
+        <location filename="../widgets/ConvertDialog.ui" line="173"/>
+        <location filename="../widgets/ConvertDialog.ui" line="536"/>
         <source>Remove All</source>
         <translation>Eliminar todos</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="412"/>
+        <location filename="../widgets/ConvertDialog.ui" line="415"/>
         <source>&amp;Quit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="317"/>
+        <location filename="../widgets/ConvertDialog.ui" line="320"/>
         <source>Options</source>
         <translation>Opciones</translation>
     </message>
@@ -751,19 +747,25 @@ Do you want continue anyway?</source>
         <translation type="vanished">Calidad:</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="402"/>
+        <location filename="../widgets/ConvertDialog.ui" line="405"/>
         <source>&amp;Convert Selected</source>
         <translation>&amp;Convertir seleccionadas</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="405"/>
+        <location filename="../widgets/ConvertDialog.ui" line="408"/>
         <source>Alt+C</source>
         <translation>Alt+C</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="389"/>
+        <location filename="../widgets/ConvertDialog.ui" line="392"/>
         <source>Convert &amp;All</source>
         <translation>Convertir &amp;todas</translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="88"/>
+        <location filename="../widgets/ConvertDialog.ui" line="516"/>
+        <source>Add &amp;File...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/ConvertDialog.ui" line="91"/>
@@ -771,149 +773,192 @@ Do you want continue anyway?</source>
         <translation>Alt+F</translation>
     </message>
     <message>
+        <location filename="../widgets/ConvertDialog.ui" line="110"/>
+        <location filename="../widgets/ConvertDialog.ui" line="521"/>
+        <source>Add &amp;Dir...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../widgets/ConvertDialog.ui" line="113"/>
         <source>Alt+D</source>
         <translation>Alt+D</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="280"/>
+        <location filename="../widgets/ConvertDialog.ui" line="170"/>
+        <location filename="../widgets/ConvertDialog.ui" line="539"/>
+        <source>Remove all files from the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="283"/>
         <source>Target Suffix:</source>
         <translation>Sufijo de destino</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="290"/>
+        <location filename="../widgets/ConvertDialog.ui" line="293"/>
         <source>Target Format:</source>
         <translation>Formato de destino</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="309"/>
+        <location filename="../widgets/ConvertDialog.ui" line="312"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="325"/>
-        <location filename="../widgets/ConvertDialog.ui" line="463"/>
+        <location filename="../widgets/ConvertDialog.ui" line="328"/>
+        <location filename="../widgets/ConvertDialog.ui" line="466"/>
         <source>Effects</source>
         <translation>Efectos</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="338"/>
+        <location filename="../widgets/ConvertDialog.ui" line="341"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="392"/>
+        <location filename="../widgets/ConvertDialog.ui" line="395"/>
         <source>Alt+A</source>
         <translation>Alt+A</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="431"/>
+        <location filename="../widgets/ConvertDialog.ui" line="434"/>
         <source>Actions</source>
         <translation>Acciones</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="523"/>
+        <location filename="../widgets/ConvertDialog.ui" line="506"/>
+        <source>About Sir...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="511"/>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="526"/>
+        <source>Check for updates...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="531"/>
+        <source>Let us know that you are using SIR...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="547"/>
+        <source>&amp;Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="558"/>
+        <source>&amp;Import files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="566"/>
+        <location filename="../widgets/ConvertDialog.ui" line="576"/>
+        <source>Restore...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ConvertDialog.ui" line="571"/>
+        <location filename="../widgets/ConvertDialog.ui" line="581"/>
+        <source>Save...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Check for updates…</source>
-        <translation>Buscar actualizaciones…</translation>
+        <translation type="vanished">Buscar actualizaciones…</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="528"/>
         <source>Let us know that you are using SIR…</source>
-        <translation>Comunícanos que estás usando SIR…</translation>
+        <translation type="vanished">Comunícanos que estás usando SIR…</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="536"/>
         <source>Remove all filles the files list</source>
-        <translation>Borrar todos los archivos de la lista de archivos</translation>
+        <translation type="vanished">Borrar todos los archivos de la lista de archivos</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="539"/>
+        <location filename="../widgets/ConvertDialog.ui" line="542"/>
         <source>Ctrl+Del</source>
         <translation>Ctrl+Del</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="544"/>
         <source>&amp;Select…</source>
-        <translation>&amp;Seleccionar…</translation>
+        <translation type="vanished">&amp;Seleccionar…</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="547"/>
+        <location filename="../widgets/ConvertDialog.ui" line="550"/>
         <source>Do advanced selection of images on list</source>
         <translation>Hacer una selección avanzada de las imágenes de la lista</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="550"/>
+        <location filename="../widgets/ConvertDialog.ui" line="553"/>
         <source>Alt+S</source>
         <translation>Alt+S</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="555"/>
         <source>&amp;Import files…</source>
-        <translation>&amp;Importar archivos…</translation>
+        <translation type="vanished">&amp;Importar archivos…</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="558"/>
+        <location filename="../widgets/ConvertDialog.ui" line="561"/>
         <source>Alt+I</source>
         <translation>Alt+i</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="563"/>
-        <location filename="../widgets/ConvertDialog.ui" line="573"/>
         <source>Restore…</source>
-        <translation>Restablecer…</translation>
+        <translation type="vanished">Restablecer…</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="568"/>
-        <location filename="../widgets/ConvertDialog.ui" line="578"/>
         <source>Save…</source>
-        <translation>Guardar…</translation>
+        <translation type="vanished">Guardar…</translation>
     </message>
     <message>
         <source>File</source>
         <translation type="obsolete">Archivo</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="443"/>
+        <location filename="../widgets/ConvertDialog.ui" line="446"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="452"/>
+        <location filename="../widgets/ConvertDialog.ui" line="455"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="456"/>
+        <location filename="../widgets/ConvertDialog.ui" line="459"/>
         <source>Session</source>
         <translation>Sesión</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="481"/>
         <location filename="../widgets/ConvertDialog.ui" line="484"/>
         <location filename="../widgets/ConvertDialog.ui" line="487"/>
-        <location filename="../widgets/ConvertDialog.cpp" line="951"/>
+        <location filename="../widgets/ConvertDialog.ui" line="490"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="952"/>
         <source>Quit</source>
         <translation>Salir</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="495"/>
+        <location filename="../widgets/ConvertDialog.ui" line="498"/>
         <source>&amp;Options</source>
         <translation>&amp;Opciones</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="498"/>
+        <location filename="../widgets/ConvertDialog.ui" line="501"/>
         <source>Alt+O</source>
         <translation>Alt+O</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="503"/>
         <source>About Sir…</source>
-        <translation>Acerca de Sir…</translation>
+        <translation type="vanished">Acerca de Sir…</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.ui" line="508"/>
         <source>About Qt…</source>
-        <translation>Acerca de Qt…</translation>
+        <translation type="vanished">Acerca de Qt…</translation>
     </message>
     <message>
         <source>Name</source>
@@ -932,7 +977,7 @@ Do you want continue anyway?</source>
         <translation type="vanished">Estado</translation>
     </message>
     <message>
-        <location filename="../widgets/ConvertDialog.cpp" line="959"/>
+        <location filename="../widgets/ConvertDialog.cpp" line="960"/>
         <source>Converted</source>
         <translation>Convertida</translation>
     </message>
@@ -953,63 +998,63 @@ Do you want continue anyway?</source>
         <translation>Convirtiendo</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="140"/>
+        <location filename="../ConvertThread.cpp" line="128"/>
         <source>Failed to open original image</source>
         <translation>No se ha podido abrir la imagen original</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="223"/>
-        <location filename="../ConvertThread.cpp" line="243"/>
-        <location filename="../ConvertThread.cpp" line="658"/>
-        <location filename="../ConvertThread.cpp" line="676"/>
+        <location filename="../ConvertThread.cpp" line="211"/>
+        <location filename="../ConvertThread.cpp" line="231"/>
+        <location filename="../ConvertThread.cpp" line="646"/>
+        <location filename="../ConvertThread.cpp" line="664"/>
         <source>Converted</source>
         <translation>Convertida</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="268"/>
+        <location filename="../ConvertThread.cpp" line="256"/>
         <source>Error code:</source>
         <translation>Código de error</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="471"/>
-        <location filename="../ConvertThread.cpp" line="560"/>
+        <location filename="../ConvertThread.cpp" line="459"/>
+        <location filename="../ConvertThread.cpp" line="548"/>
         <source>Failed to compute image size</source>
         <translation>No se ha podido calcular el tamaño de la imagen</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="660"/>
-        <location filename="../ConvertThread.cpp" line="678"/>
+        <location filename="../ConvertThread.cpp" line="648"/>
+        <location filename="../ConvertThread.cpp" line="666"/>
         <source>Failed to save</source>
         <translation>No se ha podido guardar</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="724"/>
+        <location filename="../ConvertThread.cpp" line="750"/>
         <source>Failed to save new SVG file</source>
         <translation>No se ha podido guardar el nuevo archivo SVG</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="733"/>
+        <location filename="../ConvertThread.cpp" line="759"/>
         <source>Failed to open changed SVG file</source>
         <translation>No se ha popido abrir el archivo SVG cambiado</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="739"/>
+        <location filename="../ConvertThread.cpp" line="765"/>
         <source>Failed to open SVG file</source>
         <translation>No se ha podido abrir el archivo SVG</translation>
     </message>
     <message>
         <location filename="../ConvertThread.cpp" line="97"/>
-        <location filename="../ConvertThread.cpp" line="229"/>
-        <location filename="../ConvertThread.cpp" line="236"/>
-        <location filename="../ConvertThread.cpp" line="631"/>
-        <location filename="../ConvertThread.cpp" line="665"/>
-        <location filename="../ConvertThread.cpp" line="672"/>
+        <location filename="../ConvertThread.cpp" line="217"/>
+        <location filename="../ConvertThread.cpp" line="224"/>
+        <location filename="../ConvertThread.cpp" line="619"/>
+        <location filename="../ConvertThread.cpp" line="653"/>
+        <location filename="../ConvertThread.cpp" line="660"/>
         <source>Cancelled</source>
         <translation>Cancelado</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="226"/>
-        <location filename="../ConvertThread.cpp" line="246"/>
+        <location filename="../ConvertThread.cpp" line="214"/>
+        <location filename="../ConvertThread.cpp" line="234"/>
         <source>Failed to convert</source>
         <translation>No se ha podido convertir</translation>
     </message>
@@ -1018,11 +1063,11 @@ Do you want continue anyway?</source>
         <translation type="obsolete">Conversión fallida</translation>
     </message>
     <message>
-        <location filename="../ConvertThread.cpp" line="231"/>
-        <location filename="../ConvertThread.cpp" line="234"/>
-        <location filename="../ConvertThread.cpp" line="633"/>
-        <location filename="../ConvertThread.cpp" line="667"/>
-        <location filename="../ConvertThread.cpp" line="670"/>
+        <location filename="../ConvertThread.cpp" line="219"/>
+        <location filename="../ConvertThread.cpp" line="222"/>
+        <location filename="../ConvertThread.cpp" line="621"/>
+        <location filename="../ConvertThread.cpp" line="655"/>
+        <location filename="../ConvertThread.cpp" line="658"/>
         <source>Skipped</source>
         <translation>Ignorada</translation>
     </message>
@@ -2123,16 +2168,29 @@ SIR no puede borrar el item favorito automáticamente. Hazlo manualmente.</trans
 <context>
     <name>MessageBox</name>
     <message>
+        <location filename="../widgets/MessageBox.cpp" line="53"/>
         <source>&amp;Yes</source>
-        <translation type="obsolete">&amp;Sí</translation>
+        <translation type="unfinished">&amp;Sí</translation>
     </message>
     <message>
+        <location filename="../widgets/MessageBox.cpp" line="54"/>
         <source>&amp;No</source>
-        <translation type="obsolete">&amp;No</translation>
+        <translation type="unfinished">&amp;No</translation>
     </message>
     <message>
+        <location filename="../widgets/MessageBox.cpp" line="55"/>
         <source>Yes to &amp;All</source>
-        <translation type="obsolete">Sí a &amp;todo</translation>
+        <translation type="unfinished">Sí a &amp;todo</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MessageBox.cpp" line="56"/>
+        <source>N&amp;o to All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MessageBox.cpp" line="57"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2603,7 +2661,7 @@ SIR no puede borrar el item favorito automáticamente. Hazlo manualmente.</trans
     <message>
         <location filename="../widgets/MetadataDialog.ui" line="1086"/>
         <source>Model version:</source>
-        <translation>Versión del modelo:></translation>
+        <translation>Versión del modelo:&gt;</translation>
     </message>
     <message>
         <location filename="../widgets/MetadataDialog.ui" line="1093"/>
@@ -2843,8 +2901,8 @@ Mensaje de error: %2</translation>
     </message>
     <message>
         <location filename="../metadata/Exif.cpp" line="327"/>
-        <source>Rotar contra el sentido de las agujas del reloj, voltear horizontalmente</source>
-        <translation></translation>
+        <source>Counterclockwise rotation, flip horizontaly</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../metadata/Exif.cpp" line="328"/>
@@ -3051,6 +3109,11 @@ Mensaje de error: %2</translation>
         <translation>Sir - Configurar opciones</translation>
     </message>
     <message>
+        <location filename="../widgets/OptionsDialog.cpp" line="301"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Sir - Options</source>
         <translation type="obsolete">Sir - Opciones</translation>
     </message>
@@ -3099,8 +3162,9 @@ Mensaje de error: %2</translation>
         <translation type="vanished">Aceptar</translation>
     </message>
     <message>
+        <location filename="../widgets/OptionsDialog.cpp" line="302"/>
         <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -3126,8 +3190,8 @@ Mensaje de error: %2</translation>
     </message>
     <message>
         <location filename="../widgets/convert/OptionsScrollArea.ui" line="49"/>
-        <source>Voltear vertical y horizontalmente</source>
-        <translation></translation>
+        <source>Flip vertically and horizontally</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/convert/OptionsScrollArea.ui" line="57"/>
@@ -3187,9 +3251,8 @@ Mensaje de error: %2</translation>
         <translation>Guardar imagen</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="202"/>
         <source>Save image as…</source>
-        <translation>Guardar imagen como…</translation>
+        <translation type="vanished">Guardar imagen como…</translation>
     </message>
     <message>
         <location filename="../widgets/PreviewDialog.cpp" line="214"/>
@@ -3209,9 +3272,18 @@ Mensaje de error: %2</translation>
         <translation>Ajustar al tamaño de la ventana</translation>
     </message>
     <message>
-        <location filename="../widgets/PreviewDialog.cpp" line="208"/>
         <source>Print current image…</source>
-        <translation>Imprimir imagen actual…</translation>
+        <translation type="vanished">Imprimir imagen actual…</translation>
+    </message>
+    <message>
+        <location filename="../widgets/PreviewDialog.cpp" line="202"/>
+        <source>Save image as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/PreviewDialog.cpp" line="208"/>
+        <source>Print current image...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/PreviewDialog.cpp" line="262"/>
@@ -3356,11 +3428,13 @@ Mensaje de error: %2</translation>
     <name>RawTabWidget</name>
     <message>
         <location filename="../widgets/convert/RawTabWidget.cpp" line="41"/>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="98"/>
         <source>Basic</source>
         <translation>Básico</translation>
     </message>
     <message>
         <location filename="../widgets/convert/RawTabWidget.cpp" line="49"/>
+        <location filename="../widgets/convert/RawTabWidget.cpp" line="99"/>
         <source>Advanced</source>
         <translation>Avanzado</translation>
     </message>
@@ -3374,8 +3448,22 @@ Mensaje de error: %2</translation>
     </message>
     <message>
         <location filename="../Selection.cpp" line="121"/>
+        <source>Checking selection conditions...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Selection.cpp" line="174"/>
+        <source>Checking import conditions...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Selection.cpp" line="175"/>
+        <source>Scanning directories...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Checking selection conditions…</source>
-        <translation>Comprobando las condiciones de la selección…</translation>
+        <translation type="vanished">Comprobando las condiciones de la selección…</translation>
     </message>
     <message>
         <location filename="../Selection.cpp" line="160"/>
@@ -3383,14 +3471,12 @@ Mensaje de error: %2</translation>
         <translation>Condiciones para importar archivos</translation>
     </message>
     <message>
-        <location filename="../Selection.cpp" line="174"/>
         <source>Checking import conditions…</source>
-        <translation>Comprobando las condiciones de importación…</translation>
+        <translation type="vanished">Comprobando las condiciones de importación…</translation>
     </message>
     <message>
-        <location filename="../Selection.cpp" line="175"/>
         <source>Scanning directories…</source>
-        <translation>Escaneando directorios…</translation>
+        <translation type="vanished">Escaneando directorios…</translation>
     </message>
     <message>
         <location filename="../Selection.cpp" line="198"/>
@@ -3591,9 +3677,13 @@ El formato de archivo no es válido.</translation>
 <context>
     <name>StatusWidget</name>
     <message>
-        <location filename="../widgets/StatusWidget.ui" line="41"/>
         <source>Message…</source>
-        <translation>Mensaje…</translation>
+        <translation type="vanished">Mensaje…</translation>
+    </message>
+    <message>
+        <location filename="../widgets/StatusWidget.ui" line="41"/>
+        <source>Message...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/StatusWidget.ui" line="54"/>
@@ -3618,18 +3708,30 @@ El formato de archivo no es válido.</translation>
     </message>
     <message>
         <location filename="../widgets/StatusWidget.cpp" line="123"/>
-        <source>Loading image details…</source>
-        <translation>Cargando detalles de la imagen…</translation>
+        <source>Loading image details...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/StatusWidget.cpp" line="126"/>
-        <source>Loading files…</source>
-        <translation>Cargando archivos…</translation>
+        <source>Loading files...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/StatusWidget.cpp" line="129"/>
+        <source>Converting images...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading image details…</source>
+        <translation type="vanished">Cargando detalles de la imagen…</translation>
+    </message>
+    <message>
+        <source>Loading files…</source>
+        <translation type="vanished">Cargando archivos…</translation>
+    </message>
+    <message>
         <source>Converting images…</source>
-        <translation>Convirtiendo imágenes…</translation>
+        <translation type="vanished">Convirtiendo imágenes…</translation>
     </message>
     <message>
         <location filename="../widgets/StatusWidget.cpp" line="132"/>

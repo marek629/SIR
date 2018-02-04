@@ -532,7 +532,7 @@ oba wypisują pomoc w języku polskim i wychodzą.</translation>
     </message>
     <message>
         <source>Remove all filles the files list</source>
-        <translation>Usuń wszystkie pliki z listy plików</translation>
+        <translation type="vanished">Usuń wszystkie pliki z listy plików</translation>
     </message>
     <message>
         <source>File</source>
@@ -600,7 +600,7 @@ oba wypisują pomoc w języku polskim i wychodzą.</translation>
     </message>
     <message>
         <source>You alread sent information about your SIR installation. Thank you very much!</source>
-        <translation>Już wysłałeś informację o Twojej instalacji SIR. Dziękujemy!</translation>
+        <translation type="vanished">Już wysłałeś informację o Twojej instalacji SIR. Dziękujemy!</translation>
     </message>
     <message>
         <source>IMPORTANT: this action will not send any private data about you or your computer to SIR developers! It will only update a counter of unique installations of SIR.</source>
@@ -751,6 +751,14 @@ Chcesz kontynuować mimo to?</translation>
     <message>
         <source>Raw</source>
         <translation>Raw</translation>
+    </message>
+    <message>
+        <source>Remove all files from the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You already sent information about your SIR installation. Thank you very much!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
