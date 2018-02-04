@@ -2,7 +2,7 @@
 
 ## Marek Jędryka <jedryka89@gmail.com>
 
-### unreleased
+### Sun Feb 04 2018
 
 * Fixed loading transparent image with custom background colour
 * Fixed GIF presence at output file formats list
