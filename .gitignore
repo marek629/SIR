@@ -9,6 +9,7 @@
 /Makefile
 /CMakeCache.txt
 /CMakeFiles/*
+*.md.backup
 *.qm
 *.cxx
 /ui_*.h

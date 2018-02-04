@@ -4,10 +4,10 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="SIR (Simple Image Resizer) project website">
+        <meta name="description" content="SIR (Simple Image Resizer) project news">
         <meta name="author" content="Marek Jędryka">
 
-        <title>SIR - Simple Image Resizer</title>
+        <title>Blog - SIR - Simple Image Resizer</title>
 
         <link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css">
 
@@ -29,43 +29,21 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="blog.html">Blog</a></li>
+                    <li class="active"><a href="blog.html">Blog</a></li>
                     <li><a href="download.html">Download</a></li>
                     <li><a href="screenshots.html">Screenshots</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="https://github.com/marek629/SIR/wiki">Wiki</a></li>
                     <li><a href="donate.html">Donate</a></li>
-                    <li><a href="stats.html">Stats</a></li>
                 </ul>
             </div>
         </nav>
 
         <span id="forkongithub"><a href="https://github.com/marek629/SIR">Fork me on GitHub</a></span>
-        <div class="container">
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-lg-7" style="padding-right: 30px;">
+        <div class="container" style="margin-top: 20px; margin-bottom: 5px;">
+            <div class="row">
 
-                    <h1 class="text-center" style="margin-bottom: 50px;">
-                        <img src="sir.png"> SIR <small>Simple Image Resizer</small>
-                    </h1>
-
-                    <div class="row jumbotron">
-                        <div class="col-md-12">
-                            <h2>About SIR</h2>
-                            <p>
-                                SIR (Simple Image Resizer) is a tool created for batch parallel resizing, rotate and converting images with metadata support.<br>
-                                You can add frame or text and apply color and gradient filters on your images.<br>
-                                You can also manipulate on histogram.<br>
-                                Finally you can do this all activities on many images at the same time using your multiple core CPU!
-                            </p>
-                            <a class="btn btn-primary" href="about.html" role="button">Read More</a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-5">
-
-                    <div class="row well">
+                <div class="col-sm-10">
+                    <div id="content">
 
                         <div class="row">
                             <div class="col-xs-12">
@@ -96,34 +74,10 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h2 class="panel-title">SIR 3.1 Is Out!<time datetime="2016-02-11" class="pull-right entry-date">February 11, 2016</time></h2>
-                                    </div>
-                                    <div class="panel-body">
-                                        <p>
-                                            First 3.x series update was released. Enjoy!
-                                        </p>
-                                        <p>
-                                            Changes comparing to the SIR 3.0 release:
-                                        </p>
-                                        <ul>
-                                            <li>Changed format of generated thumbnails from TIFF to JPEG</li>
-                                            <li>Fixed wait currsor after unselect files issue</li>
-                                            <li>Integrated tests with TravisCI platform</li>
-                                            <li>Updated Polish translation (Raw basic tab)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <a class="btn btn-primary pull-right" href="static/blog.html" role="button">See Blog</a>
                     </div>
-
                 </div>
+
             </div>
             <p class="text-center">
                 <span class="glyphicon glyphicon-copyright-mark" /> 2015 Marek Jędryka @ <a href="http://www.getso.pl" rel="nofollow">Getso.pl</a>
@@ -132,5 +86,11 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+        <script>
+            var year = $(".entry-date").first().attr('datetime').split('-')[0];
+            window.location.replace('../blog.html#' + year);
+        </script>
+
     </body>
 </html>
