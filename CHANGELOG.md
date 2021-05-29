@@ -1,3 +1,12 @@
+# v3.2.1
+
+## Marek Jędryka <jedryka89@gmail.com>
+
+### Sun May 30 2021
+
+* Fixed build scripts for Arch Linux based distros
+
+
 # v3.2
 
 ## Marek Jędryka <jedryka89@gmail.com>
