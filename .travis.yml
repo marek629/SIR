@@ -15,7 +15,7 @@ addons:
             - gcc-4.8
             - g++-4.8
             - cmake
-            - ['libqt4-dev', 'libqt4-dbg', 'libqt4-core', 'libqt4-gui']
+            - ['libqt4-dev', 'libqt4-dbg', 'libqtcore4', 'libqtgui4']
 
 before_script:
 # set newer GCC version
