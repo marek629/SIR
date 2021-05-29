@@ -17,14 +17,15 @@ addons:
             - cmake
             - ['libqt4-dev', 'libqt4-dbg', 'libqtcore4', 'libqtgui4']
 
+services:
+    - xvfb
+
 before_script:
 # set newer GCC version
     - if [ "$CC" = "gcc" ]; then export CC="gcc-4.8"; fi
     - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
 # run virtual screen
     - "export DISPLAY=:99.0"
-    - "sh -e /etc/init.d/xvfb start"
-    - sleep 3 # give xvfb some time to start
 # setup build
     - mkdir build
     - cd build
