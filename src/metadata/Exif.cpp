@@ -26,6 +26,7 @@
 #include "metadata/visitors/ExifRichTextVisitor.hpp"
 #include <exiv2/exif.hpp>
 #include <exiv2/metadatum.hpp>
+#include <exiv2/version.hpp>
 
 using namespace MetadataUtils;
 using namespace sir;
@@ -151,8 +152,13 @@ void Exif::setVersion(const Exiv2::Metadatum &datum) {
     }
     versionKnown = true;
     char ch[size];
-    for (int i=0; i<size; i++)
+    for (int i=0; i<size; i++) {
+#if EXIV2_TEST_VERSION(0,28,0)
+        ch[i] = datum.toInt64(i);
+#else
         ch[i] = datum.toLong(i);
+#endif
+    }
     version = QString(QByteArray(ch,size));
     version.insert(size-2,'.');
     if (version[size-1] == '0')
@@ -410,7 +416,11 @@ long Exif::getLong(Exiv2::Exifdatum &datum) {
     case Exiv2::unsignedByte:
     case Exiv2::unsignedShort:
     case Exiv2::unsignedLong:
+#if EXIV2_TEST_VERSION(0,28,0)
+        result = datum.toInt64();
+#else
         result = datum.toLong();
+#endif
         break;
     default:
         break;

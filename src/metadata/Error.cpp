@@ -52,6 +52,6 @@ void Error::setMessage(const QString &str) {
 
 
 void Error::copy(Exiv2::Error &e) {
-    code_ = e.code();
+    code_ = static_cast<int>(e.code());
     string = QString::fromUtf8(e.what());
 }

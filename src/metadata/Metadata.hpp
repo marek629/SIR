@@ -69,7 +69,12 @@ public:
     static Exiv2::Rational simpleRational(int integer);
     static Exiv2::Rational simpleRational(const Exiv2::Rational &rationalPower);
     long getLong(const QString &key);
+
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr imageAutoPtr() { return std::move(image); }
+#else
     Exiv2::Image::AutoPtr imageAutoPtr() { return image; }
+#endif
     Exiv2::Metadatum &metadatum(const std::string &key);
     /** Returns size of readed image in pixels. */
     QSize imageSize() const { return QSize(image->pixelWidth(), image->pixelHeight()); }
@@ -83,7 +88,11 @@ public:
 
 private:
     // fields
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr image;
+#else
     Exiv2::Image::AutoPtr image;
+#endif
     Exiv2::ExifData exifData;
     Exiv2::IptcData iptcData;
 #ifdef EXV_HAVE_XMP_TOOLKIT

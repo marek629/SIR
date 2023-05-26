@@ -194,7 +194,11 @@ void MetadataDialog::readFile() {
         tabWidget->setCurrentWidget(iptcTab);
         return;
     }
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr image = metadata->imageAutoPtr();
+#else
     Exiv2::Image::AutoPtr image = metadata->imageAutoPtr();
+#endif
     if (image.get() == 0) {
         QMessageBox::critical(this, errorTitle,
                               tr("Unexpected metadata read error occurred."));

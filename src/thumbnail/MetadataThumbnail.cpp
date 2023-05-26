@@ -44,7 +44,11 @@ bool MetadataThumbnail::writeThumbnail(bool isMetadataEnabled)
         if (metadata.read(imagePath, true)) {
             exifStruct_ = metadata.exifStruct()->copy();
             iptcStruct_ = metadata.iptcStruct()->copy();
+#if EXIV2_TEST_VERSION(0,28,0)
+            Exiv2::Image::UniquePtr image = metadata.imageAutoPtr();
+#else
             Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
+#endif
             imageSize = QSize(image->pixelWidth(), image->pixelHeight());
             Exiv2::PreviewManager previewManager (*image);
             Exiv2::PreviewPropertiesList previewList = previewManager.
