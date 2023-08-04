@@ -558,7 +558,11 @@ QString TreeWidget::imageSizeString(const String &imagePath) {
             if (!metadata.read(imagePath, true))
                 fromData = true;
             else {
+#if EXIV2_TEST_VERSION(0,28,0)
+                Exiv2::Image::UniquePtr image = metadata.imageAutoPtr();
+#else
                 Exiv2::Image::AutoPtr image = metadata.imageAutoPtr();
+#endif
                 imageSize = QSize(image->pixelWidth(), image->pixelHeight());
             }
         }

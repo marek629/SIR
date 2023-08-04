@@ -58,8 +58,13 @@ bool Metadata::read(const String& path, bool setupStructs, bool fromSvg) {
     close();
     std::string filePath = path.toNativeStdString();
     try {
-        if (fromSvg)
+        if (fromSvg) {
+#if EXIV2_TEST_VERSION(0,28,0)
+            image = Exiv2::ImageFactory::create(static_cast<Exiv2::ImageType>(1));
+#else
             image = Exiv2::ImageFactory::create(1);
+#endif
+        }
         else {
             image = Exiv2::ImageFactory::open(filePath);
             image->readMetadata();
@@ -69,7 +74,11 @@ bool Metadata::read(const String& path, bool setupStructs, bool fromSvg) {
         exif.setVersion(exifData["Exif.Photo.ExifVersion"]);
         // load IPTC data
         iptcData = image->iptcData();
+#if EXIV2_TEST_VERSION(0,28,0)
+        Iptc::setVersion(iptcData["Iptc.Envelope.ModelVersion"].toInt64());
+#else
         Iptc::setVersion(iptcData["Iptc.Envelope.ModelVersion"].toLong());
+#endif
 #ifdef EXV_HAVE_XMP_TOOLKIT
         // load XMP data
         xmpData = image->xmpData();
@@ -199,7 +208,13 @@ bool Metadata::setData(const QImage& qImage) {
         image->setExifData(exifData);
         result = true;
     }
-    if (!iptcData.empty() && iptcData["Iptc.Envelope.ModelVersion"].toLong() != -1) {
+
+#if EXIV2_TEST_VERSION(0,28,0)
+    int64_t mv = iptcData["Iptc.Envelope.ModelVersion"].toInt64();
+#else
+    long mv = iptcData["Iptc.Envelope.ModelVersion"].toLong();
+#endif
+    if (!iptcData.empty() && mv != -1) {
         image->setIptcData(iptcData);
         result = true;
     }
@@ -237,10 +252,16 @@ void Metadata::setFieldValue(char *field, const std::string &key) {
     if (firstEmptyFieldSkipped) {
         Exiv2::Metadatum &datum = metadatum(key);
 
-        if (datum.count() > 0)
+        if (datum.count() > 0) {
+#if EXIV2_TEST_VERSION(0,28,0)
+            *field = datum.toInt64();
+#else
             *field = datum.toLong();
-        else
+#endif
+        }
+        else {
             *field = 1;
+        }
 
         // validation structs field for rigth combobox index
         if (*field == -1)
@@ -265,7 +286,12 @@ void Metadata::setFieldValue(String *field, const std::string &key, const char *
         return;
     if (firstEmptyFieldSkipped) {
         Exiv2::Metadatum &datum = metadatum(key);
+
+#if EXIV2_TEST_VERSION(0,28,0)
+        *field = String::number(datum.toInt64());
+#else
         *field = String::number(datum.toLong());
+#endif
         field->appendUnit(unit);
     }
     else {
@@ -472,7 +498,11 @@ void Metadata::setIptcData() {
     QStringList keywords = iptcStruct_.keywords.split(' ', QString::SkipEmptyParts);
     // insert new keywords
     foreach (QString word, keywords) {
+#if EXIV2_TEST_VERSION(0,28,0)
+        Exiv2::Value::UniquePtr value = Exiv2::Value::create(Exiv2::string);
+#else
         Exiv2::Value::AutoPtr value = Exiv2::Value::create(Exiv2::string);
+#endif
         value->read(word.toStdString());
         iptcData.add(key,value.get());
     }
@@ -745,13 +775,23 @@ long Metadata::getLong(const QString &key) {
     std::string str = key.toStdString();
     if (standard == "Exif") {
         Exiv2::ExifMetadata::iterator i = exifData.findKey(Exiv2::ExifKey(str));
-        if (i != exifData.end())
+        if (i != exifData.end()) {
+#if EXIV2_TEST_VERSION(0,28,0)
+            return i->value().toInt64();
+#else
             return i->value().toLong();
+#endif
+        }
     }
     else if (standard == "Iptc") {
         Exiv2::IptcMetadata::iterator i = iptcData.findKey(Exiv2::IptcKey(str));
-        if (i != iptcData.end())
+        if (i != iptcData.end()) {
+#if EXIV2_TEST_VERSION(0,28,0)
+            return i->value().toInt64();
+#else
             return i->value().toLong();
+#endif
+        }
     }
     else
         return -3;
@@ -783,9 +823,17 @@ void Metadata::setExifDatum(
     if (key1.empty() && key2.empty())
         return;
 
-    if (exifData[key1].toLong() == 0)
+#if EXIV2_TEST_VERSION(0,28,0)
+    int64_t key1_value = exifData[key1].toInt64();
+    int64_t key2_value = exifData[key2].toInt64();
+#else
+    long key1_value = exifData[key1].toLong();
+    long key2_value = exifData[key2].toLong();
+#endif
+
+    if (key1_value == 0)
         exifData[key2] = value;
-    else if (exifData[key2].toLong() == 0)
+    else if (key2_value == 0)
         exifData[key1] = value;
     else {
         exifData[key1] = value;
@@ -804,9 +852,23 @@ void Metadata::setExifDatum(
     if (key1.empty() && key2.empty())
         return;
 
-    if (exifData[key1].toLong(0) == -1 && exifData[key1].toLong(1) == 1)
+#if EXIV2_TEST_VERSION(0,28,0)
+    int64_t key1_value0 = exifData[key1].toInt64(0);
+    int64_t key1_value1 = exifData[key1].toInt64(1);
+
+    int64_t key2_value0 = exifData[key2].toInt64(0);
+    int64_t key2_value1 = exifData[key2].toInt64(1);
+#else
+    long key1_value0 = exifData[key1].toLong(0);
+    long key1_value1 = exifData[key1].toLong(1);
+
+    long key2_value0 = exifData[key2].toLong(0);
+    long key2_value1 = exifData[key2].toLong(1);
+#endif
+
+    if (key1_value0 == -1 && key1_value1 == 1)
         exifData[key2] = value;
-    else if (exifData[key2].toLong(0) == -1 && exifData[key2].toLong(1) == 1)
+    else if (key2_value0 == -1 && key2_value1 == 1)
         exifData[key1] = value;
     else {
         exifData[key1] = value;
