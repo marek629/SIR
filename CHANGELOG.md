@@ -1,3 +1,12 @@
+# v3.2.2
+
+## Marek Jędryka <jedryka89@gmail.com>
+
+### Fri Aug 04 2023
+
+* Added support for exiv2 v0.28.0 thanks Rafael Sachetto
+
+
 # v3.2.1
 
 ## Marek Jędryka <jedryka89@gmail.com>
